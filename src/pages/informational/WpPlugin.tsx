@@ -5,7 +5,7 @@ import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
 import { APP_NAME } from "constants/env";
 
-export function Component() {
+export default function WpPlugin() {
   return (
     <div className="padded-container mt-16 content-start pb-16 @container">
       <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-pretty mb-4 text-navy-d4">

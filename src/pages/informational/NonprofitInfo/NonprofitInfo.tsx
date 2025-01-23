@@ -1,4 +1,3 @@
-import Seo from "components/Seo";
 import { benefits } from "content/benefits";
 import Benefits from "../../@sections/Benefits";
 import { BottomCta } from "./BottomCta";
@@ -12,13 +11,9 @@ import FAQ from "./faq";
 import { Features } from "./features";
 import Investment from "./investment";
 
-export function NonprofitInfo() {
+export default function NonprofitInfo() {
   return (
     <main className="w-full grid content-start pb-16 @container">
-      <Seo
-        title="For Nonprofits"
-        description="Accept any type of donation, anywhere in the world"
-      />
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
         <Hero className="padded-container px-10 bg-transparent" />
       </div>

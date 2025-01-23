@@ -1,33 +1,27 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/ContentLoader";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
+import { errorPrompt } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { useNavigate } from "react-router-dom";
-import {
-  useCapturePayPalOrderMutation,
-  usePaypalOrderMutation,
-} from "services/apes";
-import type { DonateThanksState } from "types/pages";
+import { useState } from "react";
 import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";
+import { captureOrder, createOrder } from "./api";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
+
 export default function Checkout(props: StripeCheckoutStep) {
   const { details, tip, donor: fvDonor, honorary, init, feeAllowance } = props;
 
   const navigate = useNavigate();
-  const { handleError } = useErrorContext();
+  const [prompt, setPrompt] = useState<IPromptV2>();
 
   const [{ isPending }] = usePayPalScriptReducer();
-
-  const [captureOrder, { isLoading: isCapturingOrder }] =
-    useCapturePayPalOrderMutation();
-
-  const [createOrder, { isLoading: isCreatingOrder }] =
-    usePaypalOrderMutation();
+  const [state, setState] = useState<"loading" | "error">();
 
   if (isPending) return <ContentLoader className="rounded h-10 w-40" />;
 
@@ -41,12 +35,13 @@ export default function Checkout(props: StripeCheckoutStep) {
         height: 40,
       }}
       className="w-40 flex gap-2"
-      disabled={isCapturingOrder || isCreatingOrder}
-      onError={(error) => handleError(error, { context: "processing payment" })}
+      disabled={!!state}
+      onError={(error) =>
+        setPrompt(errorPrompt(error, { context: "processing payment" }))
+      }
       onApprove={async (data, actions) => {
-        const order = await captureOrder({
-          orderId: data.orderID,
-        }).unwrap();
+        setState("loading");
+        const order = await captureOrder(data.orderID);
 
         if ("debug_id" in order) throw order;
 
@@ -63,21 +58,16 @@ export default function Checkout(props: StripeCheckoutStep) {
           throw order;
         }
 
-        /// No problem with order
-
-        const state: DonateThanksState = {
-          guestDonor: order.guestDonor,
-          recipientName: init.recipient.name,
-        };
-
-        const route =
+        const search = `?recipient_name=${init.recipient.name}`;
+        const to =
           props.init.source === "bg-widget"
-            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
-            : appRoutes.donate_thanks;
+            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}${search}`
+            : appRoutes.donate_thanks + search;
 
-        navigate(route, { state });
+        navigate(to);
       }}
       createOrder={async () => {
+        setState("loading");
         const intent: DonationIntent = {
           amount: {
             amount: +details.amount,
@@ -108,9 +98,12 @@ export default function Checkout(props: StripeCheckoutStep) {
           };
         }
 
-        const res = await createOrder(intent).unwrap();
-        return res;
+        const id = await createOrder(intent);
+        setState(undefined);
+        return id;
       }}
-    />
+    >
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+    </PayPalButtons>
   );
 }

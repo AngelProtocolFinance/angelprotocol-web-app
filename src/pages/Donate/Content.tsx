@@ -1,27 +1,23 @@
-import type { Endow } from "@better-giving/endowment";
-import flying_character from "assets/images/flying-character.png";
+import { Link, useLoaderData } from "@remix-run/react";
+import type { DonateData } from "api/donate-loader";
+import flying_character from "assets/images/flying-character.webp";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import { Steps } from "components/donation";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
-import { memo } from "react";
-import { Link } from "react-router-dom";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
-type Props = {
-  endowment: Endow;
-};
-
-function Content({ endowment }: Props) {
+export default function Content() {
+  const { endow } = useLoaderData<DonateData>();
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
-        <DappLogo classes="h-[2.036rem]" />
+        <DappLogo classes="h-12" />
         <Link
-          to={`${appRoutes.marketplace}/${endowment.id}`}
+          to={`${appRoutes.marketplace}/${endow.id}`}
           className="font-semibold font-heading hover:text-blue-d1"
         >
           Cancel
@@ -30,12 +26,12 @@ function Content({ endowment }: Props) {
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
         <div className="@container/org-card col-start-1 row-start-1">
           <OrgCard
-            id={endowment.id}
-            name={endowment.name}
-            tagline={endowment.tagline}
-            logo={endowment.logo || flying_character}
+            id={endow.id}
+            name={endow.name}
+            tagline={endow.tagline}
+            logo={endow.logo || flying_character}
             classes=""
-            target={endowment.target}
+            target={endow.target}
           />
         </div>
 
@@ -45,14 +41,14 @@ function Content({ endowment }: Props) {
             source="bg-marketplace"
             mode="live"
             recipient={{
-              id: endowment.id.toString(),
-              name: endowment.name,
-              hide_bg_tip: endowment.hide_bg_tip,
-              progDonationsAllowed: endowment.progDonationsAllowed,
+              id: endow.id.toString(),
+              name: endow.name,
+              hide_bg_tip: endow.hide_bg_tip,
+              progDonationsAllowed: endow.progDonationsAllowed,
             }}
             config={{
-              methodIds: endowment.donateMethods,
-              increments: endowment.increments?.map((i) => ({
+              methodIds: endow.donateMethods,
+              increments: endow.increments?.map((i) => ({
                 ...i,
                 value: +i.value,
               })),
@@ -82,9 +78,6 @@ function Content({ endowment }: Props) {
     </div>
   );
 }
-
-//memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
-export default memo(Content);
 
 const A: typeof ExtLink = ({ className, ...props }) => {
   return (

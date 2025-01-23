@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
-import dappLogo from "assets/images/bettergiving-logo.png";
+import dappLogo from "assets/images/bettergiving-logo.webp";
 import { laira } from "assets/laira/laira";
 import Image from "components/Image/Image";
 import { centsDecimals, humanize, roundDown } from "helpers";

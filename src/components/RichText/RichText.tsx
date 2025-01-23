@@ -1,61 +1,12 @@
 import { unpack } from "helpers";
-import Quill from "quill";
-import {
-  forwardRef,
-  useCallback,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import { toDelta } from "./helpers";
+import { Suspense, forwardRef, lazy } from "react";
+import ContentLoader from "../ContentLoader";
 import type { Props } from "./types";
+const Editor = lazy(() => import("./Editor"));
 
 type El = Pick<HTMLDivElement, "focus">;
-
 export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
   const style = unpack(classes);
-  const [numChars, setNumChars] = useState(props.content.length ?? 0);
-  const quillRef = useRef<Quill>();
-
-  useImperativeHandle(ref, () => ({
-    focus: () => quillRef.current?.focus(),
-  }));
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
-  const containerRef = useCallback((container: HTMLDivElement | null) => {
-    if (!container) return;
-
-    const quill = new Quill(container, {
-      placeholder: props.placeHolder,
-      readOnly: props.readOnly,
-      theme: "snow",
-      formats: ["bold", "italic", "indent", "list"],
-      modules: {
-        toolbar: [
-          ["bold", "italic"],
-          [{ list: "ordered" }, { list: "bullet" }],
-        ],
-      },
-    });
-
-    quillRef.current = quill;
-
-    quill.setContents(toDelta(props.content));
-
-    if (props.readOnly) return;
-
-    quill.on("editor-change", function handleChange() {
-      //quill content min length is 1
-      const numChars = quill.getLength() - 1;
-      setNumChars(numChars);
-
-      props.onChange({
-        //quill clean state has residual `\n`
-        value: numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
-        length: numChars,
-      });
-    });
-  }, []);
 
   return (
     <div className={style.container}>
@@ -64,18 +15,26 @@ export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
         aria-disabled={props.disabled}
         className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${style.field} ${props.readOnly ? "toolbar-hidden" : ""}`}
       >
-        <div
-          style={{ fontFamily: "inherit", fontSize: "inherit" }}
-          className="w-full h-full text-base"
-          ref={containerRef}
-        />
+        <Suspense
+          fallback={
+            <>
+              {Array(10)
+                .fill(null)
+                .map((_, index) => (
+                  <ContentLoader key={index} className="mb-3 h-5 w-full" />
+                ))}
+            </>
+          }
+        >
+          {<Editor classes={classes} ref={ref} {...props} />}
+        </Suspense>
         {!props.readOnly && (
           <span
             className={`absolute top-4 right-4 text-xs uppercase ${
               style.counter ?? ""
             }`}
           >
-            chars : {numChars}
+            chars : {props.content.length ?? 0}
             {props.charLimit && ` /${props.charLimit}`}
           </span>
         )}
@@ -86,3 +45,5 @@ export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
     </div>
   );
 });
+
+export default RichText;

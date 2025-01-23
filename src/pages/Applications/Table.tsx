@@ -2,12 +2,13 @@ import {
   type Status as TStatus,
   isIrs501c3,
 } from "@better-giving/registration/models";
+import { NavLink } from "@remix-run/react";
 import { HeaderButton } from "components/HeaderButton";
+import { Info } from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import useSort from "hooks/useSort";
 import { Folder } from "lucide-react";
-import { Link } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 
@@ -16,13 +17,16 @@ export default function Table({
   classes = "",
   disabled,
   isLoading,
-  hasMore,
-  onLoadMore,
+  loadMore,
+  nextPageKey,
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     applications,
     "updated_at"
   );
+  if (applications.length === 0) {
+    return <Info classes={classes}>No applications found</Info>;
+  }
 
   return (
     <table
@@ -85,7 +89,7 @@ export default function Table({
               key={row.id}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
-                hasMore ? "" : "first:rounded-bl last:rounded-br"
+                nextPageKey ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <span className="text-xs font-bold upppercase">
@@ -97,27 +101,27 @@ export default function Table({
               <td className="text-center">
                 <Status status={row.status} />
               </td>
-              <Link
+              <NavLink
                 to={appRoutes.applications + `/${row.id}`}
-                className="text-center w-full inline-block hover:text-blue-d1"
+                className="text-center w-full inline-block [&:is(.pending)]:text-gray hover:text-blue-d1"
               >
                 <Folder
                   size={22}
                   aria-label="application details"
                   className="inline-block"
                 />
-              </Link>
+              </NavLink>
             </Cells>
           ))
           .concat(
-            hasMore ? (
+            nextPageKey ? (
               <td
                 colSpan={9}
                 key="load-more-btn"
                 className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
-                  onLoadMore={onLoadMore}
+                  onLoadMore={() => loadMore(nextPageKey)}
                   disabled={disabled}
                   isLoading={isLoading}
                 />

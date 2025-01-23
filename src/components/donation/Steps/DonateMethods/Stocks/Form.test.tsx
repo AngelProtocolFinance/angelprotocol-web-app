@@ -1,9 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Provider } from "react-redux";
-import { mockPrograms } from "services/aws/programs";
-import { store } from "store/store";
-import { describe, expect, test, vi } from "vitest";
+import { mockPrograms } from "services/aws/programs/mock";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { testDonateData } from "../../__tests__/test-data";
 import type { Init, StocksDonationDetails } from "../../types";
 import Form from "./Form";
 
@@ -13,29 +12,38 @@ vi.mock("../../Context", () => ({
     .fn()
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
+const mockLoader = vi.hoisted(() => vi.fn());
+vi.mock("@remix-run/react", async () => {
+  const actual = await vi.importActual("@remix-run/react");
+  return {
+    ...actual,
+    useLoaderData: mockLoader,
+  };
+});
 
-const _Form: typeof Form = (props) => (
-  <Provider store={store}>{<Form {...props} />}</Provider>
-);
+beforeEach(() => {
+  mockLoader.mockReturnValue(testDonateData);
+});
+afterEach(() => {
+  mockLoader.mockReset();
+});
 
 describe("stocks form test", () => {
-  test("initial state: blank", () => {
+  test("initial state: blank", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
       recipient: { id: "0", name: "" },
       mode: "live",
     };
-    render(<_Form init={init} step="donate-form" />);
+    render(<Form init={init} step="donate-form" />);
     const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
     expect(symbolInput).toHaveDisplayValue("");
 
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("");
 
-    const programSelector = screen.getByRole("button", {
-      name: /general donation/i,
-    });
+    const programSelector = screen.getByLabelText(/select program/i);
     expect(programSelector).toBeInTheDocument();
   });
   test("initial blank state: program donations now allowed", () => {
@@ -45,10 +53,8 @@ describe("stocks form test", () => {
       recipient: { id: "0", name: "", progDonationsAllowed: false },
       mode: "live",
     };
-    render(<_Form init={init} step="donate-form" />);
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
-    });
+    render(<Form init={init} step="donate-form" />);
+    const programSelector = screen.queryByLabelText(/select program/i);
     expect(programSelector).toBeNull();
   });
   test("initial state: persisted and submittable", async () => {
@@ -64,17 +70,15 @@ describe("stocks form test", () => {
       numShares: "10",
       program: { value: mockPrograms[1].id, label: mockPrograms[1].title },
     };
-    render(<_Form init={init} step="donate-form" details={details} />);
+    render(<Form init={init} step="donate-form" details={details} />);
     const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
     expect(symbolInput).toHaveDisplayValue("BG");
 
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("10");
 
-    const programSelector = screen.getByRole("button", {
-      name: /program 2/i,
-    });
-    expect(programSelector).toBeInTheDocument();
+    const selectedProgram = screen.getByText(/program 2/i);
+    expect(selectedProgram).toBeInTheDocument();
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();
@@ -87,7 +91,7 @@ describe("stocks form test", () => {
       recipient: { id: "0", name: "", progDonationsAllowed: false },
       mode: "live",
     };
-    render(<_Form init={init} step="donate-form" />);
+    render(<Form init={init} step="donate-form" />);
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
 

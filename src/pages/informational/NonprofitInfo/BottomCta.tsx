@@ -1,8 +1,8 @@
+import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 
 export function BottomCta({ className = "" }) {
   return (

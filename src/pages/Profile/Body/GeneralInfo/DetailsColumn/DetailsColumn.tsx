@@ -1,10 +1,9 @@
-import type { EndowClaim } from "@better-giving/registration/models";
+import { NavLink, useOutletContext } from "@remix-run/react";
 import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { useEndowBalanceQuery } from "services/apes";
+import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import { Fundraisers } from "./Fundraisers";
 import Socials from "./Socials";
@@ -12,7 +11,7 @@ import Tags from "./Tags";
 
 export default function DetailsColumn({ className = "" }) {
   const p = useProfileContext();
-  const bal = useEndowBalanceQuery(p.id);
+  const bal = useOutletContext() as EndowmentBalances;
   const { active_in_countries = [] } = p;
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -33,37 +32,30 @@ export default function DetailsColumn({ className = "" }) {
           {p.social_media_urls && (
             <Socials social_media_urls={p.social_media_urls} />
           )}
-          {bal.data?.totalContributions != null && p.target && (
+          {bal.totalContributions != null && p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.data?.totalContributions}
+              progress={bal.totalContributions}
               target={toTarget(p.target)}
               classes="-mb-5 mt-4"
             />
           )}
-          <Link
+          <NavLink
             to={appRoutes.donate + `/${p.id}`}
             className="w-full btn-blue h-12 px-6 text-base lg:text-sm"
           >
             Donate now
-          </Link>
+          </NavLink>
         </div>
         {p.claimed === false && (
-          <Link
-            to={`${appRoutes.register}/${regRoutes.welcome}`}
-            state={
-              {
-                ein: p.registration_number,
-                name: p.name,
-                id: p.id,
-              } satisfies EndowClaim
-            }
+          <NavLink
+            to={`${appRoutes.register}/${regRoutes.welcome}?claim=${p.registration_number}`}
             className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l4 rounded"
           >
             Claim this organization
-          </Link>
+          </NavLink>
         )}
-        <Fundraisers endowId={p.id} classes="mt-4" />
+        <Fundraisers classes="mt-4" />
       </div>
     </div>
   );

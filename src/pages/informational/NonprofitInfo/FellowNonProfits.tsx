@@ -1,5 +1,4 @@
 import { brands } from "content/brands";
-import Marquee from "react-fast-marquee";
 
 export default function FellowNonProfits({ className = "" }) {
   return (
@@ -7,7 +6,7 @@ export default function FellowNonProfits({ className = "" }) {
       <h2 className="text-center text-3xl/tight md:text-4.5xl/tight text-navy-d4 text-pretty mb-16 px-4">
         Over $6 million donations <br /> processed for nonprofits worldwide
       </h2>
-      <Marquee pauseOnHover autoFill>
+      <div className="flex items-center flex-wrap justify-center gap-4 padded-container">
         {brands.map((b, idx) => (
           <img
             key={idx}
@@ -17,7 +16,7 @@ export default function FellowNonProfits({ className = "" }) {
             className="object-contain mx-6"
           />
         ))}
-      </Marquee>
+      </div>
     </section>
   );
 }

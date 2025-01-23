@@ -1,5 +1,5 @@
 import type { IMedia } from "@better-giving/endowment";
-import ReactPlayer from "react-player";
+import { ReactPlayer } from "components/react-player";
 
 export default function Media({ media }: { media: IMedia[] }) {
   return (

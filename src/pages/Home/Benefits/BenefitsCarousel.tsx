@@ -1,69 +1,62 @@
 import type { Benefit } from "content/benefits";
+import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { EffectCoverflow, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { PreCta } from "./common";
 
 type Props = { slides: Benefit[]; classes?: string };
+
 const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    skipSnaps: false,
+    slidesToScroll: 1,
+  });
+
   return (
     <div className={`grid relative ${classes}`}>
-      <button
-        type="button"
-        className="swip-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-3/4"
-      >
-        <ChevronLeft />
-      </button>
-      <button
-        type="button"
-        className="swip-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-3/4"
-      >
-        <ChevronRight />
-      </button>
-
-      <Swiper
-        effect="coverflow"
-        grabCursor
-        centeredSlides
-        loop
-        slidesPerView="auto"
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 90,
-          depth: 190,
-          modifier: 3.8,
-        }}
-        navigation={{
-          nextEl: ".swip-next",
-          prevEl: ".swip-prev",
-        }}
-        wrapperClass="w-screen @container"
-        modules={[EffectCoverflow, Navigation]}
-      >
-        {slides.map((slide, index) => {
-          return (
-            <SwiperSlide
-              key={index}
-              className={`grid justify-items-center py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.cardBgClass}`}
-            >
-              <img
-                src={slide.img}
-                className="size-60 object-cover object-center"
-                alt="logo"
-              />
-              <p className="mt-6 text-2xl font-heading text-[#0D283A] w-full text-center font-bold">
-                {slide.title}
-              </p>
-              <p className="text-xl text-navy w-full text-center font-medium">
-                {slide.title2}
-              </p>
-              <p className="text-center text-balance text-lg mt-4 text-navy">
-                {slide.description}
-              </p>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+      <div className="overflow-hidden relative" ref={emblaRef}>
+        <div className="flex">
+          {slides.map((slide, index) => (
+            <div key={index} className="flex-[0_0_100%] px-4">
+              <div
+                className={`grid justify-items-center py-14 px-10 rounded-5xl mx-auto max-w-3xl @4xl:max-w-4xl ${slide.cardBgClass}`}
+              >
+                <img
+                  src={slide.img}
+                  className="size-60 object-cover object-center"
+                  alt="Visual representation of the benefit"
+                />
+                <p className="mt-6 text-2xl font-heading text-[#0D283A] w-full text-center font-bold">
+                  {slide.title}
+                </p>
+                <p className="text-xl text-navy w-full text-center font-medium">
+                  {slide.title2}
+                </p>
+                <p className="text-center text-balance text-lg mt-4 text-navy">
+                  {slide.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => emblaApi?.scrollPrev()}
+          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-1/4"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+        <button
+          type="button"
+          onClick={() => emblaApi?.scrollNext()}
+          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-1/4"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      </div>
 
       <PreCta classes="text-center max-w-4xl justify-self-center mt-8 text-2xl px-4" />
 

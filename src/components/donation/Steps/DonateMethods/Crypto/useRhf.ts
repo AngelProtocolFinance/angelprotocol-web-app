@@ -4,12 +4,12 @@ import { useController, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
 import { object } from "yup";
 import type { OnIncrement } from "../../common/Incrementers";
-import { DEFAULT_PROGRAM, initTokenOption } from "../../common/constants";
+import { initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import type { DonateValues as DV } from "./types";
 
 const initial: DV = {
-  program: DEFAULT_PROGRAM,
+  program: { label: "", value: "" },
   token: initTokenOption,
 };
 

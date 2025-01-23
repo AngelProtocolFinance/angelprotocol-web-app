@@ -1,5 +1,5 @@
+import { NavLink } from "@remix-run/react";
 import { Fragment } from "react";
-import { NavLink } from "react-router-dom";
 
 type Props = {
   className?: string;

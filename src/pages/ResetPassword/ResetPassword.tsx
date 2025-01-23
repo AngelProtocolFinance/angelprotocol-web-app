@@ -1,27 +1,24 @@
-import { useState } from "react";
+import { useLoaderData } from "@remix-run/react";
 import InitForm from "./InitForm";
 import SetPasswordForm from "./SetPasswordForm";
 import Success from "./Success";
-import type { Steps } from "./types";
-
-export function ResetPassword() {
-  const [step, setStep] = useState<Steps>({ type: "init" });
+import type { LoaderData } from "./types";
+export { loader, action } from "./api";
+export { ErrorBoundary } from "components/error";
+export default function ResetPassword() {
+  const { redirect, step } = useLoaderData<LoaderData>();
 
   const content = (() => {
     if (step.type === "init") {
-      return <InitForm setStep={setStep} />;
+      return <InitForm to={redirect} />;
     }
 
     if (step.type === "set-password") {
-      return (
-        <SetPasswordForm
-          setStep={setStep}
-          codeRecipientEmail={step.codeRecipientEmail}
-        />
-      );
+      const { type, ...recipient } = step;
+      return <SetPasswordForm recipient={recipient} />;
     }
 
-    return <Success />;
+    return <Success to={redirect} />;
   })();
 
   return (

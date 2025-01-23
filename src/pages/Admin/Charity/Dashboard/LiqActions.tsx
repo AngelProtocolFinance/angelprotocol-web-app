@@ -1,54 +1,49 @@
-import { useModalContext } from "contexts/ModalContext";
+import { NavLink } from "@remix-run/react";
 import type { BalanceMovement } from "types/aws";
-import { MoveFundForm } from "./MoveFundForm";
 
 interface Props {
   classes?: string;
-  endowId: number;
   balance: number;
   mov: BalanceMovement;
   disabled?: boolean;
 }
 
 export function LiqActions({ classes = "", ...props }: Props) {
-  const { showModal } = useModalContext();
   return (
     <div className={`${classes} flex justify-end gap-x-2`}>
-      <button
-        type="button"
-        disabled={props.disabled}
-        onClick={() =>
-          showModal(MoveFundForm, {
-            title: "Withdraw from savings",
-            type: "liq-cash",
-            balance: props.balance,
-            mov: props.mov,
-            endowId: props.endowId,
+      <NavLink
+        replace
+        preventScrollReset
+        to={{
+          pathname: "move-funds",
+          search: new URLSearchParams({
+            flow: "liq-cash",
             effect: "append",
-          })
-        }
-        className="text-xs px-4 py-1.5 rounded-md bg-gray-d2 disabled:bg-gray-l3 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
+          }).toString(),
+        }}
+        type="button"
+        aria-disabled={props.disabled}
+        className="text-xs [&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none px-4 py-1.5 rounded-md bg-gray-d2 aria-disabled:bg-gray-l3 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
       >
         Withdraw
-      </button>
-      <button
-        type="button"
-        disabled={props.disabled}
-        onClick={() =>
-          showModal(MoveFundForm, {
-            title: "Invest savings",
-            type: "liq-lock",
-            balance: props.balance,
-            mov: props.mov,
-            endowId: props.endowId,
-            min: 50,
+      </NavLink>
+      <NavLink
+        replace
+        preventScrollReset
+        to={{
+          pathname: "move-funds",
+          search: new URLSearchParams({
+            flow: "liq-lock",
             effect: "append",
-          })
-        }
-        className="text-xs font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-green disabled:bg-gray-l3 text-white font-heading outline-blue-d1"
+            min: "50",
+          }).toString(),
+        }}
+        type="button"
+        aria-disabled={props.disabled}
+        className="text-xs [&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-green aria-disabled:bg-gray-l3 text-white font-heading outline-blue-d1"
       >
         Invest
-      </button>
+      </NavLink>
     </div>
   );
 }

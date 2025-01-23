@@ -1,41 +1,28 @@
+import type { Endow } from "@better-giving/endowment";
 import type { NewFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { fetchAuthSession } from "aws-amplify/auth";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import Prompt from "components/Prompt";
 import { RichText } from "components/RichText";
 import { NativeField as Field, Form, Label } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import { appRoutes } from "constants/routes";
-import withAuth from "contexts/Auth";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { useEffect } from "react";
-import {
-  type SubmitHandler,
-  useController,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
-import { Link, useSearchParams } from "react-router-dom";
-import { useCreateFundMutation } from "services/aws/funds";
-import { useEndowment } from "services/aws/useEndowment";
+import { useController, useFieldArray, useForm } from "react-hook-form";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 
-export default withAuth(function CreateFund() {
-  const [params] = useSearchParams();
-  const npoParam = params.get("npo");
-  const npoId = npoParam ? +npoParam : 0;
+export default function CreateFund() {
+  const fetcher = useFetcher();
+  const isSubmitting = fetcher.state !== "idle";
+  const endow = useLoaderData<Endow | null>();
   const {
     register,
     control,
     trigger,
     resetField,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     defaultValues: {
@@ -43,7 +30,9 @@ export default withAuth(function CreateFund() {
       description: "",
       banner: "",
       logo: "",
-      members: [],
+      members: endow
+        ? [{ id: endow.id, name: endow.name, logo: endow.logo }]
+        : [],
       target: {
         type: "smart",
       },
@@ -70,66 +59,36 @@ export default withAuth(function CreateFund() {
     name: "videos",
   });
 
-  const [createFund] = useCreateFundMutation();
-  const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
-
-  const { data: initNpoMember } = useEndowment(npoId, ["name", "id", "logo"]);
-
-  useEffect(() => {
-    initNpoMember && members.onChange([initNpoMember]);
-  }, [initNpoMember, members.onChange]);
-
-  const onSubmit: SubmitHandler<FV> = async (fv) => {
-    try {
-      const fund: NewFund = {
-        name: fv.name,
-        description: fv.description.value,
-        banner: fv.banner,
-        logo: fv.logo,
-        members: fv.members.map((m) => m.id),
-        featured: true, // internal ( req update: all fundraisers are public )
-        target:
-          fv.target.type === "none"
-            ? `${0}`
-            : fv.target.type === "smart"
-              ? "smart"
-              : `${+fv.target.value}`, //fixedTarget is required when targetType is fixed
-        videos: fv.videos.map((v) => v.url),
-        npo_owner: npoId,
-      };
-
-      if (fv.expiration) fund.expiration = fv.expiration;
-
-      const res = await createFund(fund).unwrap();
-
-      //delay to give room for credentials to be written in db
-      await new Promise((r) => setTimeout(r, 300));
-      await fetchAuthSession({ forceRefresh: true });
-
-      showModal(Prompt, {
-        type: "success",
-        children: (
-          <p>
-            Congratulations, your{" "}
-            <Link to={appRoutes.funds + `/${res.id}`} className="text-blue-d1">
-              fund
-            </Link>{" "}
-            was successfully created!
-          </p>
-        ),
-      });
-    } catch (err) {
-      handleError(err, { context: "creating fund" });
-    }
-  };
-
   const isUploading = banner.value === "loading" || logo.value === "loading";
 
   return (
     <div className="w-full padded-container">
       <Form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit((fv) => {
+          const fund: NewFund = {
+            name: fv.name,
+            description: fv.description.value,
+            banner: fv.banner,
+            logo: fv.logo,
+            members: fv.members.map((m) => m.id),
+            featured: true, // internal ( req update: all fundraisers are public )
+            target:
+              fv.target.type === "none"
+                ? `${0}`
+                : fv.target.type === "smart"
+                  ? "smart"
+                  : `${+fv.target.value}`, //fixedTarget is required when targetType is fixed
+            videos: fv.videos.map((v) => v.url),
+            npo_owner: endow?.id ?? 0,
+          };
+          if (fv.expiration) fund.expiration = fv.expiration;
+
+          fetcher.submit(fund, {
+            encType: "application/json",
+            method: "POST",
+            action: ".",
+          });
+        })}
         disabled={isSubmitting}
         className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
@@ -254,4 +213,4 @@ export default withAuth(function CreateFund() {
       </Form>
     </div>
   );
-});
+}

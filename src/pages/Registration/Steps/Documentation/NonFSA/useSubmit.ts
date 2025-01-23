@@ -1,39 +1,39 @@
-import { useErrorContext } from "contexts/ErrorContext";
+import type { EndowClaim } from "@better-giving/registration/models";
+import type { Update } from "@better-giving/registration/update";
+import { useFetcher } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
+import { getEndowWithEin } from "api/get/endow-with-ein";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { endowByEin } from "services/aws/aws";
-import { useUpdateRegMutation } from "services/aws/registration";
+import { toast } from "sonner";
 import { steps } from "../../../routes";
-import { useRegState } from "../../StepGuard";
 import type { FormValues as FV, Props } from "./types";
 
 type Args = {
   props: Props;
   form: UseFormReturn<FV>;
+  initClaim: EndowClaim | undefined;
 };
 
-export default function useSubmit({ form, props }: Args) {
-  const { data } = useRegState<4>();
+export default function useSubmit({ form, props, initClaim }: Args) {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = form;
 
-  const [updateReg] = useUpdateRegMutation();
-  const { handleError, displayError } = useErrorContext();
+  const fetcher = useFetcher();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && props.doc) {
-      return navigate(`../${steps.banking}`, { state: data.init });
+      return navigate(`../${steps.banking}`);
     }
 
-    if (!data.init.claim && fv.ein !== props.doc?.ein) {
-      const endow = await endowByEin(fv.ein);
+    if (!initClaim && fv.ein !== props.doc?.ein) {
+      const endow = await getEndowWithEin(fv.ein);
 
       if (endow) {
         if (endow.claimed ?? true) {
-          return displayError(
+          return toast.info(
             `Nonprofit: ${endow.name} with EIN: ${fv.ein} already exists on our app. You must speak with an existing user of your NPO Account's members in order to be invited on as a member.`
           );
         }
@@ -43,20 +43,19 @@ export default function useSubmit({ form, props }: Args) {
       }
     }
 
-    const result = await updateReg({
-      id: data.init.id,
+    const update: Update = {
       type: "docs",
       ein: fv.ein,
+    };
+    fetcher.submit(update, {
+      encType: "application/json",
+      action: ".",
+      method: "PATCH",
     });
-
-    if ("error" in result) {
-      return handleError(result.error, { context: "submitting documentation" });
-    }
-    return navigate(`../${steps.banking}`, { state: data.init });
   };
 
   return {
     submit: handleSubmit(submit),
-    isSubmitting,
+    isSubmitting: isSubmitting || fetcher.state !== "idle",
   };
 }

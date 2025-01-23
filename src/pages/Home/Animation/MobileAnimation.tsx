@@ -1,6 +1,6 @@
 import { benefits } from "content/benefits";
 import StepsCard from "./StepsCard";
-import path from "./images/static-path.png";
+import path from "./images/static-path.webp";
 import type { Card } from "./types";
 
 const MobileAnimation = ({ classes = "" }) => {
@@ -36,14 +36,14 @@ const MobileAnimation = ({ classes = "" }) => {
       className={`${classes} relative pt-24 bg-peach/20 grid px-4 bg-no-repeat`}
       style={{ backgroundImage: `url('${path}')` }}
     >
-      <h4 className="text-xs text-[#3c91cb] mb-4 text-center">
+      <h2 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
         SIMPLE PATH TO FINANCIAL STABILITY
-      </h4>
-      <h2 className=" text-3xl mb-14 text-navy-d4 text-center text-pretty">
-        Make a Lasting Impact: <br /> Give Today, Give Forever
       </h2>
+      <h3 className="text-center text-3xl md:text-4.5xl/snug text-balance mb-6 px-4">
+        Make a Lasting Impact: <br /> Give Today, Give Forever
+      </h3>
 
-      <div className="grid gap-32">
+      <div className="grid gap-32 padded-container mt-4">
         {cards.map((card, idx) => {
           return <StepsCard key={idx} {...card} />;
         })}

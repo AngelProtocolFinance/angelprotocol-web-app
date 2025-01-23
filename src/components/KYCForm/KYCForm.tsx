@@ -1,13 +1,12 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "@remix-run/react";
 import { placeHolderCountryOption } from "components/CountrySelector";
-import Modal from "components/Modal";
-import { FormProvider, useForm } from "react-hook-form";
-import Form, { formStyle } from "./Form";
-import { schema } from "./schema";
-import type { FormValues, Props } from "./types";
+import { Modal } from "components/Modal";
+import { Form } from "./Form";
+import type { FV } from "./schema";
 
-export default function KYCForm(props: Props) {
-  const init: FormValues = {
+export default function KycForm() {
+  const navigate = useNavigate();
+  const init: FV = {
     name: { first: "", last: "" },
     address: { street: "", complement: "" },
     city: "",
@@ -18,20 +17,18 @@ export default function KYCForm(props: Props) {
     kycEmail: "",
   };
 
-  const methods = useForm<FormValues>({
-    mode: "onSubmit",
-    reValidateMode: "onChange",
-    defaultValues: props.defaultValues || init,
-    resolver: yupResolver(schema),
-  });
-
   return (
-    <FormProvider {...methods}>
-      <Modal
-        className={`${formStyle} bg-white fixed-center z-20 rounded-md p-6 w-full max-w-xl max-h-[85vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-navy`}
-      >
-        <Form {...props} />
-      </Modal>
-    </FormProvider>
+    <Modal
+      open={true}
+      onClose={() =>
+        navigate(
+          { pathname: ".." },
+          { replace: true, preventScrollReset: true }
+        )
+      }
+      classes="fixed-center grid z-50 isolate w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded"
+    >
+      <Form {...init} />
+    </Modal>
   );
 }

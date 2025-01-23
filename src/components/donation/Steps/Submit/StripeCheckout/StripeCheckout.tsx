@@ -1,10 +1,10 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
-import ErrorBoundary from "errors/ErrorBoundary";
-import ErrorTrigger from "errors/ErrorTrigger";
-import { useStripePaymentIntentQuery } from "services/apes";
+import { APIs } from "constants/urls";
+import useSWR from "swr/immutable";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
@@ -14,8 +14,15 @@ import { DonationTerms } from "../DonationTerms";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 
-// Followed Stripe's custom flow docs
-// https://stripe.com/docs/payments/quickstart
+const fetcher = async (intent: DonationIntent) => {
+  const res = await fetch(`${APIs.apes}/fiat-donation/stripe`, {
+    method: "POST",
+    body: JSON.stringify(intent),
+  });
+  if (!res.ok) throw res;
+  return res.json().then((x) => x.clientSecret);
+};
+
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
@@ -53,12 +60,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     };
   }
 
-  const {
-    data: clientSecret,
-    isLoading,
-    isError,
-    error,
-  } = useStripePaymentIntentQuery(intent);
+  const { data, error, isLoading } = useSWR(intent, fetcher);
 
   return (
     <Summary
@@ -78,10 +80,10 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       }
       program={details.program}
     >
-      <ErrorBoundary>
+      <ErrorBoundaryClass>
         {isLoading ? (
           <Loader msg="Loading payment form.." />
-        ) : isError || !clientSecret ? (
+        ) : error || !data ? (
           <ErrorTrigger error={error} />
         ) : (
           <Elements
@@ -92,7 +94,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
                   cssSrc: "https://fonts.googleapis.com/css2?family=Quicksand",
                 },
               ],
-              clientSecret,
+              clientSecret: data,
               appearance: {
                 theme: "flat",
                 variables: {
@@ -108,7 +110,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
             <Checkout {...props} />
           </Elements>
         )}
-      </ErrorBoundary>
+      </ErrorBoundaryClass>
       <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
     </Summary>
   );

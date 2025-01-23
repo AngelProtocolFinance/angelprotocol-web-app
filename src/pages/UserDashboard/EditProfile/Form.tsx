@@ -1,52 +1,51 @@
+import { useFetcher } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import CurrencySelector from "components/CurrencySelector";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import Prompt from "components/Prompt";
-import { NativeField as Field, Label, Form as _Form } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { cleanObject } from "helpers/cleanObject";
-import { useEditUserMutation } from "services/aws/users";
-import { updateUserAttributes } from "slices/auth";
-import { useSetter } from "store/accessors";
-import type { UserAttributes } from "types/aws";
-import type { Props } from "./types";
+import { NativeField as Field, Form, Label } from "components/form";
+import { useActionResult } from "hooks/use-action-result";
+import type { ActionData } from "types/action";
+import type { LoaderData } from "./api";
 import { avatarSpec, useRhf } from "./useRhf";
 
-export default function Form(props: Props) {
-  const dispatch = useSetter();
-  const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
-  const [editUser] = useEditUserMutation();
-
-  const rhf = useRhf(props);
+export default function Component() {
+  const data = useCachedLoaderData<LoaderData>();
+  const fetcher = useFetcher<ActionData>();
+  useActionResult(fetcher.data);
+  const rhf = useRhf(data);
 
   return (
-    <_Form
-      disabled={rhf.isSubmitting}
+    <Form
+      disabled={fetcher.state === "submitting"}
       onReset={(e) => {
         e.preventDefault();
         rhf.reset();
       }}
       onSubmit={rhf.handleSubmit(async (fv) => {
-        try {
-          const update: Required<UserAttributes> = {
-            givenName: fv.firstName,
-            familyName: fv.lastName,
-            prefCurrencyCode: fv.prefCurrency.code,
-            avatarUrl: fv.avatar,
-          };
-          const updated = await editUser({
-            ...cleanObject(update),
-            userEmail: props.user.email,
-          }).unwrap();
-          showModal(Prompt, {
-            type: "success",
-            children: "Sucessfully updated!",
-          });
-          dispatch(updateUserAttributes(updated));
-        } catch (err) {
-          handleError(err, { context: "updating settings" });
+        const { df } = rhf;
+        const attributes: object[] = [];
+
+        if (df.firstName) {
+          attributes.push({ Name: "given_name", Value: fv.firstName });
         }
+        if (df.lastName) {
+          attributes.push({ Name: "family_name", Value: fv.lastName });
+        }
+        if (df.prefCurrency) {
+          attributes.push({
+            Name: "custom:currency",
+            Value: fv.prefCurrency.code,
+          });
+        }
+        if (df.avatar) {
+          attributes.push({ Name: "custom:avatar", Value: fv.avatar });
+        }
+
+        fetcher.submit(attributes as any, {
+          encType: "application/json",
+          action: ".",
+          method: "PATCH",
+        });
       })}
       className="w-full max-w-4xl justify-self-center content-start"
     >
@@ -73,7 +72,7 @@ export default function Form(props: Props) {
       />
 
       <CurrencySelector
-        currencies={props.currencies}
+        currencies={data.all}
         label="Default currency"
         onChange={rhf.prefCurrency.onChange}
         value={rhf.prefCurrency.value}
@@ -115,6 +114,6 @@ export default function Form(props: Props) {
           Submit changes
         </button>
       </div>
-    </_Form>
+    </Form>
   );
 }

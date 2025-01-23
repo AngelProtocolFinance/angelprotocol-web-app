@@ -1,22 +1,20 @@
+import { Link, useFetcher, useParams } from "@remix-run/react";
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
-import Prompt from "components/Prompt";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
+import { errorPrompt } from "contexts/ErrorContext";
 import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
-import { Link, useNavigate } from "react-router-dom";
-import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
+import { useState } from "react";
 import FormButtons from "./FormButtons";
 
-export default function Banking() {
-  const { id: endowment_id } = useAdminContext();
+export { newBanking as action } from "./api";
+export { ErrorBoundary } from "components/error";
 
-  const [newApplication] = useNewBankingApplicationMutation();
-  const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
-  const navigate = useNavigate();
+export default function Banking() {
+  const { id: endowIdParam = "" } = useParams();
+  const fetcher = useFetcher();
+  const [prompt, setPrompt] = useState<IPromptV2>();
 
   const submit: OnSubmit = async (recipient, bankStatementUrl) => {
     try {
@@ -25,31 +23,30 @@ export default function Banking() {
       const bankSummary = `${currency.toUpperCase()} account ending in ${
         details.accountNumber?.slice(-4) || "0000"
       } `;
-      await newApplication({
-        wiseRecipientID: id.toString(),
-        bankSummary,
-        endowmentID: endowment_id,
-        bankStatementFile: {
-          name: toFileName(bankStatementUrl) ?? "bank statement",
-          publicUrl: bankStatementUrl,
+
+      fetcher.submit(
+        {
+          wiseRecipientID: id.toString(),
+          bankSummary,
+          endowmentID: +endowIdParam,
+          bankStatementFile: {
+            name: toFileName(bankStatementUrl) ?? "bank statement",
+            publicUrl: bankStatementUrl,
+          },
         },
-      }).unwrap();
-
-      showModal(Prompt, {
-        headline: "Success!",
-        children: <p className="py-8">Banking details submitted for review!</p>,
-      });
-
-      navigate("..");
+        { action: ".", method: "POST", encType: "application/json" }
+      );
     } catch (error) {
-      handleError(error, { context: "submitting banking application" });
+      setPrompt(
+        errorPrompt(error, { context: "submitting banking application" })
+      );
     }
   };
 
   return (
     <>
       <Link
-        to={".."}
+        to={"../banking"}
         className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
       >
         <ChevronLeft size={18} />
@@ -60,8 +57,13 @@ export default function Banking() {
         title="Bank account details"
         description="The following information will be used to register your bank account that will be used to withdraw your funds."
       >
-        <BankDetails FormButtons={FormButtons} onSubmit={submit} />
+        <BankDetails
+          FormButtons={FormButtons}
+          onSubmit={submit}
+          isLoading={fetcher.state !== "idle"}
+        />
       </Group>
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </>
   );
 }

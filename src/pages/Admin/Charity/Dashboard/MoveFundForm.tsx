@@ -1,32 +1,94 @@
-import { Field, Input, Label } from "@headlessui/react";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  Field,
+  Input,
+  Label,
+} from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Modal from "components/Modal";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
+import {
+  useFetcher,
+  useNavigate,
+  useRouteLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
 import { humanize } from "helpers";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { useMoveFundsMutation } from "services/apes";
 import type { BalanceMovement } from "types/aws";
+import type { DashboardData } from "./api";
 
 type Flow = keyof BalanceMovement;
+
+const titles: { [K in Flow]: string } = {
+  "liq-cash": "Withdraw from savings",
+  "liq-lock": "Invest savings",
+  "lock-cash": "Withdraw from investments",
+  "lock-liq": "Transfer to Savings",
+};
 
 interface IMoveFundForm {
   title: string;
   effect: "append" | "override";
   type: Flow;
-  endowId: number;
   min?: number;
   balance: number;
   mov: BalanceMovement;
   initAmount?: number;
 }
 
-export function MoveFundForm(props: IMoveFundForm) {
-  const [moveFund, { isLoading }] = useMoveFundsMutation();
-  const { closeModal } = useModalContext();
-  const { handleError } = useErrorContext();
+export { moveFundAction as action } from "./move-fund-action";
+export { ErrorModal as ErrorBoundary } from "components/error";
+export default function MoveFundForm() {
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
+  const { bal } = useRouteLoaderData("dashboard") as DashboardData;
+
+  const mov = bal.movementDetails ?? {
+    "liq-cash": 0,
+    "liq-lock": 0,
+    "lock-cash": 0,
+    "lock-liq": 0,
+  };
+
+  const effect = params.get("effect") as "append" | "override";
+  const flow = params.get("flow") as Flow;
+  const initAmount = params.get("initAmount");
+  const min = +(params.get("min") ?? "0");
+
+  const bals: { [K in Flow]: number } = {
+    "liq-cash": bal.liq ?? 0,
+    "liq-lock": bal.liq ?? 0,
+    "lock-cash": bal.sustainabilityFundBal,
+    "lock-liq": bal.sustainabilityFundBal,
+  };
+
+  return (
+    <Dialog
+      open={true}
+      onClose={() =>
+        navigate("..", { replace: true, preventScrollReset: true })
+      }
+      className="relative z-50"
+    >
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <Content
+        type={flow}
+        balance={bals[flow]}
+        mov={mov}
+        title={titles[flow]}
+        effect={effect}
+        initAmount={initAmount ? +initAmount : undefined}
+        min={min}
+      />
+    </Dialog>
+  );
+}
+
+function Content(props: IMoveFundForm) {
+  const fetcher = useFetcher({ key: "bal-mov" });
   type FV = { amount: string };
 
   const from = props.type.split("-")[0];
@@ -39,7 +101,7 @@ export function MoveFundForm(props: IMoveFundForm) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isDirty },
   } = useForm<FV>({
     defaultValues: { amount: props.initAmount?.toString() || "" },
     resolver: yupResolver(
@@ -64,21 +126,20 @@ export function MoveFundForm(props: IMoveFundForm) {
   });
 
   return (
-    <Modal
+    <DialogPanel
       onSubmit={handleSubmit(async (fv) => {
-        try {
-          await moveFund({
-            endowId: props.endowId,
-            ...props.mov,
-            [props.type]:
-              props.effect === "append"
-                ? props.mov[props.type] + +fv.amount
-                : +fv.amount,
-          }).unwrap();
-          closeModal();
-        } catch (err) {
-          handleError(err, { context: "moving funds" });
-        }
+        const mov: BalanceMovement = {
+          ...props.mov,
+          [props.type]:
+            props.effect === "append"
+              ? props.mov[props.type] + +fv.amount
+              : +fv.amount,
+        };
+        fetcher.submit(mov as any, {
+          action: ".",
+          method: "put",
+          encType: "application/json",
+        });
       })}
       as="form"
       className="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6"
@@ -127,12 +188,12 @@ export function MoveFundForm(props: IMoveFundForm) {
         </span>
       </Field>
       <button
-        disabled={isSubmitting || isLoading || !isDirty}
+        disabled={fetcher.state !== "idle" || !isDirty}
         className="bg-blue-d1 text-sm hover:bg-blue disabled:bg-gray text-white rounded-full px-4 py-2 font-heading uppercase font-bold"
       >
-        {isLoading ? "Submitting..." : "Submit"}
+        {fetcher.state !== "idle" ? "Submitting..." : "Submit"}
       </button>
-    </Modal>
+    </DialogPanel>
   );
 }
 

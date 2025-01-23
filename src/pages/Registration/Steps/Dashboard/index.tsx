@@ -1,44 +1,24 @@
-import Prompt from "components/Prompt";
+import { Navigate, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { regRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { Navigate } from "react-router-dom";
-import { useSubmitMutation } from "services/aws/registration";
-import type { Step6Data } from "../../types";
-import { useRegState, withStepGuard } from "../StepGuard";
+import { useActionResult } from "hooks/use-action-result";
+import type { ActionData, Ok } from "types/action";
+import { stepLoader } from "../../data/step-loader";
+import type { RegStep6 } from "../../types";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
-function Dashboard() {
-  const { data } = useRegState<6>();
+export { submitAction as action } from "./submit-action";
+export { ErrorBoundary } from "components/error";
+export const loader = stepLoader(6);
 
-  const [submitApplication, { isLoading: isSubmitting }] = useSubmitMutation();
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
-
-  const submit = async ({ init }: Step6Data) => {
-    try {
-      await submitApplication(init.id).unwrap();
-      if (window.hasOwnProperty("lintrk")) {
-        (window as any).lintrk("track", { conversion_id: 12807754 });
-      }
-      showModal(Prompt, {
-        type: "success",
-        headline: "Submission",
-        title: "Submitted for review",
-        children: (
-          <>
-            Your application has been submitted. We will get back to you soon!
-          </>
-        ),
-      });
-    } catch (err) {
-      handleError(err, { context: "submitting registration" });
-    }
-  };
+export default function Dashboard() {
+  const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });
+  useActionResult(fetcher.data);
+  const { data } = useLoaderData() as RegStep6;
 
   const { submission, init } = data;
-  const isStepDisabled = isSubmitting || submission === "in-review";
+
+  const isStepDisabled = fetcher.state !== "idle" || submission === "in-review";
 
   if (
     submission &&
@@ -62,14 +42,9 @@ function Dashboard() {
       <Step num={4} disabled={isStepDisabled} />
       <Step num={5} disabled={isStepDisabled} />
 
-      <EndowmentStatus
-        isSubmitting={isSubmitting}
-        onSubmit={() => submit(data)}
-        status={submission}
-        classes="mt-6"
-      />
+      <EndowmentStatus status={submission} classes="mt-6" />
+      {/** render prompts */}
+      <Outlet />
     </div>
   );
 }
-
-export default withStepGuard(Dashboard);

@@ -4,6 +4,7 @@ import type {
   TaxDeductibleDocs,
 } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
+import type { UserV2 } from "types/auth";
 
 export interface Reg extends Omit<CompleteReg, keyof Init> {
   init: Init;
@@ -36,19 +37,19 @@ export type Step6Data = Data<
 >;
 
 /** contact details */
-type RegStep1 = {
+export type RegStep1 = {
   step: 1;
   data: Step1Data;
 };
 
 /** org details */
-type RegStep2 = {
+export type RegStep2 = {
   step: 2;
   data: Step2Data;
 };
 
 /** fsa inquiry */
-type RegStep3 = {
+export type RegStep3 = {
   step: 3;
   data: Step3Data;
 };
@@ -60,7 +61,7 @@ export type RegStep4 = {
 };
 
 /** banking */
-type RegStep5 = {
+export type RegStep5 = {
   step: 5;
   data: Step5Data;
 };
@@ -77,5 +78,10 @@ export type RegistrationState =
   | RegStep4
   | RegStep5
   | RegStep6;
+
+export interface Reg$IdData {
+  user: UserV2;
+  reg: RegistrationState;
+}
 
 export type RegStep = RegistrationState["step"];

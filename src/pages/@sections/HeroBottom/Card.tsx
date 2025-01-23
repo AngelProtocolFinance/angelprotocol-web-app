@@ -1,8 +1,8 @@
-import flying_character from "assets/images/flying-character.png";
+import { Link } from "@remix-run/react";
+import flying_character from "assets/images/flying-character.webp";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 import type { EndowmentCard } from "types/aws";
 
 const Card = (props: EndowmentCard) => {

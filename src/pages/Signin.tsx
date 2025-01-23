@@ -1,160 +1,161 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { Link, data, redirect, useLoaderData } from "@remix-run/react";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
 import googleIcon from "assets/icons/google.svg";
-import { AuthError, signIn, signInWithRedirect } from "aws-amplify/auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import LoaderRing from "components/LoaderRing";
-import Seo from "components/Seo";
 import { Separator } from "components/Separator";
-import { Form, Input, PasswordInput } from "components/form";
+import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
+import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import { getAuthRedirect } from "helpers";
-import { useRendered } from "hooks/use-rendered";
+import { metas } from "helpers/seo";
+import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { password, requiredString } from "schemas/string";
-import { useGetter } from "store/accessors";
-import type { OAuthState } from "types/auth";
-import { object } from "yup";
+import type { ActionData } from "types/action";
+import { isError, signIn } from "types/auth";
+import { cognito, oauth } from ".server/auth";
 
-type FormValues = {
-  email: string;
-  password: string;
+export const action: ActionFunction = async ({ request }) => {
+  try {
+    const { user } = await cognito.retrieve(request);
+    if (user) return redirect(appRoutes.marketplace);
+    const from = new URL(request.url);
+
+    const fv = await request.formData();
+    const redirectTo =
+      from.searchParams.get("redirect") || appRoutes.marketplace;
+    if (fv.get("intent") === "oauth") {
+      const origin = new URL(request.url);
+      return redirect(oauth.initiateUrl(redirectTo, origin.origin));
+    }
+
+    const payload = parseWithValibot(fv, { schema: signIn });
+
+    if (payload.status !== "success") return payload.reply();
+
+    const res = await cognito.initiate(
+      payload.value.email.toLowerCase(),
+      payload.value.password,
+      request.headers.get("Cookie")
+    );
+
+    if (isError(res)) {
+      if (res.__type === "UserNotConfirmedException") {
+        const to = new URL(from);
+        to.pathname = appRoutes.signup + "/confirm";
+        to.searchParams.set("email", payload.value.email);
+        to.searchParams.set("redirect", redirectTo);
+        return redirect(to.toString());
+      }
+
+      return payload.reply({ fieldErrors: { password: [res.message] } });
+    }
+
+    return redirect(redirectTo, { headers: { "Set-Cookie": res } });
+  } catch (err) {
+    console.error(err);
+    return data<ActionData<any>>({ __error: "Unknown error occured" }, 500);
+  }
 };
 
-export function Component() {
-  const navigate = useNavigate();
-  useRendered();
-  const { handleError, displayError } = useErrorContext();
-  const {
-    register,
-    formState: { isSubmitting, errors },
-    handleSubmit,
-  } = useForm<FormValues>({
-    resolver: yupResolver(
-      object({
-        email: requiredString.trim().strict().email("invalid email format"),
-        password: password,
-      })
-    ),
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user } = await cognito.retrieve(request);
+  if (user) return redirect(appRoutes.marketplace);
+  return new URL(request.url).searchParams.get("redirect") || "/";
+};
+
+export const meta: MetaFunction = () =>
+  metas({ title: "Login - Better Giving" });
+
+export { ErrorBoundary } from "components/error";
+export default function Signin() {
+  const { nav, data } = useRmxForm();
+  const formErr = useActionResult(data);
+  const to = useLoaderData<string>();
+
+  const [form, fields] = useForm({
+    shouldRevalidate: "onInput",
+    lastResult: formErr,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema: signIn });
+    },
   });
 
-  const { state: fromState } = useLocation();
-  const redirect = getAuthRedirect(fromState);
-  const currUser = useGetter((state) => state.auth.user);
-
-  if (currUser === "loading" || currUser?.isSigningOut) {
-    return (
-      <div className="grid content-start place-items-center py-14">
-        <LoaderRing thickness={12} classes="w-32 mt-8" />
-      </div>
-    );
-  }
-
-  if (currUser) {
-    return <Navigate to={redirect.path} state={redirect.data} replace />;
-  }
-
-  async function submit(fv: FormValues) {
-    try {
-      const { nextStep } = await signIn({
-        username: fv.email.toLowerCase(),
-        password: fv.password,
-      });
-
-      if (nextStep.signInStep === "CONFIRM_SIGN_UP") {
-        return navigate(
-          appRoutes.signup + `?confirm=${fv.email.toLowerCase()}`,
-          { state: fromState }
-        );
-      }
-      if (nextStep.signInStep !== "DONE")
-        throw `Unexpected next step: ${nextStep.signInStep}`;
-    } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
-      handleError(err, { context: "signing in" });
-    }
-  }
+  const isSubmitting = nav.state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
-      <Seo title="Login - Better Giving" />
-      <Form
-        className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-        disabled={isSubmitting}
-        onSubmit={handleSubmit(submit)}
-      >
+      <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Log in to support 18000+ causes or register and manage your nonprofit.
         </p>
-        <button
-          className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
-          type="button"
-          onClick={() => {
-            const routeState: OAuthState = {
-              pathname: redirect.path,
-              data: redirect.data,
-            };
-            signInWithRedirect({
-              provider: "Google",
-              customState: JSON.stringify(routeState),
-            });
-          }}
-        >
-          <Image src={googleIcon} height={18} width={18} />
-          <span className="normal-case font-heading font-semibold text-navy-d4">
-            Continue with Google
-          </span>
-        </button>
+        <RmxForm disabled={isSubmitting} method="POST" className="contents">
+          <button
+            name="intent"
+            value="oauth"
+            type="submit"
+            className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
+          >
+            <Image src={googleIcon} height={18} width={18} />
+            <span className="normal-case font-heading font-semibold text-navy-d4">
+              Continue with Google
+            </span>
+          </button>
+        </RmxForm>
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
-        <div className="grid gap-3">
+        <RmxForm
+          method="POST"
+          disabled={isSubmitting}
+          {...getFormProps(form)}
+          className="grid gap-3"
+        >
           <Input
-            {...register("email")}
+            {...getInputProps(fields.email, { type: "text" })}
             placeholder="Email address"
             autoComplete="username"
             icon={Mail}
-            error={errors.email?.message}
+            error={fields.email.errors?.[0]}
           />
           <PasswordInput
-            {...register("password")}
-            error={errors.password?.message}
+            {...getInputProps(fields.password, { type: "text" })}
+            error={fields.password.errors?.[0]}
             placeholder="Password"
           />
           <Link
-            to={appRoutes.reset_password}
+            to={appRoutes.reset_password + `?redirect=${to}`}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
-            state={fromState}
           >
             Forgot password?
           </Link>
-        </div>
+        </RmxForm>
         <button
+          disabled={isSubmitting}
+          form={form.id}
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full mt-4"
         >
-          {isSubmitting ? "Submitting..." : "Log in"}
+          Login
         </button>
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={appRoutes.signup}
-            state={fromState}
+            to={appRoutes.signup + `?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >
             Sign up
           </Link>
         </span>
-      </Form>
+      </div>
       <span className="text-xs sm:text-sm text-center w-80">
         By signing in, you agree to our{" "}
         <ExtLink

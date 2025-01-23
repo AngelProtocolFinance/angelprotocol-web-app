@@ -1,44 +1,25 @@
-import { adminRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useAdminContext } from "pages/Admin/Context";
-import { useNavigate } from "react-router-dom";
-import { useNewProgramMutation } from "services/aws/programs";
+import { useCachedLoaderData } from "api/cache";
+import { RmxForm, useRmxForm } from "components/form";
 import List from "./List";
+import type { LoaderData } from "./api";
+
+export { clientLoader } from "api/cache";
+export { loader, action } from "./api";
+export { ErrorBoundary } from "components/error";
 
 export default function Programs() {
-  const { id } = useAdminContext();
-  const navigate = useNavigate();
-  const { handleError } = useErrorContext();
-  const [createProgram, { isLoading }] = useNewProgramMutation();
-
-  async function handleCreateProgram() {
-    try {
-      const result = await createProgram({
-        title: "New program",
-        description: "program description",
-        endowId: id,
-        milestones: [],
-      }).unwrap();
-      navigate(`../${adminRoutes.program_editor}/${result.id}`);
-    } catch (err) {
-      handleError(err, { context: "creating program" });
-    }
-  }
+  const { nav } = useRmxForm();
+  const { programs } = useCachedLoaderData<LoaderData>();
 
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
-      <div className="flex items-center justify-between">
+      <RmxForm method="POST" className="flex items-center justify-between">
         <h2 className="text-[2rem] font-bold">Programs</h2>
-        <button
-          disabled={isLoading}
-          type="button"
-          onClick={handleCreateProgram}
-          className="btn-blue px-8 py-2"
-        >
-          {isLoading ? "Creating..." : "Create Program"}
+        <button disabled={nav.state !== "idle"} className="btn-blue px-8 py-2">
+          {nav.state === "submitting" ? "Creating..." : "Create Program"}
         </button>
-      </div>
-      <List />
+      </RmxForm>
+      <List programs={programs} />
     </div>
   );
 }

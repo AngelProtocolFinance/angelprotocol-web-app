@@ -1,20 +1,22 @@
-import QueryLoader from "components/QueryLoader";
+import type { Program } from "@better-giving/endowment";
+import { Link } from "@remix-run/react";
+import type { LinksFunction } from "@vercel/remix";
+import { useCachedLoaderData } from "api/cache";
+import { imgEditorStyles } from "components/ImgEditor";
+import { richTextStyles } from "components/RichText";
 import { adminRoutes } from "constants/routes";
 import { ChevronLeft } from "lucide-react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useProgramQuery } from "services/aws/programs";
-import { useAdminContext } from "../../Context";
 import Form from "./Form";
 
+export const links: LinksFunction = () => [
+  ...richTextStyles,
+  ...imgEditorStyles,
+];
+export { loader, action } from "./api";
+export { clientLoader } from "api/cache";
+export { ErrorBoundary } from "components/error";
 export default function ProgramEditor() {
-  const { programId = "" } = useParams();
-  const { id: endowId } = useAdminContext();
-  const programQuery = useProgramQuery(
-    { endowId, programId },
-    { skip: !programId }
-  );
-
+  const program = useCachedLoaderData<Program>();
   return (
     <>
       <Link
@@ -24,16 +26,7 @@ export default function ProgramEditor() {
         <ChevronLeft />
         <span>Back</span>
       </Link>
-      <QueryLoader
-        queryState={programQuery}
-        messages={{
-          loading: "Loading program",
-          error: "Failed to load program",
-        }}
-        classes={{ container: "mt-2" }}
-      >
-        {(p) => <Form {...p} />}
-      </QueryLoader>
+      <Form {...program} />
     </>
   );
 }

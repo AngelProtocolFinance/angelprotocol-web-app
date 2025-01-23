@@ -1,37 +1,44 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
+import { useSearchParams } from "@remix-run/react";
 import { DrawerIcon } from "components/Icon";
-import useDebouncer from "hooks/useDebouncer";
-import { forwardRef, useState } from "react";
+import debounce from "lodash/debounce";
+import { useState } from "react";
 import type { EndowmentOption } from "types/aws";
 import Options from "./Options";
 
 interface Props {
-  disabled?: boolean;
-  value: EndowmentOption;
-  onChange: (endowment: EndowmentOption) => void;
-  error?: string;
+  endow?: EndowmentOption;
+  isLoading?: boolean;
 }
 
-type El = HTMLInputElement;
-
-export const EndowmentSelector = forwardRef<El, Props>((props: Props, ref) => {
+export function EndowmentSelector({ endow, isLoading }: Props) {
+  const [params, setParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
-  const [debouncedQuery, isDebouncing] = useDebouncer(searchText, 500);
+
+  function handleSearchTextChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchText(event.target.value);
+  }
 
   return (
     <Combobox
-      disabled={props.disabled}
-      value={props.value}
-      onChange={(val) => val && props.onChange(val)}
+      disabled={isLoading}
+      value={endow}
+      onChange={(val) => {
+        if (!val) return;
+        const copy = new URLSearchParams(params);
+        copy.set("id", val.id.toString());
+        setParams(copy);
+      }}
       as="div"
       by="name"
       className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
     >
       <ComboboxInput
-        ref={ref}
         placeholder="Search for an organization..."
-        onChange={(event) => setSearchText(event.target.value)}
-        displayValue={(value: EndowmentOption) => value.name}
+        onChange={debounce(handleSearchTextChange, 500)}
+        displayValue={(value?: EndowmentOption) =>
+          value?.name ?? "Select an organization"
+        }
         className="pl-4 w-full"
       />
 
@@ -41,12 +48,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props: Props, ref) => {
         )}
       </ComboboxButton>
 
-      <Options searchText={debouncedQuery} isDebouncing={isDebouncing} />
-      {props.error && (
-        <span className="field-error" data-error>
-          {props.error}
-        </span>
-      )}
+      <Options searchText={searchText} />
     </Combobox>
   );
-});
+}

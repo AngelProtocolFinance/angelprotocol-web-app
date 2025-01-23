@@ -73,6 +73,19 @@ export const richTextContent = ({
   });
 };
 
+/** query loader */
+export interface QueryState<T> {
+  error?: unknown;
+  data?: T | undefined;
+  isLoading: boolean;
+  isFetching: boolean;
+  isError: boolean;
+}
+
+/** query loader */
+export function isQuery<T>(val: T | QueryState<T>): val is QueryState<T> {
+  return "isLoading" in (val as any) && "isFetching" in (val as any);
+}
 export type RichTextContent = v.InferOutput<ReturnType<typeof richTextContent>>;
 
 export const donateMethod = v.object({

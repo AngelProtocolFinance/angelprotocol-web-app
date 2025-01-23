@@ -1,7 +1,7 @@
+import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import { Folder } from "lucide-react";
-import { Link } from "react-router-dom";
 import type { BankingApplicationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
@@ -11,7 +11,7 @@ export default function Table({
   classes = "",
   disabled,
   isLoading,
-  hasMore,
+  nextPageKey,
   onLoadMore,
 }: TableProps) {
   return (
@@ -44,7 +44,7 @@ export default function Table({
               key={row.wiseRecipientID}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
-                hasMore ? "" : "first:rounded-bl last:rounded-br"
+                nextPageKey ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <>{new Date(row.dateCreated).toLocaleDateString()}</>
@@ -53,27 +53,27 @@ export default function Table({
               <td className="text-center">
                 <Status status={row.status} />
               </td>
-              <Link
+              <NavLink
                 to={appRoutes.banking_applications + `/${row.wiseRecipientID}`}
-                className="text-center w-full inline-block hover:text-blue-d1"
+                className="text-center w-full inline-block hover:text-blue-d1 [&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none"
               >
                 <Folder
                   size={22}
                   aria-label="bank statement file"
                   className="inline-block"
                 />
-              </Link>
+              </NavLink>
             </Cells>
           ))
           .concat(
-            hasMore ? (
+            nextPageKey ? (
               <td
                 colSpan={9}
                 key="load-more-btn"
                 className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
-                  onLoadMore={onLoadMore}
+                  onLoadMore={() => onLoadMore(nextPageKey)}
                   disabled={disabled}
                   isLoading={isLoading}
                 />

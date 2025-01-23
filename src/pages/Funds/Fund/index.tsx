@@ -1,10 +1,15 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
-import { skipToken } from "@reduxjs/toolkit/query";
-import fallback_banner from "assets/images/fallback-banner.png";
-import flying_character from "assets/images/flying-character.png";
+import { Link, NavLink, useLoaderData } from "@remix-run/react";
+import type {
+  HeadersFunction,
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
+import fallback_banner from "assets/images/bg-banner.webp";
+import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
-import { RichText } from "components/RichText";
-import Seo from "components/Seo";
+import { RichText, richTextStyles, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, statusFn } from "components/fundraiser";
@@ -12,40 +17,53 @@ import { Target, toTarget } from "components/target";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { unpack } from "helpers";
+import { metas } from "helpers/seo";
 import { ArrowLeft } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
-import { useFundQuery } from "services/aws/funds";
-import PageError from "./PageError";
-import Skeleton from "./Skeleton";
+import { parse, pipe, string, uuid } from "valibot";
 import { Share } from "./share";
 import { Video } from "./video";
+import { cacheControl, getFund } from ".server/fund";
 
-export function Component() {
-  const { fundId = "" } = useParams();
-  const { isLoading, isError, data } = useFundQuery(fundId || skipToken);
+export const loader: LoaderFunction = async ({ params }) => {
+  const id = parse(pipe(string(), uuid()), params.fundId);
+  const fund = await getFund(id);
+  if (!fund) throw new Response(null, { status: 404 });
+  return fund;
+};
 
-  if (isLoading) return <Skeleton />;
-  if (isError || !data) return <PageError />;
+export const headers: HeadersFunction = () => {
+  return { "Cache-Control": cacheControl };
+};
+
+export const links: LinksFunction = () => [...richTextStyles];
+
+export const meta: MetaFunction = ({ data, location: l }) => {
+  if (!data) return [];
+  const d = data as SingleFund;
+  return metas({
+    title: `${d.name} - ${APP_NAME}`,
+    description: toText(d.description).slice(0, 140),
+    name: d.name,
+    image: d.logo || flying_character,
+    url: `${BASE_URL}/${l.pathname}`,
+  });
+};
+export { ErrorBoundary } from "components/error";
+export default function Fund() {
+  const fund = useLoaderData() as SingleFund;
 
   const status = statusFn(
-    data.expiration ?? MAX_EXPIRATION,
-    data.active,
-    data.donation_total_usd
+    fund.expiration ?? MAX_EXPIRATION,
+    fund.active,
+    fund.donation_total_usd
   );
 
   return (
     <section className="grid pb-10">
-      <Seo
-        title={`${data.name} - ${APP_NAME}`}
-        description={data.description.slice(0, 140)}
-        name={data.name}
-        image={data.logo || flying_character}
-        url={`${BASE_URL}/profile/${data.id}`}
-      />
       <div
         className="relative w-full h-52 sm:h-72 bg-cover bg-center overlay"
         style={{
-          backgroundImage: `url('${data.banner || fallback_banner}')`,
+          backgroundImage: `url('${fund.banner || fallback_banner}')`,
         }}
       />
       <div className="padded-container grid md:grid-cols-[3fr_2fr] gap-4">
@@ -53,7 +71,7 @@ export function Component() {
           <div className="absolute -top-8 flex justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
-              to=".."
+              to="../funds"
             >
               <ArrowLeft size={16} />
               <span>Fundraisers</span>
@@ -75,11 +93,11 @@ export function Component() {
             <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
               <div className="mr-4 md:row-span-2 relative">
                 <Image
-                  src={data.logo || flying_character}
+                  src={fund.logo || flying_character}
                   width={60}
                   className="rounded-full object-cover bg-white"
                 />
-                {data.verified && (
+                {fund.verified && (
                   <VerifiedIcon
                     classes="absolute bottom-0 -right-2"
                     size={22}
@@ -88,20 +106,20 @@ export function Component() {
               </div>
 
               <h4 className="md:col-start-2 max-md:text-center font-heading font-bold text-2xl w-full break-words">
-                {data.name}
+                {fund.name}
               </h4>
-              <p className="pl-0.5">
+              <div className="pl-0.5">
                 <span className="text-sm font-medium text-navy-l3 mr-1">
                   by
                 </span>
                 <FundCreator
-                  name={data.creator_name}
-                  id={data.creator_id}
+                  name={fund.creator_name}
+                  id={fund.creator_id}
                   classes="font-medium text-navy inline"
                 />
-              </p>
+              </div>
               <DonateSection
-                {...data}
+                {...fund}
                 classes={{
                   container: "col-span-full md:hidden",
                   target: "mt-8",
@@ -110,7 +128,7 @@ export function Component() {
             </div>
             <RichText
               content={{
-                value: data.description ?? "",
+                value: fund.description ?? "",
               }}
               classes={{
                 field: "",
@@ -120,7 +138,7 @@ export function Component() {
             />
           </div>
 
-          {data.videos.map((v, idx) => (
+          {fund.videos.map((v, idx) => (
             <div
               key={idx}
               className="rounded-lg shadow-2xl shadow-black/10 mt-4"
@@ -131,7 +149,7 @@ export function Component() {
         </div>
         <div className="md:-mt-24 md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
           <DonateSection
-            {...data}
+            {...fund}
             classes={{ container: "max-md:hidden", link: "mb-4 order-first" }}
           />
 
@@ -139,7 +157,7 @@ export function Component() {
             Donations go to
           </p>
           <div className="grid gap-y-4 mb-4 grid-cols-[auto_1fr]">
-            {data.members.map((m) => (
+            {fund.members.map((m) => (
               <div
                 key={m.id}
                 className="grid items-center gap-x-2 grid-cols-subgrid col-span-2"
@@ -158,7 +176,7 @@ export function Component() {
               </div>
             ))}
           </div>
-          <Share recipientName={data.name} className="mt-auto" />
+          <Share recipientName={fund.name} className="mt-auto" />
         </div>
       </div>
     </section>
@@ -185,7 +203,7 @@ function DonateSection(props: IDonateSection) {
           classes={`${s.target} ${s.container} w-full`}
         />
       )}
-      <Link
+      <NavLink
         aria-disabled={
           !statusFn(
             props.expiration ?? MAX_EXPIRATION,
@@ -197,7 +215,7 @@ function DonateSection(props: IDonateSection) {
         className={`w-full btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >
         Donate now
-      </Link>
+      </NavLink>
     </>
   );
 }

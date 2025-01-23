@@ -1,24 +1,23 @@
 import { ErrorMessage } from "@hookform/error-message";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { wise } from "api/api";
 import {
   FileDropzone,
   type FileOutput,
   fileOutput,
 } from "components/FileDropzone";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
-import { APIs } from "constants/urls";
-import { useErrorContext } from "contexts/ErrorContext";
-import { isEmpty, logger } from "helpers";
+import { errorPrompt } from "contexts/ErrorContext";
+import { logger } from "helpers";
+import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
-import {
-  useCreateRecipientMutation,
-  useNewRequirementsMutation,
-} from "services/aws/wise";
-import type { Group, ValidationContent } from "types/aws";
+import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";
 import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
+import { useRequirements } from "../use-requirements";
 import Form from "./Form";
+import { createRecipient } from "./create-recipient";
 
 type Props = {
   fields: Group[];
@@ -56,9 +55,10 @@ export default function RecipientDetailsForm({
     getFieldState,
   } = useForm<FV>({ disabled, shouldUnregister: true });
 
-  const { handleError, displayError } = useErrorContext();
-  const [updateRequirements] = useNewRequirementsMutation();
-  const [createRecipient] = useCreateRecipientMutation();
+  const [prompt, setPrompt] = useState<IPromptV2>();
+  const { updateRequirements } = useRequirements(
+    !amount ? null : { amount, currency }
+  );
 
   const { field: bankStatement } = useController({
     control,
@@ -107,20 +107,27 @@ export default function RecipientDetailsForm({
             details,
           });
 
-          if (res.data) return await onSubmit(res.data, bankStatement);
+          if (res.ok) {
+            const data: V1RecipientAccount = await res.json();
+            return await onSubmit(data, bankStatement);
+          }
 
           //ERROR handling
-          const error = res.error as FetchBaseQueryError;
-          if (error.status !== 422) throw res.error;
+          if (res.status !== 422) throw res;
 
           //only handle 422
-          const content = error.data as ValidationContent;
+          const content: ValidationContent = await res.json();
 
           //filter "NOT_VALID"
           const _errs = content.errors;
           const validations = _errs.filter((err) => err.code === "NOT_VALID");
 
-          if (isEmpty(validations)) return displayError(_errs[0].message);
+          if (validations.length === 0) {
+            return setPrompt({
+              type: "error",
+              children: _errs[0].message,
+            });
+          }
 
           //SET field errors
           for (const v of validations) {
@@ -133,7 +140,8 @@ export default function RecipientDetailsForm({
             //wait a bit for `isSubmitting:false`, as disabled fields can't be focused
           }, 50);
         } catch (err) {
-          handleError(err, { context: "validating" });
+          const prmpt = errorPrompt(err, { context: "validating" });
+          setPrompt(prmpt);
         }
       })}
       className="grid gap-5 text-navy-d4"
@@ -259,10 +267,11 @@ export default function RecipientDetailsForm({
                         try {
                           const { params, url } = f.validationAsync!;
                           const path = new URL(url).pathname;
-                          const proxy = `${APIs.aws}/v1/wise-proxy/${path}`;
-                          const res = await fetch(
-                            `${proxy}?${params[0].key}=${v}`
-                          );
+                          const res = await wise.get(path, {
+                            throwHttpErrors: false,
+                            searchParams: { [params[0].key]: v },
+                          });
+
                           return res.ok || "invalid";
                         } catch (err) {
                           logger.error(err);
@@ -331,6 +340,7 @@ export default function RecipientDetailsForm({
         disabled={disabled || bankStatement.value === "loading"}
         isSubmitting={isSubmitting}
       />
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </Form>
   );
 }

@@ -1,10 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Provider } from "react-redux";
 import { mockTokens } from "services/apes/mock";
-import { mockPrograms } from "services/aws/programs";
-import { store } from "store/store";
+import { mockPrograms } from "services/aws/programs/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
+import { testDonateData } from "../../__tests__/test-data";
 import type { CryptoFormStep, Init } from "../../types";
 import Form from "./Form";
 
@@ -15,16 +14,20 @@ vi.mock("../../Context", () => ({
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
 
-const _Form: typeof Form = (props) => (
-  <Provider store={store}>{<Form {...props} />}</Provider>
-);
+vi.mock("@remix-run/react", async () => {
+  const actual = await vi.importActual("@remix-run/react");
+  return {
+    ...actual,
+    useLoaderData: () => testDonateData,
+  };
+});
 
 describe("Crypto form: initial load", () => {
   afterAll(() => {
     vi.restoreAllMocks();
   });
 
-  test("initial form state: no persisted details", () => {
+  test("initial form state: no persisted details", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
@@ -36,7 +39,12 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
+
+    waitFor(() => {
+      const programSelector = screen.queryByLabelText(/select program/i);
+      expect(programSelector).toBeNull();
+    });
   });
 
   test("initial form state: program donations not allowed", () => {
@@ -51,11 +59,13 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
+    render(<Form {...state} />);
+    waitFor(() => {
+      const programSelector = screen.queryByRole("button", {
+        name: /general donation/i,
+      });
+      expect(programSelector).toBeNull();
     });
-    expect(programSelector).toBeNull();
   });
 
   test("submit form with initial/persisted data", async () => {
@@ -76,15 +86,13 @@ describe("Crypto form: initial load", () => {
         program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
 
     const amountInput = screen.getByDisplayValue(amount);
     expect(amountInput).toBeInTheDocument();
 
-    const programSelector = screen.getByRole("button", {
-      name: /program 1/i,
-    });
-    expect(programSelector).toBeInTheDocument();
+    const selectedProgram = screen.getByText(/program 1/i);
+    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
@@ -104,7 +112,7 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
@@ -128,7 +136,7 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
 
     //submit empty form
     const continueBtn = screen.getByRole("button", { name: /continue/i });

@@ -1,4 +1,4 @@
-import type { NavLinkProps } from "react-router-dom";
+import type { NavLinkProps } from "@remix-run/react";
 
 export function createNavLinkStyler(
   className: string,

@@ -1,34 +1,19 @@
-import { skipToken } from "@reduxjs/toolkit/query";
-import ContentLoader from "components/ContentLoader";
-import { ErrorStatus } from "components/Status";
+import { Outlet } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { CircleAlert } from "lucide-react";
-import { useEndowBalanceQuery } from "services/apes";
-import { useEndowmentQuery } from "services/aws/aws";
-import { useAdminContext } from "../../Context";
 import { Loaded } from "./Loaded";
+import type { DashboardData } from "./api";
 import { monthPeriod } from "./monthPeriod";
+export { clientLoader } from "api/cache";
 
+export {
+  dashboardData as loader,
+  endowUpdateAction as action,
+} from "./api";
+
+export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const { id } = useAdminContext();
-  const balQuery = useEndowBalanceQuery(id || skipToken);
-  const endowQuery = useEndowmentQuery({
-    id,
-    fields: ["allocation"],
-  });
-
-  if (balQuery.isLoading || endowQuery.isLoading) {
-    return <LoaderSkeleton />;
-  }
-
-  if (
-    balQuery.isError ||
-    !balQuery.data ||
-    endowQuery.isError ||
-    !endowQuery.data
-  ) {
-    return <ErrorStatus>Failed to get nonprofit organisation info</ErrorStatus>;
-  }
-
+  const { alloc, bal } = useCachedLoaderData<DashboardData>();
   const period = monthPeriod();
 
   return (
@@ -40,26 +25,10 @@ export default function Dashboard() {
           Pending transactions are now locked for processing
         </div>
       )}
-      <Loaded
-        balances={balQuery.data}
-        allocation={
-          endowQuery.data.allocation ?? { cash: 0, liq: 100, lock: 0 }
-        }
-      />
-    </div>
-  );
-}
 
-function LoaderSkeleton() {
-  return (
-    <div className="grid gap-4 @lg:grid-cols-2">
-      <ContentLoader className="h-40" />
-      <ContentLoader className="h-40" />
-      <ContentLoader className="h-40" />
-      <ContentLoader className="h-2 col-span-full" />
-
-      <ContentLoader className="h-60 col-span-full" />
-      <ContentLoader className="h-60 col-span-full" />
+      <Loaded balances={bal} allocation={alloc} />
+      {/** prompts render here */}
+      <Outlet />
     </div>
   );
 }

@@ -1,13 +1,15 @@
-import Seo from "components/Seo";
-import { adminRoutes } from "constants/routes";
+import { useCachedLoaderData } from "api/cache";
+import type { DonationsPage } from "types/aws";
 import DonationsTable from "./DonationsTable";
-
+export { ErrorBoundary } from "components/error";
+export { loader } from "./api";
+export { clientLoader } from "api/cache";
 export default function Donations() {
+  const page1 = useCachedLoaderData() as DonationsPage;
   return (
     <div>
-      <Seo title="Donations" url={adminRoutes.donations} />
       <h2 className="text-[2rem] font-bold mb-4">Donations</h2>
-      <DonationsTable />
+      <DonationsTable firstPage={page1} />
     </div>
   );
 }

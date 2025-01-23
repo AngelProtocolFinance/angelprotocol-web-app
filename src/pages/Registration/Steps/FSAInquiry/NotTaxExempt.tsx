@@ -1,19 +1,18 @@
 import type { Init } from "@better-giving/registration/models";
+import type { Update } from "@better-giving/registration/update";
+import { Link, useFetcher, useNavigate } from "@remix-run/react";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
-import { useErrorContext } from "contexts/ErrorContext";
-import { Link, useNavigate } from "react-router-dom";
-import { useUpdateRegMutation } from "services/aws/registration";
 import { steps } from "../../routes";
 
 interface Props extends Init {
   country: string;
   isFsaPrev?: boolean;
 }
-export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
-  const [updateReg, { isLoading }] = useUpdateRegMutation();
-  const { handleError } = useErrorContext();
+export function NotTaxExempt({ country, isFsaPrev }: Props) {
+  const fetcher = useFetcher();
   const navigate = useNavigate();
+  const isLoading = fetcher.state !== "idle";
 
   return (
     <div className="w-full">
@@ -32,27 +31,27 @@ export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
         <Link
           aria-disabled={isLoading}
           to={`../${steps.orgDetails}`}
-          state={init}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
         </Link>
         <button
           onClick={async () => {
-            try {
-              if (isFsaPrev) {
-                return navigate(`../${steps.docs}`, { state: init });
-              }
-              await updateReg({
-                id: init.id,
+            if (isFsaPrev) {
+              return navigate(`../${steps.docs}`);
+            }
+
+            fetcher.submit(
+              {
                 type: "fsa-inq",
                 irs501c3: false,
-              }).unwrap();
-
-              navigate(`../${steps.docs}`, { state: init });
-            } catch (err) {
-              handleError(err, { context: "updating registration" });
-            }
+              } satisfies Update,
+              {
+                action: ".",
+                method: "PATCH",
+                encType: "application/json",
+              }
+            );
           }}
           disabled={isLoading}
           type="button"

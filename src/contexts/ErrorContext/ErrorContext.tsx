@@ -1,8 +1,16 @@
-import Prompt from "components/Prompt";
 import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
 import type { ReactNode } from "react";
-import { useModalContext } from "../ModalContext";
+
+type Generic = {
+  /**
+   * context in present participle
+   * @example sending message
+   * @example loading resouce
+   */
+  context?: string;
+};
+type DisplayType = "parsed" | Generic | { custom: ReactNode };
 
 function parseError(error: unknown): string | undefined {
   if (typeof error === "string") return error;
@@ -16,48 +24,19 @@ function parseError(error: unknown): string | undefined {
   if (error instanceof Error) return error.message;
 }
 
-export function useErrorContext() {
-  const { showModal } = useModalContext();
-
-  /**
-   * @description for expected errors
-   * @param message - user can do something about
-   */
-  function displayError(message: ReactNode) {
-    showModal(Prompt, { type: "error", children: message });
-  }
-
-  type Generic = {
-    /**
-     * context in present participle
-     * @example sending message
-     * @example loading resouce
-     */
-    context?: string;
+export const errorPrompt = (error: unknown, display?: DisplayType) => {
+  logger.error(error);
+  const disp = display || {};
+  return {
+    type: "error" as const,
+    children:
+      disp === "parsed"
+        ? parseError(error)
+        : "custom" in disp
+          ? disp.custom
+          : genericMsg(disp.context),
   };
-  type DisplayType = "parsed" | Generic | { custom: ReactNode };
-
-  /**
-   * @description for unexpected errors
-   * @param error - unknown error occured
-   * @param display - error info shown to user
-   */
-  const handleError = (error: unknown, display?: DisplayType) => {
-    const disp = display || {};
-    showModal(Prompt, {
-      type: "error",
-      children:
-        disp === "parsed"
-          ? parseError(error)
-          : "custom" in disp
-            ? disp.custom
-            : genericMsg(disp.context),
-    });
-    logger.error(error);
-  };
-
-  return { handleError, displayError };
-}
+};
 
 const genericMsg = (context?: string) =>
   `An unexpected error occurred${

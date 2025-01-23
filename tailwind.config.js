@@ -2,7 +2,7 @@
 const colors = require("tailwindcss/colors");
 module.exports = {
   darkMode: "class",
-  content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx,html}"],
   theme: {
     colors: {
       transparent: colors.transparent,
@@ -117,9 +117,9 @@ module.exports = {
         "4.5xl": "2.625rem",
       },
       fontFamily: {
-        heading: ["Quicksand", "serif"],
-        body: ["DM Sans", "sans-serif"],
-        gochi: ["Gochi Hand", "serif"],
+        heading: ["Quicksand Variable", "serif"],
+        body: ["DM Sans Variable", "sans-serif"],
+        gochi: ["Gochi Hand", "cursive"],
       },
       width: {
         "3/4": "75%",

@@ -3,9 +3,9 @@ import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
 import { isEmpty } from "helpers";
 import { memo, useState } from "react";
-import { useRequirementsQuery } from "services/aws/wise";
 import type { IFormButtons, OnSubmit } from "../types";
 import RecipientDetailsForm from "./RecipientDetailsForm";
+import { useRequirements } from "./use-requirements";
 
 type Props = {
   disabled: boolean;
@@ -22,14 +22,8 @@ function RecipientDetails({
   FormButtons,
   onSubmit,
 }: Props) {
-  const { data, isLoading, isError, isFetching } = useRequirementsQuery(
-    {
-      amount,
-      currency,
-    },
-    { skip: !amount }
-  );
-
+  const { req } = useRequirements(!amount ? null : { amount, currency });
+  const { data, isLoading, isValidating, error } = req;
   const requirements = data?.requirements || [];
   const [selectedIdx, setSelectedIdx] = useState(0);
 
@@ -44,7 +38,7 @@ function RecipientDetails({
     );
   }
 
-  if (isEmpty(requirements) || isError) {
+  if (isEmpty(requirements) || error) {
     return (
       <Info classes="text-sm">
         Target currency <span className="font-bold">{currency}</span> is not
@@ -55,7 +49,7 @@ function RecipientDetails({
 
   return (
     <>
-      {isFetching && (
+      {isValidating && (
         <LoadingStatus classes="text-blue-d1 text-xs">
           Refreshing requirements..
         </LoadingStatus>
@@ -66,14 +60,14 @@ function RecipientDetails({
           value={selectedIdx}
           onChange={(value) => setSelectedIdx(+value)}
           options={requirements.map((x, i) => ({ label: x.title, value: i }))}
-          disabled={disabled || isFetching}
+          disabled={disabled || isValidating}
           classes={{ options: "text-sm" }}
         />
       </div>
 
       <RecipientDetailsForm
-        disabled={disabled || isFetching}
-        quoteId={data?.quoteId ?? ""}
+        disabled={disabled}
+        quoteId={req.data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
         currency={currency}
         amount={amount}

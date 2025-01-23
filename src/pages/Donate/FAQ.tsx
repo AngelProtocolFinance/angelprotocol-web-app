@@ -3,11 +3,11 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
+import { Link } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 
 interface Props {
   classes?: string;

@@ -1,7 +1,7 @@
+import { Link } from "@remix-run/react";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
-import fiscalsponsorshipImg from "./images/fiscal-sponsorship.png";
+import fiscalsponsorshipImg from "./images/fiscal-sponsorship.webp";
 
 export default function FiscalSponsorship({ className = "" }) {
   return (

@@ -1,31 +1,27 @@
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSearchParams } from "@remix-run/react";
 import { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
-import { cleanObject } from "helpers/cleanObject";
 import { weeksAgo } from "helpers/weeksAgo";
 import { Filter as FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import type { DonationsQueryParams } from "types/aws";
 import Form from "./Form";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
-  setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
-  asker: string;
   isDisabled: boolean;
 };
 
-export default function Filter({
-  setParams,
-  classes = "",
-  isDisabled,
-  asker,
-}: Props) {
+export default function Filter({ classes = "", isDisabled }: Props) {
+  const [params, setParams] = useSearchParams();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+  const start = params.get("startDate");
+  const end = params.get("endDate");
 
   const methods = useForm<FV>({
     mode: "onChange",
@@ -33,36 +29,37 @@ export default function Filter({
     resolver: yupResolver(schema),
     defaultValues: {
       //set default value so empty can be tagged as invalid
-      startDate: dateToFormFormat(weeksAgo("now", 5)),
-      endDate: dateToFormFormat(new Date()),
+      startDate: dateToFormFormat(start ? new Date(start) : weeksAgo("now", 5)),
+      endDate: dateToFormFormat(end ? new Date(end) : new Date()),
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
     },
   });
 
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit } = methods;
 
   async function submit(data: FV) {
-    setParams((prev) => ({
-      asker,
-      status: prev.status,
-      ...cleanObject({
-        startDate: data.startDate ? new Date(data.startDate).toISOString() : "",
-        endDate: data.endDate ? new Date(data.endDate).toISOString() : "",
-        viaId: data.network.value,
-        symbol: data.currency.value,
-      }),
-    }));
-    buttonRef.current?.click();
+    const p = new URLSearchParams(params);
+    if (data.startDate) {
+      p.set("startDate", new Date(data.startDate).toISOString());
+    } else {
+      p.delete("startDate");
+    }
+
+    if (data.endDate) {
+      p.set("endDate", new Date(data.endDate).toISOString());
+    } else {
+      p.delete("endDate");
+    }
+
+    setParams(p);
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
-    reset();
-    setParams((prev) => ({
-      asker,
-      status: prev.status,
-    }));
-    buttonRef.current?.click();
+    const p = new URLSearchParams(params);
+    p.delete("startDate");
+    p.delete("endDate");
+    setParams(p);
   };
   return (
     <Popover className={`${classes} flex relative items-center`}>

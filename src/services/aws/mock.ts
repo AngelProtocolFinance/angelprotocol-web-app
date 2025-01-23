@@ -1,14 +1,14 @@
 import type { EndowsPage } from "@better-giving/endowment";
+import { ver } from "api/api";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
 import type { Crypto } from "types/aws";
-import { version as v } from "../helpers";
 
 export const handlers = [
   http.post(APIs.aws + "/v2/file/upload", () => {
     return HttpResponse.json();
   }),
-  http.get(APIs.aws + `/${v(1)}/cloudsearch-nonprofits`, () => {
+  http.get("api/npos", () => {
     const data: EndowsPage = {
       items: [],
       numPages: 1,
@@ -16,7 +16,7 @@ export const handlers = [
     };
     return HttpResponse.json(data);
   }),
-  http.get(APIs.aws + `/${v(1)}/crypto/v1/min-amount`, ({ request }) => {
+  http.get(APIs.aws + `/${ver(1)}/crypto/v1/min-amount`, ({ request }) => {
     const url = new URL(request.url);
     const data: Required<Crypto.Estimate> = {
       min_amount: 1,

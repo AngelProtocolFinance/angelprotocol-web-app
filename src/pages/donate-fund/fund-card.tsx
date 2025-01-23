@@ -1,8 +1,8 @@
+import { Link } from "@remix-run/react";
 import Image from "components/Image";
-import { parseContent, toText } from "components/RichText";
+import { toText } from "components/RichText";
 import { Target } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 
 type Props = {
   id: string;
@@ -30,7 +30,7 @@ export function FundCard({ classes = "", ...props }: Props) {
         </Link>
         {props.tagline && (
           <p className="text-navy-l1 text-sm w-full line-clamp-2">
-            {toText(parseContent(props.tagline))}
+            {toText(props.tagline)}
           </p>
         )}
       </div>

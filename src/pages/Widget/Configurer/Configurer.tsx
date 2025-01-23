@@ -1,3 +1,4 @@
+import type { Endow } from "@better-giving/endowment";
 import { incrementLabelMaxChars } from "@better-giving/endowment/schema";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
@@ -23,16 +24,16 @@ import type { FormValues } from "./types";
 
 type Props = {
   classes?: string;
+  endow?: Endow;
   config: WidgetConfig;
   setConfig: Dispatch<SetStateAction<WidgetConfig>>;
-  programDonationAllowed?: boolean;
 };
 
 export default function Configurer({
   classes = "",
   config,
+  endow,
   setConfig,
-  programDonationAllowed,
 }: Props) {
   const {
     handleSubmit,
@@ -63,11 +64,6 @@ export default function Configurer({
     name: "increments",
   });
 
-  const { field: endowment } = useController({
-    control: control,
-    name: "endowment",
-  });
-
   const isDescriptionTextShown = watch("isDescriptionTextShown");
   const isTitleShown = watch("isTitleShown");
   const incs = watch("increments");
@@ -94,18 +90,14 @@ export default function Configurer({
         <label className="mt-2 mb-2 font-medium text-base">
           Nonprofit name:
         </label>
-        <EndowmentSelector
-          onChange={endowment.onChange}
-          value={endowment.value}
-          error={errors.endowment?.id?.message}
-        />
+        <EndowmentSelector endow={endow} />
 
-        {programDonationAllowed && (
+        {endow && (endow?.progDonationsAllowed ?? true) && (
           <ProgramSelector
+            endowId={endow?.id}
             classes={{ container: "mt-6", label: "text-base font-medium" }}
             onChange={program.onChange}
             program={program.value}
-            endowId={config.endowment.id}
           />
         )}
 

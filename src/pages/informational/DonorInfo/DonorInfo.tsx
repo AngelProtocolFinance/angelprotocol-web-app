@@ -1,22 +1,26 @@
-import Seo from "components/Seo";
+// import { useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
 import { benefits } from "content/benefits";
+import { metas } from "helpers/seo";
+// import type { EndowmentCard } from "types/aws";
 import Benefits from "../../@sections/Benefits";
-import HeroBottom from "../../@sections/HeroBottom";
+// import HeroBottom from "../../@sections/HeroBottom";
 import BottomCta from "./BottomCta";
 import DonationFormInfo from "./DonationFormInfo";
 import Hero from "./Hero";
 
-export function DonorInfo({ className = "" }) {
+export const meta: MetaFunction = () =>
+  metas({
+    title: "For Donors",
+    description:
+      "Easily support grassroots organizations all over the world with card, crypto, stock, and DAF gifts that keep on giving. As a nonprofit, we charge no platform fees.",
+  });
+export default function DonorInfo({ className = "" }) {
+  // const endows = useLoaderData() as EndowmentCard[];
   return (
     <main className={`${className} grid @container`}>
-      <Seo
-        title="For Donors"
-        description="Easily support grassroots organizations all over the world with card,
-          crypto, stock, and DAF gifts that keep on giving. As a nonprofit, we
-          charge no platform fees."
-      />
       <Hero className="padded-container px-10" />
-      <HeroBottom className="mb-10 mt-20" />
+      {/* <HeroBottom className="mb-10 mt-20" endowments={endows} /> */}
       <DonationFormInfo className="mt-20 padded-container" />
       <Benefits
         className="mt-56 padded-container px-10"

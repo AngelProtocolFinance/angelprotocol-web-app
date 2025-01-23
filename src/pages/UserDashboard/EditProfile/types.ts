@@ -1,6 +1,4 @@
 import { imgOutput } from "components/ImgEditor";
-import type { AuthenticatedUser } from "types/auth";
-import type { DetailedCurrency } from "types/components";
 import * as v from "valibot";
 
 export const schema = v.object({
@@ -16,9 +14,3 @@ export const schema = v.object({
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}
-
-export type Props = {
-  currencies: DetailedCurrency[];
-  defaultCurr?: DetailedCurrency;
-  user: AuthenticatedUser;
-};

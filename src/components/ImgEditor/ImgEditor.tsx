@@ -4,7 +4,7 @@ import { uploadFile } from "helpers/uploadFile";
 import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
-import { type DropzoneOptions, useDropzone } from "react-dropzone";
+import { type DropzoneOptions, useDropzone } from "react-dropzone-esm";
 import {
   type FieldValues,
   type Path,
@@ -112,9 +112,10 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
       >
         {!preview ? (
           <div
-            className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
+            className="absolute-center relative grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
             tabIndex={-1}
           >
+            <input {...getInputProps()} className="absolute inset-0" />
             <ArrowUpFromLine size={22} className="mb-[1.125rem]" />
             <p className="font-semibold mb-1">Upload file</p>
             <span className="text-center">

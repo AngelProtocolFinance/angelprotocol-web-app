@@ -1,7 +1,7 @@
+import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 
 export default function BottomCta({ className = "" }) {
   return (

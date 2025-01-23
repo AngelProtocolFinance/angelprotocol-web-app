@@ -1,34 +1,18 @@
-import type { Endow } from "@better-giving/endowment";
+import { useLoaderData } from "@remix-run/react";
 import { fill } from "components/DonateMethods";
-import QueryLoader from "components/QueryLoader";
-import Seo from "components/Seo";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
-import { APP_NAME, BASE_URL } from "constants/env";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
 import type { WidgetConfig } from "types/widget";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
+import type { WidgetData } from "./loader";
 
-export function Widget({ endowId = 0 }: { endowId?: number }) {
-  const queryState = useEndowment(endowId, undefined, {
-    skip: !endowId,
-  });
+export default function Widget() {
+  const { endow, origin } = useLoaderData<WidgetData>();
 
-  return (
-    <QueryLoader queryState={queryState} dataRequired={false}>
-      {(endowment) => <Content endowment={endowment} />}
-    </QueryLoader>
-  );
-}
-
-function Content({ endowment }: { endowment?: Endow }) {
-  const location = useLocation();
-
-  const _methods = endowment?.donateMethods;
+  const _methods = endow?.donateMethods;
   const filled = fill(
     _methods?.concat(
       _methods.includes("daf") && !_methods.includes("stripe") ? ["stripe"] : []
@@ -36,10 +20,6 @@ function Content({ endowment }: { endowment?: Endow }) {
   );
 
   const [state, setState] = useState<WidgetConfig>({
-    endowment: endowment || {
-      id: 0,
-      name: "this nonprofit",
-    },
     isDescriptionTextShown: true,
     isTitleShown: true,
     methods: filled,
@@ -54,15 +34,6 @@ function Content({ endowment }: { endowment?: Endow }) {
 
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
-      <Seo
-        title={`Donation Form Configuration${
-          endowment?.id ? ` for nonprofit ${endowment?.id}` : ""
-        } - ${APP_NAME}`}
-        description={endowment?.tagline?.slice(0, 140)}
-        name={endowment?.name}
-        image={endowment?.logo}
-        url={`${BASE_URL}${location.pathname}`}
-      />
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!
       </h1>
@@ -71,14 +42,12 @@ function Content({ endowment }: { endowment?: Endow }) {
         website and you're ready to go!
       </p>
       <div className="w-full">
-        <Configurer
-          config={state}
-          setConfig={setState}
-          programDonationAllowed={endowment?.progDonationsAllowed}
-        />
-        <Snippet config={state} classes="mt-10" />
+        <Configurer config={state} setConfig={setState} endow={endow} />
+        <Snippet origin={origin} config={state} classes="mt-10" endow={endow} />
       </div>
+
       <Preview
+        endow={endow}
         config={state}
         classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10"
       />

@@ -1,3 +1,4 @@
+import type { Endow } from "@better-giving/endowment";
 import Copier from "components/Copier";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/cleanObject";
@@ -6,14 +7,20 @@ import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 type Props = {
   classes?: string;
   config: WidgetConfig;
+  endow?: Endow;
+  origin: string;
 };
-export default function Snippet({ classes = "", config }: Props) {
-  const widgetURL = widgetURLfn(config);
-  const iframeURL =
-    config.endowment.id !== 0
-      ? /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
-        `<iframe src="${widgetURL}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`
-      : "Please select organization";
+export default function Snippet({
+  classes = "",
+  config,
+  endow,
+  origin,
+}: Props) {
+  const widgetURL = widgetURLfn(config, origin, endow?.id);
+  const iframeURL = endow?.id
+    ? /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
+      `<iframe src="${widgetURL}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`
+    : "Please select organization";
 
   return (
     <div className={classes}>
@@ -34,7 +41,7 @@ export default function Snippet({ classes = "", config }: Props) {
 }
 
 //create URLSearchParams from config
-const widgetURLfn = (config: WidgetConfig) => {
+const widgetURLfn = (config: WidgetConfig, origin: string, endowId = 0) => {
   const params: Required<WidgetURLSearchParams> = {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     methods: config.methods
@@ -53,10 +60,10 @@ const widgetURLfn = (config: WidgetConfig) => {
       .join(","),
   };
   return (
-    window.location.origin +
+    origin +
     appRoutes.donate_widget +
     "/" +
-    config.endowment.id +
+    endowId +
     "?" +
     new URLSearchParams(cleanObject(params)).toString()
   );

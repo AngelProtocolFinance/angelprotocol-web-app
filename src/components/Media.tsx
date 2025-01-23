@@ -1,14 +1,21 @@
-import { useMediaQuery } from "services/wordpress";
+import { wp } from "api/api";
+import useSWR from "swr/immutable";
 import type { Wordpress } from "types/wordpress";
 import Image from "./Image";
 
 type Props = { id: number; classes?: string; sizes: string };
 
 export default function Media(props: Props) {
-  const { data: media, isLoading, isError } = useMediaQuery(props.id);
+  const {
+    data: media,
+    isLoading,
+    error,
+  } = useSWR(props.id.toString(), (id) => {
+    return wp.get<Wordpress.Media>(`media/${id}`).json();
+  });
 
-  if (!media || isLoading || isError) {
-    return <Image className={props.classes} />;
+  if (!media || isLoading || error) {
+    return <Image className={props.classes} alt="placeholder" />;
   }
 
   const { media_details, alt_text, guid } = media;
@@ -20,7 +27,7 @@ export default function Media(props: Props) {
     .join(", ");
 
   return (
-    <Image
+    <img
       alt={alt_text}
       src={guid.rendered}
       srcSet={srcSet}
@@ -28,6 +35,7 @@ export default function Media(props: Props) {
       width={width}
       height={height}
       className={props.classes}
+      loading="lazy"
     />
   );
 }

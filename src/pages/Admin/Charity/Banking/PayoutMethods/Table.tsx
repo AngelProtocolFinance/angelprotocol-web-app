@@ -1,6 +1,6 @@
+import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
 import { CircleCheck, FolderIcon } from "lucide-react";
-import { Link } from "react-router-dom";
 import type { BankingApplicationStatus, PayoutMethod } from "types/aws";
 
 type Props = {
@@ -49,16 +49,16 @@ export default function Table({ methods, classes = "" }: Props) {
                 <CircleCheck size={18} className="text-green-d1" />
               )}
             </>
-            <Link
+            <NavLink
               to={row.wiseRecipientID}
-              className="text-center w-full inline-block hover:text-blue-d1"
+              className="[&:is(.pending)]:text-gray text-center w-full inline-block hover:text-blue-d1"
             >
               <FolderIcon
                 size={22}
                 aria-label="bank statement file"
                 className="inline-block"
               />
-            </Link>
+            </NavLink>
           </Cells>
         ))}
       </TableSection>

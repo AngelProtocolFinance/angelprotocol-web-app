@@ -1,63 +1,105 @@
-import { categories } from "constants/unsdgs";
+import type { UNSDG_NUM } from "@better-giving/registration/models";
+import { useSearchParams } from "@remix-run/react";
+import { categories, sdgGroups } from "constants/unsdgs";
 import { CircleX } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { useMarketplaceContext } from "./Context";
+import { toParsed, toRaw } from "./helpers";
 
 export default function ActiveFilters() {
-  const { state, update } = useMarketplaceContext();
-  const { endow_designation, sdgGroups, countries, kyc_only, verified } = state;
+  const [params, setParams] = useSearchParams();
+  const parsed = toParsed(params);
 
-  const endowDesignations = endow_designation.map((designation) => (
-    <Item
-      key={designation}
-      onRemove={() =>
-        update({
-          endow_designation: endow_designation.filter(
-            (val) => val !== designation
-          ),
-        })
-      }
-    >
-      {designation}
-    </Item>
-  ));
+  const endowDesignations = (parsed.endow_designation || []).map(
+    (designation) => (
+      <Item
+        key={designation}
+        onRemove={() =>
+          setParams(
+            toRaw({
+              ...parsed,
+              endow_designation: parsed.endow_designation?.filter(
+                (val) => val !== designation
+              ),
+            }),
+            { replace: true, preventScrollReset: true }
+          )
+        }
+      >
+        {designation}
+      </Item>
+    )
+  );
 
-  const sdgFilters = sdgGroups.map((groupNum) => (
+  const activeGroups = sdgGroups
+    .filter(([, sdgs]) =>
+      sdgs.every((sdg) => (parsed.sdgs || []).includes(sdg))
+    )
+    .map(([g]) => g);
+
+  const sdgFilters = activeGroups.map((groupNum) => (
     <Item
       key={groupNum}
       onRemove={() =>
-        update({ sdgGroups: sdgGroups.filter((s) => s !== groupNum) })
+        setParams(
+          toRaw({
+            ...parsed,
+            sdgs: parsed.sdgs?.filter(
+              (x) => !categories[groupNum].sdgs.includes(x as UNSDG_NUM)
+            ),
+          }),
+          { replace: true, preventScrollReset: true }
+        )
       }
     >
       {categories[groupNum].name}
     </Item>
   ));
 
-  const countryFilters = countries.map((country) => (
+  const countryFilters = (parsed.countries || []).map((country) => (
     <Item
       key={country}
       onRemove={() =>
-        update({ countries: countries.filter((c) => c !== country) })
+        setParams(
+          toRaw({
+            ...parsed,
+            countries: parsed.countries?.filter((c) => c !== country),
+          }),
+          { replace: true, preventScrollReset: true }
+        )
       }
     >
       {country}
     </Item>
   ));
 
-  const kycFilters = kyc_only.map((kyc) => (
+  const kycFilters = (parsed.kyc_only || []).map((kyc) => (
     <Item
       key={`${kyc}`}
-      onRemove={() => update({ kyc_only: kyc_only.filter((v) => v !== kyc) })}
+      onRemove={() => {
+        setParams(
+          toRaw({
+            ...parsed,
+            kyc_only: parsed.kyc_only?.filter((v) => v !== kyc),
+          }),
+          { replace: true, preventScrollReset: true }
+        );
+      }}
     >
       {kyc ? "KYC" : "No KYC"}
     </Item>
   ));
 
-  const verificationFilters = verified.map((isVerified) => (
+  const verificationFilters = (parsed.claimed || []).map((isVerified) => (
     <Item
       key={`${isVerified}`}
       onRemove={() =>
-        update({ verified: verified.filter((v) => v !== isVerified) })
+        setParams(
+          toRaw({
+            ...parsed,
+            claimed: parsed.claimed?.filter((v) => v !== isVerified),
+          }),
+          { replace: true, preventScrollReset: true }
+        )
       }
     >
       {isVerified ? "Verified" : "Not verified"}
@@ -76,7 +118,12 @@ export default function ActiveFilters() {
       {filters.length >= 2 && (
         <button
           type="button"
-          onClick={() => update("reset")}
+          onClick={() =>
+            setParams(toRaw({ query: "", page: 1 }), {
+              replace: true,
+              preventScrollReset: true,
+            })
+          }
           className="text-blue hover:text-blue-l1 text-sm ml-1"
         >
           Clear all
