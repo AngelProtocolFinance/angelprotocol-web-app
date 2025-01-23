@@ -24,7 +24,7 @@ export default function Applications() {
   function loadNextPage(key: string) {
     const copy = new URLSearchParams(params);
     copy.set("nextPageKey", key);
-    load(`?index&${copy.toString()}`);
+    load(`?${copy.toString()}`);
   }
 
   return (
