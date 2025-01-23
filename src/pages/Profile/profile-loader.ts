@@ -5,12 +5,10 @@ import { getNpoByIdOrSlug } from ".server/get-npo";
 
 export const profileLoader: LoaderFunction = async ({ params }) => {
   const id = safeParse(union([segment, endowIdParam]), params.id);
-  if (id.issues) {
-    return { status: 400, body: id.issues[0].message };
-  }
+  if (id.issues) throw new Response(id.issues[0].message, { status: 400 });
 
   const npo = await getNpoByIdOrSlug(id.output);
-  if (!npo) return { status: 404 };
+  if (!npo) throw new Response(null, { status: 404 });
 
   return npo;
 };

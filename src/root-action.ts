@@ -44,5 +44,5 @@ export const action: ActionFunction = async ({ request }) => {
         });
   }
 
-  return { status: 400, body: "invalid intent" };
+  return new Response("Invalid intent", { status: 400 });
 };

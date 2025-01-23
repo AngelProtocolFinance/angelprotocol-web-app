@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const id = parse(plusInt, params.id);
 
   const npo = await getNpoByIdOrSlug(id, ["name", "logo"]);
-  if (!npo) return { status: 404 };
+  if (!npo) return new Response("Not found", { status: 404 });
 
   return {
     user,

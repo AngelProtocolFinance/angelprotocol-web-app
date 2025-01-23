@@ -20,7 +20,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   const id = v.parse(plusInt, params.id);
   const endow = await getNpoByIdOrSlug(id);
-  if (!endow) return { status: 404 };
+  if (!endow) throw new Response(null, { status: 404 });
 
   return data(
     {
