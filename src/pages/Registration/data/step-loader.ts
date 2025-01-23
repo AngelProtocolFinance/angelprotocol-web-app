@@ -40,7 +40,7 @@ export const stepLoader =
 
     const state = await getRegState(params.regId, user);
 
-    if (thisStep > state.step) {
+    if (thisStep > state.step + 1) {
       return redirect(`../${state.step}`);
     }
 
