@@ -34,7 +34,7 @@ export default function Filter({ classes = "", isDisabled }: Props) {
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: yupResolver(schema),
-    defaultValues: {
+    values: {
       //set default value so empty can be tagged as invalid
       startDate: dateToFormFormat(
         parsed.startDate ? new Date(parsed.startDate) : weeksAgo("now", 1)
@@ -44,6 +44,7 @@ export default function Filter({ classes = "", isDisabled }: Props) {
       ),
       hqCountry: { name: parsed.country ?? "", flag: "", code: "" },
       status: status || { label: "Under Review", value: "02" },
+      donorAddress: "",
     },
   });
 
