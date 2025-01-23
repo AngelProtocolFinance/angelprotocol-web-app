@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@remix-run/react";
+import { Link, NavLink, useLocation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { CircleUserRound } from "lucide-react";
@@ -27,9 +27,9 @@ export default function UserMenu({ classes = "" }) {
   }
 
   return (
-    <Link
+    <NavLink
       to={`${appRoutes.user_dashboard}/edit-profile`}
-      className="cursor-pointer contents"
+      className="[&:is(.pending)]:grayscale"
     >
       {user.avatar ? (
         //TODO: migrate userdb attribute to custom attribute
@@ -45,6 +45,6 @@ export default function UserMenu({ classes = "" }) {
           className="text-blue disabled:text-navy-l2"
         />
       )}
-    </Link>
+    </NavLink>
   );
 }
