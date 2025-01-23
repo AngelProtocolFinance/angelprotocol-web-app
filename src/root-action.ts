@@ -3,6 +3,7 @@ import { ap, ver } from "api/api";
 import { parseWithValibot } from "conform-to-valibot";
 import { emailSubs } from "types/hubspot-subscription";
 import { cognito, toAuth } from ".server/auth";
+import { createBookmark, deleteBookmark } from ".server/user-bookmarks";
 
 export const action: ActionFunction = async ({ request }) => {
   const r = request.clone();
@@ -34,14 +35,15 @@ export const action: ActionFunction = async ({ request }) => {
     const action = data.get("action");
     const endowId = data.get("endowId");
 
-    return action === "add"
-      ? ap.post(`${ver(1)}/bookmarks`, {
-          headers: { authorization: user.idToken },
-          json: { endowId },
-        })
-      : ap.delete(`${ver(1)}/bookmarks/${endowId}`, {
-          headers: { authorization: user.idToken },
-        });
+    if (action === "add") {
+      await createBookmark(user.email, Number.parseInt(endowId as string, 10));
+      return action;
+    }
+
+    if (action === "delete") {
+      await deleteBookmark(user.email, Number.parseInt(endowId as string, 10));
+      return action;
+    }
   }
 
   return new Response("Invalid intent", { status: 400 });

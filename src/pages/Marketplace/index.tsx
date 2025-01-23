@@ -13,7 +13,7 @@ import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
-import { cacheControl, getNpos } from ".server/get-npos";
+import { cacheControl, getNpos } from ".server/npos";
 
 export const headers: HeadersFunction = () => ({
   "Cache-Control": cacheControl,

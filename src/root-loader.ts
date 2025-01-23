@@ -1,30 +1,10 @@
 import { Buffer } from "node:buffer";
 import { data, redirect } from "@remix-run/react";
 import type { LoaderFunctionArgs } from "@vercel/remix";
-import { ap, ver } from "api/api";
-import { userEndows } from "api/get/user-endows";
-import type { DetailedUser, UserV2 } from "types/auth";
-import type { EndowmentBookmark } from "types/aws";
+import type { DetailedUser } from "types/auth";
 import { cognito, oauth } from ".server/auth";
-import { getNpoByIdOrSlug } from ".server/get-npo";
-
-async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
-  const endows = await ap
-    .get<number[]>(`${ver(1)}/bookmarks`, {
-      throwHttpErrors: false,
-      headers: { authorization: user.idToken },
-    })
-    .then((res) => (res.ok ? res.json() : []));
-
-  const bookmarks: EndowmentBookmark[] = [];
-
-  for (const id of endows) {
-    const endow = await getNpoByIdOrSlug(id, ["id", "name", "logo"]);
-    if (!endow) continue;
-    bookmarks.push({ ...endow, endowId: id });
-  }
-  return bookmarks;
-}
+import { getUserBookmarks } from ".server/user-bookmarks";
+import { getUserNpos } from ".server/user-npos";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   console.log("app loads");
@@ -52,7 +32,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   if (!user) return data(null, { headers });
   return {
     ...user,
-    bookmarks: getBookmarks(user),
-    orgs: userEndows(user),
+    bookmarks: getUserBookmarks(user.email),
+    orgs: getUserNpos(user.email),
   } satisfies DetailedUser;
 };

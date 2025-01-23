@@ -1,7 +1,7 @@
 import { endowIdParam, segment } from "@better-giving/endowment/schema";
 import type { LoaderFunction } from "@vercel/remix";
 import { safeParse, union } from "valibot";
-import { getNpoByIdOrSlug } from ".server/get-npo";
+import { getNpoByIdOrSlug } from ".server/npo";
 
 export const profileLoader: LoaderFunction = async ({ params }) => {
   const id = safeParse(union([segment, endowIdParam]), params.id);

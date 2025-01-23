@@ -6,7 +6,7 @@ import * as v from "valibot";
 import { getEndowBalance } from "./get/endow-balance";
 import { plusInt } from "./schema/endow-id";
 import { cognito } from ".server/auth";
-import { getNpoByIdOrSlug } from ".server/get-npo";
+import { getNpoByIdOrSlug } from ".server/npo";
 
 export interface DonateData {
   id: number;

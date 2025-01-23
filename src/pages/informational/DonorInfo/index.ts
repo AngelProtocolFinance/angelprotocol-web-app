@@ -1,6 +1,6 @@
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
-import { cacheControl, getNpos } from ".server/get-npos";
+import { cacheControl, getNpos } from ".server/npos";
 
 export { default } from "./DonorInfo";
 

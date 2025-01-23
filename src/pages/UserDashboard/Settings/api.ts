@@ -1,10 +1,10 @@
 import type { UserEndow } from "@better-giving/user";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { userEndows } from "api/get/user-endows";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
+import { getUserNpos } from ".server/user-npos";
 
 export interface SettingsData {
   user: UserV2;
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (!user) return toAuth(request, headers);
   return {
     user,
-    userEndows: await userEndows(user),
+    userEndows: await getUserNpos(user.email),
   } satisfies SettingsData;
 };
 

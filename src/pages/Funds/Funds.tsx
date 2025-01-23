@@ -7,7 +7,7 @@ import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
 import { safeParse } from "valibot";
 import Cards from "./Cards";
-import { cacheControl, getFunds } from ".server/get-funds";
+import { cacheControl, getFunds } from ".server/funds";
 
 export const headers: HeadersFunction = () => ({
   "Cache-Control": cacheControl,

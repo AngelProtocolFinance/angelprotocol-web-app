@@ -12,7 +12,7 @@ import Header from "./Header";
 import SidebarHeader from "./SidebarHeader";
 import { linkGroups } from "./constants";
 import { cognito, toAuth } from ".server/auth";
-import { getNpoByIdOrSlug } from ".server/get-npo";
+import { getNpoByIdOrSlug } from ".server/npo";
 
 interface LoaderData {
   id: number;

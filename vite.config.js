@@ -201,7 +201,6 @@ const rmx = remix({
 
 export default defineConfig({
   base: "/",
-  ssr: { noExternal: ["@aws-lite/dynamodb-types"] },
   build: { outDir: "build", target: "es2022" },
   server: { port: 4200 },
   plugins: [process.env.NODE_ENV === "test" ? undefined : rmx, tsconfigPaths()],

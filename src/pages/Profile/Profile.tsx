@@ -8,7 +8,7 @@ import Image from "components/Image";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
 import ProfileContext from "./ProfileContext";
-import { cacheControl } from ".server/get-npo";
+import { cacheControl } from ".server/npo";
 
 export { profileLoader as loader } from "./profile-loader";
 export const headers: HeadersFunction = () => ({

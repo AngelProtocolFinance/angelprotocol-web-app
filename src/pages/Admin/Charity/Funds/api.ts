@@ -6,7 +6,7 @@ import { getEndow } from "api/get/endow";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
-import { getFundsNpoMemberOf } from ".server/get-funds";
+import { getFundsNpoMemberOf } from ".server/funds";
 
 export interface LoaderData {
   user: UserV2;

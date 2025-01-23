@@ -51,11 +51,9 @@ interface IBookmarkBtn {
 }
 
 function BookmarkBtn({ bookmarks, classes = "", endowId }: IBookmarkBtn) {
-  const fetcher = useFetcher();
-
-  const action = fetcher.formData?.get("action");
-  const isBookmarked = action
-    ? action === "add"
+  const fetcher = useFetcher({ key: `bookmark-${endowId}` });
+  const isBookmarked = fetcher.data
+    ? fetcher.data === "add"
     : bookmarks.some((bm) => bm.endowId === endowId);
 
   return (

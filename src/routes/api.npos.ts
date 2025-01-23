@@ -1,7 +1,7 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
 import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 import { safeParse } from "valibot";
-import { cacheControl, getNpos } from ".server/get-npos";
+import { cacheControl, getNpos } from ".server/npos";
 
 export const headers: HeadersFunction = () => ({
   "Cache-Control": cacheControl,

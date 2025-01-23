@@ -5,7 +5,7 @@ import { getPrograms } from "api/get/programs";
 import { plusInt } from "api/schema/endow-id";
 import { parse } from "valibot";
 import { featuredMedia } from "../featured-media";
-import { getFundsNpoMemberOf } from ".server/get-funds";
+import { getFundsNpoMemberOf } from ".server/funds";
 
 export interface LoaderData {
   programs: Program[];
