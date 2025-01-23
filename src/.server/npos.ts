@@ -57,7 +57,7 @@ export async function getNpos(
   endpoint.searchParams.set("q", queryString);
   endpoint.searchParams.set("q.parser", "structured");
   endpoint.searchParams.set("fq", filterQuery);
-  endpoint.searchParams.set("sort", "name asc");
+  endpoint.searchParams.set("sort", "claimed desc, name asc");
   endpoint.searchParams.set("size", HITS_PER_PAGE.toString());
   endpoint.searchParams.set("start", startAt.toString());
   if (fields?.length) {
