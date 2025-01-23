@@ -7,19 +7,23 @@ import Table from "./Table";
 
 export default function Applications() {
   const [params] = useSearchParams();
-  const firstPage = useLoaderData<Page>();
+  const page1 = useLoaderData<Page>();
   const { load, data, state } = useFetcher<Page>({
     key: "applications",
   });
-  const [items, setItems] = useState(firstPage.items);
+  const [items, setItems] = useState(page1.items);
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    setItems(page1.items);
+  }, [page1.items]);
 
   useEffect(() => {
     if (state === "loading" || !data) return;
     setItems((prev) => [...prev, ...data.items]);
   }, [data, state]);
 
-  const nextPage = data ? data.nextPageKey : firstPage.nextPageKey;
+  const nextPage = data ? data.nextPageKey : page1.nextPageKey;
 
   function loadNextPage(key: string) {
     const copy = new URLSearchParams(params);
