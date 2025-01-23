@@ -1,6 +1,5 @@
 export * from "./createNavLinkStyler";
 export * from "./decimal";
-export * from "./getAuthRedirect";
 export * from "./getTxUrl";
 export * from "./idParamToNum";
 export * from "./isEmpty";

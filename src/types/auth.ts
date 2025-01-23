@@ -17,24 +17,7 @@ export type AuthenticatedUser = {
   prefCurrencyCode?: string;
 };
 
-export type User = null | "loading" | AuthenticatedUser;
-
 export type CognitoGroup = "ap-admin"; //| future ;
-
-//type guard
-export const userIsSignedIn = (user: User): user is AuthenticatedUser =>
-  !!(user as AuthenticatedUser)?.token;
-
-export type SignInRouteState = {
-  from?: string;
-  search?: string;
-  data?: unknown;
-};
-
-export type OAuthState = {
-  pathname: string;
-  data?: unknown;
-};
 
 export type UserV2 = {
   idToken: string;
