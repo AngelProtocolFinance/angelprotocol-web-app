@@ -1,4 +1,4 @@
-import { endowDesignations } from "@better-giving/registration/models";
+import { orgRoles } from "@better-giving/registration/models";
 import { Link } from "@remix-run/react";
 import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
@@ -46,9 +46,9 @@ export default function Form({ data }: RegStep2) {
       <Selector<FV, "designation", string>
         name="designation"
         classes={{ options: "text-sm" }}
-        options={endowDesignations.map((designation) => ({
-          label: designation,
-          value: designation,
+        options={orgRoles.map((role) => ({
+          label: role,
+          value: role,
         }))}
       />
       <Label className="mt-6 mb-2" required>
