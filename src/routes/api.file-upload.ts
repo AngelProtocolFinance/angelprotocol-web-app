@@ -13,5 +13,5 @@ export const action: ActionFunction = async ({ request }) => {
   const blob = await put(name, request.body, {
     access: "public",
   });
-  return { url: blob.url };
+  return Response.json({ url: blob.url });
 };
