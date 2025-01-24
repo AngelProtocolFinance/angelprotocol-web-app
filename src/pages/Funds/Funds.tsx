@@ -1,17 +1,13 @@
 import type { FundsPage } from "@better-giving/fundraiser";
 import { fundsParams } from "@better-giving/fundraiser/schema";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
-import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "@vercel/remix";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
 import { safeParse } from "valibot";
 import Cards from "./Cards";
-import { cacheControl, getFunds } from ".server/funds";
-
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": cacheControl,
-});
+import { getFunds } from ".server/funds";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);

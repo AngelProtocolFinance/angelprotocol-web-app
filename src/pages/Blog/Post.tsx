@@ -1,9 +1,5 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import type {
-  HeadersFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@vercel/remix";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { wp } from "api/api";
 import Media from "components/Media";
 import { appRoutes } from "constants/routes";
@@ -18,9 +14,6 @@ interface IPost extends Wordpress.Post {
   media: Wordpress.Media;
   authorName: string;
 }
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": "s-max-age=30, stale-while-revalidate=60",
-});
 
 export const loader: LoaderFunction = async ({ params }) => {
   const [post] = await wp

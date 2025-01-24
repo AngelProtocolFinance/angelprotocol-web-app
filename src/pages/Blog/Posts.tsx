@@ -4,20 +4,12 @@ import {
   useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
-import type {
-  HeadersFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@vercel/remix";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { posts } from "api/get/wp-posts";
 import Media from "components/Media";
 import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
 import type { Wordpress } from "types/wordpress";
-
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": "s-max-age=30, stale-while-revalidate=60",
-});
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);

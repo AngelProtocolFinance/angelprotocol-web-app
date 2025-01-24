@@ -1,7 +1,6 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
 import { Link, NavLink, useLoaderData } from "@remix-run/react";
 import type {
-  HeadersFunction,
   LinksFunction,
   LoaderFunction,
   MetaFunction,
@@ -22,17 +21,13 @@ import { ArrowLeft } from "lucide-react";
 import { parse, pipe, string, uuid } from "valibot";
 import { Share } from "./share";
 import { Video } from "./video";
-import { cacheControl, getFund } from ".server/fund";
+import { getFund } from ".server/fund";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = parse(pipe(string(), uuid()), params.fundId);
   const fund = await getFund(id);
   if (!fund) throw new Response(null, { status: 404 });
   return fund;
-};
-
-export const headers: HeadersFunction = () => {
-  return { "Cache-Control": cacheControl };
 };
 
 export const links: LinksFunction = () => [...richTextStyles];
