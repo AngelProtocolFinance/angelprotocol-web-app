@@ -1,5 +1,5 @@
 import { put } from "@vercel/blob";
-import type { ActionFunction } from "@vercel/remix";
+import { type ActionFunction, data } from "@vercel/remix";
 import { nonEmpty, parse, pipe, string } from "valibot";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -13,5 +13,5 @@ export const action: ActionFunction = async ({ request }) => {
   const blob = await put(name, request.body, {
     access: "public",
   });
-  return Response.json({ url: blob.url });
+  return data({ url: blob.url });
 };
