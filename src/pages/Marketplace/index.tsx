@@ -52,7 +52,7 @@ export default function Marketplace() {
       <div className="grid gap-y-4 content-start padded-container min-h-screen">
         <Toolbar classes="mt-10" />
         <ActiveFilters />
-        <Cards firstPage={page1} />
+        <Cards page1={page1} />
       </div>
       <Outlet />
     </div>

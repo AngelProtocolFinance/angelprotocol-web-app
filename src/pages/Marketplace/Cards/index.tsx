@@ -6,34 +6,35 @@ import Card from "./Card";
 
 interface Props {
   classes?: string;
-  firstPage: EndowCardsPage;
+  page1: EndowCardsPage;
 }
 
-function next(_page?: EndowCardsPage) {
-  const { page = 1, numPages = 1 } = _page || {};
+function next(p?: EndowCardsPage) {
+  const { page = 1, numPages = 1 } = p || {};
   return page < numPages ? page + 1 : undefined;
 }
 
-export default function Cards({ classes = "", firstPage }: Props) {
+export default function Cards({ classes = "", page1 }: Props) {
   const { data, state, load } = useFetcher<EndowCardsPage>({
     key: "marketplace",
   }); //initially undefined
   const [params] = useSearchParams();
-  const [items, setItems] = useState(firstPage.items);
+  const [items, setItems] = useState(page1.items);
+
+  useEffect(() => {
+    setItems(page1.items);
+  }, [page1.items]);
 
   useEffect(() => {
     if (!data || state === "loading") return;
-    if (data) {
-      if (data.page === 1) return setItems(data.items);
-      setItems((prev) => [...prev, ...data.items]);
-    }
+    setItems((prev) => [...prev, ...data.items]);
   }, [data, state]);
 
   if (items.length === 0) {
     return <Info>No organisations found</Info>;
   }
 
-  const nextPage = data ? next(data) : next(firstPage);
+  const nextPage = data ? next(data) : next(page1);
 
   function loadNext(nextPage: number) {
     const n = new URLSearchParams(params);
