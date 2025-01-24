@@ -15,10 +15,10 @@ function next(p?: EndowCardsPage) {
 }
 
 export default function Cards({ classes = "", page1 }: Props) {
+  const [params] = useSearchParams();
   const { data, state, load } = useFetcher<EndowCardsPage>({
     key: "marketplace",
   }); //initially undefined
-  const [params] = useSearchParams();
   const [items, setItems] = useState(page1.items);
 
   useEffect(() => {
@@ -27,7 +27,10 @@ export default function Cards({ classes = "", page1 }: Props) {
 
   useEffect(() => {
     if (!data || state === "loading") return;
-    setItems((prev) => [...prev, ...data.items]);
+    if (data) {
+      if (data.page === 1) return setItems(data.items);
+      setItems((prev) => [...prev, ...data.items]);
+    }
   }, [data, state]);
 
   if (items.length === 0) {

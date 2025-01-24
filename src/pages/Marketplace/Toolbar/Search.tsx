@@ -5,8 +5,10 @@ import type { ChangeEventHandler } from "react";
 import type { EndowCardsPage } from "types/aws";
 
 export default function Search({ classes = "" }: { classes?: string }) {
-  const { load } = useFetcher<EndowCardsPage>({ key: "marketplace" }); //initially undefined
   const [params] = useSearchParams();
+  const { load } = useFetcher<EndowCardsPage>({
+    key: "marketplace",
+  }); //initially undefined
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const n = new URLSearchParams(params);
     n.set("query", e.target.value);
