@@ -22,7 +22,7 @@ export const meta: MetaFunction = ({ data }) => {
     title: `${d.name} - ${APP_NAME}`,
     description: d.tagline?.slice(0, 140),
     name: d.name,
-    image: d.logo || flying_character,
+    image: d.image || flying_character,
     url: `${BASE_URL}/profile/${d.id}`,
   });
 };
