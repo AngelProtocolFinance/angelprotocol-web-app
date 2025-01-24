@@ -10,7 +10,7 @@ export async function getUserNpos(userId: string): Promise<UserEndow[]> {
     TableName: tables.usersV2,
     KeyConditionExpression: "PK = :pk AND begins_with(SK, :skSubstr)",
     ExpressionAttributeValues: {
-      ":pk": `Email#${userId}`,
+      ":pk": `Email#${userId.toLowerCase()}`,
       ":skSubstr": `Endow#${env}#`,
     },
   }).then<userDb.EndowAdmin.DbRecord[]>((res) => (res.Items || []) as any[]);
