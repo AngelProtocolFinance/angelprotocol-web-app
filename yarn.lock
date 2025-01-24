@@ -3847,15 +3847,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-helmet@npm:6.1.11":
-  version: 6.1.11
-  resolution: "@types/react-helmet@npm:6.1.11"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: 10/e329d8ad82c365fec7dd7d91c8b6d167faac30cef0d9f1e27d7e895172a0ebfa65829fb4acabbe79283b01cbbe5840a845caeb50148ceef6f3fad42b3c2c4bdc
-  languageName: node
-  linkType: hard
-
 "@types/react@npm:*, @types/react@npm:18.2.62":
   version: 18.2.62
   resolution: "@types/react@npm:18.2.62"
@@ -4236,7 +4227,6 @@ __metadata:
     "@types/react": "npm:18.2.62"
     "@types/react-csv": "npm:1.1.10"
     "@types/react-dom": "npm:18.2.19"
-    "@types/react-helmet": "npm:6.1.11"
     "@vercel/blob": "npm:0.27.1"
     "@vercel/kv": "npm:3.0.0"
     "@vercel/remix": "npm:2.15.2"
@@ -4267,7 +4257,6 @@ __metadata:
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
     react-dropzone-esm: "npm:15.2.0"
-    react-helmet: "npm:6.1.0"
     react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
     remix-client-cache: "npm:1.1.0"
@@ -8997,24 +8986,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-fast-compare@npm:^3.0.1, react-fast-compare@npm:^3.1.1":
+"react-fast-compare@npm:^3.0.1":
   version: 3.2.2
   resolution: "react-fast-compare@npm:3.2.2"
   checksum: 10/a6826180ba75cefba1c8d3ac539735f9b627ca05d3d307fe155487f5d0228d376dac6c9708d04a283a7b9f9aee599b637446635b79c8c8753d0b4eece56c125c
-  languageName: node
-  linkType: hard
-
-"react-helmet@npm:6.1.0":
-  version: 6.1.0
-  resolution: "react-helmet@npm:6.1.0"
-  dependencies:
-    object-assign: "npm:^4.1.1"
-    prop-types: "npm:^15.7.2"
-    react-fast-compare: "npm:^3.1.1"
-    react-side-effect: "npm:^2.1.0"
-  peerDependencies:
-    react: ">=16.3.0"
-  checksum: 10/eff25231384bb0a229870a0552839953a59af17f0ff5e8bca1b8c8fdf19a329e4c00c7fa2fcedc8be5d73f5c7bebb30cf9a32ea58efc7c8f726a10dba51f48a2
   languageName: node
   linkType: hard
 
@@ -9094,15 +9069,6 @@ __metadata:
     react: ^16.8.6 || 17 - 18
     react-dom: ^16.8.6 || 17 - 18
   checksum: 10/a9ed431997fa9df629bd3ec51302141173d8d1d77fa561127fa8fee088769af9af25f14b7e655715e3c9ee9b5fc161dfab413706d9ddbb72c577021959654482
-  languageName: node
-  linkType: hard
-
-"react-side-effect@npm:^2.1.0":
-  version: 2.1.2
-  resolution: "react-side-effect@npm:2.1.2"
-  peerDependencies:
-    react: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/8c31aaec5b383d942ff1775b12c45022239d1250d1a00a238bac3c07e0fe266c71991e2814ae16a5d9b855bcd96ba95817d48ab3f34738f0bb32036ebb1abb1a
   languageName: node
   linkType: hard
 
