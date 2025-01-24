@@ -9,7 +9,6 @@ import tailwind from "./index.css?url";
 import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/quicksand";
 import "@fontsource/gochi-hand";
-import type { ExternalScriptsHandle } from "remix-utils/external-scripts";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
@@ -23,38 +22,6 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => metas({});
 
-export const handle: ExternalScriptsHandle = {
-  scripts({ location: l }) {
-    if (import.meta.env.VITE_ENVIRONMENT !== "production") return [];
-    // we don't want bg consent banner showing on donate-widget on NPO's website
-    if (l.pathname.startsWith("/donate-widget")) return [];
-    return [
-      { src: "/cookie-consent.js" },
-      { src: "/scripts/cookie-consent-2.js" },
-      //functional cookies
-      { src: "/scripts/intercom.js", "data-category": "functionality" },
-      //analytics
-      { src: "/scripts/gtm-init.js", "data-category": "analytics" },
-
-      //tracking
-      {
-        src: "/scripts/twitter-conversion-tracking.js",
-        "data-category": "tracking",
-      },
-      {
-        src: "/scripts/meta-pixel.js",
-        "data-category": "tracking",
-      },
-      { src: "/scripts/linkedin-tracking.js", "data-category": "tracking" },
-      { src: "/scripts/hotjar-tracking.js", "data-category": "tracking" },
-      {
-        id: "hs-script-loader",
-        src: "//js-eu1.hs-scripts.com/24900163.js",
-        "data-category": "tracking",
-      },
-    ];
-  },
-};
 export { loader } from "./root-loader";
 export { action } from "./root-action";
 export { Layout } from "./root-layout";

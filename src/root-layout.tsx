@@ -3,10 +3,12 @@ import type { PropsWithChildren } from "react";
 import { ClientOnly } from "remix-utils/client-only";
 import { ExternalScripts } from "remix-utils/external-scripts";
 import { Toaster } from "sonner";
+import { useConsent } from "use-consent";
 import { useNProgress } from "use-nprogress";
 
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
   useNProgress();
+  useConsent();
   return (
     <html lang="en">
       <head>
