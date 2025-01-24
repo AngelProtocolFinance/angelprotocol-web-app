@@ -14,6 +14,10 @@ export default function BankingApplications() {
   const [items, setItems] = useState(firstPage.items);
 
   useEffect(() => {
+    setItems(firstPage.items);
+  }, [firstPage.items]);
+
+  useEffect(() => {
     if (state === "loading" || !data) return;
     setItems((prev) => [...prev, ...data.items]);
   }, [data, state]);
@@ -23,7 +27,7 @@ export default function BankingApplications() {
   function loadNextPage(key: string) {
     const copy = new URLSearchParams(params);
     copy.set("nextPageKey", key);
-    load(`?index&${copy.toString()}`);
+    load(`?${copy.toString()}`);
   }
 
   return (

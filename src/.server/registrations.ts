@@ -11,8 +11,8 @@ import {
 } from "@better-giving/registration/db";
 import { tables } from "@better-giving/types/list";
 import { ap } from "./aws/ap";
+import { env } from "./env";
 
-const env = "production";
 export async function getRegs(params: QueryParams): Promise<Page> {
   const { startDate = minDate, endDate = maxDate, status = "02" } = params;
   const skStart: Regs["gsi2SK"] = `${status ?? "02"}#${startDate}`;
