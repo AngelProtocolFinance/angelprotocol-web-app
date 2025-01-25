@@ -1,4 +1,3 @@
-// app/routes/robots[.]txt.ts
 import type { LoaderFunction } from "@vercel/remix";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -6,26 +5,38 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const robotText = `
 # https://www.robotstxt.org/robotstxt.html
-
-# Allow all robots complete access by default
 User-agent: *
 Allow: /
+Crawl-delay: 10
 
-# Block routes marked as "no robots" in config
+# Marketing & Analytics Bots
+User-agent: AdsBot-Google
+User-agent: AdsBot-Google-Mobile
+User-agent: Mediapartners-Google
+User-agent: LinkedInBot
+User-agent: facebookexternalhit
+User-agent: Twitterbot
+Allow: /
+
+# Security exclusions
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /banking-applications/
 Disallow: /applications/
 Disallow: /staging/
 
-# Block query parameters
+# Query parameters
 Disallow: /*?*
+Allow: /*?utm_*    # Google Analytics UTM parameters
+Allow: /*?fbclid*  # Facebook click identifier
+Allow: /*?li_*     # LinkedIn tracking parameters
+Allow: /*?twclid*  # Twitter click identifier
 
 # Block specific file types
 Disallow: /*.json$
 Disallow: /*.xml$
 
-# Define crawling rules for media files
+# Media files
 User-agent: Googlebot-Image
 Allow: /images/
 Allow: /assets/images/
@@ -35,7 +46,6 @@ Allow: /*.gif$
 Allow: /*.png$
 Allow: /*.webp$
 
-# Location of your sitemap
 Sitemap: ${origin}/sitemap.xml
 `;
 
