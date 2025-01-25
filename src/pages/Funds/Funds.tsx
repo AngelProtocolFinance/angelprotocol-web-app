@@ -1,7 +1,8 @@
 import type { FundsPage } from "@better-giving/fundraiser";
 import { fundsParams } from "@better-giving/fundraiser/schema";
-import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
+import { useFetcher, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
+import { useCachedLoaderData } from "api/cache";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
@@ -9,6 +10,7 @@ import { safeParse } from "valibot";
 import Cards from "./Cards";
 import { getFunds } from ".server/funds";
 
+export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
   const params = safeParse(
@@ -24,7 +26,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export { ErrorBoundary } from "components/error";
 export default function Funds() {
-  const page1 = useLoaderData<FundsPage>();
+  const page1 = useCachedLoaderData<FundsPage>();
   const { load } = useFetcher<FundsPage>({ key: "funds" }); //initially undefined
   const [params] = useSearchParams();
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {

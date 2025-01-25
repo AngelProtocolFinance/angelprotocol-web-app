@@ -1,10 +1,11 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
-import { Link, NavLink, useLoaderData } from "@remix-run/react";
+import { Link, NavLink } from "@remix-run/react";
 import type {
   LinksFunction,
   LoaderFunction,
   MetaFunction,
 } from "@vercel/remix";
+import { useCachedLoaderData } from "api/cache";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
@@ -23,6 +24,7 @@ import { Share } from "./share";
 import { Video } from "./video";
 import { getFund } from ".server/fund";
 
+export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ params }) => {
   const id = parse(pipe(string(), uuid()), params.fundId);
   const fund = await getFund(id);
@@ -45,7 +47,7 @@ export const meta: MetaFunction = ({ data, location: l }) => {
 };
 export { ErrorBoundary } from "components/error";
 export default function Fund() {
-  const fund = useLoaderData() as SingleFund;
+  const fund = useCachedLoaderData() as SingleFund;
 
   const status = statusFn(
     fund.expiration ?? MAX_EXPIRATION,
