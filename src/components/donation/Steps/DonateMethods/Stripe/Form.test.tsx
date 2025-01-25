@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { mockPhpCurrency } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
-import { testDonateData } from "../../__tests__/test-data";
+import { stb } from "../../__tests__/test-data";
 import type { Init, StripeDonationDetails } from "../../types";
 import Form from "./Form";
 
@@ -12,15 +12,6 @@ const mockSetState = vi.hoisted(() => vi.fn());
 vi.mock("../../Context", () => ({
   useDonationState: vi.fn(() => ({ setState: mockSetState, state: {} })),
 }));
-
-const mockLoader = vi.hoisted(() => vi.fn());
-vi.mock("@remix-run/react", async () => {
-  const actual = await vi.importActual("@remix-run/react");
-  return {
-    ...actual,
-    useLoaderData: mockLoader,
-  };
-});
 
 const init: Init = {
   source: "bg-marketplace",
@@ -41,19 +32,17 @@ describe("Stripe form test", () => {
   beforeEach(() => vi.restoreAllMocks());
 
   test("blank state: no default currency specified", async () => {
-    mockLoader.mockReturnValue(testDonateData);
-    render(<Form step="donate-form" init={init} />);
+    const Stub = stb(<Form step="donate-form" init={init} />);
+    render(<Stub />);
     const currencySelector = await screen.findByRole("combobox");
     expect(currencySelector).toHaveDisplayValue(/usd/i);
-    mockLoader.mockReset();
   });
 
   test("initial state: user has preferred currency", async () => {
-    mockLoader.mockReturnValue({
-      ...testDonateData,
-      user: { currency: "php" },
+    const Stub = stb(<Form step="donate-form" init={init} />, {
+      root: { currency: "php" },
     });
-    render(<Form step="donate-form" init={init} />);
+    render(<Stub />);
 
     //no default frequency
     const freqOptions = await screen.findAllByRole("radio");
@@ -85,7 +74,8 @@ describe("Stripe form test", () => {
       },
       config: null,
     };
-    render(<Form step="donate-form" init={init} />);
+    const Stub = stb(<Form step="donate-form" init={init} />);
+    render(<Stub />);
 
     const programSelector = screen.queryByRole("button", {
       name: /general donation/i,
@@ -102,9 +92,10 @@ describe("Stripe form test", () => {
       method: "stripe",
       program: { value: mockPrograms[0].id, label: mockPrograms[0].title },
     };
-    render(<Form step="donate-form" init={init} details={details} />);
+    const Stub = stb(<Form step="donate-form" init={init} details={details} />);
+    render(<Stub />);
 
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
+    const amountInput = await screen.findByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("60");
 
     const selectedProgram = screen.getByText(/program 1/i);
@@ -118,8 +109,13 @@ describe("Stripe form test", () => {
   });
 
   test("user corrects validation errors", async () => {
-    render(<Form step="donate-form" init={init} />);
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
+    const Stub = stb(<Form step="donate-form" init={init} />, {
+      root: { currency: "php" },
+    });
+    render(<Stub />);
+    const continueBtn = await screen.findByRole("button", {
+      name: /continue/i,
+    });
     await userEvent.click(continueBtn);
     expect(mockSetState).not.toHaveBeenCalled();
 
@@ -157,13 +153,12 @@ describe("Stripe form test", () => {
   });
 
   test("incrementers", async () => {
-    mockLoader.mockReturnValue({
-      ...testDonateData,
-      user: { currency: "php" },
+    const Stub = stb(<Form step="donate-form" init={init} />, {
+      root: { currency: "php" },
     });
-    render(<Form step="donate-form" init={init} />);
+    render(<Stub />);
 
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
+    const amountInput = await screen.findByPlaceholderText(/enter amount/i);
     await userEvent.type(amountInput, "abc");
 
     //user tries to increment invalid input
@@ -179,6 +174,5 @@ describe("Stripe form test", () => {
 
     await userEvent.click(incrementers[1]); // 50PHP * 100
     expect(amountInput).toHaveDisplayValue("7013");
-    mockLoader.mockReset();
   });
 });

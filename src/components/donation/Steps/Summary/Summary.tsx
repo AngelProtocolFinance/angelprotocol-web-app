@@ -1,5 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
-import type { DonateData } from "api/donate-loader";
+import { useRootData } from "hooks/use-root-data";
 import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
@@ -10,7 +9,7 @@ import type { SummaryStep } from "../types";
 import SummaryForm from "./SummaryForm";
 
 export default function Summary(props: SummaryStep) {
-  const { user } = useLoaderData() as DonateData;
+  const user = useRootData();
   const { details, donor, honorary, tip, init, feeAllowance } = props;
 
   const { setState } = useDonationState();

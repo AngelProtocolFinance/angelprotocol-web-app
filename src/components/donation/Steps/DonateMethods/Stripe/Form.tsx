@@ -1,10 +1,9 @@
-import { useLoaderData } from "@remix-run/react";
-import type { DonateData } from "api/donate-loader";
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/CurrencySelector";
 import { Form as FormContainer, NativeField } from "components/form";
+import { useRootData } from "hooks/use-root-data";
 import { useEffect } from "react";
-import useSWR from "swr";
+import useSWR from "swr/immutable";
 import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -18,7 +17,7 @@ import { useRhf } from "./useRhf";
 
 export default function Form(props: Props) {
   /** supplied by page loader */
-  const { user } = useLoaderData<DonateData>();
+  const user = useRootData();
   const currency = useSWR(user?.currency ?? "none", getFiatCurrencies);
   const { setState } = useDonationState();
   const rhf = useRhf(props);

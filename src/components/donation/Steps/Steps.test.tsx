@@ -1,18 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, test, vi } from "vitest";
-import { testDonateData } from "./__tests__/test-data";
+import { describe, expect, test } from "vitest";
+import { stb } from "./__tests__/test-data";
 import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
-
-vi.mock("@remix-run/react", async () => {
-  const actual = await vi.importActual("@remix-run/react");
-  return {
-    ...actual,
-    useLoaderData: () => testDonateData,
-  };
-});
 
 const stripeDonation: StripeDonationDetails = {
   method: "stripe",
@@ -34,7 +26,8 @@ describe("donation flow", () => {
       },
       details: stripeDonation,
     };
-    render(<Steps init={state} />);
+    const Stub = stb(<Steps init={state} />);
+    render(<Stub />);
 
     const continueBtn = await screen.findByRole("button", {
       name: /continue/i,
@@ -63,7 +56,8 @@ describe("donation flow", () => {
       },
       details: stripeDonation,
     };
-    render(<Steps init={state} />);
+    const Stub = stb(<Steps init={state} />);
+    render(<Stub />);
 
     await userEvent.click(
       await screen.findByRole("button", {
@@ -98,11 +92,12 @@ describe("donation flow", () => {
       tip: { value: 50, format: "pct" },
     };
 
-    render(<Steps init={state} />);
+    const Stub = stb(<Steps init={state} />);
+    render(<Stub />);
 
     // back to donate methods
     await userEvent.click(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: /go back/i,
       })
     );
@@ -141,11 +136,12 @@ describe("donation flow", () => {
       tip: { value: 50, format: "pct" },
     };
 
-    render(<Steps init={state} />);
+    const Stub = stb(<Steps init={state} />);
+    render(<Stub />);
 
     // back to donate methods
     await userEvent.click(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: /go back/i,
       })
     );

@@ -49,9 +49,6 @@ export async function getRegs(params: QueryParams): Promise<Page> {
   }
 
   const res = await ap.DynamoDB.Query(query);
-
-  console.log(res);
-
   const items = (res.Items || []) as unknown as ApplicationDbRecord[];
   return {
     items: items.map((i) => ({

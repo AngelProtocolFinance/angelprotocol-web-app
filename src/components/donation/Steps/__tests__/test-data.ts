@@ -1,5 +1,9 @@
 import type { Endow } from "@better-giving/endowment";
+import { Outlet } from "@remix-run/react";
+import { createRemixStub } from "@remix-run/testing";
 import type { DonateData } from "api/donate-loader";
+import type { ReactNode } from "react";
+import type { UserV2 } from "types/auth";
 
 const endow: Endow = {
   id: 1,
@@ -22,6 +26,22 @@ const endow: Endow = {
 export const testDonateData: DonateData = {
   id: 1,
   endow,
-  user: null,
   balance: Promise.resolve({} as any),
+};
+
+interface Data {
+  root?: Partial<UserV2>;
+  ldr?: DonateData;
+}
+export const stb = (node: ReactNode, data?: Data) => {
+  const { root = null, ldr = testDonateData } = data || {};
+  return createRemixStub([
+    {
+      path: "/",
+      id: "root",
+      loader: () => Promise.resolve(root),
+      children: [{ Component: () => node, index: true, loader: () => ldr }],
+      Component: Outlet,
+    },
+  ]);
 };
