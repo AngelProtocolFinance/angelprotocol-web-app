@@ -1,4 +1,5 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import type { DonateData } from "api/donate-loader";
 import flying_character from "assets/images/flying-character.webp";
 import ExtLink from "components/ExtLink";
@@ -11,7 +12,7 @@ import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
 export default function Content() {
-  const { endow } = useLoaderData<DonateData>();
+  const { endow } = useCachedLoaderData<DonateData>();
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
