@@ -14,7 +14,7 @@ type Props = {
 
 export default function Figure(props: Props) {
   return (
-    <div className="@container rounded border border-gray-l4 p-4">
+    <div className="@container rounded-sm border border-gray-l4 p-4">
       <div className="flex items-center mb-4">
         <h4 className="text-sm">{props.title}</h4>
 

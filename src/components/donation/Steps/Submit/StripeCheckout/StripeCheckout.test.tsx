@@ -1,16 +1,14 @@
+import { createRemixStub } from "@remix-run/testing";
 import type { Stripe, StripeError } from "@stripe/stripe-js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ModalContext from "contexts/ModalContext";
-import { useEffect } from "react";
-import { Provider } from "react-redux";
+import { type ReactNode, useEffect } from "react";
 import { fiatDonationIntentCreationErrorHandler } from "services/apes/mock";
 import { mswServer } from "setupTests";
-import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
 import { DEFAULT_PROGRAM } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
-import StripeCheckout from "./StripeCheckout";
+import Checkout from "./StripeCheckout";
 
 const mockedSetState = vi.hoisted(() => vi.fn());
 vi.mock("../../Context", () => ({
@@ -43,13 +41,8 @@ vi.mock("@stripe/react-stripe-js", () => ({
   useElements: vi.fn(() => ({})),
 }));
 
-const Checkout: typeof StripeCheckout = (props) => (
-  <Provider store={store}>
-    <ModalContext>
-      <StripeCheckout {...props} />
-    </ModalContext>
-  </Provider>
-);
+const stb = (node: ReactNode) =>
+  createRemixStub([{ path: "/", Component: () => node }]);
 
 const state: StripeCheckoutStep = {
   init: {
@@ -123,7 +116,8 @@ describe("stripe checkout", () => {
   });
 
   test("card error", async () => {
-    render(<Checkout {...state} feeAllowance={5} />);
+    const Stub = stb(<Checkout {...state} feeAllowance={5} />);
+    render(<Stub />);
     const donateBtn = await screen.findByRole("button", {
       name: /donate now/i,
     });
@@ -144,7 +138,8 @@ describe("stripe checkout", () => {
   });
 
   test("unexpected error", async () => {
-    render(<Checkout {...state} feeAllowance={5} />);
+    const Stub = stb(<Checkout {...state} feeAllowance={5} />);
+    render(<Stub />);
     const donateBtn = await screen.findByRole("button", {
       name: /donate now/i,
     });

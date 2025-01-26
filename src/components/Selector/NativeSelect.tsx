@@ -41,7 +41,7 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
         aria-disabled={props.disabled}
         id={props.id}
         as="button"
-        className={`${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
+        className={`${styles.selectorButton} peer-focus:shadow-sm peer-focus:shadow-red`}
       >
         {({ open, value }) => (
           <>

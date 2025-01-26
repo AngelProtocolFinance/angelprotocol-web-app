@@ -1,6 +1,6 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { parseContent } from "components/RichText";
+import { toContent } from "components/RichText";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { type FV, schema } from "./schema";
 
@@ -11,12 +11,12 @@ export function useRhf(init: SingleFund) {
     control,
     trigger,
     resetField,
-    formState: { isSubmitting, errors, isDirty, dirtyFields },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     values: {
       name: init.name,
-      description: parseContent(init.description),
+      description: toContent(init.description),
       target:
         init.target === "0"
           ? { type: "none" }
@@ -49,7 +49,6 @@ export function useRhf(init: SingleFund) {
   return {
     register,
     handleSubmit,
-    isSubmitting,
     errors,
     isDirty,
     dirtyFields,

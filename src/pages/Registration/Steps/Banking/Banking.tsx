@@ -1,17 +1,17 @@
+import { Link, useLoaderData } from "@remix-run/react";
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { steps } from "../../routes";
-import { useRegState, withStepGuard } from "../StepGuard";
+import type { RegStep5 } from "../../types";
 import FormButtons from "./FormButtons";
 import useSubmit from "./useSubmit";
 
-function Banking() {
-  const { data } = useRegState<5>();
+export default function Banking() {
+  const { data } = useLoaderData() as RegStep5;
   const [isChanging, setIsChanging] = useState(false);
-  const { submit } = useSubmit();
+  const { submit, isLoading } = useSubmit();
 
   if (data.banking && !isChanging) {
     return (
@@ -34,7 +34,7 @@ function Banking() {
           <span>Bank statement</span>
         </ExtLink>
         <button
-          className="btn-red px-2 py-1 rounded text-xs mt-2 mb-8"
+          className="btn-red px-2 py-1 rounded-sm text-xs mt-2 mb-8"
           type="button"
           onClick={() => setIsChanging(true)}
         >
@@ -44,14 +44,12 @@ function Banking() {
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
           <Link
             to={`../${steps.docs}`}
-            state={data.init}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back
           </Link>
           <Link
             to={`../${steps.summary}`}
-            state={data.init}
             className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             Continue
@@ -65,7 +63,7 @@ function Banking() {
     <div className="flex flex-col items-start max-sm:items-center">
       {isChanging && (
         <button
-          className="btn-blue px-2 py-1 rounded text-xs mt-2 mb-4"
+          className="btn-blue px-2 py-1 rounded-sm text-xs mt-2 mb-4"
           type="button"
           onClick={() => setIsChanging(false)}
         >
@@ -75,9 +73,11 @@ function Banking() {
       <h2 className="text-center sm:text-left text-xl mb-4">
         {isChanging ? "Update" : "Setup"} your banking details
       </h2>
-      <BankDetails FormButtons={FormButtons} onSubmit={submit} />
+      <BankDetails
+        FormButtons={FormButtons}
+        onSubmit={submit}
+        isLoading={isLoading}
+      />
     </div>
   );
 }
-
-export default withStepGuard(Banking);

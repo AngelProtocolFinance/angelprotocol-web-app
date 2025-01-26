@@ -1,25 +1,21 @@
 import type { FundItem } from "@better-giving/fundraiser";
-import { parseContent, toText } from "components/RichText";
+import { Link, useLoaderData } from "@remix-run/react";
+import { toText } from "components/RichText";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
-import { useFundsEndowMemberOfQuery } from "services/aws/endow-funds";
+import type { LoaderData } from "../api";
 
 interface Props {
-  endowId: number;
   classes?: string;
 }
 /** fundraisers that `endowId` is the only member of (not an index fund)  */
-export function Fundraisers({ endowId, classes = "" }: Props) {
-  const { data: funds = [] } = useFundsEndowMemberOfQuery({
-    endowId,
-    npoProfileFeatured: true,
-  });
+export function Fundraisers({ classes = "" }: Props) {
+  const { funds } = useLoaderData<LoaderData>();
 
   if (funds.length === 0) return null;
 
   return (
-    <div className={`${classes} p-8 border border-gray-l4 rounded`}>
+    <div className={`${classes} p-8 border border-gray-l4 rounded-sm`}>
       <h3 className="mb-4 border-b border-gray-l4 pb-2">Fundraisers</h3>
       <div className="grid gap-y-8">
         {funds.map((f) => (
@@ -47,7 +43,7 @@ function Fund(props: FundItem) {
         {props.name}
       </Link>
       <p className="whitespace-pre-line text-navy-l1 text-sm">
-        {toText(parseContent(props.description))}
+        {toText(props.description)}
       </p>
       <Target
         classes="col-span-full mt-4"

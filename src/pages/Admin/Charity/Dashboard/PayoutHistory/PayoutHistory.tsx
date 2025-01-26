@@ -1,54 +1,45 @@
-import QueryLoader from "components/QueryLoader";
+import { useFetcher, useSearchParams } from "@remix-run/react";
+import { Info } from "components/Status";
+import { useEffect, useState } from "react";
+import { useCachedLoaderData } from "remix-client-cache";
+import type { BalanceTxsPage } from "types/aws";
+import type { DashboardData } from "../api";
 import Table from "./Table";
-import usePagination from "./usePagination";
 
-interface Props {
-  endowId: number;
-  classes?: string;
-}
-export function PayoutHistory({ classes = "", endowId }: Props) {
-  const {
-    data,
-    hasMore,
-    isError,
-    isLoading,
-    isLoadingNextPage,
-    loadNextPage,
-    isFetching,
-  } = usePagination(endowId);
+export function PayoutHistory({ classes = "" }) {
+  const [params] = useSearchParams();
+  const { balTxs } = useCachedLoaderData<DashboardData>();
 
-  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
+  const [items, setItems] = useState<BalanceTxsPage["items"]>(balTxs.items);
+
+  const { data, state, load } = useFetcher<BalanceTxsPage>({ key: "bal-txs" });
+
+  useEffect(() => {
+    if (!data || state !== "idle") return;
+    setItems((prev) => [...prev, ...data.items]);
+  }, [data, state]);
+
+  const nextPageKey = data ? data.nextPageKey : balTxs.nextPageKey;
 
   return (
     <div className={`${classes} grid content-start`}>
       <h4 className="text-lg mb-2">Transaction history</h4>
 
-      <QueryLoader
-        queryState={{
-          data: data?.items,
-          isLoading,
-          isFetching,
-          isError: isError,
-        }}
-        classes={{ container: classes }}
-        messages={{
-          loading: "Loading records...",
-          error: "Failed to get records",
-          empty: "No record found",
-        }}
-      >
-        {(records) => (
-          <div className="grid col-span-full overflow-x-auto">
-            <Table
-              records={records}
-              hasMore={hasMore}
-              onLoadMore={loadNextPage}
-              disabled={isLoadingOrError}
-              isLoading={isLoadingNextPage}
-            />
-          </div>
-        )}
-      </QueryLoader>
+      {items.length === 0 ? (
+        <Info>No record found</Info>
+      ) : (
+        <Table
+          records={items}
+          hasMore={!!nextPageKey}
+          onLoadMore={() => {
+            const copy = new URLSearchParams(params);
+            if (nextPageKey) copy.set("nextPageKey", nextPageKey);
+            load(`?${copy.toString()}`);
+          }}
+          disabled={state === "loading"}
+          isLoading={state === "loading"}
+        />
+      )}
     </div>
   );
 }

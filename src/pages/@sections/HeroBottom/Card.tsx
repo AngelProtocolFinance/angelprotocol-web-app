@@ -1,13 +1,13 @@
-import flying_character from "assets/images/flying-character.png";
+import { Link } from "@remix-run/react";
+import flying_character from "assets/images/flying-character.webp";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 import type { EndowmentCard } from "types/aws";
 
 const Card = (props: EndowmentCard) => {
   return (
-    <div className="grid rounded-4xl bg-white h-[27rem] border border-gray-l4/30 shadow-sm shadow-black/5">
+    <div className="grid rounded-4xl bg-white h-[27rem] border border-gray-l4/30 shadow-xs shadow-black/5">
       <Image
         src={props.card_img || flying_character}
         alt="card image"

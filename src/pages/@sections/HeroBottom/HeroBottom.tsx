@@ -1,23 +1,42 @@
+import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
+import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useEndowmentCardsQuery } from "services/aws/aws";
-import { Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import Card, { Skeleton } from "./Card";
-import frame1 from "./characters/frame_1.png";
-import frame2 from "./characters/frame_2.png";
-import frame3 from "./characters/frame_3.png";
-import frame4 from "./characters/frame_4.png";
-import frame6 from "./characters/frame_6.png";
+import type { EndowmentCard } from "types/aws";
+import Card from "./Card";
+import frame1 from "./characters/frame_1.webp";
+import frame2 from "./characters/frame_2.webp";
+import frame3 from "./characters/frame_3.webp";
+import frame4 from "./characters/frame_4.webp";
+import frame6 from "./characters/frame_6.webp";
 import mappng from "./map.webp";
 import s from "./styles.module.css";
 
-const HeroBottom = ({ className = "" }) => {
-  const { data } = useEndowmentCardsQuery({
-    claimed: "true",
-    page: "1",
-    query: "",
+interface Props {
+  endowments: EndowmentCard[];
+  className?: string;
+}
+
+const HeroBottom = ({ className = "", endowments }: Props) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    skipSnaps: false,
+    slidesToScroll: 1,
+    breakpoints: {
+      "(min-width: 640px)": {
+        slidesToScroll: 1,
+        containScroll: "trimSnaps",
+      },
+      "(min-width: 768px)": {
+        slidesToScroll: 2,
+        containScroll: "trimSnaps",
+      },
+      "(min-width: 1024px)": {
+        slidesToScroll: 3,
+        containScroll: "trimSnaps",
+      },
+    },
   });
 
   return (
@@ -37,51 +56,38 @@ const HeroBottom = ({ className = "" }) => {
       <div className={s.carousel}>
         <button
           type="button"
-          className="cause-prev p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
+          onClick={() => emblaApi?.scrollPrev()}
+          className="p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
+          aria-label="Previous slide"
         >
           <ChevronLeft />
         </button>
+
+        <div
+          className="overflow-hidden relative w-[90vw] xl:w-[60vw] py-8"
+          ref={emblaRef}
+        >
+          <div className={`flex ${s.swiper_wrapper}`}>
+            {endowments.map((endow, idx) => (
+              <div
+                key={idx}
+                className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-2.5"
+              >
+                <Card {...endow} />
+              </div>
+            ))}
+          </div>
+        </div>
+
         <button
           type="button"
-          className="cause-next p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
+          onClick={() => emblaApi?.scrollNext()}
+          className="p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
+          aria-label="Next slide"
         >
           <ChevronRight className="text-2xl" />
         </button>
-        <Swiper
-          centeredSlides
-          loop
-          breakpoints={{
-            640: {
-              spaceBetween: 20,
-              slidesPerView: 1,
-            },
-            768: {
-              spaceBetween: 20,
-              slidesPerView: 2,
-            },
-            1024: {
-              spaceBetween: 20,
-              slidesPerView: 3,
-            },
-          }}
-          navigation={{
-            nextEl: ".cause-next",
-            prevEl: ".cause-prev",
-          }}
-          modules={[Navigation]}
-          className="relative w-[90vw] xl:w-[60vw] py-8"
-          wrapperClass={s.swiper_wrapper}
-        >
-          {(data?.items || [1, 2, 3, 4, 5, 6]).map((endow, idx) => (
-            <SwiperSlide key={idx}>
-              {typeof endow === "number" ? (
-                <Skeleton />
-              ) : (
-                <Card key={endow.id} {...endow} />
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>{" "}
+
         <div className={`${s.carousel_overlay} absolute inset-0 xl:hidden`} />
       </div>
 
@@ -92,7 +98,7 @@ const HeroBottom = ({ className = "" }) => {
         <span className="ml-1">Explore All Causes</span>
         <ArrowRight size={20} />
       </Link>
-      <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4 justify-self-center mt-4">
+      <p className="bg-[#FFEECC] font-gochi text-2xl z-22 px-4 justify-self-center mt-4">
         from all around the globe
       </p>
 
@@ -109,7 +115,7 @@ const HeroBottom = ({ className = "" }) => {
       <img
         src={frame3}
         alt="frame3"
-        className="max-xl:hidden absolute right-0 translate-x-1/5 top-44 "
+        className="max-xl:hidden absolute right-0 translate-x-1/5 top-44"
       />
       <img
         src={frame4}

@@ -1,5 +1,4 @@
-import { useGetter } from "store/accessors";
-import { userIsSignedIn } from "types/auth";
+import { useRootData } from "hooks/use-root-data";
 import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
@@ -10,10 +9,10 @@ import type { SummaryStep } from "../types";
 import SummaryForm from "./SummaryForm";
 
 export default function Summary(props: SummaryStep) {
+  const user = useRootData();
   const { details, donor, honorary, tip, init, feeAllowance } = props;
 
   const { setState } = useDonationState();
-  const user = useGetter((state) => state.auth.user);
 
   const [amount, Amount] = (() => {
     switch (details.method) {
@@ -64,9 +63,9 @@ export default function Summary(props: SummaryStep) {
         nonprofitName={init.recipient.name}
         donor={
           donor || {
-            lastName: userIsSignedIn(user) ? user.lastName ?? "" : "",
-            firstName: userIsSignedIn(user) ? user.firstName ?? "" : "",
-            email: userIsSignedIn(user) ? user.email : "",
+            lastName: user?.lastName ?? "",
+            firstName: user?.firstName ?? "",
+            email: user?.email ?? "",
             ukTaxResident: false,
             title: initDonorTitleOption,
             zipCode: "",

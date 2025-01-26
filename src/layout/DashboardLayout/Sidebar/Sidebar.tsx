@@ -1,6 +1,5 @@
-import { createNavLinkStyler } from "helpers";
+import { NavLink } from "@remix-run/react";
 import React, { type ReactNode } from "react";
-import { NavLink } from "react-router-dom";
 import type { LinkGroup } from "./types";
 
 type Props = {
@@ -34,7 +33,10 @@ export default function Sidebar({
                 end={link.end}
                 key={`nav_link-${link.to}`}
                 to={link.to}
-                className={linkClassName}
+                className={({ isActive, isPending }) =>
+                  `grid grid-cols-subgrid col-span-2 items-center py-3 px-5 font-bold text-sm hover:text-blue-d1 transition ease-in-out duration-300 aria-disabled:text-navy-l2 aria-disabled:pointer-events-none 
+                ${isActive ? "pointer-events-none text-blue-d1" : ""} ${isPending ? "pointer-events-none text-gray" : ""}`
+                }
                 onClick={onChange}
                 aria-disabled={link.disabled}
               >
@@ -48,8 +50,3 @@ export default function Sidebar({
     </div>
   );
 }
-
-const linkClassName = createNavLinkStyler(
-  "grid grid-cols-subgrid col-span-2 items-center py-3 px-5 font-bold text-sm hover:text-blue-d1 transition ease-in-out duration-300 aria-disabled:text-navy-l2 aria-disabled:pointer-events-none",
-  "pointer-events-none text-blue-d1"
-);

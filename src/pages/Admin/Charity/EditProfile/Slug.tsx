@@ -1,9 +1,11 @@
+import { Link } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import type { LoaderData } from "./api";
 
-const genLink = (slug: string) =>
-  `${window.origin}${appRoutes.marketplace}/${slug}`;
+const genLink = (slug: string, origin: string) =>
+  `${origin}${appRoutes.marketplace}/${slug}`;
 
 interface Props {
   initSlug?: string;
@@ -11,7 +13,8 @@ interface Props {
   slugField: ReactNode;
 }
 export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
-  const link = initSlug && genLink(initSlug);
+  const { origin } = useCachedLoaderData() as LoaderData;
+  const link = initSlug && genLink(initSlug, origin);
 
   return (
     <div>
@@ -33,7 +36,7 @@ export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
       </p>
 
       <p className="text-xs sm:text-sm text-navy-l1 italic mt-2">
-        Example: {genLink(newSlug || "myNonprofit")}
+        Example: {genLink(newSlug || "myNonprofit", origin)}
       </p>
     </div>
   );

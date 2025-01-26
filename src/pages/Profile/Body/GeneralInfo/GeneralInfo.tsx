@@ -1,24 +1,18 @@
-import QueryLoader from "components/QueryLoader";
+import { useLoaderData } from "@remix-run/react";
 import { RichText } from "components/RichText";
-import { useProgramsQuery } from "services/aws/programs";
-import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
 import Media from "./Media";
 import Programs from "./Programs";
+import type { LoaderData } from "./api";
 
-export default function GeneralInfo({ className = "" }) {
+export default function GeneralInfo() {
   const profile = useProfileContext();
-  const programs = useProgramsQuery(profile.id);
-  const { data: media, ...mediaState } = usePaginatedMedia(profile.id, {
-    featured: true,
-  });
+  const { programs, media } = useLoaderData<LoaderData>();
 
   return (
-    <div
-      className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
-    >
+    <div className="order-4 lg:col-span-2 grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
       <div className="flex flex-col gap-8 w-full h-full">
         <Container title="Overview">
           <RichText
@@ -27,26 +21,15 @@ export default function GeneralInfo({ className = "" }) {
             readOnly
           />
         </Container>
-        <QueryLoader
-          queryState={programs}
-          messages={{ error: "Failed to load programs", empty: <></> }}
-        >
-          {(programs) => (
-            <Container title="Programs">
-              <Programs programs={programs} />
-            </Container>
-          )}
-        </QueryLoader>
-        <QueryLoader
-          queryState={{ data: media?.items, ...mediaState }}
-          messages={{ error: "Failed to load media", empty: <></> }}
-        >
-          {(media) => (
-            <Container title="Media">
-              <Media media={media} />
-            </Container>
-          )}
-        </QueryLoader>
+        {programs.length > 0 ? (
+          <Container title="Programs">
+            <Programs programs={programs} />
+          </Container>
+        ) : null}
+
+        {media.length > 0 ? (
+          <Container title="Media">{<Media media={media} />}</Container>
+        ) : null}
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
     </div>

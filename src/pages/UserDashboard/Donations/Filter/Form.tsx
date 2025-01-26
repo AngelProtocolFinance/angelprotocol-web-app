@@ -19,7 +19,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       as="form"
       onSubmit={submit}
       onReset={onReset}
-      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l4 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @5xl:shadow-sm`}
+      className={`${classes} grid content-start gap-4 w-full rounded-sm border border-gray-l4 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @-5xl:shadow-xs`}
     >
       <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
         <span className="text-blue-d1">Filters</span>
@@ -47,7 +47,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         </button>
         <button
           type="submit"
-          className="btn btn-blue px-6 py-2 rounded-sm text-xs font-bold uppercase"
+          className="btn btn-blue px-6 py-2 rounded-xs text-xs font-bold uppercase"
         >
           Submit
         </button>

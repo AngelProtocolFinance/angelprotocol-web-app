@@ -1,26 +1,20 @@
-import flying_character from "assets/images/flying-character.png";
+import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
-import { useEndowment } from "services/aws/useEndowment";
-import { useAdminContext } from "../Context";
 
-export default function Header() {
-  const { id } = useAdminContext();
-  const { data: profile, isLoading } = useEndowment(id, ["logo", "name"]);
+interface Endow {
+  name: string;
+  logo?: string;
+}
 
+export default function Loader({ name, logo = flying_character }: Endow) {
   return (
     <div
       className={`flex flex-col gap-1 w-full py-6 px-5 border-b border-gray-l4`}
     >
       <div className="flex justify-between">
-        <Image
-          className="w-14 h-14"
-          src={profile?.logo || flying_character}
-          isSrcLoading={isLoading}
-        />
+        <Image className="w-14 h-14" src={logo || flying_character} />
       </div>
-      <h5 className="text-sm font-bold truncate mt-2">
-        {profile?.name || "Nonprofit"}
-      </h5>
+      <h5 className="text-sm font-bold truncate mt-2">{name}</h5>
     </div>
   );
 }

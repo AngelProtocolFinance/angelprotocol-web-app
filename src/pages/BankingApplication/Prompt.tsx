@@ -1,90 +1,74 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import Modal from "components/Modal";
-import GenericPrompt from "components/Prompt";
-import { Field } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
+import { getFormProps, getTextareaProps, useForm } from "@conform-to/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { Link, useFetcher, useNavigate } from "@remix-run/react";
+import { parseWithValibot } from "conform-to-valibot";
 import { ChevronRight, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
+import { type ActionData, isFormErr } from "types/action";
 import {
-  FormProvider,
-  type SubmitHandler,
-  type UseFormReturn,
-  useForm,
-} from "react-hook-form";
-import { requiredString } from "schemas/string";
-import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
-import { object, string } from "yup";
+  type BankingApplicationStatus,
+  bankingApplicationUpdate,
+} from "types/aws";
 
 type Props = {
-  uuid: string;
-  verdict: "approve" | "reject";
+  verdict: BankingApplicationStatus;
 };
 
-export default function Prompt({ verdict, uuid }: Props) {
-  const [review, { isLoading }] = useUpdateBankingApplicationMutation();
-  const { handleError } = useErrorContext();
-  const { isDismissible, setModalOption, closeModal, showModal } =
-    useModalContext();
-  const methods = useForm({
-    resolver: yupResolver(
-      object({
-        reason: verdict === "approve" ? string().trim() : requiredString.trim(),
-      })
-    ),
-    defaultValues: { reason: "" },
+export function Prompt(props: Props) {
+  const navigate = useNavigate();
+  return (
+    <Dialog
+      open={true}
+      onClose={() =>
+        navigate("..", { preventScrollReset: true, replace: true })
+      }
+      className="relative z-50"
+    >
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
+      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden">
+        <Content {...props} />
+      </DialogPanel>
+    </Dialog>
+  );
+}
+
+function Content({ verdict }: Props) {
+  const fetcher = useFetcher<ActionData<any>>({
+    key: `banking-application-${verdict}`,
   });
 
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-
-  const onSubmit: SubmitHandler<FV> = async ({ reason = "" }) => {
-    setModalOption("isDismissible", false);
-    const result = await review({
-      uuid,
-      ...(verdict === "approve"
-        ? { type: "approved" }
-        : { type: "rejected", reason }),
-    });
-
-    if ("error" in result) {
-      return handleError(result.error, { context: "submitting review" });
-    }
-
-    showModal(GenericPrompt, {
-      headline: "Success",
-      children: (
-        <p className="my-4 text-lg font-semibold">
-          Your review has been submitted.
-        </p>
-      ),
-    });
-  };
+  const [form, fields] = useForm({
+    shouldRevalidate: "onInput",
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema: bankingApplicationUpdate });
+    },
+  });
 
   return (
-    <Modal
-      as="form"
-      onSubmit={methods.handleSubmit(onSubmit)}
-      className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+    <fetcher.Form
+      {...getFormProps(form)}
+      method="POST"
+      className="grid content-start justify-items-center text-navy-d4"
     >
+      <input type="hidden" value={verdict} name="type" />
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
           Banking application
         </p>
-        {isDismissible && (
-          <button
-            onClick={closeModal}
-            disabled={isLoading}
-            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
-          >
-            <X className="text-lg sm:text-2xl" />
-          </button>
-        )}
+        <Link
+          to=".."
+          aria-disabled={fetcher.state !== "idle"}
+          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 dark:disabled:border-navy-d3"
+        >
+          <X className="text-lg sm:text-2xl" />
+        </Link>
       </div>
       <p className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5 mt-4 font-semibold">
         You are about to {verdict} this banking application.
       </p>
 
-      {verdict === "approve" ? (
+      {verdict === "approved" ? (
         <div className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5">
           This will immediately payout all pending funds to newly linked bank
           account and is irreversible.
@@ -94,44 +78,47 @@ export default function Prompt({ verdict, uuid }: Props) {
       <div className="flex items-center gap-2 mb-6">
         <Status classes="bg-gray-d2">Under review</Status>
         <ChevronRight size={20} />
-        {verdict === "approve" ? (
+        {verdict === "approved" ? (
           <Status classes="bg-green">Approved</Status>
         ) : (
           <Status classes="bg-red">Rejected</Status>
         )}
       </div>
 
-      {verdict === "reject" && (
-        <FormProvider {...methods}>
-          <div className="px-6 w-full pb-6">
-            <Field<FV, "textarea">
-              required
-              name="reason"
-              type="textarea"
-              label="Reason for rejection:"
-            />
-          </div>
-        </FormProvider>
+      {verdict === "rejected" && (
+        <div className="px-6 w-full pb-6 grid">
+          <label
+            htmlFor={fields.reason.id}
+            className="label mb-2"
+            data-required
+          >
+            Reason for rejection:
+          </label>
+          <textarea
+            {...getTextareaProps(fields.reason)}
+            className="field-input"
+          />
+          <span className="empty:hidden text-xs text-red mt-1">
+            {fields.reason.errors?.[0]}
+          </span>
+        </div>
       )}
 
       <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l4">
-        <button
-          disabled={isLoading}
-          type="button"
+        <Link
+          replace
+          preventScrollReset
+          to=".."
+          aria-disabled={fetcher.state !== "idle"}
           className="btn-outline-filled text-sm px-8 py-2"
-          onClick={closeModal}
         >
           Cancel
-        </button>
-        <button
-          disabled={isLoading}
-          type="submit"
-          className="btn-blue px-8 py-2 text-sm"
-        >
+        </Link>
+        <button type="submit" className="btn-blue px-8 py-2 text-sm">
           Submit
         </button>
       </div>
-    </Modal>
+    </fetcher.Form>
   );
 }
 

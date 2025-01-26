@@ -1,12 +1,13 @@
 import chains from "@better-giving/assets/chains";
 import type { DonationIntent } from "@better-giving/donation/intent";
+import { useNavigate } from "@remix-run/react";
+import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
-import { useNavigate } from "react-router-dom";
-import { useCreateCryptoIntentQuery } from "services/apes";
-import type { DonateThanksState } from "types/pages";
+import useSWR from "swr/immutable";
+import type { Crypto } from "types/aws";
 import ContinueBtn from "../../common/ContinueBtn";
 import { toDonor } from "../../common/constants";
 import type { CryptoSubmitStep } from "../../types";
@@ -16,6 +17,13 @@ type Props = {
   classes?: string;
   donation: CryptoSubmitStep;
 };
+
+const fetcher = async (intent: DonationIntent) => {
+  return apes
+    .post<Crypto.NewPayment>("crypto-intents", { json: intent })
+    .json();
+};
+
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
@@ -58,7 +66,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     };
   }
 
-  const intentQuery = useCreateCryptoIntentQuery(intent);
+  const { data, isLoading, error, isValidating } = useSWR(intent, fetcher);
 
   const totalDisplayAmount = roundToCents(
     +details.token.amount + (tip?.value ?? 0) + feeAllowance,
@@ -74,9 +82,14 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         {details.token.symbol} from your crypto wallet to the address below
       </p>
       <QueryLoader
-        queryState={intentQuery}
+        queryState={{
+          isLoading: isLoading,
+          isFetching: isValidating,
+          data: data,
+          isError: !!error,
+        }}
         messages={{
-          loading: <ContentLoader className="size-48 rounded" />,
+          loading: <ContentLoader className="size-48 rounded-sm" />,
           error: "Failed to load donation address",
         }}
       >
@@ -103,14 +116,11 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </p>
 
       <ContinueBtn
-        disabled={intentQuery.isError || intentQuery.isLoading}
+        disabled={!!error || isLoading}
         onClick={() =>
-          navigate(appRoutes.donate_thanks, {
-            state: {
-              recipientName: init.recipient.name,
-              recipientId: init.recipient.id,
-            } satisfies DonateThanksState,
-          })
+          navigate(
+            `${appRoutes.donate_thanks}?recipient_name=${init.recipient.name}`
+          )
         }
         text="I have completed the payment"
         className="justify-self-stretch mt-8"

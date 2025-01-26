@@ -1,14 +1,12 @@
+import { Link } from "@remix-run/react";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
-import { useRendered } from "hooks/use-rendered";
-import { Link } from "react-router-dom";
 
 export default function Hero({ className = "" }) {
-  useRendered();
   return (
     <section
-      className={`${className} grid justify-items-center gap-y-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
+      className={`${className} grid justify-items-center gap-y-10 @6xl:justify-items-start @-6xl:grid-cols-[3fr_2fr] py-24`}
     >
       <div className="grid content-start max-w-2xl order-2 @6xl:order-1">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-navy-d4 mb-5">

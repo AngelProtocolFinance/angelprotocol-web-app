@@ -1,14 +1,23 @@
-import ContentLoader from "components/ContentLoader";
-import QueryLoader from "components/QueryLoader";
+import { Link } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
+import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
-import { useAuthenticatedUser } from "contexts/Auth";
-import { Link } from "react-router-dom";
-import { useUserFundsQuery } from "services/aws/users";
 import { Fund } from "./Fund";
+import type { LoaderData } from "./api";
 
-export function Funds() {
-  const user = useAuthenticatedUser();
-  const query = useUserFundsQuery(user.email);
+export default function Funds() {
+  const { funds } = useCachedLoaderData<LoaderData>();
+
+  const items =
+    funds.length === 0 ? (
+      <Info>You currently don't have any fundraisers</Info>
+    ) : (
+      <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
+        {funds.map((fund) => (
+          <Fund key={fund.id} {...fund} />
+        ))}
+      </div>
+    );
   return (
     <div className="grid">
       <div className="flex items-center justify-between mb-2 w-full border-b border-gray-l4 pb-4">
@@ -20,39 +29,7 @@ export function Funds() {
           Create
         </Link>
       </div>
-
-      <QueryLoader
-        messages={{
-          loading: <Skeleton />,
-          error: "Failed to get fundraisers",
-          empty: "You currently don't have any fundraisers",
-        }}
-        queryState={query}
-      >
-        {(funds) => (
-          <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
-            {funds.map((fund) => (
-              <Fund key={fund.id} {...fund} />
-            ))}
-          </div>
-        )}
-      </QueryLoader>
-    </div>
-  );
-}
-
-function Skeleton() {
-  return (
-    <div
-      className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4"
-      aria-disabled={true}
-    >
-      <ContentLoader className="h-60 rounded-lg" />
-      <ContentLoader className="h-60 rounded-lg" />
-      <ContentLoader className="h-60 rounded-lg" />
-      <ContentLoader className="h-60 rounded-lg" />
-      <ContentLoader className="h-60 rounded-lg" />
-      <ContentLoader className="h-60 rounded-lg" />
+      {items}
     </div>
   );
 }

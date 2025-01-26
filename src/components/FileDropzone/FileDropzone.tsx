@@ -1,13 +1,11 @@
 import { logger } from "helpers";
 import { uploadFile } from "helpers/uploadFile";
 import { type ReactNode, forwardRef, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import type { Bucket } from "types/lists";
+import { useDropzone } from "react-dropzone-esm";
 import DropzoneText from "./DropzoneText";
 import type { FileOutput, FileSpec } from "./types";
 
 interface Props {
-  bucket: Bucket;
   label?: ReactNode;
   value: FileOutput;
   onChange: (val: FileOutput) => void;
@@ -35,7 +33,7 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
 
     try {
       props.onChange("loading");
-      const url = await uploadFile(f, props.bucket);
+      const url = await uploadFile(f);
       return props.onChange(url);
     } catch (err) {
       logger.error(err);
@@ -57,7 +55,7 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
         data-disabled={props.disabled || props.value === "loading"}
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-gray-l2 border-dashed w-full h-[11.375rem]
-          focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
+          focus:outline-hidden focus:ring-2 data-[drag="true"]:ring-2 has-active:ring-2 ring-blue-d1 ring-offset-2 
           hover:bg-blue-l5
           data-[disabled="true"]:bg-gray-l5 data-[disabled="true"]:pointer-events-none data-[disabled="true"]:ring-0
           data-[invalid="true"]:border-red

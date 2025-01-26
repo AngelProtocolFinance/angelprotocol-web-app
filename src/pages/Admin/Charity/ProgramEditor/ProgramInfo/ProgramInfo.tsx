@@ -13,7 +13,7 @@ export default function ProgramInfo(props: Program) {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, isDirty, errors },
+    formState: { isSubmitting, isDirty, errors, dirtyFields },
     trigger,
     resetField,
     control,
@@ -32,7 +32,7 @@ export default function ProgramInfo(props: Program) {
     control,
   });
 
-  const submit = useSubmit(props);
+  const { submit, isLoading } = useSubmit(dirtyFields);
 
   return (
     <Group title="Program information">
@@ -50,7 +50,6 @@ export default function ProgramInfo(props: Program) {
         />
         <Label className="-mb-4">Banner image of program</Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={image.value}
           onChange={(v) => {
             image.onChange(v);
@@ -61,7 +60,7 @@ export default function ProgramInfo(props: Program) {
             resetField("image");
           }}
           spec={imgSpec([4, 1])}
-          classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          classes={{ container: "mb-4", dropzone: "w-full aspect-4/1" }}
           error={errors.image?.message}
         />
 
@@ -75,7 +74,7 @@ export default function ProgramInfo(props: Program) {
           charLimit={MAX_CHARS}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
           }}
           error={
@@ -91,11 +90,13 @@ export default function ProgramInfo(props: Program) {
           error={errors.targetRaise?.message}
         />
         <button
-          disabled={!isDirty}
+          disabled={
+            !isDirty || isLoading || isSubmitting || image.value === "loading"
+          }
           type="submit"
           className="@lg:justify-self-end btn-blue py-2 text-sm"
         >
-          Save changes
+          {isLoading || isSubmitting ? "Saving..." : "Save changes"}
         </button>
       </Form>
     </Group>

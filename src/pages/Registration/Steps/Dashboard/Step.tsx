@@ -1,6 +1,5 @@
+import { NavLink } from "@remix-run/react";
 import type { RegStep } from "pages/Registration/types";
-import { Link } from "react-router-dom";
-import { useRegState } from "../StepGuard";
 
 type TStep = Exclude<RegStep, 6>; // exclude summary step
 type Props = {
@@ -14,10 +13,6 @@ export default function Step({
   status = "Completed" /** not possible to visit this page without completing steps */,
   disabled,
 }: Props) {
-  const {
-    data: { init },
-  } = useRegState<3>();
-
   return (
     <div
       className={`py-6 pl-2 pr-4 grid grid-cols-[1fr_auto_auto] items-center border-b ${
@@ -28,14 +23,13 @@ export default function Step({
 
       <p className="text-green font-semibold max-sm:row-start-2">{status}</p>
 
-      <Link
+      <NavLink
         to={`../${num}`}
         className="min-w-[8rem] ml-6 max-sm:row-span-2 btn-outline-filled btn-reg"
         aria-disabled={disabled}
-        state={init}
       >
         Update
-      </Link>
+      </NavLink>
     </div>
   );
 }

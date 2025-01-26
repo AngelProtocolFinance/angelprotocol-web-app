@@ -1,29 +1,42 @@
 import type { Allocation } from "@better-giving/endowment";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Field, Label, Switch } from "@headlessui/react";
-import Modal from "components/Modal";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
+import { useFetcher, useNavigate, useRouteLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import { useEditEndowmentMutation } from "services/aws/aws";
+import type { EndowmentUpdate } from "services/types";
+import type { DashboardData } from "../api";
 import { AllocationOptions } from "./AllocationOptions";
 import { AllocationSlider } from "./AllocationSlider";
 import { allocationOptions, toAllocOptValue } from "./common";
 
-export function Edit({
-  id,
-  amount,
-  ...props
-}: Allocation & { id: number; amount: number }) {
-  const { closeModal } = useModalContext();
-  const [editEndow, { isLoading }] = useEditEndowmentMutation();
-  const { handleError } = useErrorContext();
+export default function Edit() {
+  const { alloc, bal } = useRouteLoaderData("dashboard") as DashboardData;
+  const navigate = useNavigate();
+  return (
+    <Dialog
+      open={true}
+      onClose={() =>
+        navigate("..", { replace: true, preventScrollReset: true })
+      }
+      className="relative z-50"
+    >
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
+      <Content amount={bal.payoutsPending} {...alloc} />
+    </Dialog>
+  );
+}
+
+function Content({ amount, ...props }: Allocation & { amount: number }) {
+  const fetcher = useFetcher();
   const [alloc, setAlloc] = useState<Allocation>(props);
   const [isCustom, setIsCustom] = useState(
     allocationOptions.every((opt) => opt.value !== toAllocOptValue(props))
   );
 
+  const isLoading = fetcher.state !== "idle";
+
   return (
-    <Modal className="fixed-center z-10 grid gap-y-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6 max-h-[90dvh] overflow-y-scroll">
+    <DialogPanel className="fixed-center z-10 grid gap-y-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6 max-h-[90dvh] overflow-y-scroll">
       <h4>Choose allocation</h4>
 
       <AllocationOptions
@@ -38,11 +51,11 @@ export function Edit({
         <Switch
           checked={isCustom}
           onChange={setIsCustom}
-          className="group relative flex h-6 w-10 cursor-pointer rounded-full bg-gray-l4 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-blue-d1 shadow-inner"
+          className="group relative flex h-6 w-10 cursor-pointer rounded-full bg-gray-l4 p-1 transition-colors duration-200 ease-in-out focus:outline-hidden data-focus:outline-1 data-focus:outline-white data-checked:bg-blue-d1 shadow-inner"
         >
           <span
             aria-hidden="true"
-            className="pointer-events-none inline-block size-4 translate-x-0 rounded-full bg-white ring-0 shadow-lg transition duration-200 ease-in-out group-data-[checked]:translate-x-4"
+            className="pointer-events-none inline-block size-4 translate-x-0 rounded-full bg-white ring-0 shadow-lg transition duration-200 ease-in-out group-data-checked:translate-x-4"
           />
         </Switch>
         <Label>Set custom allocation</Label>
@@ -60,16 +73,17 @@ export function Edit({
         type="button"
         className="btn btn-blue px-4 py-2 text-sm uppercase mt-4 rounded-full"
         onClick={async () => {
-          try {
-            await editEndow({ id, allocation: alloc }).unwrap();
-            closeModal();
-          } catch (err) {
-            handleError(err);
-          }
+          const update: EndowmentUpdate = { allocation: alloc };
+
+          fetcher.submit(update as any, {
+            method: "PATCH",
+            action: "..",
+            encType: "application/json",
+          });
         }}
       >
         {isLoading ? "Updating.." : "Save"}
       </button>
-    </Modal>
+    </DialogPanel>
   );
 }

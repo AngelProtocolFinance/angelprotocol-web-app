@@ -1,4 +1,4 @@
-import ReactPlayer from "react-player";
+import { ReactPlayer } from "components/react-player";
 
 interface IVideo {
   classes?: string;
@@ -7,7 +7,7 @@ interface IVideo {
 export function Video(props: IVideo) {
   return (
     /** @see https://github.com/CookPete/react-player/issues/145 */
-    <div className="relative pt-[56.25%] aspect-[16/9] rounded-lg overflow-clip">
+    <div className="relative pt-[56.25%] aspect-16/9 rounded-lg overflow-clip">
       <ReactPlayer
         style={{
           position: "absolute",

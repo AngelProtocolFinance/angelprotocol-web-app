@@ -1,14 +1,16 @@
 import type { EndowDesignation } from "@better-giving/endowment";
+import { Outlet } from "@remix-run/react";
 import countries from "assets/countries/all.json";
 import { ControlledCountrySelector as CountrySelector } from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import Group from "components/Group";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
+import PromptV2 from "components/Prompt";
 import { RichText } from "components/RichText";
 import { List, MultiList } from "components/Selector";
 import { Confirmed, Info } from "components/Status";
 import { ControlledToggle as Toggle } from "components/Toggle";
-import { NativeField as Field, Label } from "components/form";
+import { Form as F, NativeField as Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import Slug from "./Slug";
@@ -38,9 +40,16 @@ interface Props {
 
 export default function Form({ initSlug = "", init, id }: Props) {
   const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
-  const { onSubmit } = useEditProfile(id, dirtyFields);
+  const { onSubmit, state, prompt, setPrompt } = useEditProfile(dirtyFields);
+  const isUploading = [
+    rhf.logo.value,
+    rhf.card_img.value,
+    rhf.banner.value,
+  ].some((v) => v === "loading");
+
   return (
-    <form
+    <F
+      disabled={rhf.isSubmitting || state !== "idle"}
       onReset={(e) => {
         e.preventDefault();
         rhf.reset();
@@ -48,6 +57,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
@@ -80,7 +90,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
         />
         <Label className="-mb-4">Banner image of your organization</Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={rhf.banner.value}
           onChange={(val) => {
             rhf.banner.onChange(val);
@@ -92,12 +101,11 @@ export default function Form({ initSlug = "", init, id }: Props) {
             rhf.resetField("image");
           }}
           spec={bannerSpec}
-          classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          classes={{ container: "mb-4", dropzone: "w-full aspect-4/1" }}
           error={rhf.errors.image?.message}
         />
         <Label className="-mb-4">Logo of your organization</Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={rhf.logo.value}
           onChange={(val) => {
             rhf.logo.onChange(val);
@@ -118,7 +126,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
           Marketplace Card image for your organization
         </Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={rhf.card_img.value}
           onChange={(val) => {
             rhf.card_img.onChange(val);
@@ -131,7 +138,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           spec={cardImgSpec}
           classes={{
             container: "mb-4",
-            dropzone: "w-full aspect-[2/1]",
+            dropzone: "w-full sm:w-96 aspect-2/1",
           }}
           error={rhf.errors.card_img?.message}
         />
@@ -144,7 +151,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           charLimit={MAX_CHARS}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
             error: "text-right",
           }}
@@ -335,20 +342,22 @@ export default function Form({ initSlug = "", init, id }: Props) {
 
       <div className="flex gap-3 group-disabled:hidden">
         <button
-          disabled={rhf.isSubmitting || !rhf.isDirty}
+          disabled={!rhf.isDirty}
           type="reset"
           className="px-6 btn-outline-filled text-sm"
         >
           Reset changes
         </button>
         <button
-          disabled={rhf.isSubmitting || !rhf.isDirty}
+          disabled={!rhf.isDirty || isUploading}
           type="submit"
           className="px-6 btn-blue text-sm"
         >
           Submit changes
         </button>
       </div>
-    </form>
+      {/** success prompts */}
+      <Outlet />
+    </F>
   );
 }

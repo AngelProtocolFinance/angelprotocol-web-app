@@ -1,7 +1,10 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "@remix-run/react";
+import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
-import Prompt from "components/Prompt";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
+import { ErrorBoundaryClass } from "components/error";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
@@ -9,16 +12,11 @@ import {
 } from "components/form";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import ErrorBoundary from "errors/ErrorBoundary";
+import { errorPrompt } from "contexts/ErrorContext";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { schema } from "schemas/shape";
-import { useLazyChariotGrantQuery } from "services/apes";
-import type { DonateThanksState } from "types/pages";
 import { mixed, string } from "yup";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
@@ -47,9 +45,8 @@ const CUSTOM_MSG_MAX_LENGTH = 250;
 
 export default function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
-  const { handleError } = useErrorContext();
-  const { showModal, closeModal, setModalOption } = useModalContext();
-  const [createGrant, { isLoading }] = useLazyChariotGrantQuery();
+  const [prompt, setPrompt] = useState<IPromptV2>();
+  const [grantState, setGrantState] = useState<"pending">();
   const navigate = useNavigate();
 
   const {
@@ -130,7 +127,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           : undefined
       }
     >
-      <ErrorBoundary>
+      <ErrorBoundaryClass>
         <Form className="grid grid-cols-2 gap-x-4 mt-4">
           <CheckField {...register("coverFee")} classes="col-span-full">
             Cover payment processing fees for your donation{" "}
@@ -221,7 +218,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         </Form>
         <ChariotConnect
           theme="LightBlueTheme"
-          disabled={isLoading}
+          disabled={grantState === "pending"}
           cid={CHARIOT_CONNECT_ID}
           // https://givechariot.readme.io/reference/integrating-connect#pre-populate-data-into-your-connect-session
           onDonationRequest={async () => {
@@ -251,12 +248,11 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (ev) => {
             try {
-              showModal(Prompt, {
+              setPrompt({
                 type: "loading",
-                children: "Processing payment..",
+                children: "Processing payment",
+                isDismissable: false,
               });
-
-              setModalOption("isDismissible", false);
 
               const {
                 grantIntent,
@@ -318,32 +314,28 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 }
               }
 
-              await createGrant(intent).unwrap();
+              setGrantState("pending");
+              await apes.post("fiat-donation/chariot", { json: intent });
 
-              setModalOption("isDismissible", true);
-              closeModal();
+              setPrompt(undefined);
 
-              navigate(`${appRoutes.donate_thanks}`, {
-                state: {
-                  guestDonor: {
-                    email: grantor.email,
-                    fullName: `${grantor.firstName} ${grantor.lastName}`,
-                  },
-                  recipientId: props.init.recipient.id,
-                  recipientName: props.init.recipient.name,
-                } satisfies DonateThanksState,
-              });
+              navigate(
+                `${appRoutes.donate_thanks}?recipient_name=${props.init.recipient.name}`
+              );
             } catch (err) {
-              handleError(err, { context: "processing donation" });
+              setPrompt(errorPrompt(err, { context: "processing donation" }));
+            } finally {
+              setGrantState(undefined);
             }
           }}
         />
-      </ErrorBoundary>
+      </ErrorBoundaryClass>
       <ContentLoader className="h-12 mt-4 block group-has-[chariot-connect]:hidden" />
       <DonationTerms
         endowName={props.init.recipient.name}
         classes="border-t border-gray-l4 mt-5 pt-4 "
       />
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </Summary>
   );
 }

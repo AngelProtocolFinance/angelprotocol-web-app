@@ -1,25 +1,148 @@
-@import "tailwindcss/base";
-@import "./styles/base";
-
-@import "../node_modules/quill/dist/quill.snow.css";
-@import "./styles/richtext.css";
-
-@import "../node_modules/cropperjs/dist/cropper.min.css";
-
-@import "../node_modules/swiper/swiper.min.css";
-@import "../node_modules/swiper/modules/pagination.min.css";
-@import "../node_modules/swiper/modules/navigation.min.css";
-@import "../node_modules/nprogress/nprogress.css";
-
-@import "tailwindcss/components";
+@import "tailwindcss";
+@import "./styles/base.css";
 @import "./styles/components.css";
-
-
-@import "tailwindcss/utilities";
 @import "./styles/utilities.css";
 
-:root {
-    --accent-primary: theme(colors.blue.d1);
-    --accent-secondary:theme(colors.blue.l4);
-  }
+@plugin '@tailwindcss/typography';
 
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-\*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-inherit: inherit;
+
+  --color-blue-d7: #0b1a2a;
+  --color-blue-d6: #112840;
+  --color-blue-d5: #1a3f60;
+  --color-blue-d4: #194b73;
+  --color-blue-d3: #1a578a;
+  --color-blue-d2: #1e6dab;
+  --color-blue-d1: #2d89c8;
+  --color-blue: #54a5dc;
+  --color-blue-l1: #8fc4ea;
+  --color-blue-l2: #c4def3;
+  --color-blue-l3: #b8d9ef;
+  --color-blue-l4: #e6f1f9;
+  --color-blue-l5: #f7fafd;
+
+  --color-green-d4: #092a17;
+  --color-green-d3: #1d5e35;
+  --color-green-d2: #1f763e;
+  --color-green-d1: #23964c;
+  --color-green: #31b861;
+  --color-green-l1: #57d182;
+  --color-green-l2: #8fe6ae;
+  --color-green-l3: #c0f2d1;
+  --color-green-l4: #dff9e8;
+  --color-green-l5: #f1fcf4;
+
+  --color-navy-d4: #183244;
+  --color-navy-d3: #1f3648;
+  --color-navy-d2: #273f52;
+  --color-navy-d1: #314c5d;
+  --color-navy: #3c5667;
+  --color-navy-l1: #496273;
+  --color-navy-l2: #5b6f7f;
+  --color-navy-l3: #72828d;
+  --color-navy-l4: #9dabb5;
+  --color-navy-l5: #d4dee6;
+
+  --color-red-d4: #9d1717;
+  --color-red-d3: #c81818;
+  --color-red-d2: #e22020;
+  --color-red-d1: #e22020;
+  --color-red: #f53e3e;
+  --color-red-l1: #fc6d6d;
+  --color-red-l2: #ffa2a2;
+  --color-red-l3: #ffc8c8;
+  --color-red-l4: #ffe1e1;
+  --color-red-l5: #fef2f2;
+
+  --color-black: #000101;
+
+  --color-gray-d3: #363636;
+  --color-gray-d2: #545454;
+  --color-gray-d1: #676767;
+  --color-gray: #999999;
+  --color-gray-l1: #adadad;
+  --color-gray-l2: #c8c8c8;
+  --color-gray-l3: #d7d7d7;
+  --color-gray-l4: #e7e7e7;
+  --color-gray-l5: #f9fbfa;
+  --color-gray-l6: #ffffff;
+
+  --color-amber-d2: #b45309;
+  --color-amber-d1: #d97706;
+  --color-amber: #f59e0b;
+  --color-amber-l3: #fcd34d;
+  --color-amber-l4: #fef3c7;
+  --color-amber-l5: #fffbeb;
+
+  --color-white: #ffffff;
+  --color-sdg1: #e5233d;
+  --color-sdg2: #dda73a;
+  --color-sdg3: #4ca146;
+  --color-sdg4: #c5192d;
+  --color-sdg5: #ef402c;
+  --color-sdg6: #27bfe6;
+  --color-sdg7: #fbc412;
+  --color-sdg8: #a31c44;
+  --color-sdg9: #f26a2d;
+  --color-sdg10: #e01483;
+  --color-sdg11: #f89d2a;
+  --color-sdg12: #bf8d2c;
+  --color-sdg13: #407f46;
+  --color-sdg14: #1f97d4;
+  --color-sdg15: #59ba48;
+  --color-sdg16: #126a9f;
+  --color-sdg17: #13496b;
+  --color-peach: #fde3d8;
+  --color-lilac: #eae2fc;
+
+  --text-2xs: 0.625rem;
+  --text-3xs: 0.56rem, 0.7rem;
+  --text-4_5xl: 2.625rem;
+
+  --font-heading: Quicksand Variable, serif;
+  --font-body: DM Sans Variable, sans-serif;
+  --font-gochi: Gochi Hand, cursive;
+
+  --width-3\/4: 75%;
+
+  --radius-4xl: 2rem;
+  --radius-5xl: 3.5rem;
+
+  @keyframes translate-rtl {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+:root {
+  --accent-primary: var(--color-blue-d1);
+  --accent-secondary: var(--color-blue-l4);
+}

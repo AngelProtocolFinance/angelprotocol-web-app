@@ -57,12 +57,12 @@ export function Summary({ classes = "", ...props }: Props) {
     return null;
 
   return (
-    <div className={`${classes} p-4 rounded border border-gray-l4`}>
+    <div className={`${classes} p-4 rounded-sm border border-gray-l4`}>
       <h4 className="mb-6 flex items-center gap-2">
         <span>Projected Month End Balances</span>
         <Tooltip
           tip={
-            <Content className="bg-navy-d4 text-gray-l2 text-xs p-2 rounded">
+            <Content className="bg-navy-d4 text-gray-l2 text-xs p-2 rounded-sm">
               This value does not reflect any potential growth from savings and
               investments
               <Arrow />

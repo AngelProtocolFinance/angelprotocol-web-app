@@ -1,8 +1,11 @@
-import { useAuthenticatedUser } from "contexts/Auth";
+import { useCachedLoaderData } from "api/cache";
 import EndowAlertForm from "./EndowAlertForm";
-
+import type { SettingsData } from "./api";
+export { loader, action } from "./api";
+export { clientLoader } from "api/cache";
+export { ErrorBoundary } from "components/error";
 export default function Settings() {
-  const user = useAuthenticatedUser();
+  const { user, userEndows } = useCachedLoaderData<SettingsData>();
   return (
     <div className="grid">
       <h2 className="text-3xl">Settings</h2>
@@ -10,7 +13,11 @@ export default function Settings() {
         Here, you can update various settings relating to any nonprofit that you
         are a member of.
       </p>
-      <EndowAlertForm user={user} classes="mt-4 justify-self-start" />
+      <EndowAlertForm
+        user={user}
+        userEndows={userEndows}
+        classes="mt-4 justify-self-start"
+      />
     </div>
   );
 }

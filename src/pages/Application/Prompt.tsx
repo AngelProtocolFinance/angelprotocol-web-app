@@ -1,9 +1,13 @@
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Modal from "components/Modal";
-import GenericPrompt from "components/Prompt";
+import {
+  Link,
+  useFetcher,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import { Field } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { ChevronRight, CircleAlert, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import {
@@ -13,24 +17,20 @@ import {
   useForm,
 } from "react-hook-form";
 import { requiredString } from "schemas/string";
-import { useReviewApplicationMutation } from "services/aws/aws";
 import { object, string } from "yup";
 
-type Props = {
-  uuid: string;
-  orgName: string;
-  verdict: "approve" | "reject";
-};
+function Content() {
+  const { verdict } = useParams();
+  const [params] = useSearchParams();
+  const orgName = params.get("org_name") ?? "";
 
-export default function Prompt({ verdict, orgName, uuid }: Props) {
-  const [review, { isLoading }] = useReviewApplicationMutation();
-  const { handleError } = useErrorContext();
-  const { isDismissible, setModalOption, closeModal, showModal } =
-    useModalContext();
+  const fetcher = useFetcher({ key: "application-review" });
+
   const methods = useForm({
     resolver: yupResolver(
       object({
-        reason: verdict === "approve" ? string().trim() : requiredString.trim(),
+        reason:
+          verdict === "approved" ? string().trim() : requiredString.trim(),
       })
     ),
     defaultValues: { reason: "" },
@@ -38,48 +38,32 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
-  const onSubmit: SubmitHandler<FV> = async (fv) => {
-    setModalOption("isDismissible", false);
-    const result = await review({
-      id: uuid,
-      ...(verdict === "approve"
-        ? { verdict: "approved" }
-        : { verdict: "rejected", reason: fv.reason ?? "" }),
+  const onSubmit: SubmitHandler<FV> = async (fv) =>
+    fetcher.submit(fv, {
+      encType: "application/json",
+      method: "POST",
+      action: ".",
     });
-
-    if ("error" in result) {
-      return handleError(result.error, { context: "applying your review" });
-    }
-
-    showModal(GenericPrompt, {
-      headline: "Success",
-      children: (
-        <p className="my-4 text-lg font-semibold">
-          Your review has been submitted.
-        </p>
-      ),
-    });
-  };
 
   return (
-    <Modal
+    <DialogPanel
       as="form"
       onSubmit={methods.handleSubmit(onSubmit)}
-      className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
           Changing Application Status
         </p>
-        {isDismissible && (
-          <button
-            onClick={closeModal}
-            disabled={isLoading}
-            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
-          >
-            <X className="text-lg sm:text-2xl" />
-          </button>
-        )}
+        <Link
+          aria-disabled={fetcher.state !== "idle"}
+          preventScrollReset
+          replace
+          to=".."
+          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 dark:disabled:border-navy-d3"
+        >
+          <X className="text-lg sm:text-2xl" />
+        </Link>
       </div>
       <CircleAlert size={80} className="my-6 text-red" />
 
@@ -95,7 +79,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
         <span className="font-semibold block">{orgName}</span>
       </p>
 
-      {verdict === "approve" ? (
+      {verdict === "approved" ? (
         <div className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5">
           This will immediately payout all pending funds to newly linked bank
           account and is irreversible.
@@ -110,14 +94,14 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
       <div className="flex items-center gap-2 mb-6">
         <Status classes="bg-gray-d2">Pending</Status>
         <ChevronRight size={20} />
-        {verdict === "approve" ? (
+        {verdict === "approved" ? (
           <Status classes="bg-green">Approved</Status>
         ) : (
           <Status classes="bg-red">Rejected</Status>
         )}
       </div>
 
-      {verdict === "reject" && (
+      {verdict === "rejected" && (
         <FormProvider {...methods}>
           <div className="px-6 w-full pb-6">
             <Field<FV, "textarea">
@@ -131,23 +115,41 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
       )}
 
       <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l4">
-        <button
-          disabled={isLoading}
+        <Link
+          to={".."}
+          aria-disabled={fetcher.state === "submitting"}
           type="button"
           className="btn-outline-filled text-sm px-8 py-2"
-          onClick={closeModal}
+          preventScrollReset
+          replace
         >
           Cancel
-        </button>
+        </Link>
         <button
-          disabled={isLoading}
+          disabled={fetcher.state !== "idle"}
           type="submit"
           className="btn-blue px-8 py-2 text-sm"
         >
           Submit
         </button>
       </div>
-    </Modal>
+    </DialogPanel>
+  );
+}
+
+export default function Prompt() {
+  const navigate = useNavigate();
+  return (
+    <Dialog
+      open={true}
+      onClose={() =>
+        navigate("..", { preventScrollReset: true, replace: true })
+      }
+      className="relative z-50"
+    >
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
+      <Content />
+    </Dialog>
   );
 }
 

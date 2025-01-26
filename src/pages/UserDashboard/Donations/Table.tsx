@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import TableSection, { Cells } from "components/TableSection";
@@ -6,13 +7,11 @@ import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { ArrowDownToLine, SquareArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
 import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
 import type { TableProps } from "./types";
-import useShowKYCForm from "./useShowKYCForm";
 
 export default function Table({
   donations,
@@ -30,7 +29,7 @@ export default function Table({
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection type="thead" rowClass="bg-blue-l4 divide-x divide-blue-l2">
         <Cells
@@ -160,15 +159,11 @@ export default function Table({
 function LastRowColContent(
   props: Donation.Record & { status: Donation.Status }
 ) {
-  const showKYCForm = useShowKYCForm();
   if (props.status === "final") {
     return (
-      <button
-        className="w-full flex justify-center"
-        onClick={() => showKYCForm(props.id)}
-      >
+      <Link to={props.id} className="w-full flex justify-center">
         <ArrowDownToLine size={20} />
-      </button>
+      </Link>
     );
   }
 

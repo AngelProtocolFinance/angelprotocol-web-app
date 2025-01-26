@@ -1,84 +1,34 @@
-import ContentLoader from "components/ContentLoader";
-import Prompt from "components/Prompt";
-import QueryLoader from "components/QueryLoader";
+import { NavLink, Outlet } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
-import { useAuthenticatedUser } from "contexts/Auth";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { Minus, Plus } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
-import {
-  useDeleteEndowAdminMutation,
-  useEndowAdminsQuery,
-} from "services/aws/endow-admins";
-import type { EndowAdmin } from "types/aws";
-import AddForm from "./AddForm";
+import { Plus } from "lucide-react";
+import type { LoaderData } from "./api";
+import { DeleteForm } from "./delete-form";
 
-export default function List() {
-  const { showModal } = useModalContext();
-  const { id } = useAdminContext();
-
-  const queryState = useEndowAdminsQuery(id);
+interface IList extends LoaderData {}
+export function List(props: IList) {
   return (
     <div className="overflow-x-auto">
-      <button
-        type="button"
-        disabled={queryState.isLoading}
+      <NavLink
         className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
-        onClick={() =>
-          showModal(AddForm, {
-            added: (queryState.data || []).map((admin) => admin.email),
-            endowID: id,
-          })
-        }
+        to="add"
       >
         <Plus size={16} />
         <span>Invite user</span>
-      </button>
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: <Skeleton />,
-          error: "Failed to get members",
-          empty: "No members found.",
-        }}
-      >
-        {(members) => <Loaded members={members} />}
-      </QueryLoader>
+      </NavLink>
+      <Loaded {...props} />
+      {/** render add form */}
+      <Outlet />
     </div>
   );
 }
 
-type LoadedProps = {
+interface LoadedProps extends LoaderData {
   classes?: string;
-  members: EndowAdmin[];
-};
-function Loaded({ members, classes = "" }: LoadedProps) {
-  const { email: user } = useAuthenticatedUser();
-  const { id } = useAdminContext();
-  const [removeUser, { isLoading }] = useDeleteEndowAdminMutation();
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
-
-  async function handleRemove(toRemove: string) {
-    if (toRemove === user)
-      return showModal(Prompt, {
-        type: "error",
-        children: "Can't delete self",
-      });
-
-    if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
-
-    try {
-      await removeUser({ email: toRemove, endowID: id }).unwrap();
-    } catch (err) {
-      handleError(err, { context: "removing member" });
-    }
-  }
-
+}
+function Loaded({ admins, classes = "", user }: LoadedProps) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"
@@ -99,22 +49,13 @@ function Loaded({ members, classes = "" }: LoadedProps) {
         rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
-        {members.map((member) => (
+        {admins.map((member) => (
           <Cells
             key={member.email}
             type="td"
             cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <td className="relative">
-              <button
-                disabled={isLoading}
-                onClick={() => handleRemove(member.email)}
-                type="button"
-                className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
-              >
-                <Minus size={16} />
-              </button>
-            </td>
+            <DeleteForm email={user.email} />
 
             <>{member.email}</>
             <>{member.givenName ?? "-"}</>
@@ -123,16 +64,5 @@ function Loaded({ members, classes = "" }: LoadedProps) {
         ))}
       </TableSection>
     </table>
-  );
-}
-
-function Skeleton() {
-  return (
-    <div className="grid gap-y-1 mt-2">
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-    </div>
   );
 }

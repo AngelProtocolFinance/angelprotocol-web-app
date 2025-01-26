@@ -1,27 +1,24 @@
-import char from "assets/images/celebrating-character.png";
+import {
+  Link,
+  NavLink,
+  useOutletContext,
+  useSearchParams,
+} from "@remix-run/react";
+import char from "assets/images/celebrating-character.webp";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import Seo from "components/Seo";
-import Signup from "components/Signup";
 import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
-import { Link, useLocation, useOutletContext } from "react-router-dom";
-import { useGetter } from "store/accessors";
-import { userIsSignedIn } from "types/auth";
-import type { DonateThanksState } from "types/pages";
 
-export function Component() {
+export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const location = useLocation();
-  const state: DonateThanksState | undefined = location.state;
-  const user = useGetter((state) => state.auth.user);
+  const [params] = useSearchParams();
+  const recipientName = params.get("recipient_name");
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
-      {/** override default scripts when used inside iframe */}
-      <Seo scripts={widgetVersion ? [] : undefined} />
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {
@@ -39,38 +36,35 @@ export function Component() {
       </h3>
       <p className="text-center text-navy-l1">
         We'll process your donation to{" "}
-        {state?.recipientName ?? "the nonprofit you specified"} as soon as the
-        payment has cleared.
+        {recipientName ?? "the nonprofit you specified"} as soon as the payment
+        has cleared.
         {widgetVersion
           ? ""
           : " You can safely navigate away using the button below."}
       </p>
 
       <Share
-        recipientName={state?.recipientName ?? "a nonprofit"}
+        recipientName={recipientName ?? "a nonprofit"}
         className="mt-6 border border-gray-l3 rounded-xl"
       />
 
       <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
         {widgetVersion ? (
-          <ExtLink href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}>
+          <ExtLink
+            className="text-blue"
+            href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}
+          >
             My Donations
           </ExtLink>
         ) : (
-          <Link to={`${appRoutes.user_dashboard}/donations`}>My Donations</Link>
+          <NavLink
+            to={`${appRoutes.user_dashboard}/donations`}
+            className="text-blue [&:is(.pending)]:text-gray"
+          >
+            My Donations page
+          </NavLink>
         )}{" "}
-        page.
       </p>
-
-      {!userIsSignedIn(user) && state?.guestDonor && (
-        <Signup
-          classes="max-w-96 w-full mt-6 justify-self-center"
-          donor={((d) => {
-            const [firstName, lastName] = d.fullName.split(" ");
-            return { firstName, lastName, email: d.email };
-          })(state.guestDonor)}
-        />
-      )}
 
       {!widgetVersion && (
         <Link

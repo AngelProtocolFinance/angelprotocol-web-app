@@ -1,4 +1,5 @@
-import { endowDesignations } from "@better-giving/registration/models";
+import { orgDesignations } from "@better-giving/schemas";
+import { Link } from "@remix-run/react";
 import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
@@ -8,15 +9,13 @@ import { MultiSelector, Selector } from "components/Selector";
 import { Field, Label, Radio } from "components/form";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
-import { Link } from "react-router-dom";
 import { steps } from "../../../routes";
-import { useRegState } from "../../StepGuard";
+import type { RegStep2 } from "../../../types";
 import type { FormValues as FV } from "../types";
 import useSubmit from "./useSubmit";
 
-export default function Form() {
-  const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+export default function Form({ data }: RegStep2) {
+  const { submit, isSubmitting } = useSubmit(data.org);
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -47,9 +46,9 @@ export default function Form() {
       <Selector<FV, "designation", string>
         name="designation"
         classes={{ options: "text-sm" }}
-        options={endowDesignations.map((designation) => ({
-          label: designation,
-          value: designation,
+        options={orgDesignations.map((v) => ({
+          label: v,
+          value: v,
         }))}
       />
       <Label className="mt-6 mb-2" required>
@@ -108,7 +107,6 @@ export default function Form() {
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.contact}`}
-          state={data.init}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

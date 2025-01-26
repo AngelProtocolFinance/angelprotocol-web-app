@@ -28,7 +28,7 @@ export const Input = forwardRef<El, Props>((props, ref) => {
           {...rest}
           ref={ref}
           type="text"
-          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-none bg-transparent ${
+          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-hidden bg-transparent ${
             props.icon ? "pr-5" : "px-5"
           } ${style.input}`}
           aria-invalid={!!error}

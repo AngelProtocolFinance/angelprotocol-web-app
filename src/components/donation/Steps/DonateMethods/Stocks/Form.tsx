@@ -6,7 +6,6 @@ import { requiredString } from "schemas/string";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
-import { DEFAULT_PROGRAM } from "../../common/constants";
 import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { nextFormState } from "../helpers";
 
@@ -31,7 +30,7 @@ export default function Form(props: StockFormStep) {
       : {
           symbol: "",
           numShares: "",
-          program: DEFAULT_PROGRAM,
+          program: { label: "", value: "" },
         },
     resolver: yupResolver(
       schema<FV>({
@@ -85,9 +84,10 @@ export default function Form(props: StockFormStep) {
       />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
+        // program not allowed for fund (id string)
         <ProgramSelector
-          classes="mt-6 mb-4"
           endowId={+props.init.recipient.id}
+          classes="mt-6 mb-4"
           program={program.value}
           onChange={program.onChange}
         />
@@ -98,7 +98,7 @@ export default function Form(props: StockFormStep) {
         You can enjoy significant tax advantages and maximize the size of your
         contributions when you transfer securities through Better Giving:
       </p>
-      <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-2 my-4">
+      <div className="grid rounded-sm bg-gray-l5 dark:bg-navy-d3 p-2 my-4">
         <span className="text-sm text-navy-l2">
           NOTE: This is not financial advice! Please speak to your tax advisor
           or broker about your specific situation and country's tax laws.

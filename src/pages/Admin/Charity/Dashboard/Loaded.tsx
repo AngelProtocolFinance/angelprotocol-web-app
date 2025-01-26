@@ -1,8 +1,9 @@
 import type { Allocation } from "@better-giving/endowment";
+import { useFetcher } from "@remix-run/react";
 import { Arrow, Content } from "components/Tooltip";
 import { humanize } from "helpers";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
+import type { BalanceMovement } from "types/aws";
 import type { EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
 import { LiqActions } from "./LiqActions";
@@ -19,15 +20,18 @@ interface Props {
   classes?: string;
 }
 export function Loaded({ classes = "", ...props }: Props) {
-  const { id } = useAdminContext();
+  const fetcher = useFetcher({ key: "bal-mov" });
   const period = monthPeriod();
 
-  const mov = props.balances.movementDetails ?? {
-    "liq-cash": 0,
-    "liq-lock": 0,
-    "lock-cash": 0,
-    "lock-liq": 0,
-  };
+  const nextMov = fetcher.json as unknown as BalanceMovement | undefined;
+
+  const mov = nextMov ??
+    props.balances.movementDetails ?? {
+      "liq-cash": 0,
+      "liq-lock": 0,
+      "lock-cash": 0,
+      "lock-liq": 0,
+    };
 
   return (
     <div className={`${classes} mt-6`}>
@@ -48,7 +52,6 @@ export function Loaded({ classes = "", ...props }: Props) {
             <LiqActions
               disabled={period.isPre}
               classes="mt-8"
-              endowId={id}
               mov={mov}
               balance={props.balances.liq ?? 0}
             />
@@ -77,7 +80,6 @@ export function Loaded({ classes = "", ...props }: Props) {
               disabled={period.isPre}
               classes="mt-8"
               balance={props.balances.sustainabilityFundBal ?? 0}
-              endowId={id}
               mov={mov}
             />
           }
@@ -102,7 +104,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           </div>
           <p className="text-sm text-navy-l3">
             <span>Ends in </span>
-            <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded ml-1">
+            <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded-sm ml-1">
               in {period.distance}
             </span>
           </p>
@@ -110,7 +112,6 @@ export function Loaded({ classes = "", ...props }: Props) {
 
         <Movements
           disabled={period.isPre}
-          endowId={id}
           mov={mov}
           classes="mt-4"
           balance={(flow) => {
@@ -140,7 +141,7 @@ export function Loaded({ classes = "", ...props }: Props) {
       />
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
-      <PayoutHistory endowId={id} classes="mt-2" />
+      <PayoutHistory classes="mt-2" />
     </div>
   );
 }

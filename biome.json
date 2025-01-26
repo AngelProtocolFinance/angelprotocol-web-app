@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "organizeImports": {
     "enabled": true
   },
@@ -47,7 +47,7 @@
         "noSwitchDeclarations": "off",
         "noChildrenProp": "off",
         "noUnusedVariables": "warn",
-        "noUnusedImports":"warn",
+        "noUnusedImports": "warn",
         "useJsxKeyInIterable": "off"
       },
       "a11y": {
@@ -55,7 +55,8 @@
         "useAltText": "off",
         "useKeyWithMouseEvents": "off",
         "useKeyWithClickEvents": "off",
-        "noSvgWithoutTitle": "off"
+        "noSvgWithoutTitle": "off",
+        "noLabelWithoutControl": "off"
       }
     }
   },

@@ -1,5 +1,4 @@
 export enum appRoutes {
-  auth_redirector = "/auth-redirector",
   marketplace = "/marketplace",
   admin = "/admin",
   user_dashboard = "/dashboard",
@@ -13,7 +12,6 @@ export enum appRoutes {
   donate = "/donate",
   donate_fund = "/donate-fund",
   donate_thanks = "/donate-thanks",
-  stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   reset_password = "/login/reset",
   form_builder = "/form-builder",
@@ -22,7 +20,7 @@ export enum appRoutes {
   privacy_policy = "/privacy-policy",
   terms_donors = "/terms-of-use",
   terms_nonprofits = "/terms-of-use-npo",
-  //informational
+  //informationalf
   nonprofit_info = "/nonprofit",
   donor_info = "/donor",
   wp_plugin = "/wp-plugin",
@@ -31,7 +29,7 @@ export enum appRoutes {
 }
 
 export const adminRoutes = {
-  index: "",
+  dashboard: "dashboard",
   edit_profile: "edit-profile",
   programs: "programs",
   program_editor: "program-editor",
@@ -54,7 +52,12 @@ export enum regRoutes {
   resume = "resume",
   success = "success",
   welcome = "welcome",
-  steps = "steps",
   sign_notice = "sign-notice",
   sign_result = "sign-result",
 }
+
+export const authRoutes: string[] = [
+  appRoutes.signin,
+  appRoutes.signup,
+  appRoutes.reset_password,
+];

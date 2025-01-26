@@ -1,0 +1,70 @@
+.toolbar-hidden .ql-toolbar {
+  display: none;
+}
+
+.toolbar-hidden .ql-editor {
+  padding: 0;
+}
+
+.ql-container.ql-snow {
+  padding: 0;
+  border: none !important;
+}
+
+.ql-toolbar.ql-snow {
+  padding: 0;
+  padding-bottom: 0.5rem;
+  border: none;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.5);
+}
+
+.ql-toolbar button.ql-active .ql-stroke {
+  fill: none;
+  stroke: var(--color-blue-d1) !important;
+}
+
+.ql-toolbar button:hover .ql-stroke {
+  fill: none;
+  stroke: var(--color-blue-d1) !important;
+}
+
+.ql-toolbar .ql-stroke {
+  fill: none;
+  stroke: white;
+}
+
+.ql-editor {
+  padding: 0;
+  padding-top: 0.5rem;
+}
+
+.ql-editor.ql-blank::before {
+  color: inherit;
+  font-size: inherit;
+  font-style: normal;
+  opacity: 0.5;
+  left: 0;
+}
+
+.rich-text-toolbar {
+  & .ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: var(--color-gray-d2);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--color-red);
+  }
+}
+.ql-toolbar {
+  &.rich-text-toolbar & .ql-stroke {
+    fill: none;
+    stroke: var(--color-gray-d2);
+  }
+}
+.ql-stroke {
+  &.rich-text-toolbar .ql-toolbar & {
+    fill: none;
+    stroke: var(--color-gray-d2);
+  }
+}

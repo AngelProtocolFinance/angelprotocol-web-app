@@ -2,7 +2,7 @@ import type { Token } from "@better-giving/assets/tokens";
 import { donateMethodId } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
-export { type Token as TokenV2 } from "@better-giving/assets/tokens";
+export type { Token as TokenV2 } from "@better-giving/assets/tokens";
 
 export interface TokenWithDetails extends Token {
   amount: string;
@@ -73,6 +73,19 @@ export const richTextContent = ({
   });
 };
 
+/** query loader */
+export interface QueryState<T> {
+  error?: unknown;
+  data?: T | undefined;
+  isLoading: boolean;
+  isFetching: boolean;
+  isError: boolean;
+}
+
+/** query loader */
+export function isQuery<T>(val: T | QueryState<T>): val is QueryState<T> {
+  return "isLoading" in (val as any) && "isFetching" in (val as any);
+}
 export type RichTextContent = v.InferOutput<ReturnType<typeof richTextContent>>;
 
 export const donateMethod = v.object({

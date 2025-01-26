@@ -1,12 +1,12 @@
+import { Link } from "@remix-run/react";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
-import fiscalsponsorshipImg from "./images/fiscal-sponsorship.png";
+import fiscalsponsorshipImg from "./images/fiscal-sponsorship.webp";
 
 export default function FiscalSponsorship({ className = "" }) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[1fr_auto] py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-[1fr_auto] py-24`}
     >
       <div className="grid max-w-2xl order-2 @6xl:order-1">
         <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center @6xl:text-left">

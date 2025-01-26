@@ -1,11 +1,11 @@
 import { setupServer } from "msw/node";
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 import "@testing-library/jest-dom";
-import { handlers as programsHandlers } from "services/aws/programs";
+import { handlers as programsHandlers } from "services/aws/programs/mock";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
+import { postsMock } from "./api/get/wp-posts";
 import { handlers as apesHandlers } from "./services/apes/mock";
 import { handlers as awsHandlers } from "./services/aws/mock";
-import { handlers as wordpressHandlers } from "./services/wordpress/mock";
 
 class IntersectionObserver {
   observe = vi.fn();
@@ -60,11 +60,11 @@ export const mswServer = setupServer(
   ...programsHandlers,
   ...apesHandlers,
   ...awsHandlers,
-  ...wordpressHandlers
+  ...[postsMock]
 );
 
 // Start server before all tests
-beforeAll(() => mswServer.listen({ onUnhandledRequest: "bypass" }));
+beforeAll(() => mswServer.listen({ onUnhandledRequest: "error" }));
 
 //  Close server after all tests
 afterAll(() => mswServer.close());

@@ -1,20 +1,17 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Link } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { FileDropzone } from "components/FileDropzone";
 import LoadText from "components/LoadText";
 import { NativeField as Field, Form as Frm, Label } from "components/form";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { steps } from "../../../../routes";
-import { useRegState } from "../../../StepGuard";
 import { type FV, fileSpec, schema } from "../schema";
 import type { Props } from "../types";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {
-  const { data } = useRegState<4>();
-
   const init: FV = {
     proof_of_identity: props.doc?.proof_of_identity.publicUrl ?? "",
     registration_number: props.doc?.registration_number ?? "",
@@ -26,7 +23,7 @@ export default function Form(props: Props) {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isDirty },
     register,
   } = useForm<FV>({
     resolver: valibotResolver(schema),
@@ -38,7 +35,10 @@ export default function Form(props: Props) {
 
   const isUploading = poi.value === "loading" || por.value === "loading";
 
-  const { submit, isRedirecting } = useSubmit({ ...props, isDirty });
+  const { submit, isRedirecting, isSubmitting } = useSubmit({
+    ...props,
+    isDirty,
+  });
 
   return (
     <Frm className="w-full" onSubmit={handleSubmit(submit)}>
@@ -51,7 +51,6 @@ export default function Form(props: Props) {
             Please provide passport, driver's license, or ID card.
           </Label>
         }
-        bucket="endow-reg"
         value={poi.value}
         onChange={poi.onChange}
         specs={fileSpec}
@@ -74,7 +73,6 @@ export default function Form(props: Props) {
             Proof of registration as a 501(c)(3) nonprofit or equivalent
           </Label>
         }
-        bucket="endow-reg"
         value={por.value}
         onChange={por.onChange}
         specs={fileSpec}
@@ -115,7 +113,6 @@ export default function Form(props: Props) {
         <Link
           aria-disabled={isSubmitting || isRedirecting}
           to={`../${steps.fsaInquiry}`}
-          state={data.init}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

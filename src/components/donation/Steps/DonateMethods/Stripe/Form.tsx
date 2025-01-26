@@ -1,10 +1,9 @@
+import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/CurrencySelector";
-import QueryLoader from "components/QueryLoader";
 import { Form as FormContainer, NativeField } from "components/form";
-import { bgCookies, setCookie } from "helpers/cookie";
-import { useFiatCurrenciesQuery } from "services/apes";
-import { useGetter } from "store/accessors";
-import { userIsSignedIn } from "types/auth";
+import { useRootData } from "hooks/use-root-data";
+import { useEffect } from "react";
+import useSWR from "swr/immutable";
 import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -13,31 +12,23 @@ import { ProgramSelector } from "../../common/ProgramSelector";
 import { USD_CODE } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
-import type { FormProps, Props } from "./types";
+import type { Props } from "./types";
 import { useRhf } from "./useRhf";
 
-export default function Loader(props: Props) {
-  const user = useGetter((state) => state.auth.user);
-  const query = useFiatCurrenciesQuery(
-    userIsSignedIn(user) ? user.prefCurrencyCode : undefined
-  );
-  return (
-    <QueryLoader
-      queryState={query}
-      messages={{
-        loading: "loading donate form",
-        error: "failed to load donate form",
-      }}
-    >
-      {(data) => <Form {...props} {...data} />}
-    </QueryLoader>
-  );
-}
-
-function Form({ currencies, defaultCurr, ...props }: FormProps) {
+export default function Form(props: Props) {
+  /** supplied by page loader */
+  const user = useRootData();
+  const currency = useSWR(user?.currency ?? "none", getFiatCurrencies);
   const { setState } = useDonationState();
+  const rhf = useRhf(props);
 
-  const rhf = useRhf({ ...props, defaultCurr });
+  const userCurrency = currency.data?.main;
+  //biome-ignore lint:
+  useEffect(() => {
+    if (userCurrency) {
+      rhf.currency.onChange(userCurrency);
+    }
+  }, [userCurrency]);
 
   return (
     <FormContainer
@@ -52,12 +43,14 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         error={rhf.errors.frequency?.message}
       />
       <CurrencySelector
-        currencies={currencies}
-        label="Currency"
-        onChange={(c) => {
-          setCookie(bgCookies.prefCode, c.code.toUpperCase());
-          rhf.currency.onChange(c);
+        currencies={{
+          isLoading: currency.isLoading,
+          isFetching: currency.isValidating,
+          isError: !!currency.error,
+          data: currency.data?.all,
         }}
+        label="Currency"
+        onChange={rhf.currency.onChange}
         value={rhf.currency.value}
         classes={{
           label: "font-semibold",
@@ -87,9 +80,10 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
       )}
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
+        // program not allowed for fund (id string)
         <ProgramSelector
-          classes="mt-4"
           endowId={+props.init.recipient.id}
+          classes="mt-4"
           program={rhf.program.value}
           onChange={rhf.program.onChange}
         />

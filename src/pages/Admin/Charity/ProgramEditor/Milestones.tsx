@@ -1,10 +1,8 @@
 import type { Milestone as TMilestone } from "@better-giving/endowment";
+import { useFetcher } from "@remix-run/react";
 import { Info } from "components/Status";
-import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { Plus } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
-import { useNewMilestoneMutation } from "services/aws/milestones";
 import Milestone from "./Milestone";
 
 type Props = {
@@ -13,37 +11,37 @@ type Props = {
 };
 
 export default function Milestones({ programId, milestones }: Props) {
-  const { id } = useAdminContext();
-
-  const { handleError } = useErrorContext();
-  const [createMilestone, { isLoading }] = useNewMilestoneMutation();
-
-  async function handleCreateMilestone() {
-    try {
-      await createMilestone({
-        endowId: id,
-        programId,
-        title: `Milestone ${milestones.length + 1}`,
-        description: "program description",
-        date: new Date().toISOString(),
-      }).unwrap();
-    } catch (err) {
-      handleError(err, { context: "creating milestone" });
-    }
-  }
+  const fetcher = useFetcher();
 
   return (
-    <div className="@container grid gap-6 p-4 @lg:p-6 border border-gray-l4 rounded bg-white dark:bg-blue-d6">
+    <div className="@container grid gap-6 p-4 @lg:p-6 border border-gray-l4 rounded-sm bg-white dark:bg-blue-d6">
       <div className="flex flex-col @md:flex-row items-center gap-3 justify-between">
         <h4 className="text-2xl">Milestones</h4>
+        <input
+          type="hidden"
+          name="next-milestone-num"
+          value={milestones.length + 1}
+        />
         <button
-          disabled={isLoading}
-          onClick={handleCreateMilestone}
+          name="intent"
+          value="add-milestone"
+          disabled={fetcher.state !== "idle"}
           type="button"
+          onClick={() =>
+            fetcher.submit(
+              {
+                intent: "add-milestone",
+                "next-milestone-num": milestones.length + 1,
+              },
+              { method: "POST", action: ".", encType: "application/json" }
+            )
+          }
           className="btn-outline-filled text-sm w-full @md:w-52 py-2"
         >
           <Plus className="mr-2" size={16} />
-          <span>{isLoading ? "Adding.." : "Add"} milestone</span>
+          <span>
+            {fetcher.state === "submitting" ? "Adding.." : "Add"} milestone
+          </span>
         </button>
       </div>
       {!isEmpty(milestones) ? (

@@ -70,10 +70,10 @@ function _MultiList<T extends ValKey>(
               />
             ))}
             {props.searchable ? (
-              <div className="bg-blue-l5 inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 rounded">
+              <div className="bg-blue-l5 inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 rounded-sm">
                 <Search size={20} />
                 <ComboboxInput
-                  className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
+                  className="appearance-none bg-transparent first:pl-3 focus:outline-hidden h-10"
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                 />
@@ -87,7 +87,7 @@ function _MultiList<T extends ValKey>(
             className={`${
               props.value.length > 0
                 ? "justify-self-end dark:text-navy-l2 shrink-0"
-                : "absolute inset-0 flex justify-end items-center pr-2 rounded active:ring-2 ring-blue-d1 ring-offset-1"
+                : "absolute inset-0 flex justify-end items-center pr-2 rounded-sm active:ring-2 ring-blue-d1 ring-offset-1"
             }`}
           >
             {({ open }) => <DrawerIcon isOpen={open} size={20} className="" />}
@@ -162,7 +162,7 @@ function SelectedOption<T extends ValKey>({
   ...option
 }: SelectedProps<T>) {
   return (
-    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l4 rounded font-semibold text-navy-l1 dark:text-navy-l2 uppercase">
+    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l4 rounded-sm font-semibold text-navy-l1 dark:text-navy-l2 uppercase">
       <span className="max-w-[200px] truncate">{option.label}</span>
       <button
         type="button"

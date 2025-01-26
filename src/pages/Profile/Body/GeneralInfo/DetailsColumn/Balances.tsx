@@ -1,24 +1,20 @@
+import { useOutletContext } from "@remix-run/react";
 import { humanize } from "helpers";
-import { useProfileContext } from "pages/Profile/ProfileContext";
-import { useEndowBalanceQuery } from "services/apes";
+import type { EndowmentBalances } from "types/aws";
 
 export default function Balances() {
-  const { id } = useProfileContext();
-  const { data } = useEndowBalanceQuery(id);
+  const bal = useOutletContext() as EndowmentBalances;
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <Balance
-        title="Total Contributions"
-        amount={data?.totalContributions ?? 0}
-      />
+      <Balance title="Total Contributions" amount={bal.totalContributions} />
     </div>
   );
 }
 
 function Balance(props: { title: string; amount: number }) {
   return (
-    <div className="flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded border border-gray-l4 dark:bg-blue-d6 md:items-start md:h-28 md:px-6 md:py-04">
+    <div className="flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded-sm border border-gray-l4 dark:bg-blue-d6 md:items-start md:h-28 md:px-6 md:py-04">
       <p className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </p>

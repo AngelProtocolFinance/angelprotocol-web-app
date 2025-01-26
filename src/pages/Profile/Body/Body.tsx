@@ -1,19 +1,24 @@
+import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
+import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
+import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
-import { Link, Outlet, type RouteObject } from "react-router-dom";
-import { useEndowBalanceQuery } from "services/apes";
+import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../ProfileContext";
-import GeneralInfo from "./GeneralInfo";
-import Program from "./Program";
 
-function Body() {
+export const loader: LoaderFunction = async ({ params }) =>
+  getEndowBalance(params.id);
+
+export default function Body() {
   const p = useProfileContext();
-  const bal = useEndowBalanceQuery(p.id);
+  const bal = useLoaderData() as EndowmentBalances;
+  const user = useRootData();
 
   return (
     <div className="flex justify-center items-center w-full h-full">
@@ -30,19 +35,19 @@ function Body() {
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
-          {bal.data?.totalContributions != null && p.target && (
+          {bal.totalContributions != null && p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.data?.totalContributions}
+              progress={bal.totalContributions}
               target={toTarget(p.target)}
             />
           )}
-          <Link
+          <NavLink
             to={`${appRoutes.donate}/${p.id}`}
             className="btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now
-          </Link>
+          </NavLink>
         </div>
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center">
@@ -57,7 +62,7 @@ function Body() {
                 )}
                 <span>{p.name}</span>
               </h3>
-              <BookmarkBtn endowId={p.id} />
+              <BookmarkBtn endowId={p.id} user={user} />
             </div>
             <p className="w-full font-normal text-lg">{p.tagline}</p>
           </div>
@@ -84,22 +89,8 @@ function Body() {
           </div>
         </div>
 
-        <Outlet />
+        <Outlet context={bal} key="profile-body" />
       </div>
     </div>
   );
 }
-
-export const bodyRoute: RouteObject = {
-  element: <Body />,
-  children: [
-    {
-      index: true,
-      element: <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />,
-    },
-    {
-      path: "program/:programId",
-      element: <Program className="order-4 lg:col-span-2 w-full h-full" />,
-    },
-  ],
-};

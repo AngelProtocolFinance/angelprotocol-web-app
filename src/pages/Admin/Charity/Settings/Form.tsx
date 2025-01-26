@@ -1,4 +1,4 @@
-import type { Endow } from "@better-giving/endowment";
+import type { EndowUpdate } from "@better-giving/endowment";
 import {
   MAX_RECEIPT_MSG_CHAR,
   incrementLabelMaxChars,
@@ -6,6 +6,8 @@ import {
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Outlet, useFetcher } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { DonateMethods, fill } from "components/DonateMethods";
 import Increments from "components/Increments";
 import {
@@ -15,19 +17,23 @@ import {
 } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { BG_ID } from "constants/common";
-import { useErrorContext } from "contexts/ErrorContext";
+import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import type { EndowmentSettingsAttributes } from "types/aws";
-import { useUpdateEndowment } from "../common";
+import { toast } from "sonner";
+import type { ActionData } from "types/action";
+import type { LoaderData } from "./api";
 import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
-type Props = Pick<Endow, "id" | EndowmentSettingsAttributes>;
+export { loader, action } from "./api";
+export { clientLoader } from "api/cache";
+export { ErrorBoundary } from "components/error";
+export default function Form() {
+  const endow = useCachedLoaderData<LoaderData>();
 
-export default function Form(props: Props) {
-  const updateEndow = useUpdateEndowment();
-  const { displayError } = useErrorContext();
+  const fetcher = useFetcher<ActionData>();
+  useActionResult(fetcher.data);
 
   const {
     reset,
@@ -39,13 +45,13 @@ export default function Form(props: Props) {
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     values: {
-      receiptMsg: props.receiptMsg ?? "",
-      hide_bg_tip: props.hide_bg_tip ?? false,
-      programDonateDisabled: !(props.progDonationsAllowed ?? true),
-      donateMethods: fill(props.donateMethods),
-      increments: props.increments ?? [],
-      fundOptIn: props.fund_opt_in ?? true,
-      target: toFormTarget(props.target),
+      receiptMsg: endow.receiptMsg ?? "",
+      hide_bg_tip: endow.hide_bg_tip ?? false,
+      programDonateDisabled: !(endow.progDonationsAllowed ?? true),
+      donateMethods: fill(endow.donateMethods),
+      increments: endow.increments ?? [],
+      fundOptIn: endow.fund_opt_in ?? true,
+      target: toFormTarget(endow.target),
     },
   });
 
@@ -69,7 +75,7 @@ export default function Form(props: Props) {
 
   return (
     <F
-      disabled={isSubmitting}
+      disabled={isSubmitting || fetcher.state !== "idle"}
       onReset={(e) => {
         e.preventDefault();
         reset();
@@ -82,21 +88,25 @@ export default function Form(props: Props) {
           target: fvTarget,
           ...fv
         }) => {
-          if (props.id === BG_ID && fv.hide_bg_tip === false) {
-            return displayError(
+          if (endow.id === BG_ID && fv.hide_bg_tip === false) {
+            return toast.error(
               "BG donation flow should not show BG tip screen"
             );
           }
-
-          await updateEndow({
+          const update: EndowUpdate = {
             ...fv,
             fund_opt_in: fundOptIn,
             target: toTarget(fvTarget),
             progDonationsAllowed: !programDonateDisabled,
-            id: props.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),
+          };
+
+          fetcher.submit(update as any, {
+            method: "POST",
+            action: ".",
+            encType: "application/json",
           });
         }
       )}
@@ -108,7 +118,7 @@ export default function Form(props: Props) {
           rows={5}
           type="textarea"
           classes={{
-            container: "field-admin [&_[data-error]]:-bottom-4",
+            container: "field-admin **:data-error:-bottom-4",
             label: "text-base font-medium",
           }}
           label="Tax Receipt message for donors"
@@ -211,7 +221,7 @@ export default function Form(props: Props) {
                 <Input
                   type="number"
                   {...register(`increments.${idx}.value`)}
-                  className="w-full h-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                  className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
                 />
               </div>
 
@@ -223,7 +233,7 @@ export default function Form(props: Props) {
               <Textarea
                 {...register(`increments.${idx}.label`)}
                 rows={2}
-                className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
               />
               <p
                 data-error={!!errors.increments?.[idx]?.label?.message}
@@ -266,6 +276,7 @@ export default function Form(props: Props) {
           Submit changes
         </button>
       </div>
+      <Outlet />
     </F>
   );
 }

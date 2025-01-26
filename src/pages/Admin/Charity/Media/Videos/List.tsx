@@ -1,63 +1,55 @@
-import QueryLoader from "components/QueryLoader";
+import type { MediaPage } from "@better-giving/endowment";
+import { useFetcher } from "@remix-run/react";
 import { Image } from "lucide-react";
-import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
+import { useEffect, useState } from "react";
 import VideoPreview from "../VideoPreview";
 
-type Props = {
+interface Props {
   classes?: string;
-  endowId: number;
-};
+  page1: MediaPage;
+}
 
-export function List({ endowId, classes = "" }: Props) {
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isLoadingNextPage,
-    isError,
-    hasMore,
-    loadNextPage,
-  } = usePaginatedMedia(endowId, {
-    type: "video",
-    limit: 10,
-  });
+export function List({ classes = "", page1 }: Props) {
+  const { state, data, load } = useFetcher<MediaPage>();
+
+  const [items, setItems] = useState<MediaPage["items"]>(page1.items);
+
+  useEffect(() => {
+    setItems(page1.items);
+  }, [page1.items]);
+
+  useEffect(() => {
+    if (state !== "idle" || !data) return;
+    setItems((prev) => [...prev, ...data.items]);
+  }, [state, data]);
+
+  if (items.length === 0) return <NoVideo classes={classes} />;
+
+  const nextPageKey = data ? data.nextPageKey : page1.nextPageKey;
+
   return (
-    <QueryLoader
-      queryState={{ data: data?.items, isLoading, isFetching, isError }}
-      classes={{ container: classes }}
-      messages={{
-        loading: "loading...",
-        error: "failed to get videos",
-        empty: <NoVideo classes={classes} />,
-      }}
-    >
-      {(items) => (
-        <div
-          className={`${classes} grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4`}
+    <div className={`${classes} grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4`}>
+      {items.map((item) => (
+        <VideoPreview key={item.id} {...item} />
+      ))}
+      {nextPageKey && (
+        <button
+          disabled={state !== "idle"}
+          type="button"
+          onClick={() => load(`?nextPageKey=${nextPageKey}`)}
+          className="col-span-full btn-outline-filled text-sm py-3"
         >
-          {items.map((item) => (
-            <VideoPreview key={item.id} {...item} />
-          ))}
-          {hasMore && (
-            <button
-              disabled={isLoadingNextPage || isLoading || isFetching}
-              type="button"
-              onClick={loadNextPage}
-              className="col-span-full btn-outline-filled text-sm py-3"
-            >
-              {isLoadingNextPage ? "Loading..." : "Load more videos"}
-            </button>
-          )}
-        </div>
+          {state !== "idle" ? "Loading..." : "Load more videos"}
+        </button>
       )}
-    </QueryLoader>
+    </div>
   );
 }
 
 function NoVideo({ classes = "" }) {
   return (
     <div
-      className={`bg-white ${classes} grid justify-items-center rounded border border-gray-l4 px-4 py-16`}
+      className={`bg-white ${classes} grid justify-items-center rounded-sm border border-gray-l4 px-4 py-16`}
     >
       <Image className="text-navy-l2 text-2xl mb-6" />
       <p className="font-bold mb-2">Start by adding your first video</p>

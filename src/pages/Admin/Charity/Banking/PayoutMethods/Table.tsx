@@ -1,6 +1,6 @@
+import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
 import { CircleCheck, FolderIcon } from "lucide-react";
-import { Link } from "react-router-dom";
 import type { BankingApplicationStatus, PayoutMethod } from "types/aws";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 export default function Table({ methods, classes = "" }: Props) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"
@@ -49,16 +49,16 @@ export default function Table({ methods, classes = "" }: Props) {
                 <CircleCheck size={18} className="text-green-d1" />
               )}
             </>
-            <Link
+            <NavLink
               to={row.wiseRecipientID}
-              className="text-center w-full inline-block hover:text-blue-d1"
+              className="[&:is(.pending)]:text-gray text-center w-full inline-block hover:text-blue-d1"
             >
               <FolderIcon
                 size={22}
                 aria-label="bank statement file"
                 className="inline-block"
               />
-            </Link>
+            </NavLink>
           </Cells>
         ))}
       </TableSection>
@@ -81,7 +81,7 @@ const text: { [key in BankingApplicationStatus]: string } = {
 function Status({ status }: { status: BankingApplicationStatus }) {
   return (
     <p
-      className={`${bg[status]} rounded px-3 py-1 inline-block uppercase text-xs text-white`}
+      className={`${bg[status]} rounded-sm px-3 py-1 inline-block uppercase text-xs text-white`}
     >
       {text[status]}
     </p>

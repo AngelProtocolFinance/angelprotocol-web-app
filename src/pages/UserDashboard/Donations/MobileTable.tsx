@@ -3,6 +3,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
+import { Link } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
@@ -10,13 +11,11 @@ import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { ArrowDownToLine } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
 import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
 import type { TableProps } from "./types";
-import useShowKYCForm from "./useShowKYCForm";
 
 export default function MobileTable({
   donations,
@@ -32,7 +31,7 @@ export default function MobileTable({
   return (
     <div
       className={`${classes} border border-blue-l2 ${
-        hasMore ? "rounded-t" : "rounded"
+        hasMore ? "rounded-t" : "rounded-sm"
       }`}
     >
       <div className="grid items-center grid-cols-[auto_1fr_auto] h-12 uppercase text-xs font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-blue-l2 divide-x divide-blue-l2 rounded-t">
@@ -131,12 +130,11 @@ function Row({
 }
 
 function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
-  const showKYCForm = useShowKYCForm();
   if (props.status === "final") {
     return (
-      <button className="block" onClick={() => showKYCForm(props.id)}>
+      <Link to={props.id} className="block">
         <ArrowDownToLine size={20} />
-      </button>
+      </Link>
     );
   }
 

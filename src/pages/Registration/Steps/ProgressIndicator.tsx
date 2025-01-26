@@ -1,11 +1,10 @@
+import { useLocation } from "@remix-run/react";
 import { DrawerIcon } from "components/Icon";
 import { idParamToNum } from "helpers";
-import { useRendered } from "hooks/use-rendered";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { type PropsWithChildren, useState } from "react";
-import { useLocation } from "react-router-dom";
 import type { RegStep } from "../types";
 
 type Props = {
@@ -14,15 +13,16 @@ type Props = {
 };
 
 export default function ProgressIndicator({ step, classes = "" }: Props) {
-  useRendered();
   const { pathname } = useLocation();
   const paths = pathname.split("/");
   const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
-  const [isDesktop, setDesktop] = useState(
-    window.innerWidth >= SCREEN_BREAKPOINTS.md
-  );
+  const [isDesktop, setDesktop] = useState(() => {
+    //handle ssr
+    if (typeof window !== "object") return false;
+    return window.innerWidth >= SCREEN_BREAKPOINTS.md;
+  });
 
   useHandleScreenResize(
     (screen, ref) => {

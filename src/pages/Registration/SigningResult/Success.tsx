@@ -1,11 +1,9 @@
+import { Link, useNavigation, useRouteLoaderData } from "@remix-run/react";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { regRoutes } from "constants/routes";
-import { getSavedRegistrationReference } from "helpers";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useLazyRegQuery } from "services/aws/registration";
-import { getRegistrationState } from "../Steps/getRegistrationState";
+import { nextStep } from "../routes";
+import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";
 
 const proxyFunctionURL =
@@ -16,23 +14,10 @@ const downloadZipURL = (eid: string) =>
 export default function Success({
   documentGroupEid,
 }: SignerCompleteQueryParams) {
-  const [checkPrevRegistration, { isLoading }] = useLazyRegQuery();
-  const navigate = useNavigate();
+  const navigation = useNavigation();
+  const { reg } = useRouteLoaderData("reg$Id") as Reg$IdData;
 
-  //redirect page from anvil has no information about the registration
-  const proceed = async () => {
-    try {
-      const reference = getSavedRegistrationReference();
-      if (!reference) return navigate(appRoutes.register);
-      const savedRegistration = await checkPrevRegistration(reference).unwrap();
-      const { state } = getRegistrationState(savedRegistration);
-      navigate(`${appRoutes.register}/${regRoutes.steps}/${state.step}`, {
-        state: state.data.init,
-      });
-    } catch (_) {
-      navigate(appRoutes.register);
-    }
-  };
+  const isLoading = navigation.state === "loading";
 
   return (
     <>
@@ -48,13 +33,13 @@ export default function Success({
         <ArrowDownToLine size={18} className="inline bottom-px relative mr-1" />
         <span className="uppercase text-sm font-semibold">download</span>
       </a>
-      <button
-        disabled={isLoading}
+      <Link
+        aria-disabled={isLoading}
         className="w-full max-w-[26.25rem] btn-blue btn-reg mt-4"
-        onClick={proceed}
+        to={`${appRoutes.register}/${reg.data.init.id}/${nextStep[reg.step]}`}
       >
         {isLoading ? "Loading..." : "Continue"}
-      </button>
+      </Link>
     </>
   );
 }

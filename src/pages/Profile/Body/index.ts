@@ -1,1 +1,0 @@
-export { bodyRoute } from "./Body";

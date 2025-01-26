@@ -1,8 +1,7 @@
+import hero from "assets/images/hero.webp";
 import Image from "components/Image";
-import { useRendered } from "hooks/use-rendered";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
-  useRendered();
   return (
     <div
       className={`${classes} grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 padded-container justify-items-center lg:content-start text-white`}
@@ -11,7 +10,7 @@ export default function Hero({ classes = "" }: { classes?: string }) {
         <p className="contents md:block">BETTER GIVING REDEFINES</p>{" "}
         <p className="contents md:block ">GLOBAL NONPROFIT FINANCING</p>
       </h1>
-      <Image src="/images/hero.png" className="order-3 row-span-2 rounded-lg" />
+      <Image src={hero} className="order-3 row-span-2 rounded-lg" />
       <p className="order-2 lg:order-3 text-[1.13rem] lg:text-2xl w-full leading-relaxed text-center lg:text-left">
         Nonprofit fundraising hasn’t changed much for the last hundred years.
         But the world has. We provide nonprofits with new tools to raise,

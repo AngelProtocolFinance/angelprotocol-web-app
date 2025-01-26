@@ -8,17 +8,22 @@ import { FormProvider, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
 import type { BankingApplicationsQueryParams } from "types/aws";
 import Form from "./Form";
+import { statuses } from "./constants";
 import type { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
-  setParams: React.Dispatch<
-    React.SetStateAction<BankingApplicationsQueryParams>
-  >;
+  params: URLSearchParams;
+  setParams: (params: BankingApplicationsQueryParams) => void;
   isDisabled: boolean;
 };
 
-export default function Filter({ setParams, classes = "", isDisabled }: Props) {
+export default function Filter({
+  setParams,
+  classes = "",
+  isDisabled,
+  params,
+}: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -34,8 +39,9 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       })
     ),
     defaultValues: {
-      endowmentID: "",
-      status: { label: "Under Review", value: "under-review" },
+      endowmentID: params.get("endowmentID") || "",
+      status:
+        statuses.find((s) => s.value === params.get("status")) || statuses[0],
     },
   });
 
@@ -46,7 +52,6 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       cleanObject({
         status: data.status.value,
         endowmentID: data.endowmentID ? +data.endowmentID : undefined,
-        requestor: "bg-admin",
       })
     );
     buttonRef.current?.click();
@@ -62,7 +67,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       <PopoverButton
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-blue-d1 text-white lg:dark:text-navy-l2 lg:text-navy-l1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-navy-d3 lg:border lg:border-gray-l4"
+        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded-sm bg-blue-d1 text-white lg:dark:text-navy-l2 lg:text-navy-l1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-navy-d3 lg:border lg:border-gray-l4"
       >
         {({ open }) => (
           <>

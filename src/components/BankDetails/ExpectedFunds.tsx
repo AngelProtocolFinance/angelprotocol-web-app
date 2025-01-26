@@ -17,17 +17,15 @@ export default function ExpectedFunds(props: Props) {
       </Label>
       <input
         id="wise__amount"
-        type="text"
+        type="number"
         value={props.value}
-        pattern="^[1-9]\d*$"
         required
         placeholder="1,000"
         onChange={(event) => props.onChange(event.target.value)}
-        className={`field-input text-field ${props.classes.input} invalid:ring-1 invalid:ring-red`}
+        className={`field-input ${props.classes.input} invalid:ring-1 invalid:ring-red`}
         autoComplete="off"
         spellCheck={false}
         disabled={props.disabled}
-        inputMode="numeric"
       />
       <p className="text-navy-l1 text-sm my-2 italic">
         Depending on how much you expect to receive each month via {APP_NAME},

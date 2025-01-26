@@ -2,54 +2,47 @@ import {
   type Submission,
   isRejected,
 } from "@better-giving/registration/models";
+import { Link, useFetcher } from "@remix-run/react";
 import LoadText from "components/LoadText";
 import { CircleAlert, Hourglass } from "lucide-react";
 import { steps } from "pages/Registration/routes";
-import type { MouseEventHandler } from "react";
-import { Link } from "react-router-dom";
-import { useRegState } from "../StepGuard";
 
 type Props = {
-  isSubmitting: boolean;
   status?: Exclude<Submission, { endowment_id: any }>;
-  onSubmit: MouseEventHandler<HTMLButtonElement>;
   classes?: string;
 };
 
-export default function EndowmentStatus({
-  onSubmit,
-  status,
-  isSubmitting,
-  classes = "",
-}: Props) {
-  const { data } = useRegState<3>();
-
+export default function EndowmentStatus({ status, classes = "" }: Props) {
+  const fetcher = useFetcher({ key: "reg-sub" });
+  const isSubmitting = fetcher.state !== "idle";
   if (!status) {
     return (
-      <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
+      <fetcher.Form
+        method="POST"
+        className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}
+      >
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.banking}`}
-          state={data.init}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
         </Link>
         <button
-          type="button"
+          type="submit"
           disabled={isSubmitting}
-          onClick={onSubmit}
           className="py-3 min-w-[8rem] btn-blue btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>
-      </div>
+      </fetcher.Form>
     );
   }
 
   if (isRejected(status)) {
     return (
-      <div
+      <fetcher.Form
+        method="POST"
         className={`max-sm:grid text-red dark:text-red-l3 ${classes} content-start`}
       >
         <p className="mb-6 max-sm:grid justify-items-center gap-2">
@@ -59,14 +52,13 @@ export default function EndowmentStatus({
           </span>
         </p>
         <button
-          type="button"
-          onClick={onSubmit}
+          type="submit"
           disabled={isSubmitting}
           className="min-w-[8rem] btn-blue btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
         </button>
-      </div>
+      </fetcher.Form>
     );
   }
 

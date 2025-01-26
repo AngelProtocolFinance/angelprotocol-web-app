@@ -5,15 +5,15 @@ import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import type { Currency } from "types/components";
 import type { OnIncrement } from "../../common/Incrementers";
-import { DEFAULT_PROGRAM, usdOption } from "../../common/constants";
-import type { FormValues as FV, FormProps } from "./types";
+import { usdOption } from "../../common/constants";
+import type { FormValues as FV, Props } from "./types";
 
-export function useRhf(props: Omit<FormProps, "currencies">) {
+export function useRhf(props: Props) {
   const initial: FV = {
     amount: "",
-    currency: props.defaultCurr || usdOption,
+    currency: usdOption,
     frequency: "" as FV["frequency"],
-    program: DEFAULT_PROGRAM,
+    program: { label: "", value: "" },
   };
 
   const currencyKey: keyof FV = "currency";

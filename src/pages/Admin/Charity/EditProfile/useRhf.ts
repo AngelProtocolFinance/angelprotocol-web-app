@@ -11,7 +11,7 @@ export default function useRhf(init: FV) {
     trigger,
     watch,
     formState: { isSubmitting, errors, isDirty, dirtyFields },
-  } = useForm<FV>({ defaultValues: init, resolver: valibotResolver(schema) });
+  } = useForm<FV>({ values: init, resolver: valibotResolver(schema) });
 
   const slug = watch("slug");
   const { field: card_img } = useController({ control, name: "card_img" });

@@ -1,84 +1,129 @@
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { useFetcher, useParams } from "@remix-run/react";
 import countries from "assets/countries/all.json";
-import CountrySelector from "components/CountrySelector";
+import { ControlledCountrySelector as CountrySelector } from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
-import { Selector } from "components/Selector";
-import { Field, Label } from "components/form";
+import { NativeSelect as Selector } from "components/Selector";
+import { NativeField as Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { useFormContext } from "react-hook-form";
-import type { FormValues as FV, Props } from "../types";
-import Tooltip from "./Tooltip";
+import { useController, useForm } from "react-hook-form";
+import type { ReceiptPayload } from "types/aws";
+import { type FV, schema } from "../schema";
+import { Tooltip } from "./Tooltip";
 import { states } from "./us-states";
 
 export const formStyle = "w-full text-navy-d4 dark:text-white p-3";
 
-export default function Form({ classes = "", ...props }: Props) {
+interface IForm extends FV {
+  classes?: string;
+}
+export function Form({ classes = "", ...init }: IForm) {
+  const params = useParams();
+  const fetcher = useFetcher();
   const {
-    watch,
     handleSubmit,
     resetField,
-    formState: { isSubmitting },
-  } = useFormContext<FV>();
+    register,
+    formState: { errors },
+    control,
+  } = useForm<FV>({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: init,
+    resolver: valibotResolver(schema),
+  });
 
-  const country = watch("country.name");
-  const isUS = /united states/i.test(country);
+  const { field: country } = useController<FV, "country">({
+    control,
+    name: "country",
+  });
+  const { field: usState } = useController<FV, "usState">({
+    control,
+    name: "usState",
+  });
+
+  const isUS = /united states/i.test(country.value.name);
 
   return (
     <form
-      onSubmit={handleSubmit(props.onSubmit)}
-      className={`${classes} ${formStyle}`}
+      onSubmit={handleSubmit((fv) => {
+        const payload: ReceiptPayload = {
+          fullName: `${fv.name.first} ${fv.name.last}`,
+          kycEmail: fv.kycEmail,
+          streetAddress: `${fv.address.street} ${fv.address.complement}`,
+          city: fv.city,
+          state: fv.usState.value || fv.state,
+          zipCode: fv.postalCode,
+          country: fv.country.name,
+        };
+        fetcher.submit(payload, {
+          encType: "application/json",
+          method: "put",
+          action: ".",
+        });
+      })}
+      className={`${classes} ${formStyle} grid gap-5 p-4`}
       autoComplete="off"
       autoSave="off"
     >
-      <Tooltip {...props} classes="col-span-full" />
-      <Field<FV>
+      <Tooltip txId={params.id ?? ""} classes="col-span-full" />
+      <Field
+        {...register("name.first")}
         classes="field-kyc"
-        name="name.first"
         label="First name"
         placeholder="e.g. John"
         required
+        error={errors.name?.first?.message}
       />
-      <Field<FV>
+      <Field
+        {...register("name.last")}
         classes="field-kyc"
-        name="name.last"
         label="Last name"
         placeholder="e.g. Doe"
         required
+        error={errors.name?.last?.message}
       />
-      <Field<FV>
+      <Field
+        {...register("address.street")}
         classes="field-kyc"
-        name="address.street"
         label="Address"
         placeholder="e.g. Street Rd 9920"
         required
+        error={errors.address?.street?.message}
       />
-      <Field<FV>
+      <Field
+        {...register("address.complement")}
         classes="field-kyc"
-        name="address.complement"
         label="Address Line 2"
         placeholder="e.g. PO Box 1234"
+        error={errors.address?.complement?.message}
       />
-      <Field<FV>
+      <Field
+        {...register("city")}
         classes="field-kyc"
-        name="city"
         label="City"
         placeholder="e.g. London"
         required
+        error={errors.city?.message}
       />
-      <Field<FV>
+      <Field
+        {...register("postalCode")}
         classes="field-kyc"
-        name="postalCode"
         label="Zip code"
         placeholder="e.g. 1080"
         required
+        error={errors.postalCode?.message}
       />
       <div className="grid relative">
         <Label htmlFor="country" className="mb-2" required>
           Country
         </Label>
 
-        <CountrySelector<FV, "country">
+        <CountrySelector
+          ref={country.ref}
+          value={country.value}
+          onChange={country.onChange}
           placeholder="Select a country"
-          fieldName="country"
           options={countries}
           onReset={() => resetField("usState")}
           classes={{
@@ -93,8 +138,9 @@ export default function Form({ classes = "", ...props }: Props) {
           <Label htmlFor="usState" className="mb-2" required={false}>
             State
           </Label>
-          <Selector<FV, "usState", string>
-            name="usState"
+          <Selector
+            onChange={usState.onChange}
+            value={usState.value.value}
             options={states}
             classes={{
               container: "bg-white dark:bg-blue-d6",
@@ -103,21 +149,23 @@ export default function Form({ classes = "", ...props }: Props) {
           />
         </div>
       ) : (
-        <Field<FV>
+        <Field
+          {...register("state", { shouldUnregister: true })}
           classes="field-kyc"
-          name="state"
           label="State"
           required={false}
           placeholder="e.g. England"
+          error={errors.state?.message}
         />
       )}
 
-      <Field<FV>
-        name="kycEmail"
+      <Field
+        {...register("kycEmail")}
         label="Email address"
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full field-kyc" }}
         required
+        error={errors.kycEmail?.message}
       />
       <p className="text-sm col-span-full">
         By submitting this information, you agree to our{" "}
@@ -136,10 +184,10 @@ export default function Form({ classes = "", ...props }: Props) {
 
       <button
         className="col-span-full btn-blue text-sm"
-        disabled={isSubmitting}
+        disabled={fetcher.state !== "idle"}
         type="submit"
       >
-        {isSubmitting ? "Processing..." : "Submit"}
+        {fetcher.state !== "idle" ? "Processing..." : "Submit"}
       </button>
     </form>
   );

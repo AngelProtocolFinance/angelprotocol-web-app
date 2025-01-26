@@ -1,212 +1,216 @@
 /** Layer 1 components */
-@layer components {
-  .rich-text-toolbar .ql-toolbar .ql-stroke {
-    @apply fill-none stroke-gray-d2 dark:stroke-white;
-  }
 
-  .rich-text-toolbar[aria-invalid="true"] {
-    @apply border-red;
-  }
-
-  .date-input::-webkit-calendar-picker-indicator {
+@utility date-input {
+  &::-webkit-calendar-picker-indicator {
     @apply absolute w-full opacity-0 cursor-pointer;
   }
-
-  .scroller::-webkit-scrollbar {
+}
+@utility scroller {
+  &::-webkit-scrollbar {
     @apply w-1;
   }
-  .scroller::-webkit-scrollbar-thumb {
-    @apply bg-[--accent-primary];
+  &::-webkit-scrollbar-thumb {
+    @apply bg-(--accent-primary);
   }
-  .scroller::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     @apply bg-gray-l3 dark:bg-navy;
   }
-
-  .padded-container {
-    @apply xl:container xl:mx-auto px-5;
-  }
-
+}
+@utility padded-container {
+  @apply xl:container xl:mx-auto px-5;
+}
+@utility btn {
   /** applicable to button and <a/> */
-  .btn {
-    @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded focus:outline-none focus-visible:ring-2;
-  }
-
-  .field-error {
-    @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
-  }
-  .field-input {
-    @apply w-full font-heading rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3;
-  }
-  .field-input:disabled,
-  .field-input[aria-disabled="true"] {
+  @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded-sm focus:outline-hidden focus-visible:ring-2;
+}
+@utility field-error {
+  @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
+}
+@utility field-input {
+  @apply w-full font-heading rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3;
+  &:disabled {
     @apply pointer-events-none bg-gray-l5 text-navy-l1;
   }
-  .field-input:enabled:focus {
-    @apply outline-none ring-2 ring-offset-1 ring-blue-d1;
+  &[aria-disabled="true"] {
+    @apply pointer-events-none bg-gray-l5 text-navy-l1;
+  }
+  &:enabled:focus {
+    @apply outline-hidden ring-2 ring-offset-1 ring-blue-d1;
   }
 
-  .field-input[aria-invalid="true"] {
+  &[aria-invalid="true"] {
     @apply border-red;
   }
-
-  .label {
-    @apply block text-sm after:ml-1;
-  }
-  .label[data-required="true"] {
+}
+@utility label {
+  @apply block text-sm after:ml-1;
+  &[data-required="true"] {
     @apply after:content-['*'] after:text-red;
   }
-  .label[data-required="false"] {
-    @apply after:content-['(optional)'] after:text-navy-l1  after:dark:text-navy-l2 after:font-normal after:text-[0.8em];
+  &[data-required="false"] {
+    @apply after:content-['(optional)'] after:text-navy-l1  dark:after:text-navy-l2 after:font-normal after:text-[0.8em];
   }
-
-  .radio {
-    @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
+}
+@utility radio {
+  @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
+  & > input {
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-blue-d1 disabled:checked:before:bg-gray-l2 dark:disabled:checked:before:bg-navy focus:outline-hidden focus:ring-1 focus:ring-blue-d1;
   }
-  .radio > input {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-blue-d1 disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-navy focus:outline-none focus:ring-1 focus:ring-blue-d1;
-  }
-
-  .checkbox {
-    @apply accent-blue-d1 size-4 shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-d1 disabled:accent-gray-l5 ring-offset-1;
-  }
+}
+@utility checkbox {
+  @apply accent-blue-d1 size-4 shrink-0 focus:outline-hidden focus:ring-2 focus:ring-blue-d1 disabled:accent-gray-l5 ring-offset-1;
 }
 
 /** Layer 2 components */
-@layer components {
-  .btn-outline {
-    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
+@utility btn-outline {
+  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 dark:aria-disabled:bg-navy dark:disabled:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 dark:enabled:hover:border-blue-d2;
+  &.pending {
+    @apply bg-gray-l4 pointer-events-none;
   }
-  .btn-outline-2 {
-    @apply rounded-lg normal-case text-sm border border-gray-l4 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
-  }
-  .btn-blue {
-    @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2 hover:bg-blue-d2;
-  }
-  .btn-outline-blue {
-    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 text-blue-d1 border border-blue-d1 enabled:hover:border-blue;
-  }
-  .btn-red {
-    @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
-  }
-  .btn-green {
-    @apply btn bg-green disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-green-l1 active:bg-green-d1 focus-visible:ring-green-l4;
-  }
-  .overlay {
-    @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;
-  }
+}
 
-  .field-container {
-    @apply rounded border border-gray-l3;
+@utility btn-outline-2 {
+  @apply rounded-lg normal-case text-sm border border-gray-l4 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
+}
+@utility btn-blue {
+  @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2 hover:bg-blue-d2;
+  &.pending {
+    @apply bg-gray pointer-events-none;
   }
-  .field-container:has(:focus) {
+}
+@utility btn-outline-blue {
+  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 text-blue-d1 border border-blue-d1 enabled:hover:border-blue;
+}
+@utility btn-red {
+  @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
+  &.pending {
+    @apply bg-gray pointer-events-none;
+  }
+}
+@utility btn-green {
+  @apply btn bg-green disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-green-l1 active:bg-green-d1 focus-visible:ring-green-l4;
+  &.pending {
+    @apply bg-gray pointer-events-none;
+  }
+}
+@utility overlay {
+  @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 dark:before:bg-blue-d3/90;
+}
+@utility field-container {
+  @apply rounded-sm border border-gray-l3;
+  &:has(:focus) {
     @apply ring-2 ring-offset-1 ring-blue-d1;
   }
-  .field-container:has(:disabled),
-  .field-container:has([aria-disabled="true"]) {
+  &:has(:disabled) {
     @apply text-navy-l1 bg-gray-l5 pointer-events-none;
   }
-  .field-container:has([data-error]),
-  .field-container:has([aria-invalid="true"]) {
+  &:has([aria-disabled="true"]) {
+    @apply text-navy-l1 bg-gray-l5 pointer-events-none;
+  }
+  &:has([data-error]) {
     @apply border-red;
   }
-  .field-container > input {
-    @apply bg-transparent focus:outline-none w-full;
+  &:has([aria-invalid="true"]) {
+    @apply border-red;
   }
-
-  .field-input-donate {
-    @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+  & > input {
+    @apply bg-transparent focus:outline-hidden w-full;
   }
-  .field-input-donate:enabled:focus {
+}
+@utility field-input-donate {
+  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+  &:enabled:focus {
     @apply ring-[color:var(--accent-primary)];
   }
+}
+@utility field {
+  @apply relative;
 
-  .field {
-    @apply relative;
-  }
-
-  .field > textarea,
-  .field > input {
+  & > textarea {
     @apply field-input;
   }
 
-  .field > label {
-    @apply mb-2;
-  }
-  .field [data-error] {
-    @apply field-error;
+  & > input {
+    @apply field-input;
   }
 
-  .check-field {
-    @apply grid grid-cols-[auto_1fr] justify-items-start gap-x-3 items-center;
+  & > label {
+    @apply mb-2;
   }
-  .check-field > label {
+  & [data-error] {
+    @apply field-error;
+  }
+}
+@utility check-field {
+  @apply grid grid-cols-[auto_1fr] justify-items-start gap-x-3 items-center;
+  & > label {
     @apply cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   }
-  .check-field > input {
+  & > input {
     @apply checkbox;
   }
-  .check-field > [data-error] {
+  & > [data-error] {
     @apply col-span-full text-xs text-red dark:text-red-l2;
   }
 }
 
 /** page components */
-@layer components {
-  .btn-outline-filled {
-    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 disabled:bg-gray-l4 aria-disabled:bg-gray-l4;
-  }
-  .btn-outline-gray {
-    @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;
-  }
-  .btn-gift {
-    @apply text-base sm:text-sm;
-  }
-  .btn-donate {
-    @apply rounded-full normal-case;
-  }
-
-  .btn-reg {
-    @apply text-sm;
-  }
-
-  .field-gift > input {
+@utility btn-outline-filled {
+  @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 disabled:bg-gray-l4 aria-disabled:bg-gray-l4;
+}
+@utility btn-outline-gray {
+  @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;
+}
+@utility btn-gift {
+  @apply text-base sm:text-sm;
+}
+@utility btn-donate {
+  @apply rounded-full normal-case;
+}
+@utility btn-reg {
+  @apply text-sm;
+}
+@utility field-gift {
+  & > input {
     @apply bg-white dark:bg-blue-d6;
   }
-
-  .field-input-admin {
-    @apply bg-gray-l6 dark:bg-blue-d5;
-  }
-
-  .field-kyc > input {
+}
+@utility field-input-admin {
+  @apply bg-gray-l6 dark:bg-blue-d5;
+}
+@utility field-kyc {
+  & > input {
     @apply bg-gray-l6 dark:bg-blue-d6;
   }
-
-  .field-admin > textarea,
-  .field-admin > input {
+}
+@utility field-admin {
+  & > textarea {
     @apply bg-gray-l6 dark:bg-blue-d5;
   }
 
-  .field-donate > input {
+  & > input {
+    @apply bg-gray-l6 dark:bg-blue-d5;
+  }
+}
+@utility field-donate {
+  & > input {
     @apply field-input-donate;
   }
-  .field-donate > label {
+  & > label {
     @apply font-heading font-semibold text-base;
   }
-
-  .field-container-donate {
-    @apply text-base font-semibold rounded-lg;
-  }
-  .field-container-donate > input {
+}
+@utility field-container-donate {
+  @apply text-base font-semibold rounded-lg;
+  & > input {
     @apply py-3.5 px-5 text-base placeholder:font-medium;
   }
-  .field-container-donate:has(:focus) {
+  &:has(:focus) {
     @apply ring-[color:var(--accent-primary)];
   }
-
-  .field-admin-sec > input {
+}
+@utility field-admin-sec {
+  & > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 }
-
-
-

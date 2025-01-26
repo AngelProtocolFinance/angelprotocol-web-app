@@ -4,9 +4,10 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import LoadText from "components/LoadText";
-import { appRoutes, donateWidgetRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import ErrorTrigger from "errors/ErrorTrigger";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
+import { ErrorTrigger } from "components/error";
+import { appRoutes } from "constants/routes";
+import { errorPrompt } from "contexts/ErrorContext";
 import { type FormEventHandler, useState } from "react";
 import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
@@ -16,9 +17,9 @@ type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
+  const [prompt, setPrompt] = useState<IPromptV2>();
   const stripe = useStripe();
   const elements = useElements();
-  const { handleError } = useErrorContext();
 
   // There is a small delay before Stripe Payment Element starts to load.
   // To avoid just showing the "Back" button with nothing else on screen,
@@ -40,8 +41,8 @@ export default function Checkout(props: StripeCheckoutStep) {
 
     const return_url =
       props.init.source === "bg-widget"
-        ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
-        : `${window.location.origin}${appRoutes.stripe_payment_status}`;
+        ? `${window.location.origin}${appRoutes.donate_widget}/donate-thanks`
+        : `${window.location.origin}/donate-thanks`;
 
     const stripeConfirmParams = {
       elements,
@@ -61,9 +62,9 @@ export default function Checkout(props: StripeCheckoutStep) {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
-      handleError(error.message, "parsed");
+      setPrompt(errorPrompt(error.message, "parsed"));
     } else {
-      handleError(error, { context: "processing payment" });
+      setPrompt(errorPrompt(error, { context: "processing payment" }));
     }
 
     setStatus("ready");
@@ -105,7 +106,7 @@ export default function Checkout(props: StripeCheckoutStep) {
         <Loader />
       ) : (
         <button
-          className="btn-blue btn-donate bg-[--accent-primary] hover:enabled:bg-[--accent-primary] w-full mt-6"
+          className="btn-blue btn-donate bg-(--accent-primary) hover:enabled:bg-(--accent-primary) w-full mt-6"
           disabled={!stripe || !elements || status !== "ready"}
           type="submit"
         >
@@ -114,6 +115,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           </LoadText>
         </button>
       )}
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </form>
   );
 }

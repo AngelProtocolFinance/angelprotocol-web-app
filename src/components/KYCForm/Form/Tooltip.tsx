@@ -1,13 +1,14 @@
 import { maskAddress } from "helpers";
-import type { Props } from "../types";
 
-export default function Tooltip(props: Props) {
+interface ITooltip {
+  txId: string;
+  classes?: string;
+}
+export function Tooltip({ txId, classes = "" }: ITooltip) {
   return (
-    <p className={props.classes ?? ""}>
+    <p className={classes}>
       <span className="text-xs uppercase font-bold mb-1">Transaction ID:</span>
-      <span className="font-normal text-sm ml-2">
-        {maskAddress(props.txHash)}
-      </span>
+      <span className="font-normal text-sm ml-2">{maskAddress(txId)}</span>
     </p>
   );
 }

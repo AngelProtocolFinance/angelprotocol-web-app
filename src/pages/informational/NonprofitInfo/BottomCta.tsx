@@ -1,8 +1,8 @@
+import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 
 export function BottomCta({ className = "" }) {
   return (
@@ -40,7 +40,7 @@ interface ICtaCard {
 export function CtaCard({ className = "", title, to, img }: ICtaCard) {
   return (
     <div
-      className={`${className} grid @md:grid-cols-2 w-full bg-gradient-to-br to-transparent p-6 rounded-xl`}
+      className={`${className} grid @md:grid-cols-2 w-full bg-linear-to-br to-transparent p-6 rounded-xl`}
     >
       <h3 className="@3xl:text-left text-white @3xl:leading-snug font-heading text-xl @sm:text-2xl mb-4 col-span-full">
         {title}
