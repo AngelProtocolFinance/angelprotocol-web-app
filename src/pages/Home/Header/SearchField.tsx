@@ -31,7 +31,7 @@ export default function SearchField({ classes = "", onChange }: Props) {
         id="__endow-search"
         type="text"
         placeholder="Search causes..."
-        className="focus:outline-none text-lg placeholder:text-gray text-navy-l1 autofill:bg-white"
+        className="focus:outline-hidden text-lg placeholder:text-gray text-navy-l1 autofill:bg-white"
       />
     </div>
   );

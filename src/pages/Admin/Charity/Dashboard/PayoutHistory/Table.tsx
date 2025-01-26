@@ -111,7 +111,7 @@ export default function Table({
 }: TableProps) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-gray-l4`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l4`}
     >
       <TableSection type="thead" rowClass="divide-x divide-gray-l4">
         <Cells

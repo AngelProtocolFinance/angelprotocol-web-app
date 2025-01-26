@@ -7,7 +7,7 @@ import { appRoutes } from "constants/routes";
 export function BottomCta({ className = "" }) {
   return (
     <div
-      className={`${className} grid md:grid-cols-[3fr_1fr] bg-gradient-to-br from-blue-d1 to-white rounded-3xl md:rounded-4xl px-10 py-12 md:px-16 md:py-[4.5rem]`}
+      className={`${className} grid md:grid-cols-[3fr_1fr] bg-linear-to-br from-blue-d1 to-white rounded-3xl md:rounded-4xl px-10 py-12 md:px-16 md:py-[4.5rem]`}
     >
       <div className="order-2 md:order-1">
         <h4 className="text-center md:text-left uppercase [28rem]:text-lg text-white leading-normal mb-6">

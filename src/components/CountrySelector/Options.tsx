@@ -3,7 +3,7 @@ import { isEmpty } from "helpers";
 import type { Country } from "types/components";
 
 const containerStyle =
-  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
+  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded-sm overflow-y-scroll scroller";
 
 type Props = {
   query: string;
@@ -22,7 +22,7 @@ export default function Options({ query, options }: Props) {
       {(!isEmpty(options) &&
         filtered.map((country) => (
           <ComboboxOption
-            className="data-[selected]:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm font-heading"
+            className="data-selected:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm font-heading"
             key={country.name}
             value={country}
           >

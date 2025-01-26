@@ -26,7 +26,7 @@ export default function Table({
   );
 
   return (
-    <table className="w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2">
+    <table className="w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2">
       <TableSection
         type="thead"
         rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
@@ -121,7 +121,7 @@ export default function Table({
                   type="button"
                   onClick={onLoadMore}
                   disabled={disabled}
-                  className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-blue-l4 enabled:dark:hover:bg-blue-d3 active:bg-blue-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-navy-l2 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy"
+                  className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 active:bg-blue-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-navy-l2 aria-disabled:bg-gray-l3 dark:aria-disabled:bg-navy dark:disabled:bg-navy"
                 >
                   {isLoading ? "Loading..." : "Load More"}
                 </button>

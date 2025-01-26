@@ -104,7 +104,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           </div>
           <p className="text-sm text-navy-l3">
             <span>Ends in </span>
-            <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded ml-1">
+            <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded-sm ml-1">
               in {period.distance}
             </span>
           </p>

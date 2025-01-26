@@ -27,7 +27,7 @@ export default function DeletePrompt() {
       }
       className="relative z-50"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
       <Content isDefault={isDefault} isWithHeir={isWithHeir} />
     </Dialog>
   );
@@ -47,7 +47,7 @@ function Content({ isDefault, isWithHeir }: Props) {
         : [true, "Are you sure you want to delete this payment method?"];
 
   return (
-    <DialogPanel className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden">
+    <DialogPanel className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden">
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
           Delete payout method

@@ -46,7 +46,7 @@ export function Skeleton() {
       aria-disabled={true}
     >
       <ContentLoader className="w-[20px] h-[20px] rounded-full" />
-      <ContentLoader className="h-[20px] w-40 rounded" />
+      <ContentLoader className="h-[20px] w-40 rounded-sm" />
     </a>
   );
 }

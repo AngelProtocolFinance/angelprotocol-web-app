@@ -18,7 +18,7 @@ export default function Media() {
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
       <h3 className="text-[2rem]">Media</h3>
-      <div className="border border-gray-l4 rounded p-8">
+      <div className="border border-gray-l4 rounded-sm p-8">
         <div className="flex justify-between items-center">
           <h4 className="text-2xl">Videos</h4>
           <NavLink
@@ -33,7 +33,7 @@ export default function Media() {
         <FeaturedVideos items={featuredPage.items} classes="mt-4" />
         <NavLink
           to="videos"
-          className="btn-outline-filled text-sm py-3 rounded mt-4"
+          className="btn-outline-filled text-sm py-3 rounded-sm mt-4"
         >
           View all videos
         </NavLink>

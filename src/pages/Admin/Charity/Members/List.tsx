@@ -28,7 +28,7 @@ interface LoadedProps extends LoaderData {
 function Loaded({ admins, classes = "", user }: LoadedProps) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"

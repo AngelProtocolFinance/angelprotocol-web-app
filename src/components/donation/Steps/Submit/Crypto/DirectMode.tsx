@@ -89,7 +89,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
           isError: !!error,
         }}
         messages={{
-          loading: <ContentLoader className="size-48 rounded" />,
+          loading: <ContentLoader className="size-48 rounded-sm" />,
           error: "Failed to load donation address",
         }}
       >

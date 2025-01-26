@@ -51,7 +51,7 @@ export default function WpPlugin() {
           is the number that was assigned to your nonprofit when you signed up
           with {APP_NAME} and is unique to it (ex. 121).
         </div>
-        <div className="mx-auto flex max-w-md gap-4 bg-blue-l2 p-4 my-4 rounded">
+        <div className="mx-auto flex max-w-md gap-4 bg-blue-l2 p-4 my-4 rounded-sm">
           <Image
             alt="Laira mascot waving"
             src={laira.waiving}
@@ -78,7 +78,7 @@ export default function WpPlugin() {
           may be passed to further customize and configure your Donation Form
           settings and appearance from the default:
           <div className="overflow-x-auto">
-            <table className="w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2">
+            <table className="w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2">
               <TableSection
                 type="thead"
                 rowClass="bg-blue-l4 divide-x divide-blue-l2"

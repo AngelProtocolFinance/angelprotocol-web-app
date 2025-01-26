@@ -190,7 +190,7 @@ export default function Configurer({
                     type="number"
                     placeholder="0.00"
                     {...register(`increments.${idx}.value`)}
-                    className="w-full h-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                    className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
                   />
                 </div>
                 <p className="mt-1 empty:hidden text-left text-xs text-red">
@@ -201,7 +201,7 @@ export default function Configurer({
                 <Textarea
                   rows={2}
                   {...register(`increments.${idx}.label`)}
-                  className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                  className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
                 />
                 <p
                   data-error={!!errors.increments?.[idx]?.label?.message}

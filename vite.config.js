@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { vitePlugin as remix } from "@remix-run/dev";
 import { vercelPreset } from "@vercel/remix/vite";
+import tailwind from "@tailwindcss/vite";
 
 const rmx = remix({
   presets: [vercelPreset()],
@@ -203,7 +204,11 @@ export default defineConfig({
   base: "/",
   build: { outDir: "build", target: "es2022" },
   server: { port: 4200 },
-  plugins: [process.env.NODE_ENV === "test" ? undefined : rmx, tsconfigPaths()],
+  plugins: [
+    process.env.NODE_ENV === "test" ? undefined : rmx,
+    tsconfigPaths(),
+    tailwind(),
+  ],
   test: {
     setupFiles: ["./src/setupTests.ts"],
     environment: "jsdom",

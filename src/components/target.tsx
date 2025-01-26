@@ -26,7 +26,7 @@ export function Target({ text, target, classes = "", progress }: ITarget) {
       <div className="h-1.5 w-full rounded-full bg-green-l4 shadow-inner">
         <div
           style={{ width: `${pct * 100}%` }}
-          className="h-full rounded-full bg-green shadow-sm"
+          className="h-full rounded-full bg-green shadow-xs"
         />
       </div>
       <div className="flex items-center justify-between mt-1">

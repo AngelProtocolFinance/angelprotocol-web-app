@@ -91,7 +91,7 @@ function Method({
       dragControls={controls}
       id={value.id}
       style={{ y }}
-      className="flex items-center gap-2 border border-gray-l4 p-3 aria-disabled:bg-gray-l4 aria-disabled:text-gray rounded bg-white select-none"
+      className="flex items-center gap-2 border border-gray-l4 p-3 aria-disabled:bg-gray-l4 aria-disabled:text-gray rounded-sm bg-white select-none"
     >
       <input
         type="checkbox"

@@ -41,7 +41,7 @@ function Milestone(m: TMilestone) {
     >
       {m.media && (
         <div className="pl-6 sm:pl-8">
-          <Image src={m.media} className="h-60 w-full rounded" />
+          <Image src={m.media} className="h-60 w-full rounded-sm" />
         </div>
       )}
 

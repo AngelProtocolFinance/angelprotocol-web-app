@@ -34,7 +34,7 @@ export default function Banking() {
           <span>Bank statement</span>
         </ExtLink>
         <button
-          className="btn-red px-2 py-1 rounded text-xs mt-2 mb-8"
+          className="btn-red px-2 py-1 rounded-sm text-xs mt-2 mb-8"
           type="button"
           onClick={() => setIsChanging(true)}
         >
@@ -63,7 +63,7 @@ export default function Banking() {
     <div className="flex flex-col items-start max-sm:items-center">
       {isChanging && (
         <button
-          className="btn-blue px-2 py-1 rounded text-xs mt-2 mb-4"
+          className="btn-blue px-2 py-1 rounded-sm text-xs mt-2 mb-4"
           type="button"
           onClick={() => setIsChanging(false)}
         >

@@ -16,7 +16,7 @@ export function ErrorModal() {
     <Modal
       open={true}
       onClose={() => window.location.reload()}
-      classes="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      classes="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="px-6 pb-4 text-center text-navy-l1 mt-4">
         <DefaultFallback />

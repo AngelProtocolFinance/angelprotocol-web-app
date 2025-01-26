@@ -1,31 +1,37 @@
-@layer utilities {
-  .fixed-center {
-    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
-  }
-  .absolute-center {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
-  }
-  .flex-center {
-    @apply flex items-center justify-center;
-  }
+@utility fixed-center {
+  @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
 
-  .box-delay-1 {
-    animation-delay: 300ms;
-  }
-  .box-delay-2 {
-    animation-delay: 600ms;
-  }
+@utility absolute-center {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
 
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility box-delay-1 {
+  animation-delay: 300ms;
+}
+
+@utility box-delay-2 {
+  animation-delay: 600ms;
+}
+
+@utility text-field {
   /** remove arrows from input type=number*/
-  .text-field {
-    -moz-appearance: textfield;
-  }
-  .text-field:hover,
-  .text-field:focus {
+  -moz-appearance: textfield;
+  &:hover {
     -moz-appearance: number-input;
   }
-  .text-field::-webkit-inner-spin-button,
-  .text-field::-webkit-outer-spin-button {
+  &:focus {
+    -moz-appearance: number-input;
+  }
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }

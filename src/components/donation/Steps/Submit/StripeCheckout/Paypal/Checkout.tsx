@@ -23,7 +23,7 @@ export default function Checkout(props: StripeCheckoutStep) {
   const [{ isPending }] = usePayPalScriptReducer();
   const [state, setState] = useState<"loading" | "error">();
 
-  if (isPending) return <ContentLoader className="rounded h-10 w-40" />;
+  if (isPending) return <ContentLoader className="rounded-sm h-10 w-40" />;
 
   return (
     <PayPalButtons

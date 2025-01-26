@@ -21,7 +21,7 @@ export default function Reference({ id, classes = "" }: Props) {
 
         <Tooltip
           tip={
-            <Content className="p-3 text-xs bg-navy-d4 text-white max-w-xs rounded">
+            <Content className="p-3 text-xs bg-navy-d4 text-white max-w-xs rounded-sm">
               {tooltip}
               <Arrow />
             </Content>

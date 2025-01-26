@@ -29,7 +29,7 @@ type Props = {
   classes?: string;
 };
 const container =
-  "w-56 border border-gray-l4 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
+  "w-56 border border-gray-l4 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-hidden";
 export default function TokenOptions({ onChange, token }: Props) {
   return (
     <PopoverPanel
@@ -103,11 +103,11 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         }
       }}
     >
-      <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded mb-1 border border-gray-l4">
+      <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded-sm mb-1 border border-gray-l4">
         <ComboboxInput
           value={searchText}
           placeholder="Search..."
-          className="text-left text-sm focus:outline-none bg-transparent"
+          className="text-left text-sm focus:outline-hidden bg-transparent"
           onChange={(event) => setSearchText(event.target.value)}
         />
         <SearchIcon size={20} />
@@ -126,7 +126,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                 as={CloseButton}
                 key={token.id}
                 className={
-                  "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-[--accent-secondary] data-[selected]:bg-[--accent-secondary] cursor-pointer"
+                  "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) cursor-pointer"
                 }
                 value={{ ...token, amount: "" }}
               >

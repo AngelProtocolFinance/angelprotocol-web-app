@@ -142,13 +142,13 @@ export default function Tip(props: TipStep) {
           className="relative flex items-center select-none touch-none mt-16"
         >
           <Slider.Track className="relative grow rounded-full h-1.5 bg-[#EAECEB]">
-            <Slider.Range className="absolute bg-[--accent-primary] rounded-full h-full" />
+            <Slider.Range className="absolute bg-(--accent-primary) rounded-full h-full" />
           </Slider.Track>
           <Slider.Thumb className="flex gap-[2.5px] justify-center items-center w-9 h-5 bg-white border border-[#EAECEB] shadow-lg shadow-black/15 rounded-[6px] relative">
             <span className="w-px h-2.5 bg-[#D9D9D9]" />
             <span className="w-px h-2.5 bg-[#D9D9D9]" />
             <span className="w-px h-2.5 bg-[#D9D9D9]" />
-            <div className="absolute -top-9 px-2 py-0.5 rounded text-sm">
+            <div className="absolute -top-9 px-2 py-0.5 rounded-sm text-sm">
               <span className="text-xs uppercase mr-0.5">{symbol}</span>
               <span className="mr-0.5">
                 {humanize(tip.amount || "0", centsDecimals(rate, decimals))}
@@ -204,7 +204,7 @@ export default function Tip(props: TipStep) {
         </>
       )}
 
-      <div className="rounded bg-[--accent-secondary] mt-16 relative px-4 py-2 grid grid-cols-[auto_1fr] gap-x-4 items-center">
+      <div className="rounded-sm bg-(--accent-secondary) mt-16 relative px-4 py-2 grid grid-cols-[auto_1fr] gap-x-4 items-center">
         <Image
           src={withTip ? laira.gift : laira.standingFront}
           width={withTip ? 50 : 40}

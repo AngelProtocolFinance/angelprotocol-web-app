@@ -36,7 +36,7 @@ export default function Options({ searchText }: Props) {
 
     return endows.map((endow) => (
       <ComboboxOption
-        className="data-[selected]:bg-blue-l2 cursor-pointer flex gap-2 p-2 text-sm"
+        className="data-selected:bg-blue-l2 cursor-pointer flex gap-2 p-2 text-sm"
         key={endow.name}
         value={endow}
       >
@@ -46,7 +46,7 @@ export default function Options({ searchText }: Props) {
   })(fetcher);
 
   return (
-    <ComboboxOptions className="absolute left-0 max-h-60 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller">
+    <ComboboxOptions className="absolute left-0 max-h-60 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded-sm overflow-y-scroll scroller">
       {opts}
     </ComboboxOptions>
   );

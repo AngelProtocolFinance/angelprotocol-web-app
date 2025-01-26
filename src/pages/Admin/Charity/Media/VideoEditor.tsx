@@ -30,7 +30,7 @@ export default function VideoEditor() {
       onClose={() =>
         navigate("..", { preventScrollReset: true, replace: true })
       }
-      classes="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      classes="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <Content
         edit={

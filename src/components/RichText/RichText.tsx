@@ -13,7 +13,7 @@ export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
       <div
         aria-invalid={!!props.error}
         aria-disabled={props.disabled}
-        className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${style.field} ${props.readOnly ? "toolbar-hidden" : ""}`}
+        className={`relative has-focus-within:ring-2 ring-blue-d1 ring-offset-1 ${style.field} ${props.readOnly ? "toolbar-hidden" : ""}`}
       >
         <Suspense
           fallback={

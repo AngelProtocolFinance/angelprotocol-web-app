@@ -66,7 +66,7 @@ export default function Filter({ classes = "", isDisabled }: Props) {
       <PopoverButton
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full @5xl:w-[22.3rem] flex justify-center items-center p-3 rounded bg-blue-d1 text-white @5xl:text-navy-l1 @5xl:bg-white @5xl:justify-between disabled:bg-gray @5xl:disabled:bg-gray-l3 @5xl:dark:disabled:bg-navy-d3 @5xl:border @5xl:border-gray-l4"
+        className="w-full @5xl:w-[22.3rem] flex justify-center items-center p-3 rounded-sm bg-blue-d1 text-white @5xl:text-navy-l1 @5xl:bg-white @5xl:justify-between disabled:bg-gray @5xl:disabled:bg-gray-l3 @5xl:dark:disabled:bg-navy-d3 @5xl:border @5xl:border-gray-l4"
       >
         {({ open }) => (
           <>

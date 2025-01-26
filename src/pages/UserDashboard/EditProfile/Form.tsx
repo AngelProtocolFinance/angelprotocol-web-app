@@ -65,7 +65,7 @@ export default function Component() {
         }}
         classes={{
           container: "mb-4",
-          dropzone: "w-60 aspect-[1/1] rounded-full",
+          dropzone: "w-60 aspect-1/1 rounded-full",
         }}
         error={rhf.errors.avatar?.message}
       />

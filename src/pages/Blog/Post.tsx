@@ -75,7 +75,7 @@ function Loaded(post: IPost) {
       <div className="w-full h-px bg-gray-l4 my-4" />
 
       <div
-        className="prose lg:prose-lg prose-a:text-blue prose-a:hover:text-blue-d1"
+        className="prose lg:prose-lg prose-a:text-blue hover:prose-a:text-blue-d1"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />

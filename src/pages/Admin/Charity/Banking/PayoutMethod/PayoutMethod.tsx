@@ -39,7 +39,7 @@ export default function PayoutMethod() {
           </div>
         )}
         {isDefault && (
-          <div className="bg-blue text-white px-2 py-1 text-xs uppercase rounded inline-block">
+          <div className="bg-blue text-white px-2 py-1 text-xs uppercase rounded-sm inline-block">
             Default
           </div>
         )}
@@ -52,7 +52,7 @@ export default function PayoutMethod() {
         </p>
       )}
 
-      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l4 rounded mt-2">
+      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l4 rounded-sm mt-2">
         <Row label="Currency">{bank.currency}</Row>
         <Row label="Country">{bank.country}</Row>
         <Row label="Recipient name">{bank.name.fullName}</Row>

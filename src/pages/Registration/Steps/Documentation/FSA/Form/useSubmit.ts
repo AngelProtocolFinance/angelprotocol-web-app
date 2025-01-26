@@ -41,7 +41,7 @@ export default function useSubmit({
       last_name: contact.last_name,
       role:
         contact.org_role === "other"
-          ? contact.other_role ?? ""
+          ? (contact.other_role ?? "")
           : contact.org_role,
       docs: {
         org_name: contact.org_name,

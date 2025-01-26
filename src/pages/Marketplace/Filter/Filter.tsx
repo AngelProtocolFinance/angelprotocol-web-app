@@ -21,9 +21,9 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         )
       }
     >
-      <DialogBackdrop className="fixed z-40 inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogBackdrop className="fixed z-40 inset-0 bg-black/30 data-closed:opacity-0" />
       <DialogPanel
-        className={`${classes} fixed-center z-50 isolate w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded`}
+        className={`${classes} fixed-center z-50 isolate w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded-sm`}
       >
         <div className="bg-blue-l5 dark:bg-blue-d7 flex items-center p-4 border-b border-gray-l4">
           <p className="font-bold font-heading uppercase mr-auto">Filters</p>

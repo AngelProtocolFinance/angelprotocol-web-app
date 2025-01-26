@@ -49,7 +49,7 @@ export function List({ classes = "", page1 }: Props) {
 function NoVideo({ classes = "" }) {
   return (
     <div
-      className={`bg-white ${classes} grid justify-items-center rounded border border-gray-l4 px-4 py-16`}
+      className={`bg-white ${classes} grid justify-items-center rounded-sm border border-gray-l4 px-4 py-16`}
     >
       <Image className="text-navy-l2 text-2xl mb-6" />
       <p className="font-bold mb-2">Start by adding your first video</p>

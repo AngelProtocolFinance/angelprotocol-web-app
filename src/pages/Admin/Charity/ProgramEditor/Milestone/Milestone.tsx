@@ -49,7 +49,7 @@ export default function Milestone(props: Props) {
   return (
     <Disclosure
       as="div"
-      className="border border-gray-l4 rounded overflow-hidden"
+      className="border border-gray-l4 rounded-sm overflow-hidden"
     >
       <div className="relative py-3 px-4 text-center bg-blue-l5 dark:bg-blue-d7">
         <span className="text-xl font-bold font-heading">{props.title}</span>
@@ -97,7 +97,7 @@ export default function Milestone(props: Props) {
           spec={imgSpec([4, 1])}
           classes={{
             container: "mb-4",
-            dropzone: "w-full @md:aspect-[4/1] h-36 @md:h-auto",
+            dropzone: "w-full @-md:aspect-4/1 h-36 @md:h-auto",
           }}
           error={errors.media?.message}
         />
@@ -126,7 +126,7 @@ export default function Milestone(props: Props) {
           charLimit={MAX_CHARS}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
           }}
           error={

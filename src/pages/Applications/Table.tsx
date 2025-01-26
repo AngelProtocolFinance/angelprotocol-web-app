@@ -30,7 +30,7 @@ export default function Table({
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"
@@ -152,7 +152,7 @@ const text: { [key in TStatus]: string } = {
 function Status({ status }: { status: TStatus }) {
   return (
     <p
-      className={`${bg[status]} rounded px-3 py-1 inline-block uppercase text-xs text-white`}
+      className={`${bg[status]} rounded-sm px-3 py-1 inline-block uppercase text-xs text-white`}
     >
       {text[status]}
     </p>

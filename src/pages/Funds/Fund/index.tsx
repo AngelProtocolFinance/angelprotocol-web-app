@@ -161,7 +161,7 @@ export default function Fund() {
               >
                 <Image
                   src={m.logo}
-                  className="aspect-[2/1] rounded-sm"
+                  className="aspect-2/1 rounded-xs"
                   width={50}
                 />
                 <Link

@@ -15,7 +15,7 @@ type Props = {
 export function FundCard({ classes = "", ...props }: Props) {
   return (
     <div
-      className={`grid @xl/fund-card:grid-cols-[3fr_2fr] gap-x-4 gap-y-6 p-4 md:bg-white rounded-lg md:border border-gray-l4 ${classes}`}
+      className={`grid @-xl/fund-card:grid-cols-[3fr_2fr] gap-x-4 gap-y-6 p-4 md:bg-white rounded-lg md:border border-gray-l4 ${classes}`}
     >
       <div className="grid grid-cols-[auto-1fr] gap-x-4 justify-start order-2 @xl/fund-card:order-1">
         <Image

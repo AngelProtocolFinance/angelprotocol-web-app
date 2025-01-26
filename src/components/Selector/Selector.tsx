@@ -40,7 +40,7 @@ function _List<T extends ValKey>(
           aria-invalid={!!props.error}
           aria-disabled={props.disabled}
           as="button"
-          className={`${cls.button} ${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
+          className={`${cls.button} ${styles.selectorButton} peer-focus:shadow-sm peer-focus:shadow-red`}
         >
           {({ open }) => (
             <>

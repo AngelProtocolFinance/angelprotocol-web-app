@@ -24,17 +24,17 @@ export default function NavDropdown({ user, isInAuth }: Props) {
     <HuiMenu>
       <MenuButton
         data-testid="nav_dropdown"
-        className="text-white data-[open]:text-white/90 group flex justify-center items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+        className="text-white data-open:text-white/90 group flex justify-center items-center hover:text-white focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/75"
         aria-label="Navigation Menu"
       >
         <MenuIcon
           size={24}
-          className="text-navy-l2 data-[open]:text-navy-l2/70 sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80"
+          className="text-navy-l2 data-open:text-navy-l2/70 sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80"
           aria-hidden="true"
         />
         <ChevronDown
           size={20}
-          className="text-blue-d7 data-[open]:text-blue-d7/70 max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80"
+          className="text-blue-d7 data-open:text-blue-d7/70 max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80"
           aria-hidden="true"
         />
       </MenuButton>
@@ -43,7 +43,7 @@ export default function NavDropdown({ user, isInAuth }: Props) {
         transition
         anchor={{ to: "bottom end", gap: 10 }}
         as="nav"
-        className="grid isolate z-40 rounded-lg bg-gray-l6 drop-shadow-2xl scroller origin-top transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+        className="grid isolate z-40 rounded-lg bg-gray-l6 drop-shadow-2xl scroller origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
       >
         <div className="p-5 grid gap-y-2 w-80">
           <MenuItem>

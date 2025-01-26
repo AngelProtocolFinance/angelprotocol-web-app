@@ -16,7 +16,7 @@ export default function TokenSelector({
     <Popover className="relative gap-1 flex justify-end dark:text-navy-l2 h-full">
       <PopoverButton
         disabled={tokenState === "loading"}
-        className="flex items-center gap-1 focus:outline-none"
+        className="flex items-center gap-1 focus:outline-hidden"
       >
         {({ open }) => (
           <>

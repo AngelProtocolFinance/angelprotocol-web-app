@@ -40,7 +40,7 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
     <div className={classes}>
       <div className="grid w-full sm:flex items-center sm:justify-end mb-2 gap-2">
         <CsvExporter
-          classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded px-4 py-2 text-sm"
+          classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded-sm px-4 py-2 text-sm"
           headers={csvHeaders}
           data={items
             .filter(

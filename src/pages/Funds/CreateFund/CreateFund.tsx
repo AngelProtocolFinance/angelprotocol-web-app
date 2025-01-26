@@ -112,7 +112,7 @@ export default function CreateFund() {
           charLimit={MAX_DESCRIPTION_CHAR}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
             error: "text-right",
           }}
@@ -166,7 +166,7 @@ export default function CreateFund() {
           }}
           classes={{
             container: "mb-4",
-            dropzone: "aspect-[4/1]",
+            dropzone: "aspect-4/1",
           }}
           error={errors.banner?.message}
         />
@@ -187,7 +187,7 @@ export default function CreateFund() {
           spec={imgSpec([1, 1])}
           classes={{
             container: "mb-4",
-            dropzone: "aspect-[1/1] w-60",
+            dropzone: "aspect-1/1 w-60",
           }}
           error={errors.logo?.message}
         />

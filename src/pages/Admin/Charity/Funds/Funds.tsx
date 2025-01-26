@@ -29,7 +29,7 @@ export default function Funds() {
           {(["ours", "others"] satisfies CreatorType[]).map((opt) => (
             <Field key={opt} className="contents">
               <Radio value={opt} className="peer hidden" />
-              <Label className="text-sm bg-blue-l4 peer-data-[checked]:bg-blue-d1 peer-data-[checked]:text-white py-1 px-4 rounded-full hover:bg-blue-d1 hover:text-white">
+              <Label className="text-sm bg-blue-l4 peer-data-checked:bg-blue-d1 peer-data-checked:text-white py-1 px-4 rounded-full hover:bg-blue-d1 hover:text-white">
                 {opt === "ours" ? `By Nonprofit` : `By Supporters`}
               </Label>
             </Field>

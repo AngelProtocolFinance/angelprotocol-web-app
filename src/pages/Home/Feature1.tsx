@@ -38,7 +38,7 @@ const items: TListItem[] = [
 export function Feature1({ className = "" }) {
   return (
     <section
-      className={`${className} pt-56 pb-20 lg:pb-0 grid content-start bg-gradient-to-b from-transparent to-peach/20`}
+      className={`${className} pt-56 pb-20 lg:pb-0 grid content-start bg-linear-to-b from-transparent to-peach/20`}
     >
       <h2 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
         Easy as 1-2-3

@@ -20,7 +20,7 @@ export default function Edit() {
       }
       className="relative z-50"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
       <Content amount={bal.payoutsPending} {...alloc} />
     </Dialog>
   );
@@ -51,11 +51,11 @@ function Content({ amount, ...props }: Allocation & { amount: number }) {
         <Switch
           checked={isCustom}
           onChange={setIsCustom}
-          className="group relative flex h-6 w-10 cursor-pointer rounded-full bg-gray-l4 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-blue-d1 shadow-inner"
+          className="group relative flex h-6 w-10 cursor-pointer rounded-full bg-gray-l4 p-1 transition-colors duration-200 ease-in-out focus:outline-hidden data-focus:outline-1 data-focus:outline-white data-checked:bg-blue-d1 shadow-inner"
         >
           <span
             aria-hidden="true"
-            className="pointer-events-none inline-block size-4 translate-x-0 rounded-full bg-white ring-0 shadow-lg transition duration-200 ease-in-out group-data-[checked]:translate-x-4"
+            className="pointer-events-none inline-block size-4 translate-x-0 rounded-full bg-white ring-0 shadow-lg transition duration-200 ease-in-out group-data-checked:translate-x-4"
           />
         </Switch>
         <Label>Set custom allocation</Label>

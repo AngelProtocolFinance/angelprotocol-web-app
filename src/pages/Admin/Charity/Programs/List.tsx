@@ -4,7 +4,7 @@ import { Program } from "./Program";
 
 export default function List({ programs }: { programs: IProgram[] }) {
   return (
-    <div className="@container grid gap-3 p-4 @lg:p-8 border border-gray-l4 rounded bg-white dark:bg-blue-d6">
+    <div className="@container grid gap-3 p-4 @lg:p-8 border border-gray-l4 rounded-sm bg-white dark:bg-blue-d6">
       {programs.length === 0 ? (
         <Info>No programs</Info>
       ) : (

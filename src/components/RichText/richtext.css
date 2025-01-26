@@ -18,20 +18,19 @@
   border-bottom: 1px solid rgba(200, 200, 200, 0.5);
 }
 
-
 .ql-toolbar button.ql-active .ql-stroke {
   fill: none;
-  @apply !stroke-blue-d1
+  stroke: var(--color-blue-d1) !important;
 }
 
 .ql-toolbar button:hover .ql-stroke {
   fill: none;
-  @apply !stroke-blue-d1
+  stroke: var(--color-blue-d1) !important;
 }
 
 .ql-toolbar .ql-stroke {
   fill: none;
-  stroke: #fff;
+  stroke: white;
 }
 
 .ql-editor {
@@ -45,4 +44,27 @@
   font-style: normal;
   opacity: 0.5;
   left: 0;
+}
+
+.rich-text-toolbar {
+  & .ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: var(--color-gray-d2);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--color-red);
+  }
+}
+.ql-toolbar {
+  &.rich-text-toolbar & .ql-stroke {
+    fill: none;
+    stroke: var(--color-gray-d2);
+  }
+}
+.ql-stroke {
+  &.rich-text-toolbar .ql-toolbar & {
+    fill: none;
+    stroke: var(--color-gray-d2);
+  }
 }

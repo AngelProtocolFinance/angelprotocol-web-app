@@ -55,7 +55,7 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
         data-disabled={props.disabled || props.value === "loading"}
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-gray-l2 border-dashed w-full h-[11.375rem]
-          focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
+          focus:outline-hidden focus:ring-2 data-[drag="true"]:ring-2 has-active:ring-2 ring-blue-d1 ring-offset-2 
           hover:bg-blue-l5
           data-[disabled="true"]:bg-gray-l5 data-[disabled="true"]:pointer-events-none data-[disabled="true"]:ring-0
           data-[invalid="true"]:border-red

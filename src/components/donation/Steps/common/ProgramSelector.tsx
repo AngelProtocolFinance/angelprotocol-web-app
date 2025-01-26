@@ -32,7 +32,7 @@ export function ProgramSelector({
       by="value"
       onChange={onChange}
       as="div"
-      className={`relative grid ${styles.container} group has-[[data-error]]:hidden has-[[data-empty]]:hidden has-[[data-loading]]:hidden`}
+      className={`relative grid ${styles.container} group has-data-error:hidden has-data-empty:hidden has-data-loading:hidden`}
     >
       {program.value && (
         <div className="">

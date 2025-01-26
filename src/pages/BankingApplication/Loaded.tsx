@@ -35,7 +35,7 @@ export function Loaded(props: BankingApplicationDetails) {
         </span>
       </div>
 
-      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l4 rounded">
+      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l4 rounded-sm">
         <Row label="Currency">{props.currency}</Row>
         <Row label="Country">{props.country}</Row>
         <Row label="Recipient name">{props.name.fullName}</Row>

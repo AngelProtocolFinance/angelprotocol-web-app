@@ -101,7 +101,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
             rhf.resetField("image");
           }}
           spec={bannerSpec}
-          classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          classes={{ container: "mb-4", dropzone: "w-full aspect-4/1" }}
           error={rhf.errors.image?.message}
         />
         <Label className="-mb-4">Logo of your organization</Label>
@@ -138,7 +138,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           spec={cardImgSpec}
           classes={{
             container: "mb-4",
-            dropzone: "w-full sm:w-96 aspect-[2/1]",
+            dropzone: "w-full sm:w-96 aspect-2/1",
           }}
           error={rhf.errors.card_img?.message}
         />
@@ -151,7 +151,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           charLimit={MAX_CHARS}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
             error: "text-right",
           }}

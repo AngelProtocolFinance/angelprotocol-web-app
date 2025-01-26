@@ -40,23 +40,23 @@ export const ReferralMethodSelector = forwardRef<HTMLButtonElement, Props>(
         >
           <ListboxButton
             ref={ref}
-            className="group flex items-center focus:outline outline-2 outline-blue-d1 outline-offset-[3px] text-sm justify-between w-full px-4 py-3.5 text-navy-d4 border border-gray-l3 font-heading rounded disabled:bg-gray-l5 disabled:text-navy-l1"
+            className="group flex items-center focus:outline outline-2 outline-blue-d1 outline-offset-[3px] text-sm justify-between w-full px-4 py-3.5 text-navy-d4 border border-gray-l3 font-heading rounded-sm disabled:bg-gray-l5 disabled:text-navy-l1"
           >
             <span>{props.value.label}</span>
             <ChevronDown
               size={20}
-              className="group-data-[open]:rotate-180 transition-transform ease-in-out"
+              className="group-data-open:rotate-180 transition-transform ease-in-out"
             />
           </ListboxButton>
           <ListboxOptions
             anchor={{ to: "bottom", gap: 5, padding: 10 }}
-            className="border border-gray-l3 w-[var(--button-width)] bg-white z-10 rounded h-40"
+            className="border border-gray-l3 w-[var(--button-width)] bg-white z-10 rounded-sm h-40"
           >
             {referralOptions.map((o) => (
               <ListboxOption
                 key={o.value}
                 value={o}
-                className="py-1 px-4 hover:bg-blue-l4 text-sm font-heading data-[selected]:text-blue"
+                className="py-1 px-4 hover:bg-blue-l4 text-sm font-heading data-selected:text-blue"
               >
                 {o.label}
               </ListboxOption>

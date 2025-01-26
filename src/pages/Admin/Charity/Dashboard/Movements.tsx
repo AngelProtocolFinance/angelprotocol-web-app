@@ -48,7 +48,7 @@ export function Movements({ classes = "", ...props }: Props) {
   if (movs.length === 0) return null;
 
   return (
-    <div className={`p-4 grid rounded border border-gray-l4 ${classes}`}>
+    <div className={`p-4 grid rounded-sm border border-gray-l4 ${classes}`}>
       <h4 className="grid border-b border-gray-l4 w-full pb-2">
         Pending Transactions
       </h4>

@@ -97,7 +97,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
         data-disabled={props.disabled || props.value === "loading"}
         {...getRootProps({
           className: `relative ${overlay} ${styles.dropzone} group rounded border border-gray-l2 border-dashed 
-          focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
+          focus:outline-hidden focus:ring-2 data-[drag="true"]:ring-2 has-active:ring-2 ring-blue-d1 ring-offset-2 
           hover:bg-blue-l5
           data-[disabled="true"]:bg-gray-l5 data-[disabled="true"]:pointer-events-none
           data-[invalid="true"]:border-red

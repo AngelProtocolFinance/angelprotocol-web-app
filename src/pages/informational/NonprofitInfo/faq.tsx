@@ -18,18 +18,18 @@ export default function FAQ({ classes = "" }) {
       {faqs.map((faq) => (
         <Disclosure as="div" key={faq.id} className="p-4">
           <DisclosureButton className="group flex items-center justify-between gap-2 w-full">
-            <span className="text-left group-data-[open]:font-semibold">
+            <span className="text-left group-data-open:font-semibold">
               {faq.question}
             </span>
             <DrawerIcon
               size={18}
               isOpen={false}
-              className="shrink-0 group-data-[open]:rotate-180"
+              className="shrink-0 group-data-open:rotate-180"
             />
           </DisclosureButton>
           <DisclosurePanel
             as="div"
-            className="grid gap-3 text-navy-l1 data-[open]:mt-4"
+            className="grid gap-3 text-navy-l1 data-open:mt-4"
           >
             {faq.paragraphs.map((p, idx) => (
               <Fragment key={idx}>{p}</Fragment>

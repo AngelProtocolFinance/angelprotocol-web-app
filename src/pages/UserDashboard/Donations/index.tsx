@@ -65,7 +65,7 @@ export default function Donations() {
               id: item.id,
               receipt: item.donorDetails?.address?.country
                 ? "Yes"
-                : "No" ?? "No",
+                : ("No" ?? "No"),
             });
           }) ?? []
         }
@@ -75,13 +75,13 @@ export default function Donations() {
       >
         Export to CSV
       </CsvExporter>
-      <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded">
+      <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded-sm">
         <Search
           size={20}
           className="text-navy-d4 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
-          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-navy-l2 bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
+          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-navy-l2 bg-transparent w-full outline-hidden disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
           type="text"
           placeholder="Search donations..."
           value={query}

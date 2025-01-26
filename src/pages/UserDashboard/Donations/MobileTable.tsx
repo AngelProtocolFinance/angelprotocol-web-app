@@ -31,7 +31,7 @@ export default function MobileTable({
   return (
     <div
       className={`${classes} border border-blue-l2 ${
-        hasMore ? "rounded-t" : "rounded"
+        hasMore ? "rounded-t" : "rounded-sm"
       }`}
     >
       <div className="grid items-center grid-cols-[auto_1fr_auto] h-12 uppercase text-xs font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-blue-l2 divide-x divide-blue-l2 rounded-t">

@@ -27,7 +27,7 @@ export function PromptV2({
     <Modal
       open={open ?? true}
       onClose={close}
-      classes="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      classes="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="flex justify-end p-4 border-b border-gray-l4">
         <button

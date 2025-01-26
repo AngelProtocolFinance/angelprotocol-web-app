@@ -20,7 +20,7 @@ export function Schedule(props: Props) {
   );
 
   return (
-    <div className="p-4 grid rounded border border-gray-l4 mt-4">
+    <div className="p-4 grid rounded-sm border border-gray-l4 mt-4">
       <div className="grid border-b border-gray-l4 w-full pb-2">
         <h4 className="mb-1">Current Month Donations</h4>
         <p className="font-heading font-medium">$ {humanize(props.amount)}</p>

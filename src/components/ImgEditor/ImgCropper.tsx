@@ -39,9 +39,9 @@ export function ImgCropper({
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
       <DialogPanel
-        className={`${classes} grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm`}
+        className={`${classes} grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-xs`}
       >
         <div className="bg-white flex items-center justify-end gap-2 p-1">
           <button

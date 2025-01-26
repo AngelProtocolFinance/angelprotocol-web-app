@@ -49,7 +49,7 @@ function Content() {
     <DialogPanel
       as="form"
       onSubmit={methods.handleSubmit(onSubmit)}
-      className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
@@ -60,7 +60,7 @@ function Content() {
           preventScrollReset
           replace
           to=".."
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
+          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 dark:disabled:border-navy-d3"
         >
           <X className="text-lg sm:text-2xl" />
         </Link>
@@ -147,7 +147,7 @@ export default function Prompt() {
       }
       className="relative z-50"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
       <Content />
     </Dialog>
   );

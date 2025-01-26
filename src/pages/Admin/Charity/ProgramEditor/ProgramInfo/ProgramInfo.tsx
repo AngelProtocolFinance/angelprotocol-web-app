@@ -60,7 +60,7 @@ export default function ProgramInfo(props: Program) {
             resetField("image");
           }}
           spec={imgSpec([4, 1])}
-          classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          classes={{ container: "mb-4", dropzone: "w-full aspect-4/1" }}
           error={errors.image?.message}
         />
 
@@ -74,7 +74,7 @@ export default function ProgramInfo(props: Program) {
           charLimit={MAX_CHARS}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
           }}
           error={

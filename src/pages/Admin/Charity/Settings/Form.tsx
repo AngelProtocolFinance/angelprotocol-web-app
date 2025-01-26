@@ -118,7 +118,7 @@ export default function Form() {
           rows={5}
           type="textarea"
           classes={{
-            container: "field-admin [&_[data-error]]:-bottom-4",
+            container: "field-admin **:data-error:-bottom-4",
             label: "text-base font-medium",
           }}
           label="Tax Receipt message for donors"
@@ -221,7 +221,7 @@ export default function Form() {
                 <Input
                   type="number"
                   {...register(`increments.${idx}.value`)}
-                  className="w-full h-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                  className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export default function Form() {
               <Textarea
                 {...register(`increments.${idx}.label`)}
                 rows={2}
-                className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
               />
               <p
                 data-error={!!errors.increments?.[idx]?.label?.message}

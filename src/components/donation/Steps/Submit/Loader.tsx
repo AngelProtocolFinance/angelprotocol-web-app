@@ -11,7 +11,7 @@ export default function Loader({ msg }: Props) {
     >
       <LoaderRing
         thickness={10}
-        classes={{ container: "w-32", ringToColor: "to-[--accent-primary]" }}
+        classes={{ container: "w-32", ringToColor: "to-(--accent-primary)" }}
       />
       {msg && <p className="text-center">{msg}</p>}
     </div>

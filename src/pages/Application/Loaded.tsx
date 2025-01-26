@@ -22,7 +22,7 @@ export default function Loaded(props: Application) {
       <h3 className="text-lg">{props.contact.org_name}</h3>
       {claim && (
         <ExtLink
-          className="-mt-7 justify-self-start text-sm rounded text-blue-d1 hover:underline"
+          className="-mt-7 justify-self-start text-sm rounded-sm text-blue-d1 hover:underline"
           href={`${appRoutes.marketplace}/${claim.id}`}
         >
           Claim: {claim.name}, EIN: {claim.ein}

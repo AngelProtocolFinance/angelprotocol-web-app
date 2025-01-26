@@ -73,7 +73,7 @@ export default function MoveFundForm() {
       }
       className="relative z-50"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
       <Content
         type={flow}
         balance={bals[flow]}

@@ -24,8 +24,8 @@ export function Prompt(props: Props) {
       }
       className="relative z-50"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
-      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden">
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
+      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden">
         <Content {...props} />
       </DialogPanel>
     </Dialog>
@@ -59,7 +59,7 @@ function Content({ verdict }: Props) {
         <Link
           to=".."
           aria-disabled={fetcher.state !== "idle"}
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
+          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 dark:disabled:border-navy-d3"
         >
           <X className="text-lg sm:text-2xl" />
         </Link>

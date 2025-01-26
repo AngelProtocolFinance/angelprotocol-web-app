@@ -26,9 +26,9 @@ export function GoalSelector(props: Props) {
         <Field key={value} className="flex items-center gap-2">
           <Radio
             value={value}
-            className="group flex size-5 items-center justify-center rounded-full border bg-white data-[checked]:bg-blue-d1"
+            className="group flex size-5 items-center justify-center rounded-full border bg-white data-checked:bg-blue-d1"
           >
-            <span className="invisible size-2 rounded-full bg-white group-data-[checked]:visible" />
+            <span className="invisible size-2 rounded-full bg-white group-data-checked:visible" />
           </Radio>
           <Label className="text-sm">
             {label}{" "}

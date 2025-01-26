@@ -71,7 +71,7 @@ export default function BankDetails({
         disabled={isSubmitting}
       />
 
-      <Separator classes="before:bg-gray-l3 after:bg-gray-l3 before:dark:bg-navy after:dark:bg-navy" />
+      <Separator classes="before:bg-gray-l3 after:bg-gray-l3 dark:before:bg-navy dark:after:bg-navy" />
 
       <RecipientDetails
         amount={amnt}

@@ -75,7 +75,7 @@ export function Form({
         charLimit={MAX_DESCRIPTION_CHARS}
         classes={{
           field:
-            "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+            "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
           counter: "text-navy-l1 dark:text-navy-l2",
           error: "text-right",
         }}
@@ -98,7 +98,7 @@ export function Form({
           rhf.resetField("logo");
         }}
         spec={imgSpec([1, 1])}
-        classes={{ container: "w-80 aspect-[1/1]" }}
+        classes={{ container: "w-80 aspect-1/1" }}
         error={rhf.errors.logo?.message}
       />
 
@@ -115,7 +115,7 @@ export function Form({
           rhf.resetField("banner");
         }}
         spec={imgSpec([4, 1])}
-        classes={{ container: "w-full aspect-[4/1]" }}
+        classes={{ container: "w-full aspect-4/1" }}
         error={rhf.errors.banner?.message}
       />
 

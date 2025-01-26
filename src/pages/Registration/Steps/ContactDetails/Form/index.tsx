@@ -72,7 +72,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           First name <Star />
         </Label>
         <Input
-          className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
           placeholder="e.g. John"
           {...register("first_name")}
         />
@@ -85,7 +85,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           Last name <Star />
         </Label>
         <Input
-          className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
           placeholder="e.g. Doe"
           {...register("last_name")}
         />
@@ -98,7 +98,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           Phone number <span className="text-navy-l1 text-sm">(optional)</span>
         </Label>
         <Input
-          className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
           placeholder="000000000"
           {...register("contact_number")}
         />
@@ -111,7 +111,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           E-mail address <Star />
         </Label>
         <Input
-          className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
           {...register("registrant_id")}
           disabled
         />
@@ -122,7 +122,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           Organization name <Star />
         </Label>
         <Input
-          className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
           placeholder="Organization name"
           {...register("org_name")}
         />
@@ -142,7 +142,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
             Specify your role <Star />
           </Label>
           <Input
-            className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+            className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
             placeholder="Specify your role"
             {...register("other_role", { shouldUnregister: true })}
           />
@@ -165,7 +165,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
             Please provide additional information <Star />
           </Label>
           <Input
-            className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+            className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
             placeholder="Specify how you found us"
             {...register("other_referral_method", { shouldUnregister: true })}
           />
@@ -180,7 +180,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
             Referral Code <Star />
           </Label>
           <Input
-            className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+            className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
             placeholder="Referral Code"
             {...register("referral_code", { shouldUnregister: true })}
           />
@@ -194,7 +194,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           Goals <Star />
         </Label>
         <Input
-          className="font-heading rounded outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
+          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-navy-l1 px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3"
           placeholder={`What is your goal working with ${APP_NAME}?`}
           {...register("goals")}
         />

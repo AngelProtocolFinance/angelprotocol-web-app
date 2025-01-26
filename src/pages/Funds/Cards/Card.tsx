@@ -23,7 +23,7 @@ export default function Card({
         to={`${appRoutes.funds}/${id}`}
         className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
       >
-        <div className="aspect-[4/1] w-full relative">
+        <div className="aspect-4/1 w-full relative">
           <Image
             loading="lazy"
             src={banner}

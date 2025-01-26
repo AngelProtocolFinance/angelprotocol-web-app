@@ -98,7 +98,7 @@ const HeroBottom = ({ className = "", endowments }: Props) => {
         <span className="ml-1">Explore All Causes</span>
         <ArrowRight size={20} />
       </Link>
-      <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4 justify-self-center mt-4">
+      <p className="bg-[#FFEECC] font-gochi text-2xl z-22 px-4 justify-self-center mt-4">
         from all around the globe
       </p>
 

@@ -14,7 +14,7 @@ export default function Media({ media }: { media: IMedia[] }) {
 function Medium(props: IMedia) {
   return (
     /** @see https://github.com/CookPete/react-player/issues/145 */
-    <div className="relative pt-[56.25%] aspect-[16/9] rounded-lg overflow-clip">
+    <div className="relative pt-[56.25%] aspect-16/9 rounded-lg overflow-clip">
       <ReactPlayer
         style={{
           position: "absolute",
