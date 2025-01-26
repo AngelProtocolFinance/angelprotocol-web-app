@@ -1,12 +1,8 @@
-import {
-  type TaxDeductibleDocs,
-  taxDeductibleDocs,
+import type { TaxDeductibleDocs } from "@better-giving/registration/models";
+export {
+  taxDeductibleDocs as schema,
+  type TaxDeductibleDocs as FV,
 } from "@better-giving/registration/models";
-import { type InferOutput, omit } from "valibot";
-
-export const schema = omit(taxDeductibleDocs, ["claim", "ein"]);
-
-export interface FormValues extends InferOutput<typeof taxDeductibleDocs> {}
 
 export type Props = {
   doc: TaxDeductibleDocs | undefined;

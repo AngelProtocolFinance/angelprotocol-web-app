@@ -3,23 +3,18 @@ import type { Update } from "@better-giving/registration/update";
 import { useFetcher } from "@remix-run/react";
 import { useNavigate } from "@remix-run/react";
 import { getEndowWithEin } from "api/get/endow-with-ein";
-import type { SubmitHandler, UseFormReturn } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { steps } from "../../../routes";
-import type { FormValues as FV, Props } from "./types";
+import type { FV, Props } from "./types";
 
 type Args = {
+  isDirty: boolean;
   props: Props;
-  form: UseFormReturn<FV>;
   initClaim: EndowClaim | undefined;
 };
 
-export default function useSubmit({ form, props, initClaim }: Args) {
-  const {
-    handleSubmit,
-    formState: { isDirty, isSubmitting },
-  } = form;
-
+export default function useSubmit({ props, initClaim, isDirty }: Args) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
 
@@ -47,6 +42,7 @@ export default function useSubmit({ form, props, initClaim }: Args) {
       type: "docs",
       ein: fv.ein,
     };
+
     fetcher.submit(update, {
       encType: "application/json",
       action: ".",
@@ -55,7 +51,7 @@ export default function useSubmit({ form, props, initClaim }: Args) {
   };
 
   return {
-    submit: handleSubmit(submit),
-    isSubmitting: isSubmitting || fetcher.state !== "idle",
+    submit,
+    state: fetcher.state,
   };
 }
