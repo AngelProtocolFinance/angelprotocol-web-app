@@ -148,7 +148,7 @@ function generateShareLink(
   switch (type) {
     case "x":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
-      return `https://x.com/intent/tweet?text=${encodedText}`;
+      return `https://x.com/intent/tweet?text=${encodedText}&url=${url}`;
     /**
      * feed description is depracated
      * https://developers.facebook.com/docs/sharing/reference/feed-dialog#response
