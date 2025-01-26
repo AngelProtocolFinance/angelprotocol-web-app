@@ -1,8 +1,9 @@
 import type { FundsPage } from "@better-giving/fundraiser";
 import { fundsParams } from "@better-giving/fundraiser/schema";
 import { useFetcher, useSearchParams } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
+import { metas } from "helpers/seo";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
@@ -23,6 +24,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   const page = await getFunds(params.output);
   return page;
 };
+
+export const meta: MetaFunction = () =>
+  metas({
+    title: "Fundraisers",
+    description: "Access our free fundraising technology and tools.",
+  });
 
 export { ErrorBoundary } from "components/error";
 export default function Funds() {
