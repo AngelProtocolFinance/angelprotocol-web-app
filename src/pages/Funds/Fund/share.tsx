@@ -4,7 +4,7 @@ import telegram from "assets/icons/social/telegram.webp";
 import x from "assets/icons/social/x.webp";
 import ExtLink from "components/ExtLink";
 import { Modal } from "components/Modal";
-import { APP_NAME, BASE_URL } from "constants/env";
+import { APP_NAME } from "constants/env";
 import { X } from "lucide-react";
 import { useCallback, useState } from "react";
 
@@ -38,6 +38,7 @@ const socials: SocialMedia[] = [
 type ShareProps = {
   recipientName: string;
   className?: string;
+  url: string;
 };
 
 export function Share(props: ShareProps) {
@@ -52,7 +53,12 @@ export function Share(props: ShareProps) {
       </p>
       <div className="flex items-center gap-2 mt-1">
         {socials.map((s) => (
-          <ShareBtn key={s.id} {...s} recipientName={props.recipientName} />
+          <ShareBtn
+            key={s.id}
+            {...s}
+            url={props.url}
+            recipientName={props.recipientName}
+          />
         ))}
       </div>
     </div>
@@ -61,6 +67,7 @@ export function Share(props: ShareProps) {
 
 interface IShare extends SocialMedia {
   recipientName: string;
+  url: string;
 }
 function ShareBtn(props: IShare) {
   const [open, setOpen] = useState(false);
@@ -77,11 +84,12 @@ function ShareBtn(props: IShare) {
 }
 
 interface IPrompt extends SocialMedia {
+  url: string;
   recipientName: string;
   open: boolean;
   setOpen: (open: boolean) => void;
 }
-function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
+function Prompt({ recipientName, open, setOpen, url, ...social }: IPrompt) {
   //shareText will always hold some value
   const [shareText, setShareText] = useState("");
   const msgRef = useCallback((node: HTMLParagraphElement | null) => {
@@ -111,10 +119,10 @@ function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
       >
         Donate to <span className="font-bold">{recipientName}</span> fundraiser
         on <span className="font-bold">{social.handle}</span>!{" "}
-        {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever. Help join the cause: ${BASE_URL}.`}
+        {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever. Help join the cause: ${new URL(url).origin}.`}
       </p>
       <ExtLink
-        href={generateShareLink(shareText, social.id)}
+        href={generateShareLink(shareText, social.id, url)}
         className="btn-outline btn-donate hover:bg-blue-l4 gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center">
@@ -130,9 +138,13 @@ function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
   );
 }
 
-function generateShareLink(rawText: string, type: SocialMedia["id"]) {
+function generateShareLink(
+  rawText: string,
+  type: SocialMedia["id"],
+  url: string
+) {
   const encodedText = encodeURIComponent(rawText);
-  const encodedURL = encodeURIComponent(BASE_URL);
+  const encodedURL = encodeURIComponent(url);
   switch (type) {
     case "x":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
@@ -144,7 +156,7 @@ function generateShareLink(rawText: string, type: SocialMedia["id"]) {
      */
     case "fb":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        BASE_URL
+        encodedURL
       )}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons

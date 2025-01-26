@@ -1,10 +1,6 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
 import { Link, NavLink } from "@remix-run/react";
-import type {
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@vercel/remix";
+import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
@@ -19,19 +15,12 @@ import { appRoutes } from "constants/routes";
 import { unpack } from "helpers";
 import { metas } from "helpers/seo";
 import { ArrowLeft } from "lucide-react";
-import { parse, pipe, string, uuid } from "valibot";
+import type { LoaderData } from "./api";
 import { Share } from "./share";
 import { Video } from "./video";
-import { getFund } from ".server/fund";
 
+export { loader } from "./api";
 export { clientLoader } from "api/cache";
-export const loader: LoaderFunction = async ({ params }) => {
-  const id = parse(pipe(string(), uuid()), params.fundId);
-  const fund = await getFund(id);
-  if (!fund) throw new Response(null, { status: 404 });
-  return fund;
-};
-
 export const links: LinksFunction = () => [...richTextStyles];
 
 export const meta: MetaFunction = ({ data, location: l }) => {
@@ -47,7 +36,7 @@ export const meta: MetaFunction = ({ data, location: l }) => {
 };
 export { ErrorBoundary } from "components/error";
 export default function Fund() {
-  const fund = useCachedLoaderData() as SingleFund;
+  const { url, ...fund } = useCachedLoaderData() as LoaderData;
 
   const status = statusFn(
     fund.expiration ?? MAX_EXPIRATION,
@@ -173,7 +162,7 @@ export default function Fund() {
               </div>
             ))}
           </div>
-          <Share recipientName={fund.name} className="mt-auto" />
+          <Share recipientName={fund.name} url={url} className="mt-auto" />
         </div>
       </div>
     </section>
