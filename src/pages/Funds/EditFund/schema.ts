@@ -6,7 +6,7 @@ import { video } from "../common/videos";
 
 const str = v.pipe(v.string(), v.trim());
 
-export const MAX_DESCRIPTION_CHARS = 500;
+export const MAX_DESCRIPTION_CHARS = 3000;
 export const schema = v.object({
   name: v.pipe(str, v.nonEmpty("required")),
   description: richTextContent({

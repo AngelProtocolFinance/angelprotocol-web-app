@@ -12,7 +12,7 @@ export const endowOption = v.object({
   logo: v.optional(v.pipe(str, v.url())),
 });
 
-export const MAX_DESCRIPTION_CHAR = 500;
+export const MAX_DESCRIPTION_CHAR = 3000;
 
 export const schema = v.object({
   name: v.pipe(str, v.nonEmpty("required")),
