@@ -11,7 +11,7 @@ import type {
 } from "../types";
 import Summary from "./summary";
 
-vi.mock("../Context", () => ({
+vi.mock("../context", () => ({
   useDonationState: vi.fn().mockReturnValue({ state: {}, setState: vi.fn() }),
 }));
 
