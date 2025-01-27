@@ -11,7 +11,7 @@ import type { StripeCheckoutStep } from "../../types";
 import Checkout from "./stripe-checkout";
 
 const mockedSetState = vi.hoisted(() => vi.fn());
-vi.mock("../../Context", () => ({
+vi.mock("../../context", () => ({
   useDonationState: vi
     .fn()
     .mockReturnValue({ state: {}, setState: mockedSetState }),

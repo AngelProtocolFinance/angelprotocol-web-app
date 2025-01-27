@@ -7,7 +7,7 @@ import type { DafDonationDetails, Init } from "../../types";
 import Form from "./form";
 
 const mockedSetState = vi.hoisted(() => vi.fn());
-vi.mock("../../Context", () => ({
+vi.mock("../../context", () => ({
   useDonationState: vi
     .fn()
     .mockReturnValue({ state: {}, setState: mockedSetState }),

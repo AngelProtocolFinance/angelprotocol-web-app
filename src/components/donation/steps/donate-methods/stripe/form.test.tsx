@@ -9,7 +9,7 @@ import type { Init, StripeDonationDetails } from "../../types";
 import Form from "./form";
 
 const mockSetState = vi.hoisted(() => vi.fn());
-vi.mock("../../Context", () => ({
+vi.mock("../../context", () => ({
   useDonationState: vi.fn(() => ({ setState: mockSetState, state: {} })),
 }));
 
