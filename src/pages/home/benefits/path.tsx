@@ -4,7 +4,6 @@ import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import BenefitsCarousel from "./benefits-carousel";
-import s from "./benefits.module.css";
 import Carousel from "./carousel";
 
 type TPath = keyof typeof benefits;
@@ -12,9 +11,7 @@ const Path = () => {
   const [path] = useState<TPath>("nonprofits");
 
   return (
-    <section
-      className={`relative grid ${s.container} pt-20 pb-40 xl:pb-56 overflow-x-clip`}
-    >
+    <section className={`relative grid pt-20 pb-40 xl:pb-56 overflow-x-clip`}>
       <h2 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
         Bridge To Better
       </h2>
