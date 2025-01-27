@@ -214,7 +214,7 @@ export default defineConfig({
     tailwind(),
   ],
   test: {
-    setupFiles: ["./src/setupTests.ts"],
+    setupFiles: ["./src/setup-tests.ts"],
     environment: "jsdom",
     globals: true,
   },

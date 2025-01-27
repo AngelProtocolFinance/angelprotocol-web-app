@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode, useEffect } from "react";
 import { fiatDonationIntentCreationErrorHandler } from "services/apes/mock";
-import { mswServer } from "setupTests";
+import { mswServer } from "setup-tests";
 import { describe, expect, test, vi } from "vitest";
 import { DEFAULT_PROGRAM } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
