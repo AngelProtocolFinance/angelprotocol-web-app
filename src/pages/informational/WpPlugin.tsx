@@ -1,8 +1,8 @@
 import { laira } from "assets/laira/laira";
-import Copier from "components/Copier";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import TableSection, { Cells } from "components/TableSection";
+import Copier from "components/copier";
 import { APP_NAME } from "constants/env";
 
 export default function WpPlugin() {

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import Copier from "./Copier";
+import Copier from "./copier";
 
 // Mock copy button
 const CopyButton = () => {

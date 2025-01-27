@@ -1,4 +1,4 @@
-import Copier from "components/Copier";
+import Copier from "components/copier";
 import { logoUrl } from "constants/common";
 import { QRCodeSVG } from "qrcode.react";
 import type { TokenV2 } from "types/components";

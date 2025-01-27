@@ -1,7 +1,7 @@
 import { unpack } from "helpers";
 import { Check, Copy } from "lucide-react";
 import type { ReactNode } from "react";
-import useCopier from "./useCopier";
+import useCopier from "./use-copier";
 
 type Classes = string | { container?: string; icon?: string };
 
