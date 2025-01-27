@@ -5,8 +5,8 @@ import x from "assets/icons/social/x.webp";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { X } from "lucide-react";
 import { useCallback, useState } from "react";
-import ExtLink from "../../ExtLink";
-import { Modal } from "../../Modal";
+import ExtLink from "../../ext-link";
+import { Modal } from "../../modal";
 
 interface SocialMedia {
   id: "x" | "telegram" | "linkedin" | "fb";

@@ -1,4 +1,4 @@
-import ContentLoader from "components/ContentLoader";
+import ContentLoader from "components/content-loader";
 
 export default function Skeleton() {
   return (

@@ -1,7 +1,7 @@
 import type { Program as TProgram } from "@better-giving/endowment";
 import { Link } from "@remix-run/react";
-import Image from "components/Image";
-import { RichText } from "components/RichText";
+import Image from "components/image";
+import { RichText } from "components/rich-text";
 
 export default function Programs({ programs }: { programs: TProgram[] }) {
   return (

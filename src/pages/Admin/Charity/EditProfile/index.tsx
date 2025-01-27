@@ -1,9 +1,9 @@
 import type { EndowDesignation } from "@better-giving/endowment";
 import type { LinksFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
-import { imgEditorStyles } from "components/ImgEditor";
-import { richTextStyles, toContent } from "components/RichText";
 import { country } from "components/country-selector";
+import { imgEditorStyles } from "components/img-editor";
+import { richTextStyles, toContent } from "components/rich-text";
 import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
 import type { LoaderData } from "./api";

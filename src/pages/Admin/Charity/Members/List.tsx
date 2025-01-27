@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "@remix-run/react";
-import TableSection, { Cells } from "components/TableSection";
+import TableSection, { Cells } from "components/table-section";
 import { Plus } from "lucide-react";
 import type { LoaderData } from "./api";
 import { DeleteForm } from "./delete-form";

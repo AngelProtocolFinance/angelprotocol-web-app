@@ -1,7 +1,7 @@
 import type { UserEndow } from "@better-giving/user";
 import { useFetcher } from "@remix-run/react";
-import { Info } from "components/Status";
 import { NativeCheckField as CheckField, Form } from "components/form";
+import { Info } from "components/status";
 import { useActionResult } from "hooks/use-action-result";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import type { UserV2 } from "types/auth";

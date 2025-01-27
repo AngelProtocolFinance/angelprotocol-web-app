@@ -1,7 +1,7 @@
 import { Link, NavLink, useFetcher } from "@remix-run/react";
 import { randomLaira } from "assets/laira/laira";
-import Image from "components/Image";
-import { Info, LoadingStatus } from "components/Status";
+import Image from "components/image";
+import { Info, LoadingStatus } from "components/status";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";
 import type { EndowCardsPage } from "types/aws";

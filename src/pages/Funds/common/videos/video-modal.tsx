@@ -1,6 +1,6 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Modal } from "components/Modal";
 import { NativeField as Field } from "components/form";
+import { Modal } from "components/modal";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { object } from "valibot";

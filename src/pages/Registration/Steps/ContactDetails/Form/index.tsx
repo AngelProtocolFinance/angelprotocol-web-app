@@ -1,7 +1,7 @@
 import type { Update } from "@better-giving/registration/update";
 import { Field, Input, Label } from "@headlessui/react";
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
-import LoadText from "components/LoadText";
+import LoadText from "components/load-text";
 import { APP_NAME } from "constants/env";
 import type { SubmitHandler } from "react-hook-form";
 import { steps } from "../../../routes";

@@ -1,5 +1,5 @@
-import { DrawerIcon } from "components/Icon";
-import { Arrow, Content, Tooltip } from "components/Tooltip";
+import { DrawerIcon } from "components/icon";
+import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 

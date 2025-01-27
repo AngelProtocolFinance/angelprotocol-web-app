@@ -1,5 +1,5 @@
 import { Form, useNavigation } from "@remix-run/react";
-import LoadText from "components/LoadText";
+import LoadText from "components/load-text";
 import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
 export { newApplicationAction as action } from "./api";

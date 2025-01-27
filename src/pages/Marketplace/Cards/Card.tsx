@@ -1,9 +1,9 @@
 import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
-import BookmarkBtn from "components/BookmarkBtn";
-import Image from "components/Image";
-import VerifiedIcon from "components/VerifiedIcon";
+import BookmarkBtn from "components/bookmark-btn";
+import Image from "components/image";
 import { Target, toTarget } from "components/target";
+import VerifiedIcon from "components/verified-icon";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import type { EndowmentCard } from "types/aws";

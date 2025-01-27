@@ -1,5 +1,5 @@
-import { HeaderButton } from "components/HeaderButton";
-import TableSection, { Cells } from "components/TableSection";
+import { HeaderButton } from "components/header-button";
+import TableSection, { Cells } from "components/table-section";
 import useSort from "hooks/useSort";
 import type { Donation } from "types/aws";
 import Row from "./Row";

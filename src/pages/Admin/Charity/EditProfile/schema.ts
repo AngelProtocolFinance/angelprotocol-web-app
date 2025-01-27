@@ -7,7 +7,7 @@ import {
   str,
   unSdgNum,
 } from "@better-giving/endowment/schema";
-import { type ImgSpec, imgOutput } from "components/ImgEditor";
+import { type ImgSpec, imgOutput } from "components/img-editor";
 import { richTextContent } from "types/components";
 import type { ImageMIMEType } from "types/lists";
 import * as v from "valibot";

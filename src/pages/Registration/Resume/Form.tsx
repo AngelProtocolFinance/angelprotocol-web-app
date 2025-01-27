@@ -5,8 +5,8 @@ import {
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { Separator } from "components/Separator";
 import { NativeField as Field } from "components/form";
+import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
 import { regCookie } from "../data/cookie.server";
 import { getRegState } from "../data/step-loader";

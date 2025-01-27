@@ -1,5 +1,5 @@
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
-import { Info } from "components/Status";
+import { Info } from "components/status";
 import { useEffect, useState } from "react";
 import type { BankingApplicationsPage } from "types/aws";
 import Filter from "./Filter";

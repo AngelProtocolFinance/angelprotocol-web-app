@@ -2,7 +2,7 @@ import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { Link } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import { Info } from "components/Status";
+import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
 import type { UserV2 } from "types/auth";

@@ -1,5 +1,5 @@
 import type { IMedia } from "@better-giving/endowment";
-import { Info } from "components/Status";
+import { Info } from "components/status";
 import VideoPreview from "./VideoPreview";
 
 interface Props {

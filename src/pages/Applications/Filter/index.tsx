@@ -5,8 +5,8 @@ import {
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSearchParams } from "@remix-run/react";
-import { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
+import { DrawerIcon } from "components/icon";
 import { weeksAgo } from "helpers/weeksAgo";
 import { FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";

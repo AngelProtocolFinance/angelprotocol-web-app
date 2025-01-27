@@ -1,5 +1,5 @@
-import TableSection, { Cells } from "components/TableSection";
-import { Arrow, Content, Tooltip } from "components/Tooltip";
+import TableSection, { Cells } from "components/table-section";
+import { Arrow, Content, Tooltip } from "components/tooltip";
 import { humanize } from "helpers";
 import {
   ArrowLeft,

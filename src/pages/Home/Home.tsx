@@ -1,5 +1,5 @@
 // import HeroBottom from "../@sections/HeroBottom";
-import Footer from "components/Footer";
+import Footer from "components/footer";
 import Animation from "./Animation";
 import Benefits from "./Benefits";
 import Blogs from "./Blogs";

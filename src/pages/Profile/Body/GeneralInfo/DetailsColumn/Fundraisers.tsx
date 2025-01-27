@@ -1,6 +1,6 @@
 import type { FundItem } from "@better-giving/fundraiser";
 import { Link, useLoaderData } from "@remix-run/react";
-import { toText } from "components/RichText";
+import { toText } from "components/rich-text";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import type { LoaderData } from "../api";

@@ -1,4 +1,4 @@
-import { Tooltip } from "components/Tooltip";
+import { Tooltip } from "components/tooltip";
 import { CircleHelp } from "lucide-react";
 import type { ReactNode } from "react";
 

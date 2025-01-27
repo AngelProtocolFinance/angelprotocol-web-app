@@ -1,5 +1,5 @@
-export { ErrorElement as ErrorBoundary } from "./ErrorElement";
-export { ErrorBoundary as ErrorBoundaryClass } from "./ErrorBoundary";
-export { ErrorModal } from "./ErrorModal";
-export { ErrorTrigger } from "./ErrorTrigger";
-export { DefaultFallback } from "./DefaultFallback";
+export { ErrorElement as ErrorBoundary } from "./error-element";
+export { ErrorBoundary as ErrorBoundaryClass } from "./error-boundary";
+export { ErrorModal } from "./error-modal";
+export { ErrorTrigger } from "./error-trigger";
+export { DefaultFallback } from "./default-fallback";

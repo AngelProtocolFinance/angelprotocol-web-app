@@ -1,5 +1,5 @@
-import ExtLink from "components/ExtLink";
-import { Confirmed, Info } from "components/Status";
+import ExtLink from "components/ext-link";
+import { Confirmed, Info } from "components/status";
 import { appRoutes } from "constants/routes";
 
 interface Props {

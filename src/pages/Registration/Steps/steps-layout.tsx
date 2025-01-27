@@ -1,6 +1,6 @@
 import { isIrs501c3 } from "@better-giving/registration/models";
 import { Outlet, useRouteLoaderData } from "@remix-run/react";
-import ExtLink from "components/ExtLink";
+import ExtLink from "components/ext-link";
 import { appRoutes } from "constants/routes";
 import type { Reg$IdData, RegStep4, RegistrationState } from "../types";
 import ProgressIndicator from "./ProgressIndicator";

@@ -1,10 +1,10 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Link, useLoaderData } from "@remix-run/react";
 import googleIcon from "assets/icons/google.svg";
-import ExtLink from "components/ExtLink";
-import Image from "components/Image";
-import { Separator } from "components/Separator";
+import ExtLink from "components/ext-link";
 import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
+import Image from "components/image";
+import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { useActionResult } from "hooks/use-action-result";

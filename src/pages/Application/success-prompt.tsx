@@ -1,4 +1,4 @@
-import { PromptV2 } from "components/Prompt";
+import { PromptV2 } from "components/prompt";
 const SuccessPrompt = () => (
   <PromptV2 type="success">Review submitted</PromptV2>
 );

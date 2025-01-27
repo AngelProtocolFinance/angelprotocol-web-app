@@ -1,8 +1,8 @@
 import tokens from "@better-giving/assets/tokens/map";
 import { ap, ver } from "api/api";
-import { Modal } from "components/Modal";
-import PromptV2, { type IPromptV2 } from "components/Prompt";
 import { PayQr } from "components/donation";
+import { Modal } from "components/modal";
+import PromptV2, { type IPromptV2 } from "components/prompt";
 import { errorPrompt } from "contexts/ErrorContext";
 import { roundDown } from "helpers";
 import { useState } from "react";

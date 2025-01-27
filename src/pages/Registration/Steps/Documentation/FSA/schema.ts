@@ -1,4 +1,4 @@
-import { type FileSpec, fileOutput } from "components/FileDropzone";
+import { type FileSpec, fileOutput } from "components/file-dropzone";
 import { alphanumeric } from "schemas/string";
 import * as v from "valibot";
 

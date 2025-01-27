@@ -1,5 +1,5 @@
 import { NavLink } from "@remix-run/react";
-import ExtLink from "components/ExtLink";
+import ExtLink from "components/ext-link";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";

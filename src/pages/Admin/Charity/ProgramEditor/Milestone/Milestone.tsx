@@ -9,15 +9,15 @@ import {
 } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher } from "@remix-run/react";
-import { DrawerIcon } from "components/Icon";
-import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import { RichText } from "components/RichText";
 import {
   NativeField as Field,
   Form,
   Label,
   dateToFormFormat,
 } from "components/form";
+import { DrawerIcon } from "components/icon";
+import { ControlledImgEditor as ImgEditor } from "components/img-editor";
+import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";

@@ -1,7 +1,7 @@
 import type { Milestone as TMilestone } from "@better-giving/endowment";
-import Image from "components/Image";
-import { RichText } from "components/RichText";
-import { Info } from "components/Status";
+import Image from "components/image";
+import { RichText } from "components/rich-text";
+import { Info } from "components/status";
 import { isEmpty } from "helpers";
 import Container from "../common/Container";
 

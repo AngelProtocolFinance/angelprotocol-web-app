@@ -1,6 +1,6 @@
 import { NavLink } from "@remix-run/react";
-import ContentLoader from "components/ContentLoader";
-import Media from "components/Media";
+import ContentLoader from "components/content-loader";
+import Media from "components/media";
 import { appRoutes } from "constants/routes";
 import type { Wordpress } from "types/wordpress";
 

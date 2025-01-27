@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useFetcher } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import type { BankDetails } from "api/get/payout-method";
-import ExtLink from "components/ExtLink";
+import ExtLink from "components/ext-link";
 import { useActionResult } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";

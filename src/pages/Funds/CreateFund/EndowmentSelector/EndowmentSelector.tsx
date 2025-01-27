@@ -5,7 +5,7 @@ import {
   Field,
   Label,
 } from "@headlessui/react";
-import Image from "components/Image";
+import Image from "components/image";
 import { Search, X } from "lucide-react";
 import { forwardRef, useState } from "react";
 import type { EndowOption } from "../schema";

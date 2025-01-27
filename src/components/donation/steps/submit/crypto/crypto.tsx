@@ -1,6 +1,6 @@
 import chains from "@better-giving/assets/chains";
 import { logoUrl } from "constants/common";
-import Image from "../../../../Image";
+import Image from "../../../../image";
 import Summary from "../../common/summary";
 import { token } from "../../common/token";
 import { useDonationState } from "../../context";

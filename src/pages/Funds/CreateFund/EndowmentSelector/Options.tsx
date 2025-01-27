@@ -1,7 +1,7 @@
 import type { EndowsQueryParams } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import Image from "components/Image";
-import { ErrorStatus, Info, LoadingStatus } from "components/Status";
+import Image from "components/image";
+import { ErrorStatus, Info, LoadingStatus } from "components/status";
 import useDebouncer from "hooks/useDebouncer";
 import useSWR from "swr/immutable";
 import type { EndowFundMembersOptionsPage } from "types/aws";

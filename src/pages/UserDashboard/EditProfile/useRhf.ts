@@ -1,5 +1,5 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import type { ImgSpec } from "components/ImgEditor";
+import type { ImgSpec } from "components/img-editor";
 import { useController, useForm } from "react-hook-form";
 import type { LoaderData } from "./api";
 import { type FV, schema } from "./types";

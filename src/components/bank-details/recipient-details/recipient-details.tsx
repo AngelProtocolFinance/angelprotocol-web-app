@@ -1,6 +1,6 @@
-import { NativeSelect } from "components/Selector";
-import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
+import { NativeSelect } from "components/selector";
+import { Info, LoadingStatus } from "components/status";
 import { isEmpty } from "helpers";
 import { memo, useState } from "react";
 import type { IFormButtons, OnSubmit } from "../types";

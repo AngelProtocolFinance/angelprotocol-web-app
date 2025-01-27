@@ -1,11 +1,11 @@
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { getEndowBalance } from "api/get/endow-balance";
-import BookmarkBtn from "components/BookmarkBtn";
-import Breadcrumbs from "components/Breadcrumbs";
-import ExtLink from "components/ExtLink";
-import VerifiedIcon from "components/VerifiedIcon";
+import BookmarkBtn from "components/bookmark-btn";
+import Breadcrumbs from "components/breadcrumbs";
+import ExtLink from "components/ext-link";
 import { Target, toTarget } from "components/target";
+import VerifiedIcon from "components/verified-icon";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";

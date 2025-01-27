@@ -1,4 +1,4 @@
-import Image from "components/Image";
+import Image from "components/image";
 import { Bolt, Combine, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import sectionImg from "./images/portfolio.webp";

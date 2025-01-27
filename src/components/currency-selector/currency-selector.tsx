@@ -13,7 +13,7 @@ import {
   type QueryState,
   isQuery,
 } from "types/components";
-import { DrawerIcon } from "../Icon";
+import { DrawerIcon } from "../icon";
 import CurrencyOptions from "./currency-options";
 
 type Classes = {

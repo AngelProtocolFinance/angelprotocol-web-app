@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import Image from "components/Image";
+import Image from "components/image";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 

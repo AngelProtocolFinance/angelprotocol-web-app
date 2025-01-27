@@ -6,8 +6,8 @@ import {
   useParams,
   useSearchParams,
 } from "@remix-run/react";
-import { Modal } from "components/Modal";
 import { NativeField as Field, RmxForm, useRmxForm } from "components/form";
+import { Modal } from "components/modal";
 import { parseWithValibot } from "conform-to-valibot";
 import { X } from "lucide-react";
 import { isFormErr } from "types/action";

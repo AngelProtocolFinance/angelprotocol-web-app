@@ -1,6 +1,6 @@
 import { useFetcher } from "@remix-run/react";
 import { getEndow } from "api/get/endow";
-import type { IPromptV2 } from "components/Prompt";
+import type { IPromptV2 } from "components/prompt";
 import { errorPrompt } from "contexts/ErrorContext";
 import { useActionResult } from "hooks/use-action-result";
 import { useState } from "react";

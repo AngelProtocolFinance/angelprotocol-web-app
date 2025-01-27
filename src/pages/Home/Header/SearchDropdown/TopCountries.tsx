@@ -1,7 +1,7 @@
 import { NavLink } from "@remix-run/react";
 import { apes } from "api/api";
-import ContentLoader from "components/ContentLoader";
-import QueryLoader from "components/QueryLoader";
+import ContentLoader from "components/content-loader";
+import QueryLoader from "components/query-loader";
 import { appRoutes } from "constants/routes";
 import useSWR from "swr/immutable";
 

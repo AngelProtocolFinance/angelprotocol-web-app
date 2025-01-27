@@ -5,9 +5,9 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import char from "assets/images/celebrating-character.webp";
-import ExtLink from "components/ExtLink";
-import Image from "components/Image";
 import { Share } from "components/donation";
+import ExtLink from "components/ext-link";
+import Image from "components/image";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";

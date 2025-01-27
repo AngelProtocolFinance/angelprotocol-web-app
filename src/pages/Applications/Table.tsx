@@ -3,9 +3,9 @@ import {
   isIrs501c3,
 } from "@better-giving/registration/models";
 import { NavLink } from "@remix-run/react";
-import { HeaderButton } from "components/HeaderButton";
-import { Info } from "components/Status";
-import TableSection, { Cells } from "components/TableSection";
+import { HeaderButton } from "components/header-button";
+import { Info } from "components/status";
+import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import useSort from "hooks/useSort";
 import { Folder } from "lucide-react";

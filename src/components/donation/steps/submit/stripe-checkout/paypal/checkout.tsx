@@ -1,8 +1,8 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useNavigate } from "@remix-run/react";
-import ContentLoader from "components/ContentLoader";
-import { type IPromptV2, PromptV2 } from "components/Prompt";
+import ContentLoader from "components/content-loader";
+import { type IPromptV2, PromptV2 } from "components/prompt";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";

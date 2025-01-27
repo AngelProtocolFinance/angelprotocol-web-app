@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import { Info } from "components/Status";
+import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { Fund } from "./Fund";
 import type { LoaderData } from "./api";

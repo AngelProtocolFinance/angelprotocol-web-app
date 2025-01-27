@@ -1,6 +1,6 @@
 import type { Allocation } from "@better-giving/endowment";
 import { useFetcher } from "@remix-run/react";
-import { Arrow, Content } from "components/Tooltip";
+import { Arrow, Content } from "components/tooltip";
 import { humanize } from "helpers";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
 import type { BalanceMovement } from "types/aws";

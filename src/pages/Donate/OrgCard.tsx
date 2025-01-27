@@ -1,6 +1,6 @@
 import { Await, Link, useLoaderData } from "@remix-run/react";
 import type { DonateData } from "api/donate-loader";
-import Image from "components/Image";
+import Image from "components/image";
 import { type TTarget, Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 

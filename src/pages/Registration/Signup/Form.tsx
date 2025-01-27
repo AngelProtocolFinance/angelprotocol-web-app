@@ -1,5 +1,5 @@
 import { Link, useFetcher } from "@remix-run/react";
-import { Separator } from "components/Separator";
+import { Separator } from "components/separator";
 import { APP_NAME } from "constants/env";
 import { regRoutes } from "constants/routes";
 

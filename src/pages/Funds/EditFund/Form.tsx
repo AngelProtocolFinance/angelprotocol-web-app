@@ -1,9 +1,9 @@
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import { useFetcher } from "@remix-run/react";
-import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import { RichText } from "components/RichText";
 import { NativeField as Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
+import { ControlledImgEditor as ImgEditor } from "components/img-editor";
+import { RichText } from "components/rich-text";
 import { useActionResult } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";
 import { imgSpec } from "../common";

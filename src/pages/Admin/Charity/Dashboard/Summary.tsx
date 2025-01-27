@@ -1,5 +1,5 @@
 import type { Allocation } from "@better-giving/endowment";
-import { Arrow, Content, Tooltip } from "components/Tooltip";
+import { Arrow, Content, Tooltip } from "components/tooltip";
 import { humanize } from "helpers";
 import { ArrowLeft, ArrowRight, CircleAlert, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";

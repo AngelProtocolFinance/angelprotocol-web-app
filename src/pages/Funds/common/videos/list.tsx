@@ -1,4 +1,4 @@
-import { Info } from "components/Status";
+import { Info } from "components/status";
 import type { UseFieldArrayReturn } from "react-hook-form";
 import type { FV } from "./types";
 import { VideoPreview } from "./video-preview";

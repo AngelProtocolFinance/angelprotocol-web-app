@@ -1,5 +1,5 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import QueryLoader from "components/QueryLoader";
+import QueryLoader from "components/query-loader";
 import type { CurrencyOption, QueryState } from "types/components";
 
 type Props = {

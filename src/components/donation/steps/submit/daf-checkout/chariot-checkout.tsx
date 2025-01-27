@@ -2,14 +2,14 @@ import type { DonationIntent } from "@better-giving/donation/intent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "@remix-run/react";
 import { apes } from "api/api";
-import ContentLoader from "components/ContentLoader";
-import { type IPromptV2, PromptV2 } from "components/Prompt";
+import ContentLoader from "components/content-loader";
 import { ErrorBoundaryClass } from "components/error";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
   Form,
 } from "components/form";
+import { type IPromptV2, PromptV2 } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";

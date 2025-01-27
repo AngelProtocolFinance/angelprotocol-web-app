@@ -1,4 +1,4 @@
-import type { ImgSpec } from "components/ImgEditor";
+import type { ImgSpec } from "components/img-editor";
 
 export const imgSpec = (aspect: [number, number], rounded = false): ImgSpec => {
   return {

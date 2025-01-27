@@ -1,7 +1,7 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { useNavigate, useRouteLoaderData } from "@remix-run/react";
-import { Modal } from "components/Modal";
 import { NativeField as Field, RmxForm, useRmxForm } from "components/form";
+import { Modal } from "components/modal";
 import { parseWithValibot } from "conform-to-valibot";
 import { isFormErr } from "types/action";
 import type { LoaderData } from "./api";

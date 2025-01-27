@@ -4,10 +4,10 @@ import {
   FileDropzone,
   type FileOutput,
   fileOutput,
-} from "components/FileDropzone";
-import { type IPromptV2, PromptV2 } from "components/Prompt";
-import { NativeSelect } from "components/Selector";
+} from "components/file-dropzone";
 import { Label } from "components/form";
+import { type IPromptV2, PromptV2 } from "components/prompt";
+import { NativeSelect } from "components/selector";
 import { errorPrompt } from "contexts/ErrorContext";
 import { logger } from "helpers";
 import { useState } from "react";

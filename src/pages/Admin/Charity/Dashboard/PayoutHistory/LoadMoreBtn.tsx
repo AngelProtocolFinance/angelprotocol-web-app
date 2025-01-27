@@ -1,4 +1,4 @@
-import LoaderRing from "components/LoaderRing";
+import LoaderRing from "components/loader-ring";
 
 interface Props {
   onLoadMore(): void;

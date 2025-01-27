@@ -1,5 +1,5 @@
 import flying_character from "assets/images/flying-character.webp";
-import Image from "components/Image";
+import Image from "components/image";
 
 interface Endow {
   name: string;

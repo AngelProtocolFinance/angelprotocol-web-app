@@ -1,12 +1,12 @@
 import { orgDesignations } from "@better-giving/schemas";
 import { Link } from "@remix-run/react";
 import countries from "assets/countries/all.json";
-import ActivityCountries from "components/ActivityCountries";
-import ExtLink from "components/ExtLink";
-import LoadText from "components/LoadText";
-import { MultiSelector, Selector } from "components/Selector";
+import ActivityCountries from "components/activity-countries";
 import CountrySelector from "components/country-selector";
+import ExtLink from "components/ext-link";
 import { Field, Label, Radio } from "components/form";
+import LoadText from "components/load-text";
+import { MultiSelector, Selector } from "components/selector";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import { steps } from "../../../routes";

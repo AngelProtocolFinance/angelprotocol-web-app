@@ -1,5 +1,5 @@
 import { useLoaderData } from "@remix-run/react";
-import { RichText } from "components/RichText";
+import { RichText } from "components/rich-text";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";

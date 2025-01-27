@@ -1,6 +1,6 @@
 import type { Allocation } from "@better-giving/endowment";
 import { NavLink } from "@remix-run/react";
-import { Arrow, Content, Tooltip } from "components/Tooltip";
+import { Arrow, Content, Tooltip } from "components/tooltip";
 import { humanize } from "helpers";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";

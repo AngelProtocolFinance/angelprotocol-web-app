@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
-import ExtLink from "components/ExtLink";
-import { Cells } from "components/TableSection";
+import ExtLink from "components/ext-link";
+import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 import { CircleCheck, X } from "lucide-react";

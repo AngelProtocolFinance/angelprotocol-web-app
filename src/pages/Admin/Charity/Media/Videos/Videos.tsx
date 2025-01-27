@@ -1,7 +1,7 @@
 import type { MediaPage } from "@better-giving/endowment";
 import { NavLink, Outlet, useParams } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import Breadcrumbs from "components/Breadcrumbs";
+import Breadcrumbs from "components/breadcrumbs";
 import { appRoutes } from "constants/routes";
 import { Plus } from "lucide-react";
 import { List } from "./List";

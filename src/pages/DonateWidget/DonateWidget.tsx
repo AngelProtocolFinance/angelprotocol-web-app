@@ -1,6 +1,6 @@
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import type { DonateData } from "api/donate-loader";
-import { ErrorStatus } from "components/Status";
+import { ErrorStatus } from "components/status";
 import { useEffect } from "react";
 import Content from "./Content";
 import parseConfig from "./parseConfig";

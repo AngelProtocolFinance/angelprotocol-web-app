@@ -1,8 +1,8 @@
 import { useLocation } from "@remix-run/react";
-import { DappLogo } from "components/Image";
+import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
 
-import { NavDropdown, UserMenu } from "components/Header";
+import { NavDropdown, UserMenu } from "components/header";
 import { useRootData } from "hooks/use-root-data";
 
 type Props = { classes?: string };

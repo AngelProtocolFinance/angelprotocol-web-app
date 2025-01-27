@@ -1,7 +1,7 @@
 import { Link, useFetcher, useParams } from "@remix-run/react";
-import Group from "components/Group";
-import { type IPromptV2, PromptV2 } from "components/Prompt";
 import BankDetails, { type OnSubmit } from "components/bank-details";
+import Group from "components/group";
+import { type IPromptV2, PromptV2 } from "components/prompt";
 import { errorPrompt } from "contexts/ErrorContext";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";

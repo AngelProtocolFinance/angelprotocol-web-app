@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
 import dappLogo from "assets/images/bettergiving-logo.webp";
 import { laira } from "assets/laira/laira";
-import Image from "components/Image/Image";
+import Image from "components/image/image";
 import { centsDecimals, humanize, roundDown } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";

@@ -1,5 +1,5 @@
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { Arrow, Content, Tooltip } from "components/Tooltip";
+import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelp } from "lucide-react";
 import type { TargetType } from "./types";
 

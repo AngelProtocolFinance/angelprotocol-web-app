@@ -8,7 +8,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Outlet, useFetcher } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import Increments from "components/Increments";
 import { DonateMethods, fill } from "components/donate-methods";
 import {
   NativeCheckField as CheckField,
@@ -16,6 +15,7 @@ import {
   NativeField as Field,
 } from "components/form";
 import { GoalSelector } from "components/goal-selector";
+import Increments from "components/increments";
 import { BG_ID } from "constants/common";
 import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";

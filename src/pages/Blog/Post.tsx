@@ -1,7 +1,7 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { wp } from "api/api";
-import Media from "components/Media";
+import Media from "components/media";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";

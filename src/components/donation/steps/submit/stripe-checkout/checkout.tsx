@@ -3,9 +3,9 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import LoadText from "components/LoadText";
-import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { ErrorTrigger } from "components/error";
+import LoadText from "components/load-text";
+import { type IPromptV2, PromptV2 } from "components/prompt";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
 import { type FormEventHandler, useState } from "react";

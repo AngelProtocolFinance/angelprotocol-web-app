@@ -1,5 +1,5 @@
 import { NavLink } from "@remix-run/react";
-import TableSection, { Cells } from "components/TableSection";
+import TableSection, { Cells } from "components/table-section";
 import { CircleCheck, FolderIcon } from "lucide-react";
 import type { BankingApplicationStatus, PayoutMethod } from "types/aws";
 

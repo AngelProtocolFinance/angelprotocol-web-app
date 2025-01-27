@@ -1,5 +1,5 @@
 import type { Program as IProgram } from "@better-giving/endowment";
-import { Info } from "components/Status";
+import { Info } from "components/status";
 import { Program } from "./Program";
 
 export default function List({ programs }: { programs: IProgram[] }) {

@@ -3,7 +3,7 @@ import {
   isRejected,
 } from "@better-giving/registration/models";
 import { Link, useFetcher } from "@remix-run/react";
-import LoadText from "components/LoadText";
+import LoadText from "components/load-text";
 import { CircleAlert, Hourglass } from "lucide-react";
 import { steps } from "pages/Registration/routes";
 

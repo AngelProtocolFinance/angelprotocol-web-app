@@ -1,6 +1,6 @@
 import { useFetcher, useSearchParams } from "@remix-run/react";
-import { Info } from "components/Status";
 import CsvExporter from "components/csv-exporter";
+import { Info } from "components/status";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { FileSpreadsheet } from "lucide-react";
 import { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
-import ExtLink from "components/ExtLink";
-import { HeaderButton } from "components/HeaderButton";
-import TableSection, { Cells } from "components/TableSection";
+import ExtLink from "components/ext-link";
+import { HeaderButton } from "components/header-button";
+import TableSection, { Cells } from "components/table-section";
 import { juno } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";

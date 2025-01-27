@@ -1,5 +1,5 @@
-import Image from "components/Image";
 import { StepsCarousel } from "components/donation";
+import Image from "components/image";
 import { benefits } from "content/benefits";
 import { Star } from "lucide-react";
 

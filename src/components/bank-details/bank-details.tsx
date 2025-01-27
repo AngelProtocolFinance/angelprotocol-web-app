@@ -1,4 +1,4 @@
-import { Separator } from "components/Separator";
+import { Separator } from "components/separator";
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
 import type { Currency } from "types/components";

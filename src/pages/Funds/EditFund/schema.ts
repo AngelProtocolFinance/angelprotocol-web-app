@@ -1,5 +1,5 @@
-import { imgOutput } from "components/ImgEditor";
 import { target } from "components/goal-selector";
+import { imgOutput } from "components/img-editor";
 import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { video } from "../common/videos";

@@ -1,6 +1,6 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
-import { Info, LoadingStatus } from "components/Status";
+import { Info, LoadingStatus } from "components/status";
 import { useEffect } from "react";
 import type { WidgetData } from "../../loader";
 

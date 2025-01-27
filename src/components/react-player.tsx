@@ -5,7 +5,7 @@ import { type ComponentProps, forwardRef } from "react";
  * @see https://react.dev/reference/react/Suspense#providing-a-fallback-for-server-errors-and-client-only-content */
 import Wrapped from "react-player";
 import { ClientOnly } from "remix-utils/client-only";
-import ContentLoader from "./ContentLoader";
+import ContentLoader from "./content-loader";
 
 export const ReactPlayer = forwardRef<Wrapped, ComponentProps<typeof Wrapped>>(
   (props, ref) => {

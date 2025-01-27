@@ -1,5 +1,5 @@
 import { DONATION_INCREMENTS } from "constants/common";
-import TokenField from "../../../../TokenField";
+import TokenField from "../../../../token-field";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
 import { ProgramSelector } from "../../common/program-selector";

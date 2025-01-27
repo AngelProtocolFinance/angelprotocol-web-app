@@ -1,8 +1,8 @@
 import type { Endow } from "@better-giving/endowment";
 import { laira } from "assets/laira/laira";
-import Image from "components/Image/Image";
-import { Info } from "components/Status";
 import { type DonationState, Steps, initDetails } from "components/donation";
+import Image from "components/image/image";
+import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
 import type { WidgetConfig } from "types/widget";
 

@@ -1,4 +1,4 @@
-import { Selector } from "components/Selector";
+import { Selector } from "components/selector";
 import { statuses } from "./constants";
 import type { FormValues as FV } from "./types";
 

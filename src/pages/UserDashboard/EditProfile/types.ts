@@ -1,4 +1,4 @@
-import { imgOutput } from "components/ImgEditor";
+import { imgOutput } from "components/img-editor";
 import * as v from "valibot";
 
 export const schema = v.object({

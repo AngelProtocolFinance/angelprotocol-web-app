@@ -7,8 +7,8 @@ import {
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
-import { imgEditorStyles } from "components/ImgEditor";
-import { richTextStyles } from "components/RichText";
+import { imgEditorStyles } from "components/img-editor";
+import { richTextStyles } from "components/rich-text";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";

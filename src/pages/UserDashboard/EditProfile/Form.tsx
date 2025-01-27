@@ -1,8 +1,8 @@
 import { useFetcher } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import CurrencySelector from "components/currency-selector";
 import { NativeField as Field, Form, Label } from "components/form";
+import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { useActionResult } from "hooks/use-action-result";
 import type { ActionData } from "types/action";
 import type { LoaderData } from "./api";

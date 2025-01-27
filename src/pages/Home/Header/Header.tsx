@@ -1,7 +1,7 @@
 import { useLocation } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import { NavDropdown, UserMenu } from "components/Header";
-import { DappLogo } from "components/Image";
+import { NavDropdown, UserMenu } from "components/header";
+import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { useState } from "react";

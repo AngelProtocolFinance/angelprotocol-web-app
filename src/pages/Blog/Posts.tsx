@@ -6,7 +6,7 @@ import {
 } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { posts } from "api/get/wp-posts";
-import Media from "components/Media";
+import Media from "components/media";
 import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
 import type { Wordpress } from "types/wordpress";

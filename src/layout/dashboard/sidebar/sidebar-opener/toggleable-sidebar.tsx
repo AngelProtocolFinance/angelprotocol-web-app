@@ -1,4 +1,4 @@
-import { Modal } from "components/Modal";
+import { Modal } from "components/modal";
 import Sidebar from "../sidebar";
 import type { LinkGroup } from "../types";
 

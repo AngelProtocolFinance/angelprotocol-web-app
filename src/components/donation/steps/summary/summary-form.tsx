@@ -1,12 +1,12 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { List } from "components/Selector";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
   Form,
   Label,
 } from "components/form";
+import { List } from "components/selector";
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { mixed, string } from "yup";

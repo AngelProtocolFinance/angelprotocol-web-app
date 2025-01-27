@@ -1,8 +1,8 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Link } from "@remix-run/react";
-import LoadText from "components/LoadText";
 import { NativeField as Field, Form } from "components/form";
+import LoadText from "components/load-text";
 import { useForm } from "react-hook-form";
 import { steps } from "../../../routes";
 import { type FV, type Props, schema } from "./types";

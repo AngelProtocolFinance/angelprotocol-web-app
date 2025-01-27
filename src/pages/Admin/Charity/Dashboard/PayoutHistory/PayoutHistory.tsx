@@ -1,5 +1,5 @@
 import { useFetcher, useSearchParams } from "@remix-run/react";
-import { Info } from "components/Status";
+import { Info } from "components/status";
 import { useEffect, useState } from "react";
 import { useCachedLoaderData } from "remix-client-cache";
 import type { BalanceTxsPage } from "types/aws";

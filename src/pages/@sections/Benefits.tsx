@@ -1,4 +1,4 @@
-import Image from "components/Image";
+import Image from "components/image";
 import type { Benefit as TBenefit } from "content/benefits";
 
 type Props = {

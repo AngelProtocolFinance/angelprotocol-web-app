@@ -1,6 +1,6 @@
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import ExtLink from "../../../ExtLink";
+import ExtLink from "../../../ext-link";
 
 interface Props {
   classes?: string;

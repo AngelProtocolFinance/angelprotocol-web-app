@@ -1,6 +1,6 @@
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/icon";
 import { cleanObject } from "helpers/cleanObject";
 import { FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";

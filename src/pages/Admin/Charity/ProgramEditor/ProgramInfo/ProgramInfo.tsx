@@ -1,9 +1,9 @@
 import type { Program } from "@better-giving/endowment";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import Group from "components/Group";
-import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import { RichText } from "components/RichText";
 import { NativeField as Field, Form, Label } from "components/form";
+import Group from "components/group";
+import { ControlledImgEditor as ImgEditor } from "components/img-editor";
+import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";

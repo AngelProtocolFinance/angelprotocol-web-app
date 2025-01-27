@@ -1,6 +1,6 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { toContent } from "components/RichText";
+import { toContent } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { type FV, schema } from "./schema";
 

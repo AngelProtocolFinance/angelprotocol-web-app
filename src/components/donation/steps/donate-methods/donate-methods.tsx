@@ -1,8 +1,8 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import dafPayLogo from "assets/icons/dafpay.svg";
-import Image from "components/Image";
 import { Label } from "components/form";
+import Image from "components/image";
 import { ChartSpline, Coins, CreditCard } from "lucide-react";
 import type { ReactNode } from "react";
 import type { FormStep } from "../types";

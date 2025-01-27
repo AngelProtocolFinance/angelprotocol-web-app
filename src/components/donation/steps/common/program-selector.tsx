@@ -9,7 +9,7 @@ import { unpack } from "helpers";
 import { X } from "lucide-react";
 import useSWR from "swr/immutable";
 import type { OptionType } from "types/components";
-import { DrawerIcon } from "../../../Icon";
+import { DrawerIcon } from "../../../icon";
 
 type Props = {
   classes?: string | { container?: string; label?: string };

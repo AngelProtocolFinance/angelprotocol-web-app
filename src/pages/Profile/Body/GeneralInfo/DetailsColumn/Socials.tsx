@@ -6,7 +6,7 @@ import linkedinIcon from "assets/icons/social/linkedin.webp";
 import tiktokIcon from "assets/icons/social/tiktok.webp";
 import xIcon from "assets/icons/social/x.webp";
 import youtubeIcon from "assets/icons/social/youtube.webp";
-import ExtLink from "components/ExtLink";
+import ExtLink from "components/ext-link";
 
 export default function Socials(props: Pick<Endow, "social_media_urls">) {
   const { facebook, linkedin, twitter, discord, instagram, youtube, tiktok } =

@@ -3,8 +3,8 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import ExtLink from "components/ExtLink";
-import { DrawerIcon } from "components/Icon";
+import ExtLink from "components/ext-link";
+import { DrawerIcon } from "components/icon";
 import { INTERCOM_HELP } from "constants/env";
 import { ArrowRight } from "lucide-react";
 import { Fragment } from "react";
