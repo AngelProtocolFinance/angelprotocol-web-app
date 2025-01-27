@@ -148,16 +148,14 @@ function generateShareLink(
   switch (type) {
     case "x":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
-      return `https://x.com/intent/tweet?text=${encodedText}&url=${url}`;
+      return `https://x.com/intent/tweet?text=${encodedText}&url=${encodedURL}`;
     /**
      * feed description is depracated
      * https://developers.facebook.com/docs/sharing/reference/feed-dialog#response
      * NOTE 6/3/2024: must rely on OpenGraph metadata
      */
     case "fb":
-      return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        encodedURL
-      )}&quote=${encodedText}`;
+      return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodedURL}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons
     case "telegram":
