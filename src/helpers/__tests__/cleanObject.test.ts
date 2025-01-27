@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { cleanObject } from "../cleanObject";
+import { cleanObject } from "../clean-object";
 
 describe("cleanObject", () => {
   test("remove blacklisted values", () => {

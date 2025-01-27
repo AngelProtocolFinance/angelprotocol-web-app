@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useSearchParams } from "@remix-run/react";
 import { dateToFormFormat } from "components/form";
 import { DrawerIcon } from "components/icon";
-import { weeksAgo } from "helpers/weeksAgo";
+import { weeksAgo } from "helpers/weeks-ago";
 import { Filter as FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";

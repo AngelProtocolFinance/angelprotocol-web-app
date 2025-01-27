@@ -5,7 +5,7 @@ import TableSection, { Cells } from "components/table-section";
 import { juno } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
-import useSort from "hooks/useSort";
+import useSort from "hooks/use-sort";
 import { ArrowDownToLine, SquareArrowUpRight } from "lucide-react";
 import type { Donation } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";

@@ -3,7 +3,7 @@ import type { MetaFunction } from "@vercel/remix";
 import { benefits } from "content/benefits";
 import { metas } from "helpers/seo";
 // import type { EndowmentCard } from "types/aws";
-import Benefits from "../../@sections/Benefits";
+import Benefits from "../../@sections/benefits";
 // import HeroBottom from "../../@sections/HeroBottom";
 import BottomCta from "./BottomCta";
 import DonationFormInfo from "./DonationFormInfo";

@@ -1,1 +1,0 @@
-export { errorPrompt } from "./ErrorContext";

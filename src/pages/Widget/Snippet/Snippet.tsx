@@ -1,7 +1,7 @@
 import type { Endow } from "@better-giving/endowment";
 import Copier from "components/copier";
 import { appRoutes } from "constants/routes";
-import { cleanObject } from "helpers/cleanObject";
+import { cleanObject } from "helpers/clean-object";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 type Props = {

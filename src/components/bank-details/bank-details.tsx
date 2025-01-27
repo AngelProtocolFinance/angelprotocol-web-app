@@ -1,5 +1,5 @@
 import { Separator } from "components/separator";
-import useDebouncer from "hooks/useDebouncer";
+import useDebouncer from "hooks/use-debouncer";
 import { useState } from "react";
 import type { Currency } from "types/components";
 import CurrencySelector from "../currency-selector";

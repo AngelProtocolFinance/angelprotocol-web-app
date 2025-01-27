@@ -1,6 +1,6 @@
 import { humanize, logger, unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
-import { uploadFile } from "helpers/uploadFile";
+import { uploadFile } from "helpers/upload-file";
 import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";

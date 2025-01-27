@@ -3,7 +3,7 @@ import { DrawerIcon } from "components/icon";
 import { idParamToNum } from "helpers";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
-} from "hooks/useHandleScreenResize";
+} from "hooks/use-handle-screen-resize";
 import { type PropsWithChildren, useState } from "react";
 import type { RegStep } from "../types";
 

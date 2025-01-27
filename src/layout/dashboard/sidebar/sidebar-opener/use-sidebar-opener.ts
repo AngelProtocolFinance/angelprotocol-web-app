@@ -1,7 +1,7 @@
 import { matchPath, useLocation } from "@remix-run/react";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
-} from "hooks/useHandleScreenResize";
+} from "hooks/use-handle-screen-resize";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import type { Link, LinkGroup } from "../types";

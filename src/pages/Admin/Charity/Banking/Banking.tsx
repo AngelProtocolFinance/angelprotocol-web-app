@@ -2,7 +2,7 @@ import { Link, useFetcher, useParams } from "@remix-run/react";
 import BankDetails, { type OnSubmit } from "components/bank-details";
 import Group from "components/group";
 import { type IPromptV2, PromptV2 } from "components/prompt";
-import { errorPrompt } from "contexts/ErrorContext";
+import { errorPrompt } from "helpers/error-prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import FormButtons from "./FormButtons";

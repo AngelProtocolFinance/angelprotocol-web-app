@@ -8,8 +8,8 @@ import {
 import { Label } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { NativeSelect } from "components/selector";
-import { errorPrompt } from "contexts/ErrorContext";
 import { logger } from "helpers";
+import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
 import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";

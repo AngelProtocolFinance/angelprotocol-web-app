@@ -1,4 +1,4 @@
-import { isEmpty } from "./isEmpty";
+import { isEmpty } from "./is-empty";
 
 export function cleanObject<T extends Record<string, any>>(obj: T): T {
   const cleanedObject: any = {};

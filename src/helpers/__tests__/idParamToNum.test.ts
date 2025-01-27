@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { idParamToNum } from "../idParamToNum";
+import { idParamToNum } from "../id-param-to-num";
 
 describe("id param to number", () => {
   test("user set id path to invalid", () => {

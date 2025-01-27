@@ -12,7 +12,7 @@ import {
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { errorPrompt } from "contexts/ErrorContext";
+import { errorPrompt } from "helpers/error-prompt";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";

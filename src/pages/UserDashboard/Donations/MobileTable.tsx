@@ -8,7 +8,7 @@ import ExtLink from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
-import useSort from "hooks/useSort";
+import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import type { Donation } from "types/aws";

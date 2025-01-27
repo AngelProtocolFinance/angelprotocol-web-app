@@ -7,7 +7,7 @@ import { HeaderButton } from "components/header-button";
 import { Info } from "components/status";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import useSort from "hooks/useSort";
+import useSort from "hooks/use-sort";
 import { Folder } from "lucide-react";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";

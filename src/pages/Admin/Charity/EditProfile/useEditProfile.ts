@@ -1,7 +1,7 @@
 import { useFetcher } from "@remix-run/react";
 import { getEndow } from "api/get/endow";
 import type { IPromptV2 } from "components/prompt";
-import { errorPrompt } from "contexts/ErrorContext";
+import { errorPrompt } from "helpers/error-prompt";
 import { useActionResult } from "hooks/use-action-result";
 import { useState } from "react";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";

@@ -3,7 +3,7 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import { Input } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { useActionResult } from "hooks/use-action-result";
-import useCounter from "hooks/useCounter";
+import useCounter from "hooks/use-counter";
 import { signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
 

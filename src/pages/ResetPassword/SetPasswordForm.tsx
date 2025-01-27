@@ -2,7 +2,7 @@ import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { useFetcher } from "@remix-run/react";
 import { Input, PasswordInput } from "components/form";
 import { useActionResult } from "hooks/use-action-result";
-import useCounter from "hooks/useCounter";
+import useCounter from "hooks/use-counter";
 import type { ActionData } from "types/action";
 import type { CodeRecipient } from "./types";
 
