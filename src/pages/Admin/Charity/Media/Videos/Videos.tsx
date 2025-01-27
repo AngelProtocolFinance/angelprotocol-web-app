@@ -4,7 +4,7 @@ import { useCachedLoaderData } from "api/cache";
 import Breadcrumbs from "components/breadcrumbs";
 import { appRoutes } from "constants/routes";
 import { Plus } from "lucide-react";
-import { List } from "./List";
+import { List } from "./list";
 
 export { ErrorBoundary } from "components/error";
 export {

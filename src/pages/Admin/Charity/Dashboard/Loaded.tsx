@@ -5,14 +5,14 @@ import { humanize } from "helpers";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
 import type { BalanceMovement } from "types/aws";
 import type { EndowmentBalances } from "types/aws";
-import Figure from "./Figure";
-import { LiqActions } from "./LiqActions";
-import { LockActions } from "./LockActions";
-import { Movements } from "./Movements";
-import { PayoutHistory } from "./PayoutHistory";
-import { Schedule } from "./Schedule";
-import { Summary } from "./Summary";
-import { monthPeriod } from "./monthPeriod";
+import Figure from "./figure";
+import { LiqActions } from "./liq-actions";
+import { LockActions } from "./lock-actions";
+import { monthPeriod } from "./month-period";
+import { Movements } from "./movements";
+import { PayoutHistory } from "./payout-history";
+import { Schedule } from "./schedule";
+import { Summary } from "./summary";
 
 interface Props {
   balances: EndowmentBalances;

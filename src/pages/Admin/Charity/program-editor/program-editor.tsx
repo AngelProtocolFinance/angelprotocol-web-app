@@ -6,7 +6,7 @@ import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles } from "components/rich-text";
 import { adminRoutes } from "constants/routes";
 import { ChevronLeft } from "lucide-react";
-import Form from "./Form";
+import Form from "./form";
 
 export const links: LinksFunction = () => [
   ...richTextStyles,

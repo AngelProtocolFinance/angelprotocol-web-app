@@ -10,7 +10,7 @@ import {
 import type { ReactNode } from "react";
 import type { BalanceTx } from "types/aws";
 import { MIN_GRANT_PROCESSING } from "../common";
-import LoadMoreBtn from "./LoadMoreBtn";
+import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";
 
 const transferIcon = <ArrowLeftRight className="size-4 text-amber" />;

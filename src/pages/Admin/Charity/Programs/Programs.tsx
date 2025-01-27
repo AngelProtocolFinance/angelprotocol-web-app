@@ -1,7 +1,7 @@
 import { useCachedLoaderData } from "api/cache";
 import { RmxForm, useRmxForm } from "components/form";
-import List from "./List";
 import type { LoaderData } from "./api";
+import List from "./list";
 
 export { clientLoader } from "api/cache";
 export { loader, action } from "./api";

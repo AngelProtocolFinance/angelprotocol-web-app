@@ -2,7 +2,7 @@ import type { MediaPage } from "@better-giving/endowment";
 import { useFetcher } from "@remix-run/react";
 import { Image } from "lucide-react";
 import { useEffect, useState } from "react";
-import VideoPreview from "../VideoPreview";
+import VideoPreview from "../video-preview";
 
 interface Props {
   classes?: string;

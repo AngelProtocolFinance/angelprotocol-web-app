@@ -1,6 +1,6 @@
 import type { IMedia } from "@better-giving/endowment";
 import { Info } from "components/status";
-import VideoPreview from "./VideoPreview";
+import VideoPreview from "./video-preview";
 
 interface Props {
   classes?: string;

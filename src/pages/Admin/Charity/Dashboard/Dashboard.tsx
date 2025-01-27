@@ -1,9 +1,9 @@
 import { Outlet } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import { CircleAlert } from "lucide-react";
-import { Loaded } from "./Loaded";
 import type { DashboardData } from "./api";
-import { monthPeriod } from "./monthPeriod";
+import { Loaded } from "./loaded";
+import { monthPeriod } from "./month-period";
 export { clientLoader } from "api/cache";
 
 export {

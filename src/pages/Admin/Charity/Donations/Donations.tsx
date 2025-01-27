@@ -1,6 +1,6 @@
 import { useCachedLoaderData } from "api/cache";
 import type { DonationsPage } from "types/aws";
-import DonationsTable from "./DonationsTable";
+import DonationsTable from "./donations-table";
 export { ErrorBoundary } from "components/error";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";

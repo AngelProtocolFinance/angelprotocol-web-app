@@ -3,7 +3,7 @@ import { useFetcher } from "@remix-run/react";
 import { Info } from "components/status";
 import { isEmpty } from "helpers";
 import { Plus } from "lucide-react";
-import Milestone from "./Milestone";
+import Milestone from "./milestone";
 
 type Props = {
   programId: string;

@@ -1,6 +1,6 @@
 import type { Program } from "@better-giving/endowment";
-import Milestones from "./Milestones";
-import ProgramInfo from "./ProgramInfo";
+import Milestones from "./milestones";
+import ProgramInfo from "./program-info";
 
 export default function Content(props: Program) {
   return (

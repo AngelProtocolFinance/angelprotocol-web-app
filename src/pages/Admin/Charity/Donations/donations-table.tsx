@@ -6,7 +6,7 @@ import { FileSpreadsheet } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Donation, DonationsPage } from "types/aws";
 import type { Ensure } from "types/utils";
-import Table from "./Table";
+import Table from "./table";
 
 interface Props {
   classes?: string;

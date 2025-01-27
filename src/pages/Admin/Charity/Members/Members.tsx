@@ -1,6 +1,6 @@
 import { useCachedLoaderData } from "api/cache";
-import { List } from "./List";
 import type { LoaderData } from "./api";
+import { List } from "./list";
 
 export { clientLoader } from "api/cache";
 export { members as loader, deleteAction as action } from "./api";

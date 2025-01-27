@@ -6,8 +6,8 @@ import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
 import type { UserV2 } from "types/auth";
-import { FundItem } from "./FundItem";
 import type { LoaderData } from "./api";
+import { FundItem } from "./fund-item";
 
 type CreatorType = "others" | "ours";
 export { action, loader } from "./api";

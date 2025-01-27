@@ -8,7 +8,7 @@ import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
 import { parse } from "valibot";
-import { schema } from "./VideoEditor";
+import { schema } from "./video-editor";
 import { cognito, toAuth } from ".server/auth";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {

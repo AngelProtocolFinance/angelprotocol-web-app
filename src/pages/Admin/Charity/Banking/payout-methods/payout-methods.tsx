@@ -2,8 +2,8 @@ import { NavLink } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { Plus } from "lucide-react";
-import Table from "./Table";
 import type { LoaderData } from "./api";
+import Table from "./table";
 
 export { loader } from "./api";
 

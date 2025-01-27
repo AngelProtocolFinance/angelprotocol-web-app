@@ -13,12 +13,12 @@ import { Confirmed, Info } from "components/status";
 import { ControlledToggle as Toggle } from "components/toggle";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import Slug from "./Slug";
-import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
+import { getSDGLabelValuePair } from "./get-sdg-label-value-pair";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
-import useEditProfile from "./useEditProfile";
-import useRhf from "./useRhf";
+import Slug from "./slug";
+import useEditProfile from "./use-edit-profile";
+import useRhf from "./use-rhf";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
   getSDGLabelValuePair(key, title)

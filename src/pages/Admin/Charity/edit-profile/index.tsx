@@ -5,9 +5,9 @@ import { country } from "components/country-selector";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles, toContent } from "components/rich-text";
 import { unsdgs } from "constants/unsdgs";
-import Form from "./Form";
 import type { LoaderData } from "./api";
-import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
+import Form from "./form";
+import { getSDGLabelValuePair } from "./get-sdg-label-value-pair";
 import type { FV } from "./schema";
 
 export { loader, action } from "./api";

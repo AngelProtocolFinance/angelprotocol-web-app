@@ -7,7 +7,7 @@ import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";
-import useSubmit from "./useSubmit";
+import useSubmit from "./use-submit";
 
 export default function ProgramInfo(props: Program) {
   const {

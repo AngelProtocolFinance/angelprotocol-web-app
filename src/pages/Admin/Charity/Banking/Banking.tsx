@@ -5,7 +5,7 @@ import { type IPromptV2, PromptV2 } from "components/prompt";
 import { errorPrompt } from "helpers/error-prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
-import FormButtons from "./FormButtons";
+import FormButtons from "./form-buttons";
 
 export { newBanking as action } from "./api";
 export { ErrorBoundary } from "components/error";

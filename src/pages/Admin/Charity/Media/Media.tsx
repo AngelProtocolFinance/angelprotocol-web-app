@@ -2,7 +2,7 @@ import type { MediaPage } from "@better-giving/endowment";
 import { NavLink, Outlet } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import { Plus } from "lucide-react";
-import FeaturedVideos from "./FeaturedVideos";
+import FeaturedVideos from "./featured-videos";
 
 export {
   featuredMedia as loader,

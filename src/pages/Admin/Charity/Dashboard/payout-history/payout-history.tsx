@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useCachedLoaderData } from "remix-client-cache";
 import type { BalanceTxsPage } from "types/aws";
 import type { DashboardData } from "../api";
-import Table from "./Table";
+import Table from "./table";
 
 export function PayoutHistory({ classes = "" }) {
   const [params] = useSearchParams();

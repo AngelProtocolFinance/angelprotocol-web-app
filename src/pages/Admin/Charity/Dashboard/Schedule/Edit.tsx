@@ -5,8 +5,8 @@ import { useFetcher, useNavigate, useRouteLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import type { EndowmentUpdate } from "services/types";
 import type { DashboardData } from "../api";
-import { AllocationOptions } from "./AllocationOptions";
-import { AllocationSlider } from "./AllocationSlider";
+import { AllocationOptions } from "./allocation-options";
+import { AllocationSlider } from "./allocation-slider";
 import { allocationOptions, toAllocOptValue } from "./common";
 
 export default function Edit() {

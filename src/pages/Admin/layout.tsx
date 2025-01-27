@@ -8,9 +8,9 @@ import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
-import Header from "./Header";
-import SidebarHeader from "./SidebarHeader";
 import { linkGroups } from "./constants";
+import Header from "./header";
+import SidebarHeader from "./sidebar-header";
 import { cognito, toAuth } from ".server/auth";
 import { getNpoByIdOrSlug } from ".server/npo";
 
