@@ -4652,7 +4652,7 @@ __metadata:
     "@vercel/blob": "npm:0.27.1"
     "@vercel/kv": "npm:3.0.0"
     "@vercel/remix": "npm:2.15.2"
-    conform-to-valibot: "npm:1.11.0"
+    conform-to-valibot: "npm:1.14.0"
     date-fns: "npm:3.6.0"
     decimal.js: "npm:10.4.3"
     embla-carousel-react: "npm:8.5.2"
@@ -5278,13 +5278,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"conform-to-valibot@npm:1.11.0":
-  version: 1.11.0
-  resolution: "conform-to-valibot@npm:1.11.0"
+"conform-to-valibot@npm:1.14.0":
+  version: 1.14.0
+  resolution: "conform-to-valibot@npm:1.14.0"
   peerDependencies:
     "@conform-to/dom": ">= 1.0.0"
     valibot: ">= 0.32.0"
-  checksum: 10/d7fdea34cd6f134f57d81b76cb8a8ffc46728ee231a6ae5580ad9b0e96cd4d0596095eefb281902ab98aa06248c25f3511d1f5d93f708a48b70d987bf4934840
+  checksum: 10/16609d74d4a9b7d91f70c38d161349040937a6eca6144204fc9bbc390f9e7a972570501a93ed2bba4eb43775125e2d8168cf1a1b3d0e68c783fcac63c21ea575
   languageName: node
   linkType: hard
 
