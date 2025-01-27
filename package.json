@@ -111,7 +111,7 @@
     "@types/react-csv": "1.1.10",
     "@types/react-dom": "18.2.19",
     "jsdom": "24.1.0",
-    "lefthook": "1.6.15",
+    "lefthook": "1.10.10",
     "msw": "2.3.1",
     "tailwindcss": "^4.0.0",
     "typescript": "5.5",
