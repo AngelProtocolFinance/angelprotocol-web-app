@@ -4,7 +4,7 @@ import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import Footer from "components/Footer";
 import { appRoutes } from "constants/routes";
-import Layout from "layout/DashboardLayout";
+import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";

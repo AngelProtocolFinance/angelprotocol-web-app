@@ -1,5 +1,5 @@
 import { adminRoutes } from "constants/routes";
-import type { LinkGroup } from "layout/DashboardLayout";
+import type { LinkGroup } from "layout/dashboard";
 import {
   Blocks,
   CircleDollarSign,

@@ -1,7 +1,7 @@
 import { Outlet } from "@remix-run/react";
 import type { ReactNode } from "react";
-import Sidebar, { SidebarOpener } from "./Sidebar";
-import type { LinkGroup } from "./Sidebar/types";
+import Sidebar, { SidebarOpener } from "./sidebar";
+import type { LinkGroup } from "./sidebar/types";
 
 type DashboardLayoutProps = {
   linkGroups: LinkGroup[];

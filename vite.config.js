@@ -97,7 +97,7 @@ const rmx = remix({
           }
         );
       });
-      r("", "./App/Layout.tsx", () => {
+      r("", "./layout/app/layout.tsx", () => {
         r("login", "./pages/Signin.tsx");
         r("signup", "./pages/SignUp/layout.tsx", () => {
           r("", "./pages/SignUp/SignupForm/SignupForm.tsx", { index: true });

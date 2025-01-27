@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import type { LinkGroup } from "../types";
-import ToggleableSidebar from "./ToggleableSidebar";
-import useSidebarOpener from "./useSidebarOpener";
+import ToggleableSidebar from "./toggleable-sidebar";
+import useSidebarOpener from "./use-sidebar-opener";
 
 type Props = { className?: string; linkGroups: LinkGroup[]; rootRoute: string };
 

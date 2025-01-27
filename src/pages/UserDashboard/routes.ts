@@ -1,4 +1,4 @@
-import type { LinkGroup } from "layout/DashboardLayout";
+import type { LinkGroup } from "layout/dashboard";
 import {
   CircleDollarSign,
   CircleUserRound,

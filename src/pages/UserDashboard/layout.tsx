@@ -1,5 +1,5 @@
 import { appRoutes } from "constants/routes";
-import DashboardLayout from "layout/DashboardLayout";
+import DashboardLayout from "layout/dashboard";
 import { linkGroups } from "./routes";
 
 export default function Layout() {

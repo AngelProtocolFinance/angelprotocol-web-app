@@ -1,5 +1,5 @@
 import { Modal } from "components/Modal";
-import Sidebar from "../Sidebar";
+import Sidebar from "../sidebar";
 import type { LinkGroup } from "../types";
 
 interface Props {
