@@ -4665,7 +4665,7 @@ __metadata:
     ky: "npm:1.7.2"
     lefthook: "npm:1.6.15"
     lodash: "npm:4.17.21"
-    lucide-react: "npm:0.436.0"
+    lucide-react: "npm:0.474.0"
     msw: "npm:2.3.1"
     nprogress: "npm:0.2.0"
     qrcode.react: "npm:4.2.0"
@@ -7707,12 +7707,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:0.436.0":
-  version: 0.436.0
-  resolution: "lucide-react@npm:0.436.0"
+"lucide-react@npm:0.474.0":
+  version: 0.474.0
+  resolution: "lucide-react@npm:0.474.0"
   peerDependencies:
-    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
-  checksum: 10/33ece64ea067a02d9d4eaf4b18f9334323db3e0b91746c5332c29b0aa2afd44858db9b48300a78a3406adcd99ffc15c14f94345b7a18a02070216741710c5751
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/66370cb601cda7f5df78ed11d14b20b7f2dfac128a88a098f6e70ff98e4e8abc63d4ad7b3dc9ecf9814c5578c9d224fc158127d3ee4df770016cc356464011ec
   languageName: node
   linkType: hard
 
