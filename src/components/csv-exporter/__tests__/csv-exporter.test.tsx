@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
-import CsvExporter from "../CsvExporter";
+import CsvExporter from "../csv-exporter";
 
 const mockChildComponent = vi.fn();
 vi.mock("react-csv", () => ({
