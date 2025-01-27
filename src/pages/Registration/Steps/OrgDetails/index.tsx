@@ -1,7 +1,7 @@
 import type { Org } from "@better-giving/registration/models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoaderData } from "@remix-run/react";
-import { country } from "components/CountrySelector";
+import { country } from "components/country-selector";
 import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
 import { stepLoader } from "../../data/step-loader";

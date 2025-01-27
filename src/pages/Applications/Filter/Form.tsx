@@ -1,6 +1,6 @@
 import { PopoverButton, PopoverPanel } from "@headlessui/react";
 import countries from "assets/countries/all.json";
-import CountrySelector from "components/CountrySelector";
+import CountrySelector from "components/country-selector";
 import { DateInput } from "components/form";
 import { X } from "lucide-react";
 import type { FC, FormEventHandler } from "react";

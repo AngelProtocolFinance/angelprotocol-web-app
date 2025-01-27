@@ -1,9 +1,9 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useParams } from "@remix-run/react";
 import countries from "assets/countries/all.json";
-import { ControlledCountrySelector as CountrySelector } from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import { NativeSelect as Selector } from "components/Selector";
+import { ControlledCountrySelector as CountrySelector } from "components/country-selector";
 import { NativeField as Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useController, useForm } from "react-hook-form";

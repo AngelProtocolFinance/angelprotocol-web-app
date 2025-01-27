@@ -1,7 +1,6 @@
 import type { EndowDesignation } from "@better-giving/endowment";
 import { Outlet } from "@remix-run/react";
 import countries from "assets/countries/all.json";
-import { ControlledCountrySelector as CountrySelector } from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
 import Group from "components/Group";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
@@ -10,6 +9,7 @@ import { RichText } from "components/RichText";
 import { List, MultiList } from "components/Selector";
 import { Confirmed, Info } from "components/Status";
 import { ControlledToggle as Toggle } from "components/Toggle";
+import { ControlledCountrySelector as CountrySelector } from "components/country-selector";
 import { Form as F, NativeField as Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";

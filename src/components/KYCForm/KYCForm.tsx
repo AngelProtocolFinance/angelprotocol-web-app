@@ -1,6 +1,6 @@
 import { useNavigate } from "@remix-run/react";
-import { placeHolderCountryOption } from "components/CountrySelector";
 import { Modal } from "components/Modal";
+import { placeHolderCountryOption } from "components/country-selector";
 import { Form } from "./Form";
 import type { FV } from "./schema";
 

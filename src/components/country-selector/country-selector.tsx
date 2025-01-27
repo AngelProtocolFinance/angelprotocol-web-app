@@ -11,8 +11,8 @@ import {
 } from "react-hook-form";
 import type { Country } from "types/components";
 import { DrawerIcon } from "../Icon";
-import Options from "./Options";
 import { placeHolderCountryOption } from "./constants";
+import Options from "./options";
 
 type El = HTMLInputElement;
 
