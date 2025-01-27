@@ -2,8 +2,8 @@ import type { Endow } from "@better-giving/endowment";
 import { incrementLabelMaxChars } from "@better-giving/endowment/schema";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { DonateMethods } from "components/DonateMethods";
 import Increments from "components/Increments";
+import { DonateMethods } from "components/donate-methods";
 import { ProgramSelector } from "components/donation";
 import {
   NativeCheckField as CheckField,

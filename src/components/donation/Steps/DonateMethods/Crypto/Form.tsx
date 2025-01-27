@@ -1,9 +1,9 @@
 import { DONATION_INCREMENTS } from "constants/common";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
-import ContinueBtn from "../../common/ContinueBtn";
-import Incrementers from "../../common/Incrementers";
-import { ProgramSelector } from "../../common/ProgramSelector";
+import ContinueBtn from "../../common/continue-btn";
+import Incrementers from "../../common/incrementers";
+import { ProgramSelector } from "../../common/program-selector";
 import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
 import type { DonateValues } from "./types";

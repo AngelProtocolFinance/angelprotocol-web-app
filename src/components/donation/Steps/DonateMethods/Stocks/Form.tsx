@@ -4,8 +4,8 @@ import { useController, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useDonationState } from "../../Context";
-import ContinueBtn from "../../common/ContinueBtn";
-import { ProgramSelector } from "../../common/ProgramSelector";
+import ContinueBtn from "../../common/continue-btn";
+import { ProgramSelector } from "../../common/program-selector";
 import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { nextFormState } from "../helpers";
 

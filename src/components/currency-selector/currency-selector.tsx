@@ -14,7 +14,7 @@ import {
   isQuery,
 } from "types/components";
 import { DrawerIcon } from "../Icon";
-import CurrencyOptions from "./CurrencyOptions";
+import CurrencyOptions from "./currency-options";
 
 type Classes = {
   combobox?: string;

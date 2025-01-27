@@ -2,7 +2,7 @@ import { Separator } from "components/Separator";
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
 import type { Currency } from "types/components";
-import CurrencySelector from "../CurrencySelector";
+import CurrencySelector from "../currency-selector";
 import ExpectedFunds from "./expected-funds";
 import RecipientDetails from "./recipient-details";
 import type { IFormButtons, OnSubmit } from "./types";

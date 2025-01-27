@@ -1,10 +1,10 @@
-import CurrencySelector from "components/CurrencySelector";
+import CurrencySelector from "components/currency-selector";
 import { NativeField as Field, Form as FormContainer } from "components/form";
 import { useDonationState } from "../../Context";
-import ContinueBtn from "../../common/ContinueBtn";
-import Incrementers from "../../common/Incrementers";
-import { ProgramSelector } from "../../common/ProgramSelector";
 import { usdOption } from "../../common/constants";
+import ContinueBtn from "../../common/continue-btn";
+import Incrementers from "../../common/incrementers";
+import { ProgramSelector } from "../../common/program-selector";
 import { nextFormState } from "../helpers";
 import type { Props } from "./types";
 import { useRhf } from "./useRhf";

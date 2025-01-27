@@ -3,7 +3,7 @@ import { ListCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import type { OptionType } from "types/components";
 import type { Frequency } from "../types";
-import BackBtn from "./BackBtn";
+import BackBtn from "./back-btn";
 
 type Classes =
   | string

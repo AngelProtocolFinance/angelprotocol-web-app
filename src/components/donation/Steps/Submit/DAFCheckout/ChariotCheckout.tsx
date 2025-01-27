@@ -19,14 +19,14 @@ import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { mixed, string } from "yup";
 import { useDonationState } from "../../Context";
-import { currency } from "../../common/Currency";
-import Summary from "../../common/Summary";
 import {
   initDonorTitleOption,
   initTributeNotif,
   toDonor,
 } from "../../common/constants";
+import { currency } from "../../common/currency";
 import { minFeeAllowance } from "../../common/min-fee-allowance";
+import Summary from "../../common/summary";
 import type { DafCheckoutStep, Honorary } from "../../types";
 import { DonationTerms } from "../DonationTerms";
 import { type AdjustedAmounts, toPlatformValues } from "./toPlatformValues";

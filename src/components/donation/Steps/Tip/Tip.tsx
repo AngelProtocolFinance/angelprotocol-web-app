@@ -9,9 +9,9 @@ import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { useDonationState } from "../Context";
-import BackBtn from "../common/BackBtn";
-import ContinueBtn from "../common/ContinueBtn";
+import BackBtn from "../common/back-btn";
 import { summaryData } from "../common/constants";
+import ContinueBtn from "../common/continue-btn";
 import type { TipFormat, TipStep } from "../types";
 
 const DEFAULT_PCT = "0.17";

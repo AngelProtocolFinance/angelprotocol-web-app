@@ -8,8 +8,8 @@ import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import useSWR from "swr/immutable";
 import type { Crypto } from "types/aws";
-import ContinueBtn from "../../common/ContinueBtn";
 import { toDonor } from "../../common/constants";
+import ContinueBtn from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";
 import { PayQr } from "./PayQr";
 

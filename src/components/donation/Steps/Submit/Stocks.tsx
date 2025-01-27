@@ -1,7 +1,7 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useDonationState } from "../Context";
-import BackBtn from "../common/BackBtn";
+import BackBtn from "../common/back-btn";
 import type { StockCheckoutStep } from "../types";
 import { DonationTerms } from "./DonationTerms";
 

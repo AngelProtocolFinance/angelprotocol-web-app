@@ -3,8 +3,8 @@ import { centsDecimals, roundDown } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
 import { object } from "yup";
-import type { OnIncrement } from "../../common/Incrementers";
 import { initTokenOption } from "../../common/constants";
+import type { OnIncrement } from "../../common/incrementers";
 import type { CryptoFormStep } from "../../types";
 import type { DonateValues as DV } from "./types";
 

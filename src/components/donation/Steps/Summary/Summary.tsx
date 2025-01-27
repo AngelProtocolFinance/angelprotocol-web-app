@@ -1,10 +1,10 @@
 import { useRootData } from "hooks/use-root-data";
 import { useDonationState } from "../Context";
-import { currency } from "../common/Currency";
-import SummaryContainer from "../common/Summary";
-import { token } from "../common/Token";
 import { initDonorTitleOption, initTributeNotif } from "../common/constants";
+import { currency } from "../common/currency";
 import { minFeeAllowance } from "../common/min-fee-allowance";
+import SummaryContainer from "../common/summary";
+import { token } from "../common/token";
 import type { SummaryStep } from "../types";
 import SummaryForm from "./SummaryForm";
 

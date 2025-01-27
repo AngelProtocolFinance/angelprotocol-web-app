@@ -2,8 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { roundDown } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import type { OnIncrement } from "../../common/Incrementers";
 import { usdOption } from "../../common/constants";
+import type { OnIncrement } from "../../common/incrementers";
 import type { FormValues as FV, Props } from "./types";
 
 export function useRhf(props: Props) {

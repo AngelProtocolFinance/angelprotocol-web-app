@@ -4,8 +4,8 @@ import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import type { Currency } from "types/components";
-import type { OnIncrement } from "../../common/Incrementers";
 import { usdOption } from "../../common/constants";
+import type { OnIncrement } from "../../common/incrementers";
 import type { FormValues as FV, Props } from "./types";
 
 export function useRhf(props: Props) {

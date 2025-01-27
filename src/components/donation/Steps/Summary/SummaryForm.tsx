@@ -10,8 +10,8 @@ import {
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { mixed, string } from "yup";
-import ContinueBtn from "../common/ContinueBtn";
 import { initDonorTitleOption } from "../common/constants";
+import ContinueBtn from "../common/continue-btn";
 import type { FormDonor, Honorary, Mode } from "../types";
 
 type FV = FormDonor & Honorary & { coverFee: boolean };

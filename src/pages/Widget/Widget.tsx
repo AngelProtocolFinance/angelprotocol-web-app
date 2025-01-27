@@ -1,5 +1,5 @@
 import { useLoaderData } from "@remix-run/react";
-import { fill } from "components/DonateMethods";
+import { fill } from "components/donate-methods";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
 import { useState } from "react";
