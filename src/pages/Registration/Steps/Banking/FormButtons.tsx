@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
-import type { FormButtonsProps } from "components/BankDetails/types";
 import LoadText from "components/LoadText";
+import type { FormButtonsProps } from "components/bank-details/types";
 import { steps } from "../../routes";
 
 export default function FormButtons(props: FormButtonsProps) {

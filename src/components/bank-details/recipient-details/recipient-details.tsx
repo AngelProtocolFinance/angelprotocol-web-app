@@ -4,7 +4,7 @@ import { Label } from "components/form";
 import { isEmpty } from "helpers";
 import { memo, useState } from "react";
 import type { IFormButtons, OnSubmit } from "../types";
-import RecipientDetailsForm from "./RecipientDetailsForm";
+import RecipientDetailsForm from "./recipient-details-form";
 import { useRequirements } from "./use-requirements";
 
 type Props = {

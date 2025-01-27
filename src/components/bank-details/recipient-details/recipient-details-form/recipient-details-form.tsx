@@ -16,8 +16,8 @@ import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";
 import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
 import { useRequirements } from "../use-requirements";
-import Form from "./Form";
 import { createRecipient } from "./create-recipient";
+import Form from "./form";
 
 type Props = {
   fields: Group[];

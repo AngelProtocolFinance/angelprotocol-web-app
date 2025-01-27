@@ -1,6 +1,6 @@
 import type { Update } from "@better-giving/registration/update";
 import { useFetcher } from "@remix-run/react";
-import type { OnSubmit } from "components/BankDetails";
+import type { OnSubmit } from "components/bank-details";
 
 export default function useSubmit() {
   const fetcher = useFetcher();

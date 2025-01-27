@@ -1,5 +1,5 @@
-import type { FormButtonsProps } from "components/BankDetails/types";
 import LoadText from "components/LoadText";
+import type { FormButtonsProps } from "components/bank-details/types";
 
 export default function FormButtons({
   disabled = false,
