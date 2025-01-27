@@ -4,8 +4,8 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { Link } from "@remix-run/react";
-import ExtLink from "components/ExtLink";
-import { DrawerIcon } from "components/Icon";
+import ExtLink from "components/ext-link";
+import { DrawerIcon } from "components/icon";
 import { appRoutes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
 

@@ -6,7 +6,7 @@ import pallav from "assets/people/pallav.webp";
 import shaun from "assets/people/shaun.webp";
 import tejaswini from "assets/people/tejaswini.webp";
 import tim from "assets/people/tim.webp";
-import ExtLink from "components/ExtLink";
+import ExtLink from "components/ext-link";
 import { Mail } from "lucide-react";
 
 const members: IMember[] = [

@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
-import Image from "components/Image";
-import { toText } from "components/RichText";
+import Image from "components/image";
+import { toText } from "components/rich-text";
 import { Target } from "components/target";
 import { appRoutes } from "constants/routes";
 
