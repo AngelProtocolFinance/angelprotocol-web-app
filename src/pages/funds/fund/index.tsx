@@ -30,7 +30,7 @@ export const meta: MetaFunction = ({ data, location: l }) => {
     title: `${d.name} - ${APP_NAME}`,
     description: toText(d.description).slice(0, 140),
     name: d.name,
-    image: d.logo || flying_character,
+    image: d.banner || flying_character,
     url: `${BASE_URL}/${l.pathname}`,
   });
 };
