@@ -4678,7 +4678,7 @@ __metadata:
     react-dropzone-esm: "npm:15.2.0"
     react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
-    remix-client-cache: "npm:1.1.0"
+    remix-client-cache: "npm:2.1.0"
     remix-utils: "npm:8.1.0"
     sonner: "npm:1.7.0"
     swr: "npm:2.2.5"
@@ -9651,14 +9651,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remix-client-cache@npm:1.1.0":
-  version: 1.1.0
-  resolution: "remix-client-cache@npm:1.1.0"
+"remix-client-cache@npm:2.1.0":
+  version: 2.1.0
+  resolution: "remix-client-cache@npm:2.1.0"
   peerDependencies:
-    "@remix-run/react": ^2.5.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  checksum: 10/425868f32c994bdebcc0f581e555fa20176fbae59f355ec8af0b950abd35f8d3292afdd83398f84a6ed624afd18eabcf9e5126943e5bd75a86a2a26a7253dc1d
+    react: ^18.2.0 || ^19.0.0
+    react-dom: ^18.2.0 || ^19.0.0
+    react-router: ^7.0.0
+  checksum: 10/290f4ef1d1b41ce65cc6ff7c630806231cd31e06af7756dcc2712812eaf1a31ae2817ceefae47f59a33788f2de3f6ff7f97fbd7ca52833c42cc8a93dffacb0ee
   languageName: node
   linkType: hard
 
