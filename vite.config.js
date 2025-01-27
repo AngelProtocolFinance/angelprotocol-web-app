@@ -133,6 +133,7 @@ const rmx = remix({
             r("program/:programId", "./pages/Profile/Body/Program/index.ts");
           });
         });
+        r("profile/:id", "./pages/Profile/profile-redirect.ts");
         r("funds", "./pages/Funds/Funds.tsx");
         r("funds/:fundId", "./pages/Funds/Fund/index.tsx");
         r("funds/:fundId/edit", "./pages/Funds/EditFund/index.ts");
