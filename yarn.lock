@@ -4659,7 +4659,7 @@ __metadata:
     framer-motion: "npm:11.2.10"
     fuse.js: "npm:7.0.0"
     gsap: "npm:3.12.5"
-    isbot: "npm:4.1.0"
+    isbot: "npm:5.1.21"
     jose: "npm:5.9.2"
     jsdom: "npm:24.1.0"
     ky: "npm:1.7.2"
@@ -7144,10 +7144,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isbot@npm:4.1.0":
-  version: 4.1.0
-  resolution: "isbot@npm:4.1.0"
-  checksum: 10/ee76a2c937e701dbc47043fe71ab887dd3e7a5ba7c61f12bb7053b5634c1e3d413325f1adee3bc615cb8b75b9a95e9c79f36c66f11809cc4108488cb8e21d1dc
+"isbot@npm:5.1.21":
+  version: 5.1.21
+  resolution: "isbot@npm:5.1.21"
+  checksum: 10/ef19941c34880f06e8d884091c5f500d6a2f942191c3629c605e595c9651f1ff320befe0b5721026ffcb9ba39ed9ee6c4fb77516ebd27b28e7398f4adba75ab5
   languageName: node
   linkType: hard
 
