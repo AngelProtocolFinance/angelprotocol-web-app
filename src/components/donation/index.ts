@@ -1,16 +1,16 @@
-export * from "./Steps";
+export * from "./steps";
 export type {
   DonationState,
   DonationRecipient,
   DetailedCurrency,
-} from "./Steps/types";
-export { Steps } from "./Steps";
-export { default as Share } from "./Steps/Share";
-export { StepsCarousel } from "./StepsCarousel";
-export { ProgramSelector } from "./Steps/common/program-selector";
+} from "./steps/types";
+export { Steps } from "./steps";
+export { default as Share } from "./steps/share";
+export { StepsCarousel } from "./steps-carousel";
+export { ProgramSelector } from "./steps/common/program-selector";
 export {
   DEFAULT_PROGRAM,
   initDetails,
   initTokenOption,
-} from "./Steps/common/constants";
-export { PayQr } from "./Steps/Submit/Crypto/PayQr";
+} from "./steps/common/constants";
+export { PayQr } from "./steps/submit/crypto/pay-qr";
