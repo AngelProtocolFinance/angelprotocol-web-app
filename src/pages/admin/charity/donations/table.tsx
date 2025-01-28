@@ -26,10 +26,10 @@ export default function Table({
   );
 
   return (
-    <table className="w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2">
+    <table className="w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l3">
       <TableSection
         type="thead"
-        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
+        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-gray-l3"
       >
         <Cells
           type="th"
@@ -115,7 +115,7 @@ export default function Table({
               <td
                 colSpan={19}
                 key="load-more-btn"
-                className="border-t border-blue-l2 rounded-b"
+                className="border-t border-gray-l3 rounded-b"
               >
                 <button
                   type="button"

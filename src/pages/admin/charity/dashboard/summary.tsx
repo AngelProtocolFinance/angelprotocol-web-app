@@ -129,7 +129,7 @@ function Balance({ classes = "", ...props }: IItem) {
 
   return (
     <div
-      className={`grid grid-cols-subgrid col-span-full gap-y-2 divide-y divide-gray-l4 ${classes}`}
+      className={`grid grid-cols-subgrid col-span-full gap-y-2 divide-y divide-gray-l3 ${classes}`}
     >
       <div className="grid grid-cols-subgrid items-center col-span-full">
         <p className="text-sm font-semibold mr-2">{props.title}</p>

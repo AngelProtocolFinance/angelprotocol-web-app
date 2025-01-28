@@ -47,7 +47,7 @@ export function Section2({ className = "" }) {
         enduring impact.
       </p>
 
-      <ul className="mt-4 @3xl:divide-x divide-gray-l4 grid @3xl:grid-cols-3 gap-y-16 @3xl:gap-y-0">
+      <ul className="mt-4 @3xl:divide-x divide-gray-l3 grid @3xl:grid-cols-3 gap-y-16 @3xl:gap-y-0">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}

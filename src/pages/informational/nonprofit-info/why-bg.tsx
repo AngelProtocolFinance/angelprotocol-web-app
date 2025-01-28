@@ -48,7 +48,7 @@ export default function WhyBG({ className = "" }) {
         A partner who understands your needs.
       </p>
 
-      <ul className="mt-4 @3xl:divide-x divide-gray-l4 grid @3xl:grid-cols-3 gap-y-16 @3xl:gap-y-0">
+      <ul className="mt-4 @3xl:divide-x divide-gray-l3 grid @3xl:grid-cols-3 gap-y-16 @3xl:gap-y-0">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}

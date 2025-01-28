@@ -113,7 +113,7 @@ export default function Table({
     <table
       className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l3`}
     >
-      <TableSection type="thead" rowClass="divide-x divide-gray-l4">
+      <TableSection type="thead" rowClass="divide-x divide-gray-l3">
         <Cells
           type="th"
           cellClass="px-3 py-2 bg-gray-l5 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
@@ -126,7 +126,7 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-gray-l4"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-gray-l3"
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {records

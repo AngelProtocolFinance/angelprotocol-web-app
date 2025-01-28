@@ -51,7 +51,7 @@ export function Feature1({ className = "" }) {
         long-term financial sustainability.
       </p>
 
-      <ul className="lg:divide-x divide-gray-l4 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
+      <ul className="lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}
