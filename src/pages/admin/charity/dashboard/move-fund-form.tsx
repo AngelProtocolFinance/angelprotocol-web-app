@@ -146,7 +146,7 @@ function Content(props: IMoveFundForm) {
     >
       <h4 className="mb-2">{props.title}</h4>
       <div className="grid grid-cols-[auto_auto_1fr] items-center mt-2 gap-x-2 gap-y-2">
-        <div className="grid grid-cols-subgrid col-span-full items-center mb-4 border-b border-gray-l4 pb-2">
+        <div className="grid grid-cols-subgrid col-span-full items-center mb-4 border-b border-gray-l3 pb-2">
           <p className="text-sm mr-2 text-gray">Balance</p>
           <p className="font-heading font-bold text-left">
             $ {humanize(props.balance)}
@@ -163,7 +163,7 @@ function Content(props: IMoveFundForm) {
                 isEditing={flow === props.type && props.effect === "override"}
               />
             ))}
-            <div className="grid grid-cols-subgrid col-span-full items-center border-t pt-2 mt-4 border-gray-l4">
+            <div className="grid grid-cols-subgrid col-span-full items-center border-t pt-2 mt-4 border-gray-l3">
               <p className="text-sm">Available</p>
               <p className="font-heading font-bold">
                 $ {humanize(available ?? 0)}

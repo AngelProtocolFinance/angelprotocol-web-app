@@ -66,7 +66,7 @@ export default function Stocks(props: StockCheckoutStep) {
       </a>
       <DonationTerms
         endowName={props.init.recipient.name}
-        classes="mt-5 border-t border-gray-l4 pt-4"
+        classes="mt-5 border-t border-gray-l3 pt-4"
       />
     </div>
   );

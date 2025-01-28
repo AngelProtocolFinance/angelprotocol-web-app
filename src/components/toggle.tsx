@@ -39,7 +39,7 @@ export const ControlledToggle = ({ children, ...props }: ControlledProps) => {
         disabled={props.disabled}
         checked={props.value}
         onChange={props.onChange}
-        className="border border-gray-l4 peer relative inline-flex h-8 w-14 items-center rounded-full transition-colors"
+        className="border border-gray-l3 peer relative inline-flex h-8 w-14 items-center rounded-full transition-colors"
       >
         <span
           className={`${

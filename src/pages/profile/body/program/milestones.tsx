@@ -36,7 +36,7 @@ function Milestone(m: TMilestone) {
   return (
     <div
       className={`pb-4 pt-4 first:pt-0 last:pb-0 border-l ${
-        isComplete ? "border-blue-d1" : "border-gray-l4"
+        isComplete ? "border-blue-d1" : "border-gray-l3"
       }`}
     >
       {m.media && (

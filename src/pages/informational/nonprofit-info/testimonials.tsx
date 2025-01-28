@@ -33,11 +33,11 @@ export default function Testimonials({ className = "" }) {
 
 const Testimonial = (props: TTestimonial) => {
   return (
-    <div className="grid @-lg:grid-cols-[auto_1fr] border border-gray-l4 rounded-3xl p-9 gap-x-8">
+    <div className="grid @-lg:grid-cols-[auto_1fr] border border-gray-l3 rounded-3xl p-9 gap-x-8">
       <img
         src={props.reviewer_org_logo}
         alt="organization logo"
-        className="size-24 object-contain object-center rounded-lg shadow-xl shadow-black/5 border border-gray-l4 mb-6 @lg:mb-0"
+        className="size-24 object-contain object-center rounded-lg shadow-xl shadow-black/5 border border-gray-l3 mb-6 @lg:mb-0"
       />
       <div>
         <p className="text-xl mb-9 text-gray">{props.content}</p>

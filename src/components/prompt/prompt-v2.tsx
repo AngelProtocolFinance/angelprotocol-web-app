@@ -29,11 +29,11 @@ export function PromptV2({
       onClose={close}
       classes="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
-      <div className="flex justify-end p-4 border-b border-gray-l4">
+      <div className="flex justify-end p-4 border-b border-gray-l3">
         <button
           type="button"
           onClick={close}
-          className="border border-gray-l4 p-2 rounded-md"
+          className="border border-gray-l3 p-2 rounded-md"
         >
           <X size={24} />
         </button>
@@ -43,7 +43,7 @@ export function PromptV2({
       <div className="px-6 pb-4 text-center text-gray dark:text-gray">
         {children}
       </div>
-      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-blue-l5 border-t border-gray-l4">
+      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-blue-l5 border-t border-gray-l3">
         <Link
           to=".."
           preventScrollReset

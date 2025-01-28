@@ -333,7 +333,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
       <ContentLoader className="h-12 mt-4 block group-has-[chariot-connect]:hidden" />
       <DonationTerms
         endowName={props.init.recipient.name}
-        classes="border-t border-gray-l4 mt-5 pt-4 "
+        classes="border-t border-gray-l3 mt-5 pt-4 "
       />
       {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </Summary>

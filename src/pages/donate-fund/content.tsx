@@ -41,7 +41,7 @@ export default function Content() {
           />
         </div>
         {/** small screen but space is still enough to render sidebar */}
-        <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
+        <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l3">
           {isClosed(fund.active, fund.expiration) ? (
             <Info classes="row-start-2 self-center bg-white rounded-lg h-80 content-center justify-items-center grid">
               This fundraiser is already closed and can't accept any more
@@ -58,7 +58,7 @@ export default function Content() {
                 progDonationsAllowed: false,
               }}
               config={{ methodIds: fund.settings.donateMethods }}
-              className="md:border border-gray-l4 rounded-lg row-start-2"
+              className="md:border border-gray-l3 rounded-lg row-start-2"
             />
           )}
         </div>

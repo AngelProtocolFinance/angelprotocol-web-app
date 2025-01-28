@@ -38,7 +38,7 @@ export default function Profile() {
         <div className="xl:container xl:mx-auto px-5 flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
           <Image
             src={data.logo || flying_character}
-            className="h-48 w-48 border border-gray-l4 rounded-full object-cover bg-white"
+            className="h-48 w-48 border border-gray-l3 rounded-full object-cover bg-white"
           />
         </div>
         <Outlet />

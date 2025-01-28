@@ -22,7 +22,7 @@ export function FlatFilter<T>(props: GroupProps<T>) {
               `${
                 selected
                   ? "border-blue-d1 text-blue-d4 bg-blue-l5"
-                  : "border-gray-l4"
+                  : "border-gray-l3"
               } border select-none rounded-full cursor-pointer capitalize text-xs pt-1 pb-[.3rem] px-4`
             }
           >

@@ -36,7 +36,7 @@ export default function Applications() {
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Dashboard
       </h1>
-      <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded-sm">
+      <div className="relative flex gap-x-3 items-center border border-gray-l3 w-full bg-white dark:bg-blue-d6 rounded-sm">
         <Search
           size={22}
           className="text-gray-d4 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"

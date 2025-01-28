@@ -30,7 +30,7 @@ export default function Crypto(props: CryptoSubmitStep) {
       }
       preSplitContent={
         <>
-          <dl className="text-gray py-3 flex items-center justify-between border-b border-gray-l4">
+          <dl className="text-gray py-3 flex items-center justify-between border-b border-gray-l3">
             <dt className="mr-auto">Currency</dt>
             <Image
               className="ml-auto object-cover h-4 w-4 rounded-full mr-1"

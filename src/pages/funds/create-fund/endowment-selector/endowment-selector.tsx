@@ -72,7 +72,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
 
         <Options
           searchText={searchText}
-          classes="absolute top-[calc(100%+10px)] inset-x-0 bg-white border border-gray-l4 z-10 max-h-40 scroller overflow-y-auto rounded-lg shadow-xl shadow-black/5"
+          classes="absolute top-[calc(100%+10px)] inset-x-0 bg-white border border-gray-l3 z-10 max-h-40 scroller overflow-y-auto rounded-lg shadow-xl shadow-black/5"
         />
       </Combobox>
       <p className="text-red text-xs empty:hidden mt-1">{props.error}</p>
@@ -91,7 +91,7 @@ interface ISelectedOption extends EndowOption {
 
 function SelectedOption({ onDeselect, ...props }: ISelectedOption) {
   return (
-    <div className="flex items-center px-3 gap-2 h-10 border border-gray-l4 rounded-sm font-semibold text-gray dark:text-gray">
+    <div className="flex items-center px-3 gap-2 h-10 border border-gray-l3 rounded-sm font-semibold text-gray dark:text-gray">
       <Image src={props.logo} className="w-8" />
       <span className="max-w-[200px] truncate">{props.name}</span>
       <button

@@ -63,13 +63,13 @@ function Content(props: Props) {
       {...getFormProps(form)}
     >
       <div className="relative">
-        <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
+        <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           {props.edit ? "Edit" : "Add"} video
         </p>
         <Link
           to=".."
           aria-disabled={nav.state !== "idle"}
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-gray-l2"
+          className="border border-gray-l3 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-gray-l2"
         >
           <X size={24} />
         </Link>
@@ -84,7 +84,7 @@ function Content(props: Props) {
         />
       </div>
 
-      <div className="mt-4 p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l4 dark:bg-blue-d7 border-t border-gray-l4">
+      <div className="mt-4 p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l4 dark:bg-blue-d7 border-t border-gray-l3">
         <Link to=".." className="btn-outline-filled text-sm px-8 py-2">
           Cancel
         </Link>

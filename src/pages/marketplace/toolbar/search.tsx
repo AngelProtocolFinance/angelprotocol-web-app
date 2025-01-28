@@ -17,7 +17,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} flex gap-2 items-center border border-gray-l4 rounded-lg relative`}
+      className={`${classes} flex gap-2 items-center border border-gray-l3 rounded-lg relative`}
     >
       <SearchIcon
         size={20}

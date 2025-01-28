@@ -53,13 +53,13 @@ function Content({ verdict }: Props) {
     >
       <input type="hidden" value={verdict} name="type" />
       <div className="relative w-full">
-        <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
+        <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           Banking application
         </p>
         <Link
           to=".."
           aria-disabled={fetcher.state !== "idle"}
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
+          className="border border-gray-l3 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
         >
           <X className="text-lg sm:text-2xl" />
         </Link>
@@ -104,7 +104,7 @@ function Content({ verdict }: Props) {
         </div>
       )}
 
-      <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l4">
+      <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3">
         <Link
           replace
           preventScrollReset

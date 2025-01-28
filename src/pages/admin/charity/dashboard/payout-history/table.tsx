@@ -111,7 +111,7 @@ export default function Table({
 }: TableProps) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l4`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l3`}
     >
       <TableSection type="thead" rowClass="divide-x divide-gray-l4">
         <Cells
@@ -136,7 +136,7 @@ export default function Table({
               <Cells
                 key={row.date}
                 type="td"
-                cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
+                cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${
                   hasMore ? "" : "first:rounded-bl last:rounded-br"
                 }`}
               >
@@ -152,7 +152,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-gray-l4 rounded-b"
+                className="border-t border-gray-l3 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}

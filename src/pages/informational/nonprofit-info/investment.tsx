@@ -46,7 +46,7 @@ export default function WhyBG({ className = "" }) {
       <div className="grid @3xl:grid-cols-2 items-center mb-14 p-3 rounded-lg">
         <Image src={sectionImg} width={320} className="justify-self-center" />
         <div className="">
-          <p className="border-b border-gray-l4 pb-2 text-2xl mb-4 mt-4 @3xl:mt-0 font-medium text-center @3xl:text-left">
+          <p className="border-b border-gray-l3 pb-2 text-2xl mb-4 mt-4 @3xl:mt-0 font-medium text-center @3xl:text-left">
             Investment Philosophy
           </p>
           <ul className="space-y-7">

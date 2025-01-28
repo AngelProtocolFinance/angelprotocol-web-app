@@ -15,8 +15,8 @@ export function Fundraisers({ classes = "" }: Props) {
   if (funds.length === 0) return null;
 
   return (
-    <div className={`${classes} p-8 border border-gray-l4 rounded-sm`}>
-      <h3 className="mb-4 border-b border-gray-l4 pb-2">Fundraisers</h3>
+    <div className={`${classes} p-8 border border-gray-l3 rounded-sm`}>
+      <h3 className="mb-4 border-b border-gray-l3 pb-2">Fundraisers</h3>
       <div className="grid gap-y-8">
         {funds.map((f) => (
           <Fund key={f.id} {...f} />

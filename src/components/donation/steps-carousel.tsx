@@ -68,7 +68,7 @@ export function StepsCarousel({
             <div className="flex-[0_0_100%]" key={idx}>
               <Image
                 src={screenshot}
-                className="rounded-xl border border-gray-l4 overflow-clip"
+                className="rounded-xl border border-gray-l3 overflow-clip"
                 alt={`Step ${idx + 1}`}
               />
             </div>

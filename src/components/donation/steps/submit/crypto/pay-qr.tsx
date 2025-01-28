@@ -30,7 +30,7 @@ export function PayQr({ classes = "", ...props }: Props) {
         text={props.recipient}
         classes={{
           container:
-            "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l4 shadow-md shadow-black/5",
+            "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l3 shadow-md shadow-black/5",
           icon: "size-5",
         }}
       >
@@ -53,7 +53,7 @@ function Memo({ val, classes = "" }: IMemo) {
         text={val}
         classes={{
           container:
-            "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l4 shadow-md shadow-black/5",
+            "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l3 shadow-md shadow-black/5",
           icon: "size-5",
         }}
       >

@@ -37,7 +37,7 @@ export function ProgramSelector({
       {program.value && (
         <div className="">
           <p className="text-gray mb-1">Program</p>
-          <p className="justify-between border border-gray-l4 rounded-lg p-3.5 flex items-center">
+          <p className="justify-between border border-gray-l3 rounded-lg p-3.5 flex items-center">
             <span>{program.label}</span>
             <button
               onClick={() => onChange({ label: "", value: "" })}
@@ -62,7 +62,7 @@ export function ProgramSelector({
         <ListboxButton
           id="select-program"
           as="button"
-          className="flex items-center justify-between border border-gray-l4 py-3.5 pl-5 pr-2 rounded-lg focus:ring-2 focus:ring-blue-d1 ring-offset-1"
+          className="flex items-center justify-between border border-gray-l3 py-3.5 pl-5 pr-2 rounded-lg focus:ring-2 focus:ring-blue-d1 ring-offset-1"
         >
           {({ open }) => (
             <>
@@ -94,7 +94,7 @@ function Options({ endowId }: { endowId: number }) {
   return (
     <ListboxOptions
       anchor={{ to: "bottom", gap: 8 }}
-      className="bg-white w-[var(--button-width)] border border-gray-l4 px-5 py-3.5 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
+      className="bg-white w-[var(--button-width)] border border-gray-l3 px-5 py-3.5 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
     >
       {data.map((o) => (
         <ListboxOption

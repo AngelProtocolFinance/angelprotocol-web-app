@@ -21,7 +21,7 @@ export default function Card({
     <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none grid grid-rows-subgrid row-span-4">
       <NavLink
         to={`${appRoutes.funds}/${id}`}
-        className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
+        className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l3 hover:border-blue-d1"
       >
         <div className="aspect-4/1 w-full relative">
           <Image

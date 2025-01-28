@@ -20,7 +20,7 @@ export default function Funds() {
   return (
     <div className="grid">
       <div className="">
-        <h3 className="text-3xl border-b border-gray-l4 pb-2">Fundraisers</h3>
+        <h3 className="text-3xl border-b border-gray-l3 pb-2">Fundraisers</h3>
         <RadioGroup
           value={creatorType}
           onChange={setCreatorType}

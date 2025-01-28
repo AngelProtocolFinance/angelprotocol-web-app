@@ -17,7 +17,7 @@ export default function Sidebar({
 }: Props) {
   return (
     <div
-      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-gray-l4 ${className}`}
+      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-gray-l3 ${className}`}
     >
       {sidebarHeader}
       <div className="grid grid-cols-[auto_1fr] py-3 gap-x-2">

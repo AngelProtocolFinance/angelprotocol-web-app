@@ -57,7 +57,7 @@ export function Summary({ classes = "", ...props }: Props) {
     return null;
 
   return (
-    <div className={`${classes} p-4 rounded-sm border border-gray-l4`}>
+    <div className={`${classes} p-4 rounded-sm border border-gray-l3`}>
       <h4 className="mb-6 flex items-center gap-2">
         <span>Projected Month End Balances</span>
         <Tooltip

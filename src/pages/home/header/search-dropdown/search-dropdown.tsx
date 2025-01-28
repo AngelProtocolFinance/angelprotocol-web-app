@@ -31,7 +31,7 @@ export default function SearchDropdown({
             {Object.entries(categories).map(([, v]) => (
               <NavLink
                 key={v.name}
-                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
+                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
                   pathname: appRoutes.marketplace,
                   search: new URLSearchParams({
@@ -78,7 +78,7 @@ function SearchResult(props: ISearchResult) {
         <Link
           to={`${appRoutes.marketplace}/${endow.id}`}
           key={endow.id}
-          className="flex items-center gap-4 border border-gray-l4 hover:bg-blue-l4 pr-6 rounded-full overflow-clip h-10"
+          className="flex items-center gap-4 border border-gray-l3 hover:bg-blue-l4 pr-6 rounded-full overflow-clip h-10"
         >
           {endow.card_img ? (
             <Image

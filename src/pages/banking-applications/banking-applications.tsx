@@ -59,7 +59,7 @@ export default function BankingApplications() {
             isLoading={state === "loading"}
           />
         ) : (
-          <Info classes="pt-4 border-t border-gray-l4">
+          <Info classes="pt-4 border-t border-gray-l3">
             No applications found
           </Info>
         )}

@@ -45,7 +45,7 @@ export default function Summary({
       {props.preSplitContent}
 
       <dl
-        className={`text-gray grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 divide-y divide-gray-l4 ${splitClass}`}
+        className={`text-gray grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l3 divide-y divide-gray-l4 ${splitClass}`}
       >
         {props.program && props.program.value && (
           <p className="text-gray col-span-full py-2 text-sm">

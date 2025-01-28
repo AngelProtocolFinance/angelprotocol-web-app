@@ -29,7 +29,7 @@ type Props = {
   classes?: string;
 };
 const container =
-  "w-56 border border-gray-l4 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-hidden";
+  "w-56 border border-gray-l3 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-hidden";
 export default function TokenOptions({ onChange, token }: Props) {
   return (
     <PopoverPanel
@@ -103,7 +103,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         }
       }}
     >
-      <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded-sm mb-1 border border-gray-l4">
+      <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded-sm mb-1 border border-gray-l3">
         <ComboboxInput
           value={searchText}
           placeholder="Search..."

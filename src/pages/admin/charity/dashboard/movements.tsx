@@ -48,8 +48,8 @@ export function Movements({ classes = "", ...props }: Props) {
   if (movs.length === 0) return null;
 
   return (
-    <div className={`p-4 grid rounded-sm border border-gray-l4 ${classes}`}>
-      <h4 className="grid border-b border-gray-l4 w-full pb-2">
+    <div className={`p-4 grid rounded-sm border border-gray-l3 ${classes}`}>
+      <h4 className="grid border-b border-gray-l3 w-full pb-2">
         Pending Transactions
       </h4>
       <div className="grid grid-cols-[auto_auto_auto_auto_auto_1fr] mt-4 gap-y-2">

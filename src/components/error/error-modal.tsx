@@ -21,7 +21,7 @@ export function ErrorModal() {
       <div className="px-6 pb-4 text-center text-gray mt-4">
         <DefaultFallback />
       </div>
-      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-blue-l5 border-t border-gray-l4">
+      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-blue-l5 border-t border-gray-l3">
         <button
           onClick={() => window.location.reload()}
           type="button"

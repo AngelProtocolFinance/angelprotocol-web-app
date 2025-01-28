@@ -16,7 +16,7 @@ export default function Row(
   return (
     <Cells
       type="td"
-      cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${props.classes}`}
+      cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${props.classes}`}
     >
       <span className="text-sm">
         {new Date(props.date).toLocaleDateString()}

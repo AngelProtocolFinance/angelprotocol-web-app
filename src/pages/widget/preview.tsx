@@ -58,7 +58,7 @@ export default function Preview({ classes = "", config, endow }: Props) {
       <Steps
         key={JSON.stringify(initState)}
         init={initState}
-        className="my-5 @md/preview:w-3/4 border border-gray-l4"
+        className="my-5 @md/preview:w-3/4 border border-gray-l3"
       />
     </Container>
   );

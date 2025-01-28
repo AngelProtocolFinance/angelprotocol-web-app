@@ -35,7 +35,7 @@ export function AllocationSlider({
 
   return (
     <div
-      className={`${classes} grid gap-y-4 border border-gray-l4/80 p-4 rounded-lg shadow-inner`}
+      className={`${classes} grid gap-y-4 border border-gray-l3/80 p-4 rounded-lg shadow-inner`}
     >
       {/** percentages */}
       <div className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2">
@@ -73,7 +73,7 @@ export function AllocationSlider({
           <Slider.Range className="absolute bg-[#F5C828] group-aria-disabled/slider:bg-[#bdcc9d] rounded-full h-full" />
         </Slider.Track>
         <Slider.Thumb className="block size-5 rounded-full bg-gray-d1 shadow-md  group-aria-disabled/slider:bg-gray" />
-        <Slider.Thumb className="block size-5 rounded-full bg-white shadow-md border border-gray-l4 group-aria-disabled/slider:bg-gray" />
+        <Slider.Thumb className="block size-5 rounded-full bg-white shadow-md border border-gray-l3 group-aria-disabled/slider:bg-gray" />
       </Slider.Root>
     </div>
   );

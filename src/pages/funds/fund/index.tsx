@@ -116,7 +116,7 @@ export default function Fund() {
               }}
               classes={{
                 field: "",
-                container: "mt-4 pt-4 border-t border-gray-l4",
+                container: "mt-4 pt-4 border-t border-gray-l3",
               }}
               readOnly
             />
