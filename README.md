@@ -4,20 +4,20 @@
 
 ### Requirements
 
-- `Node.js` (18.x) - https://github.com/nvm-sh/nvm#installing-and-updating
-- `yarn` (v1.22.x) - https://yarnpkg.com/getting-started/install/
+- `Node.js` (20.x) - https://nodejs.org/en
+- `pnpm` (v10) - https://pnpm.io/
 
 We recommend using a version manager like `nvm`. Assuming you are using nvm, you can install and use Node v18 with the following two commands:
 
 ```shell
-nvm install v18
-nvm use v18
+nvm install v20
+nvm use v20
 ```
 
-We use `yarn` as a package manager. After installing yarn, simply run the package installer:
+We use `pnpm` as a package manager. After installing yarn, simply run the package installer:
 
 ```shell
-yarn install
+pnpm install
 ```
 
 Lastly, we have provided an example `.env` file as `.env.example`.
@@ -30,5 +30,5 @@ cp .env.example .env
 To run the web app server locally, simply execute:
 
 ```shell
-yarn start
+pnpm start
 ```
