@@ -45,7 +45,7 @@ export default function DonationFormInfo({ className = "" }) {
       <h2 className="col-span-full text-center text-3xl @3xl:text-4.5xl mb-4">
         Raise more. Save more. Do less.
       </h2>
-      <p className="col-span-full mb-12 text-center text-xl text-navy">
+      <p className="col-span-full mb-12 text-center text-xl text-gray-d1">
         100% free. No setup costs, no recurring charges, no platform fees.
       </p>
 
@@ -76,10 +76,10 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         height={props.image.height}
       />
-      <h6 className="text-lg font-medium @6xl:text-xl text-navy-d4">
+      <h6 className="text-lg font-medium @6xl:text-xl text-gray-d4">
         {props.title}
       </h6>
-      <p className="text-lg @6xl:text-xl text-navy-l3">{props.description}</p>
+      <p className="text-lg @6xl:text-xl text-gray">{props.description}</p>
     </li>
   );
 }

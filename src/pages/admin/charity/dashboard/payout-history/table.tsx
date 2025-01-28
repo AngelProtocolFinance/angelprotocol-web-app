@@ -41,7 +41,7 @@ const txs: {
     icon: (
       <Tooltip
         tip={
-          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+          <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
             <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
             Grant processing threshold and would be processed in the next cycle
           </Content>
@@ -74,7 +74,7 @@ const txs: {
     icon: (
       <Tooltip
         tip={
-          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+          <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
             <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
             Grant processing threshold and is credited back to Savings
           </Content>
@@ -89,7 +89,7 @@ const txs: {
     icon: (
       <Tooltip
         tip={
-          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+          <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
             <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
             Grant processing threshold and is credited back to Investments
           </Content>

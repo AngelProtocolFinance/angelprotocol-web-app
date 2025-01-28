@@ -27,7 +27,7 @@ export function PromptV2({
     <Modal
       open={open ?? true}
       onClose={close}
-      classes="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
+      classes="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="flex justify-end p-4 border-b border-gray-l4">
         <button
@@ -40,7 +40,7 @@ export function PromptV2({
       </div>
 
       <PromptIcon type={type} classes="mb-6 sm:mb-8 mt-4 sm:mt-12" />
-      <div className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l2">
+      <div className="px-6 pb-4 text-center text-gray dark:text-gray">
         {children}
       </div>
       <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-blue-l5 border-t border-gray-l4">

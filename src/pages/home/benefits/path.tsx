@@ -18,10 +18,10 @@ const Path = () => {
       <h2 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
         Bridge To Better
       </h2>
-      <h3 className="text-3xl md:text-4.5xl capitalize text-navy-d4 leading-snug text-center text-balance mb-11">
+      <h3 className="text-3xl md:text-4.5xl capitalize text-gray-d4 leading-snug text-center text-balance mb-11">
         How Better Giving Powers Your Mission
       </h3>
-      <p className="text-lg md:text-2xl font-medium text-navy-l1/60 text-center mb-11">
+      <p className="text-lg md:text-2xl font-medium text-gray/60 text-center mb-11">
         Your All-in-One Solution for Sustainable Fundraising and Financial
         Growth
       </p>

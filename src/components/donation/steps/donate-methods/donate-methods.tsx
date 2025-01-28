@@ -44,8 +44,8 @@ const allMethodIds: DonateMethodId[] = ["stripe", "daf", "stocks", "crypto"];
 const tabClasses = (selected: boolean) =>
   `${
     selected
-      ? "font-medium bg-(--accent-secondary) text-navy-d4"
-      : "border border-gray-l4 @xl/steps:border-none text-navy-l1"
+      ? "font-medium bg-(--accent-secondary) text-gray-d4"
+      : "border border-gray-l4 @xl/steps:border-none text-gray"
   }  flex items-center gap-2 p-2 @xl/steps:px-3 @xl/steps:py-[1.15rem] @xl/steps:grid @xl/steps:grid-cols-subgrid @xl/steps:col-span-2 focus:outline-hidden @xl/steps:w-full rounded @xl/steps:rounded-none`;
 
 export default function DonateMethods(props: FormStep) {

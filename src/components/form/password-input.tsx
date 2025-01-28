@@ -15,18 +15,18 @@ export const PasswordInput = forwardRef<El, Props>((props, ref) => {
   return (
     <div>
       <div className={`grid grid-cols-[auto_1fr_auto] px-5 ${fieldClasses}`}>
-        <Lock className="text-navy-l3" size={20} />
+        <Lock className="text-gray" size={20} />
         <input
           ref={ref}
           {...rest}
           type={isPasswordShown ? "text" : "password"}
           autoComplete="current-password"
-          className="w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-hidden bg-transparent"
+          className="w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-gray max-sm:placeholder:text-sm focus:outline-hidden bg-transparent"
           aria-invalid={!!error}
         />
         <button
           type="button"
-          className="text-navy-l3 hover:text-navy-l2 active:text-navy rounded-sm focus-visible:outline focus-visible:outline-2"
+          className="text-gray hover:text-gray active:text-gray-d1 rounded-sm focus-visible:outline focus-visible:outline-2"
           onClick={() => setIsPasswordShown((prev) => !prev)}
         >
           {isPasswordShown ? <EyeOff size={20} /> : <Eye size={20} />}

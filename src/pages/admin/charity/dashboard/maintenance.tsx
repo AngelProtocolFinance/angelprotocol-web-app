@@ -43,7 +43,7 @@ export default function Component() {
     <div className="@container w-full max-w-4xl grid content-start">
       <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       <div className="flex items-center gap-2">
-        <p className="mt-4 text-navy-l1">
+        <p className="mt-4 text-gray">
           Your new dashboard experience is underway
         </p>
         <img
@@ -52,10 +52,10 @@ export default function Component() {
           alt="Laira jumping"
         />
       </div>
-      <p className="text-navy-l1 mt-2">
+      <p className="text-gray mt-2">
         Please bear with us while we bring final pieces together 🙏
       </p>
-      <p className="text-navy-l2 text-sm mt-4">
+      <p className="text-gray text-sm mt-4">
         Changes are expected to be live in{" "}
         <span className="text-md font-bold">{formatTime(time)}</span>
       </p>

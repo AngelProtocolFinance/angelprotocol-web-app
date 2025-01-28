@@ -36,7 +36,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
                 { replace: true, preventScrollReset: true }
               )
             }
-            className="text-navy-l1 dark:text-navy-l5 text-sm mr-4"
+            className="text-gray dark:text-gray-l2 text-sm mr-4"
           >
             Clear Filters
           </button>

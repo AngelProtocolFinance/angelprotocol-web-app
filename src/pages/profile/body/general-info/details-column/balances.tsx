@@ -18,7 +18,7 @@ function Balance(props: { title: string; amount: number }) {
       <p className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </p>
-      <p className="font-normal text-lg text-navy-l1 dark:text-navy-l2">
+      <p className="font-normal text-lg text-gray dark:text-gray">
         ${humanize(props.amount)}
       </p>
     </div>

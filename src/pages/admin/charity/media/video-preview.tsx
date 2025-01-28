@@ -11,7 +11,7 @@ export default function VideoPreview(props: IMedia) {
     del.state === "submitting" || feat.state === "submitting";
 
   return (
-    <div className="text-navy-d4" key={props.id}>
+    <div className="text-gray-d4" key={props.id}>
       <div className="flex items-center justify-end mb-1">
         <CRUDBtn
           id={props.id}

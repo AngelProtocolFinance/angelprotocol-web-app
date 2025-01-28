@@ -62,14 +62,14 @@ export function Summary({ classes = "", ...props }: Props) {
         <span>Projected Month End Balances</span>
         <Tooltip
           tip={
-            <Content className="bg-navy-d4 text-gray-l2 text-xs p-2 rounded-sm">
+            <Content className="bg-gray-d4 text-gray-l2 text-xs p-2 rounded-sm">
               This value does not reflect any potential growth from savings and
               investments
               <Arrow />
             </Content>
           }
         >
-          <CircleAlert className="text-navy-l1" size={15} />
+          <CircleAlert className="text-gray" size={15} />
         </Tooltip>
       </h4>
       <div className="grid grid-cols-[auto_auto_auto_1fr]">
@@ -84,7 +84,7 @@ export function Summary({ classes = "", ...props }: Props) {
             return (
               <Tooltip
                 tip={
-                  <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
+                  <Content className="max-w-xs text-sm bg-gray-d4 text-gray-l4 p-3 rounded-lg">
                     Total Grant is less than minimum processing amount of $
                     {MIN_GRANT_PROCESSING} and would be carried over to the next
                     month.
@@ -168,11 +168,11 @@ function Balance({ classes = "", ...props }: IItem) {
                   ) : (
                     <ArrowLeft
                       size={14}
-                      className="text-navy-l1 justify-self-end mr-2"
+                      className="text-gray justify-self-end mr-2"
                     />
                   )}
 
-                  <span className="text-sm text-navy-l1">{toOrFrom}</span>
+                  <span className="text-sm text-gray">{toOrFrom}</span>
                 </p>
               )}
               <p className="font-heading">$ {humanize(Math.abs(value))}</p>

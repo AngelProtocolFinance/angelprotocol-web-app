@@ -54,7 +54,7 @@ export default function Card({
             <span className="inline">{name}</span>
           </h3>
 
-          <p className="peer text-navy-l1 dark:text-navy-l2 text-sm line-clamp-3 mb-4">
+          <p className="peer text-gray dark:text-gray text-sm line-clamp-3 mb-4">
             {toText(description)}
           </p>
 

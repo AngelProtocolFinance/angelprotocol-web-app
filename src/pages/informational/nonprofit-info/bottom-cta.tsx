@@ -22,7 +22,7 @@ export function BottomCta({ className = "" }) {
         img={{ src: laira.negotiating, width: 140 }}
       />
       <CtaCard
-        className="from-navy"
+        className="from-gray-d1"
         title="Want to learn more first?"
         to={{ href: BOOK_A_DEMO, title: "Book a demo" }}
         img={{ src: laira.laptop, width: 70 }}

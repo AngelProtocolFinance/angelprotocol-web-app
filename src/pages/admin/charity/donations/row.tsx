@@ -47,7 +47,7 @@ export default function Row(
         <ExtLink
           //default to ethereum for staging
           href={getTxUrl(props.viaId, props.id)}
-          className="text-center text-blue-d1 hover:text-navy uppercase text-sm"
+          className="text-center text-blue-d1 hover:text-gray-d1 uppercase text-sm"
         >
           {maskAddress(props.id)}
         </ExtLink>

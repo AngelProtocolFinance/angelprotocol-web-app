@@ -91,7 +91,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
     </>
   );
 
-  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-navy-l2`;
+  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-gray`;
 
   if (isDesktop) {
     return <div className={classNames}>{children}</div>;
@@ -130,12 +130,12 @@ function Step({
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
-            isDone ? "bg-blue-d1" : "bg-gray-l3 dark:bg-navy"
+            isDone ? "bg-blue-d1" : "bg-gray-l3 dark:bg-gray-d1"
           } rounded-full transform -translate-x-1/2`}
         />
         <span
           className={`text-sm ${
-            isCurr ? "text-blue-d1" : "text-navy-l1 dark:text-navy-l2"
+            isCurr ? "text-blue-d1" : "text-gray dark:text-gray"
           }`}
         >
           {children}

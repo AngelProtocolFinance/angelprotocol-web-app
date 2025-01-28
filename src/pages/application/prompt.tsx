@@ -49,7 +49,7 @@ function Content() {
     <DialogPanel
       as="form"
       onSubmit={methods.handleSubmit(onSubmit)}
-      className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
+      className="fixed-center z-10 grid content-start justify-items-center text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
@@ -60,7 +60,7 @@ function Content() {
           preventScrollReset
           replace
           to=".."
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 dark:disabled:border-navy-d3"
+          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
         >
           <X className="text-lg sm:text-2xl" />
         </Link>
@@ -72,7 +72,7 @@ function Content() {
         <div>Nonprofit</div>
       </h3>
 
-      <p className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5 mt-4">
+      <p className="px-6 pb-4 text-center text-gray dark:text-gray-l2 mt-4">
         <span className="block">
           You are about to {verdict} the Application for
         </span>
@@ -80,13 +80,13 @@ function Content() {
       </p>
 
       {verdict === "approved" ? (
-        <div className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5">
+        <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2">
           This will immediately payout all pending funds to newly linked bank
           account and is irreversible.
         </div>
       ) : null}
 
-      <div className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5 font-bold">
+      <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2 font-bold">
         Please ensure you have confirmed all submitted details and supporting
         documentation before proceeding!
       </div>

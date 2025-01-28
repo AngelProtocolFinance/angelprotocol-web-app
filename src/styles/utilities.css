@@ -11,7 +11,7 @@
     @apply bg-(--accent-primary);
   }
   &::-webkit-scrollbar-track {
-    @apply bg-gray-l3 dark:bg-navy;
+    @apply bg-gray-l3 dark:bg-gray-d1;
   }
 }
 
@@ -23,12 +23,12 @@
   @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
 }
 @utility field-input {
-  @apply w-full font-heading rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3;
+  @apply w-full font-heading rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3;
   &:disabled {
-    @apply pointer-events-none bg-gray-l5 text-navy-l1;
+    @apply pointer-events-none bg-gray-l5 text-gray;
   }
   &[aria-disabled="true"] {
-    @apply pointer-events-none bg-gray-l5 text-navy-l1;
+    @apply pointer-events-none bg-gray-l5 text-gray;
   }
   &:enabled:focus {
     @apply outline-hidden ring-2 ring-offset-1 ring-blue-d1;
@@ -44,13 +44,13 @@
     @apply after:content-['*'] after:text-red;
   }
   &[data-required="false"] {
-    @apply after:content-['(optional)'] after:text-navy-l1  dark:after:text-navy-l2 after:font-normal after:text-[0.8em];
+    @apply after:content-['(optional)'] after:text-gray  dark:after:text-gray after:font-normal after:text-[0.8em];
   }
 }
 @utility radio {
   @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   & > input {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-blue-d1 disabled:checked:before:bg-gray-l2 dark:disabled:checked:before:bg-navy focus:outline-hidden focus:ring-1 focus:ring-blue-d1;
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-blue-d1 disabled:checked:before:bg-gray-l2 dark:disabled:checked:before:bg-gray-d1 focus:outline-hidden focus:ring-1 focus:ring-blue-d1;
   }
 }
 @utility checkbox {
@@ -59,7 +59,7 @@
 
 /** Layer 2 components */
 @utility btn-outline {
-  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 dark:aria-disabled:bg-navy dark:disabled:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 dark:enabled:hover:border-blue-d2;
+  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 dark:aria-disabled:bg-gray-d1 dark:disabled:bg-gray-d1 border border-gray-l3 dark:border-gray-d1 enabled:hover:border-gray-l2 dark:enabled:hover:border-blue-d2;
   &.pending {
     @apply bg-gray-l4 pointer-events-none;
   }
@@ -98,10 +98,10 @@
     @apply ring-2 ring-offset-1 ring-blue-d1;
   }
   &:has(:disabled) {
-    @apply text-navy-l1 bg-gray-l5 pointer-events-none;
+    @apply text-gray bg-gray-l5 pointer-events-none;
   }
   &:has([aria-disabled="true"]) {
-    @apply text-navy-l1 bg-gray-l5 pointer-events-none;
+    @apply text-gray bg-gray-l5 pointer-events-none;
   }
   &:has([data-error]) {
     @apply border-red;
@@ -155,7 +155,7 @@
   @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 disabled:bg-gray-l4 aria-disabled:bg-gray-l4;
 }
 @utility btn-outline-gray {
-  @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;
+  @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-gray-d3 dark:enabled:hover:bg-gray-d1 dark:active:bg-gray-d4;
 }
 @utility btn-gift {
   @apply text-base sm:text-sm;

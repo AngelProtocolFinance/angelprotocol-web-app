@@ -12,11 +12,11 @@ export default function FiscalSponsorship({ className = "" }) {
         <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center @6xl:text-left">
           Borderless Donations
         </h4>
-        <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
+        <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-gray-d4">
           Globally Inclusive: We support all nonprofits and NGOs, regardless of
           their size or location
         </h1>
-        <p className="mb-10 text-navy-l1 text-lg @6xl:text-xl text-center @6xl:text-left">
+        <p className="mb-10 text-gray text-lg @6xl:text-xl text-center @6xl:text-left">
           At Better Giving, we recognize that many grassroots organizations,
           especially those outside the US, struggle to access IRS tax-exempt
           status and benefit from US donor support. Our fiscal sponsorship

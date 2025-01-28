@@ -30,7 +30,7 @@ export default function VideoEditor() {
       onClose={() =>
         navigate("..", { preventScrollReset: true, replace: true })
       }
-      classes="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
+      classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <Content
         edit={
@@ -69,7 +69,7 @@ function Content(props: Props) {
         <Link
           to=".."
           aria-disabled={nav.state !== "idle"}
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-navy-l5"
+          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-gray-l2"
         >
           <X size={24} />
         </Link>

@@ -49,7 +49,7 @@ function Content({ verdict }: Props) {
     <fetcher.Form
       {...getFormProps(form)}
       method="POST"
-      className="grid content-start justify-items-center text-navy-d4"
+      className="grid content-start justify-items-center text-gray-d4"
     >
       <input type="hidden" value={verdict} name="type" />
       <div className="relative w-full">
@@ -59,17 +59,17 @@ function Content({ verdict }: Props) {
         <Link
           to=".."
           aria-disabled={fetcher.state !== "idle"}
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 dark:disabled:border-navy-d3"
+          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
         >
           <X className="text-lg sm:text-2xl" />
         </Link>
       </div>
-      <p className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5 mt-4 font-semibold">
+      <p className="px-6 pb-4 text-center text-gray dark:text-gray-l2 mt-4 font-semibold">
         You are about to {verdict} this banking application.
       </p>
 
       {verdict === "approved" ? (
-        <div className="px-6 pb-4 text-center text-navy-l1 dark:text-navy-l5">
+        <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2">
           This will immediately payout all pending funds to newly linked bank
           account and is irreversible.
         </div>

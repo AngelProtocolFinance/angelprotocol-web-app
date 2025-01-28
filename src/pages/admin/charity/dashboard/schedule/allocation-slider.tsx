@@ -41,7 +41,7 @@ export function AllocationSlider({
       <div className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2">
         <Row
           title="Grant"
-          icon={<HandCoins size={20} className="text-navy-l1" />}
+          icon={<HandCoins size={20} className="text-gray" />}
           pct={value.cash}
         />
         <Row

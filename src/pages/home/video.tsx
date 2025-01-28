@@ -60,11 +60,11 @@ const Video = () => {
         />
       </div>
       <h2
-        className={`${styles.heading} justify-self-center text-navy-d4 text-[32px] md:text-[42px] text-center mb-5 -mt-12 sm:-mt-16`}
+        className={`${styles.heading} justify-self-center text-gray-d4 text-[32px] md:text-[42px] text-center mb-5 -mt-12 sm:-mt-16`}
       >
         The Better.Giving Alliance
       </h2>
-      <p className="z-10 text-[20px] md:text-[28px] text-navy-l1/80 font-medium text-center max-w-2xl mx-auto text-pretty mb-14">
+      <p className="z-10 text-[20px] md:text-[28px] text-gray/80 font-medium text-center max-w-2xl mx-auto text-pretty mb-14">
         Join a global alliance of partners united around a giving pledge to
         create lasting positive change{" "}
       </p>
@@ -74,7 +74,7 @@ const Video = () => {
           <img height={600} src={videobanner} alt="donation tally" />
           <TextSurroundedHeart classes="max-xl:hidden absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2" />
         </div>
-        <p className="mt-20 md:text-2xl font-medium text-navy-l1/80 text-center">
+        <p className="mt-20 md:text-2xl font-medium text-gray/80 text-center">
           We connect you with the causes you care about most, with pioneering
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.

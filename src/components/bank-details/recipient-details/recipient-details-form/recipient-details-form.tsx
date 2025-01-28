@@ -144,7 +144,7 @@ export default function RecipientDetailsForm({
           setPrompt(prmpt);
         }
       })}
-      className="grid gap-5 text-navy-d4"
+      className="grid gap-5 text-gray-d4"
     >
       {fields.map((f) => {
         const labelRequired = f.required ? true : undefined;

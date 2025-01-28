@@ -109,7 +109,7 @@ export function Features({ classes = "" }) {
         Features
       </h4>
       <div className="row-span-2 col-span-full @4xl:col-span-2 pb-8">
-        <h3 className="text-2xl @4xl:text-3xl text-navy-d3 mb-4 text-center @4xl:text-left">
+        <h3 className="text-2xl @4xl:text-3xl text-gray-d3 mb-4 text-center @4xl:text-left">
           Smarter Tools for Seamless Fundraising
         </h3>
         <p className="text-lg text-center @4xl:text-left">
@@ -131,7 +131,7 @@ function Feature(props: IFeature) {
         {props.icon}
         <p className="font-bold text-sm font-heading">{props.title}</p>
       </div>
-      <p className="text-navy">{props.body}</p>
+      <p className="text-gray-d1">{props.body}</p>
     </div>
   );
 }

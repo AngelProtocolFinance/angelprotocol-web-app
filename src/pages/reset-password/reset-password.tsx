@@ -22,7 +22,7 @@ export default function ResetPassword() {
   })();
 
   return (
-    <div className="grid place-items-center px-4 py-14 text-navy-l1">
+    <div className="grid place-items-center px-4 py-14 text-gray">
       {content}
     </div>
   );

@@ -47,7 +47,7 @@ export default function Countries() {
             />
           ))}
 
-          <div className="inline-flex p-1 items-center gap-2 bg-blue-l5 text-navy-l1 dark:text-navy-l2 rounded-sm">
+          <div className="inline-flex p-1 items-center gap-2 bg-blue-l5 text-gray dark:text-gray rounded-sm">
             <SearchIcon size={18} />
             <ComboboxInput
               className="appearance-none bg-transparent focus:outline-hidden"
@@ -65,7 +65,7 @@ export default function Countries() {
             </ComboboxOption>
           ))}
         {isEmpty(filteredOptions) && (
-          <p className="text-navy-l1 dark:text-navy-l2 text-sm px-4 py-2">
+          <p className="text-gray dark:text-gray text-sm px-4 py-2">
             No options found
           </p>
         )}

@@ -8,7 +8,7 @@ interface Props {
 export default function DropzoneText({ value }: Props) {
   if (value == null || value === "") {
     return (
-      <div className="grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none">
+      <div className="grid justify-items-center text-sm text-gray dark:text-gray select-none">
         <ArrowUpFromLine size={20} className="mb-[1.125rem]" />
         <p className="font-semibold mb-1">Upload file</p>
         <span>Click to Browse or Drag &amp; Drop</span>
@@ -18,7 +18,7 @@ export default function DropzoneText({ value }: Props) {
   if (value === "loading") {
     return (
       <div className="grid place-items-center">
-        <LoaderCircle className="text-navy-l1 animate-spin" />
+        <LoaderCircle className="text-gray animate-spin" />
       </div>
     );
   }

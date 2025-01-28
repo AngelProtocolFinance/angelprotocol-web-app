@@ -12,9 +12,7 @@ export const meta: MetaFunction = () =>
 export default function TermsDonors() {
   return (
     <main className="prose lg:prose-lg xl:container xl:mx-auto px-5 py-20">
-      <i className="text-navy-l1 text-right block">
-        Effective October 25, 2024
-      </i>
+      <i className="text-gray text-right block">Effective October 25, 2024</i>
       <h2 className="text-center">
         Donor <br /> Terms of Use
       </h2>

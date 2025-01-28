@@ -8,7 +8,7 @@ import { APP_NAME } from "constants/env";
 export default function WpPlugin() {
   return (
     <div className="xl:container xl:mx-auto px-5 mt-16 content-start pb-16 @container">
-      <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-pretty mb-4 text-navy-d4">
+      <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-pretty mb-4 text-gray-d4">
         {APP_NAME} Wordpress plugin documentation
       </h1>
       <div className="py-5">

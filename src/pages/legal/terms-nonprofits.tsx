@@ -15,9 +15,7 @@ export const meta: MetaFunction = () =>
 export default function TermsNonprofits() {
   return (
     <div className="xl:container xl:mx-auto px-5 prose lg:prose-lg py-20">
-      <i className="text-navy-l1 text-right block">
-        Effective October 25, 2024
-      </i>
+      <i className="text-gray text-right block">Effective October 25, 2024</i>
       <h2 className="text-center">
         <span className="block">Better Giving</span>
         <span className="block">Nonprofit Organization</span>

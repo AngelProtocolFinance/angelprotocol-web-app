@@ -11,7 +11,7 @@ export const Header: React.FC = () => (
       Secure your financial stability
     </text>
     <text
-      className="fill-navy-d4 capitalize font-heading font-bold text-4.5xl"
+      className="fill-gray-d4 capitalize font-heading font-bold text-4.5xl"
       x={533}
       y={54}
       textAnchor="middle"
@@ -19,7 +19,7 @@ export const Header: React.FC = () => (
       Nonprofit Fund Management:
     </text>
     <text
-      className="fill-navy-d4 capitalize font-heading font-bold text-4.5xl"
+      className="fill-gray-d4 capitalize font-heading font-bold text-4.5xl"
       x={533}
       y={108}
       textAnchor="middle"

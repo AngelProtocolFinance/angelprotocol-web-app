@@ -72,7 +72,7 @@ function _Field<T extends InputType = InputType>(
       {(tooltip && ( //tooltip in normal flow
         <p className={style.error + " text-left mt-2 left-0 text-xs"}>
           {typeof tooltip === "string" ? (
-            <span className="text-navy-l1 dark:text-navy-l2">{tooltip}</span>
+            <span className="text-gray dark:text-gray">{tooltip}</span>
           ) : (
             tooltip
           )}{" "}

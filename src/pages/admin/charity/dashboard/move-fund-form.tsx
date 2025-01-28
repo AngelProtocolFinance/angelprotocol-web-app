@@ -142,12 +142,12 @@ function Content(props: IMoveFundForm) {
         });
       })}
       as="form"
-      className="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6"
+      className="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6"
     >
       <h4 className="mb-2">{props.title}</h4>
       <div className="grid grid-cols-[auto_auto_1fr] items-center mt-2 gap-x-2 gap-y-2">
         <div className="grid grid-cols-subgrid col-span-full items-center mb-4 border-b border-gray-l4 pb-2">
-          <p className="text-sm mr-2 text-navy-l1">Balance</p>
+          <p className="text-sm mr-2 text-gray">Balance</p>
           <p className="font-heading font-bold text-left">
             $ {humanize(props.balance)}
           </p>
@@ -212,7 +212,7 @@ function Deduction(props: IDeduction) {
   return (
     <div className="col-span-full grid grid-cols-subgrid text-sm">
       <p className="flex items-center">
-        <ArrowLeft size={15} className="text-navy-l1 mr-1" />
+        <ArrowLeft size={15} className="text-gray mr-1" />
         <span className="text-left">{tos[props.to]}</span>
       </p>
       <span className="text-left">

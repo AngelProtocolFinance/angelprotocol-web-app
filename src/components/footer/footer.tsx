@@ -118,7 +118,7 @@ function LinkGroup({ links, title, classes = "" }: LinkGroupProps) {
   return (
     <div className={`grid gap-2 content-start ${classes}`}>
       <p className="font-semibold text-[#4585bb] uppercase">{title}</p>
-      <ul className="contents text-sm text-navy-l3">
+      <ul className="contents text-sm text-gray">
         {links.map((link, idx) => (
           <li className="contents hover:underline" key={idx}>
             {link}

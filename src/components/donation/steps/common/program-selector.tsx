@@ -36,7 +36,7 @@ export function ProgramSelector({
     >
       {program.value && (
         <div className="">
-          <p className="text-navy-l1 mb-1">Program</p>
+          <p className="text-gray mb-1">Program</p>
           <p className="justify-between border border-gray-l4 rounded-lg p-3.5 flex items-center">
             <span>{program.label}</span>
             <button
@@ -52,10 +52,9 @@ export function ProgramSelector({
       {!program.value && (
         <label
           htmlFor="select-program"
-          className={`${styles.label} block font-semibold font-heading mb-2 text-navy-d4`}
+          className={`${styles.label} block font-semibold font-heading mb-2 text-gray-d4`}
         >
-          Select program{" "}
-          <span className="text-xs text-navy-l1">( optional )</span>
+          Select program <span className="text-xs text-gray">( optional )</span>
         </label>
       )}
 

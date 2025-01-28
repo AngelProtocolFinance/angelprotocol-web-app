@@ -16,10 +16,10 @@ export default function Benefits(props: Props) {
           {props.subheading}
         </h4>
       )}
-      <h2 className="text-3xl md:text-4.5xl capitalize text-navy-d4 text-center text-pretty mb-4">
+      <h2 className="text-3xl md:text-4.5xl capitalize text-gray-d4 text-center text-pretty mb-4">
         {props.heading}
       </h2>
-      <p className="text-xl text-navy text-center mb-24 text-balance">
+      <p className="text-xl text-gray-d1 text-center mb-24 text-balance">
         {props.body}
       </p>
       <div className="grid gap-y-4 @2xl:gap-y-8">
@@ -45,10 +45,10 @@ function Benefit(props: TBenefit) {
         />
       </div>
       <div className="order-2 mt-4 @2xl:mt-0 @2xl:group-even:order-1 @2xl:group-even:justify-self-end self-center @5xl:self-start @5xl:mt-24">
-        <h4 className="text-xl @2xl:text-2xl text-center @2xl:text-left mb-6 text-pretty text-navy-d4">
+        <h4 className="text-xl @2xl:text-2xl text-center @2xl:text-left mb-6 text-pretty text-gray-d4">
           {props.title}
         </h4>
-        <p className="text-lg @2xl:text-xl text-navy-l1 text-center @2xl:text-left">
+        <p className="text-lg @2xl:text-xl text-gray text-center @2xl:text-left">
           {props.description}
         </p>
       </div>

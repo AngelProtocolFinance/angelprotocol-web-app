@@ -16,7 +16,7 @@ export default function Testimonials({ className = "" }) {
           width={60}
           className="mb-4 @3xl:mb-8"
         />
-        <h2 className="text-navy-d4 text-pretty text-xl @3xl:text-3xl/normal">
+        <h2 className="text-gray-d4 text-pretty text-xl @3xl:text-3xl/normal">
           Nonprofit Success Stories: <br />
           Inspiring Change Together
         </h2>
@@ -40,9 +40,9 @@ const Testimonial = (props: TTestimonial) => {
         className="size-24 object-contain object-center rounded-lg shadow-xl shadow-black/5 border border-gray-l4 mb-6 @lg:mb-0"
       />
       <div>
-        <p className="text-xl mb-9 text-navy-l1">{props.content}</p>
+        <p className="text-xl mb-9 text-gray">{props.content}</p>
         <p className="text-lg mb-2 font-bold">{props.reviewer}</p>
-        <p className="text-navy-l1">{props.reviewer_org_role}</p>
+        <p className="text-gray">{props.reviewer_org_role}</p>
       </div>
     </div>
   );

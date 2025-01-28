@@ -25,7 +25,7 @@ export function DonateMethods({ values, onChange, error, classes }: Props) {
       <label className={`${style.label} mb-2 block`}>
         Customize donation payment options
       </label>
-      <p className={`text-navy-l1 ${style.tooltip} mb-4`}>
+      <p className={`text-gray ${style.tooltip} mb-4`}>
         Here you can turn on/off payment options and change the order of their
         appearance
       </p>

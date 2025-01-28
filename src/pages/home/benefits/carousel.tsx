@@ -22,7 +22,7 @@ const Carousel = ({ slides, classes = "" }: Props) => {
             <p className="text-center md:text-lg text-black font-bold mb-3">
               {slide.title2}
             </p>
-            <p className="md:text-xl text-center text-navy">
+            <p className="md:text-xl text-center text-gray-d1">
               {slide.description}
             </p>
           </div>

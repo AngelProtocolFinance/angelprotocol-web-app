@@ -30,7 +30,7 @@ export function Schedule(props: Props) {
         {presetOpt ? (
           <div className="text-sm flex items-center gap-x-1 bg-blue-l4 rounded-full px-3 py-1">
             <span className="scale-75">{presetOpt.icon}</span>
-            <span className="text-xs text-navy-l1">{presetOpt.label}</span>
+            <span className="text-xs text-gray">{presetOpt.label}</span>
           </div>
         ) : null}
 
@@ -48,20 +48,20 @@ export function Schedule(props: Props) {
 
       <div className="grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-y-3 gap-x-2 mt-4">
         <Row
-          icon={<HandCoins className="h-4 w-4 mr-2 text-navy-l1" />}
+          icon={<HandCoins className="h-4 w-4 mr-2 text-gray" />}
           title={
             <div className="flex items-center">
               <span>Grants</span>
               <Tooltip
                 tip={
-                  <Content className="max-w-xs bg-navy-d4 p-4 text-gray-l4 text-sm shadow-lg rounded-lg">
+                  <Content className="max-w-xs bg-gray-d4 p-4 text-gray-l4 text-sm shadow-lg rounded-lg">
                     Donations received through Better Giving that will
                     distributed to your bank account.
                     <Arrow />
                   </Content>
                 }
               >
-                <CircleHelp size={14} className="text-navy-l1 ml-1" />
+                <CircleHelp size={14} className="text-gray ml-1" />
               </Tooltip>
             </div>
           }
@@ -98,7 +98,7 @@ function Row(props: IRow) {
     <div className="grid grid-cols-subgrid col-span-full items-center">
       {props.icon}
       {props.title}
-      <span className="ml-2 text-navy-l1 font-medium text-sm font-heading">
+      <span className="ml-2 text-gray font-medium text-sm font-heading">
         {props.pct ?? 50} %
       </span>
       <span className="text-right">$</span>

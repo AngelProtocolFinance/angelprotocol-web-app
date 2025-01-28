@@ -29,7 +29,7 @@ export default function FAQ({ classes = "" }) {
           </DisclosureButton>
           <DisclosurePanel
             as="div"
-            className="grid gap-3 text-navy-l1 data-open:mt-4"
+            className="grid gap-3 text-gray data-open:mt-4"
           >
             {faq.paragraphs.map((p, idx) => (
               <Fragment key={idx}>{p}</Fragment>

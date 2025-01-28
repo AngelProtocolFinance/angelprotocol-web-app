@@ -13,7 +13,7 @@ interface IVideoPreview extends Video {
 export function VideoPreview(props: IVideoPreview) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="text-navy-d4">
+    <div className="text-gray-d4">
       <VideoModal
         open={open}
         setOpen={setOpen}

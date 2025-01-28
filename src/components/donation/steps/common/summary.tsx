@@ -45,22 +45,22 @@ export default function Summary({
       {props.preSplitContent}
 
       <dl
-        className={`text-navy-l1 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 divide-y divide-gray-l4 ${splitClass}`}
+        className={`text-gray grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 divide-y divide-gray-l4 ${splitClass}`}
       >
         {props.program && props.program.value && (
-          <p className="text-navy-l1 col-span-full py-2 text-sm">
+          <p className="text-gray col-span-full py-2 text-sm">
             Program: {props.program.label}
           </p>
         )}
         <div className="grid grid-cols-[1fr_auto] py-3 gap-y-1">
-          <dt aria-label="amount" className="mr-auto text-navy-d4">
+          <dt aria-label="amount" className="mr-auto text-gray-d4">
             <span>
               {props.tip && tipValue > 0
                 ? `Donation for ${props.tip.charityName}`
                 : "Total donation"}
             </span>
           </dt>
-          <Amount amount={props.amount} classes="text-navy-d4" />
+          <Amount amount={props.amount} classes="text-gray-d4" />
         </div>
 
         {tipValue > 0 && (
@@ -82,7 +82,7 @@ export default function Summary({
         ) : null}
 
         <div className="grid col-span-full grid-cols-[1fr_auto] font-medium py-3">
-          <dt className="mr-auto text-navy-d4" aria-label="total">
+          <dt className="mr-auto text-gray-d4" aria-label="total">
             Total {frequency === "subscription" ? "monthly " : ""}charge
           </dt>
           <Amount

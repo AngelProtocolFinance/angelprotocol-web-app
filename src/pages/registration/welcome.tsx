@@ -12,7 +12,7 @@ export default function Welcome() {
       <h1 className="text-[2rem] mt-10 text-center">
         Thank you for joining {APP_NAME}!
       </h1>
-      <p className="text-center text-navy-l1 dark:text-white/75 w-full text-lg max-w-lg mt-4 mb-8">
+      <p className="text-center text-gray dark:text-white/75 w-full text-lg max-w-lg mt-4 mb-8">
         Your fundraising profile & account are just few steps away 😇
       </p>
 
@@ -23,7 +23,7 @@ export default function Welcome() {
         <LoadText text="Continue registration">Continue registration</LoadText>
       </button>
 
-      <p className="text-sm italic text-navy-l1 dark:text-navy-l2 mt-8 text-center">
+      <p className="text-sm italic text-gray dark:text-gray mt-8 text-center">
         Note: Registration is quick, but we've sent an email link if you need to
         pause and resume at any point.
       </p>

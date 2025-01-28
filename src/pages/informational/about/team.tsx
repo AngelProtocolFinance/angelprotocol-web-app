@@ -105,13 +105,13 @@ function Member(props: IMember) {
     <div className="grid md:grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 row-span-3 md:grid-rows-subgrid max-md:justify-items-center">
       <img
         width={120}
-        className="rounded-full bg-navy object-contain shadow-2xl aspect-square md:row-span-3"
+        className="rounded-full bg-gray-d1 object-contain shadow-2xl aspect-square md:row-span-3"
         src={props.image}
       />
-      <p className="self-end max-md:mt-2 uppercase font-bold text-navy">
+      <p className="self-end max-md:mt-2 uppercase font-bold text-gray-d1">
         {props.name}
       </p>
-      <p className="text-sm text-navy-l1">{props.title}</p>
+      <p className="text-sm text-gray">{props.title}</p>
       <div className="self-start flex items-center gap-2">
         {props.socials.github && (
           <ExtLink href={props.socials.github} className="text-blue-d1">

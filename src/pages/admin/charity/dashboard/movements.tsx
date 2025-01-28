@@ -14,13 +14,13 @@ const asset: {
   };
 } = {
   "liq-cash": {
-    title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <HandCoins className="text-navy-l1 size-4" />,
+    title: <span className="text-sm text-gray">Grant</span>,
+    icon: <HandCoins className="text-gray size-4" />,
     source: "Savings",
   },
   "lock-cash": {
-    title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <HandCoins className="text-navy-l1 size-4" />,
+    title: <span className="text-sm text-gray">Grant</span>,
+    icon: <HandCoins className="text-gray size-4" />,
     source: "Investments",
   },
   "liq-lock": {
@@ -78,7 +78,7 @@ export function Movements({ classes = "", ...props }: Props) {
                   }).toString(),
                 }}
                 aria-disabled={props.disabled}
-                className="text-right bg-gray-l4 disabled:bg-gray-l5 text-navy-d4 aria-disabled:text-gray px-3 py-1 font-heading hover:bg-gray-l3 justify-self-end text-xs rounded-full"
+                className="text-right bg-gray-l4 disabled:bg-gray-l5 text-gray-d4 aria-disabled:text-gray px-3 py-1 font-heading hover:bg-gray-l3 justify-self-end text-xs rounded-full"
               >
                 edit
               </Link>

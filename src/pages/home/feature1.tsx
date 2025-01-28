@@ -46,7 +46,7 @@ export function Feature1({ className = "" }) {
       <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
         How Better Giving Works
       </h3>
-      <p className="text-navy-l1 px-10 text-center mb-16 text-xl">
+      <p className="text-gray px-10 text-center mb-16 text-xl">
         Discover how easy it is to boost your nonprofit’s donations and achieve
         long-term financial sustainability.
       </p>
@@ -86,13 +86,13 @@ function ListItem(props: TListItem) {
         alt={props.image.alt}
         className="mb-4"
       />
-      <h4 className="text-center font-body font-medium text-2xl text-navy px-8">
+      <h4 className="text-center font-body font-medium text-2xl text-gray-d1 px-8">
         {props.title1}
       </h4>
-      <h5 className="py-4 text-center font-medium font-body text-lg @6xl:text-xl text-navy-l1 border-b-[3px] border-blue-d1 mb-7 px-8">
+      <h5 className="py-4 text-center font-medium font-body text-lg @6xl:text-xl text-gray border-b-[3px] border-blue-d1 mb-7 px-8">
         {props.title2}
       </h5>
-      <p className="text-center text-lg @6xl:text-xl text-navy-l3">
+      <p className="text-center text-lg @6xl:text-xl text-gray">
         {props.description}
       </p>
     </li>

@@ -33,7 +33,7 @@ export default function SignupForm() {
   return (
     <div className="grid justify-items-center gap-3.5">
       <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
-        <h3 className="text-center text-2xl font-bold text-navy-d4">
+        <h3 className="text-center text-2xl font-bold text-gray-d4">
           Philanthropy for Everyone
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
@@ -49,13 +49,13 @@ export default function SignupForm() {
             type="submit"
           >
             <Image src={googleIcon} height={18} width={18} />
-            <span className="normal-case font-heading font-semibold text-navy-d4">
+            <span className="normal-case font-heading font-semibold text-gray-d4">
               Sign Up with Google
             </span>
           </button>
         </RmxForm>
 
-        <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
+        <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-gray-l2 after:bg-gray-l2 font-medium text-[13px] text-gray">
           OR
         </Separator>
 

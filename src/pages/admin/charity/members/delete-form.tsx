@@ -22,7 +22,7 @@ export function DeleteForm({ email }: { email: string }) {
         disabled={fetcher.state !== "idle"}
         onClick={() => handleRemove(email)}
         type="button"
-        className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
+        className=" disabled:text-gray hover:text-red active:text-red absolute-center"
       >
         {fetcher.state !== "idle" ? (
           <LoaderCircle size={16} className="animate-spin" />

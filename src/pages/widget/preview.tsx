@@ -87,12 +87,12 @@ function Container({
       className={`${classes} @container/preview pb-4`}
     >
       <div>
-        <p className="flex text-navy-d4 text-lg font-heading">
+        <p className="flex text-gray-d4 text-lg font-heading">
           <Image src={laira.waiving} className="h-[45px] mr-2 pb-2" />
           <span className="uppercase font-bold">Live form preview</span>
         </p>
       </div>
-      <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded-sm text-navy-d4 bg-white">
+      <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded-sm text-gray-d4 bg-white">
         <div className="grow flex flex-col justify-between items-center pt-6 @xl/preview:pt-10">
           {children}
         </div>

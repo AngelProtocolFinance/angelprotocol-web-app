@@ -52,7 +52,7 @@ export default function Funds() {
           type="search"
           name="query"
           onChange={debounce(onChange, 500)}
-          className="w-full py-2 pr-3 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading"
+          className="w-full py-2 pr-3 placeholder:text-gray text-gray-d4 font-medium font-heading"
           placeholder="Search fundraiser"
         />
       </div>

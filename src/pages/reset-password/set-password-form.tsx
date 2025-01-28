@@ -31,7 +31,7 @@ export default function SetPasswordForm(props: Props) {
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
     >
       <input type="hidden" name="email" value={props.recipient.recipient_raw} />
-      <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
+      <h3 className="text-center text-xl sm:text-2xl font-bold text-gray-d4">
         Set new password
       </h3>
       <section className="text-center font-normal max-sm:text-sm mt-2">

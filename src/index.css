@@ -13,19 +13,21 @@
   --color-current: currentColor;
   --color-inherit: inherit;
 
-  --color-blue-d7: #0b1a2a;
-  --color-blue-d6: #112840;
-  --color-blue-d5: #1a3f60;
-  --color-blue-d4: #194b73;
-  --color-blue-d3: #1a578a;
-  --color-blue-d2: #1e6dab;
-  --color-blue-d1: #2d89c8;
-  --color-blue: #54a5dc;
-  --color-blue-l1: #8fc4ea;
-  --color-blue-l2: #c4def3;
-  --color-blue-l3: #b8d9ef;
-  --color-blue-l4: #e6f1f9;
-  --color-blue-l5: #f7fafd;
+  --color-blue-d7: oklch(0.147 0.034 244.5);
+  --color-blue-d6: oklch(0.22 0.05 243.8);
+  --color-blue-d5: #112840;
+  --color-blue-d4: #1a3f60;
+  --color-blue-d3: #194b73;
+  --color-blue-d2: #1a578a;
+  --color-blue-d1: #1e6dab;
+  --color-blue: #2d89c8;
+  --color-blue-l1: #54a5dc;
+  --color-blue-l2: #8fc4ea;
+  --color-blue-l3: #c4def3;
+  --color-blue-l4: #e4effa;
+  --color-blue-l5: #f2f8fd;
+
+ 
 
   --color-green-d4: #092a17;
   --color-green-d3: #1d5e35;
@@ -38,16 +40,20 @@
   --color-green-l4: #dff9e8;
   --color-green-l5: #f1fcf4;
 
-  --color-navy-d4: #183244;
-  --color-navy-d3: #1f3648;
-  --color-navy-d2: #273f52;
-  --color-navy-d1: #314c5d;
-  --color-navy: #3c5667;
-  --color-navy-l1: #496273;
-  --color-navy-l2: #5b6f7f;
-  --color-navy-l3: #72828d;
-  --color-navy-l4: #9dabb5;
-  --color-navy-l5: #d4dee6;
+
+  --color-gray-d5: oklch(0.129 0.042 264.695);
+  --color-gray-d4: oklch(0.208 0.042 265.755);
+  --color-gray-d3: oklch(0.279 0.041 260.031);
+  --color-gray-d2: oklch(0.372 0.044 257.287);
+  --color-gray-d1: oklch(0.446 0.043 257.281);
+  --color-gray: oklch(0.554 0.046 257.417);
+  --color-gray-l1: oklch(0.704 0.04 256.788);
+  --color-gray-l2: oklch(0.869 0.022 252.894);
+  --color-gray-l3: oklch(0.929 0.013 255.508);
+  --color-gray-l4: oklch(0.968 0.007 247.896);
+  --color-gray-l5: oklch(0.984 0.003 247.858);
+  --color-gray-l6: #fff;
+
 
   --color-red-d4: #9d1717;
   --color-red-d3: #c81818;
@@ -62,16 +68,6 @@
 
   --color-black: #000101;
 
-  --color-gray-d3: #363636;
-  --color-gray-d2: #545454;
-  --color-gray-d1: #676767;
-  --color-gray: #999999;
-  --color-gray-l1: #adadad;
-  --color-gray-l2: #c8c8c8;
-  --color-gray-l3: #d7d7d7;
-  --color-gray-l4: #e7e7e7;
-  --color-gray-l5: #f9fbfa;
-  --color-gray-l6: #ffffff;
 
   --color-amber-d2: #b45309;
   --color-amber-d1: #d97706;

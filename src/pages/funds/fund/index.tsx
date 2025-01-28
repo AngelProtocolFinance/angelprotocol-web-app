@@ -95,13 +95,11 @@ export default function Fund() {
                 {fund.name}
               </h4>
               <div className="pl-0.5">
-                <span className="text-sm font-medium text-navy-l3 mr-1">
-                  by
-                </span>
+                <span className="text-sm font-medium text-gray mr-1">by</span>
                 <FundCreator
                   name={fund.creator_name}
                   id={fund.creator_id}
-                  classes="font-medium text-navy inline"
+                  classes="font-medium text-gray-d1 inline"
                 />
               </div>
               <DonateSection
@@ -139,7 +137,7 @@ export default function Fund() {
             classes={{ container: "max-md:hidden", link: "mb-4 order-first" }}
           />
 
-          <p className="text-navy-l1 mt-8 mb-2 font-bold uppercase text-xs">
+          <p className="text-gray mt-8 mb-2 font-bold uppercase text-xs">
             Donations go to
           </p>
           <div className="grid gap-y-4 mb-4 grid-cols-[auto_1fr]">
@@ -155,7 +153,7 @@ export default function Fund() {
                 />
                 <Link
                   to={`${appRoutes.marketplace}/${m.id}`}
-                  className="font-bold font-heading text-navy-l1 hover:text-blue-d1"
+                  className="font-bold font-heading text-gray hover:text-blue-d1"
                 >
                   {m.name}
                 </Link>

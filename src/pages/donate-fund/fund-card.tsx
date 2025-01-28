@@ -29,7 +29,7 @@ export function FundCard({ classes = "", ...props }: Props) {
           {props.name}
         </Link>
         {props.tagline && (
-          <p className="text-navy-l1 text-sm w-full line-clamp-2">
+          <p className="text-gray text-sm w-full line-clamp-2">
             {toText(props.tagline)}
           </p>
         )}

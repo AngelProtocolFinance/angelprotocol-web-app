@@ -63,7 +63,7 @@ function Loaded(post: IPost) {
         dangerouslySetInnerHTML={{ __html: post.title.rendered }}
       />
 
-      <p className="text-sm mt-8 text-navy-l1">
+      <p className="text-sm mt-8 text-gray">
         Posted:{" "}
         {new Date(post.date).toLocaleDateString(undefined, {
           day: "numeric",
@@ -87,5 +87,5 @@ function Author(props: { id: number }) {
   const { data } = useSWR(props.id.toString(), (id) =>
     wp.get<Wordpress.User>(`users/${id}`).json()
   );
-  return data && <p className="text-navy-l1 text-sm">Author: {data.name}</p>;
+  return data && <p className="text-gray text-sm">Author: {data.name}</p>;
 }

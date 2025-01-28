@@ -24,12 +24,12 @@ export function HeaderButton<T>(
 
       {_activeSortKey === _sortKey ? (
         _sortDirection === "asc" ? (
-          <ChevronUp className="w-4 h-4 shrink-0 text-navy-d4" />
+          <ChevronUp className="w-4 h-4 shrink-0 text-gray-d4" />
         ) : (
-          <ChevronDown className="w-4 h-4 shrink-0 text-navy-d4" />
+          <ChevronDown className="w-4 h-4 shrink-0 text-gray-d4" />
         )
       ) : (
-        <ChevronsUpDown className="w-4 h-4 shrink-0 text-navy-l2" />
+        <ChevronsUpDown className="w-4 h-4 shrink-0 text-gray" />
       )}
     </button>
   );

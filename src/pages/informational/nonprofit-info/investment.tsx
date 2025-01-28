@@ -54,7 +54,7 @@ export default function WhyBG({ className = "" }) {
               <span className="block font-semibold mb-1">
                 50% Equity Exposure
               </span>{" "}
-              <span className="text-navy-l1">
+              <span className="text-gray">
                 benefit from the long-term growth potential of US and global
                 markets
               </span>
@@ -63,7 +63,7 @@ export default function WhyBG({ className = "" }) {
               <span className="block font-semibold b-1">
                 30% Fixed Income Stability
               </span>{" "}
-              <span className="text-navy-l1">
+              <span className="text-gray">
                 cushion losses during market down-turns and generate steady
                 income
               </span>
@@ -72,7 +72,7 @@ export default function WhyBG({ className = "" }) {
               <span className="block font-semibold mb-1">
                 15% Blockchain Assets
               </span>{" "}
-              <span className="text-navy-l1">
+              <span className="text-gray">
                 gain exposure to the emerging digital asset frontier
               </span>
             </li>
@@ -80,7 +80,7 @@ export default function WhyBG({ className = "" }) {
               <span className="block font-semibold mb-1">
                 5% Cash Flexibility
               </span>{" "}
-              <span className="text-navy-l1">
+              <span className="text-gray">
                 maintain liquidity for strategic rebalancing opportunities
               </span>
             </li>
@@ -92,7 +92,7 @@ export default function WhyBG({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
-      <p className="text-navy-l1 text-sm text-center mt-16 max-w-2xl justify-self-center">
+      <p className="text-gray text-sm text-center mt-16 max-w-2xl justify-self-center">
         Disclaimer: Past performance is not indicative of future results. All
         investments carry risk, and the value of our portfolio may fluctuate.
         Our investment committee oversees and reviews our portfolio to ensure
@@ -107,13 +107,13 @@ function ListItem(props: TListItem) {
   return (
     <li className="grid content-start @3xl:grid-rows-subgrid row-span-4 justify-items-center px-4">
       {props.icon}
-      <h5 className="text-center font-body font-medium text-xl @6xl:text-2xl text-navy mt-8">
+      <h5 className="text-center font-body font-medium text-xl @6xl:text-2xl text-gray-d1 mt-8">
         {props.title1}
       </h5>
-      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-navy-l1 mb-4">
+      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-gray mb-4">
         {props.title2}
       </h6>
-      <p className="text-center @6xl:text-lg text-navy-l3 mt-4">
+      <p className="text-center @6xl:text-lg text-gray mt-4">
         {props.description}
       </p>
     </li>

@@ -58,7 +58,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
               />
             ))}
 
-            <div className="bg-blue-l5 inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 rounded-sm">
+            <div className="bg-blue-l5 inline-flex items-center gap-2 text-gray dark:text-gray pl-3 rounded-sm">
               <Search size={20} />
               <ComboboxInput
                 className="appearance-none bg-transparent first:pl-3 focus:outline-hidden h-10"
@@ -76,7 +76,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
         />
       </Combobox>
       <p className="text-red text-xs empty:hidden mt-1">{props.error}</p>
-      <Description className="text-sm text-navy-l1 mt-1">
+      <Description className="text-sm text-gray mt-1">
         You may include other nonprofits in a joint fundraiser, if those
         nonprofits have opted in to fundraising functionality. Raised funds will
         be split equally between nonprofits.
@@ -91,7 +91,7 @@ interface ISelectedOption extends EndowOption {
 
 function SelectedOption({ onDeselect, ...props }: ISelectedOption) {
   return (
-    <div className="flex items-center px-3 gap-2 h-10 border border-gray-l4 rounded-sm font-semibold text-navy-l1 dark:text-navy-l2">
+    <div className="flex items-center px-3 gap-2 h-10 border border-gray-l4 rounded-sm font-semibold text-gray dark:text-gray">
       <Image src={props.logo} className="w-8" />
       <span className="max-w-[200px] truncate">{props.name}</span>
       <button

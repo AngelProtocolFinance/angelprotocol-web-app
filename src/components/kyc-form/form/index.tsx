@@ -12,7 +12,7 @@ import { type FV, schema } from "../schema";
 import { Tooltip } from "./tooltip";
 import { states } from "./us-states";
 
-export const formStyle = "w-full text-navy-d4 dark:text-white p-3";
+export const formStyle = "w-full text-gray-d4 dark:text-white p-3";
 
 interface IForm extends FV {
   classes?: string;

@@ -20,7 +20,7 @@ export default function Dashboard() {
     <div className="@container w-full max-w-4xl grid content-start">
       <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       {period.isPre && (
-        <div className="bg-gray-l4 text-navy-l1 text-sm p-2 rounded-sm">
+        <div className="bg-gray-l4 text-gray text-sm p-2 rounded-sm">
           <CircleAlert size={16} className="relative inline bottom-px mr-1" />
           Pending transactions are now locked for processing
         </div>

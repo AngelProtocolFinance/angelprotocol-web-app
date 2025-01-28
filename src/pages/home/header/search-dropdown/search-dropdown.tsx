@@ -95,7 +95,7 @@ function SearchResult(props: ISearchResult) {
             </div>
           )}
 
-          <span className="text-navy-l1">{endow.name}</span>
+          <span className="text-gray">{endow.name}</span>
         </Link>
       ))}
       {props.page < props.numPages && (

@@ -131,7 +131,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         <Form className="grid grid-cols-2 gap-x-4 mt-4">
           <CheckField {...register("coverFee")} classes="col-span-full">
             Cover payment processing fees for your donation{" "}
-            <span className="text-navy-l1 text-sm">
+            <span className="text-gray text-sm">
               (&nbsp;{props.init.recipient.name} receives the full amount&nbsp;)
             </span>
           </CheckField>
@@ -207,7 +207,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   />
                   <p
                     data-exceed={errors.tributeNotif?.fromMsg?.type === "max"}
-                    className="text-xs text-navy-l4 -mt-2 data-[exceed='true']:text-red"
+                    className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
                   >
                     {customMsg.length}/{CUSTOM_MSG_MAX_LENGTH}
                   </p>

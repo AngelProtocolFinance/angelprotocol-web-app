@@ -19,7 +19,7 @@ export default function NoDonations({ classes, status }: Props) {
         width={100}
       />
       <h3 className="text-lg self-end">No donations found.</h3>
-      <p className="self-start text-navy-l1 dark:text-navy-l2">
+      <p className="self-start text-gray dark:text-gray">
         {status === "pending"
           ? "You have no donations pending"
           : "You've not made any donations yet"}

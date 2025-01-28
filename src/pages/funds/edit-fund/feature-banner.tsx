@@ -41,7 +41,7 @@ export function FeatureBanner({ classes = "", ...props }: Props) {
         </button>
         <ExtLink
           href={`${appRoutes.funds}/${props.fundId}`}
-          className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
+          className="text-blue-d1 hover:text-gray-d1 text-sm flex items-center gap-1"
         >
           View
         </ExtLink>

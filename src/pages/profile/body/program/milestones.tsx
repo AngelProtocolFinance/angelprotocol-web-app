@@ -45,7 +45,7 @@ function Milestone(m: TMilestone) {
         </div>
       )}
 
-      <p className="mt-4 pl-6 sm:pl-8 mb-3 text-navy-l1 dark:text-navy-l2 text-xs">
+      <p className="mt-4 pl-6 sm:pl-8 mb-3 text-gray dark:text-gray text-xs">
         {new Date(m.date).toLocaleDateString()}
       </p>
       <h6 className="pl-6 sm:pl-8 font-bold mb-3 relative">
@@ -53,7 +53,7 @@ function Milestone(m: TMilestone) {
         <span className="bg-white dark:bg-blue-d6 w-4 h-6 absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
         <span
           className={`${
-            isComplete ? "bg-blue-d1" : "bg-gray-l3 dark:bg-navy"
+            isComplete ? "bg-blue-d1" : "bg-gray-l3 dark:bg-gray-d1"
           } w-4 h-4 rounded-full absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2`}
         />
       </h6>
@@ -62,7 +62,7 @@ function Milestone(m: TMilestone) {
           content={{ value: m.description ?? "" }}
           readOnly
           classes={{
-            field: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
+            field: "text-gray dark:text-gray text-sm w-full",
           }}
         />
       </div>

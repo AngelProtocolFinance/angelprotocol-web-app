@@ -67,7 +67,7 @@ export default function Content() {
           //TODO: endowId={1}
           endowId={1}
         />
-        <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
+        <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-gray dark:text-gray">
           <span className="block mb-0.5">
             Need help? See{" "}
             <Link to="./#faqs" className="hover:underline font-medium">

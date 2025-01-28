@@ -42,7 +42,7 @@ function Fund(props: FundItem) {
       >
         {props.name}
       </Link>
-      <p className="whitespace-pre-line text-navy-l1 text-sm">
+      <p className="whitespace-pre-line text-gray text-sm">
         {toText(props.description)}
       </p>
       <Target

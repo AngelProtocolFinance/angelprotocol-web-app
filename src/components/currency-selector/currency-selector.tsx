@@ -64,7 +64,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
       >
         <ComboboxInput
-          className="w-full dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
+          className="w-full dark:border-gray-d1 px-4 py-3.5 text-sm leading-5 focus:ring-0"
           displayValue={(currency: T) =>
             !!currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
@@ -76,7 +76,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         <ComboboxButton className="flex items-center absolute inset-y-0 right-2">
           {({ open }) =>
             isCurrencyLoading ? (
-              <LoaderCircle className="text-navy-l2 animate-spin" size={20} />
+              <LoaderCircle className="text-gray animate-spin" size={20} />
             ) : (
               <DrawerIcon
                 isOpen={open}

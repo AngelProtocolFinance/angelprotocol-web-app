@@ -23,12 +23,12 @@ export const Input = forwardRef<El, Props>((props, ref) => {
           props.icon ? "grid-cols-[auto_1fr]" : ""
         } ${fieldClasses}`}
       >
-        {props.icon && <props.icon className="ml-5 text-navy-l3" size={20} />}
+        {props.icon && <props.icon className="ml-5 text-gray" size={20} />}
         <input
           {...rest}
           ref={ref}
           type="text"
-          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-hidden bg-transparent ${
+          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-gray max-sm:placeholder:text-sm focus:outline-hidden bg-transparent ${
             props.icon ? "pr-5" : "px-5"
           } ${style.input}`}
           aria-invalid={!!error}

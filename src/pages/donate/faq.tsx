@@ -38,7 +38,7 @@ export default function FAQ({ classes = "" }: Props) {
                 <DisclosurePanel
                   as="div"
                   static
-                  className="text-sm grid gap-3 text-navy-l1 mb-6"
+                  className="text-sm grid gap-3 text-gray mb-6"
                 >
                   {faq.paragraphs.map((p, idx) => (
                     <Fragment key={idx}>{p}</Fragment>
@@ -128,11 +128,11 @@ const faqs = [
     paragraphs: [
       <p className="leading-normal">
         For gifts by check: Make your check out to{" "}
-        <Em classes="text-navy-d4">
+        <Em classes="text-gray-d4">
           Altruistic Partners Empowering Society Inc
         </Em>
         and send it to:{" "}
-        <Em intensity={1} classes="text-navy-d4 block mt-2">
+        <Em intensity={1} classes="text-gray-d4 block mt-2">
           Miscellaneous Account Services
           <br /> PNC Bank
           <br /> P.O. Box 161019
@@ -144,7 +144,7 @@ const faqs = [
         our services free, you may add that in the memo with{" "}
         <Em
           intensity={1}
-          classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5"
+          classes="text-gray-d4 text-xs font-mono bg-blue-l4 p-0.5"
         >
           BG:&nbsp;Amount
         </Em>
@@ -166,7 +166,7 @@ function Em({
           ? "font-medium"
           : intensity === 2
             ? "font-semibold"
-            : "font-semibold text-navy-d4"
+            : "font-semibold text-gray-d4"
       } ${classes}`}
     >
       {children}

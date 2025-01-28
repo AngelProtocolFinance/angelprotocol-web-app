@@ -13,7 +13,7 @@ export default function TokenSelector({
   tokenState,
 }: ITokenSelector) {
   return (
-    <Popover className="relative gap-1 flex justify-end dark:text-navy-l2 h-full">
+    <Popover className="relative gap-1 flex justify-end dark:text-gray h-full">
       <PopoverButton
         disabled={tokenState === "loading"}
         className="flex items-center gap-1 focus:outline-hidden"

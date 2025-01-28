@@ -87,7 +87,7 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
           }}
         />
         <p
-          className="text-navy-l1"
+          className="text-gray"
           // biome-ignore lint: trusted html
           dangerouslySetInnerHTML={{
             __html: post.excerpt.rendered,

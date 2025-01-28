@@ -16,7 +16,7 @@ const Hero = ({ classes = "" }) => {
       <h1 className="z-10 mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
         Simplified Giving, <br /> Amplified Impact
       </h1>
-      <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">
+      <p className="z-10 px-6 text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
         Benefit from free donation processing with Better Giving’s one-stop
         solution to simplify giving, earn high-yield savings, and enjoy
         hands-off investment growth. Add our customizable donation form to your
@@ -37,7 +37,7 @@ const Hero = ({ classes = "" }) => {
 
 function Tooltip({ className = "" }) {
   return (
-    <span className={`text-navy-d4 ${className}`}>
+    <span className={`text-gray-d4 ${className}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="82"
@@ -50,7 +50,7 @@ function Tooltip({ className = "" }) {
           fill="#183244"
         />
       </svg>
-      <p className="text-navy-d4 translate-x-12 -rotate-[12deg] font-gochi text-nowrap">
+      <p className="text-gray-d4 translate-x-12 -rotate-[12deg] font-gochi text-nowrap">
         It’s totally free!
       </p>
     </span>

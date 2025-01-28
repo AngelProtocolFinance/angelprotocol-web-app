@@ -46,7 +46,7 @@ export default function ShareContainer(props: ShareProps) {
       <h2 className="w-full pt-2 text-center font-medium text-[color:var(--accent-primary)] mb-2">
         Spread the word!
       </h2>
-      <p className="text-center text-navy-l1 text-sm max-w-sm">
+      <p className="text-center text-gray text-sm max-w-sm">
         Encourage your friends to join in and contribute, making a collective
         impact through donations.
       </p>
@@ -96,7 +96,7 @@ function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
     <Modal
       open={open}
       onClose={() => setOpen(false)}
-      classes="grid content-start fixed-center z-20 border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 text-navy-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded-sm overflow-hidden"
+      classes="grid content-start fixed-center z-20 border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 text-gray-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded-sm overflow-hidden"
     >
       <div className="grid place-items-center relative h-16 font-heading font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l4">
         Share on {social.title}

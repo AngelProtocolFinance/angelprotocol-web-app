@@ -112,7 +112,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
       >
         {!preview ? (
           <div
-            className="absolute-center relative grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
+            className="absolute-center relative grid justify-items-center text-sm text-gray dark:text-gray select-none"
             tabIndex={-1}
           >
             <input {...getInputProps()} className="absolute inset-0" />
@@ -159,7 +159,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           </div>
         )}
       </div>
-      <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
+      <p className="text-xs text-gray dark:text-gray mt-2">
         <span>
           Valid types are:{" "}
           {props.spec.type
