@@ -35,7 +35,7 @@ export default function Profile() {
             backgroundImage: `url('${data.image || fallback_banner}')`,
           }}
         />
-        <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
+        <div className="xl:container xl:mx-auto px-5 flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
           <Image
             src={data.logo || flying_character}
             className="h-48 w-48 border border-gray-l4 rounded-full object-cover bg-white"

@@ -5,7 +5,7 @@ export default function Skeleton() {
     <section className="pb-8">
       <Banner />
 
-      <div className="w-full padded-container grid lg:grid-cols-[4fr_2fr] gap-6 content-start">
+      <div className="w-full xl:container xl:mx-auto px-5 grid lg:grid-cols-[4fr_2fr] gap-6 content-start">
         <Logo className="col-span-full" />
         {/** header */}
         <ContentLoader className="h-40 lg:h-20 mt-20 col-span-full" />

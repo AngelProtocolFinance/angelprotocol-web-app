@@ -31,7 +31,7 @@ export default function BankingApplications() {
   }
 
   return (
-    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20 lg:pt-10">
+    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative xl:container xl:mx-auto px-5 py-20 lg:pt-10">
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Banking Applications
       </h1>

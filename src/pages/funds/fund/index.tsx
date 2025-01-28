@@ -52,7 +52,7 @@ export default function Fund() {
           backgroundImage: `url('${fund.banner || fallback_banner}')`,
         }}
       />
-      <div className="padded-container grid md:grid-cols-[3fr_2fr] gap-4">
+      <div className="xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
         <div className="self-start -mt-12 md:-mt-24 z-10 grid gap-4 relative">
           <div className="absolute -top-8 flex justify-between w-full">
             <Link

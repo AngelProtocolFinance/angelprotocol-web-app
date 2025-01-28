@@ -42,7 +42,7 @@ export default function Posts() {
   const nextPage = data ? data.nextPageNum : firstPage.nextPageNum;
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start padded-container min-h-screen pb-6">
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start xl:container xl:mx-auto px-5 min-h-screen pb-6">
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Posts
       </h1>

@@ -16,7 +16,7 @@ export default function Success({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} grid padded-container max-w-lg justify-items-center`}
+      className={`${classes} grid xl:container xl:mx-auto px-5 max-w-lg justify-items-center`}
     >
       <CircleCheck className="text-green" size={92} />
       <h1 className="text-[2rem] mt-10 text-center">

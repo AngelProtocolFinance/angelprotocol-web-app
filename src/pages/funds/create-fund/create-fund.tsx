@@ -62,7 +62,7 @@ export default function CreateFund() {
   const isUploading = banner.value === "loading" || logo.value === "loading";
 
   return (
-    <div className="w-full padded-container">
+    <div className="w-full xl:container xl:mx-auto px-5">
       <Form
         onSubmit={handleSubmit((fv) => {
           const fund: NewFund = {

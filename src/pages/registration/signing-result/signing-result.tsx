@@ -12,7 +12,7 @@ export default function SignResult({ classes = "" }) {
     <div
       className={
         classes +
-        " grid padded-container max-w-lg justify-items-center content-start"
+        " grid xl:container xl:mx-auto px-5 max-w-lg justify-items-center content-start"
       }
     >
       {isSuccess(params) ? <Success {...params} /> : <ErrorPage {...params} />}

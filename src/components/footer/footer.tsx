@@ -26,7 +26,7 @@ function Footer({ classes = "" }: Props) {
       ref={ref}
       className={`grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] border-t border-gray-l4 ${classes}`}
     >
-      <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 padded-container p-4 md:p-10">
+      <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 xl:container xl:mx-auto px-5 p-4 md:p-10">
         <div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96">
           <div className="flex items-center gap-x-6 shrink-0">
             <img

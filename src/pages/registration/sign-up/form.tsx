@@ -19,7 +19,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     <fetcher.Form
       action="?index"
       method="POST"
-      className={`${classes} justify-center gap-8 padded-container w-full max-w-[37.5rem] grid`}
+      className={`${classes} justify-center gap-8 xl:container xl:mx-auto px-5 w-full max-w-[37.5rem] grid`}
     >
       <h3 className="text-3xl text-center">
         Register your new {APP_NAME} nonprofit account

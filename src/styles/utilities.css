@@ -15,9 +15,6 @@
   }
 }
 
-@utility padded-container {
-  @apply xl:container xl:mx-auto px-5;
-}
 @utility btn {
   /** applicable to button and <a/> */
   @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded-sm focus:outline-hidden focus-visible:ring-2;

@@ -26,7 +26,7 @@ export default function Header({ classes }: Props) {
         observer.observe(node);
       }}
     >
-      <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 padded-container py-2">
+      <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 xl:container xl:mx-auto px-5 py-2">
         <DappLogo classes="w-48 h-12" />
 
         {!isInAuth && <UserMenu classes="max-sm:hidden" />}

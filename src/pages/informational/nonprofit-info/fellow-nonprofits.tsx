@@ -6,7 +6,7 @@ export default function FellowNonProfits({ className = "" }) {
       <h2 className="text-center text-3xl/tight md:text-4.5xl/tight text-navy-d4 text-pretty mb-16 px-4">
         Over $6 million donations <br /> processed for nonprofits worldwide
       </h2>
-      <div className="flex items-center flex-wrap justify-center gap-4 padded-container">
+      <div className="flex items-center flex-wrap justify-center gap-4 xl:container xl:mx-auto px-5">
         {brands.map((b, idx) => (
           <img
             key={idx}

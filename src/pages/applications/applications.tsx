@@ -32,7 +32,7 @@ export default function Applications() {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
+    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative xl:container xl:mx-auto px-5 py-20">
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Dashboard
       </h1>

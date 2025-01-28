@@ -3,7 +3,7 @@ import { CircleAlert } from "lucide-react";
 import type { LoaderData } from "./api";
 import { Form } from "./form";
 
-const containerClass = "padded-container mt-8 grid content-start";
+const containerClass = "xl:container xl:mx-auto px-5 mt-8 grid content-start";
 export default function EditFund() {
   const { fund, user } = useLoaderData() as LoaderData;
 
