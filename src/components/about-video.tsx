@@ -1,3 +1,4 @@
+import poster from "assets/images/about-video-preview.webp";
 import { useEffect, useRef, useState } from "react";
 
 type VideoStatus = "loading" | "error" | "loaded";
@@ -65,6 +66,7 @@ export const AboutVideo = ({ classes = "" }) => {
             </div>
           )}
           <video
+            poster={poster}
             src={videoUrl}
             ref={videoRef}
             className={`absolute top-0 left-0 w-full h-full object-cover`}
