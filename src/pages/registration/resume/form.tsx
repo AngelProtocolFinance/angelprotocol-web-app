@@ -60,7 +60,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     <fetcher.Form
       method="POST"
       {...getFormProps(form)}
-      className={`${classes} grid xl:container xl:mx-auto px-5 w-full max-w-[37.5rem]`}
+      className={`${classes} grid px-5 w-full max-w-2xl`}
     >
       <h3 className="text-3xl text-center">Resume registration</h3>
       <p className="text-center mt-2 text-navy-l1 dark:text-navy-l4 text-lg">
