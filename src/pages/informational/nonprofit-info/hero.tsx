@@ -1,13 +1,12 @@
 import { Link } from "@remix-run/react";
-import Image from "components/image";
+import { AboutVideo } from "components/about-video";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { benefits } from "content/benefits";
 
 export default function Hero({ className = "" }) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-[3fr_2fr] py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-2 py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-gray-d4 mb-5">
@@ -39,12 +38,13 @@ export default function Hero({ className = "" }) {
           </Link>
         </div>
       </div>
-      <Image
+      <AboutVideo classes="max-w-2xl @6xl:max-w-auto order-1 @6xl:order-2 w-full self-center" />
+      {/* <Image
         src={benefits.donors[1].img}
         width={420}
         height={420}
         className="rounded-4xl order-1 @6xl:order-2"
-      />
+      /> */}
     </section>
   );
 }
