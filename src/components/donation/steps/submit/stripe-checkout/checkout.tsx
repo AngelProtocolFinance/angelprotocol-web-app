@@ -81,6 +81,7 @@ export default function Checkout(props: StripeCheckoutStep) {
       className="contents"
     >
       <PaymentElement
+        className="mt-4"
         options={{
           layout: "tabs",
           defaultValues: {
