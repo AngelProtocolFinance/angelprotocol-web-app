@@ -5,18 +5,27 @@
   h4,
   h5,
   h6 {
-    @apply font-heading font-bold;
+    font-family: var(--font-heading);
+    font-weight: 700;
   }
 
   body {
-    @apply font-body text-navy-d4;
+    font-family: var(--font-body);
+    color: var(--color-navy-d4);
   }
 
   a {
-    @apply cursor-pointer aria-disabled:pointer-events-none aria-disabled:cursor-default;
+    cursor: pointer;
+    &[aria-disabled="true"] {
+      pointer-events: none;
+      cursor: default;
+    }
   }
 
   button {
-    @apply cursor-pointer disabled:cursor-default;
+    cursor: pointer;
+    &:disabled {
+      cursor: default;
+    }
   }
 }
