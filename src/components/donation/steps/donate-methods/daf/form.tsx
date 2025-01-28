@@ -62,7 +62,7 @@ export default function Form(props: Props) {
         />
       )}
 
-      <p className="text-sm text-navy-d4 dark:text-navy-l2 mt-4">
+      <p className="text-sm text-gray-d4 dark:text-gray mt-4">
         Please click the button below and follow the instructions provided to
         complete your donation
       </p>

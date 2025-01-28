@@ -29,7 +29,7 @@ export default function NavDropdown({ user, isInAuth }: Props) {
       >
         <MenuIcon
           size={24}
-          className="text-navy-l2 data-open:text-navy-l2/70 sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80"
+          className="text-gray data-open:text-gray/70 sm:hidden transition duration-150 ease-in-out group-hover:text-gray/80"
           aria-hidden="true"
         />
         <ChevronDown
@@ -117,4 +117,4 @@ export default function NavDropdown({ user, isInAuth }: Props) {
 
 const styles =
   "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1 flex items-center gap-x-2";
-const styler = createNavLinkStyler(styles, "pointer-events-none text-navy-d4");
+const styler = createNavLinkStyler(styles, "pointer-events-none text-gray-d4");

@@ -7,7 +7,7 @@ export const meta: MetaFunction = () =>
 
 export default function PrivacyPolicy() {
   return (
-    <div className="padded-container min-h-screen pb-6 prose pt-24">
+    <div className="xl:container xl:mx-auto px-5 min-h-screen pb-6 prose pt-24">
       <h1 className="text-center">
         {" "}
         <strong>Privacy Policy</strong>

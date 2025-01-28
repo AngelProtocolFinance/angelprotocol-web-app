@@ -10,10 +10,10 @@ export default function Hero({ className = "" }) {
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-[3fr_2fr] py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
-        <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-navy-d4 mb-5">
+        <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-gray-d4 mb-5">
           Funding Today, Funding Forever
         </h4>
-        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-navy-d4">
+        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-gray-d4">
           Raise funds easily. <br /> Grow them effortlessly.
         </h1>
         <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">

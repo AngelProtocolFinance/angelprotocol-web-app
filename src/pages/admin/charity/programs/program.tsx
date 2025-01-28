@@ -12,7 +12,7 @@ export function Program(props: TProgram) {
 
   return (
     <div
-      className={`p-6 border border-gray-l4 rounded ${
+      className={`p-6 border border-gray-l3 rounded ${
         isDeleting ? "bg-gray-l4" : "bg-gray-l6"
       } grid @lg:flex items-center gap-x-4 gap-y-8`}
     >

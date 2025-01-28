@@ -24,7 +24,7 @@ export default function Funds() {
     );
   return (
     <div className="grid">
-      <div className="flex items-center justify-between mb-2 w-full border-b border-gray-l4 pb-4">
+      <div className="flex items-center justify-between mb-2 w-full border-b border-gray-l3 pb-4">
         <h3 className="text-3xl">My Fundraisers</h3>
         <Link
           to={appRoutes.funds + "/new"}

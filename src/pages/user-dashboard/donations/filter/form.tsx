@@ -19,7 +19,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       as="form"
       onSubmit={submit}
       onReset={onReset}
-      className={`${classes} grid content-start gap-4 w-full rounded-sm border border-gray-l4 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @-5xl:shadow-xs`}
+      className={`${classes} grid content-start gap-4 w-full rounded-sm border border-gray-l3 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @-5xl:shadow-xs`}
     >
       <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
         <span className="text-blue-d1">Filters</span>
@@ -37,7 +37,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       {/*<NetworkDropdown classes="px-4 @5xl:px-6" />*/}
       {/*<CurrencyDropdown classes="px-4 @5xl:px-6" />*/}
 
-      <div className="row-start-2 flex gap-x-4 items-center justify-between px-4 py-3 p-6 @5xl:mt-2 bg-blue-l5 dark:bg-blue-d7 border-y @5xl:border-t border-gray-l4">
+      <div className="row-start-2 flex gap-x-4 items-center justify-between px-4 py-3 p-6 @5xl:mt-2 bg-blue-l5 dark:bg-blue-d7 border-y @5xl:border-t border-gray-l3">
         <h3 className="uppercase @5xl:hidden">Filter by</h3>
         <button
           type="reset"

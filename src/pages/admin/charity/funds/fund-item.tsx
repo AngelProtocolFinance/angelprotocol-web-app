@@ -21,7 +21,7 @@ export const FundItem = (props: Props) => {
   );
 
   return (
-    <div className="grid grid-rows-subgrid row-span-6 content-start gap-y-0 items-center border border-gray-l4 p-3 rounded-lg">
+    <div className="grid grid-rows-subgrid row-span-6 content-start gap-y-0 items-center border border-gray-l3 p-3 rounded-lg">
       <div className="flex items-start justify-between">
         <img
           src={props.logo}
@@ -42,7 +42,7 @@ export const FundItem = (props: Props) => {
 
       <Link
         to={`${appRoutes.funds}/${props.id}`}
-        className="mt-4 font-semibold text-navy-l1 hover:text-blue-d1 font-heading"
+        className="mt-4 font-semibold text-gray hover:text-blue-d1 font-heading"
       >
         {props.name}
       </Link>

@@ -14,7 +14,7 @@ export default function Milestones({ programId, milestones }: Props) {
   const fetcher = useFetcher();
 
   return (
-    <div className="@container grid gap-6 p-4 @lg:p-6 border border-gray-l4 rounded-sm bg-white dark:bg-blue-d6">
+    <div className="@container grid gap-6 p-4 @lg:p-6 border border-gray-l3 rounded-sm bg-white dark:bg-blue-d6">
       <div className="flex flex-col @md:flex-row items-center gap-3 justify-between">
         <h4 className="text-2xl">Milestones</h4>
         <input
@@ -46,7 +46,7 @@ export default function Milestones({ programId, milestones }: Props) {
       </div>
       {!isEmpty(milestones) ? (
         <>
-          <span className="text-sm text-navy-l1 dark:text-navy-l2">
+          <span className="text-sm text-gray dark:text-gray">
             Milestones will be publicly displayed in descending order by their
             date.
           </span>

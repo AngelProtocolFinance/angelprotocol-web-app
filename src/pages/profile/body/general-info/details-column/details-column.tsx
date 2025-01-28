@@ -16,7 +16,7 @@ export default function DetailsColumn({ className = "" }) {
   return (
     <div className="flex flex-col gap-6 w-full">
       <div className={`${className} w-full lg:w-96`}>
-        <div className="flex flex-col gap-8 w-full p-8 border border-gray-l4 rounded-sm">
+        <div className="flex flex-col gap-8 w-full p-8 border border-gray-l3 rounded-sm">
           {p.registration_number && (
             <Detail title="registration no.">{p.registration_number}</Detail>
           )}
@@ -50,7 +50,7 @@ export default function DetailsColumn({ className = "" }) {
         {p.claimed === false && (
           <NavLink
             to={`${appRoutes.register}/${regRoutes.welcome}?claim=${p.registration_number}`}
-            className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l4 rounded-sm"
+            className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l3 rounded-sm"
           >
             Claim this organization
           </NavLink>
@@ -67,7 +67,7 @@ function Detail(props: PropsWithChildren<{ title: string }>) {
       <p className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </p>
-      <span className="font-normal text-base text-navy-l1 dark:text-navy-l2">
+      <span className="font-normal text-base text-gray dark:text-gray">
         {props.children || "-"}
       </span>
     </div>

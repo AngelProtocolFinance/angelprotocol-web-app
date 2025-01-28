@@ -124,7 +124,7 @@ export default function Form({ data }: RegStep2) {
 }
 
 const Separator = ({ classes = "" }: { classes?: string }) => (
-  <div className={`${classes} h-px w-full bg-gray-l3 dark:bg-navy`} />
+  <div className={`${classes} h-px w-full bg-gray-l3 dark:bg-gray-d1`} />
 );
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) => ({

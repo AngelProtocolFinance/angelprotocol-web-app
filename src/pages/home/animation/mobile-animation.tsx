@@ -43,7 +43,7 @@ const MobileAnimation = ({ classes = "" }) => {
         Make a Lasting Impact: <br /> Give Today, Give Forever
       </h3>
 
-      <div className="grid gap-32 padded-container mt-4">
+      <div className="grid gap-32 xl:container xl:mx-auto px-5 mt-4">
         {cards.map((card, idx) => {
           return <StepsCard key={idx} {...card} />;
         })}

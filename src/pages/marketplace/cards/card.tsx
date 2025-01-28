@@ -24,7 +24,7 @@ export default function Card({
     <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none  grid grid-rows-subgrid row-span-4 gap-y-0">
       <NavLink
         to={`${appRoutes.marketplace}/${id}`}
-        className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
+        className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l3 hover:border-blue-d1"
       >
         <Image
           loading="lazy"
@@ -46,7 +46,7 @@ export default function Card({
 
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
-            <p className="peer text-navy-l1 dark:text-navy-l2 text-sm -mt-2 mb-4">
+            <p className="peer text-gray dark:text-gray text-sm -mt-2 mb-4">
               {tagline}
             </p>
           ) : (

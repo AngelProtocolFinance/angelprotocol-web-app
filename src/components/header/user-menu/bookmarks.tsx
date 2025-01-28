@@ -11,7 +11,7 @@ interface Props {
 export function Bookmarks({ classes = "", user }: Props) {
   return (
     <div className={`${classes} hidden [&:has(a)]:grid mt-6 gap-2`}>
-      <h5 className="uppercase text-xs text-navy-l1 -mb-1">My Favorites</h5>
+      <h5 className="uppercase text-xs text-gray -mb-1">My Favorites</h5>
 
       <Suspense>
         <Await resolve={user.bookmarks}>

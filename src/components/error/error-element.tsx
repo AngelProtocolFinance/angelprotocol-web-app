@@ -48,7 +48,7 @@ export function ErrorElement() {
           onClick={() => {
             window.location.reload();
           }}
-          className="border border-gray-l4 rounded-lg px-6 py-2"
+          className="border border-gray-l3 rounded-lg px-6 py-2"
         >
           OK
         </button>

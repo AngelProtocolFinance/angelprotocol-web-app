@@ -15,7 +15,7 @@ export default function DonationFormInfo({ className = "" }) {
 
       <StepsCarousel classes="w-full max-w-lg self-center justify-self-center" />
 
-      <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0">
+      <ul className="divide-y divide-gray-l3 mt-6 @6xl:mt-0">
         {benefits.donorsOrder2.map((b, idx) => (
           <ListItem
             title={b.title}
@@ -48,10 +48,10 @@ function ListItem(props: TListItem) {
       ) : (
         <Star className="col-start-1 row-span-2 text-gray mt-1 text-lg @6xl:text-xl" />
       )}
-      <h6 className="text-lg font-medium @6xl:text-xl text-navy-d4">
+      <h6 className="text-lg font-medium @6xl:text-xl text-gray-d4">
         {props.title}
       </h6>
-      <p className="text-lg @6xl:text-xl text-navy-l3">{props.description}</p>
+      <p className="text-lg @6xl:text-xl text-gray">{props.description}</p>
     </li>
   );
 }

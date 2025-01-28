@@ -74,8 +74,8 @@ export default function ProgramInfo(props: Program) {
           charLimit={MAX_CHARS}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
-            counter: "text-navy-l1 dark:text-navy-l2",
+              "rich-text-toolbar border border-gray-l3 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+            counter: "text-gray dark:text-gray",
           }}
           error={
             errors.description?.value?.message ||

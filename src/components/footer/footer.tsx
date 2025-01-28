@@ -24,9 +24,9 @@ function Footer({ classes = "" }: Props) {
   return (
     <footer
       ref={ref}
-      className={`grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] border-t border-gray-l4 ${classes}`}
+      className={`grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] border-t border-gray-l3 ${classes}`}
     >
-      <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 padded-container p-4 md:p-10">
+      <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 xl:container xl:mx-auto px-5 p-4 md:p-10">
         <div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96">
           <div className="flex items-center gap-x-6 shrink-0">
             <img
@@ -118,7 +118,7 @@ function LinkGroup({ links, title, classes = "" }: LinkGroupProps) {
   return (
     <div className={`grid gap-2 content-start ${classes}`}>
       <p className="font-semibold text-[#4585bb] uppercase">{title}</p>
-      <ul className="contents text-sm text-navy-l3">
+      <ul className="contents text-sm text-gray">
         {links.map((link, idx) => (
           <li className="contents hover:underline" key={idx}>
             {link}

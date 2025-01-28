@@ -32,20 +32,20 @@ export default function Applications() {
   }
 
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
+    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative xl:container xl:mx-auto px-5 py-20">
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Dashboard
       </h1>
-      <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded-sm">
+      <div className="relative flex gap-x-3 items-center border border-gray-l3 w-full bg-white dark:bg-blue-d6 rounded-sm">
         <Search
           size={22}
-          className="text-navy-d4 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
+          className="text-gray-d4 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
           disabled={state === "loading"}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-navy-l2 bg-transparent w-full outline-hidden disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
+          className="p-3 pl-10 placeholder:text-gray dark:placeholder:text-gray bg-transparent w-full outline-hidden disabled:bg-gray-l3 dark:disabled:bg-gray-d3"
           type="text"
           placeholder="Search applications"
         />

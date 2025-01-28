@@ -120,7 +120,7 @@ export default function Tip(props: TipStep) {
         One-Time Donation to{" "}
         <Image src={dappLogo} className="inline-block h-8 px-1" />
       </h4>
-      <p className="text-navy-l1">
+      <p className="text-gray">
         Better Giving offers this donation service{" "}
         <span className={withTip ? "" : "font-bold"}>free of charge</span> to
         empower nonprofits worldwide. As a nonprofit ourselves, we depend on
@@ -153,7 +153,7 @@ export default function Tip(props: TipStep) {
               <span className="mr-0.5">
                 {humanize(tip.amount || "0", centsDecimals(rate, decimals))}
               </span>
-              <span className="text-navy-l1 text-xs">
+              <span className="text-gray text-xs">
                 ({(Number(tip.pct) * 100).toFixed(0)}%)
               </span>
             </div>
@@ -210,14 +210,14 @@ export default function Tip(props: TipStep) {
           width={withTip ? 50 : 40}
           className=""
         />
-        <p className="self-center text-navy-l1 indent-4">
+        <p className="self-center text-gray indent-4">
           {!withTip
             ? "Please consider helping keep Better Giving free for everyone, as a nonprofit we charge no platform fees and rely on your support"
             : "Thank you for keeping Better Giving free for everyone!"}
         </p>
       </div>
 
-      <p className="text-sm text-navy-l1 mt-6">
+      <p className="text-sm text-gray mt-6">
         Assist us in advancing our mission to connect with global organizations
         and spread our timeless message:{" "}
         <span className="font-medium block">Give today, give forever.</span>

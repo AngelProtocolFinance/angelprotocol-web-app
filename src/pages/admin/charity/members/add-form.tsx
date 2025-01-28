@@ -17,7 +17,7 @@ export default function AddForm() {
       onClose={() =>
         navigate("..", { preventScrollReset: true, replace: true })
       }
-      classes="p-6 fixed-center z-10 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
+      classes="p-6 fixed-center z-10 text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <Content />
     </Modal>

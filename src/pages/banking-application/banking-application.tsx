@@ -20,7 +20,7 @@ export default function BankingApplication() {
   const bank = useLoaderData() as BankDetails;
 
   return (
-    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
+    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative xl:container xl:mx-auto px-5 py-20">
       <Loaded {...bank} />
       {/** prompts: approve, reject, success */}
       <Outlet />

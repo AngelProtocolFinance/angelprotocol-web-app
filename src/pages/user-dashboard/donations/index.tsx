@@ -75,13 +75,13 @@ export default function Donations() {
       >
         Export to CSV
       </CsvExporter>
-      <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded-sm">
+      <div className="relative flex gap-x-3 items-center border border-gray-l3 w-full bg-white dark:bg-blue-d6 rounded-sm">
         <Search
           size={20}
-          className="text-navy-d4 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
+          className="text-gray-d4 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
-          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-navy-l2 bg-transparent w-full outline-hidden disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
+          className="p-3 pl-10 placeholder:text-gray dark:placeholder:text-gray bg-transparent w-full outline-hidden disabled:bg-gray-l3 dark:disabled:bg-gray-d3"
           type="text"
           placeholder="Search donations..."
           value={query}
@@ -101,7 +101,7 @@ export default function Donations() {
             setParams(copy);
           }}
         />
-        <div className="p-5 bg-gray-l6 border border-gray-l4 rounded-b @2xl:rounded-tr grid">
+        <div className="p-5 bg-gray-l6 border border-gray-l3 rounded-b @2xl:rounded-tr grid">
           {items.length === 0 ? (
             <NoDonations
               classes="mt-8 place-self-center col-span-full"

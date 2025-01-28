@@ -17,7 +17,7 @@ export function SidebarOpener({
     <button
       type="button"
       onClick={() => setOpen(true)}
-      className={`flex items-center gap-2 py-5 px-6 dark:bg-blue-d6 border-b border-gray-l4 font-bold text-sm text-blue-d1 ${className}`}
+      className={`flex items-center gap-2 py-5 px-6 dark:bg-blue-d6 border-b border-gray-l3 font-bold text-sm text-blue-d1 ${className}`}
     >
       <Ico {...activeLink.icon} />
       {activeLink.title}

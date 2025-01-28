@@ -27,7 +27,7 @@ export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
           </Link>
         </div>
       )}
-      <p className="text-xs sm:text-sm text-navy-l1 italic mt-2">
+      <p className="text-xs sm:text-sm text-gray italic mt-2">
         Change your nonprofit's profile URL ending segment from the default
         numeric ID to a more human-readable value for better SEO and donor
         recognition. Only numbers and letters are permitted! Your numeric ID URL
@@ -35,7 +35,7 @@ export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
         have been shared.
       </p>
 
-      <p className="text-xs sm:text-sm text-navy-l1 italic mt-2">
+      <p className="text-xs sm:text-sm text-gray italic mt-2">
         Example: {genLink(newSlug || "myNonprofit", origin)}
       </p>
     </div>

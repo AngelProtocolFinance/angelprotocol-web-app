@@ -30,11 +30,11 @@ export function Target({ text, target, classes = "", progress }: ITarget) {
         />
       </div>
       <div className="flex items-center justify-between mt-1">
-        <p className="flex items-center gap-x-1 text-sm text-navy-l1">
+        <p className="flex items-center gap-x-1 text-sm text-gray">
           <span className="font-medium">${prettyUsd(progress)}</span>
           <span className="text-xs">Raised</span>
         </p>
-        <p className="flex items-center gap-x-1 text-sm text-navy-l1">
+        <p className="flex items-center gap-x-1 text-sm text-gray">
           <span className="font-medium">${prettyUsd(to)}</span>
           <span className="text-xs">Goal</span>
         </p>
@@ -52,7 +52,7 @@ Target.Text = ({ classes = "" }) => {
         height={20}
         className="inline-block relative mr-2 bottom-1"
       />
-      <span className="text-sm font-heading font-medium text-navy-l1">
+      <span className="text-sm font-heading font-medium text-gray">
         Help them reach their goal!
       </span>
     </p>

@@ -46,7 +46,7 @@ export function ImgCropper({
         <div className="bg-white flex items-center justify-end gap-2 p-1">
           <button
             type="button"
-            className="text-navy-d4 hover:text-blue"
+            className="text-gray-d4 hover:text-blue"
             onClick={handleSave}
           >
             <Save size={22} />

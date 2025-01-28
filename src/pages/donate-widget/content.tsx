@@ -34,7 +34,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
       <Steps
         source="bg-widget"
         mode="live"
-        className="w-full border border-gray-l4 rounded-lg"
+        className="w-full border border-gray-l3 rounded-lg"
         recipient={recipient}
         config={config}
       />

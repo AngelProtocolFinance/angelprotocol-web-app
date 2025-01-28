@@ -44,11 +44,11 @@ export default function WhyBG({ className = "" }) {
       <h2 className="col-span-full text-center text-3xl md:text-4.5xl leading-snug">
         Why Nonprofits Choose Better Giving
       </h2>
-      <p className="text-navy text-center mb-16  col-span-full text-xl mt-4">
+      <p className="text-gray-d1 text-center mb-16  col-span-full text-xl mt-4">
         A partner who understands your needs.
       </p>
 
-      <ul className="mt-4 @3xl:divide-x divide-gray-l4 grid @3xl:grid-cols-3 gap-y-16 @3xl:gap-y-0">
+      <ul className="mt-4 @3xl:divide-x divide-gray-l3 grid @3xl:grid-cols-3 gap-y-16 @3xl:gap-y-0">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}
@@ -82,13 +82,13 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         className="mb-4"
       />
-      <h5 className="text-center font-body font-medium text-2xl text-navy">
+      <h5 className="text-center font-body font-medium text-2xl text-gray-d1">
         {props.title1}
       </h5>
-      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-navy-l1 mb-4">
+      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-gray mb-4">
         {props.title2}
       </h6>
-      <p className="pt-4 text-center @6xl:text-lg text-navy-l3 border-t-[3px] border-blue-d1 ">
+      <p className="pt-4 text-center @6xl:text-lg text-gray border-t-[3px] border-blue-d1 ">
         {props.description}
       </p>
     </li>

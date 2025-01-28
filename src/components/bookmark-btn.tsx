@@ -16,7 +16,7 @@ export default function Loader({ classes = "", user, endowId }: Props) {
     return (
       <Tooltip
         tip={
-          <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
+          <Content className="px-4 py-2 bg-gray-d4 text-white text-sm rounded-lg shadow-lg">
             Login to save your favorites
             <Arrow />
           </Content>
@@ -67,7 +67,7 @@ function BookmarkBtn({ bookmarks, classes = "", endowId }: IBookmarkBtn) {
       <Tooltip
         tip={
           !isBookmarked ? (
-            <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
+            <Content className="px-4 py-2 bg-gray-d4 text-white text-sm rounded-lg shadow-lg">
               Add to favorites
               <Arrow />
             </Content>

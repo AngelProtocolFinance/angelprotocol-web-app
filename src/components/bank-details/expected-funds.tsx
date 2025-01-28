@@ -27,7 +27,7 @@ export default function ExpectedFunds(props: Props) {
         spellCheck={false}
         disabled={props.disabled}
       />
-      <p className="text-navy-l1 text-sm my-2 italic">
+      <p className="text-gray text-sm my-2 italic">
         Depending on how much you expect to receive each month via {APP_NAME},
         different details are required. At this point, we recommend using a
         conservative figure - Maybe $1000 per month.

@@ -62,7 +62,7 @@ export default function CreateFund() {
   const isUploading = banner.value === "loading" || logo.value === "loading";
 
   return (
-    <div className="w-full padded-container">
+    <div className="w-full xl:container xl:mx-auto px-5">
       <Form
         onSubmit={handleSubmit((fv) => {
           const fund: NewFund = {
@@ -90,7 +90,7 @@ export default function CreateFund() {
           });
         })}
         disabled={isSubmitting}
-        className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
+        className="grid border border-gray-l3 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
         <h4 className="font-bold text-xl mb-4">Fund Information</h4>
 
@@ -112,8 +112,8 @@ export default function CreateFund() {
           charLimit={MAX_DESCRIPTION_CHAR}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
-            counter: "text-navy-l1 dark:text-navy-l2",
+              "rich-text-toolbar border border-gray-l3 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+            counter: "text-gray dark:text-gray",
             error: "text-right",
           }}
           error={

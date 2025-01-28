@@ -19,11 +19,11 @@ export default function DonorInfo({ className = "" }) {
   // const endows = useLoaderData() as EndowmentCard[];
   return (
     <main className={`${className} grid @container`}>
-      <Hero className="padded-container px-10" />
+      <Hero className="xl:container xl:mx-auto px-5 px-10" />
       {/* <HeroBottom className="mb-10 mt-20" endowments={endows} /> */}
-      <DonationFormInfo className="mt-20 padded-container" />
+      <DonationFormInfo className="mt-20 xl:container xl:mx-auto px-5" />
       <Benefits
-        className="mt-56 padded-container px-10"
+        className="mt-56 xl:container xl:mx-auto px-5 px-10"
         subheading="Simple path to financial stability"
         heading="Making a Lasting Impact: Give today, Give Forever"
         body="Access our free fundraising technology and tools."

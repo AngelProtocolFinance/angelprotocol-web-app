@@ -17,7 +17,7 @@ export default function Step({
     <div
       className={`py-6 pl-2 pr-4 grid grid-cols-[1fr_auto_auto] items-center border-b ${
         num === 1 ? "border-t" : ""
-      } border-gray-l4 `}
+      } border-gray-l3 `}
     >
       <p className="mr-auto text-left">{title[num]}</p>
 

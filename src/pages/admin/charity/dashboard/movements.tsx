@@ -14,13 +14,13 @@ const asset: {
   };
 } = {
   "liq-cash": {
-    title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <HandCoins className="text-navy-l1 size-4" />,
+    title: <span className="text-sm text-gray">Grant</span>,
+    icon: <HandCoins className="text-gray size-4" />,
     source: "Savings",
   },
   "lock-cash": {
-    title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <HandCoins className="text-navy-l1 size-4" />,
+    title: <span className="text-sm text-gray">Grant</span>,
+    icon: <HandCoins className="text-gray size-4" />,
     source: "Investments",
   },
   "liq-lock": {
@@ -48,8 +48,8 @@ export function Movements({ classes = "", ...props }: Props) {
   if (movs.length === 0) return null;
 
   return (
-    <div className={`p-4 grid rounded-sm border border-gray-l4 ${classes}`}>
-      <h4 className="grid border-b border-gray-l4 w-full pb-2">
+    <div className={`p-4 grid rounded-sm border border-gray-l3 ${classes}`}>
+      <h4 className="grid border-b border-gray-l3 w-full pb-2">
         Pending Transactions
       </h4>
       <div className="grid grid-cols-[auto_auto_auto_auto_auto_1fr] mt-4 gap-y-2">
@@ -78,7 +78,7 @@ export function Movements({ classes = "", ...props }: Props) {
                   }).toString(),
                 }}
                 aria-disabled={props.disabled}
-                className="text-right bg-gray-l4 disabled:bg-gray-l5 text-navy-d4 aria-disabled:text-gray px-3 py-1 font-heading hover:bg-gray-l3 justify-self-end text-xs rounded-full"
+                className="text-right bg-gray-l4 disabled:bg-gray-l5 text-gray-d4 aria-disabled:text-gray px-3 py-1 font-heading hover:bg-gray-l3 justify-self-end text-xs rounded-full"
               >
                 edit
               </Link>

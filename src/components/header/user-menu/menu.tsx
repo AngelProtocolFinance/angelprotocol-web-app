@@ -13,7 +13,7 @@ type Props = {
 export default function Menu({ user, classes }: Props) {
   const navigation = useNavigation();
   return (
-    <div className={`${classes} text-navy-l1`}>
+    <div className={`${classes} text-gray`}>
       <p className="text-sm p-3 bg-blue-l4">
         Welcome, {user.firstName || user.email}!
       </p>
@@ -29,7 +29,7 @@ export default function Menu({ user, classes }: Props) {
         <Organizations user={user} classes="mt-6" />
         <Bookmarks user={user} classes="mt-6" />
         <div className="hidden [&:has(a)]:block mt-6">
-          <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
+          <h5 className="uppercase text-xs text-gray mb-1">BG Admin</h5>
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}

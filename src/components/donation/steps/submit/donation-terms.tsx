@@ -8,7 +8,7 @@ interface Props {
 }
 export function DonationTerms({ classes = "", endowName }: Props) {
   return (
-    <p className={`${classes} text-sm leading-normal text-navy-l1`}>
+    <p className={`${classes} text-sm leading-normal text-gray`}>
       100% of your donation is tax-deductible to the extent allowed by US law.
       Your donation is made to {APP_NAME}, a tax-exempt US 501(c)(3) charity
       that grants unrestricted funds to {endowName} on your behalf. As a legal

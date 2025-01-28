@@ -41,7 +41,7 @@ const txs: {
     icon: (
       <Tooltip
         tip={
-          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+          <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
             <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
             Grant processing threshold and would be processed in the next cycle
           </Content>
@@ -74,7 +74,7 @@ const txs: {
     icon: (
       <Tooltip
         tip={
-          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+          <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
             <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
             Grant processing threshold and is credited back to Savings
           </Content>
@@ -89,7 +89,7 @@ const txs: {
     icon: (
       <Tooltip
         tip={
-          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+          <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
             <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
             Grant processing threshold and is credited back to Investments
           </Content>
@@ -111,9 +111,9 @@ export default function Table({
 }: TableProps) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l4`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l3`}
     >
-      <TableSection type="thead" rowClass="divide-x divide-gray-l4">
+      <TableSection type="thead" rowClass="divide-x divide-gray-l3">
         <Cells
           type="th"
           cellClass="px-3 py-2 bg-gray-l5 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
@@ -126,7 +126,7 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-gray-l4"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-gray-l3"
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {records
@@ -136,7 +136,7 @@ export default function Table({
               <Cells
                 key={row.date}
                 type="td"
-                cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
+                cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${
                   hasMore ? "" : "first:rounded-bl last:rounded-br"
                 }`}
               >
@@ -152,7 +152,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-gray-l4 rounded-b"
+                className="border-t border-gray-l3 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}

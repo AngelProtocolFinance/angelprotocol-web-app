@@ -127,11 +127,11 @@ export default function Form() {
         />
         <p
           data-exceed={receipMsg.length > MAX_RECEIPT_MSG_CHAR}
-          className="text-xs text-navy-l1 data-[exceed='true']:text-red"
+          className="text-xs text-gray data-[exceed='true']:text-red"
         >
           {receipMsg.length}/{MAX_RECEIPT_MSG_CHAR}
         </p>
-        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+        <p className="text-xs sm:text-sm text-gray italic mt-1">
           This is an optional message that can be included on all tax receipts
           to your donors to add a personalized touch, a thank you, or a call to
           action.
@@ -145,7 +145,7 @@ export default function Form() {
         >
           Disable Program-based donations
         </CheckField>
-        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+        <p className="text-xs sm:text-sm text-gray italic mt-1">
           Program-based donations are allowed by default, enabling donors to
           select a specifc Program they wish to put their donation towards. You
           may opt-in or out of Program-based donations at any time.
@@ -156,7 +156,7 @@ export default function Form() {
         <CheckField {...register("hide_bg_tip")} classes="font-medium">
           Opt out of Support Contribution Model
         </CheckField>
-        <span className="text-xs sm:text-sm italic text-navy-l1">
+        <span className="text-xs sm:text-sm italic text-gray">
           During the donation flow, there is a step in which users can choose to
           support Better Giving by contributing any amount they desire alongside
           their donation to you - the amount they contribute will not affect the
@@ -170,7 +170,7 @@ export default function Form() {
         <CheckField {...register("fundOptIn")} classes="font-medium">
           Allow Fundraisers to be created on behalf of your nonprofit
         </CheckField>
-        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+        <p className="text-xs sm:text-sm text-gray italic mt-1">
           Fundraising functionality is optional for all Better Giving
           nonprofits. By opting in, people will be able to create fundraisers on
           your behalf. You will receive 100% of funds raised for fundraisers
@@ -216,12 +216,12 @@ export default function Form() {
               <div className="relative w-full">
                 <DollarSign
                   size={15}
-                  className="text-navy-l1 absolute top-1/2 left-2 transform -translate-y-1/2"
+                  className="text-gray absolute top-1/2 left-2 transform -translate-y-1/2"
                 />
                 <Input
                   type="number"
                   {...register(`increments.${idx}.value`)}
-                  className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                  className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                 />
               </div>
 
@@ -233,7 +233,7 @@ export default function Form() {
               <Textarea
                 {...register(`increments.${idx}.label`)}
                 rows={2}
-                className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
               />
               <p
                 data-error={!!errors.increments?.[idx]?.label?.message}

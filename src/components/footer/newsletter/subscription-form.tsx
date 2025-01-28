@@ -32,7 +32,7 @@ export default function SubscriptionForm() {
       <div className="grid mb-3">
         <input
           {...getInputProps(fields.email, { type: "email" })}
-          className="text-[#000000] opacity-[.9] p-3 rounded-md font-normal text-base md:text-sm border border-gray-l4 w-full outline-blue-d1"
+          className="text-[#000000] opacity-[.9] p-3 rounded-md font-normal text-base md:text-sm border border-gray-l3 w-full outline-blue-d1"
           placeholder="Enter your email"
           disabled={fetcher.state === "submitting"}
         />

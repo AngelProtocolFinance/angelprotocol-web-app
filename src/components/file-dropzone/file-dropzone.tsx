@@ -66,7 +66,7 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
         <input {...getInputProps()} />
         <DropzoneText value={props.value || file} />
       </div>
-      <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
+      <p className="text-xs text-gray dark:text-gray mt-2">
         Valid types are:
         {props.specs.mimeTypes
           .map((m) => m.split("/")[1].toUpperCase())

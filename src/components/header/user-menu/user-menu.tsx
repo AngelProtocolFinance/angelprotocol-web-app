@@ -40,10 +40,7 @@ export default function UserMenu({ classes = "" }) {
           width={32}
         />
       ) : (
-        <CircleUserRound
-          size={24}
-          className="text-blue disabled:text-navy-l2"
-        />
+        <CircleUserRound size={24} className="text-blue disabled:text-gray" />
       )}
     </NavLink>
   );

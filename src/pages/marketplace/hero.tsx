@@ -4,7 +4,7 @@ import Image from "components/image";
 export default function Hero({ classes = "" }: { classes?: string }) {
   return (
     <div
-      className={`${classes} grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 padded-container justify-items-center lg:content-start text-white`}
+      className={`${classes} grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 xl:container xl:mx-auto px-5 justify-items-center lg:content-start text-white`}
     >
       <h1 className="order-1 font-bold w-full text-[1.63rem] md:text-3xl/tight lg:text-[2.75rem] text-center lg:text-left lg:self-end text-balance">
         <p className="contents md:block">BETTER GIVING REDEFINES</p>{" "}

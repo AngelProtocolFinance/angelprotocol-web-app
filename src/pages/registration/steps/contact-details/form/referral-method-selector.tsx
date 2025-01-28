@@ -40,7 +40,7 @@ export const ReferralMethodSelector = forwardRef<HTMLButtonElement, Props>(
         >
           <ListboxButton
             ref={ref}
-            className="group flex items-center focus:outline-2 outline-blue-d1 outline-offset-[3px] text-sm justify-between w-full px-4 py-3.5 text-navy-d4 border border-gray-l3 font-heading rounded-sm disabled:bg-gray-l5 disabled:text-navy-l1"
+            className="group flex items-center focus:outline-2 outline-blue-d1 outline-offset-[3px] text-sm justify-between w-full px-4 py-3.5 text-gray-d4 border border-gray-l3 font-heading rounded-sm disabled:bg-gray-l5 disabled:text-gray"
           >
             <span>{props.value.label}</span>
             <ChevronDown

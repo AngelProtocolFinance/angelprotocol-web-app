@@ -14,11 +14,11 @@ export default function Balances() {
 
 function Balance(props: { title: string; amount: number }) {
   return (
-    <div className="flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded-sm border border-gray-l4 dark:bg-blue-d6 md:items-start md:h-28 md:px-6 md:py-04">
+    <div className="flex flex-col justify-center items-center gap-2 h-20 w-full py-4 rounded-sm border border-gray-l3 dark:bg-blue-d6 md:items-start md:h-28 md:px-6 md:py-04">
       <p className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </p>
-      <p className="font-normal text-lg text-navy-l1 dark:text-navy-l2">
+      <p className="font-normal text-lg text-gray dark:text-gray">
         ${humanize(props.amount)}
       </p>
     </div>

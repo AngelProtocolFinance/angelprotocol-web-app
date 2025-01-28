@@ -48,7 +48,7 @@ const HeroBottom = ({ className = "", endowments }: Props) => {
         Bridge to better
       </h3>
       <h2
-        className={`${s.heading} px-6 justify-self-center z-10 mb-9 lg:mb-12 text-3xl md:text-4xl text-center text-navy-d4`}
+        className={`${s.heading} px-6 justify-self-center z-10 mb-9 lg:mb-12 text-3xl md:text-4xl text-center text-gray-d4`}
       >
         Connecting Donors to Causes That Matter
       </h2>

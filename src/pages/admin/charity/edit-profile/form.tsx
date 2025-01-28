@@ -151,8 +151,8 @@ export default function Form({ initSlug = "", init, id }: Props) {
           charLimit={MAX_CHARS}
           classes={{
             field:
-              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
-            counter: "text-navy-l1 dark:text-navy-l2",
+              "rich-text-toolbar border border-gray-l3 text-sm grid grid-rows-[auto_1fr] rounded-sm bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+            counter: "text-gray dark:text-gray",
             error: "text-right",
           }}
           error={
@@ -333,7 +333,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
 
           <ExtLink
             href={`${appRoutes.marketplace}/${id}`}
-            className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
+            className="text-blue-d1 hover:text-gray-d1 text-sm flex items-center gap-1"
           >
             View Profile
           </ExtLink>

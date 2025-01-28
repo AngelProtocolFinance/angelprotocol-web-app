@@ -11,7 +11,7 @@ import { Fragment } from "react";
 
 export default function FAQ({ classes = "" }) {
   return (
-    <div className={classes + " grid divide-y divide-gray-l4"}>
+    <div className={classes + " grid divide-y divide-gray-l3"}>
       <h2 className="col-span-full text-center text-3xl md:text-4xl leading-snug mb-10">
         Frequently Asked Questions
       </h2>
@@ -29,7 +29,7 @@ export default function FAQ({ classes = "" }) {
           </DisclosureButton>
           <DisclosurePanel
             as="div"
-            className="grid gap-3 text-navy-l1 data-open:mt-4"
+            className="grid gap-3 text-gray data-open:mt-4"
           >
             {faq.paragraphs.map((p, idx) => (
               <Fragment key={idx}>{p}</Fragment>

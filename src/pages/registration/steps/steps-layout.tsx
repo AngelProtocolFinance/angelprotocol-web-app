@@ -11,20 +11,20 @@ export default function Layout() {
   const claim = getClaim(reg);
 
   return (
-    <div className="w-full md:w-[90%] max-w-[62.5rem] [&]:has-data-[claim='true']:pt-0 pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l4 rounded-none md:rounded-lg bg-white dark:bg-blue-d6">
+    <div className="w-full md:w-[90%] max-w-[62.5rem] [&]:has-data-[claim='true']:pt-0 pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l3 rounded-none md:rounded-lg bg-white dark:bg-blue-d6">
       {claim && (
         <div
           data-claim
-          className="bg-blue-l4 col-span-full md:mb-8 rounded-t p-2 text-navy-l1 text-sm"
+          className="bg-blue-l4 col-span-full md:mb-8 rounded-t p-2 text-gray text-sm"
         >
           Claiming{" "}
           <ExtLink
-            className="font-bold text-navy-d4 hover:underline"
+            className="font-bold text-gray-d4 hover:underline"
             href={`${appRoutes.marketplace}/${claim.id}`}
           >
             {claim.name}
           </ExtLink>
-          , EIN: <span className="font-bold text-navy-d4">{claim.ein}</span>
+          , EIN: <span className="font-bold text-gray-d4">{claim.ein}</span>
         </div>
       )}
       <ProgressIndicator

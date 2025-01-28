@@ -31,7 +31,7 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
         >
           {props.label}
         </label>
-        <span className="text-navy-l1 text-sm mr-1">
+        <span className="text-gray text-sm mr-1">
           {tokenState === "ok"
             ? `$ ${humanize(
                 props.token.rate * multipliable(props.token.amount),
@@ -56,7 +56,7 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
           id="amount"
           type="text"
           placeholder="Enter amount"
-          className="text-sm py-3.5 dark:text-navy-l2"
+          className="text-sm py-3.5 dark:text-gray"
         />
         <TokenSelector
           tokenState={tokenState}

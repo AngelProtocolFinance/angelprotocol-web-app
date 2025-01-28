@@ -40,7 +40,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         <Figure
           title="Savings"
           tooltip={
-            <Content className="bg-navy-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg">
+            <Content className="bg-gray-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg">
               Funds held in Fidelity Government Money Market (SPAXX) consisting
               of cash, US Government Securities and Repurchase Agreements
               <Arrow />
@@ -60,7 +60,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         <Figure
           title="Investments"
           tooltip={
-            <Content className="bg-navy-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg shadow-lg">
+            <Content className="bg-gray-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg shadow-lg">
               <span className="block mb-2">
                 Funds invested in a diversified portfolio comprising:
               </span>
@@ -102,9 +102,9 @@ export function Loaded({ classes = "", ...props }: Props) {
               {period.from} - {period.to}
             </span>
           </div>
-          <p className="text-sm text-navy-l3">
+          <p className="text-sm text-gray">
             <span>Ends in </span>
-            <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded-sm ml-1">
+            <span className="p-1 px-2 bg-gray-d4 text-gray-l4 text-xs rounded-sm ml-1">
               in {period.distance}
             </span>
           </p>

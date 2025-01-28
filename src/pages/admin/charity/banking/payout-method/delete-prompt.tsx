@@ -47,29 +47,29 @@ function Content({ isDefault, isWithHeir }: Props) {
         : [true, "Are you sure you want to delete this payment method?"];
 
   return (
-    <DialogPanel className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden">
+    <DialogPanel className="fixed-center z-10 grid content-start justify-items-center text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden">
       <div className="relative w-full">
-        <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
+        <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           Delete payout method
         </p>
         <NavLink
           to=".."
           aria-disabled={isSubmitting}
-          className="[&:is(.pending)]:text-gray border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-navy-l5"
+          className="[&:is(.pending)]:text-gray border border-gray-l3 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-gray-l2"
         >
           <X className="text-lg sm:text-2xl" />
         </NavLink>
       </div>
       <CircleAlert size={80} className="mt-6 text-red" />
 
-      <div className="p-6 text-center text-navy-l1 dark:text-navy-l5">
+      <div className="p-6 text-center text-gray dark:text-gray-l2">
         {message}
       </div>
 
       {canProceed && (
         <fetcher.Form
           method="DELETE"
-          className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l4"
+          className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3"
         >
           <NavLink
             to=".."

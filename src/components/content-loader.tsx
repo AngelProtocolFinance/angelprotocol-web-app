@@ -8,7 +8,7 @@ export default function ContentLoader({
     <div
       {...props}
       className={
-        className + " bg-gray-l4 dark:bg-navy animate-pulse rounded-sm"
+        className + " bg-gray-l4 dark:bg-gray-d1 animate-pulse rounded-sm"
       }
     />
   );

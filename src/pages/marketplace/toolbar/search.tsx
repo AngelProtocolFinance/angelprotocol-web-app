@@ -17,7 +17,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} flex gap-2 items-center border border-gray-l4 rounded-lg relative`}
+      className={`${classes} flex gap-2 items-center border border-gray-l3 rounded-lg relative`}
     >
       <SearchIcon
         size={20}
@@ -27,7 +27,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
         type="search"
         name="query"
         onChange={debounce(onChange, 500)}
-        className="w-full h-full p-3 pl-10 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading rounded-lg outline-blue-d1 outline-offset-4"
+        className="w-full h-full p-3 pl-10 placeholder:text-gray text-gray-d4 font-medium font-heading rounded-lg outline-blue-d1 outline-offset-4"
         placeholder={"Search organizations..."}
       />
     </div>

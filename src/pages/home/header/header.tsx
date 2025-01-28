@@ -35,7 +35,7 @@ export default function Header({ classes }: Props) {
         observer.observe(node);
       }}
     >
-      <div className="grid relative items-center grid-cols-2 gap-4 padded-container bg-white rounded-full py-2">
+      <div className="grid relative items-center grid-cols-2 gap-4 xl:container xl:mx-auto px-5 bg-white rounded-full py-2">
         <DappLogo classes="w-48 h-12" />
         <SearchField
           onChange={(txt) => setQuery(txt)}

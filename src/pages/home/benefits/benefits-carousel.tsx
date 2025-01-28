@@ -30,10 +30,10 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
                 <p className="mt-6 text-2xl font-heading text-[#0D283A] w-full text-center font-bold">
                   {slide.title}
                 </p>
-                <p className="text-xl text-navy w-full text-center font-medium">
+                <p className="text-xl text-gray-d1 w-full text-center font-medium">
                   {slide.title2}
                 </p>
-                <p className="text-center text-balance text-lg mt-4 text-navy">
+                <p className="text-center text-balance text-lg mt-4 text-gray-d1">
                   {slide.description}
                 </p>
               </div>

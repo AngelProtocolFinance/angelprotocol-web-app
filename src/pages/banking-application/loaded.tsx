@@ -35,7 +35,7 @@ export function Loaded(props: BankingApplicationDetails) {
         </span>
       </div>
 
-      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l4 rounded-sm">
+      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l3 rounded-sm">
         <Row label="Currency">{props.currency}</Row>
         <Row label="Country">{props.country}</Row>
         <Row label="Recipient name">{props.name.fullName}</Row>
@@ -104,14 +104,14 @@ function Row(props: Props) {
       </dt>
       <div
         aria-hidden={true}
-        className="max-sm:hidden w-px border-r border-gray-l4 last:border-none"
+        className="max-sm:hidden w-px border-r border-gray-l3 last:border-none"
       />
       <dd className="px-3 max-sm:pb-3 sm:p-3 flex items-center text-sm">
         {props.children}
       </dd>
       <div
         aria-hidden={true}
-        className="h-px col-span-full border-b border-gray-l4 last:border-none"
+        className="h-px col-span-full border-b border-gray-l3 last:border-none"
       />
     </>
   );

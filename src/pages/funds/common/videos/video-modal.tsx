@@ -27,7 +27,7 @@ export function VideoModal(props: IVideoModal) {
     <Modal
       open={props.open}
       onClose={() => props.setOpen(false)}
-      classes="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
+      classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <form
         className="contents"
@@ -36,12 +36,12 @@ export function VideoModal(props: IVideoModal) {
         })}
       >
         <div className="relative">
-          <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
+          <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
             {props.initUrl ? "Edit" : "Add"} video
           </p>
           <button
             onClick={() => props.setOpen(false)}
-            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 dark:disabled:border-navy-d3"
+            className="border border-gray-l3 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
           >
             <X size={24} />
           </button>
@@ -57,7 +57,7 @@ export function VideoModal(props: IVideoModal) {
           />
         </div>
 
-        <div className="mt-4 p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l4 dark:bg-blue-d7 border-t border-gray-l4">
+        <div className="mt-4 p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l4 dark:bg-blue-d7 border-t border-gray-l3">
           <button
             type="button"
             className="btn-outline-filled text-sm px-8 py-2"
