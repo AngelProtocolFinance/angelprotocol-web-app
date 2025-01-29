@@ -67,7 +67,10 @@ export default function Form(props: StockFormStep) {
         error={errors.symbol?.message}
         label="Symbol name of share"
         placeholder="Ex. AAPL"
-        classes={{ label: "font-semibold", container: "field-donate" }}
+        classes={{
+          label: "font-heading font-semibold text-base",
+          input: "field-input-donate",
+        }}
       />
 
       <Field
@@ -77,9 +80,9 @@ export default function Form(props: StockFormStep) {
         label="Number of shares you are donating"
         placeholder="Enter quantity"
         classes={{
-          label: "font-semibold",
-          container: "mt-6 field-donate",
-          error: "left-0",
+          container: "mt-6",
+          label: "font-heading font-semibold text-base",
+          input: "field-input-donate",
         }}
       />
 

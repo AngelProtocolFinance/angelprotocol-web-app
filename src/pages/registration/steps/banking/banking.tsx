@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { NavLink, useLoaderData } from "@remix-run/react";
 import BankDetails from "components/bank-details";
 import ExtLink from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
@@ -40,18 +40,18 @@ export default function Banking() {
         </button>
 
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
-          <Link
+          <NavLink
             to={`../${steps.docs}`}
             className="py-3 min-w-[8rem] btn btn-outline text-sm"
           >
             Back
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to={`../${steps.summary}`}
             className="py-3 min-w-[8rem] btn btn-blue text-sm"
           >
             Continue
-          </Link>
+          </NavLink>
         </div>
       </div>
     );

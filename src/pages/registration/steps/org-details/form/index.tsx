@@ -40,29 +40,26 @@ export default function Form({ data }: RegStep2) {
         options={sdgOptions}
         classes={{ options: "text-sm" }}
       />
-      <Label className="mb-2 mt-6" required>
-        Nonprofit Designation
-      </Label>
       <Selector<FV, "designation", string>
+        required
+        label="Nonprofit Designation"
         name="designation"
-        classes={{ options: "text-sm" }}
+        classes={{ options: "text-sm", container: "mt-4" }}
         options={orgDesignations.map((v) => ({
           label: v,
           value: v,
         }))}
       />
-      <Label className="mt-6 mb-2" required>
-        In what country is your organization registered in?
-      </Label>
+
       <CountrySelector<FV, "hq_country">
+        required
+        label="In what country is your organization registered in?"
         //endowment claims are US-based and shoudn't be changed by claimer
         disabled={!!data.init.claim}
         fieldName="hq_country"
         placeholder="Select a country"
         classes={{
-          container: "px-4",
-          input: "text-sm py-3.5",
-          error: "field-error",
+          container: "mt-6 mb-2",
         }}
         options={countries}
       />

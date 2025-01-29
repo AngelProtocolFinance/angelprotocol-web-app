@@ -31,7 +31,7 @@ export function EndowmentSelector({ endow, isLoading }: Props) {
       }}
       as="div"
       by="name"
-      className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
+      className="relative"
     >
       <ComboboxInput
         placeholder="Search for an organization..."
@@ -39,13 +39,11 @@ export function EndowmentSelector({ endow, isLoading }: Props) {
         displayValue={(value?: EndowmentOption) =>
           value?.name ?? "Select an organization"
         }
-        className="pl-4 w-full"
+        className="pl-4 field-input"
       />
 
-      <ComboboxButton>
-        {({ open }) => (
-          <DrawerIcon isOpen={open} size={20} className="ml-auto mr-1" />
-        )}
+      <ComboboxButton className="absolute top-1/2 -translate-y-1/2 right-4">
+        {({ open }) => <DrawerIcon isOpen={open} size={20} />}
       </ComboboxButton>
 
       <Options searchText={searchText} />

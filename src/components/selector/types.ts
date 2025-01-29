@@ -6,6 +6,7 @@ export type Classes = {
   container?: string;
   button?: string;
   options?: string;
+  option?: string;
 };
 
 type BaseProps = {
@@ -25,6 +26,8 @@ export interface Props<
   classes?: Classes;
   onOptionChange?(): void;
   children?: (selected: OptionType<V>) => ReactNode;
+  label?: ReactNode;
+  required?: boolean;
 }
 
 export interface ControlledProps<T extends ValKey> extends BaseProps {
@@ -33,6 +36,8 @@ export interface ControlledProps<T extends ValKey> extends BaseProps {
   options: OptionType<T>[];
   children?: (selected: OptionType<T>) => ReactNode;
   error?: string;
+  label?: ReactNode;
+  required?: boolean;
 }
 
 export interface ControlledMultiSelectorProps<T extends ValKey>

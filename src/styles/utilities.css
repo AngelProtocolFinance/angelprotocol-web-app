@@ -7,22 +7,7 @@
 @utility field-error {
   @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
 }
-@utility field-input {
-  @apply w-full font-heading rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3;
-  &:disabled {
-    @apply pointer-events-none bg-gray-l5 text-gray;
-  }
-  &[aria-disabled="true"] {
-    @apply pointer-events-none bg-gray-l5 text-gray;
-  }
-  &:enabled:focus {
-    @apply outline-hidden ring-2 ring-offset-1 ring-blue-d1;
-  }
-
-  &[aria-invalid="true"] {
-    @apply border-red;
-  }
-}
+/* ` */
 @utility label {
   @apply block text-sm after:ml-1;
   &[data-required="true"] {
@@ -45,51 +30,7 @@
 @utility overlay {
   @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 dark:before:bg-blue-d3/90;
 }
-@utility field-container {
-  @apply rounded-sm border border-gray-l3;
-  &:has(:focus) {
-    @apply ring-2 ring-offset-1 ring-blue-d1;
-  }
-  &:has(:disabled) {
-    @apply text-gray bg-gray-l5 pointer-events-none;
-  }
-  &:has([aria-disabled="true"]) {
-    @apply text-gray bg-gray-l5 pointer-events-none;
-  }
-  &:has([data-error]) {
-    @apply border-red;
-  }
-  &:has([aria-invalid="true"]) {
-    @apply border-red;
-  }
-  & > input {
-    @apply bg-transparent focus:outline-hidden w-full;
-  }
-}
-@utility field-input-donate {
-  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
-  &:enabled:focus {
-    @apply ring-[color:var(--accent-primary)];
-  }
-}
-@utility field {
-  @apply relative;
 
-  & > textarea {
-    @apply field-input;
-  }
-
-  & > input {
-    @apply field-input;
-  }
-
-  & > label {
-    @apply mb-2;
-  }
-  & [data-error] {
-    @apply field-error;
-  }
-}
 @utility check-field {
   @apply grid grid-cols-[auto_1fr] justify-items-start gap-x-3 items-center;
   & > label {
@@ -110,44 +51,10 @@
   text-transform: none;
 }
 
-@utility field-input-admin {
-  @apply bg-gray-l6 dark:bg-blue-d5;
-}
-
-@utility field-kyc {
-  & > input {
-    @apply bg-gray-l6 dark:bg-blue-d6;
-  }
-}
-@utility field-admin {
-  & > textarea {
-    @apply bg-gray-l6 dark:bg-blue-d5;
-  }
-
-  & > input {
-    @apply bg-gray-l6 dark:bg-blue-d5;
-  }
-}
-@utility field-donate {
-  & > input {
-    @apply field-input-donate;
-  }
-  & > label {
-    @apply font-heading font-semibold text-base;
-  }
-}
-@utility field-container-donate {
-  @apply text-base font-semibold rounded-lg;
-  & > input {
-    @apply py-3.5 px-5 text-base placeholder:font-medium;
-  }
-  &:has(:focus) {
+@utility field-input-donate {
+  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+  &:enabled:focus {
     @apply ring-[color:var(--accent-primary)];
-  }
-}
-@utility field-admin-sec {
-  & > input {
-    @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 }
 
@@ -169,23 +76,4 @@
 
 @utility box-delay-2 {
   animation-delay: 600ms;
-}
-
-@utility text-field {
-  /** remove arrows from input type=number*/
-  -moz-appearance: textfield;
-  &:hover {
-    -moz-appearance: number-input;
-  }
-  &:focus {
-    -moz-appearance: number-input;
-  }
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
 }

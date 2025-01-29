@@ -5,7 +5,7 @@ import {
   type FileOutput,
   fileOutput,
 } from "components/file-dropzone";
-import { Label } from "components/form";
+import { Form, Label } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { NativeSelect } from "components/selector";
 import { logger } from "helpers";
@@ -17,7 +17,6 @@ import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
 import { useRequirements } from "../use-requirements";
 import { createRecipient } from "./create-recipient";
-import Form from "./form";
 
 type Props = {
   fields: Group[];
@@ -93,7 +92,7 @@ export default function RecipientDetailsForm({
 
   return (
     <Form
-      isSubmitting={isSubmitting}
+      disabled={isSubmitting}
       onSubmit={handleSubmit(async (fv) => {
         try {
           const { accountHolderName, bankStatement, ...details } = fv;
@@ -150,8 +149,8 @@ export default function RecipientDetailsForm({
         const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
-            <div key={f.key} className="field">
-              <Label required={labelRequired} htmlFor={f.key}>
+            <div key={f.key}>
+              <Label required={labelRequired} htmlFor={f.key} className="mb-2">
                 {f.name}
               </Label>
               <Controller
@@ -179,7 +178,12 @@ export default function RecipientDetailsForm({
                   />
                 )}
               />
-              <ErrorMessage name={f.key} errors={errors} as="p" data-error />
+              <ErrorMessage
+                name={f.key}
+                errors={errors}
+                as="p"
+                className="text-red text-xs mt-1"
+              />
             </div>
           );
         }
@@ -233,11 +237,12 @@ export default function RecipientDetailsForm({
 
         if (f.type === "text") {
           return (
-            <div key={f.key} className="field">
-              <Label required={labelRequired} htmlFor={f.key}>
+            <div key={f.key} className="">
+              <Label required={labelRequired} htmlFor={f.key} className="mb-2">
                 {f.name}
               </Label>
               <input
+                className="field-input"
                 aria-invalid={!!getFieldState(f.key).error}
                 type="text"
                 placeholder={f.example}
@@ -283,18 +288,24 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
+              <ErrorMessage
+                as="p"
+                className="text-red text-xs mt-1"
+                errors={errors}
+                name={f.key}
+              />
             </div>
           );
         }
 
         if (f.type === "date") {
           return (
-            <div key={f.key} className="field">
+            <div key={f.key} className="">
               <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
               <input
+                className="field-input"
                 aria-invalid={!!getFieldState(f.key).error}
                 type="text"
                 placeholder={f.example}
@@ -309,7 +320,12 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
+              <ErrorMessage
+                as="p"
+                className="text-red text-xs mt-1"
+                errors={errors}
+                name={f.key}
+              />
             </div>
           );
         }

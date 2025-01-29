@@ -4,7 +4,6 @@ import {
   NativeCheckField as CheckField,
   NativeField as Field,
   Form,
-  Label,
 } from "components/form";
 import { List } from "components/selector";
 import { useController, useForm } from "react-hook-form";
@@ -111,14 +110,16 @@ export default function SummaryForm({
       onSubmit={handleSubmit(onSubmit)}
       className={`grid grid-cols-2 gap-x-4 ${classes}`}
     >
-      <Label className="mb-2 text-base font-medium">Title</Label>
       <List
+        label={
+          <span className="font-semibold text-base font-heading">Title</span>
+        }
         value={title.value}
         onChange={title.onChange}
         options={titleOptions}
         classes={{
-          button: "field-input-donate",
           container: "col-span-full mb-4",
+          button: "field-input-donate",
         }}
       />
       <Field
@@ -128,15 +129,18 @@ export default function SummaryForm({
         required
         classes={{
           label: "font-semibold text-base font-heading",
-          container: "field-donate",
+          input: "field-input-donate",
         }}
         error={errors.firstName?.message}
       />
       <Field
         {...register("lastName")}
-        label=""
+        label="Last name"
         placeholder="Last Name"
-        classes={{ container: "field-donate mb-4" }}
+        classes={{
+          input: "field-input-donate",
+          label: "font-semibold text-base font-heading invisible",
+        }}
         error={errors.lastName?.message}
       />
       <Field
@@ -144,8 +148,9 @@ export default function SummaryForm({
         label="Your email"
         placeholder="Email address"
         classes={{
-          label: "font-medium text-base",
-          container: "col-span-full field-donate mb-4",
+          label: "font-semibold text-base font-heading",
+          container: "col-span-full my-4",
+          input: "field-input-donate",
         }}
         error={errors.email?.message}
         required
@@ -171,7 +176,7 @@ export default function SummaryForm({
             {...register("streetAddress")}
             label="House number"
             placeholder="e.g. 100 Better Giving Rd"
-            classes={{ container: "field-donate" }}
+            classes={{ input: "field-input-donate" }}
             required
             error={errors.streetAddress?.message}
           />
@@ -179,7 +184,7 @@ export default function SummaryForm({
             {...register("zipCode")}
             label="Postal code"
             placeholder="e.g. BG21 1BG"
-            classes={{ container: "field-donate" }}
+            classes={{ input: "field-input-donate" }}
             required
             error={errors.zipCode?.message}
           />
@@ -195,7 +200,10 @@ export default function SummaryForm({
             {...register("honoraryFullName")}
             label="Honoree's name"
             placeholder="e.g. Jane Doe"
-            classes="w-full field-donate [&_input]:bg-white"
+            classes={{
+              container: "[&_input]:bg-white",
+              input: "field-input-donate",
+            }}
             required
             error={errors.honoraryFullName?.message}
           />
@@ -212,7 +220,10 @@ export default function SummaryForm({
                 {...register("tributeNotif.toFullName")}
                 label="Recipient name"
                 placeholder="e.g. Jane Doe"
-                classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                classes={{
+                  container: "[&_label]:text-sm [&_input]:text-sm",
+                  input: "field-input-donate",
+                }}
                 required
                 error={errors.tributeNotif?.toFullName?.message}
               />
@@ -220,7 +231,10 @@ export default function SummaryForm({
                 {...register("tributeNotif.toEmail")}
                 label="Email address"
                 placeholder="e.g. janedoe@better.giving"
-                classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                classes={{
+                  container: "[&_label]:text-sm [&_input]:text-sm",
+                  input: "field-input-donate",
+                }}
                 required
                 error={errors.tributeNotif?.toEmail?.message}
               />
@@ -231,7 +245,8 @@ export default function SummaryForm({
                 label="Custom message"
                 placeholder="Message to recipient"
                 classes={{
-                  container: "field-donate [&_label]:text-sm [&_input]:text-sm",
+                  container: "[&_label]:text-sm [&_textarea]:text-sm",
+                  input: "field-input-donate",
                 }}
                 required={false}
                 error={errors.tributeNotif?.fromMsg?.message}

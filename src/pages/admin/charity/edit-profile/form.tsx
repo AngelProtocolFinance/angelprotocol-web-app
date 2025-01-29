@@ -65,7 +65,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
       >
         <Field
           {...rhf.register("name")}
-          classes="field-admin"
           label="Name of your organization"
           disabled
           tooltip="The name field reflects your organization's legal name as provided on your initial application. If you need to change your name please contact support@better.giving and provide documentation supporting the legal name change or D.B.A. records."
@@ -74,7 +73,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
         />
         <Field
           {...rhf.register("tagline")}
-          classes="field-admin"
           name="tagline"
           label="Tagline of your organization"
           required
@@ -82,7 +80,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
         />
         <Field
           {...rhf.register("registration_number")}
-          classes="field-admin"
           name="registration_number"
           label="EIN / Registration#"
           error={rhf.errors.registration_number?.message}
@@ -166,7 +163,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
 
         <Field
           {...rhf.register("url")}
-          classes="field-admin"
           label="Website of your organization"
           placeholder="https://website.org"
           error={rhf.errors.url?.message}
@@ -178,7 +174,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
           slugField={
             <Field
               {...rhf.register("slug")}
-              classes="field-admin"
               label="Custom Profile URL"
               placeholder="myNonprofit"
               error={rhf.errors.slug?.message}
@@ -195,15 +190,14 @@ export default function Form({ initSlug = "", init, id }: Props) {
           value={rhf.sdgs.value}
           onChange={rhf.sdgs.onChange}
           options={sdgOptions}
-          classes={{ button: "field-input-admin", options: "text-sm" }}
+          classes={{ options: "text-sm" }}
           error={rhf.errors.sdgs?.message}
           onReset={() => rhf.resetField("sdgs")}
           ref={rhf.sdgs.ref}
         />
-        <Label className="-mb-4" required>
-          Organization Designation
-        </Label>
         <List
+          required
+          label="Organization Designation"
           value={rhf.designation.value}
           onChange={rhf.designation.onChange}
           classes={{ options: "text-sm" }}
@@ -214,19 +208,14 @@ export default function Form({ initSlug = "", init, id }: Props) {
           error={rhf.errors.endow_designation?.message}
           ref={rhf.designation.ref}
         />
-        <Label className="-mb-4" required>
-          Headquarters
-        </Label>
+
         <CountrySelector
+          required
+          label="Headquarters"
           value={rhf.hqCountry.value}
           onChange={rhf.hqCountry.onChange}
           placeholder="Select a country"
           options={countries}
-          classes={{
-            container: "px-4 bg-gray-l6 dark:bg-blue-d5",
-            input: "text-sm py-3.5",
-            error: "field-error",
-          }}
           error={rhf.errors.hq_country?.name?.message}
           ref={rhf.hqCountry.ref}
         />
@@ -243,13 +232,11 @@ export default function Form({ initSlug = "", init, id }: Props) {
           }))}
           classes={{
             container: "bg-white dark:bg-blue-d6",
-            button: "field-input-admin",
             options: "text-sm",
           }}
         />
         <Field
           {...rhf.register("street_address")}
-          classes="field-admin"
           label="Address"
           error={rhf.errors.street_address?.message}
         />
@@ -258,49 +245,42 @@ export default function Form({ initSlug = "", init, id }: Props) {
       <Group title="Social Media">
         <Field
           {...rhf.register("social_media_urls.facebook")}
-          classes="field-admin"
           label="Facebook"
           placeholder="https://facebook.com/"
           error={rhf.errors.social_media_urls?.facebook?.message}
         />
         <Field
           {...rhf.register("social_media_urls.linkedin")}
-          classes="field-admin"
           label="LinkedIn"
           placeholder="https://linkedin.com/"
           error={rhf.errors.social_media_urls?.linkedin?.message}
         />
         <Field
           {...rhf.register("social_media_urls.twitter")}
-          classes="field-admin"
           label="X (fka Twitter)"
           placeholder="https://x.com/"
           error={rhf.errors.social_media_urls?.twitter?.message}
         />
         <Field
           {...rhf.register("social_media_urls.instagram")}
-          classes="field-admin"
           label="Instagram"
           placeholder="https://instagram.com/"
           error={rhf.errors.social_media_urls?.instagram?.message}
         />
         <Field
           {...rhf.register("social_media_urls.youtube")}
-          classes="field-admin"
           label="YouTube"
           placeholder="https://youtube.com/"
           error={rhf.errors.social_media_urls?.youtube?.message}
         />
         <Field
           {...rhf.register("social_media_urls.tiktok")}
-          classes="field-admin"
           label="Tiktok"
           placeholder="https://tiktok.com/"
           error={rhf.errors.social_media_urls?.tiktok?.message}
         />
         <Field
           {...rhf.register("social_media_urls.discord")}
-          classes="field-admin"
           label="Discord"
           placeholder="https://discord.com/"
           error={rhf.errors.social_media_urls?.discord?.message}

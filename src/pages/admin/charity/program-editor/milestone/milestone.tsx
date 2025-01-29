@@ -104,7 +104,7 @@ export default function Milestone(props: Props) {
         <Field
           {...register("date")}
           type="date"
-          classes={{ input: "date-input uppercase", container: "field-admin" }}
+          classes={{ input: "date-input uppercase" }}
           label="Date of milestone"
           placeholder="e.g. 2014-09-23"
           required
@@ -112,7 +112,6 @@ export default function Milestone(props: Props) {
         />
         <Field
           {...register("title")}
-          classes="field-admin"
           label="Title of milestone"
           placeholder="e.g. John"
           required

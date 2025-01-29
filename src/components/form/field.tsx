@@ -51,8 +51,12 @@ function _Field<T extends InputType = InputType>(
   const errorId = "__error_" + String(props.name);
 
   return (
-    <div className={style.container + " field"}>
-      <Label className={style.label} required={required} htmlFor={id}>
+    <div className={style.container + " "}>
+      <Label
+        className={style.label + " label mb-2"}
+        required={required}
+        htmlFor={id}
+      >
         {label}
       </Label>
 
@@ -64,13 +68,13 @@ function _Field<T extends InputType = InputType>(
         "aria-invalid": !!error,
         "aria-disabled": props.disabled,
         "aria-errormessage": errorId,
-        className: style.input,
+        className: `${style.input} field-input`,
         autoComplete: "off",
         spellCheck: false,
       })}
 
       {(tooltip && ( //tooltip in normal flow
-        <p className={style.error + " text-left mt-2 left-0 text-xs"}>
+        <p className={style.error + " text-left mt-1 left-0 text-xs"}>
           {typeof tooltip === "string" ? (
             <span className="text-gray dark:text-gray">{tooltip}</span>
           ) : (
@@ -84,9 +88,12 @@ function _Field<T extends InputType = InputType>(
           </span>
         </p>
       )) || (
-        <span id={errorId} data-error className={style.error + " empty:hidden"}>
+        <p
+          id={errorId}
+          className={style.error + " field-err mt-1 empty:hidden"}
+        >
           {error}
-        </span>
+        </p>
       )}
     </div>
   );

@@ -65,7 +65,7 @@ export default function SignupForm() {
           disabled={isSubmitting}
           className="grid gap-3"
         >
-          <div className="flex gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <Input
               {...getInputProps(fields.firstName, { type: "text" })}
               placeholder="First Name"

@@ -46,19 +46,11 @@ export function useRhf(data: Step1Data, user: UserV2) {
         },
   });
 
-  const {
-    field: {
-      value: referralMethod,
-      onChange: onReferralMethodChange,
-      ref: referralMethodRef,
-    },
-  } = useController({
+  const { field: refMethod } = useController({
     control,
     name: "referral_method",
   });
-  const {
-    field: { value: orgRole, onChange: onOrgRoleChange, ref: orgRoleRef },
-  } = useController({ control, name: "org_role" });
+  const { field: orgRole } = useController({ control, name: "org_role" });
 
   return {
     register,
@@ -69,11 +61,7 @@ export function useRhf(data: Step1Data, user: UserV2) {
 
     //controllers
     orgRole,
-    orgRoleRef,
-    onOrgRoleChange,
-    referralMethod,
-    onReferralMethodChange,
-    referralMethodRef,
+    refMethod,
   };
 }
 

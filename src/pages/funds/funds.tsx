@@ -44,15 +44,16 @@ export default function Funds() {
 
   return (
     <div className="xl:container xl:mx-auto px-5 mt-8 pb-8">
-      <div
-        className={`flex gap-2 items-center rounded-lg overflow-clip field-container`}
-      >
-        <Search size={20} className="ml-2" />
+      <div className="relative">
+        <Search
+          size={20}
+          className="ml-2 absolute top-1/2 -translate-y-1/2 left-2"
+        />
         <input
           type="search"
           name="query"
           onChange={debounce(onChange, 500)}
-          className="w-full py-2 pr-3 placeholder:text-gray text-gray-d4 font-medium font-heading"
+          className="field-input text-base rounded-lg h-full pl-12"
           placeholder="Search fundraiser"
         />
       </div>

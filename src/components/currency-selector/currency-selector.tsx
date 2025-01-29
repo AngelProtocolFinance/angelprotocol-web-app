@@ -21,6 +21,7 @@ type Classes = {
   label?: string;
   container?: string;
   options?: string;
+  input?: string;
 };
 
 type Props<T extends CurrencyOption> = {
@@ -47,10 +48,10 @@ export default function CurrencySelector<T extends CurrencyOption>({
   return (
     <Field
       disabled={props.disabled || isCurrencyLoading || isCurrencyError}
-      className={`field ${style.container}`}
+      className={style.container}
     >
       <Label
-        className={`${style.label} label`}
+        className={`${style.label} label mb-2`}
         data-required={props.required}
         aria-required={props.required}
       >
@@ -61,10 +62,10 @@ export default function CurrencySelector<T extends CurrencyOption>({
         value={props.value}
         onChange={(val) => val && props.onChange(val)}
         as="div"
-        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
+        className={`relative ${style.combobox}`}
       >
         <ComboboxInput
-          className="w-full dark:border-gray-d1 px-4 py-3.5 text-sm leading-5 focus:ring-0"
+          className={`h-full field-input ${style.input}`}
           displayValue={(currency: T) =>
             !!currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
@@ -73,7 +74,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
           onChange={(event) => setQuery(event.target.value)}
           spellCheck={false}
         />
-        <ComboboxButton className="flex items-center absolute inset-y-0 right-2">
+        <ComboboxButton className="flex items-center absolute inset-y-0 right-4">
           {({ open }) =>
             isCurrencyLoading ? (
               <LoaderCircle className="text-gray animate-spin" size={20} />

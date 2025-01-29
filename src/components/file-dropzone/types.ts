@@ -9,7 +9,7 @@ export const errors = {
 
 type FileErr = (typeof errors)[keyof typeof errors];
 
-const requiredStr = pipe(string(), nonEmpty("required"));
+const requiredStr = pipe(string("required"), nonEmpty("required"));
 
 export const fileOutput = ({ required = false } = {}) =>
   pipe(

@@ -35,7 +35,7 @@ export default function Frequency({ value, onChange, error }: Props) {
           <Check size={16} className={styles.icon} />
         </Radio>
       </div>
-      {error && <p className="field-error static text-left mt-1">{error}</p>}
+      {error && <p className="field-err text-left mt-1">{error}</p>}
       <p className="text-gray mt-3">
         <span className="text-gray-d4 font-medium">Monthly donations</span> help
         nonprofits focus on mission and long-term impact, not fundraising.
