@@ -98,4 +98,16 @@
       pointer-events: none;
     }
   }
+
+  .scroller {
+    &::-webkit-scrollbar {
+      width: calc(var(--spacing) * 1);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--accent-primary);
+    }
+    &::-webkit-scrollbar-track {
+      background-color: var(--color-gray-l3);
+    }
+  }
 }

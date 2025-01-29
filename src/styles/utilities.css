@@ -3,17 +3,6 @@
     @apply absolute w-full opacity-0 cursor-pointer;
   }
 }
-@utility scroller {
-  &::-webkit-scrollbar {
-    @apply w-1;
-  }
-  &::-webkit-scrollbar-thumb {
-    @apply bg-(--accent-primary);
-  }
-  &::-webkit-scrollbar-track {
-    @apply bg-gray-l3 dark:bg-gray-d1;
-  }
-}
 
 @utility field-error {
   @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
