@@ -8,8 +8,8 @@ export default function Newsletter({ classes = "" }) {
       className={`grid content-start px-1 ${classes} sm:max-md:grid-cols-2 xl:grid-cols-1 gap-x-8 xl:max-w-md`}
     >
       <div className="mb-6">
-        <p className="text-[#4585bb] mb-3.5">Subscribe to our newsletter</p>
-        <p className="text-[12px] text[#647581] text-justify text-pretty">
+        <p className="text-blue-d1 mb-3.5">Subscribe to our newsletter</p>
+        <p className="text-[12px] text-gray-d4 text-justify text-pretty">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
           <Link
