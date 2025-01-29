@@ -119,7 +119,7 @@ function Content() {
           to={".."}
           aria-disabled={fetcher.state === "submitting"}
           type="button"
-          className="btn-outline-filled text-sm px-8 py-2"
+          className="btn-outline btn text-sm px-8 py-2"
           preventScrollReset
           replace
         >

@@ -218,7 +218,7 @@ export default function Configurer({
           <button
             disabled={!isDirty}
             type="reset"
-            className="btn-outline-filled @max-sm/configurer:mx-auto w-40"
+            className="btn-outline btn @max-sm/configurer:mx-auto w-40"
           >
             Reset Changes
           </button>

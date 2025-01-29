@@ -27,7 +27,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
         Retry
       </button>
       <Link
-        className="w-full max-w-[26.25rem] btn-outline-filled btn-reg mt-4"
+        className="w-full max-w-[26.25rem] btn-outline btn btn-reg mt-4"
         to={`${appRoutes.register}/${regRoutes.resume}`}
         aria-disabled={isRedirecting}
       >

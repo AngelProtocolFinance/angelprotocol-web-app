@@ -66,7 +66,7 @@ export function Loaded(props: BankingApplicationDetails) {
           replace
           preventScrollReset
           to={appRoutes.banking_applications}
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back
         </NavLink>

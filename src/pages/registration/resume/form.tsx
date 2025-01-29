@@ -86,7 +86,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         OR
       </Separator>
       <Link
-        className="mx-0 sm:mx-24 btn-outline-filled btn-reg"
+        className="mx-0 sm:mx-24 btn-outline btn btn-reg"
         to=".."
         aria-disabled={fetcher.state !== "idle"}
       >

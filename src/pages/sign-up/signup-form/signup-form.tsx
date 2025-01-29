@@ -45,7 +45,7 @@ export default function SignupForm() {
           <button
             name="intent"
             value="oauth"
-            className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
+            className="flex-center btn-outline rounded-lg gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
             type="submit"
           >
             <Image src={googleIcon} height={18} width={18} />

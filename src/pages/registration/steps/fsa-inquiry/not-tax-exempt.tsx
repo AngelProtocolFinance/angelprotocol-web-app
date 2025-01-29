@@ -31,7 +31,7 @@ export function NotTaxExempt({ country, isFsaPrev }: Props) {
         <Link
           aria-disabled={isLoading}
           to={`../${steps.orgDetails}`}
-          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+          className="py-3 min-w-[8rem] btn-outline btn btn-reg"
         >
           Back
         </Link>

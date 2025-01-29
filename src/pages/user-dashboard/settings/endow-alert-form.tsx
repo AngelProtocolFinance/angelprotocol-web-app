@@ -100,7 +100,7 @@ export default function EndowAlertForm({ classes = "", userEndows }: Props) {
         <button
           disabled={!isDirty}
           type="reset"
-          className="btn-outline-filled text-sm px-6 py-2"
+          className="btn-outline btn text-sm px-6 py-2"
         >
           reset
         </button>

@@ -1,5 +1,5 @@
 import { orgDesignations } from "@better-giving/schemas";
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import countries from "assets/countries/all.json";
 import ActivityCountries from "components/activity-countries";
 import CountrySelector from "components/country-selector";
@@ -104,13 +104,13 @@ export default function Form({ data }: RegStep2) {
         .
       </p>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link
+        <NavLink
           aria-disabled={isSubmitting}
           to={`../${steps.contact}`}
-          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+          className="py-3 min-w-[8rem] btn btn-outline btn-reg"
         >
           Back
-        </Link>
+        </NavLink>
         <button
           disabled={isSubmitting}
           type="submit"

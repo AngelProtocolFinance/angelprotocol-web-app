@@ -344,7 +344,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
         <button
           disabled={!rhf.isDirty}
           type="reset"
-          className="px-6 btn-outline-filled text-sm"
+          className="px-6 btn-outline btn text-sm"
         >
           Reset changes
         </button>

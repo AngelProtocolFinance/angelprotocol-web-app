@@ -24,11 +24,14 @@ const Hero = ({ classes = "" }) => {
       </p>
 
       <div className="mt-8 isolate z-10 justify-self-center relative">
-        <Link to={appRoutes.register} className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading">
+        <Link
+          to={appRoutes.register}
+          className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
+        >
           Start Fundraising Today
           <ArrowRight size={18} className="group-hover:translate-x-1" />
         </Link>
-       
+
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
       </div>
     </section>

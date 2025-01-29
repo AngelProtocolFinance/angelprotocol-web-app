@@ -28,7 +28,7 @@ export default function Banking() {
           href={data.banking.bank_statement.publicUrl}
           className="flex items-center gap-2 text-blue hover:text-blue-d1"
         >
-          <SquareArrowOutUpRight />
+          <SquareArrowOutUpRight size={16} />
           <span>Bank statement</span>
         </ExtLink>
         <button
@@ -42,7 +42,7 @@ export default function Banking() {
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
           <Link
             to={`../${steps.docs}`}
-            className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+            className="py-3 min-w-[8rem] btn btn-outline btn-reg"
           >
             Back
           </Link>

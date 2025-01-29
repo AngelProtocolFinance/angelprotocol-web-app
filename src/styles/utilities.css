@@ -15,8 +15,6 @@
   }
 }
 
-
-
 @utility btn {
   /** applicable to button and <a/> */
   @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded-sm focus:outline-hidden focus-visible:ring-2;
@@ -60,20 +58,14 @@
 }
 
 /** Layer 2 components */
-@utility btn-outline {
+/* @utility btn-outline {
   @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 dark:aria-disabled:bg-gray-d1 dark:disabled:bg-gray-d1 border border-gray-l3 dark:border-gray-d1 enabled:hover:border-gray-l2 dark:enabled:hover:border-blue-d2;
   &.pending {
     @apply bg-gray-l4 pointer-events-none;
   }
 }
-
-@utility btn-outline-2 {
-  @apply rounded-lg normal-case text-sm border border-gray-l3 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
-}
-
-@utility btn-outline-blue {
-  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 text-blue-d1 border border-blue-d1 enabled:hover:border-blue;
-}
+  
+*/
 @utility btn-red {
   @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
   &.pending {
@@ -148,12 +140,7 @@
 }
 
 /** page components */
-@utility btn-outline-filled {
-  @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 disabled:bg-gray-l4 aria-disabled:bg-gray-l4;
-}
-@utility btn-outline-gray {
-  @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-gray-d3 dark:enabled:hover:bg-gray-d1 dark:active:bg-gray-d4;
-}
+
 @utility btn-gift {
   @apply text-base sm:text-sm;
 }

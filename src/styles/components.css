@@ -9,9 +9,36 @@
     padding: calc(var(--spacing) * 3);
     border-radius: var(--radius-sm);
   }
+
+  .btn-outline {
+    background-color: white;
+    border: 1px solid var(--color-gray-l3);
+    outline-color: var(--color-gray-l2);
+    &:active {
+      border-color: var(--color-gray-l2);
+    }
+    &:disabled {
+      background-color: var(--color-gray-l3);
+    }
+    &:hover {
+      border-color: var(--color-gray-l2);
+      background: var(--color-gray-l4);
+    }
+  }
+  a.btn-outline {
+    &[aria-disabled="true"] {
+      background-color: var(--color-gray-l3);
+    }
+    &.pending {
+      background-color: var(--color-gray-l3);
+      pointer-events: none;
+    }
+  }
+
   .btn-blue {
     background-color: var(--color-blue-d1);
     color: var(--color-white);
+    outline-color: var(--color-blue-l4);
     &:active {
       background-color: var(--color-blue-d2);
     }
@@ -20,18 +47,6 @@
     }
     &:disabled {
       background-color: var(--color-gray);
-    }
-    &:focus,
-    &:focus-visible {
-      outline: 2px solid var(--color-blue-l2);
-    }
-  }
-  a.btn-blue {
-    &[aria-disabled="true"] {
-      background-color: var(--color-gray);
-    }
-    &.pending {
-      @apply bg-gray-l1 pointer-events-none;
     }
   }
 }

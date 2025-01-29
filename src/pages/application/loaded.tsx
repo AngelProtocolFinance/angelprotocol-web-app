@@ -114,7 +114,7 @@ export default function Loaded(props: Application) {
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <NavLink
           to={appRoutes.applications}
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back
         </NavLink>

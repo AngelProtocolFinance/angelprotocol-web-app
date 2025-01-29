@@ -25,7 +25,7 @@ export default function Step({
 
       <NavLink
         to={`../${num}`}
-        className="min-w-[8rem] ml-6 max-sm:row-span-2 btn-outline-filled btn-reg"
+        className="min-w-[8rem] ml-6 max-sm:row-span-2 btn-outline btn btn-reg"
         aria-disabled={disabled}
       >
         Update

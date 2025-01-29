@@ -60,7 +60,7 @@ export function VideoModal(props: IVideoModal) {
         <div className="mt-4 p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l4 dark:bg-blue-d7 border-t border-gray-l3">
           <button
             type="button"
-            className="btn-outline-filled text-sm px-8 py-2"
+            className="btn-outline btn text-sm px-8 py-2"
             onClick={() => props.setOpen(false)}
           >
             Cancel

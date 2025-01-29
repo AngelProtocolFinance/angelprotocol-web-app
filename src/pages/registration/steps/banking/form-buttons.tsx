@@ -14,7 +14,7 @@ function Submit({ isSubmitting = false }) {
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.docs}`}
-          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+          className="py-3 min-w-[8rem] btn btn-outline btn-reg"
         >
           Back
         </Link>

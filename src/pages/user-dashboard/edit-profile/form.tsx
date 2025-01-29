@@ -100,7 +100,7 @@ export default function Component() {
       <div className="flex gap-3 mt-8">
         <button
           type="reset"
-          className="px-6 btn-outline-filled text-sm"
+          className="px-6 btn-outline btn text-sm"
           disabled={!rhf.isDirty}
         >
           Reset changes

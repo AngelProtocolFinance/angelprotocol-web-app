@@ -263,7 +263,7 @@ export default function Form() {
       <div className="flex gap-3 mt-8">
         <button
           type="reset"
-          className="px-6 btn-outline-filled text-sm"
+          className="px-6 btn-outline btn text-sm"
           disabled={!isDirty}
         >
           Reset changes

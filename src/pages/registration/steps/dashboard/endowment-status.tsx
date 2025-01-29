@@ -24,7 +24,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.banking}`}
-          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+          className="py-3 min-w-[8rem] btn-outline btn btn-reg"
         >
           Back
         </Link>

@@ -113,7 +113,7 @@ export default function Form(props: Props) {
         <Link
           aria-disabled={isSubmitting || isRedirecting}
           to={`../${steps.fsaInquiry}`}
-          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+          className="py-3 min-w-[8rem] btn-outline btn btn-reg"
         >
           Back
         </Link>
