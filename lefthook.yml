@@ -3,4 +3,4 @@ pre-commit:
     check:
       stage_fixed: true
       glob: "*.{ts,tsx,css,d.ts}"
-      run: yarn biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      run: pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
