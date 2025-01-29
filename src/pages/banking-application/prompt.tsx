@@ -114,7 +114,7 @@ function Content({ verdict }: Props) {
         >
           Cancel
         </Link>
-        <button type="submit" className="btn-blue px-8 py-2 text-sm">
+        <button type="submit" className="btn btn-blue px-8 py-2 text-sm">
           Submit
         </button>
       </div>

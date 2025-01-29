@@ -23,14 +23,14 @@ const Hero = ({ classes = "" }) => {
         website in minutes and start putting your donations to work for you.
       </p>
 
-      <Link
-        to={appRoutes.register}
-        className="mt-8 isolate z-10 justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
-      >
-        <span className="ml-1">Start Fundraising Today</span>
-        <ArrowRight size={18} className="group-hover:translate-x-1" />
+      <div className="mt-8 isolate z-10 justify-self-center relative">
+        <Link to={appRoutes.register} className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading">
+          Start Fundraising Today
+          <ArrowRight size={18} className="group-hover:translate-x-1" />
+        </Link>
+       
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
-      </Link>
+      </div>
     </section>
   );
 };

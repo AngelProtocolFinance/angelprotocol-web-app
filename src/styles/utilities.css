@@ -15,6 +15,8 @@
   }
 }
 
+
+
 @utility btn {
   /** applicable to button and <a/> */
   @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded-sm focus:outline-hidden focus-visible:ring-2;
@@ -68,12 +70,7 @@
 @utility btn-outline-2 {
   @apply rounded-lg normal-case text-sm border border-gray-l3 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
 }
-@utility btn-blue {
-  @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2 hover:bg-blue-d2;
-  &.pending {
-    @apply bg-gray pointer-events-none;
-  }
-}
+
 @utility btn-outline-blue {
   @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 text-blue-d1 border border-blue-d1 enabled:hover:border-blue;
 }

@@ -52,7 +52,7 @@ function Fund(props: FundItem) {
       />
       <Link
         to={`${appRoutes.donate_fund}/${props.id}`}
-        className="btn-blue text-xs w-full col-span-full mt-4"
+        className="btn btn-blue text-xs w-full col-span-full mt-4"
       >
         Donate
       </Link>

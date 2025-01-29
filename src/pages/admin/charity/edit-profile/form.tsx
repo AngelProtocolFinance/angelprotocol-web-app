@@ -351,7 +351,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
         <button
           disabled={!rhf.isDirty || isUploading}
           type="submit"
-          className="px-6 btn-blue text-sm"
+          className="px-6 btn btn-blue text-sm"
         >
           Submit changes
         </button>

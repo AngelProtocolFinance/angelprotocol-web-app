@@ -55,7 +55,7 @@ export function NotTaxExempt({ country, isFsaPrev }: Props) {
           }}
           disabled={isLoading}
           type="button"
-          className="py-3 min-w-[8rem] btn-blue btn-reg"
+          className="py-3 min-w-[8rem] btn btn-blue btn-reg"
         >
           <LoadText isLoading={isLoading}>Continue</LoadText>
         </button>

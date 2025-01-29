@@ -128,7 +128,7 @@ function Content() {
         <button
           disabled={fetcher.state !== "idle"}
           type="submit"
-          className="btn-blue px-8 py-2 text-sm"
+          className="btn btn-blue px-8 py-2 text-sm"
         >
           Submit
         </button>

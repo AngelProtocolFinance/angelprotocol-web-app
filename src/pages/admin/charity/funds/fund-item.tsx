@@ -89,7 +89,7 @@ export const FundItem = (props: Props) => {
         )}
         <NavLink
           aria-disabled={!status.active}
-          className={`btn btn-blue rounded-full text-xs px-6 py-2 ${
+          className={`btn btn btn-blue rounded-full text-xs px-6 py-2 ${
             props.isEditor ? "" : "invisible"
           }`}
           to={`${appRoutes.funds}/${props.id}/edit`}

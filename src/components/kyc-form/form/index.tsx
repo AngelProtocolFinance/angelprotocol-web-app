@@ -183,7 +183,7 @@ export function Form({ classes = "", ...init }: IForm) {
       </p>
 
       <button
-        className="col-span-full btn-blue text-sm"
+        className="col-span-full btn btn-blue text-sm"
         disabled={fetcher.state !== "idle"}
         type="submit"
       >

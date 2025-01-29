@@ -49,7 +49,7 @@ export function PromptV2({
           preventScrollReset
           replace
           type="button"
-          className="inline-block btn-blue px-8 py-2 max-sm:w-full"
+          className="inline-block btn btn-blue px-8 py-2 max-sm:w-full"
         >
           {type === "success" ? "Done" : "Ok"}
         </Link>

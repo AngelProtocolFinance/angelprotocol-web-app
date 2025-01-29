@@ -91,7 +91,7 @@ function Content(props: Props) {
         <button
           disabled={!form.dirty}
           type="submit"
-          className="btn-blue px-8 py-2 text-sm"
+          className="btn btn-blue px-8 py-2 text-sm"
         >
           Continue
         </button>

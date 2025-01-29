@@ -107,7 +107,7 @@ export default function Component() {
         </button>
         <button
           type="submit"
-          className="px-6 btn-blue text-sm"
+          className="px-6 btn btn-blue text-sm"
           disabled={!rhf.isDirty || rhf.avatar.value === "loading"}
         >
           Submit changes

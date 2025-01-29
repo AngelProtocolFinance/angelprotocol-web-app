@@ -42,7 +42,7 @@ export default function DetailsColumn({ className = "" }) {
           )}
           <NavLink
             to={appRoutes.donate + `/${p.id}`}
-            className="w-full btn-blue h-12 px-6 text-base lg:text-sm"
+            className="w-full btn btn-blue h-12 px-6 text-base lg:text-sm"
           >
             Donate now
           </NavLink>

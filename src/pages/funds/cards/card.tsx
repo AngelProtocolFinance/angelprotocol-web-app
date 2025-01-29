@@ -66,7 +66,7 @@ export default function Card({
         <div /> {/** future: share button  */}
         <NavLink
           to={`${appRoutes.donate_fund}/${id}`}
-          className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
+          className="btn btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate
         </NavLink>

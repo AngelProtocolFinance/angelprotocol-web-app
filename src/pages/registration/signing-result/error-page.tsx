@@ -22,7 +22,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
         value={props.signerEid}
         type="submit"
         disabled={isRedirecting}
-        className="w-full max-w-[26.25rem] btn-blue btn-reg mt-6"
+        className="w-full max-w-[26.25rem] btn btn-blue btn-reg mt-6"
       >
         Retry
       </button>

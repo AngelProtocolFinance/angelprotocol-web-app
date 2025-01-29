@@ -158,7 +158,7 @@ export default function Milestone(props: Props) {
               !isDirty || fetcher.state !== "idle" || media.value === "loading"
             }
             type="submit"
-            className="btn-blue py-2 text-sm"
+            className="btn btn-blue py-2 text-sm"
           >
             Save changes
           </button>

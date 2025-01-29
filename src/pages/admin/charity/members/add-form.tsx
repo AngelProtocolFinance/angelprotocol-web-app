@@ -64,7 +64,7 @@ function Content() {
         error={fields.lastName.errors?.[0]}
         required
       />
-      <button disabled={nav.state !== "idle"} className="btn-blue mt-6">
+      <button disabled={nav.state !== "idle"} className="btn btn-blue mt-6">
         Add member
       </button>
     </RmxForm>

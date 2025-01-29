@@ -44,7 +44,7 @@ export default function Funds() {
               pathname: appRoutes.funds + "/new",
               search: `npo=$ endowId}`,
             }}
-            className="btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4 col-span-full justify-self-start"
+            className="btn btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4 col-span-full justify-self-start"
           >
             Create fundraiser
           </Link>

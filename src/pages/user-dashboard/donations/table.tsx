@@ -175,7 +175,7 @@ function LastRowColContent(
     return (
       <ExtLink
         href={props.bankVerificationUrl}
-        className="btn-blue px-3 py-1 text-xs"
+        className="btn btn-blue px-3 py-1 text-xs"
       >
         Verify Bank Account
       </ExtLink>

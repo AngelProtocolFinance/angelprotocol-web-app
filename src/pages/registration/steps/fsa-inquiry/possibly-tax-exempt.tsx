@@ -88,7 +88,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
         <button
           disabled={isLoading}
           type="submit"
-          className="py-3 min-w-[8rem] btn-blue btn-reg"
+          className="py-3 min-w-[8rem] btn btn-blue btn-reg"
         >
           <LoadText isLoading={isLoading}>Continue</LoadText>
         </button>

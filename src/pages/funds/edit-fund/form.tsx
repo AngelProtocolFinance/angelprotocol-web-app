@@ -163,7 +163,7 @@ export function Form({
             !rhf.isDirty || rhf.isUploading || isSubmitting || isUploading
           }
           type="submit"
-          className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
+          className="btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"
         >
           Update fund
         </button>

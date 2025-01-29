@@ -20,7 +20,7 @@ export function BottomCta({ className = "" }) {
         <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-6">
           <Link
             to={appRoutes.register}
-            className="bg-blue-d1 hover:bg-blue-d2 active:translate-x-1 text-white font-heading uppercase font-bold shadow-2xl rounded-full px-8 py-3 md:px-12 md:py-6"
+            className="active:translate-x-1 btn-blue font-heading uppercase font-bold shadow-2xl rounded-full px-8 py-3 md:px-12 md:py-6"
           >
             Start today
           </Link>

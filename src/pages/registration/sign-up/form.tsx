@@ -28,7 +28,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <button
         disabled={fetcher.state !== "idle"}
         type="submit"
-        className="btn-blue btn-reg"
+        className="btn btn-blue btn-reg"
       >
         Start a new application
       </button>

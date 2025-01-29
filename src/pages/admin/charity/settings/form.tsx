@@ -270,7 +270,7 @@ export default function Form() {
         </button>
         <button
           type="submit"
-          className="px-6 btn-blue text-sm"
+          className="px-6 btn btn-blue text-sm"
           disabled={!isDirty}
         >
           Submit changes

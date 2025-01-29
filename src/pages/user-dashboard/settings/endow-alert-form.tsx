@@ -93,7 +93,7 @@ export default function EndowAlertForm({ classes = "", userEndows }: Props) {
         <button
           disabled={!isDirty || fetcher.state === "submitting"}
           type="submit"
-          className="btn-blue text-sm px-6 py-2"
+          className="btn btn-blue text-sm px-6 py-2"
         >
           {fetcher.state === "submitting" ? "updating.." : "save"}
         </button>

@@ -31,7 +31,7 @@ export function FeatureBanner({ classes = "", ...props }: Props) {
           disabled={props.isToggling}
           onClick={props.onToggle}
           type="button"
-          className="text-xs btn-blue px-4 py-2 rounded-full"
+          className="text-xs btn btn-blue px-4 py-2 rounded-full"
         >
           {props.isToggling
             ? "Updating.."

@@ -54,7 +54,7 @@ export default function NonFSA(
         <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] btn-blue btn-reg"
+          className="py-3 min-w-[8rem] btn btn-blue btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>

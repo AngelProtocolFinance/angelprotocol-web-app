@@ -105,7 +105,7 @@ export default function PayoutMethod() {
         <button
           disabled={fetcher.state === "submitting" || isDefault || !isApproved}
           type="submit"
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-blue"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-blue"
         >
           set default
         </button>

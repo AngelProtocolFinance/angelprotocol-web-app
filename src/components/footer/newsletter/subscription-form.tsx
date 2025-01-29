@@ -49,7 +49,7 @@ export default function SubscriptionForm() {
         type="submit"
         name="intent"
         value="subscribe"
-        className="sm:justify-self-start bg-blue-d1 disabled:bg-gray rounded-full px-5 py-2 text-white text-sm font-medium"
+        className="sm:justify-self-start rounded-full px-5 py-2 btn-blue text-sm font-medium"
         disabled={fetcher.state === "submitting"}
       >
         Subscribe

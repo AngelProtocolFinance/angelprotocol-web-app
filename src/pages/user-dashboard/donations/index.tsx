@@ -50,7 +50,7 @@ export default function Donations() {
       </h1>
       <CsvExporter
         aria-disabled={isLoading || items.length === 0}
-        classes="row-start-5 @5xl:row-auto col-span-full @5xl:col-span-1 @5xl:justify-self-end btn-blue px-8 py-3"
+        classes="row-start-5 @5xl:row-auto col-span-full @5xl:col-span-1 @5xl:justify-self-end btn btn-blue px-8 py-3"
         headers={csvHeaders}
         data={
           items.map((item) => {

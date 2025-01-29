@@ -59,7 +59,7 @@ export function Feature1({ className = "" }) {
       <div className="isolate z-10 flex max-md:flex-col items-center justify-self-center gap-4 mt-24">
         <Link
           to={appRoutes.register}
-          className="group isolate normal-case inline-flex items-center px-10 py-3 gap-1 text-lg relative bg-blue-d1 active:translate-x-1 text-white font-heading font-bold shadow-2xl rounded-full"
+          className="btn-blue group isolate normal-case inline-flex items-center px-10 py-3 gap-1 text-lg relative active:translate-x-1 font-heading font-bold shadow-2xl rounded-full"
         >
           <span className="ml-1">Start Today</span>
           <ArrowRight size={18} className="group-hover:translate-x-1" />

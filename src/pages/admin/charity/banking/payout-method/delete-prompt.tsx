@@ -82,7 +82,7 @@ function Content({ isDefault, isWithHeir }: Props) {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="btn-blue px-8 py-2 text-sm"
+            className="btn btn-blue px-8 py-2 text-sm"
           >
             Proceed
           </button>

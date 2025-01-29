@@ -104,7 +104,7 @@ export default function SetPasswordForm(props: Props) {
         value="confirm"
         disabled={fetcher.state !== "idle"}
         type="submit"
-        className="mt-6 w-full h-12 sm:h-[52px] flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 rounded-full normal-case sm:text-lg font-bold"
+        className="mt-6 w-full h-12 sm:h-[52px] flex-center btn-blue rounded-full normal-case sm:text-lg font-bold"
       >
         Confirm
       </button>

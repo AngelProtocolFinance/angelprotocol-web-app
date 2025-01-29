@@ -68,7 +68,7 @@ export function VideoModal(props: IVideoModal) {
           <button
             disabled={!isDirty}
             type="submit"
-            className="btn-blue px-8 py-2 text-sm"
+            className="btn btn-blue px-8 py-2 text-sm"
           >
             Continue
           </button>

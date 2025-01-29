@@ -189,7 +189,7 @@ function Content(props: IMoveFundForm) {
       </Field>
       <button
         disabled={fetcher.state !== "idle" || !isDirty}
-        className="bg-blue-d1 text-sm hover:bg-blue disabled:bg-gray text-white rounded-full px-4 py-2 font-heading uppercase font-bold"
+        className="text-sm btn-blue rounded-full px-4 py-2 font-heading uppercase font-bold"
       >
         {fetcher.state !== "idle" ? "Submitting..." : "Submit"}
       </button>

@@ -60,7 +60,7 @@ export default function Stocks(props: StockCheckoutStep) {
           +props.details.numShares,
           props.details.symbol
         )}
-        className="btn btn-blue bg-(--accent-primary) enabled:hover:bg-(--accent-primary) rounded-full px-4 py-2 justify-self-end mt-2 text-xs font-normal"
+        className="btn btn btn-blue bg-(--accent-primary) enabled:hover:bg-(--accent-primary) rounded-full px-4 py-2 justify-self-end mt-2 text-xs font-normal"
       >
         Generate email
       </a>

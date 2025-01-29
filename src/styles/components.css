@@ -1,1 +1,37 @@
 /** Layer 1 components */
+@layer components {
+  .btn {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    padding: calc(var(--spacing) * 3);
+    border-radius: var(--radius-sm);
+  }
+  .btn-blue {
+    background-color: var(--color-blue-d1);
+    color: var(--color-white);
+    &:active {
+      background-color: var(--color-blue-d2);
+    }
+    &:hover {
+      background-color: var(--color-blue) /* #2d89c8 */;
+    }
+    &:disabled {
+      background-color: var(--color-gray);
+    }
+    &:focus,
+    &:focus-visible {
+      outline: 2px solid var(--color-blue-l2);
+    }
+  }
+  a.btn-blue {
+    &[aria-disabled="true"] {
+      background-color: var(--color-gray);
+    }
+    &.pending {
+      @apply bg-gray-l1 pointer-events-none;
+    }
+  }
+}

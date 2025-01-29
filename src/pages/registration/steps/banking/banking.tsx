@@ -48,7 +48,7 @@ export default function Banking() {
           </Link>
           <Link
             to={`../${steps.summary}`}
-            className="py-3 min-w-[8rem] btn-blue btn-reg"
+            className="py-3 min-w-[8rem] btn btn-blue btn-reg"
           >
             Continue
           </Link>
@@ -61,7 +61,7 @@ export default function Banking() {
     <div className="flex flex-col items-start max-sm:items-center">
       {isChanging && (
         <button
-          className="btn-blue px-2 py-1 rounded-sm text-xs mt-2 mb-4"
+          className="btn btn-blue px-2 py-1 rounded-sm text-xs mt-2 mb-4"
           type="button"
           onClick={() => setIsChanging(false)}
         >

@@ -18,7 +18,7 @@ export default function UserMenu({ classes = "" }) {
         </Link>
         <Link
           to={appRoutes.signup + `?redirect=${to}`}
-          className="btn text-base normal-case bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
+          className="btn-blue text-nowrap px-6 py-2 rounded-full"
         >
           Sign up
         </Link>
