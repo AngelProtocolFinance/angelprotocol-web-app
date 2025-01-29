@@ -2,6 +2,7 @@
 @layer components {
   .btn {
     display: flex;
+    justify-content: center;
     align-items: center;
     text-transform: uppercase;
     font-weight: 700;
@@ -20,7 +21,7 @@
     &:disabled {
       background-color: var(--color-gray-l3);
     }
-    &:hover {
+    &:enabled:hover {
       border-color: var(--color-gray-l2);
       background: var(--color-gray-l4);
     }
@@ -42,11 +43,59 @@
     &:active {
       background-color: var(--color-blue-d2);
     }
-    &:hover {
-      background-color: var(--color-blue) /* #2d89c8 */;
+    &:enabled:hover {
+      background-color: var(--color-blue-d2) /* #2d89c8 */;
     }
+  }
+
+  .btn-red {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    outline-color: var(--color-red-l4);
+    &:active {
+      background-color: var(--color-red-d1);
+    }
+    &:enabled:hover {
+      background-color: var(--color-red-d1);
+    }
+    &.pending {
+      background-color: var(--color-gray);
+      pointer-events: none;
+    }
+  }
+
+  .btn-green {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    outline-color: var(--color-green-l4);
+    &:active {
+      background-color: var(--color-green-d1);
+    }
+    &:enabled:hover {
+      background-color: var(--color-green-d1);
+    }
+    &.pending {
+      background-color: var(--color-gray);
+      pointer-events: none;
+    }
+  }
+
+  .btn-green,
+  .btn-blue,
+  .btn-red {
     &:disabled {
       background-color: var(--color-gray);
+    }
+  }
+  a.btn-green,
+  a.btn-blue,
+  a.btn-red {
+    &[aria-disabled="true"] {
+      background-color: var(--color-gray);
+    }
+    &.pending {
+      background-color: var(--color-gray);
+      pointer-events: none;
     }
   }
 }

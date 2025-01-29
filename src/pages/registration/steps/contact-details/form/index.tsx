@@ -204,7 +204,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </Field>
       <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto btn btn-blue btn-reg"
+        className="mt-8 py-3 px-8 w-full sm:w-auto btn btn-blue text-sm"
         disabled={fetcher.state !== "idle"}
       >
         <LoadText isLoading={fetcher.state === "submitting"}>Continue</LoadText>

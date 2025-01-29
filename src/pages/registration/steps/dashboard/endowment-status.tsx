@@ -24,14 +24,14 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
         <Link
           aria-disabled={isSubmitting}
           to={`../${steps.banking}`}
-          className="py-3 min-w-[8rem] btn-outline btn btn-reg"
+          className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back
         </Link>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="py-3 min-w-[8rem] btn btn-blue btn-reg"
+          className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>
@@ -54,7 +54,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="min-w-[8rem] btn btn-blue btn-reg"
+          className="min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
         </button>

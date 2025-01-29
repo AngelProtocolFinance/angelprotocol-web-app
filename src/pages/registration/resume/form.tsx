@@ -77,7 +77,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
       <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24 btn btn-blue btn-reg"
+        className="mt-8 mx-0 sm:mx-24 btn btn-blue text-sm"
         disabled={fetcher.state !== "idle"}
       >
         Resume
@@ -86,7 +86,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         OR
       </Separator>
       <Link
-        className="mx-0 sm:mx-24 btn-outline btn btn-reg"
+        className="mx-0 sm:mx-24 btn-outline btn text-sm"
         to=".."
         aria-disabled={fetcher.state !== "idle"}
       >

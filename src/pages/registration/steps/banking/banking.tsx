@@ -32,7 +32,7 @@ export default function Banking() {
           <span>Bank statement</span>
         </ExtLink>
         <button
-          className="btn-red px-2 py-1 rounded-sm text-xs mt-2 mb-8"
+          className="btn btn-red px-2 py-1 rounded-sm text-xs mt-2 mb-8"
           type="button"
           onClick={() => setIsChanging(true)}
         >
@@ -42,13 +42,13 @@ export default function Banking() {
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
           <Link
             to={`../${steps.docs}`}
-            className="py-3 min-w-[8rem] btn btn-outline btn-reg"
+            className="py-3 min-w-[8rem] btn btn-outline text-sm"
           >
             Back
           </Link>
           <Link
             to={`../${steps.summary}`}
-            className="py-3 min-w-[8rem] btn btn-blue btn-reg"
+            className="py-3 min-w-[8rem] btn btn-blue text-sm"
           >
             Continue
           </Link>

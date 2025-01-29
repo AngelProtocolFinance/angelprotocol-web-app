@@ -28,13 +28,13 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <button
         disabled={fetcher.state !== "idle"}
         type="submit"
-        className="btn btn-blue btn-reg"
+        className="btn btn-blue text-sm"
       >
         Start a new application
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
 
-      <Link className="btn-outline btn btn-reg" to={regRoutes.resume}>
+      <Link className="btn-outline btn text-sm" to={regRoutes.resume}>
         Resume your registration
       </Link>
 

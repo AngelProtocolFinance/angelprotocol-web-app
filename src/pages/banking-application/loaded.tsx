@@ -75,7 +75,7 @@ export function Loaded(props: BankingApplicationDetails) {
           preventScrollReset
           aria-disabled={!!prevVerdict}
           to="reject"
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-red"
         >
           reject
         </NavLink>
@@ -84,7 +84,7 @@ export function Loaded(props: BankingApplicationDetails) {
           preventScrollReset
           aria-disabled={!!prevVerdict}
           to="approve"
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-green"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-green"
         >
           approve
         </NavLink>

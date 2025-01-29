@@ -35,7 +35,7 @@ export default function Success({
       </a>
       <Link
         aria-disabled={isLoading}
-        className="w-full max-w-[26.25rem] btn btn-blue btn-reg mt-4"
+        className="w-full max-w-[26.25rem] btn btn-blue text-sm mt-4"
         to={`${appRoutes.register}/${reg.data.init.id}/${nextStep[reg.step]}`}
       >
         {isLoading ? "Loading..." : "Continue"}

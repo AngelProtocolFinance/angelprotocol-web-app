@@ -1,6 +1,6 @@
 import type { Init } from "@better-giving/registration/models";
 import type { Update } from "@better-giving/registration/update";
-import { Link, useFetcher, useNavigate } from "@remix-run/react";
+import { NavLink, useFetcher, useNavigate } from "@remix-run/react";
 import LoadText from "components/load-text";
 import { useForm } from "react-hook-form";
 import { steps } from "../../routes";
@@ -78,17 +78,17 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
       </div>
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link
+        <NavLink
           aria-disabled={isLoading}
           to={`../${steps.orgDetails}`}
-          className="py-3 min-w-[8rem] btn-outline btn btn-reg"
+          className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back
-        </Link>
+        </NavLink>
         <button
           disabled={isLoading}
           type="submit"
-          className="py-3 min-w-[8rem] btn btn-blue btn-reg"
+          className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText isLoading={isLoading}>Continue</LoadText>
         </button>

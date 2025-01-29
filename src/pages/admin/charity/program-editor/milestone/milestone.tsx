@@ -138,7 +138,7 @@ export default function Milestone(props: Props) {
           <button
             disabled={fetcher.state !== "idle"}
             type="button"
-            className="btn-red py-2 text-sm"
+            className="btn btn-red py-2 text-sm"
             onClick={() => {
               if (!window.confirm("Delete milestone?")) return;
               fetcher.submit(

@@ -18,7 +18,7 @@ export default function Welcome() {
 
       <button
         disabled={nav.state === "submitting"}
-        className="w-full max-w-[26.25rem] btn btn-blue btn-reg"
+        className="w-full max-w-[26.25rem] btn btn-blue text-sm"
       >
         <LoadText text="Continue registration">Continue registration</LoadText>
       </button>

@@ -107,14 +107,14 @@ export default function Form({ data }: RegStep2) {
         <NavLink
           aria-disabled={isSubmitting}
           to={`../${steps.contact}`}
-          className="py-3 min-w-[8rem] btn btn-outline btn-reg"
+          className="py-3 min-w-[8rem] btn btn-outline text-sm"
         >
           Back
         </NavLink>
         <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] btn btn-blue btn-reg"
+          className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>

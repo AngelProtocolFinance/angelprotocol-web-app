@@ -15,10 +15,6 @@
   }
 }
 
-@utility btn {
-  /** applicable to button and <a/> */
-  @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded-sm focus:outline-hidden focus-visible:ring-2;
-}
 @utility field-error {
   @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
 }
@@ -57,27 +53,6 @@
   @apply accent-blue-d1 size-4 shrink-0 focus:outline-hidden focus:ring-2 focus:ring-blue-d1 disabled:accent-gray-l5 ring-offset-1;
 }
 
-/** Layer 2 components */
-/* @utility btn-outline {
-  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 dark:aria-disabled:bg-gray-d1 dark:disabled:bg-gray-d1 border border-gray-l3 dark:border-gray-d1 enabled:hover:border-gray-l2 dark:enabled:hover:border-blue-d2;
-  &.pending {
-    @apply bg-gray-l4 pointer-events-none;
-  }
-}
-  
-*/
-@utility btn-red {
-  @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
-  &.pending {
-    @apply bg-gray pointer-events-none;
-  }
-}
-@utility btn-green {
-  @apply btn bg-green disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-green-l1 active:bg-green-d1 focus-visible:ring-green-l4;
-  &.pending {
-    @apply bg-gray pointer-events-none;
-  }
-}
 @utility overlay {
   @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 dark:before:bg-blue-d3/90;
 }
@@ -141,23 +116,15 @@
 
 /** page components */
 
-@utility btn-gift {
-  @apply text-base sm:text-sm;
-}
 @utility btn-donate {
-  @apply rounded-full normal-case;
+  border-radius: calc(infinity * 1px);
+  text-transform: none;
 }
-@utility btn-reg {
-  @apply text-sm;
-}
-@utility field-gift {
-  & > input {
-    @apply bg-white dark:bg-blue-d6;
-  }
-}
+
 @utility field-input-admin {
   @apply bg-gray-l6 dark:bg-blue-d5;
 }
+
 @utility field-kyc {
   & > input {
     @apply bg-gray-l6 dark:bg-blue-d6;

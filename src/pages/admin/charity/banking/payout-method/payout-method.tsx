@@ -98,7 +98,7 @@ export default function PayoutMethod() {
               with_heir: isWithHeir.toString(),
             }).toString(),
           }}
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-red"
         >
           delete
         </NavLink>

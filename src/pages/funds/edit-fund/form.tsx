@@ -154,7 +154,7 @@ export function Form({
             );
           }}
           type="button"
-          className="btn-red text-sm font-medium px-4 py-2 justify-self-end"
+          className="btn btn-red text-sm font-medium px-4 py-2 justify-self-end"
         >
           {isClosingFund ? "Closing.." : "Close fund"}
         </button>
