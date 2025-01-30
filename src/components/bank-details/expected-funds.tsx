@@ -10,8 +10,8 @@ type Props = {
 
 export default function ExpectedFunds(props: Props) {
   return (
-    <div className="field">
-      <Label htmlFor="wise__amount" required>
+    <div className="">
+      <Label htmlFor="wise__amount" required className="mb-2">
         What is the amount of donations (in USD) you expect to receive monthly
         on our platform?
       </Label>
@@ -22,7 +22,7 @@ export default function ExpectedFunds(props: Props) {
         required
         placeholder="1,000"
         onChange={(event) => props.onChange(event.target.value)}
-        className={`field-input ${props.classes.input} invalid:ring-1 invalid:ring-red`}
+        className={`field-input ${props.classes.input}`}
         autoComplete="off"
         spellCheck={false}
         disabled={props.disabled}

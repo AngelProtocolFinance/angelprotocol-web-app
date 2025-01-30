@@ -112,24 +112,27 @@ export default function Form() {
       )}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      <div>
+      <div className="relative">
         <Field
           {...register("receiptMsg")}
           rows={5}
           type="textarea"
           classes={{
-            container: "field-admin **:data-error:-bottom-4",
             label: "text-base font-medium",
           }}
           label="Tax Receipt message for donors"
           placeholder="Your nonprofit's message to all donors"
-          error={errors.receiptMsg?.message}
         />
         <p
           data-exceed={receipMsg.length > MAX_RECEIPT_MSG_CHAR}
-          className="text-xs text-gray data-[exceed='true']:text-red"
+          className="text-xs text-gray data-[exceed='true']:text-red flex justify-between"
         >
-          {receipMsg.length}/{MAX_RECEIPT_MSG_CHAR}
+          <span>
+            {receipMsg.length}/{MAX_RECEIPT_MSG_CHAR}
+          </span>
+          <span className="text-red text-xs">
+            {errors.receiptMsg?.message ?? ""}
+          </span>
         </p>
         <p className="text-xs sm:text-sm text-gray italic mt-1">
           This is an optional message that can be included on all tax receipts
@@ -263,14 +266,14 @@ export default function Form() {
       <div className="flex gap-3 mt-8">
         <button
           type="reset"
-          className="px-6 btn-outline-filled text-sm"
+          className="px-6 btn-outline btn text-sm"
           disabled={!isDirty}
         >
           Reset changes
         </button>
         <button
           type="submit"
-          className="px-6 btn-blue text-sm"
+          className="px-6 btn btn-blue text-sm"
           disabled={!isDirty}
         >
           Submit changes

@@ -28,9 +28,8 @@ export default function Form(props: Props) {
         onChange={() => {}}
         value={usdOption}
         classes={{
-          label: "font-semibold",
-          combobox: "field-container-donate",
-          container: "field-donate",
+          label: "font-heading font-semibold text-base",
+          input: "field-input-donate",
         }}
         required
       />
@@ -38,7 +37,11 @@ export default function Form(props: Props) {
         {...rhf.register("amount")}
         label="Donation amount"
         placeholder="Enter amount"
-        classes={{ label: "font-semibold", container: "field-donate mt-1" }}
+        classes={{
+          label: "font-heading font-semibold text-base",
+          input: "field-input-donate",
+          container: "mt-1",
+        }}
         required
         tooltip="The minimum donation amount will depend on your DAF provider."
         error={rhf.errors.amount?.message}

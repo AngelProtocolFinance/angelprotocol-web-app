@@ -47,7 +47,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         </button>
         <button
           type="submit"
-          className="btn btn-blue px-6 py-2 rounded-xs text-xs font-bold uppercase"
+          className="btn btn btn-blue px-6 py-2 rounded-xs text-xs font-bold uppercase"
         >
           Submit
         </button>

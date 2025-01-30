@@ -57,7 +57,7 @@ export default function Cards({ classes = "", page1 }: Props) {
         <button
           type="button"
           disabled={state === "loading"}
-          className="col-span-full btn-blue rounded-md p-2 text-sm w-full mt-6"
+          className="col-span-full btn btn-blue rounded-md p-2 text-sm w-full mt-6"
           onClick={() => loadNext(nextPage)}
         >
           Load more organizations

@@ -1,37 +1,24 @@
 import type { Update } from "@better-giving/registration/update";
-import { Field, Input, Label } from "@headlessui/react";
+// import { Field, Input, Label } from "@headlessui/react";
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
+import { NativeField as Field } from "components/form";
 import LoadText from "components/load-text";
+import { List } from "components/selector";
 import { APP_NAME } from "constants/env";
 import type { SubmitHandler } from "react-hook-form";
 import { steps } from "../../../routes";
 import type { RegStep1 } from "../../../types";
 import { useUser } from "../../../user";
-import { ReferralMethodSelector } from "./referral-method-selector";
-import { RoleSelector } from "./role-selector";
+import { referralOptions, roleOptions } from "../constants";
 import type { FV } from "./schema";
 import { useRhf } from "./use-rhf";
-
-function Star() {
-  return <span className="text-red">*</span>;
-}
 
 export default function Form({ classes = "" }: { classes?: string }) {
   const fetcher = useFetcher();
   const state = useLoaderData() as RegStep1;
   const user = useUser();
-  const {
-    register,
-    errors,
-    orgRole,
-    onOrgRoleChange,
-    orgRoleRef,
-    referralMethod,
-    onReferralMethodChange,
-    referralMethodRef,
-    isDirty,
-    handleSubmit,
-  } = useRhf(state.data, user);
+  const { register, errors, orgRole, refMethod, isDirty, handleSubmit } =
+    useRhf(state.data, user);
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
@@ -67,144 +54,111 @@ export default function Form({ classes = "" }: { classes?: string }) {
         let us know more about you and your organization
       </p>
       <h3 className="mb-4">Personal information</h3>
-      <Field className="grid mb-4">
-        <Label className="mb-1 text-sm">
-          First name <Star />
-        </Label>
-        <Input
-          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-          placeholder="e.g. John"
-          {...register("first_name")}
-        />
-        <p className="text-right text-red text-xs mt-1">
-          {errors.first_name?.message}
-        </p>
-      </Field>
-      <Field className="grid mb-4">
-        <Label className="mb-1 text-sm">
-          Last name <Star />
-        </Label>
-        <Input
-          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-          placeholder="e.g. Doe"
-          {...register("last_name")}
-        />
-        <p className="text-right text-red text-xs mt-1">
-          {errors.last_name?.message}
-        </p>
-      </Field>
-      <Field className="grid mb-4">
-        <Label className="mb-1 text-sm">
-          Phone number <span className="text-gray text-sm">(optional)</span>
-        </Label>
-        <Input
-          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-          placeholder="000000000"
-          {...register("contact_number")}
-        />
-        <p className="text-right text-red text-xs mt-1">
-          {errors.contact_number?.message}
-        </p>
-      </Field>
-      <Field className="grid" disabled>
-        <Label className="mb-1 text-sm">
-          E-mail address <Star />
-        </Label>
-        <Input
-          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-          {...register("registrant_id")}
-          disabled
-        />
-      </Field>
-      <h3 className="mt-8 mb-4">Organization information</h3>
-      <Field className="grid mb-4">
-        <Label className="mb-1 text-sm">
-          Organization name <Star />
-        </Label>
-        <Input
-          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-          placeholder="Organization name"
-          {...register("org_name")}
-        />
-        <p className="text-right text-red text-xs mt-1">
-          {errors.org_name?.message}
-        </p>
-      </Field>
-      <RoleSelector
-        value={orgRole}
-        onChange={onOrgRoleChange}
-        ref={orgRoleRef}
-        error={errors.org_role?.value?.message}
+      <Field
+        required
+        label="First name"
+        {...register("first_name")}
+        placeholder="e.g. John"
+        error={errors.first_name?.message}
       />
-      {orgRole.value === "other" && (
-        <Field className="grid my-4">
-          <Label className="mb-1 text-sm">
-            Specify your role <Star />
-          </Label>
-          <Input
-            className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-            placeholder="Specify your role"
-            {...register("other_role", { shouldUnregister: true })}
-          />
-          <p className="text-right text-red text-xs mt-1">
-            {errors.other_role?.message}
-          </p>
-        </Field>
+
+      <Field
+        {...register("last_name")}
+        required
+        label="Last name"
+        {...register("last_name")}
+        placeholder="e.g. Doe"
+        error={errors.last_name?.message}
+        classes={{ container: "mt-4" }}
+      />
+
+      <Field
+        required={false}
+        label="Phone number"
+        {...register("contact_number")}
+        placeholder="000000000"
+        error={errors.contact_number?.message}
+        classes={{ container: "mt-4" }}
+      />
+
+      <Field
+        required
+        label="E-mail address"
+        {...register("registrant_id")}
+        disabled
+        error={errors.registrant_id?.message}
+        classes={{ container: "mt-4" }}
+      />
+
+      <h3 className="mt-8 mb-4">Organization information</h3>
+      <Field
+        required
+        label="Organization name"
+        {...register("org_name")}
+        placeholder="Organization name"
+        error={errors.org_name?.message}
+        classes={{ container: "mb-4" }}
+      />
+      <List
+        required
+        label=" What's your role within the organization?"
+        value={orgRole.value}
+        onChange={orgRole.onChange}
+        options={roleOptions}
+        error={errors.org_role?.value?.message}
+        ref={orgRole.ref}
+        classes={{ option: "text-sm" }}
+      />
+      {orgRole.value.value === "other" && (
+        <Field
+          required
+          label="Specify your role"
+          {...register("other_role", { shouldUnregister: true })}
+          placeholder="Specify your role"
+          error={errors.other_role?.message}
+        />
       )}
       <h3 className="mt-8 mb-4">Other information</h3>
-      <ReferralMethodSelector
-        classes="mb-4"
-        value={referralMethod}
-        onChange={onReferralMethodChange}
+      <List
+        label="How did you find about us?"
+        required
+        value={refMethod.value}
+        onChange={refMethod.onChange}
+        options={referralOptions}
         error={errors.referral_method?.value?.message}
-        ref={referralMethodRef}
+        ref={refMethod.ref}
+        classes={{ option: "text-sm", container: "mb-4" }}
       />
-      {referralMethod.value === "other" && (
-        <Field className="grid my-4">
-          <Label className="mb-1 text-sm">
-            Please provide additional information <Star />
-          </Label>
-          <Input
-            className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-            placeholder="Specify how you found us"
-            {...register("other_referral_method", { shouldUnregister: true })}
-          />
-          <p className="text-right text-red text-xs mt-1">
-            {errors.other_referral_method?.message}
-          </p>
-        </Field>
-      )}
-      {referralMethod.value === "referral" && (
-        <Field className="grid mb-4">
-          <Label className="mb-1 text-sm">
-            Referral Code <Star />
-          </Label>
-          <Input
-            className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-            placeholder="Referral Code"
-            {...register("referral_code", { shouldUnregister: true })}
-          />
-          <p className="text-right text-red text-xs mt-1">
-            {errors.referral_code?.message}
-          </p>
-        </Field>
-      )}
-      <Field className="grid mb-4">
-        <Label className="mb-1 text-sm">
-          Goals <Star />
-        </Label>
-        <Input
-          className="font-heading rounded-sm outline-blue-d1 outline-offset-4 text-sm font-medium bg-transparent disabled:bg-gray-l5 disabled:text-gray px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3"
-          placeholder={`What is your goal working with ${APP_NAME}?`}
-          {...register("goals")}
+
+      {refMethod.value.value === "other" && (
+        <Field
+          required
+          label="Please provide additional information"
+          {...register("other_referral_method", { shouldUnregister: true })}
+          placeholder="Specify how you found us"
+          error={errors.other_referral_method?.message}
         />
-        <p className="text-right text-red text-xs mt-1">
-          {errors.goals?.message}
-        </p>
-      </Field>
+      )}
+      {refMethod.value.value === "referral" && (
+        <Field
+          required
+          label="Referral Code"
+          {...register("referral_code", { shouldUnregister: true })}
+          placeholder="Referral Code"
+          error={errors.referral_code?.message}
+        />
+      )}
+      <Field
+        required
+        label="Goals"
+        {...register("goals")}
+        placeholder={`What is your goal working with ${APP_NAME}?`}
+        error={errors.goals?.message}
+        classes={{ container: "mt-4" }}
+      />
       <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto btn-blue btn-reg"
+        className="mt-8 py-3 px-8 w-full sm:w-auto btn btn-blue text-sm"
         disabled={fetcher.state !== "idle"}
       >
         <LoadText isLoading={fetcher.state === "submitting"}>Continue</LoadText>

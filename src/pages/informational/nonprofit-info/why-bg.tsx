@@ -56,7 +56,7 @@ export default function WhyBG({ className = "" }) {
       <div className="isolate z-10 flex flex-col @3xl:flex-row items-center justify-self-center gap-4 mt-24">
         <Link
           to={appRoutes.register}
-          className="isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
+          className="btn-blue isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative group active:translate-x-1 font-bold shadow-2xl"
         >
           <span className="ml-1">Start Today</span>
           <ArrowRight size={18} className="group-hover:translate-x-1" />

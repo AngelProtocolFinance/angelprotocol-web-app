@@ -110,11 +110,11 @@ function Content({ verdict }: Props) {
           preventScrollReset
           to=".."
           aria-disabled={fetcher.state !== "idle"}
-          className="btn-outline-filled text-sm px-8 py-2"
+          className="btn-outline btn text-sm px-8 py-2"
         >
           Cancel
         </Link>
-        <button type="submit" className="btn-blue px-8 py-2 text-sm">
+        <button type="submit" className="btn btn-blue px-8 py-2 text-sm">
           Submit
         </button>
       </div>

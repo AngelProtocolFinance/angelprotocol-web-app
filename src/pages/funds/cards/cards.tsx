@@ -49,7 +49,7 @@ export default function Cards({ classes = "", page1 }: Props) {
 
       {nextPage && (
         <button
-          className="col-span-full btn-blue rounded-md p-2 text-sm w-full mt-6"
+          className="col-span-full btn btn-blue rounded-md p-2 text-sm w-full mt-6"
           onClick={() => loadNext(nextPage)}
           disabled={state !== "idle"}
         >

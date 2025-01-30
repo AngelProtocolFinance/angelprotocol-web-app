@@ -46,7 +46,7 @@ export const Fund = (props: UserFund) => {
 
       <Link
         aria-disabled={!status.active}
-        className="btn btn-blue rounded-full text-xs px-6 py-2 justify-self-end mt-6"
+        className="btn btn btn-blue rounded-full text-xs px-6 py-2 justify-self-end mt-6"
         to={`${appRoutes.funds}/${props.id}/edit`}
       >
         Edit

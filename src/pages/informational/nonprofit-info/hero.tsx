@@ -27,7 +27,7 @@ export default function Hero({ className = "" }) {
         <div className="flex flex-col @sm:flex-row justify-center @6xl:justify-start items-center gap-6">
           <Link
             to={appRoutes.register}
-            className="px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 bg-blue-d1 active:translate-x-1 text-white font-heading uppercase font-bold shadow-2xl rounded-full"
+            className="btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-full"
           >
             Start today
           </Link>

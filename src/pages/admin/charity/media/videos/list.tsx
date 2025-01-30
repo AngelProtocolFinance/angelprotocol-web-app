@@ -37,7 +37,7 @@ export function List({ classes = "", page1 }: Props) {
           disabled={state !== "idle"}
           type="button"
           onClick={() => load(`?nextPageKey=${nextPageKey}`)}
-          className="col-span-full btn-outline-filled text-sm py-3"
+          className="col-span-full btn-outline btn text-sm py-3"
         >
           {state !== "idle" ? "Loading..." : "Load more videos"}
         </button>

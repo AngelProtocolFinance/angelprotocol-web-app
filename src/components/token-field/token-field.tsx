@@ -41,9 +41,7 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
         </span>
       </div>
 
-      <div
-        className={`${style.inputContainer} relative grid grid-cols-[1fr_auto] items-center gap-2 field-container`}
-      >
+      <div className="relative">
         <input
           ref={ref}
           value={props.token.amount}
@@ -56,9 +54,10 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
           id="amount"
           type="text"
           placeholder="Enter amount"
-          className="text-sm py-3.5 dark:text-gray"
+          className={`field-input h-full ${style.input}`}
         />
         <TokenSelector
+          classes="absolute top-1/2 -translate-y-1/2 right-4"
           tokenState={tokenState}
           token={props.token}
           onChange={props.onChange}

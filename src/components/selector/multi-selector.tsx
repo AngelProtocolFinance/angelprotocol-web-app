@@ -86,14 +86,14 @@ function _MultiList<T extends ValKey>(
           <ComboboxButton
             className={`${
               props.value.length > 0
-                ? "justify-self-end dark:text-gray shrink-0"
-                : "absolute inset-0 flex justify-end items-center pr-2 rounded-sm active:ring-2 ring-blue-d1 ring-offset-1"
+                ? "justify-self-end dark:text-gray shrink-0 pr-2"
+                : "absolute inset-0 flex justify-end items-center pr-4 rounded-sm active:ring-2 ring-blue-d1 ring-offset-1"
             }`}
           >
             {({ open }) => <DrawerIcon isOpen={open} size={20} className="" />}
           </ComboboxButton>
         </div>
-        <ComboboxOptions className={`${styles.options} ${cls.options}`}>
+        <ComboboxOptions className={`selector-opts ${cls.options}`}>
           {optionsAvailable && (
             <div className="flex justify-between p-4">
               {isAllSelected ? (
@@ -109,7 +109,11 @@ function _MultiList<T extends ValKey>(
 
           {optionsAvailable &&
             filteredOptions.map((o) => (
-              <ComboboxOption key={o.value} value={o} className={styles.option}>
+              <ComboboxOption
+                key={o.value}
+                value={o}
+                className={`${cls.option} selector-opt`}
+              >
                 {o.label}
               </ComboboxOption>
             ))}

@@ -85,13 +85,13 @@ function Content(props: Props) {
       </div>
 
       <div className="mt-4 p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l4 dark:bg-blue-d7 border-t border-gray-l3">
-        <Link to=".." className="btn-outline-filled text-sm px-8 py-2">
+        <Link to=".." className="btn-outline btn text-sm px-8 py-2">
           Cancel
         </Link>
         <button
           disabled={!form.dirty}
           type="submit"
-          className="btn-blue px-8 py-2 text-sm"
+          className="btn btn-blue px-8 py-2 text-sm"
         >
           Continue
         </button>

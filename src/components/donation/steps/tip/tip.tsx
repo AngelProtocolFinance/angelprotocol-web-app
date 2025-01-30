@@ -171,15 +171,21 @@ export default function Tip(props: TipStep) {
       )}
 
       {format === "amount" && (
-        <>
-          <label className="mb-2 mt-6 font-heading font-semibold">
+        <div className="mt-6">
+          <label
+            data-required
+            htmlFor="tip-custom-amount"
+            className="label mb-2 block text-base font-heading font-semibold"
+          >
             Your One-Time Donation Amount
           </label>
           <div
-            aria-invalid={!!errors.tip?.amount}
-            className="relative field-container field-container-donate grid grid-cols-[1fr_auto] items-center pr-5"
+            aria-invalid={!!errors.tip?.amount?.message}
+            className="relative"
           >
             <input
+              id="tip-custom-amount"
+              className="field-input field-input-donate pl-14"
               type="number"
               value={tip.amount}
               onChange={(e) =>
@@ -190,18 +196,18 @@ export default function Tip(props: TipStep) {
               }
               placeholder="Enter amount"
             />
-            <span className="uppercase text-[color:var(--accent-primary)]">
+            <span className="absolute top-1/2 -translate-y-1/2 left-4 uppercase text-[color:var(--accent-primary)]">
               {symbol}
             </span>
-            <ErrorMessage
-              data-error
-              className="field-error text-right mt-2"
-              errors={errors}
-              name="tip.amount"
-              as="p"
-            />
           </div>
-        </>
+          <ErrorMessage
+            data-error
+            className="field-err mt-1"
+            errors={errors}
+            name="tip.amount"
+            as="p"
+          />
+        </div>
       )}
 
       <div className="rounded-sm bg-(--accent-secondary) mt-16 relative px-4 py-2 grid grid-cols-[auto_1fr] gap-x-4 items-center">

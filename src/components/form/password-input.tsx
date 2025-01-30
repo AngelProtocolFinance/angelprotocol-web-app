@@ -1,6 +1,5 @@
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { type InputHTMLAttributes, forwardRef, useState } from "react";
-import { fieldClasses } from "./constants";
 
 type El = HTMLInputElement;
 interface Props
@@ -14,19 +13,22 @@ export const PasswordInput = forwardRef<El, Props>((props, ref) => {
 
   return (
     <div>
-      <div className={`grid grid-cols-[auto_1fr_auto] px-5 ${fieldClasses}`}>
-        <Lock className="text-gray" size={20} />
+      <div className="relative">
+        <Lock
+          className="text-gray absolute top-1/2 -translate-y-1/2 left-4"
+          size={20}
+        />
         <input
           ref={ref}
           {...rest}
           type={isPasswordShown ? "text" : "password"}
           autoComplete="current-password"
-          className="w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-gray max-sm:placeholder:text-sm focus:outline-hidden bg-transparent"
+          className="w-full h-full field-input pl-12"
           aria-invalid={!!error}
         />
         <button
           type="button"
-          className="text-gray hover:text-gray active:text-gray-d1 rounded-sm focus-visible:outline focus-visible:outline-2"
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray hover:text-gray active:text-gray-d1 rounded-sm "
           onClick={() => setIsPasswordShown((prev) => !prev)}
         >
           {isPasswordShown ? <EyeOff size={20} /> : <Eye size={20} />}

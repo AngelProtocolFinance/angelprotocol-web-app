@@ -45,7 +45,7 @@ export default function SignupForm() {
           <button
             name="intent"
             value="oauth"
-            className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
+            className="flex-center btn-outline rounded-lg gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
             type="submit"
           >
             <Image src={googleIcon} height={18} width={18} />
@@ -65,7 +65,7 @@ export default function SignupForm() {
           disabled={isSubmitting}
           className="grid gap-3"
         >
-          <div className="flex gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <Input
               {...getInputProps(fields.firstName, { type: "text" })}
               placeholder="First Name"
@@ -104,7 +104,7 @@ export default function SignupForm() {
           disabled={isSubmitting}
           form={form.id}
           type="submit"
-          className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
+          className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
         >
           {isSubmitting ? "Submitting..." : "Sign up"}
         </button>

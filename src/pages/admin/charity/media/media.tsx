@@ -21,10 +21,7 @@ export default function Media() {
       <div className="border border-gray-l3 rounded-sm p-8">
         <div className="flex justify-between items-center">
           <h4 className="text-2xl">Videos</h4>
-          <NavLink
-            to="new"
-            className="btn-outline-filled text-sm px-8 py-2 gap-1"
-          >
+          <NavLink to="new" className="btn-outline btn text-sm px-8 py-2 gap-1">
             <Plus size={16} />
             <span>add video</span>
           </NavLink>
@@ -33,7 +30,7 @@ export default function Media() {
         <FeaturedVideos items={featuredPage.items} classes="mt-4" />
         <NavLink
           to="videos"
-          className="btn-outline-filled text-sm py-3 rounded-sm mt-4"
+          className="btn-outline btn text-sm py-3 rounded-sm mt-4"
         >
           View all videos
         </NavLink>

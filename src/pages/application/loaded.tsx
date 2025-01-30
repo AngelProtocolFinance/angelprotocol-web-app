@@ -114,7 +114,7 @@ export default function Loaded(props: Application) {
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <NavLink
           to={appRoutes.applications}
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back
         </NavLink>
@@ -122,7 +122,7 @@ export default function Loaded(props: Application) {
           aria-disabled={!!prevVerdict}
           to={`rejected?org_name=${props.contact.org_name}`}
           type="button"
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-red"
           preventScrollReset
         >
           reject
@@ -131,7 +131,7 @@ export default function Loaded(props: Application) {
           aria-disabled={!!prevVerdict}
           to={`approved?org_name=${props.contact.org_name}`}
           type="button"
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-green"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-green"
           preventScrollReset
         >
           approve

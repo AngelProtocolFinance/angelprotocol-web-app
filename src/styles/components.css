@@ -1,1 +1,182 @@
 /** Layer 1 components */
+@layer components {
+  .btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    padding: calc(var(--spacing) * 3);
+    border-radius: var(--radius-sm);
+  }
+
+  .btn-outline {
+    background-color: white;
+    border: 1px solid var(--color-gray-l3);
+    outline-color: var(--color-gray-l2);
+    &:active {
+      border-color: var(--color-gray-l2);
+    }
+    &:disabled {
+      background-color: var(--color-gray-l3);
+    }
+    &:enabled:hover {
+      border-color: var(--color-gray-l2);
+      background: var(--color-gray-l4);
+    }
+  }
+  a.btn-outline {
+    &[aria-disabled="true"] {
+      background-color: var(--color-gray-l3);
+    }
+    &.pending {
+      background-color: var(--color-gray-l3);
+      pointer-events: none;
+    }
+  }
+
+  .btn-blue {
+    background-color: var(--color-blue-d1);
+    color: var(--color-white);
+    outline-color: var(--color-blue-l4);
+    &:active {
+      background-color: var(--color-blue-d2);
+    }
+    &:enabled:hover {
+      background-color: var(--color-blue-d2) /* #2d89c8 */;
+    }
+  }
+
+  .btn-red {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    outline-color: var(--color-red-l4);
+    &:active {
+      background-color: var(--color-red-d1);
+    }
+    &:enabled:hover {
+      background-color: var(--color-red-d1);
+    }
+    &.pending {
+      background-color: var(--color-gray);
+      pointer-events: none;
+    }
+  }
+
+  .btn-green {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    outline-color: var(--color-green-l4);
+    &:active {
+      background-color: var(--color-green-d1);
+    }
+    &:enabled:hover {
+      background-color: var(--color-green-d1);
+    }
+    &.pending {
+      background-color: var(--color-gray);
+      pointer-events: none;
+    }
+  }
+
+  .btn-green,
+  .btn-blue,
+  .btn-red {
+    &:disabled {
+      background-color: var(--color-gray);
+    }
+  }
+  a.btn-green,
+  a.btn-blue,
+  a.btn-red {
+    &[aria-disabled="true"] {
+      background-color: var(--color-gray);
+    }
+    &.pending {
+      background-color: var(--color-gray);
+      pointer-events: none;
+    }
+  }
+
+  .scroller {
+    &::-webkit-scrollbar {
+      width: calc(var(--spacing) * 1);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--accent-primary);
+    }
+    &::-webkit-scrollbar-track {
+      background-color: var(--color-gray-l3);
+    }
+  }
+
+  .field-input {
+    width: 100%;
+    font-family: var(--font-heading);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm) /* 0.875rem = 14px */;
+    line-height: var(
+      --tw-leading,
+      var(--text-sm--line-height) /* calc(1.25 / 0.875) ≈ 1.4286 */
+    );
+    background: transparent;
+    padding: calc(var(--spacing) * 3.5) calc(var(--spacing) * 4);
+    border: 1px solid var(--color-gray-l3);
+    outline-color: var(--color-blue-d1);
+    color: var(--color-gray-d4);
+
+    &::placeholder {
+      color: var(--color-gray);
+    }
+    &[aria-disabled="true"],
+    &:disabled {
+      pointer-events: none;
+      background-color: var(--color-gray-l5);
+      color: var(--color-gray);
+    }
+
+    &:invalid,
+    &[aria-invalid="true"] {
+      @apply border-red;
+    }
+  }
+
+  .field-err {
+    text-align: right;
+    font-size: var(--text-xs);
+    color: var(--color-red);
+  }
+
+  .selector-btn {
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    justify-content: space-between;
+  }
+  .selector-opt {
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+    cursor: pointer;
+    &[data-selected="true"] {
+      background-color: var(--accent-secondary);
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: var(--accent-secondary);
+    }
+  }
+  .selector-opts {
+    font-family: var(--font-heading);
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-gray-l3);
+    background-color: var(--color-gray-l6);
+    color: var(--color-gray-d4);
+    position: absolute;
+    top: 100%;
+    margin-top: calc(var(--spacing) * 2);
+    z-index: 10;
+    width: 100%;
+    max-height: 10rem;
+    overflow-y: auto;
+  }
+}

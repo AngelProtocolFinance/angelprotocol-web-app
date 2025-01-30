@@ -71,7 +71,7 @@ function Content({ amount, ...props }: Allocation & { amount: number }) {
       <button
         disabled={isLoading}
         type="button"
-        className="btn btn-blue px-4 py-2 text-sm uppercase mt-4 rounded-full"
+        className="btn btn btn-blue px-4 py-2 text-sm uppercase mt-4 rounded-full"
         onClick={async () => {
           const update: EndowmentUpdate = { allocation: alloc };
 

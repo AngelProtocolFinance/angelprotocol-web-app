@@ -15,7 +15,10 @@ export default function Programs() {
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
       <RmxForm method="POST" className="flex items-center justify-between">
         <h2 className="text-[2rem] font-bold">Programs</h2>
-        <button disabled={nav.state !== "idle"} className="btn-blue px-8 py-2">
+        <button
+          disabled={nav.state !== "idle"}
+          className="btn btn-blue px-8 py-2"
+        >
           {nav.state === "submitting" ? "Creating..." : "Create Program"}
         </button>
       </RmxForm>

@@ -51,7 +51,7 @@ export default function Posts() {
       {nextPage && (
         <button
           type="button"
-          className="col-span-full btn-blue rounded-full justify-self-center px-4 py-2 text-sm  mt-6"
+          className="col-span-full btn btn-blue rounded-full justify-self-center px-4 py-2 text-sm  mt-6"
           onClick={() => {
             const copy = new URLSearchParams(params);
             copy.set("page", nextPage.toString());

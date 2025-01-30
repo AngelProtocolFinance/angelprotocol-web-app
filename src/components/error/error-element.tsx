@@ -31,7 +31,7 @@ export function ErrorElement() {
           </p>
           <NavLink
             to={appRoutes.marketplace}
-            className="btn-outline text-sm px-6 py-2 rounded-full"
+            className="btn btn-outline text-sm px-6 py-2 rounded-full"
           >
             Back
           </NavLink>

@@ -57,7 +57,7 @@ export default function Menu({ user, classes }: Props) {
         <button
           disabled={navigation.state !== "idle"}
           type="submit"
-          className="btn-blue rounded-none w-full p-3 text-sm mt-4"
+          className="btn btn-blue rounded-none w-full p-3 text-sm mt-4"
         >
           Log out
         </button>

@@ -3,41 +3,11 @@
     @apply absolute w-full opacity-0 cursor-pointer;
   }
 }
-@utility scroller {
-  &::-webkit-scrollbar {
-    @apply w-1;
-  }
-  &::-webkit-scrollbar-thumb {
-    @apply bg-(--accent-primary);
-  }
-  &::-webkit-scrollbar-track {
-    @apply bg-gray-l3 dark:bg-gray-d1;
-  }
-}
 
-@utility btn {
-  /** applicable to button and <a/> */
-  @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded-sm focus:outline-hidden focus-visible:ring-2;
-}
 @utility field-error {
   @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
 }
-@utility field-input {
-  @apply w-full font-heading rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3;
-  &:disabled {
-    @apply pointer-events-none bg-gray-l5 text-gray;
-  }
-  &[aria-disabled="true"] {
-    @apply pointer-events-none bg-gray-l5 text-gray;
-  }
-  &:enabled:focus {
-    @apply outline-hidden ring-2 ring-offset-1 ring-blue-d1;
-  }
-
-  &[aria-invalid="true"] {
-    @apply border-red;
-  }
-}
+/* ` */
 @utility label {
   @apply block text-sm after:ml-1;
   &[data-required="true"] {
@@ -57,86 +27,10 @@
   @apply accent-blue-d1 size-4 shrink-0 focus:outline-hidden focus:ring-2 focus:ring-blue-d1 disabled:accent-gray-l5 ring-offset-1;
 }
 
-/** Layer 2 components */
-@utility btn-outline {
-  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 dark:aria-disabled:bg-gray-d1 dark:disabled:bg-gray-d1 border border-gray-l3 dark:border-gray-d1 enabled:hover:border-gray-l2 dark:enabled:hover:border-blue-d2;
-  &.pending {
-    @apply bg-gray-l4 pointer-events-none;
-  }
-}
-
-@utility btn-outline-2 {
-  @apply rounded-lg normal-case text-sm border border-gray-l3 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
-}
-@utility btn-blue {
-  @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2 hover:bg-blue-d2;
-  &.pending {
-    @apply bg-gray pointer-events-none;
-  }
-}
-@utility btn-outline-blue {
-  @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 text-blue-d1 border border-blue-d1 enabled:hover:border-blue;
-}
-@utility btn-red {
-  @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
-  &.pending {
-    @apply bg-gray pointer-events-none;
-  }
-}
-@utility btn-green {
-  @apply btn bg-green disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-green-l1 active:bg-green-d1 focus-visible:ring-green-l4;
-  &.pending {
-    @apply bg-gray pointer-events-none;
-  }
-}
 @utility overlay {
   @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 dark:before:bg-blue-d3/90;
 }
-@utility field-container {
-  @apply rounded-sm border border-gray-l3;
-  &:has(:focus) {
-    @apply ring-2 ring-offset-1 ring-blue-d1;
-  }
-  &:has(:disabled) {
-    @apply text-gray bg-gray-l5 pointer-events-none;
-  }
-  &:has([aria-disabled="true"]) {
-    @apply text-gray bg-gray-l5 pointer-events-none;
-  }
-  &:has([data-error]) {
-    @apply border-red;
-  }
-  &:has([aria-invalid="true"]) {
-    @apply border-red;
-  }
-  & > input {
-    @apply bg-transparent focus:outline-hidden w-full;
-  }
-}
-@utility field-input-donate {
-  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
-  &:enabled:focus {
-    @apply ring-[color:var(--accent-primary)];
-  }
-}
-@utility field {
-  @apply relative;
 
-  & > textarea {
-    @apply field-input;
-  }
-
-  & > input {
-    @apply field-input;
-  }
-
-  & > label {
-    @apply mb-2;
-  }
-  & [data-error] {
-    @apply field-error;
-  }
-}
 @utility check-field {
   @apply grid grid-cols-[auto_1fr] justify-items-start gap-x-3 items-center;
   & > label {
@@ -151,63 +45,16 @@
 }
 
 /** page components */
-@utility btn-outline-filled {
-  @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 disabled:bg-gray-l4 aria-disabled:bg-gray-l4;
-}
-@utility btn-outline-gray {
-  @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-gray-d3 dark:enabled:hover:bg-gray-d1 dark:active:bg-gray-d4;
-}
-@utility btn-gift {
-  @apply text-base sm:text-sm;
-}
-@utility btn-donate {
-  @apply rounded-full normal-case;
-}
-@utility btn-reg {
-  @apply text-sm;
-}
-@utility field-gift {
-  & > input {
-    @apply bg-white dark:bg-blue-d6;
-  }
-}
-@utility field-input-admin {
-  @apply bg-gray-l6 dark:bg-blue-d5;
-}
-@utility field-kyc {
-  & > input {
-    @apply bg-gray-l6 dark:bg-blue-d6;
-  }
-}
-@utility field-admin {
-  & > textarea {
-    @apply bg-gray-l6 dark:bg-blue-d5;
-  }
 
-  & > input {
-    @apply bg-gray-l6 dark:bg-blue-d5;
-  }
+@utility btn-donate {
+  border-radius: calc(infinity * 1px);
+  text-transform: none;
 }
-@utility field-donate {
-  & > input {
-    @apply field-input-donate;
-  }
-  & > label {
-    @apply font-heading font-semibold text-base;
-  }
-}
-@utility field-container-donate {
-  @apply text-base font-semibold rounded-lg;
-  & > input {
-    @apply py-3.5 px-5 text-base placeholder:font-medium;
-  }
-  &:has(:focus) {
+
+@utility field-input-donate {
+  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+  &:enabled:focus {
     @apply ring-[color:var(--accent-primary)];
-  }
-}
-@utility field-admin-sec {
-  & > input {
-    @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 }
 
@@ -229,23 +76,4 @@
 
 @utility box-delay-2 {
   animation-delay: 600ms;
-}
-
-@utility text-field {
-  /** remove arrows from input type=number*/
-  -moz-appearance: textfield;
-  &:hover {
-    -moz-appearance: number-input;
-  }
-  &:focus {
-    -moz-appearance: number-input;
-  }
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
 }

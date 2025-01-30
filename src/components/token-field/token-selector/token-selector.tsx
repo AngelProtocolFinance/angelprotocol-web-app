@@ -6,14 +6,16 @@ import TokenOptions from "./token-options";
 
 interface ITokenSelector extends Pick<Props, "token" | "onChange"> {
   tokenState: Token.State;
+  classes?: string;
 }
 export default function TokenSelector({
   onChange,
   token,
   tokenState,
+  classes = "",
 }: ITokenSelector) {
   return (
-    <Popover className="relative gap-1 flex justify-end dark:text-gray h-full">
+    <Popover className={`gap-1 flex justify-end dark:text-gray ${classes}`}>
       <PopoverButton
         disabled={tokenState === "loading"}
         className="flex items-center gap-1 focus:outline-hidden"
@@ -34,7 +36,7 @@ export default function TokenSelector({
                 size={20}
               />
             ) : (
-              <DrawerIcon isOpen={open} size={24} />
+              <DrawerIcon isOpen={open} size={20} />
             )}
           </>
         )}

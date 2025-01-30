@@ -53,9 +53,8 @@ export default function Form(props: Props) {
         onChange={rhf.currency.onChange}
         value={rhf.currency.value}
         classes={{
-          label: "font-semibold",
-          combobox: "field-container-donate rounded-lg",
-          container: "field-donate",
+          label: "font-heading font-semibold text-base",
+          input: "field-input-donate",
         }}
         required
       />
@@ -63,7 +62,10 @@ export default function Form(props: Props) {
         {...rhf.register("amount")}
         label="Donation amount"
         placeholder="Enter amount"
-        classes={{ label: "font-semibold", container: "field-donate" }}
+        classes={{
+          label: "font-heading font-semibold text-base",
+          input: "field-input-donate",
+        }}
         error={rhf.errors.amount?.message}
         required
         // validation must be dynamicly set depending on which exact currency is selected

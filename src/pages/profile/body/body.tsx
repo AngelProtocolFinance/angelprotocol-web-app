@@ -44,7 +44,7 @@ export default function Body() {
           )}
           <NavLink
             to={`${appRoutes.donate}/${p.id}`}
-            className="btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
+            className="btn btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now
           </NavLink>

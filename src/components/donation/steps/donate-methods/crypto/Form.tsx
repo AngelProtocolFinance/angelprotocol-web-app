@@ -31,12 +31,11 @@ export default function Form(props: CryptoFormStep) {
         token={token.value}
         onChange={token.onChange}
         error={errors.token}
+        classes={{
+          input: "field-input-donate",
+        }}
         withBalance
         label="Donation amount"
-        classes={{
-          label: "font-heading mb-1",
-          inputContainer: "field-container-donate pr-5",
-        }}
         withMininum
       />
 

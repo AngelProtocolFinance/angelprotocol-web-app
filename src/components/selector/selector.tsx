@@ -1,4 +1,6 @@
 import {
+  Field,
+  Label,
   Listbox,
   ListboxButton,
   ListboxOption,
@@ -7,7 +9,7 @@ import {
 import { DrawerIcon } from "components/icon";
 import { unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
-import type { ForwardedRef } from "react";
+import { type ForwardedRef, useImperativeHandle, useRef } from "react";
 import {
   type FieldValues,
   type Path,
@@ -15,32 +17,40 @@ import {
   useController,
 } from "react-hook-form";
 import type { OptionType, ValKey } from "types/components";
-import { styles, valueKey } from "./constants";
-import FocusableInput from "./focusable-input";
+import { valueKey } from "./constants";
 import type { ControlledProps, Props } from "./types";
 
 function _List<T extends ValKey>(
   props: ControlledProps<T>,
-  ref: ForwardedRef<HTMLInputElement>
+  ref: ForwardedRef<Pick<HTMLButtonElement, "focus" | "scrollTo">>
 ) {
   const cls = unpack(props.classes);
 
+  const btnRef = useRef<HTMLButtonElement>(null);
+  useImperativeHandle(ref, () => ({
+    focus: () => btnRef.current?.focus(),
+    scrollTo: () => btnRef.current?.scrollIntoView({ block: "nearest" }),
+  }));
+
   return (
-    <>
+    <Field className={cls.container}>
+      <Label data-required={props.required} className="label empty:hidden mb-2">
+        {props.label}
+      </Label>
       <Listbox
         disabled={props.disabled}
         value={props.value}
         by={valueKey}
         onChange={props.onChange}
         as="div"
-        className={`relative ${cls.container}`}
+        className="relative"
       >
-        <FocusableInput ref={ref} />
         <ListboxButton
+          ref={btnRef}
           aria-invalid={!!props.error}
           aria-disabled={props.disabled}
           as="button"
-          className={`${cls.button} ${styles.selectorButton} peer-focus:shadow-sm peer-focus:shadow-red`}
+          className={`${cls.button} selector-btn field-input focus:outline-2 data-open:outline-2 outline-blue-d1`}
         >
           {({ open }) => (
             <>
@@ -53,21 +63,23 @@ function _List<T extends ValKey>(
             </>
           )}
         </ListboxButton>
-        <ListboxOptions className={`${styles.options} ${cls.options}`}>
+        <ListboxOptions className={`selector-opts ${cls.options} scroller`}>
           {props.options
             .filter((o) => !!o.value)
             .map((o) => (
-              <ListboxOption key={o.value} value={o} className={styles.option}>
+              <ListboxOption
+                key={o.value}
+                value={o}
+                className={`selector-opt ${cls.option}`}
+              >
                 {o.label}
               </ListboxOption>
             ))}
         </ListboxOptions>
-        <p className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2 empty:hidden">
-          {props.error}
-        </p>
+        <p className="field-err mt-1 empty:hidden">{props.error}</p>
       </Listbox>
       {props.children?.(props.value)}
-    </>
+    </Field>
   );
 }
 

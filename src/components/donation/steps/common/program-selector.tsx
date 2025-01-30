@@ -62,7 +62,7 @@ export function ProgramSelector({
         <ListboxButton
           id="select-program"
           as="button"
-          className="flex items-center justify-between border border-gray-l3 py-3.5 pl-5 pr-2 rounded-lg focus:ring-2 focus:ring-blue-d1 ring-offset-1"
+          className="flex items-center justify-between border border-gray-l3 py-3.5 pl-5 pr-2 rounded-lg outline-blue-d1 data-open:outline-2"
         >
           {({ open }) => (
             <>

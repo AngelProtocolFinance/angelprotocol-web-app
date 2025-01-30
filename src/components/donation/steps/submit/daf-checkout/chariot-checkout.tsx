@@ -163,7 +163,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 {...register("honoraryFullName")}
                 label="Honoree's name"
                 placeholder="e.g. Jane Doe"
-                classes="w-full field-donate [&_input]:bg-white"
+                classes={{
+                  container: "w-full [&_input]:bg-white",
+                  input: "field-input-donate",
+                }}
                 required
                 error={errors.honoraryFullName?.message}
               />
@@ -180,7 +183,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     {...register("tributeNotif.toFullName")}
                     label="Recipient name"
                     placeholder="e.g. Jane Doe"
-                    classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                    classes={{
+                      container: "[&_label]:text-sm [&_input]:text-sm",
+                      input: "field-input-donate",
+                    }}
                     required
                     error={errors.tributeNotif?.toFullName?.message}
                   />
@@ -188,7 +194,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     {...register("tributeNotif.toEmail")}
                     label="Email address"
                     placeholder="e.g. janedoe@better.giving"
-                    classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                    classes={{
+                      container: "[&_label]:text-sm [&_input]:text-sm",
+                      input: "field-input-donate",
+                    }}
                     required
                     error={errors.tributeNotif?.toEmail?.message}
                   />
@@ -199,8 +208,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     label="Custom message"
                     placeholder="Message to recipient"
                     classes={{
-                      container:
-                        "field-donate [&_label]:text-sm [&_input]:text-sm",
+                      container: "[&_label]:text-sm [&_textarea]:text-sm",
+                      input: "field-input-donate",
                     }}
                     required={false}
                     error={errors.tributeNotif?.fromMsg?.message}

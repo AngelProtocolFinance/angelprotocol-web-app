@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { NavLink, useLoaderData } from "@remix-run/react";
 import BankDetails from "components/bank-details";
 import ExtLink from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
@@ -28,11 +28,11 @@ export default function Banking() {
           href={data.banking.bank_statement.publicUrl}
           className="flex items-center gap-2 text-blue hover:text-blue-d1"
         >
-          <SquareArrowOutUpRight />
+          <SquareArrowOutUpRight size={16} />
           <span>Bank statement</span>
         </ExtLink>
         <button
-          className="btn-red px-2 py-1 rounded-sm text-xs mt-2 mb-8"
+          className="btn btn-red px-2 py-1 rounded-sm text-xs mt-2 mb-8"
           type="button"
           onClick={() => setIsChanging(true)}
         >
@@ -40,18 +40,18 @@ export default function Banking() {
         </button>
 
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
-          <Link
+          <NavLink
             to={`../${steps.docs}`}
-            className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+            className="py-3 min-w-[8rem] btn btn-outline text-sm"
           >
             Back
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to={`../${steps.summary}`}
-            className="py-3 min-w-[8rem] btn-blue btn-reg"
+            className="py-3 min-w-[8rem] btn btn-blue text-sm"
           >
             Continue
-          </Link>
+          </NavLink>
         </div>
       </div>
     );
@@ -61,7 +61,7 @@ export default function Banking() {
     <div className="flex flex-col items-start max-sm:items-center">
       {isChanging && (
         <button
-          className="btn-blue px-2 py-1 rounded-sm text-xs mt-2 mb-4"
+          className="btn btn-blue px-2 py-1 rounded-sm text-xs mt-2 mb-4"
           type="button"
           onClick={() => setIsChanging(false)}
         >

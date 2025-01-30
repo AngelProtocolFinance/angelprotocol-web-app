@@ -34,7 +34,7 @@ export default function DonateThanks() {
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
-      <p className="text-center text-gray">
+      <p className="text-center text-navy-l1">
         We'll process your donation to{" "}
         {recipientName ?? "the nonprofit you specified"} as soon as the payment
         has cleared.
@@ -48,7 +48,7 @@ export default function DonateThanks() {
         className="mt-6 border border-gray-l3 rounded-xl"
       />
 
-      <p className="text-center text-gray mt-8 mb-2 text-[15px]">
+      <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
         {widgetVersion ? (
           <ExtLink
             className="text-blue"
@@ -69,7 +69,7 @@ export default function DonateThanks() {
       {!widgetVersion && (
         <Link
           to={appRoutes.marketplace}
-          className="btn-outline h-[3.25rem] font-heading max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
+          className="btn btn-outline h-[3.25rem] font-heading max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
         >
           Back to the platform
         </Link>

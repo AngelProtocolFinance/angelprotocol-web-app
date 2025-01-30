@@ -36,13 +36,13 @@ export function Program(props: TProgram) {
             type="submit"
             name="programId"
             value={props.id}
-            className="btn-outline-filled w-24 py-2 text-sm @lg:ml-auto"
+            className="btn-outline btn w-24 py-2 text-sm @lg:ml-auto"
           >
             delete
           </button>
           <Link
             to={`../${adminRoutes.program_editor}/${props.id}`}
-            className="btn-outline-filled w-24 py-2 text-sm"
+            className="btn-outline btn w-24 py-2 text-sm"
           >
             edit
           </Link>

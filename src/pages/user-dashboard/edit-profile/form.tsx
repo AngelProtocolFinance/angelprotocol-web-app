@@ -100,14 +100,14 @@ export default function Component() {
       <div className="flex gap-3 mt-8">
         <button
           type="reset"
-          className="px-6 btn-outline-filled text-sm"
+          className="px-6 btn-outline btn text-sm"
           disabled={!rhf.isDirty}
         >
           Reset changes
         </button>
         <button
           type="submit"
-          className="px-6 btn-blue text-sm"
+          className="px-6 btn btn-blue text-sm"
           disabled={!rhf.isDirty || rhf.avatar.value === "loading"}
         >
           Submit changes

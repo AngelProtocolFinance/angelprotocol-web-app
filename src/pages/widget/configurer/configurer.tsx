@@ -218,14 +218,14 @@ export default function Configurer({
           <button
             disabled={!isDirty}
             type="reset"
-            className="btn-outline-filled @max-sm/configurer:mx-auto w-40"
+            className="btn-outline btn @max-sm/configurer:mx-auto w-40"
           >
             Reset Changes
           </button>
           <button
             disabled={!isDirty}
             type="submit"
-            className="btn-blue @max-sm/configurer:mx-auto w-40"
+            className="btn btn-blue @max-sm/configurer:mx-auto w-40"
           >
             {isSubmitting ? "Updating.." : "Update Form"}
           </button>

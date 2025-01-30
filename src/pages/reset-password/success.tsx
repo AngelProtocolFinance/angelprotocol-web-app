@@ -16,7 +16,7 @@ export default function Success(props: { to: string }) {
 
       <Link
         to={appRoutes.signin + `?redirect=${props.to}`}
-        className="flex-center mt-9 w-full bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
+        className="flex-center mt-9 w-full btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
       >
         Back to Sign in
       </Link>

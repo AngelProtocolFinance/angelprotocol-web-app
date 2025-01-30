@@ -9,7 +9,7 @@ export function List(props: IList) {
   return (
     <div className="overflow-x-auto">
       <NavLink
-        className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
+        className="justify-self-end btn btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
         to="add"
       >
         <Plus size={16} />

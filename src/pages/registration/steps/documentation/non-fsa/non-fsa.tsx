@@ -1,6 +1,6 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import { NativeField as Field, Form } from "components/form";
 import LoadText from "components/load-text";
 import { useForm } from "react-hook-form";
@@ -44,17 +44,17 @@ export default function NonFSA(
       />
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-        <Link
+        <NavLink
           aria-disabled={isSubmitting}
           to={`../${steps.fsaInquiry}`}
-          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+          className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back
-        </Link>
+        </NavLink>
         <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] btn-blue btn-reg"
+          className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>

@@ -22,7 +22,7 @@ export function Hero({ classes = "" }) {
 
       <Link
         to={appRoutes.register}
-        className="mt-10 isolate justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
+        className="btn-blue mt-10 isolate justify-self-center inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative group active:translate-x-1 font-bold shadow-2xl"
       >
         <span className="ml-1 text-center">
           Join the Fundraising Revolution

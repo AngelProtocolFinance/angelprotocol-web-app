@@ -54,8 +54,10 @@ function RecipientDetails({
           Refreshing requirements..
         </LoadingStatus>
       )}
-      <div className="field">
-        <Label required>Transfer type</Label>
+      <div className="">
+        <Label required className="mb-2">
+          Transfer type
+        </Label>
         <NativeSelect
           value={selectedIdx}
           onChange={(value) => setSelectedIdx(+value)}

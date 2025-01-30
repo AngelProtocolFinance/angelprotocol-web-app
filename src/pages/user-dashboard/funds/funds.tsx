@@ -28,7 +28,7 @@ export default function Funds() {
         <h3 className="text-3xl">My Fundraisers</h3>
         <Link
           to={appRoutes.funds + "/new"}
-          className="btn-blue text-sm px-6 py-2 rounded-full"
+          className="btn btn-blue text-sm px-6 py-2 rounded-full"
         >
           Create
         </Link>

@@ -15,7 +15,7 @@ export default function PayoutMethods() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-left text-lg uppercase">Current Banking Details</h1>
-        <NavLink to="new" className="btn-green pl-2 pr-4 py-2 text-xs">
+        <NavLink to="new" className="btn btn-green pl-2 pr-4 py-2 text-xs">
           <Plus className="mr-2" size={16} />
           <span>New</span>
         </NavLink>

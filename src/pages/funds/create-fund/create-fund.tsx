@@ -204,7 +204,7 @@ export default function CreateFund() {
         <button
           disabled={isUploading}
           type="submit"
-          className="mt-8 btn-blue text-sm font-medium px-4 py-2 justify-self-end"
+          className="mt-8 btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"
         >
           Create Fund
         </button>

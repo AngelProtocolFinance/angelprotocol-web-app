@@ -3,7 +3,7 @@ import type { TokenWithDetails } from "types/components";
 type Classes = {
   container?: string;
   label?: string;
-  inputContainer?: string;
+  input?: string;
 };
 
 export type Props = {

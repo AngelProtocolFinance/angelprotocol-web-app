@@ -33,10 +33,7 @@ export default function Videos() {
       />
       <div className="flex justify-between items-center">
         <h4 className="text-2xl capitalize mt-4">All videos</h4>
-        <NavLink
-          to="new"
-          className="btn-outline-filled text-sm px-8 py-2 gap-1"
-        >
+        <NavLink to="new" className="btn-outline btn text-sm px-8 py-2 gap-1">
           <Plus size={16} />
           <span>add video</span>
         </NavLink>

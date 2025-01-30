@@ -30,7 +30,7 @@ export default function FiscalSponsorship({ className = "" }) {
 
         <Link
           to={appRoutes.register}
-          className="justify-self-center text-center @6xl:justify-self-start btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50 uppercase"
+          className="justify-self-center text-center @6xl:justify-self-start btn btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50 uppercase"
         >
           Unlock a new world of donors
         </Link>

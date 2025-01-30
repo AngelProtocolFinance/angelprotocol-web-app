@@ -43,7 +43,6 @@ export default function ProgramInfo(props: Program) {
       >
         <Field
           {...register("title")}
-          classes="field-admin"
           label="Title of program"
           required
           error={errors.title?.message}
@@ -84,7 +83,7 @@ export default function ProgramInfo(props: Program) {
         />
         <Field
           {...register("targetRaise")}
-          classes="field-admin mb-4"
+          classes="mb-4"
           label="Target amount to raise (USD)"
           placeholder="e.g. $1000"
           error={errors.targetRaise?.message}
@@ -94,7 +93,7 @@ export default function ProgramInfo(props: Program) {
             !isDirty || isLoading || isSubmitting || image.value === "loading"
           }
           type="submit"
-          className="@lg:justify-self-end btn-blue py-2 text-sm"
+          className="@lg:justify-self-end btn btn-blue py-2 text-sm"
         >
           {isLoading || isSubmitting ? "Saving..." : "Save changes"}
         </button>

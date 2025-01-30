@@ -93,7 +93,7 @@ const HeroBottom = ({ className = "", endowments }: Props) => {
 
       <Link
         to={appRoutes.marketplace}
-        className="z-10 mt-16 justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full font-heading relative"
+        className="z-10 mt-16 justify-self-center btn btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full font-heading relative"
       >
         <span className="ml-1">Explore All Causes</span>
         <ArrowRight size={20} />

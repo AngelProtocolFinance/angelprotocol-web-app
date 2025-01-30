@@ -75,14 +75,14 @@ function Content({ isDefault, isWithHeir }: Props) {
             to=".."
             aria-disabled={isSubmitting}
             type="button"
-            className="btn-outline-filled text-sm px-8 py-2"
+            className="btn-outline btn text-sm px-8 py-2"
           >
             Cancel
           </NavLink>
           <button
             disabled={isSubmitting}
             type="submit"
-            className="btn-blue px-8 py-2 text-sm"
+            className="btn btn-blue px-8 py-2 text-sm"
           >
             Proceed
           </button>
