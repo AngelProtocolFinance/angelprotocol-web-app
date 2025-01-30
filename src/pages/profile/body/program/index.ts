@@ -1,9 +1,13 @@
 import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 import { getProgram } from "api/get/program";
 import { richTextStyles } from "components/rich-text";
+import { npoId } from "../common/npo-id";
 export { default } from "./program";
 export { ErrorBoundary } from "components/error";
-export const loader: LoaderFunction = ({ params }) =>
-  getProgram(params.id, params.programId);
+export const loader: LoaderFunction = async ({ params }) => {
+  const id = await npoId(params.id);
+  if (typeof id !== "number") return id;
 
+  return getProgram(id, params.programId);
+};
 export const links: LinksFunction = () => [...richTextStyles];

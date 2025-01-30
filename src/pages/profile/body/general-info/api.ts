@@ -2,8 +2,7 @@ import type { IMedia, Program } from "@better-giving/endowment";
 import type { FundItem } from "@better-giving/fundraiser";
 import type { LoaderFunction } from "@vercel/remix";
 import { getPrograms } from "api/get/programs";
-import { plusInt } from "api/schema/endow-id";
-import { parse } from "valibot";
+import { npoId } from "../common/npo-id";
 import { featuredMedia } from "../featured-media";
 import { getFundsNpoMemberOf } from ".server/funds";
 
@@ -14,10 +13,12 @@ export interface LoaderData {
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const id = parse(plusInt, params.id);
+  const id = await npoId(params.id);
+  if (typeof id !== "number") return id;
+
   return {
-    programs: await getPrograms(params.id),
-    media: await featuredMedia(params.id),
+    programs: await getPrograms(id),
+    media: await featuredMedia(id.toString()),
     funds: await getFundsNpoMemberOf(id, {
       npoProfileFeatured: true,
     }),

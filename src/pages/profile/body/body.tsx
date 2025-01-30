@@ -11,9 +11,13 @@ import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../profile-context";
+import { npoId } from "./common/npo-id";
 
-export const loader: LoaderFunction = async ({ params }) =>
-  getEndowBalance(params.id);
+export const loader: LoaderFunction = async ({ params }) => {
+  const id = await npoId(params.id);
+  if (typeof id !== "number") return id;
+  return getEndowBalance(id.toString());
+};
 
 export default function Body() {
   const p = useProfileContext();
