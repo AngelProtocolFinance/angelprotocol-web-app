@@ -23,4 +23,12 @@ export const aws_secret_access_key = v.parse(
   required,
   process.env.AWS_SECRET_ACCESS_KEY
 );
+export const apes_aws_access_key_id = v.parse(
+  required,
+  process.env.APES_AWS_ACCESS_KEY_ID
+);
+export const apes_aws_secret_access_key = v.parse(
+  required,
+  process.env.APES_AWS_SECRET_ACCESS_KEY
+);
 export const aws_region = v.parse(required, process.env.AWS_REGION);
