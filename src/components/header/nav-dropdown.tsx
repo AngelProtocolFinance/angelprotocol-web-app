@@ -77,7 +77,7 @@ export default function NavDropdown({ user, isInAuth }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.funds} className={styler}>
+            <NavLink to={appRoutes.funds} className={styler} end>
               <CornerDownRight strokeWidth={1.5} size={15} />
               Fundraisers
             </NavLink>
