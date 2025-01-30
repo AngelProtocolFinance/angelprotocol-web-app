@@ -1,4 +1,3 @@
-import { AboutVideo } from "components/about-video";
 // import HeroBottom from "../@sections/HeroBottom";
 import Footer from "components/footer";
 import Animation from "./animation";
@@ -22,7 +21,7 @@ export default function Home() {
       <Header classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
       {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
-      <AboutVideo classes="max-w-2xl justify-self-center" />
+
       <Feature1 />
       <Benefits />
       <Brands />

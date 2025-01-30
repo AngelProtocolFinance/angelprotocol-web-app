@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
+import { AboutVideo } from "components/about-video";
 import Image from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -46,12 +47,14 @@ export function Feature1({ className = "" }) {
       <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
         How Better Giving Works
       </h3>
-      <p className="text-gray px-10 text-center mb-16 text-xl">
+      <p className="text-gray px-10 text-center mb-2 text-xl">
         Discover how easy it is to boost your nonprofit’s donations and achieve
         long-term financial sustainability.
       </p>
 
-      <ul className="lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
+      <AboutVideo classes="max-w-2xl justify-self-center p-4" />
+
+      <ul className="mt-20 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}
