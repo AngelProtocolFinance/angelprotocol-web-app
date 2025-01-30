@@ -1,5 +1,5 @@
 import { tables } from "@better-giving/types/list";
-import type { LoaderFunction } from "@vercel/remix";
+import { type LoaderFunction, data } from "@vercel/remix";
 import { apes } from ".server/aws/apes";
 import { env } from ".server/env";
 
@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async () => {
     }
   } while (startKey);
 
-  return Response.json({
+  return data({
     list: balances.map((b) => ({
       ...b,
       pct: `${((b.bal / total) * 100).toFixed(2)}%`,
