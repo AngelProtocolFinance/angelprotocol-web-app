@@ -49,10 +49,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   } while (startKey);
 
   return data({
-    list: balances.map((b) => ({
-      ...b,
-      pct: `${((b.bal / total) * 100).toFixed(2)}%`,
-    })),
+    list: balances
+      .toSorted((a, b) => b.bal - a.bal)
+      .map((b) => ({
+        ...b,
+        bal: b.bal.toFixed(2),
+        pct: `${((b.bal / total) * 100).toFixed(2)}%`,
+      })),
     total,
   });
 };
