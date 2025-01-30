@@ -33,16 +33,16 @@ export const loader: LoaderFunction = async ({ request }) => {
     const res = await apes.DynamoDB.Query({
       TableName: tables.balances,
       KeyConditionExpression: "network = :network",
-      FilterExpression: "sustainabilityFundBal > :zero",
+      FilterExpression: "liq > :zero",
       ExpressionAttributeValues: { ":network": env, ":zero": 0 },
-      ProjectionExpression: "id, sustainabilityFundBal",
+      ProjectionExpression: "id, liq",
       ExclusiveStartKey: startKey,
     });
 
     startKey = res.LastEvaluatedKey;
 
     for (const item of (res.Items || []) as any[]) {
-      const bal = item.sustainabilityFundBal;
+      const bal = item.liq;
       total += bal as any;
       balances.push({ id: item.id, bal });
     }
