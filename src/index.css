@@ -111,15 +111,6 @@
 
   --radius-4xl: 2rem;
   --radius-5xl: 3.5rem;
-
-  @keyframes translate-rtl {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
 }
 
 /*
