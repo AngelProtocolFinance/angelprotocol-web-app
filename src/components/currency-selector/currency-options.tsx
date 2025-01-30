@@ -49,7 +49,7 @@ export default function CurrencyOptions({
       {(currencies) => (
         <ComboboxOptions
           anchor="bottom"
-          className={`${classes} w-[var(--input-width)] bg-white dark:bg-blue-d6 shadow-lg rounded-sm [--anchor-max-height:13rem] overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-hidden`}
+          className={`${classes} w-[var(--input-width)] bg-white shadow-lg rounded-sm [--anchor-max-height:13rem] overflow-y-auto scroller text-base outline-blue-d1`}
         >
           {currencies.map(({ code, name, min, rate }) => (
             <ComboboxOption
