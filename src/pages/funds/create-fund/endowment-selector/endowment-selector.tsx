@@ -35,7 +35,14 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
         disabled={props.disabled}
         value={props.values}
         by="id"
-        onChange={props.onChange}
+        onChange={(v) => {
+          if (!v) return;
+          props.onChange(v);
+          //something is added
+          if (v.length > props.values.length) {
+            setSearchText("");
+          }
+        }}
         as="div"
         className="relative"
         multiple
