@@ -1,5 +1,6 @@
 import poster from "assets/images/about-video-preview.webp";
 import { useEffect, useRef, useState } from "react";
+import subtitle from "./about-video.vtt";
 
 type VideoStatus = "loading" | "error" | "loaded";
 
@@ -77,7 +78,7 @@ export const AboutVideo = ({ classes = "" }) => {
           >
             <track
               kind="captions"
-              src="captions.vtt"
+              src={subtitle}
               srcLang="en"
               label="English"
               default
