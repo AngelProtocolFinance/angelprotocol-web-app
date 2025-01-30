@@ -87,7 +87,10 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           input={file}
           aspect={props.spec.aspect}
           onSave={handleSave}
-          onClose={() => setOpenCropper(false)}
+          onClose={() => {
+            setFile(undefined);
+            setOpenCropper(false);
+          }}
         />
       )}
       <div
