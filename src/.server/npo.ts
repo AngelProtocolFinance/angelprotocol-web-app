@@ -1,7 +1,7 @@
 import type { Endow } from "@better-giving/endowment";
 import * as db from "@better-giving/endowment/db";
 import { tables } from "@better-giving/types/list";
-import { ap } from "./aws/ap";
+import { GetCommand, QueryCommand, ap } from "./aws/db";
 import { env } from "./env";
 
 type K = keyof Endow;
@@ -18,7 +18,7 @@ export async function getNpoByIdOrSlug<T extends K[]>(
   const { names, expression } = projection(fields as any);
 
   if (typeof id === "string") {
-    const res = await ap.DynamoDB.Query({
+    const cmd = new QueryCommand({
       TableName: tables.endowments_v3,
       IndexName: db.endowGsi.slugEnv,
       KeyConditionExpression: "#slug = :slug and #env = :env",
@@ -33,12 +33,13 @@ export async function getNpoByIdOrSlug<T extends K[]>(
         "#slug": "slug" satisfies keyof db.SlugEnvGsi.Keys,
       },
     });
+    const res = await ap.send(cmd);
 
     const item = res.Items?.[0];
     return item ? (pretty(item) as R<T>) : undefined;
   }
 
-  const res = await ap.DynamoDB.GetItem({
+  const getCmd = new GetCommand({
     TableName: tables.endowments_v3,
     Key: {
       PK: `Endow#${id}`,
@@ -47,6 +48,7 @@ export async function getNpoByIdOrSlug<T extends K[]>(
     ProjectionExpression: expression,
     ExpressionAttributeNames: names,
   });
+  const res = await ap.send(getCmd);
 
   return res.Item ? (pretty(res.Item) as R<T>) : undefined;
 }

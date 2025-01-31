@@ -10,7 +10,7 @@ import {
   sansKeys,
 } from "@better-giving/registration/db";
 import { tables } from "@better-giving/types/list";
-import { ap } from "./aws/ap";
+import { QueryCommand, type QueryCommandInput, ap } from "./aws/db";
 import { env } from "./env";
 
 export async function getRegs(params: QueryParams): Promise<Page> {
@@ -22,7 +22,7 @@ export async function getRegs(params: QueryParams): Promise<Page> {
     ? JSON.parse(Buffer.from(params.nextPageKey, "base64").toString())
     : undefined;
 
-  const query: any = {
+  const query: QueryCommandInput = {
     TableName: tables.registration,
     IndexName: "gsi2",
     KeyConditionExpression: `gsi2PK = :pk AND gsi2SK BETWEEN :start AND :end`,
@@ -48,8 +48,8 @@ export async function getRegs(params: QueryParams): Promise<Page> {
     };
   }
 
-  const res = await ap.DynamoDB.Query(query);
-  const items = (res.Items || []) as unknown as ApplicationDbRecord[];
+  const res = await ap.send(new QueryCommand(query));
+  const items = (res.Items || []) as ApplicationDbRecord[];
   return {
     items: items.map((i) => ({
       ...sansKeys(i),

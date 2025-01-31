@@ -1,7 +1,7 @@
 import { tables } from "@better-giving/types/list";
 import { type LoaderFunction, data } from "@vercel/remix";
 import { cognito } from ".server/auth";
-import { apes } from ".server/aws/apes";
+import { QueryCommand, apes } from ".server/aws/db";
 import { env } from ".server/env";
 
 export const MAX_ALLOWED_OPS = 100;
@@ -28,9 +28,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const balances: NpoBal[] = [];
   let total = 0;
-  let startKey: Record<string, any> | undefined = undefined;
+  let startKey: Record<string, any> | undefined;
   do {
-    const res = await apes.DynamoDB.Query({
+    const cmd = new QueryCommand({
       TableName: tables.balances,
       KeyConditionExpression: "network = :network",
       FilterExpression: "liq > :zero",
@@ -38,6 +38,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       ProjectionExpression: "id, liq",
       ExclusiveStartKey: startKey,
     });
+    const res = await apes.send(cmd);
 
     startKey = res.LastEvaluatedKey;
 

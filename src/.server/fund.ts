@@ -3,7 +3,7 @@ import type { SingleFund } from "@better-giving/fundraiser";
 import type * as db from "@better-giving/fundraiser/db";
 import { tables } from "@better-giving/types/list";
 import type { AttrNames } from "@better-giving/types/utils";
-import { ap } from "./aws/ap";
+import { BatchGetCommand, GetCommand, ap } from "./aws/db";
 import { env } from "./env";
 
 export const cacheControl =
@@ -12,13 +12,15 @@ export const cacheControl =
 export const getFund = async (
   fundId: string
 ): Promise<SingleFund | undefined> => {
-  const res = await ap.DynamoDB.GetItem({
+  const command = new GetCommand({
     TableName: tables.funds,
     Key: {
       PK: `Fund#${fundId}`,
       SK: `Fund#${fundId}`,
-    } satisfies db.Keys,
+    },
   });
+
+  const res = await ap.send(command);
 
   const item = res.Item as db.DbRecord | undefined;
   if (!item) return;
@@ -43,23 +45,23 @@ export const getFund = async (
     "#image": "image",
   };
 
-  const { Responses } = await ap.DynamoDB.BatchGetItem({
+  const batchGet = new BatchGetCommand({
     RequestItems: {
       [tables.endowments_v3]: {
         Keys: fund.members.map((endowId) => {
           return {
             PK: `Endow#${endowId}`,
             SK: env,
-          } satisfies endowDb.Endow.Keys;
+          } as endowDb.Endow.Keys;
         }),
         ProjectionExpression: Object.keys(fundMemberNames).join(", "),
         ExpressionAttributeNames: fundMemberNames,
       },
     },
   });
+  const { Responses } = await ap.send(batchGet);
 
-  const members = (Responses?.[tables.endowments_v3] ??
-    []) as unknown as Endow[];
+  const members = (Responses?.[tables.endowments_v3] ?? []) as Endow[];
 
   return {
     ...fund,

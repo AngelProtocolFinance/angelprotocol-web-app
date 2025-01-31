@@ -2,22 +2,25 @@ import type * as endowDb from "@better-giving/endowment/db";
 import { tables } from "@better-giving/types/list";
 import type { UserEndow } from "@better-giving/user";
 import type * as userDb from "@better-giving/user/db";
-import { ap } from "./aws/ap";
+import { BatchGetCommand, QueryCommand, ap } from "./aws/db";
 import { env } from "./env";
 
 export async function getUserNpos(userId: string): Promise<UserEndow[]> {
-  const creds = await ap.DynamoDB.Query({
+  const cmd = new QueryCommand({
     TableName: tables.usersV2,
     KeyConditionExpression: "PK = :pk AND begins_with(SK, :skSubstr)",
     ExpressionAttributeValues: {
       ":pk": `Email#${userId.toLowerCase()}`,
       ":skSubstr": `Endow#${env}#`,
     },
-  }).then<userDb.EndowAdmin.DbRecord[]>((res) => (res.Items || []) as any[]);
+  });
+  const creds = await ap
+    .send(cmd)
+    .then<userDb.EndowAdmin.DbRecord[]>((res) => (res.Items || []) as any[]);
 
   if (creds.length === 0) return [];
 
-  const { Responses } = await ap.DynamoDB.BatchGetItem({
+  const batchGet = new BatchGetCommand({
     RequestItems: {
       [tables.endowments_v3]: {
         Keys: creds.map((cred) => {
@@ -35,6 +38,8 @@ export async function getUserNpos(userId: string): Promise<UserEndow[]> {
       },
     },
   });
+
+  const { Responses } = await ap.send(batchGet);
   type EndowMeta = Pick<endowDb.Endow.DbRecord, "name" | "logo" | "id">;
 
   const endows = (Responses?.[tables.endowments_v3] ??
