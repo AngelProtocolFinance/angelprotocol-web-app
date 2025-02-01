@@ -63,7 +63,7 @@
     "@vercel/remix": "2.15.2",
     "conform-to-valibot": "1.11.0",
     "cropperjs": "1.6.2",
-    "date-fns": "3.6.0",
+    "date-fns": "4.1.0",
     "decimal.js": "10.4.3",
     "embla-carousel-react": "8.5.2",
     "framer-motion": "11.2.10",
