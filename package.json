@@ -39,6 +39,7 @@
     "@better-giving/schemas": "1.0.2",
     "@better-giving/types": "1.0.5",
     "@better-giving/user": "1.0.7",
+    "@better-giving/balance-tx": "1.0.2",
     "@conform-to/dom": "1.2.2",
     "@conform-to/react": "1.2.2",
     "@fontsource-variable/dm-sans": "5.1.1",
