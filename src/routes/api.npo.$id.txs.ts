@@ -12,8 +12,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     s.get("nextKey")
   );
 
-  console.log({ id, key });
-
   const { user } = await cognito.retrieve(request);
   if (!user) return new Response(null, { status: 401 });
   if (!user.endowments.includes(id)) return new Response(null, { status: 403 });
