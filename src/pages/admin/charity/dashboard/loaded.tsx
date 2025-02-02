@@ -15,6 +15,7 @@ import { Schedule } from "./schedule";
 import { Summary } from "./summary";
 
 interface Props {
+  id: number;
   balances: EndowmentBalances;
   allocation: Allocation;
   classes?: string;
@@ -141,7 +142,7 @@ export function Loaded({ classes = "", ...props }: Props) {
       />
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
-      <PayoutHistory classes="mt-2" />
+      <PayoutHistory classes="mt-2" id={props.id} />
     </div>
   );
 }

@@ -1,25 +1,51 @@
-import { useFetcher, useSearchParams } from "@remix-run/react";
-import { Info } from "components/status";
-import { useEffect, useState } from "react";
-import { useCachedLoaderData } from "remix-client-cache";
+import { Info, LoadingStatus } from "components/status";
+import useSWR from "swr/immutable";
 import type { BalanceTxsPage } from "types/aws";
-import type { DashboardData } from "../api";
 import Table from "./table";
 
-export function PayoutHistory({ classes = "" }) {
-  const [params] = useSearchParams();
-  const { balTxs } = useCachedLoaderData<DashboardData>();
+const fetcher = ([id, key]: [number, string | null]) =>
+  fetch(
+    `/api/npo/${id}/txs${key ? `?nextKey=${key}` : ""}`
+  ).then<BalanceTxsPage>((res) => res.json());
 
-  const [items, setItems] = useState<BalanceTxsPage["items"]>(balTxs.items);
+interface Props {
+  id: number;
+  classes?: string;
+}
 
-  const { data, state, load } = useFetcher<BalanceTxsPage>({ key: "bal-txs" });
+export function PayoutHistory({ classes = "", id }: Props) {
+  const { data, mutate, isLoading, isValidating, error } = useSWR(
+    [id, null],
+    fetcher
+  );
 
-  useEffect(() => {
-    if (!data || state !== "idle") return;
-    setItems((prev) => [...prev, ...data.items]);
-  }, [data, state]);
+  if (isLoading) {
+    return (
+      <LoadingStatus classes="mt-4 text-sm">
+        Loading transactions...
+      </LoadingStatus>
+    );
+  }
 
-  const nextPageKey = data ? data.nextPageKey : balTxs.nextPageKey;
+  if (error || !data) {
+    return <Info classes="mt-4">Failed to get transactions</Info>;
+  }
+
+  const { items, nextPageKey } = data;
+  if (items.length === 0) return <Info>No record found</Info>;
+
+  async function load(nextKey: string) {
+    const res = await fetcher([id, nextKey]);
+    mutate(
+      (x) => {
+        return {
+          items: [...(x?.items || []), ...res.items],
+          nextPageKey: res.nextPageKey,
+        };
+      },
+      { revalidate: false }
+    );
+  }
 
   return (
     <div className={`${classes} grid content-start`}>
@@ -30,14 +56,9 @@ export function PayoutHistory({ classes = "" }) {
       ) : (
         <Table
           records={items}
-          hasMore={!!nextPageKey}
-          onLoadMore={() => {
-            const copy = new URLSearchParams(params);
-            if (nextPageKey) copy.set("nextPageKey", nextPageKey);
-            load(`?${copy.toString()}`);
-          }}
-          disabled={state === "loading"}
-          isLoading={state === "loading"}
+          onLoadMore={nextPageKey ? () => load(nextPageKey) : undefined}
+          disabled={isValidating}
+          isLoading={isValidating}
         />
       )}
     </div>

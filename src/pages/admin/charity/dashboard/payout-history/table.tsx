@@ -106,7 +106,6 @@ export default function Table({
   classes = "",
   disabled,
   isLoading,
-  hasMore,
   onLoadMore,
 }: TableProps) {
   return (
@@ -137,7 +136,7 @@ export default function Table({
                 key={row.date}
                 type="td"
                 cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${
-                  hasMore ? "" : "first:rounded-bl last:rounded-br"
+                  onLoadMore ? "" : "first:rounded-bl last:rounded-br"
                 }`}
               >
                 <td className="w-4">{tx(row.amount).icon}</td>
@@ -148,7 +147,7 @@ export default function Table({
             );
           })
           .concat(
-            hasMore ? (
+            onLoadMore ? (
               <td
                 colSpan={9}
                 key="load-more-btn"

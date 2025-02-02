@@ -13,7 +13,7 @@ export {
 
 export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const { alloc, bal } = useCachedLoaderData<DashboardData>();
+  const { alloc, bal, id } = useCachedLoaderData<DashboardData>();
   const period = monthPeriod();
 
   return (
@@ -26,7 +26,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <Loaded balances={bal} allocation={alloc} />
+      <Loaded balances={bal} allocation={alloc} id={id} />
       {/** prompts render here */}
       <Outlet />
     </div>
