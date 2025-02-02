@@ -68,17 +68,25 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
     currDate = addWeeks(currDate, 1);
   }
 
+  // graph boundary
+  let min = filled[0].end || 500e12; // 500T global wealth
+  let max = filled[0].end;
   const metered: (Item & { twr: number })[] = [];
   for (let i = 1; i < filled.length; i++) {
     const prev = metered.at(i - 1);
     const curr = filled[i];
 
+    // this week return
     const sub =
       (curr.end - (curr.start + curr.flow)) / (curr.start + curr.flow);
+    // running time weighted return
     const twr = ((prev?.twr ?? 0) + 1) * (1 + sub) - 1;
 
     metered.push({ ...curr, twr });
+
+    min = Math.min(min, curr.end);
+    max = Math.max(max, curr.end);
   }
 
-  return metered;
+  return { all: metered, min, max, twr: metered.at(-1)?.twr ?? 0 };
 };
