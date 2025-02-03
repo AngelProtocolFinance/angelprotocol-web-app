@@ -29,7 +29,7 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
       acc[item.week] = item;
       return acc;
     },
-    {} as Record<string, BalanceTx.SFW.DBRecord>
+    {} as Record<string, BalanceTx.SFW.DBRecord | undefined>
   );
   const latest = new Date(items[0].date);
   const oldest = subWeeks(latest, limit);
@@ -44,18 +44,15 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
     if (!curr) {
       const start = prev ? prev.end : 0;
       const end = 0;
-      const change = end - start;
-      const pct_change = start === 0 ? 0 : change / start;
       const item: Item = {
-        date: "",
+        date: currDate.toISOString(),
         week: currKey,
         endow_id: id,
         environment: env,
-        flow: 0,
+        flow: prev ? -prev.end : 0,
         start,
         end,
-        change,
-        pct_change,
+        filler: true,
       };
       filled.push(item);
       currDate = addWeeks(currDate, 1);
@@ -68,14 +65,18 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
   // graph boundary
   let min = filled[0].end || 500e12; // 500T global wealth
   let max = filled[0].end;
+
+  const firstNotFilled = filled.findIndex((x) => !x.filler);
   const metered: (Item & { twr: number })[] = [];
-  for (let i = 1; i < filled.length; i++) {
-    const prev = metered.at(i - 1);
+
+  //disregard all filler items in front
+  for (let i = Math.max(0, firstNotFilled); i < filled.length; i++) {
+    const prev = metered[i - 1];
     const curr = filled[i];
 
+    const endBal = curr.start + curr.flow;
     // this week return
-    const sub =
-      (curr.end - (curr.start + curr.flow)) / (curr.start + curr.flow);
+    const sub = endBal ? (curr.end - endBal) / endBal : 0;
     // running time weighted return
     const twr = ((prev?.twr ?? 0) + 1) * (1 + sub) - 1;
 

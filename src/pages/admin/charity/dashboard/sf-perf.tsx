@@ -14,7 +14,7 @@ const sfwPage = (id: string) =>
 export function SfPerf({ id, classes = "" }: Props) {
   const [expanded, expand] = useState(false);
   const { data } = useSWR(id.toString(), sfwPage);
-  if (!data) return null;
+  if (!data || data.all.length === 0) return null;
   return (
     <div className={classes + " inline relative bottom-1"}>
       <button
