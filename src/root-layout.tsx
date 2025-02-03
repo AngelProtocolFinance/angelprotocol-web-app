@@ -1,7 +1,5 @@
 import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
-import { ClientOnly } from "remix-utils/client-only";
-import { ExternalScripts } from "remix-utils/external-scripts";
 import { Toaster } from "sonner";
 import { useConsent } from "use-consent";
 import { useNProgress } from "use-nprogress";
@@ -23,7 +21,6 @@ export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
         {children}
         <ScrollRestoration />
         <Scripts />
-        <ClientOnly>{() => <ExternalScripts />}</ClientOnly>
         <Toaster richColors position="top-right" closeButton />
       </body>
     </html>
