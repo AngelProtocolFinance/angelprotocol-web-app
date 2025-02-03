@@ -1,9 +1,9 @@
 import type { BalanceTx } from "@better-giving/balance-tx";
 import { tables } from "@better-giving/types/list";
 import { addWeeks, format, subWeeks } from "date-fns";
+import type { Item, SfwPage } from "types/npo-sfws";
 import { QueryCommand, apes } from "./aws/db";
-
-const env = "production";
+import { env } from "./env";
 
 const key = (date: Date) => `${format(date, "yy")}${format(date, "II")}`;
 
@@ -31,11 +31,8 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
     },
     {} as Record<string, BalanceTx.SFW.DBRecord>
   );
-
   const latest = new Date(items[0].date);
   const oldest = subWeeks(latest, limit);
-
-  type Item = Omit<BalanceTx.SFW.DBRecord, "PK" | "SK">;
 
   const filled: Item[] = [];
   let currDate = oldest;
@@ -88,5 +85,10 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
     max = Math.max(max, curr.end);
   }
 
-  return { all: metered, min, max, twr: metered.at(-1)?.twr ?? 0 };
+  return {
+    all: metered,
+    min,
+    max,
+    twr: metered.at(-1)?.twr ?? 0,
+  } satisfies SfwPage;
 };
