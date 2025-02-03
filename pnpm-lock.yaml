@@ -105,8 +105,8 @@ importers:
         specifier: 2.15.2
         version: 2.15.2(@remix-run/dev@2.15.2(@remix-run/react@2.15.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.5.4))(@types/node@18.18.13)(lightningcss@1.29.1)(typescript@5.5.4)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)))(@remix-run/node@2.15.2(typescript@5.5.4))(@remix-run/server-runtime@2.15.2(typescript@5.5.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       conform-to-valibot:
-        specifier: 1.11.0
-        version: 1.11.0(@conform-to/dom@1.2.2)(valibot@0.42.0(typescript@5.5.4))
+        specifier: 1.14.1
+        version: 1.14.1(@conform-to/dom@1.2.2)(valibot@0.42.0(typescript@5.5.4))
       cropperjs:
         specifier: 1.6.2
         version: 1.6.2
@@ -2419,8 +2419,8 @@ packages:
   confbox@0.1.8:
     resolution: {integrity: sha512-RMtmw0iFkeR4YV+fUOSucriAQNb9g8zFR52MWCtl+cCZOFRNL6zeB395vPzFhEjjn4fMxXudmELnl/KF/WrK6w==}
 
-  conform-to-valibot@1.11.0:
-    resolution: {integrity: sha512-OyAAKxyb85aTJWcKnZhckQPJxcEx/J8puTwS/4DI2INnuk3g3lzZ902AIGFwGl10aIwECAQXpe2QOpXHAPo9TA==}
+  conform-to-valibot@1.14.1:
+    resolution: {integrity: sha512-ZwyQT+Y7t5WTmNnZkzkgiRL1s9iysJOKE/oBrGlTTfqYIcogvJRpE5QtY7apWA/ZBrz9Wv661IevfM+flb3SSw==}
     peerDependencies:
       '@conform-to/dom': '>= 1.0.0'
       valibot: '>= 0.32.0'
@@ -7293,7 +7293,7 @@ snapshots:
 
   confbox@0.1.8: {}
 
-  conform-to-valibot@1.11.0(@conform-to/dom@1.2.2)(valibot@0.42.0(typescript@5.5.4)):
+  conform-to-valibot@1.14.1(@conform-to/dom@1.2.2)(valibot@0.42.0(typescript@5.5.4)):
     dependencies:
       '@conform-to/dom': 1.2.2
       valibot: 0.42.0(typescript@5.5.4)
