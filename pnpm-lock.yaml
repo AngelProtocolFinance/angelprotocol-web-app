@@ -129,8 +129,8 @@ importers:
         specifier: 3.12.5
         version: 3.12.5
       isbot:
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 5.1.22
+        version: 5.1.22
       jose:
         specifier: 5.9.2
         version: 5.9.2
@@ -3089,8 +3089,8 @@ packages:
     resolution: {integrity: sha512-vne1mzQUTR+qsMLeCBL9+/tgnDXRyc2pygLGl/WsgA+EZKIiB5Ehu0CiVTHIIk30zhJ24uGz4M5Ppse37aR0Hg==}
     engines: {node: '>=12'}
 
-  isbot@4.1.0:
-    resolution: {integrity: sha512-Kz7zk1wc0oC0FYLYtqea1RKdEX4XGlqacPhoaq9HSEQamEXQNJ/MzVzBKAQXDCCHO0h/eo4CdZs9t3Jfbup5Aw==}
+  isbot@5.1.22:
+    resolution: {integrity: sha512-RqCFY3cJy3c2y1I+rMn81cfzAR4XJwfPBC+M8kffUjbPzxApzyyv7Tbm1C/gXXq2dSCuD238pKFEWlQMTWsTFw==}
     engines: {node: '>=18'}
 
   isexe@2.0.0:
@@ -7966,7 +7966,7 @@ snapshots:
 
   isbot@3.8.0: {}
 
-  isbot@4.1.0: {}
+  isbot@5.1.22: {}
 
   isexe@2.0.0: {}
 
