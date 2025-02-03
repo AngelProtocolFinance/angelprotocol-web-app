@@ -1,16 +1,16 @@
-/*
- * importing quill access document object which errors out in SSR,
- * but this is okay, as it would be rendered on the client eventually
- * @see https://react.dev/reference/react/Suspense#providing-a-fallback-for-server-errors-and-client-only-content */
+import type TQuill from "quill";
+const Quill =
+  typeof window !== "object"
+    ? null
+    : await import("quill").then((x) => x.default);
 
-import Quill from "quill";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { toDelta } from "./helpers";
 import type { Props } from "./types";
 
 type El = Pick<HTMLDivElement, "focus">;
 const Editor = forwardRef<El, Props>(({ classes, ...props }, ref) => {
-  const quillRef = useRef<Quill>();
+  const quillRef = useRef<TQuill>();
   useImperativeHandle(ref, () => ({
     focus: () => quillRef.current?.focus(),
   }));
@@ -19,8 +19,8 @@ const Editor = forwardRef<El, Props>(({ classes, ...props }, ref) => {
     <div
       style={{ fontFamily: "inherit", fontSize: "inherit" }}
       className="w-full h-full text-base"
-      ref={(node) => {
-        if (!node || quillRef.current) return;
+      ref={async (node) => {
+        if (!node || quillRef.current || !Quill) return;
         const quill = new Quill(node, {
           placeholder: props.placeHolder,
           readOnly: props.readOnly,
