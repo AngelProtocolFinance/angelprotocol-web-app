@@ -1,5 +1,4 @@
 import { Modal } from "components/modal";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import {
   CartesianGrid,
   Line,
@@ -62,7 +61,7 @@ export function SfPerChart(
             domain={["dataMin - 100", "dataMax + 100"]}
             tickFormatter={formatCurrency}
           />
-          <Tooltip<Item, string> content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip />} />
           <Line
             type="monotone"
             dataKey="end"
@@ -91,19 +90,24 @@ const CustomTooltip: React.FC<ICustomTooltip> = ({
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-white p-4 border border-gray-l3 rounded-sm space-y-1 text-xs">
-        <p className="text-gray">{formatDate(label ?? "")}</p>
-        <p className="font-semibold">{formatCurrency(data.end)}</p>
-        {data.flow !== 0 && (
-          <p className={data.flow > 0 ? "text-green-d1" : "text-red-d1"}>
-            {data.flow > 0 ? (
-              <ArrowRight className="inline" size={8} />
-            ) : (
-              <ArrowLeft className="inline" size={8} />
-            )}{" "}
-            {formatCurrency(Math.abs(data.flow))}
-          </p>
-        )}
+      <div className="bg-white px-2 py-1 border border-gray-l3 rounded-sm text-xs">
+        <p className="text-gray flex gap-x-2">
+          <span className=""> {formatDate(label ?? "")}</span>
+          <span className="text-gray-d1">{formatCurrency(data.end)}</span>
+        </p>
+        {data.flow ? (
+          data.flow > 0 ? (
+            <p className="pt-2 mt-2 border-t border-gray-l3 text-green">
+              Deposit
+            </p>
+          ) : (
+            <p className="pt-2 mt-2 border-t border-gray-l3 text-red">
+              Withdrawal
+            </p>
+          )
+        ) : null}
+
+        {data.flow ? <p>{formatCurrency(Math.abs(data.flow))}</p> : null}
       </div>
     );
   }
