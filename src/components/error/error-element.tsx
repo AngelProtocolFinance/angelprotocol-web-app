@@ -1,6 +1,5 @@
 import { NavLink, isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { logger } from "helpers";
 import { CircleAlert } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { DefaultFallback } from "./default-fallback";
@@ -12,7 +11,7 @@ export function ErrorElement() {
 
   //biome-ignore lint: log onmount only
   useEffect(() => {
-    logger.error(error);
+    console.error(error);
   }, []);
 
   useEffect(() => {

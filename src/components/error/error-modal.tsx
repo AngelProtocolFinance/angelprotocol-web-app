@@ -1,5 +1,4 @@
 import { useRouteError } from "@remix-run/react";
-import { logger } from "helpers";
 import { useEffect } from "react";
 import { Modal } from "../modal";
 import { DefaultFallback } from "./default-fallback";
@@ -9,7 +8,7 @@ export function ErrorModal() {
 
   //biome-ignore lint: log onmount only
   useEffect(() => {
-    logger.error(error);
+    console.error(error);
   }, []);
 
   return (
