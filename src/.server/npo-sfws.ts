@@ -42,16 +42,15 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
     const curr = map[currKey];
 
     if (!curr) {
-      const start = prev ? prev.end : 0;
-      const end = 0;
       const item: Item = {
         date: currDate.toISOString(),
         week: currKey,
         endow_id: id,
         environment: env,
+        // if this is not defined, a whole withdraw must have been performed in previous SFW
         flow: prev ? -prev.end : 0,
-        start,
-        end,
+        start: prev ? prev.end : 0,
+        end: 0,
         filler: true,
       };
       filled.push(item);
@@ -71,12 +70,12 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
 
   //disregard all filler items in front
   for (let i = Math.max(0, firstNotFilled); i < filled.length; i++) {
-    const prev = metered[i - 1];
+    const prev = metered.at(-1); //last item pushed
     const curr = filled[i];
 
-    const endBal = curr.start + curr.flow;
-    // this week return
-    const sub = endBal ? (curr.end - endBal) / endBal : 0;
+    // this week returnƒ
+    const sub =
+      curr.start && !curr.filler ? (curr.end - curr.start) / curr.start : 0;
     // running time weighted return
     const twr = ((prev?.twr ?? 0) + 1) * (1 + sub) - 1;
 

@@ -1,4 +1,5 @@
 import { Modal } from "components/modal";
+import { humanize } from "helpers";
 import {
   CartesianGrid,
   Line,
@@ -16,15 +17,6 @@ const formatDate = (dateString: string): string => {
     month: "2-digit",
     day: "2-digit",
   });
-};
-
-const formatCurrency = (value: number): string => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
 };
 
 export function SfPerChart(
@@ -59,7 +51,7 @@ export function SfPerChart(
           <YAxis
             className="text-xs"
             domain={["dataMin - 100", "dataMax + 100"]}
-            tickFormatter={formatCurrency}
+            tickFormatter={humanize}
           />
           <Tooltip content={<CustomTooltip />} />
           <Line
@@ -90,10 +82,10 @@ const CustomTooltip: React.FC<ICustomTooltip> = ({
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-white px-2 py-1 border border-gray-l3 rounded-sm text-xs">
+      <div className="bg-white px-2 py-1 border border-gray-l3 rounded-sm text-xs font-heading">
         <p className="text-gray flex gap-x-2">
           <span className=""> {formatDate(label ?? "")}</span>
-          <span className="text-gray-d1">{formatCurrency(data.end)}</span>
+          <span className="text-gray-d1">{humanize(data.end)}</span>
         </p>
         {data.flow ? (
           data.flow > 0 ? (
@@ -107,7 +99,7 @@ const CustomTooltip: React.FC<ICustomTooltip> = ({
           )
         ) : null}
 
-        {data.flow ? <p>{formatCurrency(Math.abs(data.flow))}</p> : null}
+        {data.flow ? <p>${humanize(Math.abs(data.flow))}</p> : null}
       </div>
     );
   }
