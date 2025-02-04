@@ -30,6 +30,7 @@ type Props<T extends InputType> = Omit<
   classes?: Classes | string;
   tooltip?: ReactNode;
   label: string | ReactElement;
+  sub?: ReactNode;
   type?: T;
 };
 
@@ -53,12 +54,19 @@ function _Field<T extends InputType = InputType>(
   return (
     <div className={style.container + " "}>
       <Label
-        className={style.label + " label mb-2"}
+        className={style.label + ` label ${props.sub ? "" : "mb-2"}`}
         required={required}
         htmlFor={id}
       >
         {label}
       </Label>
+      {props.sub ? (
+        typeof props.sub === "string" ? (
+          <p className="text-gray text-sm mb-2">{props.sub}</p>
+        ) : (
+          props.sub
+        )
+      ) : null}
 
       {createElement(type === textarea ? textarea : "input", {
         ref,

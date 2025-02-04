@@ -12,7 +12,7 @@ export function Videos({ classes = "", ...props }: IVideos) {
   const [open, setOpen] = useState(false);
   return (
     <div className={`grid content-start @container ${classes}`}>
-      <div className="flex gap-x-2 items-center mb-2">
+      <div className="flex gap-x-2 items-center">
         <label className="label font-medium">Videos</label>
         <button
           onClick={() => setOpen(true)}
@@ -22,6 +22,10 @@ export function Videos({ classes = "", ...props }: IVideos) {
           <Plus size={16} />
         </button>
       </div>
+      <p id="videos-description" className="text-gray text-sm mb-2">
+        Upload a video or two about your fundraiser - you could use a video from
+        your chosen nonprofit.
+      </p>
       <VideoModal
         open={open}
         setOpen={setOpen}
