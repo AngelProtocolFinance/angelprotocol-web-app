@@ -123,7 +123,7 @@ function Prompt({ recipientName, open, setOpen, url, ...social }: IPrompt) {
       </p>
       <ExtLink
         href={generateShareLink(shareText, social.id, url)}
-        className="btn-outline btn-donate hover:bg-blue-l4 gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
+        className="btn btn-outline btn-donate hover:bg-blue-l4 gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center">
           <img

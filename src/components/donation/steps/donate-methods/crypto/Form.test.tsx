@@ -5,7 +5,7 @@ import { mockPrograms } from "services/aws/programs/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
 import { testDonateData } from "../../__tests__/test-data";
 import type { CryptoFormStep, Init } from "../../types";
-import Form from "./Form";
+import Form from "./form";
 
 const mockedSetState = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
