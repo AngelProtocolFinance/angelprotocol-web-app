@@ -55,6 +55,7 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
         run: vercel pull --yes --environment=${{ env.ENVIRONMENT }} --token=${{ secrets.VERCEL_TOKEN }}
       
+<<<<<<< HEAD
       - name: Build Project
         run: pnpm build
 
@@ -65,3 +66,8 @@ jobs:
       - name: Deploy to Vercel
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
         run: vercel deploy --prebuilt ${{ env.PROD_FLAG }} --token=${{ secrets.VERCEL_TOKEN }}
+=======
+      - name: Build and Deploy to Vercel
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
+        run: vercel deploy ${{ env.PROD_FLAG }} --token=${{ secrets.VERCEL_TOKEN }}
+>>>>>>> 641776936 (test deploy)
