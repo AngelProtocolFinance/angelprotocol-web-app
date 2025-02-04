@@ -12,7 +12,7 @@ import { monthPeriod } from "./month-period";
 import { Movements } from "./movements";
 import { PayoutHistory } from "./payout-history";
 import { Schedule } from "./schedule";
-import { SfPerf } from "./sf-perf";
+// import { SfPerf } from "./sf-perf";
 import { Summary } from "./summary";
 
 interface Props {
@@ -77,7 +77,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           }
           icon={<ChartSpline size={16} />}
           amount={`$ ${humanize(props.balances.sustainabilityFundBal, 2)}`}
-          perf={<SfPerf id={props.id} />}
+          // perf={<SfPerf id={props.id} />}
           actions={
             <LockActions
               disabled={period.isPre}
