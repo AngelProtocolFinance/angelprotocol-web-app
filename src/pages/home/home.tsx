@@ -21,9 +21,10 @@ export default function Home() {
       <Header classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
       {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
+
+      <Feature1 />
       <Benefits />
       <Brands />
-      <Feature1 />
       <Animation classes="pt-40" />
 
       {/* <Video /> */}

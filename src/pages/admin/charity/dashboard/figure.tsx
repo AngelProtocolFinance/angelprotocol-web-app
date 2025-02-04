@@ -10,6 +10,7 @@ type Props = {
   /** must be wrapped by tooltip content */
   tooltip?: ReactNode;
   actions?: ReactNode;
+  perf?: ReactNode;
 };
 
 export default function Figure(props: Props) {
@@ -26,7 +27,9 @@ export default function Figure(props: Props) {
 
         <span className="ml-auto">{props.icon}</span>
       </div>
-      <p className="text-2xl font-medium font-heading">{props.amount}</p>
+      <p className="text-2xl font-medium font-heading">
+        {props.amount} {props.perf}
+      </p>
       {props.actions}
     </div>
   );

@@ -4,7 +4,6 @@ import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import BenefitsCarousel from "./benefits-carousel";
-import s from "./benefits.module.css";
 import Carousel from "./carousel";
 
 type TPath = keyof typeof benefits;
@@ -13,13 +12,13 @@ const Path = () => {
 
   return (
     <section
-      className={`relative grid ${s.container} pt-20 pb-40 xl:pb-56 overflow-x-clip`}
+      className={`relative grid pt-50 pb-40 xl:pb-56  bg-gradient-to-b from-peach/20 to-transparent`}
     >
       <h2 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
         Bridge To Better
       </h2>
       <h3 className="text-3xl md:text-4.5xl capitalize text-gray-d4 leading-snug text-center text-balance mb-11">
-        How Better Giving Powers Your Mission
+        Why Choose Better Giving
       </h3>
       <p className="text-lg md:text-2xl font-medium text-gray/60 text-center mb-11">
         Your All-in-One Solution for Sustainable Fundraising and Financial

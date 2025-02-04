@@ -2,21 +2,22 @@ import { Link } from "@remix-run/react";
 import banner from "assets/images/bg-banner.webp";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import s from "./styles.module.css";
 
 const Hero = ({ classes = "" }) => {
   return (
     <section
-      className={`${classes} ${s.container} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
-      style={{ backgroundImage: `url('${banner}')` }}
+      className={`${classes} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
+      style={{
+        backgroundImage: `linear-gradient(to top, rgba(255,255,255) 1%, transparent), url('${banner}')`,
+      }}
     >
-      <p className="z-10 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
+      <p className="text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>
-      <h1 className="z-10 mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
+      <h1 className="mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
         Simplified Giving, <br /> Amplified Impact
       </h1>
-      <p className="z-10 px-6 text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
+      <p className="px-6 text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
         Benefit from free donation processing with Better Giving’s one-stop
         solution to simplify giving, earn high-yield savings, and enjoy
         hands-off investment growth. Add our customizable donation form to your
