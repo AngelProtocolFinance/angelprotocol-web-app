@@ -23,7 +23,7 @@ export default function Copier({ text, classes, size, children }: Props) {
     >
       {(copied && (
         <Check
-          className={`${icon} cursor-default hover:text-current test`}
+          className={`${icon} cursor-default hover:text-current`}
           size={size?.check}
           aria-labelledby="copied"
         />
@@ -34,7 +34,7 @@ export default function Copier({ text, classes, size, children }: Props) {
           aria-labelledby="copy"
         />
       )}
-      <span id="copied" className="invisible absolute">
+      <span id="copied" className="invisible absolute test">
         Copied!
       </span>
       <span id="copy" className="invisible absolute">

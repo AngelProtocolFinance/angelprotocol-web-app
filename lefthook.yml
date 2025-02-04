@@ -8,5 +8,5 @@ pre-commit:
       glob: "*.{ts,tsx}"
       run: pnpm tsc-files {staged_files}
     test:
-      glob: "*test.{ts,tsx}"
-      run: pnpm vitest related {staged_files}
+      glob: "*.{ts,tsx}"
+      run: pnpm vitest related --run {staged_files}
