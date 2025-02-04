@@ -43,7 +43,9 @@ describe("stocks form test", () => {
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("");
 
-    const programSelector = screen.getByLabelText(/select program/i);
+    const programSelector = screen.getByLabelText(
+      /select a program to donate to/i
+    );
     expect(programSelector).toBeInTheDocument();
   });
   test("initial blank state: program donations now allowed", () => {
