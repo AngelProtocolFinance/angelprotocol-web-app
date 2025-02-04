@@ -34,7 +34,7 @@ export default function Copier({ text, classes, size, children }: Props) {
           aria-labelledby="copy"
         />
       )}
-      <span id="copied" className="invisible absolute test">
+      <span id="copied" className="invisible absolute">
         Copied!
       </span>
       <span id="copy" className="invisible absolute">
