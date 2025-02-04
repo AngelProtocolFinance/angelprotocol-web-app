@@ -23,7 +23,7 @@ export default function Copier({ text, classes, size, children }: Props) {
     >
       {(copied && (
         <Check
-          className={`${icon} cursor-default hover:text-current`}
+          className={`${icon} cursor-default hover:text-current test`}
           size={size?.check}
           aria-labelledby="copied"
         />

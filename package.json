@@ -116,6 +116,7 @@
     "lefthook": "1.6.15",
     "msw": "2.4.9",
     "tailwindcss": "4.0.0",
+    "tsc-files": "1.1.4",
     "typescript": "5.5",
     "vite": "5.2.0",
     "vite-tsconfig-paths": "5.1.4",
