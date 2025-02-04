@@ -57,7 +57,9 @@ describe("Stripe form test", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("");
 
-    const programSelector = screen.getByLabelText(/select program/i);
+    const programSelector = screen.getByLabelText(
+      /select a program to donate to/i
+    );
     expect(programSelector).toBeInTheDocument();
   });
 
