@@ -23,7 +23,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
         }}
         type="button"
         aria-disabled={props.disabled}
-        className="text-xs [&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none px-4 py-1.5 rounded-md bg-gray-d2 aria-disabled:bg-gray-l3 outline-blue-d1 text-white font-heading font-bold drop-shadow-xs shadow-inner shadow-white/30"
+        className="btn btn-outline text-xs rounded-full px-4 py-2"
       >
         Withdraw
       </NavLink>
@@ -40,7 +40,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
         }}
         type="button"
         aria-disabled={props.disabled}
-        className="text-xs [&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-xs py-1 bg-green aria-disabled:bg-gray-l3 text-white font-heading outline-blue-d1"
+        className="btn btn-green shadow-md text-xs rounded-full px-6 py-2"
       >
         Invest
       </NavLink>

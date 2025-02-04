@@ -80,13 +80,31 @@
     }
   }
 
+  .btn-amber {
+    background-color: var(--color-amber);
+    color: var(--color-white);
+    outline-color: var(--color-amber-l4);
+    &:active {
+      background-color: var(--color-amber-d1);
+    }
+    &:enabled:hover {
+      background-color: var(--color-amber-d1);
+    }
+    &.pending {
+      background-color: var(--color-gray);
+      pointer-events: none;
+    }
+  }
+
   .btn-green,
   .btn-blue,
+  .btn-amber,
   .btn-red {
     &:disabled {
       background-color: var(--color-gray);
     }
   }
+  a.btn-amber,
   a.btn-green,
   a.btn-blue,
   a.btn-red {

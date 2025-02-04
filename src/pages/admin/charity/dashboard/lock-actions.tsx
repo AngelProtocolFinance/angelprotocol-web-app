@@ -23,7 +23,7 @@ export function LockActions({ classes = "", ...props }: Props) {
             min: "50",
           }).toString(),
         }}
-        className="[&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none text-xs font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-xs py-1 bg-amber aria-disabled:bg-gray-l3 text-white font-heading outline-blue-d1"
+        className="btn shadow-md btn-amber px-6 py-2 text-xs rounded-full"
       >
         Save
       </NavLink>
@@ -39,7 +39,7 @@ export function LockActions({ classes = "", ...props }: Props) {
           }).toString(),
         }}
         aria-disabled={props.disabled}
-        className="[&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none text-xs px-4 py-1.5 rounded-md bg-gray-d2 aria-disabled:bg-gray-l3 outline-blue-d1 text-white font-heading font-bold drop-shadow-xs shadow-inner shadow-white/30"
+        className="btn btn-outline text-xs rounded-full px-4 py-2"
       >
         Withdraw
       </NavLink>
