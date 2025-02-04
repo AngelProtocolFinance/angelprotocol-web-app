@@ -10,8 +10,7 @@
     "test": "vitest",
     "lint": "biome check ./src",
     "format": "biome check --write src",
-    "format-unsafe": "biome check --write-unsafe src",
-    "prepare": "pnpm lefthook install"
+    "format-unsafe": "biome check --write-unsafe src"
   },
   "browserslist": {
     "production": [
