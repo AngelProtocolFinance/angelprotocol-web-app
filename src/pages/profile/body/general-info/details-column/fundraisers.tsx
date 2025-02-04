@@ -1,5 +1,5 @@
 import type { FundItem } from "@better-giving/fundraiser";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, NavLink, useLoaderData } from "@remix-run/react";
 import { toText } from "components/rich-text";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
@@ -50,12 +50,12 @@ function Fund(props: FundItem) {
         target={toTarget(props.target)}
         progress={props.donation_total_usd}
       />
-      <Link
+      <NavLink
         to={`${appRoutes.donate_fund}/${props.id}`}
         className="btn btn-blue text-xs w-full col-span-full mt-4"
       >
         Donate
-      </Link>
+      </NavLink>
     </div>
   );
 }
