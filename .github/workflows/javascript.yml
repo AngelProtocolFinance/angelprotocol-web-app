@@ -1,11 +1,15 @@
-name: JavaScript
+name: CI/CD Pipeline
 on:
   push:
+
 jobs:
-  lint-tests:
-    name: "Lint and test the codebase"
+  build-test-deploy:
+    name: "Build, Test, and Deploy"
     environment: production
     runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -21,11 +25,43 @@ jobs:
         with:
           node-version: "20"
           cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Lint codebase
         run: pnpm lint
+
       - name: Test codebase
         run: pnpm test --bail=0 --watch=false --passWithNoTests
-      - name: Build codebase
+
+      - name: Install Vercel CLI
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
+        run: npm install --global vercel@latest
+      
+      - name: Set Environment Variables
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
+        id: set_env
+        run: |
+          if [[ ${{ github.ref }} == 'refs/heads/master' ]]; then
+            echo "ENVIRONMENT=production" >> $GITHUB_ENV
+            echo "PROD_FLAG=--prod" >> $GITHUB_ENV
+          else
+            echo "ENVIRONMENT=preview" >> $GITHUB_ENV
+            echo "PROD_FLAG=" >> $GITHUB_ENV
+          fi
+      
+      - name: Pull Vercel Environment Information
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
+        run: vercel pull --yes --environment=${{ env.ENVIRONMENT }} --token=${{ secrets.VERCEL_TOKEN }}
+      
+      - name: Build Project
         run: pnpm build
+
+      - name: Build for Vercel
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
+        run: vercel build ${{ env.PROD_FLAG }} --token=${{ secrets.VERCEL_TOKEN }}
+      
+      - name: Deploy to Vercel
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/staging'
+        run: vercel deploy --prebuilt ${{ env.PROD_FLAG }} --token=${{ secrets.VERCEL_TOKEN }}

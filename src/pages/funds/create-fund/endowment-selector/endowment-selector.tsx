@@ -28,7 +28,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
   return (
     <Field className={props.classes ?? "relative"}>
       <Label className="block text-sm font-medium mb-2">
-        Fundraiser Members <span className="text-red">*</span>
+        I want to raise funds for … <span className="text-red">*</span>
       </Label>
       <Combobox
         immediate
@@ -84,9 +84,9 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
       </Combobox>
       <p className="text-red text-xs empty:hidden mt-1">{props.error}</p>
       <Description className="text-sm text-gray mt-1">
-        You may include other nonprofits in a joint fundraiser, if those
+        You may include more than one nonprofit in a joint fundraiser, if those
         nonprofits have opted in to fundraising functionality. Raised funds will
-        be split equally between nonprofits.
+        be split equally between the nonprofits.
       </Description>
     </Field>
   );

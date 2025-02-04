@@ -92,11 +92,12 @@ export default function CreateFund() {
         disabled={isSubmitting}
         className="grid border border-gray-l3 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
-        <h4 className="font-bold text-xl mb-4">Fund Information</h4>
+        <h4 className="font-bold text-xl mb-4">Create your fundraiser</h4>
 
         <Field
           {...register("name")}
-          label="Name"
+          label="Name your Fundraiser"
+          sub="A great name will attract more donors"
           required
           error={errors.name?.message}
           classes={{ label: "font-medium" }}
@@ -194,7 +195,7 @@ export default function CreateFund() {
 
         <Field
           {...register("expiration")}
-          label="Expiration"
+          label="I want my fundraiser to end on this date"
           type="date"
           classes={{ input: "uppercase" }}
           error={errors.expiration?.message}
