@@ -13,8 +13,8 @@
   --color-current: currentColor;
   --color-inherit: inherit;
 
-  --color-blue-d7: oklch(0.147 0.034 244.5);
-  --color-blue-d6: oklch(0.22 0.05 243.8);
+  --color-blue-d7: #050c1a;
+  --color-blue-d6: #0d1e30;
   --color-blue-d5: #112840;
   --color-blue-d4: #1a3f60;
   --color-blue-d3: #194b73;
