@@ -1,3 +1,4 @@
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState } from "react";
 import useSWR from "swr/immutable";
 import type { SfwPage } from "types/npo-sfws";
@@ -21,10 +22,17 @@ export function SfPerf({ id, classes = "" }: Props) {
         type="button"
         onClick={() => expand(true)}
         className={
-          "text-[0.6rem] font-semibold px-2 py-0.5 rounded-sm  " +
-          (data.twr > 0 ? "btn-green" : data.twr < 0 ? "btn-red" : "")
+          "text-xs font-semibold rounded-sm focus:outline-none  " +
+          (data.twr > 0 ? "text-green" : data.twr < 0 ? "text-red" : "")
         }
       >
+        {data.twr > 0 ? (
+          <ArrowUp className="relative bottom-px inline mr-0.5" size={14} />
+        ) : data.twr < 0 ? (
+          <ArrowDown className="relative bottom-px inline mr-0.5" size={14} />
+        ) : (
+          ""
+        )}
         {(data.twr * 100).toFixed(2)}%
       </button>
       {expanded && (
