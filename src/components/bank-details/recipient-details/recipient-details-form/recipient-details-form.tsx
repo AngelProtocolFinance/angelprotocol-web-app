@@ -272,7 +272,7 @@ export default function RecipientDetailsForm({
                         try {
                           const { params, url } = f.validationAsync!;
                           const path = new URL(url).pathname;
-                          const res = await wise.get(path, {
+                          const res = await wise.get(path.slice(1), {
                             throwHttpErrors: false,
                             searchParams: { [params[0].key]: v },
                           });
