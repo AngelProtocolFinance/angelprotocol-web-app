@@ -14,7 +14,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const { user } = await cognito.retrieve(request);
   if (!user) return new Response(null, { status: 401 });
-  if (!user.endowments.includes(id)) return new Response(null, { status: 403 });
+  if (!user.endowments.includes(id) && !user.groups.includes("ap-admin")) {
+    return new Response(null, { status: 403 });
+  }
 
   const page = await npoTxs(id, key);
   return new Response(JSON.stringify(page), {
