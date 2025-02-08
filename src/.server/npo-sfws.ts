@@ -1,11 +1,8 @@
 import type { BalanceTx } from "@better-giving/balance-tx";
 import { tables } from "@better-giving/types/list";
-import { addWeeks, format, subWeeks } from "date-fns";
 import type { Item, SfwPage } from "types/npo-sfws";
 import { QueryCommand, apes } from "./aws/db";
 import { env } from "./env";
-
-const key = (date: Date) => `${format(date, "yy")}${format(date, "II")}`;
 
 export const npoSfws = async (id: number, limit = 52 / 4) => {
   const cmd = new QueryCommand({
@@ -24,71 +21,24 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
 
   if (items.length === 0) return [];
 
-  const map = items.reduce(
-    (acc, item) => {
-      acc[item.week] = item;
-      return acc;
-    },
-    {} as Record<string, BalanceTx.SFW.DBRecord | undefined>
-  );
-  const latest = new Date(items[0].date);
-  const oldest = subWeeks(latest, limit);
-
-  const filled: Item[] = [];
-  let currDate = oldest;
-  while (currDate <= latest) {
-    const currKey = key(currDate);
-    const prev = map[key(subWeeks(currDate, 1))];
-    const curr = map[currKey];
-
-    if (!curr) {
-      const item: Item = {
-        date: currDate.toISOString(),
-        week: currKey,
-        endow_id: id,
-        environment: env,
-        // if this is not defined, a whole withdraw must have been performed in previous SFW
-        flow: prev ? -prev.end : 0,
-        start: prev ? prev.end : 0,
-        end: 0,
-        filler: true,
-      };
-      filled.push(item);
-      currDate = addWeeks(currDate, 1);
-      continue;
-    }
-    filled.push((({ PK, SK, ...x }) => x)(curr));
-    currDate = addWeeks(currDate, 1);
-  }
-
-  // graph boundary
-  let min = filled[0].end || 500e12; // 500T global wealth
-  let max = filled[0].end;
-
-  const firstNotFilled = filled.findIndex((x) => !x.filler);
+  // const firstNotFilled = filled.findIndex((x) => !x.filler);
   const metered: (Item & { twr: number })[] = [];
 
-  //disregard all filler items in front
-  for (let i = Math.max(0, firstNotFilled); i < filled.length; i++) {
+  for (let i = 0; i < items.length; i++) {
     const prev = metered.at(-1); //last item pushed
-    const curr = filled[i];
+    const curr = items[i];
 
     // this week returnƒ
-    const sub =
-      curr.start && !curr.filler ? (curr.end - curr.start) / curr.start : 0;
+    const sub = curr.start ? (curr.end - curr.start) / curr.start : 0;
     // running time weighted return
     const twr = ((prev?.twr ?? 0) + 1) * (1 + sub) - 1;
 
-    metered.push({ ...curr, twr });
-
-    min = Math.min(min, curr.end);
-    max = Math.max(max, curr.end);
+    const { PK, SK, ...c } = curr;
+    metered.push({ ...c, twr });
   }
 
   return {
     all: metered,
-    min,
-    max,
     twr: metered.at(-1)?.twr ?? 0,
   } satisfies SfwPage;
 };

@@ -47,11 +47,13 @@ export function SfPerChart(
             textAnchor="end"
             height={35}
             dy={10}
+            type="category"
+            interval={0}
           />
           <YAxis
             className="text-xs"
-            domain={["dataMin - 100", "dataMax + 100"]}
-            tickFormatter={humanize}
+            domain={["dataMin", "dataMax"]}
+            tickFormatter={(v) => humanize(v, 2)}
           />
           <Tooltip content={<CustomTooltip />} />
           <Line
