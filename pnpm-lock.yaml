@@ -18,8 +18,8 @@ importers:
         specifier: 1.0.18
         version: 1.0.18
       '@better-giving/balance-tx':
-        specifier: 1.0.2
-        version: 1.0.2(@better-giving/types@1.0.5)
+        specifier: 1.0.3
+        version: 1.0.3(@better-giving/types@1.0.5)
       '@better-giving/donation':
         specifier: 1.0.12
         version: 1.0.12(@better-giving/types@1.0.5)(valibot@0.42.0(typescript@5.5.4))
@@ -555,8 +555,8 @@ packages:
   '@better-giving/assets@1.0.18':
     resolution: {integrity: sha512-FGM1fyGpuPVZroTJOXBHpQ2bEf1BXgsmH4XS9CEm6WWD+MCQcPSA+9Ydig4YMl543oITXm8JqLiVAzFJ2/Qj9A==}
 
-  '@better-giving/balance-tx@1.0.2':
-    resolution: {integrity: sha512-mSEFxXa9YSTzmbZBg3PAMq4vSJUl9VdyuhvH8uKOBPZwcqNlHs0L0Ciqpz0RwbNG7wIonL5Y8mhiCPlm+yASLw==}
+  '@better-giving/balance-tx@1.0.3':
+    resolution: {integrity: sha512-4pgoIHo7g6djCgjIfaezmwbunTF0dTTakWsOr7s4hJC7D8yK7eUunZRzR0GPB+hrrV/xY2NZ//ysJjQ+i1tMDQ==}
     peerDependencies:
       '@better-giving/types': workspace:*
 
@@ -5517,7 +5517,7 @@ snapshots:
 
   '@better-giving/assets@1.0.18': {}
 
-  '@better-giving/balance-tx@1.0.2(@better-giving/types@1.0.5)':
+  '@better-giving/balance-tx@1.0.3(@better-giving/types@1.0.5)':
     dependencies:
       '@better-giving/types': 1.0.5
 
