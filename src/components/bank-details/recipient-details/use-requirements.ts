@@ -61,7 +61,10 @@ export function useRequirements(args: Input | null) {
       )
       .json();
 
-    req.mutate({ quoteId: payload.quoteId, requirements: reqs });
+    req.mutate(
+      { quoteId: payload.quoteId, requirements: reqs },
+      { revalidate: false }
+    );
   }
 
   return { req, updateRequirements };
