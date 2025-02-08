@@ -128,8 +128,8 @@ export default function Component() {
                       {w.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray">
-                      {format(w.start, "yyyy/MM/dd")} -{" "}
-                      {format(w.end, "yyyy/MM/dd")}
+                      {format(w.start, "MM/dd/yyyy")} -{" "}
+                      {format(w.end, "MM/dd/yyyy")}
                     </td>
                   </tr>
                 ))}
