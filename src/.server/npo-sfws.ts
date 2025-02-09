@@ -24,7 +24,7 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
   // const firstNotFilled = filled.findIndex((x) => !x.filler);
   const metered: (Item & { twr: number })[] = [];
 
-  for (let i = 0; i < items.length; i++) {
+  for (let i = items.length - 1; i >= 0; i--) {
     const prev = metered.at(-1); //last item pushed
     const curr = items[i];
 
