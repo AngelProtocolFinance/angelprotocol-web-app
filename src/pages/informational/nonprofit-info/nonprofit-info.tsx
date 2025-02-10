@@ -15,7 +15,7 @@ export default function NonprofitInfo() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <div className="bg-linear-to-br from-50% from-transparent to-peach/50">
-        <Hero className="xl:container xl:mx-auto px-5 px-10 bg-transparent" />
+        <Hero className="xl:container xl:mx-auto px-10 bg-transparent" />
       </div>
       <div className="bg-linear-to-bl via-transparent via-50% from-peach/50 to-lilac/50">
         <FellowNonProfits className="my-20 md:my-44" />
@@ -29,7 +29,7 @@ export default function NonprofitInfo() {
       </div>
       <div className="bg-linear-to-bl from-50% from-transparent to-peach/50">
         <Benefits
-          className="mt-56 xl:container xl:mx-auto px-5 px-10"
+          className="mt-56 xl:container xl:mx-auto px-10"
           subheading="Simplify your fundraising"
           heading="Your One-Stop Fundraising Solution"
           body="Donation processing and fund management in one platform"

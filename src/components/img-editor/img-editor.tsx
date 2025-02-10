@@ -12,6 +12,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
+import { AspectTooltip } from "./aspect-tooltip";
 import { ImgCropper } from "./img-cropper";
 import type { ControlledProps, Props } from "./types";
 
@@ -182,6 +183,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             ""
           )}
         </span>{" "}
+        <AspectTooltip aspect={props.spec.aspect} />
         <span className="empty:hidden text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden">
           {props.error}
         </span>
