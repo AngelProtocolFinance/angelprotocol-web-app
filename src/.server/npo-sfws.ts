@@ -4,7 +4,7 @@ import type { Item, SfwPage } from "types/npo-sfws";
 import { QueryCommand, apes } from "./aws/db";
 import { env } from "./env";
 
-export const npoSfws = async (id: number, limit = 52 / 4) => {
+export const npoSfws = async (id: number, limit = 52 / 4): Promise<SfwPage> => {
   const cmd = new QueryCommand({
     TableName: tables["balance-txs"],
     KeyConditionExpression: "PK = :pk AND begins_with(SK, :sk)",
@@ -19,7 +19,11 @@ export const npoSfws = async (id: number, limit = 52 / 4) => {
     .send(cmd)
     .then<BalanceTx.SFW.DBRecord[]>((res) => (res.Items || []) as any);
 
-  if (items.length === 0) return [];
+  if (items.length === 0)
+    return {
+      all: [],
+      twr: 0,
+    };
 
   // const firstNotFilled = filled.findIndex((x) => !x.filler);
   const metered: (Item & { twr: number })[] = [];
