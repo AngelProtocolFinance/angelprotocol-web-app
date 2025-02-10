@@ -25,7 +25,6 @@ export const npoSfws = async (id: number, limit = 52 / 4): Promise<SfwPage> => {
       twr: 0,
     };
 
-  // const firstNotFilled = filled.findIndex((x) => !x.filler);
   const metered: (Item & { twr: number })[] = [];
 
   for (let i = items.length - 1; i >= 0; i--) {

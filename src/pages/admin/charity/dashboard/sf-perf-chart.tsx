@@ -26,8 +26,33 @@ export function SfPerChart(
     <Modal
       open={props.open}
       onClose={props.onClose}
-      classes="h-96 fixed-center z-20 border border-gray-l3 bg-gray-l6 dark:bg-blue-d5 text-gray-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded-sm overflow-hidden"
+      classes="h-96 p-4 fixed-center z-20 border border-gray-l3 bg-gray-l6 dark:bg-blue-d5 text-gray-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded-sm overflow-hidden"
     >
+      <div className="flex flex-wrap gap-y-2 justify-between">
+        <h4>Investment performance</h4>
+        <div className="flex gap-x-2 items-center">
+          <button
+            type="button"
+            className="font-heading btn-blue text-xs px-2 py-1 rounded-sm uppercase pointer-events-none"
+          >
+            3 months
+          </button>
+          <button
+            disabled
+            type="button"
+            className="font-heading btn-outline text-xs px-2 py-1 rounded-sm uppercase pointer-events-none"
+          >
+            6 months
+          </button>
+          <button
+            disabled
+            type="button"
+            className="font-heading btn-outline text-xs px-2 py-1 rounded-sm uppercase"
+          >
+            1 year
+          </button>
+        </div>
+      </div>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={props.all}
