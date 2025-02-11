@@ -197,4 +197,20 @@
     max-height: 10rem;
     overflow-y: auto;
   }
+
+  .label {
+    display: block;
+    font-size: var(--text-sm);
+    margin-left: calc(var(--spacing) * 1);
+    &[data-required="true"]::after {
+      content: "*";
+      color: var(--color-red);
+    }
+    &[data-required="false"]::after {
+      content: "(optional)";
+      color: var(--color-gray);
+      font-weight: normal;
+      font-size: 0.8em;
+    }
+  }
 }
