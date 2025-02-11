@@ -32,6 +32,7 @@ const rmx = remix({
         r("donations", "./pages/admin/donations/donations.tsx");
         r("programs", "./pages/admin/programs/programs.tsx");
         r("funds", "./pages/admin/funds/funds.tsx");
+        r("integrations","./pages/admin/integrations/index.tsx")
         r(
           "program-editor/:programId",
           "./pages/admin/program-editor/program-editor.tsx"
