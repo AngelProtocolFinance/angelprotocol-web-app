@@ -20,7 +20,7 @@ export const generateZapierApiKey = async (npoId: number): Promise<string> => {
     cipher.update(JSON.stringify(payload), "utf8"),
     cipher.final(),
   ]);
-  const authTag = cipher.getAuthTag().subarray(0, 8);
+  const authTag = cipher.getAuthTag();
 
   const combined = Buffer.concat([iv, encryptedData, authTag]);
   const key = combined.toString("base64url");
@@ -42,11 +42,11 @@ export const decodeApiKey = (apiKey: string): ApiKeyPayload => {
   const combined = Buffer.from(apiKey, "base64url");
 
   const iv = combined.subarray(0, 12);
-  const authTag = combined.subarray(combined.length - 8);
-  const encryptedData = combined.subarray(12, combined.length - 8);
+  const authTag = combined.subarray(combined.length - 16);
+  const encryptedData = combined.subarray(12, combined.length - 16);
 
   const decipher = crypto.createDecipheriv("aes-256-gcm", encryptionKey, iv);
-  decipher.setAuthTag(Buffer.concat([authTag, Buffer.alloc(8)]));
+  decipher.setAuthTag(authTag);
 
   const decrypted = Buffer.concat([
     decipher.update(encryptedData),
