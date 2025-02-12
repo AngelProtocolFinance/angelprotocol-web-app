@@ -8,13 +8,18 @@ type Classes = string | { container?: string; icon?: string };
 type Props = {
   text: string;
   classes?: Classes;
-  size?: { copy?: number; check?: number };
+  size?: { copy?: number; check?: number } | number;
   children?: ReactNode;
 };
 
 export default function Copier({ text, classes, size, children }: Props) {
   const { handleCopy, copied } = useCopier(text);
   const { container, icon } = unpack(classes);
+  const { check = 16, copy = 16 } = size
+    ? typeof size === "number"
+      ? { check: size, copy: size }
+      : size
+    : {};
   return (
     <button
       className={container + " relative"}
@@ -23,14 +28,14 @@ export default function Copier({ text, classes, size, children }: Props) {
     >
       {(copied && (
         <Check
-          className={`${icon} cursor-default hover:text-current`}
-          size={size?.check}
+          className={`${icon} cursor-default text-green`}
+          size={check}
           aria-labelledby="copied"
         />
       )) || (
         <Copy
           className={`${icon} cursor-pointer`}
-          size={size?.copy}
+          size={copy}
           aria-labelledby="copy"
         />
       )}
@@ -38,7 +43,7 @@ export default function Copier({ text, classes, size, children }: Props) {
         Copied!
       </span>
       <span id="copy" className="invisible absolute">
-        Copy Address
+        Copy
       </span>
       {children}
     </button>
