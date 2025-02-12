@@ -63,9 +63,7 @@ export default function Donations() {
               initAmount: humanize(item.initAmount, 2),
               initAmountUsd: humanize(item.initAmountUsd ?? 0, 2),
               id: item.id,
-              receipt: item.donorDetails?.address?.country
-                ? "Yes"
-                : ("No" ?? "No"),
+              receipt: item.donorDetails?.address?.country ? "Yes" : "No",
             });
           }) ?? []
         }
