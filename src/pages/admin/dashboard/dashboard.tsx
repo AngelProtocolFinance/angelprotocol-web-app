@@ -4,8 +4,8 @@ import { CircleAlert } from "lucide-react";
 import type { DashboardData } from "./api";
 import { Loaded } from "./loaded";
 import { monthPeriod } from "./month-period";
-export { clientLoader } from "api/cache";
 
+export { clientLoader } from "api/cache";
 export {
   dashboardData as loader,
   endowUpdateAction as action,

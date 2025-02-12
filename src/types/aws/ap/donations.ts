@@ -1,86 +1,146 @@
-import type { Chain } from "types/chain";
-import type { DonationSource } from "types/lists";
+import { plusInt } from "api/schema/endow-id";
+import { subDays } from "date-fns";
+import * as v from "valibot";
+// import Joi from "joi";
+
+export const donationSources = ["bg-marketplace", "bg-widget"] as const;
+export const donationStatuses = ["final", "intent", "pending"] as const;
+// export type Method = "Bank" | "Card" | "Crypto";
+// export type FiatRamp = "STRIPE" | "PAYPAL" | "CHARIOT";
+export const donationMethods = ["Bank", "Card", "Crypto"] as const;
+export const fiatRamps = ["STRIPE", "PAYPAL", "CHARIOT"] as const;
+export const donationSource = v.picklist(donationSources);
+export const donationStatus = v.picklist(donationStatuses);
+
+export const viaIds = [
+  "1",
+  "137",
+  "42161",
+  "421614",
+  "11155111",
+  "56",
+  "80002",
+  "97",
+  "btc-mainnet",
+  "btc-testnet",
+  "doge-mainnet",
+  "doge-testnet",
+  "juno-1",
+  "phoenix-1",
+  "pisco-1",
+  "sol-mainnet",
+  "sol-testnet",
+  "xrp-mainnet",
+  "xrp-testnet",
+  "fiat",
+];
+
+export const viaId = v.picklist(viaIds);
+
+const email = v.pipe(v.string(), v.email());
+const date = v.pipe(v.string(), v.isoTimestamp());
+
+export const donationsQueryParams = v.pipe(
+  v.object({
+    asker: v.union([email, plusInt]),
+    status: v.optional(donationStatus),
+    page: v.optional(plusInt),
+    symbol: v.optional(v.pipe(v.string(), v.minLength(3))),
+    recipientName: v.optional(v.string()),
+    viaId: v.optional(viaId),
+    startDate: v.optional(date),
+    endDate: v.optional(date),
+  }),
+  v.forward(
+    v.partialCheck(
+      [["startDate"], ["endDate"]],
+      ({ endDate = new Date().toISOString(), startDate }) => {
+        const start = startDate ?? subDays(endDate, 7);
+        return endDate <= start;
+      },
+      "start date must be before end date"
+    ),
+    ["startDate"]
+  )
+);
+
+export interface DonationsQueryParams
+  extends v.InferOutput<typeof donationsQueryParams> {}
+
+const reqStr = v.pipe(v.string(), v.nonEmpty("required"));
+export const donorAddress = v.object({
+  line1: reqStr,
+  line2: v.optional(v.string()),
+  city: v.optional(v.string()),
+  state: v.optional(v.string()),
+  zipCode: v.optional(v.string()),
+  country: reqStr,
+});
+
+export const donor = v.object({
+  fullName: reqStr,
+  kycEmail: v.optional(email),
+  address: v.fallback(v.optional(donorAddress), undefined),
+});
+
+const int = v.pipe(v.number(), v.integer());
+const endowId = v.pipe(int, v.minValue(0));
+const amount = v.pipe(v.number(), v.minValue(0));
+const pct = v.pipe(amount, v.maxValue(100));
+export const donationItem = v.object({
+  id: reqStr,
+  donorId: reqStr,
+  donorDetails: v.fallback(v.optional(donor), undefined),
+  recipientId: endowId,
+  recipientName: reqStr,
+  programId: v.string(),
+  programName: v.string(),
+  date: date,
+  paymentMethod: v.optional(v.string()),
+  symbol: v.pipe(v.string(), v.minLength(3)),
+  initAmount: amount,
+  initAmountUsd: v.optional(amount),
+  finalAmountUsd: v.optional(amount),
+  directDonateAmount: v.optional(amount),
+  sfDonateAmount: v.optional(amount),
+  splitLiqPct: v.fallback(pct, 50),
+  isRecurring: v.optional(v.boolean()),
+  appUsed: v.fallback(donationSource, "bg-marketplace"),
+  bankVerificationUrl: v.optional(v.pipe(v.string(), v.url())),
+  viaId: v.fallback(viaId, "staging"),
+  viaName: v.optional(v.string(), "Unknown"),
+  payment_id: v.optional(int),
+});
 
 export namespace Donation {
+  export type Status = v.InferOutput<typeof donationStatus>;
+  export type Source = v.InferOutput<typeof donationSource>;
+  export interface Donor extends v.InferOutput<typeof donor> {}
+  export type FiatRamp = (typeof fiatRamps)[number];
+  export type Method = (typeof donationMethods)[number];
   export namespace Donor {
-    export interface Address {
-      line1: string;
-      line2?: string;
-      /** may be empty `""` */
-      city?: string;
-      state?: string;
-      zipCode?: string;
-      country: string;
-    }
+    export interface Address extends v.InferOutput<typeof donorAddress> {}
   }
-  export interface Donor {
-    fullName: string;
-    kycEmail?: string;
-    address?: Donor.Address;
-  }
-
-  export type KYC = Required<Omit<Donor, "address"> & Donor.Address>;
-
-  export type Method = "Bank" | "Card" | "Crypto";
-  export type FiatRamp = "STRIPE" | "PAYPAL" | "CHARIOT";
-  export type Status = "final" | "pending" | "intent";
-
-  export type Record = {
-    id: string;
-
-    //from
-    /** email */
-    donorId: string;
-    donorDetails?: Donor;
-
-    //to
-    /** endow id  */
-    recipientId: number;
-    recipientName: string;
-    programId?: string;
-    programName?: string;
-
-    //details
-    /** ISODate string */
-    date: string;
-    paymentMethod?: Method;
-    symbol: string;
-    initAmount: number;
-    initAmountUsd?: number;
-    finalAmountUsd?: number;
-    isRecurring?: boolean;
-    appUsed: DonationSource;
-  } & (
-    | {
-        //medium
-        viaId: Chain.Id.All | "staging";
-        viaName: string;
-        //present for 3p payments
-        payment_id?: number;
-      }
-    | {
-        bankVerificationUrl?: string;
-        viaId: "fiat";
-        viaName: FiatRamp;
-      }
-  );
+  export interface KYC
+    extends Required<Omit<Donor, "address"> & Donor.Address> {}
+  export type Record = v.InferOutput<typeof donationItem>;
 }
 
-export type DonationsQueryParams = {
-  page?: number;
-  /** number of items per page */
-  limit?: number;
-  /** ISOstring */
-  startDate?: string;
-  /** ISOstring */
-  endDate?: string;
-  recipientName?: string;
-  /** id of medium: i.e. chainId for crypto */
-  viaId?: string;
-  symbol?: string;
-  asker: number | string;
-  status?: Donation.Status;
-};
+// export type DonationsQueryParams = {
+//   page?: number;
+//   /** number of items per page */
+//   limit?: number;
+//   /** ISOstring */
+//   startDate?: string;
+//   /** ISOstring */
+//   endDate?: string;
+//   recipientName?: string;
+//   /** id of medium: i.e. chainId for crypto */
+//   viaId?: string;
+//   symbol?: string;
+//   asker: number | string;
+//   status?: Donation.Status;
+// };
 
 export type DonationsPage = { Items: Donation.Record[]; nextPage?: number };
 

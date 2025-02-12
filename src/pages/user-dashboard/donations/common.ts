@@ -6,14 +6,15 @@ export const lastHeaderName: { [K in Donation.Status]: string } = {
   pending: "Tx hash",
 };
 
-const commonNames: { [index: string]: string | undefined } = {
+const commonNames: {
+  [K in Donation.FiatRamp | (string & {})]: string | undefined;
+} = {
   CHARIOT: "Daf",
   STRIPE: "Card",
+  PAYPAL: "PayPal",
 };
 
-export function donationMethod(
-  method: Donation.Method | { id: Donation.Record["viaId"]; name: string }
-) {
+export function donationMethod(method: string | { id: string; name: string }) {
   if (typeof method === "string") return method;
   if (method.id === "fiat") return commonNames[method.name] ?? method.name;
 
