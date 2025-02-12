@@ -1,11 +1,9 @@
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { vitePlugin as remix } from "@remix-run/dev";
-import { installGlobals } from "@remix-run/node";
 import { vercelPreset } from "@vercel/remix/vite";
 import tailwind from "@tailwindcss/vite";
 
-installGlobals();
 const rmx = remix({
   presets: [vercelPreset()],
   appDirectory: "src",
@@ -30,74 +28,75 @@ const rmx = remix({
       });
       // no robots
       r("admin/:id", "./pages/admin/layout.tsx", () => {
-        r("", "./pages/admin/charity/redirect.ts", { index: true });
-        r("donations", "./pages/admin/charity/donations/donations.tsx");
-        r("programs", "./pages/admin/charity/programs/programs.tsx");
-        r("funds", "./pages/admin/charity/funds/funds.tsx");
+        r("", "./pages/admin/redirect.ts", { index: true });
+        r("donations", "./pages/admin/donations/donations.tsx");
+        r("programs", "./pages/admin/programs/programs.tsx");
+        r("funds", "./pages/admin/funds/funds.tsx");
+        r("integrations","./pages/admin/integrations/index.tsx")
         r(
           "program-editor/:programId",
-          "./pages/admin/charity/program-editor/program-editor.tsx"
+          "./pages/admin/program-editor/program-editor.tsx"
         );
         r(
           "members",
-          "./pages/admin/charity/members/members.tsx",
+          "./pages/admin/members/members.tsx",
           { id: "endow-admins" },
           () => {
-            r("add", "./pages/admin/charity/members/add-form.tsx");
+            r("add", "./pages/admin/members/add-form.tsx");
           }
         );
-        r("settings", "./pages/admin/charity/settings/form.tsx");
-        r("edit-profile", "./pages/admin/charity/edit-profile/index.tsx");
+        r("settings", "./pages/admin/settings/form.tsx");
+        r("edit-profile", "./pages/admin/edit-profile/index.tsx");
         r(
           "banking",
-          "./pages/admin/charity/banking/payout-methods/payout-methods.tsx"
+          "./pages/admin/banking/payout-methods/payout-methods.tsx"
         );
-        r("banking/new", "./pages/admin/charity/banking/banking.tsx");
+        r("banking/new", "./pages/admin/banking/banking.tsx");
         r(
           "banking/:bankId",
-          "./pages/admin/charity/banking/payout-method/payout-method.tsx",
+          "./pages/admin/banking/payout-method/payout-method.tsx",
           () => {
             r(
               "delete",
-              "./pages/admin/charity/banking/payout-method/delete-prompt.tsx"
+              "./pages/admin/banking/payout-method/delete-prompt.tsx"
             );
           }
         );
         r("form-builder", "./pages/widget/index.ts", {
           id: "admin-form-builder",
         });
-        r("media", "./pages/admin/charity/media/media.tsx", () => {
-          r("new", "./pages/admin/charity/media/video-new.ts", {
+        r("media", "./pages/admin/media/media.tsx", () => {
+          r("new", "./pages/admin/media/video-new.ts", {
             id: "media-new",
           });
-          r(":mediaId", "./pages/admin/charity/media/video-edit.ts", {
+          r(":mediaId", "./pages/admin/media/video-edit.ts", {
             id: "media-edit",
           });
         });
         r(
           "media/videos",
-          "./pages/admin/charity/media/videos/videos.tsx",
+          "./pages/admin/media/videos/videos.tsx",
           () => {
-            r("new", "./pages/admin/charity/media/video-new.ts", {
+            r("new", "./pages/admin/media/video-new.ts", {
               id: "videos-new",
             });
-            r(":mediaId", "./pages/admin/charity/media/video-edit.ts", {
+            r(":mediaId", "./pages/admin/media/video-edit.ts", {
               id: "videos-edit",
             });
           }
         );
         r(
           "dashboard",
-          "./pages/admin/charity/dashboard/dashboard.tsx",
+          "./pages/admin/dashboard/dashboard.tsx",
           { id: "dashboard" },
           () => {
             r(
               "edit-alloc",
-              "./pages/admin/charity/dashboard/schedule/edit.tsx"
+              "./pages/admin/dashboard/schedule/edit.tsx"
             );
             r(
               "move-funds",
-              "./pages/admin/charity/dashboard/move-fund-form.tsx"
+              "./pages/admin/dashboard/move-fund-form.tsx"
             );
           }
         );

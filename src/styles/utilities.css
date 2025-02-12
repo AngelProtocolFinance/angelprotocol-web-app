@@ -7,16 +7,7 @@
 @utility field-error {
   @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
 }
-/* ` */
-@utility label {
-  @apply block text-sm after:ml-1;
-  &[data-required="true"] {
-    @apply after:content-['*'] after:text-red;
-  }
-  &[data-required="false"] {
-    @apply after:content-['(optional)'] after:text-gray  dark:after:text-gray after:font-normal after:text-[0.8em];
-  }
-}
+
 @utility radio {
   @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   & > input {

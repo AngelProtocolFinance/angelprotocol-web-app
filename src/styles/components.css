@@ -158,6 +158,10 @@
     &[aria-invalid="true"] {
       @apply border-red;
     }
+    &:read-only {
+      background-color: var(--color-gray-l5);
+      pointer-events: none;
+    }
   }
 
   .field-err {
@@ -196,5 +200,21 @@
     width: 100%;
     max-height: 10rem;
     overflow-y: auto;
+  }
+
+  .label {
+    display: block;
+    font-size: var(--text-sm);
+    margin-left: calc(var(--spacing) * 1);
+    &[data-required="true"]::after {
+      content: "*";
+      color: var(--color-red);
+    }
+    &[data-required="false"]::after {
+      content: "(optional)";
+      color: var(--color-gray);
+      font-weight: normal;
+      font-size: 0.8em;
+    }
   }
 }
