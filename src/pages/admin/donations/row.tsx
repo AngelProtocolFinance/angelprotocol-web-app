@@ -25,7 +25,7 @@ export default function Row(
       {props.programId ? (
         <Link
           className="text-blue hover:text-blue-d1"
-          to={`${appRoutes.profile}/${props.recipientId}/program/${props.programId}`}
+          to={`${appRoutes.marketplace}/${props.recipientId}/program/${props.programId}`}
         >
           {props.programName}
         </Link>
