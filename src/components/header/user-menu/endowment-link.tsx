@@ -8,23 +8,32 @@ import ContentLoader from "../../content-loader";
 
 interface IBookmarkLink extends EndowmentBookmark {}
 export function BookmarkLink({ endowId, ...endow }: IBookmarkLink) {
-  return <_Link {...endow} id={endowId} route="profile" />;
+  return (
+    <_Link {...endow} id={endowId} to={`${appRoutes.marketplace}/${endowId}`} />
+  );
 }
 
 export function EndowmentLink({ endowID, logo, name }: UserEndow) {
-  return <_Link id={endowID} logo={logo} name={name} route={appRoutes.admin} />;
+  return (
+    <_Link
+      id={endowID}
+      logo={logo}
+      name={name}
+      to={`${appRoutes.admin}/${endowID}`}
+    />
+  );
 }
 
 type LinkProps = {
   id: number | string;
   name?: string;
   logo?: string;
-  route: string;
+  to: string;
 };
 const _Link = (props: LinkProps) => (
   <MenuItem
     as={NavLink}
-    to={props.route + `/${props.id}`}
+    to={props.to}
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
     <Image
