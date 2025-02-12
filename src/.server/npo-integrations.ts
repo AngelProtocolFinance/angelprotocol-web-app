@@ -1,7 +1,7 @@
 import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
 import { GetCommand, PutCommand, ap } from "./aws/db";
-import { api_encryption_key, api_hmac_key, env } from "./env";
+import { api_encryption_key, env } from "./env";
 
 interface ApiKeyPayload {
   npoId: number;
@@ -10,33 +10,20 @@ interface ApiKeyPayload {
 }
 
 const encryptionKey = Buffer.from(api_encryption_key, "base64");
-const hmacKey = Buffer.from(api_hmac_key, "base64");
 
 export const generateZapierApiKey = async (npoId: number): Promise<string> => {
-  // Create the payload
   const payload: ApiKeyPayload = { npoId, env, timestamp: Date.now() };
 
-  // Encrypt the payload
-  const iv = crypto.randomBytes(16);
+  const iv = crypto.randomBytes(12);
   const cipher = crypto.createCipheriv("aes-256-gcm", encryptionKey, iv);
   const encryptedData = Buffer.concat([
     cipher.update(JSON.stringify(payload), "utf8"),
     cipher.final(),
   ]);
-  const authTag = cipher.getAuthTag();
+  const authTag = cipher.getAuthTag().subarray(0, 8);
 
-  // Combine IV, encrypted data, and auth tag
   const combined = Buffer.concat([iv, encryptedData, authTag]);
-
-  // Create a signature using HMAC
-  const signature = crypto
-    .createHmac("sha256", hmacKey)
-    .update(combined)
-    .digest();
-
-  const encodedData = combined.toString("base64url");
-  const encodedSignature = signature.toString("base64url");
-  const key = `${encodedData}_${encodedSignature}`;
+  const key = combined.toString("base64url");
 
   const cmd = new PutCommand({
     TableName: "api-keys",
@@ -44,7 +31,6 @@ export const generateZapierApiKey = async (npoId: number): Promise<string> => {
       PK: `Zapier#${npoId}`,
       SK: env,
       apiKey: key,
-      //duplicate
       ...payload,
     },
   });
@@ -53,29 +39,15 @@ export const generateZapierApiKey = async (npoId: number): Promise<string> => {
 };
 
 export const decodeApiKey = (apiKey: string): ApiKeyPayload => {
-  const [encodedData, encodedSignature] = apiKey.split("_");
+  const combined = Buffer.from(apiKey, "base64url");
 
-  const combined = Buffer.from(encodedData, "base64url");
-  const signature = Buffer.from(encodedSignature, "base64url");
+  const iv = combined.subarray(0, 12);
+  const authTag = combined.subarray(combined.length - 8);
+  const encryptedData = combined.subarray(12, combined.length - 8);
 
-  // Verify signature
-  const expectedSignature = crypto
-    .createHmac("sha256", hmacKey)
-    .update(combined)
-    .digest();
-
-  if (!crypto.timingSafeEqual(signature, expectedSignature)) {
-    throw "Invalid signature";
-  }
-
-  // Extract IV, encrypted data, and auth tag
-  const iv = combined.subarray(0, 16);
-  const authTag = combined.subarray(combined.length - 16);
-  const encryptedData = combined.subarray(16, combined.length - 16);
-
-  // Decrypt the payload
   const decipher = crypto.createDecipheriv("aes-256-gcm", encryptionKey, iv);
-  decipher.setAuthTag(authTag);
+  decipher.setAuthTag(Buffer.concat([authTag, Buffer.alloc(8)]));
+
   const decrypted = Buffer.concat([
     decipher.update(encryptedData),
     decipher.final(),
