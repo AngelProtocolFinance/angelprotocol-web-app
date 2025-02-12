@@ -9,13 +9,12 @@ interface Props {
   classes?: string;
 }
 
-const sfwPage = (id: string) =>
-  fetch(`/api/npo/${id}/sfws`).then<SfwPage>((res) => res.json());
+const sfwPage = (path: string) =>
+  fetch(path).then<SfwPage>((res) => res.json());
 
 export function SfPerf({ id, classes = "" }: Props) {
   const [expanded, expand] = useState(false);
-  const { data = { all: [], twr: 0 } } = useSWR(id.toString(), sfwPage);
-  console.log(data, id);
+  const { data = { all: [], twr: 0 } } = useSWR(`/api/npo/${id}/sfws`, sfwPage);
   if (data.all.length === 0) return null;
   return (
     <div className={classes + " inline relative bottom-1"}>

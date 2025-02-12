@@ -5,7 +5,7 @@ import useSWR from "swr/immutable";
 import BlogCard, { Skeleton } from "./blog-card";
 
 const Blogs = () => {
-  const { data } = useSWR("1", (page) => posts(+page));
+  const { data } = useSWR(["posts", "1"], ([, page]) => posts(+page));
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,

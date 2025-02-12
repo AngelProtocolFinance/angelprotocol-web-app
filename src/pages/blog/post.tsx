@@ -84,8 +84,8 @@ function Loaded(post: IPost) {
 }
 
 function Author(props: { id: number }) {
-  const { data } = useSWR(props.id.toString(), (id) =>
-    wp.get<Wordpress.User>(`users/${id}`).json()
+  const { data } = useSWR(`users/${props.id}`, (path) =>
+    wp.get<Wordpress.User>(path).json()
   );
   return data && <p className="text-gray text-sm">Author: {data.name}</p>;
 }

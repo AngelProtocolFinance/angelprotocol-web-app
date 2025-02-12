@@ -3,7 +3,7 @@ import useSWR from "swr/immutable";
 import type { BalanceTxsPage } from "types/aws";
 import Table from "./table";
 
-const fetcher = ([id, key]: [number, string | null]) =>
+const fetcher = ([, id, key]: [string, number, string | null]) =>
   fetch(
     `/api/npo/${id}/txs${key ? `?nextKey=${key}` : ""}`
   ).then<BalanceTxsPage>((res) => res.json());
@@ -15,7 +15,7 @@ interface Props {
 
 export function PayoutHistory({ classes = "", id }: Props) {
   const { data, mutate, isLoading, isValidating, error } = useSWR(
-    [id, null],
+    ["txs", id, null],
     fetcher
   );
 
@@ -35,7 +35,7 @@ export function PayoutHistory({ classes = "", id }: Props) {
   if (items.length === 0) return <Info>No record found</Info>;
 
   async function load(nextKey: string) {
-    const res = await fetcher([id, nextKey]);
+    const res = await fetcher(["txs", id, nextKey]);
     mutate(
       (x) => {
         return {

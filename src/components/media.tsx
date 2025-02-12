@@ -10,8 +10,8 @@ export default function Media(props: Props) {
     data: media,
     isLoading,
     error,
-  } = useSWR(props.id.toString(), (id) => {
-    return wp.get<Wordpress.Media>(`media/${id}`).json();
+  } = useSWR(`media/${props.id}`, (path) => {
+    return wp.get<Wordpress.Media>(path).json();
   });
 
   if (!media || isLoading || error) {

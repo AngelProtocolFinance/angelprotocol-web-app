@@ -88,7 +88,10 @@ export function ProgramSelector({
 }
 
 function Options({ endowId }: { endowId: number }) {
-  const { data, isLoading, error } = useSWR(endowId.toString(), getPrograms);
+  const { data, isLoading, error } = useSWR(
+    ["programs", endowId.toString()],
+    ([, page]) => getPrograms(page)
+  );
 
   if (isLoading) return <span data-loading />;
   if (error) return <span data-error />;
