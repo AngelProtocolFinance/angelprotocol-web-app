@@ -8,7 +8,6 @@ import {
   Image,
   LayoutDashboard,
   ListCheck,
-  PlugZap,
   Settings,
   UsersRound,
   Wallet,
@@ -111,14 +110,14 @@ const linkGroup3: LinkGroup = {
         size: 21,
       },
     },
-    {
-      title: "Integrations",
-      to: sidebarRoutes.integrations,
-      icon: {
-        fn: PlugZap,
-        size: 21,
-      },
-    },
+    // {
+    //   title: "Integrations",
+    //   to: sidebarRoutes.integrations,
+    //   icon: {
+    //     fn: PlugZap,
+    //     size: 21,
+    //   },
+    // },
   ],
 };
 
