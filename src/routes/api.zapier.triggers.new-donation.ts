@@ -6,13 +6,45 @@ import {
   saveZapierHookUrl,
 } from ".server/npo-integrations";
 
-// get all recent donations
+interface Item {
+  id: string;
+  date: string;
+  recipient_id: number;
+  recipient_name: string;
+  amount: number;
+  amount_usd: number;
+  currency: string;
+  donor_name: string;
+  donor_email: string;
+  program_id?: string;
+  program_name?: string;
+  payment_method: string;
+}
+
+//get all recent donations
 export const loader: LoaderFunction = async ({ request }) => {
   const result = await validateApiKey(request.headers.get("x-api-key"));
   if (isResponse(result)) return result;
   const { npoId } = result;
   const page1 = await getDonations({ asker: npoId, limit: 3 });
-  return new Response(JSON.stringify(page1.Items), { status: 200 });
+  const items = page1.Items.map((i) => {
+    const x: Item = {
+      id: i.id,
+      date: i.date,
+      recipient_id: i.recipientId,
+      recipient_name: i.recipientName,
+      amount: i.initAmount,
+      amount_usd: i.finalAmountUsd!, //should be defined for finalized records
+      currency: i.symbol,
+      donor_name: i.donorDetails?.fullName ?? "Anonymous",
+      donor_email: i.donorId,
+      program_id: i.programId,
+      program_name: i.programName,
+      payment_method: i.paymentMethod || i.viaName,
+    };
+    return x;
+  });
+  return new Response(JSON.stringify(items), { status: 200 });
 };
 
 export const action: ActionFunction = async ({ request }) => {
