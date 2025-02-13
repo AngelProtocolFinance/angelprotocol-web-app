@@ -64,9 +64,6 @@ export const donationsQueryParams = v.pipe(
   )
 );
 
-export interface DonationsQueryParams
-  extends v.InferOutput<typeof donationsQueryParams> {}
-
 const reqStr = v.pipe(v.string(), v.nonEmpty("required"));
 export const donorAddress = v.object({
   line1: reqStr,
@@ -86,17 +83,17 @@ export const donor = v.object({
 const int = v.pipe(v.number(), v.integer());
 const endowId = v.pipe(int, v.minValue(0));
 const amount = v.pipe(v.number(), v.minValue(0));
-const pct = v.pipe(amount, v.maxValue(100));
+export const pct = v.pipe(amount, v.maxValue(100));
 export const donationItem = v.object({
   id: reqStr,
   donorId: reqStr,
   donorDetails: v.fallback(v.optional(donor), undefined),
   recipientId: endowId,
   recipientName: reqStr,
-  programId: v.string(),
-  programName: v.string(),
+  programId: v.fallback(v.optional(v.pipe(v.string(), v.uuid())), undefined),
+  programName: v.fallback(v.optional(v.string()), undefined),
   date: date,
-  paymentMethod: v.optional(v.string()),
+  paymentMethod: v.fallback(v.optional(v.string()), undefined),
   symbol: v.pipe(v.string(), v.minLength(3)),
   initAmount: amount,
   initAmountUsd: v.optional(amount),
@@ -123,7 +120,11 @@ export namespace Donation {
   }
   export interface KYC
     extends Required<Omit<Donor, "address"> & Donor.Address> {}
-  export type Record = v.InferOutput<typeof donationItem>;
+  export type Item = v.InferOutput<typeof donationItem>;
 }
 
-export type DonationsPage = { Items: Donation.Record[]; nextPage?: number };
+export interface DonationsQueryParams
+  extends v.InferInput<typeof donationsQueryParams> {}
+export interface DonationsQueryParamsParsed
+  extends v.InferOutput<typeof donationsQueryParams> {}
+export type DonationsPage = { Items: Donation.Item[]; nextPage?: number };
