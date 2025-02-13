@@ -1,5 +1,5 @@
-import type { FiatCurrencyData } from "types/aws/apes/donation";
 import type { DetailedCurrency } from "types/components";
+import type { FiatCurrencyData } from "types/donate";
 import { apesUrl } from "../api";
 
 const toDetailed = (

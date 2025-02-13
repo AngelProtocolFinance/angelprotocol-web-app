@@ -1,7 +1,7 @@
 import { useFetcher, useSearchParams } from "@remix-run/react";
 import { Info } from "components/status";
 import { useEffect, useState } from "react";
-import type { EndowCardsPage } from "types/aws/ap";
+import type { EndowCardsPage } from "types/npo";
 import Card from "./card";
 
 interface Props {

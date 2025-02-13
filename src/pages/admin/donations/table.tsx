@@ -1,7 +1,7 @@
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
 import useSort from "hooks/use-sort";
-import type { Donation } from "types/aws/ap/donations";
+import type { Donation } from "types/donations";
 import Row from "./row";
 
 type Props = {

@@ -3,7 +3,7 @@ import { Arrow, Content, Tooltip } from "components/tooltip";
 import { humanize } from "helpers";
 import { ArrowLeft, ArrowRight, CircleAlert, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
-import type { BalanceMovement, EndowmentBalances } from "types/aws/apes";
+import type { BalanceMovement, EndowmentBalances } from "types/npo-balance";
 import { MIN_GRANT_PROCESSING } from "./common";
 
 interface Props {

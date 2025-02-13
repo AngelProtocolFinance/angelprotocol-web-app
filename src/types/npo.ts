@@ -76,18 +76,3 @@ export type MilestoneDelete = {
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
-
-export type EndowmentBookmark = {
-  endowId: number;
-  name: string;
-  logo?: string; // old bookmarks do not have this field saved yet
-};
-
-export type UserAttributes = {
-  familyName: string;
-  givenName: string;
-  prefCurrencyCode?: string;
-  avatarUrl?: string;
-};
-
-export type UserUpdate = Partial<UserAttributes>;

@@ -1,7 +1,7 @@
 import type { Endow } from "@better-giving/endowment";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
-import type { EndowmentSettingsAttributes } from "types/aws/ap";
+import type { EndowmentSettingsAttributes } from "types/npo";
 import { endowUpdate } from "../endow-update-action";
 
 export interface LoaderData

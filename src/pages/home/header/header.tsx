@@ -5,7 +5,7 @@ import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { useState } from "react";
-import type { EndowCardsPage } from "types/aws/ap";
+import type { EndowCardsPage } from "types/npo";
 import SearchDropdown from "./search-dropdown";
 import SearchField from "./search-field";
 

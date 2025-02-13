@@ -4,7 +4,7 @@ import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { humanize, maskAddress } from "helpers";
 import { CircleCheck, X } from "lucide-react";
-import type { Donation } from "types/aws/ap/donations";
+import type { Donation } from "types/donations";
 
 const Amount = ({ amount = 0 }) => {
   return amount >= 0.01 ? <>${humanize(amount)}</> : <>--</>;

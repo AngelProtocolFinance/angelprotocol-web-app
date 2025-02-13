@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, toSearch, ver } from "api/api";
 import type { UserV2 } from "types/auth";
-import type { DonationsPage } from "types/aws/ap/donations";
+import type { DonationsPage } from "types/donations";
 import { cognito, toAuth } from ".server/auth";
 
 export interface DonationsData extends DonationsPage {

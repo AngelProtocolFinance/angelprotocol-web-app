@@ -1,7 +1,7 @@
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type { Currency, FiatCurrencyData } from "types/aws/apes/donation";
 import type { TokenV2 } from "types/components";
+import type { Currency, FiatCurrencyData } from "types/donate";
 
 export const mockTokens: TokenV2[] = [
   {

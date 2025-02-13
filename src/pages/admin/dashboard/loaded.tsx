@@ -3,7 +3,7 @@ import { useFetcher } from "@remix-run/react";
 import { Arrow, Content } from "components/tooltip";
 import { humanize } from "helpers";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
-import type { BalanceMovement, EndowmentBalances } from "types/aws/apes";
+import type { BalanceMovement, EndowmentBalances } from "types/npo-balance";
 import Figure from "./figure";
 import { LiqActions } from "./liq-actions";
 import { LockActions } from "./lock-actions";

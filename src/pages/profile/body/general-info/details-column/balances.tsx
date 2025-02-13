@@ -1,6 +1,6 @@
 import { useOutletContext } from "@remix-run/react";
 import { humanize } from "helpers";
-import type { EndowmentBalances } from "types/aws/apes";
+import type { EndowmentBalances } from "types/npo-balance";
 
 export default function Balances() {
   const bal = useOutletContext() as EndowmentBalances;

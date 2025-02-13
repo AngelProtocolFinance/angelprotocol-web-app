@@ -3,7 +3,7 @@ import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
 import type { PropsWithChildren } from "react";
-import type { EndowmentBalances } from "types/aws/apes";
+import type { EndowmentBalances } from "types/npo-balance";
 import { useProfileContext } from "../../../profile-context";
 import { Fundraisers } from "./fundraisers";
 import Socials from "./socials";

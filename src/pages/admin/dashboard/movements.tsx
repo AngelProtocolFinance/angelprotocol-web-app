@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import { humanize, roundDownToNum } from "helpers";
 import { HandCoins, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
-import type { BalanceMovement } from "types/aws/apes";
+import type { BalanceMovement } from "types/npo-balance";
 
 type Flow = keyof BalanceMovement;
 

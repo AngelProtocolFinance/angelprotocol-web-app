@@ -7,7 +7,7 @@ import { appRoutes } from "constants/routes";
 import { humanize, maskAddress } from "helpers";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
-import type { Donation } from "types/aws/ap/donations";
+import type { Donation } from "types/donations";
 import { donationMethod, lastHeaderName } from "./common";
 import LoadMoreBtn from "./load-more-btn";
 import PaymentResumer from "./payment-resumer";

@@ -1,4 +1,4 @@
-import type { DonationsQueryParams } from "types/aws/ap/donations";
+import type { DonationsQueryParams } from "types/donations";
 
 type Props = {
   status: DonationsQueryParams["status"];

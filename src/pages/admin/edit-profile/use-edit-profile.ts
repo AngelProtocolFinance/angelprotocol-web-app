@@ -5,8 +5,8 @@ import { errorPrompt } from "helpers/error-prompt";
 import { useActionResult } from "hooks/use-action-result";
 import { useState } from "react";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
-import type { EndowmentProfileUpdate } from "types/aws/ap";
 import type { UNSDG_NUMS } from "types/lists";
+import type { EndowmentProfileUpdate } from "types/npo";
 import type { FV } from "./schema";
 
 type DirtyFields = FieldNamesMarkedBoolean<FV>;
