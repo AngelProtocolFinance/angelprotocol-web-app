@@ -19,6 +19,7 @@ interface Item {
   program_id?: string;
   program_name?: string;
   payment_method: string;
+  is_recurring: boolean;
 }
 
 //get all recent donations
@@ -41,6 +42,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       program_id: i.programId,
       program_name: i.programName,
       payment_method: i.paymentMethod || i.viaName,
+      is_recurring: i.isRecurring ?? false,
     };
     return x;
   });
