@@ -48,6 +48,7 @@ export const donationsQueryParams = v.pipe(
     asker: v.union([email, plusInt]),
     status: v.optional(donationStatus),
     page: v.optional(plusInt),
+    limit: v.optional(plusInt),
     symbol: v.optional(v.pipe(v.string(), v.minLength(3))),
     recipientName: v.optional(v.string()),
     viaId: v.optional(viaId),

@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 import { DeleteCommand, GetCommand, PutCommand, ap } from "./aws/db";
 import { api_encryption_key, env } from "./env";
 
-interface ApiKeyPayload {
+export interface ApiKeyPayload {
   npoId: number;
   env: string;
   timestamp: number;

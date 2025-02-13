@@ -13,7 +13,7 @@ import type { DBRecord, Index, Key } from "./types";
 export const getDonations = async (
   params: DonationsQueryParamsParsed
 ): Promise<DonationsPage> => {
-  const { page = 1, asker, status = "final", ...p } = params;
+  const { page = 1, limit = 10, asker, status = "final", ...p } = params;
 
   const filterExpression = [
     (() => {
@@ -87,10 +87,9 @@ export const getDonations = async (
 
   if (items.length === 0) return { Items: [] };
 
-  const LIMIT = 10;
   const numItems = items.length;
-  const start = (page - 1) * LIMIT;
-  const end = Math.min(page * LIMIT, numItems);
+  const start = (page - 1) * limit;
+  const end = Math.min(page * limit, numItems);
 
   return {
     Items: toSorted(items, "desc", "date").slice(start, end),
