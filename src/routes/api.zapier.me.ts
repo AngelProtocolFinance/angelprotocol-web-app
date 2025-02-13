@@ -13,5 +13,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
   if (!retrieved) return new Response(null, { status: 404 });
   if (retrieved !== apiKey) return new Response(null, { status: 401 });
 
+  //data for connection label
   return new Response(JSON.stringify(payload), { status: 200 });
 }
