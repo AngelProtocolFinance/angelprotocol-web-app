@@ -82,7 +82,14 @@ export const donor = v.object({
 
 const int = v.pipe(v.number(), v.integer());
 const endowId = v.pipe(int, v.minValue(0));
-const amount = v.pipe(v.number(), v.minValue(0));
+
+const amountNum = v.pipe(v.number(), v.minValue(0));
+const amountStr = v.pipe(
+  v.string(),
+  v.transform((x) => +x),
+  amountNum
+);
+const amount = v.union([amountNum, amountStr]);
 export const pct = v.pipe(amount, v.maxValue(100));
 export const donationItem = v.object({
   id: reqStr,
@@ -121,6 +128,7 @@ export namespace Donation {
   export interface KYC
     extends Required<Omit<Donor, "address"> & Donor.Address> {}
   export type Item = v.InferOutput<typeof donationItem>;
+  export type ItemInput = v.InferInput<typeof donationItem>;
 }
 
 export interface DonationsQueryParams

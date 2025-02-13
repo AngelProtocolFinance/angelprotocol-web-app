@@ -1,5 +1,5 @@
 import { type Donation, donationItem, pct } from "types/donations";
-import { parse, safeParse } from "valibot";
+import { fallback, parse, safeParse } from "valibot";
 import type { DBRecord } from "./types";
 
 export const toSorted = <T extends Record<string, any>>(
@@ -23,7 +23,7 @@ export function askerIsDonor(asker: string | number): asker is string {
 export function toItems(records: DBRecord[], asker: string | number) {
   let items: Donation.Item[] = [];
   for (const r of records) {
-    const splitLiq = parse(pct, r.splitLiq);
+    const splitLiq = parse(fallback(pct, 50), r.splitLiq);
     const amountForAsker = askerIsDonor(asker) ? r.usdValue : 0;
     const directDonateAmt = amountForAsker * (splitLiq / 100);
     const sfDonateAmt = amountForAsker - directDonateAmt;
@@ -43,7 +43,7 @@ export function toItems(records: DBRecord[], asker: string | number) {
       address: donorAddress,
     };
 
-    const raw: Donation.Item = {
+    const raw: Donation.ItemInput = {
       id: r.transactionId,
       donorId: r.email || r.kycEmail || "",
       donorDetails: donor,
