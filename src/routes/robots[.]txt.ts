@@ -13,7 +13,7 @@ Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /banking-applications/
 Disallow: /applications/
-Disallow: /staging/
+Disallow: /api/
 
 Sitemap: ${origin}/sitemap.xml
 `;
