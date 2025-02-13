@@ -1,6 +1,6 @@
 import type { UserEndow } from "@better-giving/user";
 import * as v from "valibot";
-import type { EndowmentBookmark } from "./aws";
+import type { EndowmentBookmark } from "./user";
 
 export type AuthenticatedUser = {
   token: string;

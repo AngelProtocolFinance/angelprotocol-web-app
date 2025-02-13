@@ -1,4 +1,4 @@
-import type { BankingApplicationUpdate } from "types/aws";
+import type { BankingApplicationUpdate } from "types/applications";
 import { ap, ver } from "../api";
 
 export async function bankUpdate(

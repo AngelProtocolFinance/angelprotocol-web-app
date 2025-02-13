@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import type { EndowmentCard } from "types/aws";
+import type { EndowmentCard } from "types/npo";
 import Card from "./card";
 import frame1 from "./characters/frame_1.webp";
 import frame2 from "./characters/frame_2.webp";

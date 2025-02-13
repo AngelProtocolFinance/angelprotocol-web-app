@@ -3,7 +3,7 @@ import flying_character from "assets/images/flying-character.webp";
 import ContentLoader from "components/content-loader";
 import Image from "components/image";
 import { appRoutes } from "constants/routes";
-import type { EndowmentCard } from "types/aws";
+import type { EndowmentCard } from "types/npo";
 
 const Card = (props: EndowmentCard) => {
   return (

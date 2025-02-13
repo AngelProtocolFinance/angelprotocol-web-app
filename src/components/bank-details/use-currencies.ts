@@ -1,6 +1,6 @@
 import { ap, ver } from "api/api";
 import useSWR from "swr/immutable";
-import type { WiseCurrency } from "types/aws";
+import type { WiseCurrency } from "types/bank-details";
 import type { Currency, QueryState } from "types/components";
 
 async function getCurencies(path: string) {

@@ -8,7 +8,7 @@ import { type ActionData, isFormErr } from "types/action";
 import {
   type BankingApplicationStatus,
   bankingApplicationUpdate,
-} from "types/aws";
+} from "types/applications";
 
 type Props = {
   verdict: BankingApplicationStatus;

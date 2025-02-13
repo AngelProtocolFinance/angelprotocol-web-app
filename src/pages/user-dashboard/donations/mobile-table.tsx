@@ -11,7 +11,7 @@ import { humanize } from "helpers";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import type { Donation } from "types/aws";
+import type { Donation } from "types/donations";
 import { donationMethod, lastHeaderName } from "./common";
 import LoadMoreBtn from "./load-more-btn";
 import PaymentResumer from "./payment-resumer";
@@ -129,7 +129,7 @@ function Row({
   );
 }
 
-function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
+function LastRowContent(props: Donation.Item & { status: Donation.Status }) {
   if (props.status === "final") {
     return (
       <Link to={props.id} className="block">

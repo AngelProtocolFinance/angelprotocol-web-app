@@ -1,17 +1,10 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { decodeApiKey, getZapierApiKey } from ".server/npo-integrations";
+import { isResponse } from "@remix-run/server-runtime/dist/responses";
+import { validateApiKey } from "./helpers/validate-api-key";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const apiKey = request.headers.get("x-api-key");
-
-  if (!apiKey) return new Response(null, { status: 400 });
-
-  const payload = decodeApiKey(apiKey);
-
-  const retrieved: string | undefined = await getZapierApiKey(payload.npoId);
-
-  if (!retrieved) return new Response(null, { status: 404 });
-  if (retrieved !== apiKey) return new Response(null, { status: 401 });
-
-  return new Response(JSON.stringify(payload), { status: 200 });
+  const result = await validateApiKey(request.headers.get("x-api-key"));
+  if (isResponse(result)) return result;
+  //data for connection label
+  return new Response(JSON.stringify(result), { status: 200 });
 }

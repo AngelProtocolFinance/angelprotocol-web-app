@@ -1,6 +1,5 @@
 export * from "./create-navlink-styler";
 export * from "./decimal";
-export * from "./get-tx-url";
 export * from "./id-param-to-num";
 export * from "./is-empty";
 export * from "./logger";

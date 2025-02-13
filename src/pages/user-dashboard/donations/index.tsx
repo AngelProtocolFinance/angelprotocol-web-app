@@ -4,7 +4,7 @@ import CsvExporter from "components/csv-exporter";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { Donation } from "types/aws";
+import type { Donation } from "types/donations";
 import type { DonationsData } from "./donations-loader";
 import Filter from "./filter";
 import MobileTable from "./mobile-table";
@@ -20,7 +20,7 @@ export default function Donations() {
   const [params, setParams] = useSearchParams();
   const { load, data, state } = useFetcher<DonationsData>();
   const { user, ...firstPage } = useCachedLoaderData<DonationsData>();
-  const [items, setItems] = useState<Donation.Record[]>(firstPage.Items);
+  const [items, setItems] = useState<Donation.Item[]>(firstPage.Items);
 
   const [query, setQuery] = useState("");
 
@@ -28,6 +28,10 @@ export default function Donations() {
     if (!data || state !== "idle") return;
     setItems((prev) => [...prev, ...data.Items]);
   }, [data, state]);
+
+  useEffect(() => {
+    setItems(firstPage.Items);
+  }, [firstPage.Items]);
 
   const nextPage = data ? data.nextPage : firstPage.nextPage;
   function loadNextPage() {
@@ -133,15 +137,14 @@ export default function Donations() {
   );
 }
 
-const csvHeaders: { key: keyof Donation.Record | "receipt"; label: string }[] =
-  [
-    { key: "recipientName", label: "Recipient" },
-    { key: "date", label: "Date" },
-    { key: "paymentMethod", label: "Donation Type" },
-    { key: "isRecurring", label: "Recurring" },
-    { key: "symbol", label: "Currency" },
-    { key: "initAmount", label: "Amount" },
-    { key: "initAmountUsd", label: "USD Value" },
-    { key: "id", label: "Transaction Hash" },
-    { key: "receipt", label: "Receipt" },
-  ];
+const csvHeaders: { key: keyof Donation.Item | "receipt"; label: string }[] = [
+  { key: "recipientName", label: "Recipient" },
+  { key: "date", label: "Date" },
+  { key: "paymentMethod", label: "Donation Type" },
+  { key: "isRecurring", label: "Recurring" },
+  { key: "symbol", label: "Currency" },
+  { key: "initAmount", label: "Amount" },
+  { key: "initAmountUsd", label: "USD Value" },
+  { key: "id", label: "Transaction Hash" },
+  { key: "receipt", label: "Receipt" },
+];

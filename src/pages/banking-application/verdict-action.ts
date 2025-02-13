@@ -2,7 +2,7 @@ import { type ActionFunction, redirect } from "@vercel/remix";
 import { bankUpdate } from "api/action/bank-update";
 import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
-import { bankingApplicationUpdate } from "types/aws";
+import { bankingApplicationUpdate } from "types/applications";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
 

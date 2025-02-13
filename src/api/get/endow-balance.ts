@@ -1,5 +1,5 @@
 import { plusInt } from "api/schema/endow-id";
-import type { EndowmentBalances } from "types/aws";
+import type { EndowmentBalances } from "types/npo-balance";
 import { parse } from "valibot";
 import { apes, ver } from "../api";
 

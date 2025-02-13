@@ -1,9 +1,9 @@
 import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
-import { GetCommand, PutCommand, ap } from "./aws/db";
+import { DeleteCommand, GetCommand, PutCommand, ap } from "./aws/db";
 import { api_encryption_key, env } from "./env";
 
-interface ApiKeyPayload {
+export interface ApiKeyPayload {
   npoId: number;
   env: string;
   timestamp: number;
@@ -67,4 +67,32 @@ export const getZapierApiKey = async (
     },
   });
   return ap.send(cmd).then((res) => res.Item?.apiKey);
+};
+
+export const saveZapierHookUrl = async (
+  hookUrl: string,
+  npoId: number
+): Promise<string> => {
+  const id = crypto.randomUUID();
+  const cmd = new PutCommand({
+    TableName: "webhooks",
+    Item: {
+      PK: `Zapier#${env}#${npoId}`,
+      SK: id,
+      id,
+      npoId,
+      env,
+      url: hookUrl,
+    },
+  });
+  await ap.send(cmd);
+  return id;
+};
+
+export const deleteZapierHookUrl = async (id: string, npoId: number) => {
+  const cmd = new DeleteCommand({
+    TableName: "webhooks",
+    Key: { PK: `Zapier#${env}#${npoId}`, SK: id },
+  });
+  return ap.send(cmd);
 };

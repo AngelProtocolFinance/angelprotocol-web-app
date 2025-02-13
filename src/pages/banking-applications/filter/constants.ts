@@ -1,4 +1,4 @@
-import type { BankingApplicationStatus } from "types/aws";
+import type { BankingApplicationStatus } from "types/applications";
 import type { OptionType } from "types/components";
 
 export const statuses: OptionType<BankingApplicationStatus>[] = [

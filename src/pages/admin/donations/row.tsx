@@ -1,17 +1,17 @@
 import { Link } from "@remix-run/react";
-import ExtLink from "components/ext-link";
+import Copier from "components/copier";
 import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { getTxUrl, humanize, maskAddress } from "helpers";
+import { humanize, maskAddress } from "helpers";
 import { CircleCheck, X } from "lucide-react";
-import type { Donation } from "types/aws";
+import type { Donation } from "types/donations";
 
 const Amount = ({ amount = 0 }) => {
   return amount >= 0.01 ? <>${humanize(amount)}</> : <>--</>;
 };
 
 export default function Row(
-  props: Donation.Record & { hasMore?: boolean; classes?: string }
+  props: Donation.Item & { hasMore?: boolean; classes?: string }
 ) {
   return (
     <Cells
@@ -44,13 +44,13 @@ export default function Row(
       {props.viaId === "staging" || props.viaId === "fiat" ? (
         <>--</>
       ) : (
-        <ExtLink
-          //default to ethereum for staging
-          href={getTxUrl(props.viaId, props.id)}
-          className="text-center text-blue-d1 hover:text-gray-d1 uppercase text-sm"
+        <Copier
+          size={16}
+          text={props.id}
+          classes="text-center inline-flex items-center gap-x-2 text-sm"
         >
           {maskAddress(props.id)}
-        </ExtLink>
+        </Copier>
       )}
 
       <td className="relative">

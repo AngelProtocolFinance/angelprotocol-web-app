@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { V1RecipientAccount } from "types/aws";
+import type { V1RecipientAccount } from "types/bank-details";
 
 export type FormButtonsProps = {
   disabled?: boolean;

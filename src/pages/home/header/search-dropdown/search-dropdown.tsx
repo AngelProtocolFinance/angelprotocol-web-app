@@ -4,7 +4,7 @@ import Image from "components/image";
 import { Info, LoadingStatus } from "components/status";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";
-import type { EndowCardsPage } from "types/aws";
+import type { EndowCardsPage } from "types/npo";
 import { TopCountries } from "./top-countries";
 
 interface Props {

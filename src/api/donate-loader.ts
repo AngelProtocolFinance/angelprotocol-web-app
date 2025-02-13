@@ -1,6 +1,6 @@
 import type { Endow } from "@better-giving/endowment";
 import { type LoaderFunction, data } from "@vercel/remix";
-import type { EndowmentBalances } from "types/aws";
+import type { EndowmentBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { getEndowBalance } from "./get/endow-balance";
 import { plusInt } from "./schema/endow-id";

@@ -8,7 +8,7 @@ import {
   CircleAlert,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import type { BalanceTx } from "types/aws";
+import type { BalanceTx } from "types/balance-tx";
 import { MIN_GRANT_PROCESSING } from "../common";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";

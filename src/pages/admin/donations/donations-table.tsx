@@ -4,7 +4,7 @@ import { Info } from "components/status";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { FileSpreadsheet } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { Donation, DonationsPage } from "types/aws";
+import type { Donation, DonationsPage } from "types/donations";
 import type { Ensure } from "types/utils";
 import Table from "./table";
 
@@ -44,10 +44,10 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
           headers={csvHeaders}
           data={items
             .filter(
-              (d): d is Ensure<Donation.Record, "donorDetails"> =>
+              (d): d is Ensure<Donation.Item, "donorDetails"> =>
                 !!d.donorDetails
             )
-            .map<Donation.Record | Donation.KYC>(
+            .map<Donation.Item | Donation.KYC>(
               ({ donorDetails: donor, ...d }) => {
                 return fill({
                   date: new Date(d.date).toLocaleDateString(),
@@ -88,7 +88,7 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
 }
 
 const csvHeaders: {
-  key: keyof Donation.Record | keyof Donation.KYC | "receipt";
+  key: keyof Donation.Item | keyof Donation.KYC | "receipt";
   label: string;
 }[] = [
   { key: "date", label: "Datetime" },

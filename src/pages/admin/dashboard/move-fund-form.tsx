@@ -17,7 +17,7 @@ import { humanize } from "helpers";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import type { BalanceMovement } from "types/aws";
+import type { BalanceMovement } from "types/npo-balance";
 import type { DashboardData } from "./api";
 
 type Flow = keyof BalanceMovement;

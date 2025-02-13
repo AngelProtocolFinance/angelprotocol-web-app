@@ -4,7 +4,7 @@ import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import hero from "assets/images/hero.webp?url";
 import { metas } from "helpers/seo";
-import type { EndowCardsPage } from "types/aws";
+import type { EndowCardsPage } from "types/npo";
 import { safeParse } from "valibot";
 import ActiveFilters from "./active-filters";
 import Cards from "./cards";

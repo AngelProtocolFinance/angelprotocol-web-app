@@ -1,13 +1,13 @@
 import { Link } from "@remix-run/react";
+import Copier from "components/copier";
 import ExtLink from "components/ext-link";
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
-import { juno } from "constants/chains";
 import { appRoutes } from "constants/routes";
-import { getTxUrl, humanize } from "helpers";
+import { humanize, maskAddress } from "helpers";
 import useSort from "hooks/use-sort";
-import { ArrowDownToLine, SquareArrowUpRight } from "lucide-react";
-import type { Donation } from "types/aws";
+import { ArrowDownToLine } from "lucide-react";
+import type { Donation } from "types/donations";
 import { donationMethod, lastHeaderName } from "./common";
 import LoadMoreBtn from "./load-more-btn";
 import PaymentResumer from "./payment-resumer";
@@ -97,15 +97,12 @@ export default function Table({
               }`}
             >
               <Link
-                to={`${
-                  appRoutes[row.viaId === juno.id ? "profile" : "marketplace"]
-                }/${row.recipientId}`}
-                className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
+                to={`${appRoutes.marketplace}/${row.recipientId}`}
+                className="flex items-center justify-between gap-1 text-blue hover:text-blue-d1"
               >
                 <span className="truncate max-w-[12rem]">
                   {row.recipientName}
                 </span>
-                <SquareArrowUpRight className="w-5 h-5" />
               </Link>
               {row.programId ? (
                 <Link
@@ -156,9 +153,7 @@ export default function Table({
   );
 }
 
-function LastRowColContent(
-  props: Donation.Record & { status: Donation.Status }
-) {
+function LastRowColContent(props: Donation.Item & { status: Donation.Status }) {
   if (props.status === "final") {
     return (
       <Link to={props.id} className="w-full flex justify-center">
@@ -201,11 +196,12 @@ function LastRowColContent(
   }
 
   return (
-    <ExtLink
-      href={getTxUrl(props.viaId, props.id)}
-      className="text-center text-blue-d1 hover:text-gray-d1  uppercase text-sm"
+    <Copier
+      size={16}
+      text={props.id}
+      classes="text-center inline-flex items-center gap-x-2 text-sm"
     >
-      {props.id}
-    </ExtLink>
+      {maskAddress(props.id)}
+    </Copier>
   );
 }

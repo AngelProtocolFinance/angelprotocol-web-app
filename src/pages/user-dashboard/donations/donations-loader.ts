@@ -1,8 +1,9 @@
 import type { LoaderFunction } from "@vercel/remix";
-import { ap, toSearch, ver } from "api/api";
 import type { UserV2 } from "types/auth";
-import type { DonationsPage } from "types/aws";
+import { type DonationsPage, donationsQueryParams } from "types/donations";
+import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
+import { getDonations } from ".server/donations";
 
 export interface DonationsData extends DonationsPage {
   user: UserV2;
@@ -10,18 +11,13 @@ export interface DonationsData extends DonationsPage {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const from = new URL(request.url);
-  const { page = "1", status = "final" } = Object.fromEntries(
-    from.searchParams.entries()
-  );
 
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  return ap
-    .get(`${ver(2)}/donations`, {
-      headers: { authorization: user.idToken },
-      searchParams: toSearch({ asker: user.email, page, status }),
-    })
-    .json()
-    .then((data: any) => ({ ...data, user }));
+  const raw = Object.fromEntries(from.searchParams.entries());
+  const params = parse(donationsQueryParams, { ...raw, asker: user.email });
+  const page = await getDonations(params);
+
+  return { ...page, user } satisfies DonationsData;
 };

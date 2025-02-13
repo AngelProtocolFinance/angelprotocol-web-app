@@ -1,8 +1,8 @@
 import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
 import { Toaster } from "sonner";
-import { useConsent } from "use-consent";
-import { useNProgress } from "use-nprogress";
+import { useConsent } from "./use-consent";
+import { useNProgress } from "./use-nprogress";
 
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
   useNProgress();

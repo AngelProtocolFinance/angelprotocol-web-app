@@ -1,5 +1,5 @@
 import { NavLink } from "@remix-run/react";
-import type { BalanceMovement } from "types/aws";
+import type { BalanceMovement } from "types/npo-balance";
 
 interface Props {
   classes?: string;

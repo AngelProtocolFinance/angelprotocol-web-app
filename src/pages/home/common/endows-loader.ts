@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@vercel/remix";
-import type { EndowCardsPage } from "types/aws";
-export type { EndowmentCard } from "types/aws";
+import type { EndowCardsPage } from "types/npo";
+export type { EndowmentCard } from "types/npo";
 import { ap, ver } from "api/api";
 
 export const endowsLoader: LoaderFunction = async () => {

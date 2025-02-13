@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { plusInt } from "api/schema/endow-id";
-import type { PayoutMethod } from "types/aws";
+import type { PayoutMethod } from "types/applications";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 

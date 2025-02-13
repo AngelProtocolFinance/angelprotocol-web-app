@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "es2023"
-    ],
+    "lib": ["dom", "dom.iterable", "es2023"],
     "module": "preserve",
     "target": "es2022",
     "allowJs": true,
@@ -18,17 +14,12 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "types": [
-      "vite/client",
-      "@vercel/remix"
-    ]
+    "types": ["vite/client", "@vercel/remix"]
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/.server/**/*.ts",
-    "**/.server/**/*.tsx",
-    "**/.client/**/*.ts",
-    "**/.client/**/*.tsx"
-  ],
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./src/.server/**/*.ts",
+    "./src/.server/**/*.tsx"
+  ]
 }

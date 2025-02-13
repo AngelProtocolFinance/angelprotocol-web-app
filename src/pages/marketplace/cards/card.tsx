@@ -6,7 +6,7 @@ import { Target, toTarget } from "components/target";
 import VerifiedIcon from "components/verified-icon";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
-import type { EndowmentCard } from "types/aws";
+import type { EndowmentCard } from "types/npo";
 
 const PLACEHOLDER_TAGLINE = " ";
 

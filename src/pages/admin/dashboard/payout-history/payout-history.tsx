@@ -1,6 +1,6 @@
 import { Info, LoadingStatus } from "components/status";
 import useSWR from "swr/immutable";
-import type { BalanceTxsPage } from "types/aws";
+import type { BalanceTxsPage } from "types/balance-tx";
 import Table from "./table";
 
 const fetcher = ([, id, key]: [string, number, string | null]) =>
