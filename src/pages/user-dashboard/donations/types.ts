@@ -1,7 +1,7 @@
 import type { Donation } from "types/donations";
 
 export type TableProps = {
-  donations: Donation.Record[];
+  donations: Donation.Item[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;

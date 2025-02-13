@@ -11,7 +11,7 @@ const Amount = ({ amount = 0 }) => {
 };
 
 export default function Row(
-  props: Donation.Record & { hasMore?: boolean; classes?: string }
+  props: Donation.Item & { hasMore?: boolean; classes?: string }
 ) {
   return (
     <Cells

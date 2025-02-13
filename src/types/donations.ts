@@ -1,5 +1,4 @@
 import { plusInt } from "api/schema/endow-id";
-import { subDays } from "date-fns";
 import * as v from "valibot";
 // import Joi from "joi";
 
@@ -38,7 +37,11 @@ export const viaIds = [
 export const viaId = v.picklist(viaIds);
 
 const email = v.pipe(v.string(), v.email());
-const date = v.pipe(v.string(), v.isoTimestamp());
+const date = v.pipe(
+  v.string(),
+  v.isoTimestamp(),
+  v.maxValue(new Date().toISOString())
+);
 
 export const donationsQueryParams = v.pipe(
   v.object({
@@ -54,10 +57,7 @@ export const donationsQueryParams = v.pipe(
   v.forward(
     v.partialCheck(
       [["startDate"], ["endDate"]],
-      ({ endDate = new Date().toISOString(), startDate }) => {
-        const start = startDate ?? subDays(endDate, 7);
-        return endDate <= start;
-      },
+      ({ endDate: e, startDate: s }) => (s && e ? e >= s : true),
       "start date must be before end date"
     ),
     ["startDate"]

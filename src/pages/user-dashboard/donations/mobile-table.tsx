@@ -129,7 +129,7 @@ function Row({
   );
 }
 
-function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
+function LastRowContent(props: Donation.Item & { status: Donation.Status }) {
   if (props.status === "final") {
     return (
       <Link to={props.id} className="block">

@@ -10,7 +10,7 @@ import { env } from "../env";
 import { askerIsDonor, toItems, toSorted } from "./helpers";
 import type { DBRecord, Index, Key } from "./types";
 
-export const getNpoDonations = async (
+export const getDonations = async (
   params: DonationsQueryParamsParsed
 ): Promise<DonationsPage> => {
   const { page = 1, asker, status = "final", ...p } = params;

@@ -153,9 +153,7 @@ export default function Table({
   );
 }
 
-function LastRowColContent(
-  props: Donation.Record & { status: Donation.Status }
-) {
+function LastRowColContent(props: Donation.Item & { status: Donation.Status }) {
   if (props.status === "final") {
     return (
       <Link to={props.id} className="w-full flex justify-center">

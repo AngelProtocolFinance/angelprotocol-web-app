@@ -2,7 +2,7 @@ import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
-import { getNpoDonations } from ".server/npo-donations";
+import { getDonations } from ".server/donations";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const from = new URL(request.url);
@@ -11,7 +11,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const page = await getNpoDonations({
+  const page = await getDonations({
     asker: v.parse(plusInt, params.id),
     status: "final",
     page: +pageNum,

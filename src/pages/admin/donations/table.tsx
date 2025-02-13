@@ -5,7 +5,7 @@ import type { Donation } from "types/donations";
 import Row from "./row";
 
 type Props = {
-  donations: Donation.Record[];
+  donations: Donation.Item[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;
