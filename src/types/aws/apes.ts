@@ -56,5 +56,3 @@ export type EndowmentBalances = {
   /** savings balance */
   liq?: number;
 };
-
-export * from "./paypal";

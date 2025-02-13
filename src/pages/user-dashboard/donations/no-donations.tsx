@@ -1,6 +1,6 @@
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
-import type { DonationsQueryParams } from "types/aws";
+import type { DonationsQueryParams } from "types/aws/ap/donations";
 
 type Props = {
   classes: string;

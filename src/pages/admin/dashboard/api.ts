@@ -3,7 +3,7 @@ import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import { getEndowBalance } from "api/get/endow-balance";
 import { plusInt } from "api/schema/endow-id";
-import type { EndowmentBalances } from "types/aws";
+import type { EndowmentBalances } from "types/aws/apes";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
 import { cognito, toAuth } from ".server/auth";

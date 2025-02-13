@@ -126,40 +126,4 @@ export namespace Donation {
   export type Record = v.InferOutput<typeof donationItem>;
 }
 
-// export type DonationsQueryParams = {
-//   page?: number;
-//   /** number of items per page */
-//   limit?: number;
-//   /** ISOstring */
-//   startDate?: string;
-//   /** ISOstring */
-//   endDate?: string;
-//   recipientName?: string;
-//   /** id of medium: i.e. chainId for crypto */
-//   viaId?: string;
-//   symbol?: string;
-//   asker: number | string;
-//   status?: Donation.Status;
-// };
-
 export type DonationsPage = { Items: Donation.Record[]; nextPage?: number };
-
-export interface BalanceTx {
-  /** iso */
-  date: string;
-  endowId: number;
-  environment: string;
-  to: "cash" | "liq" | "lock" | "unprocessed";
-  from: "donation" | "liq" | "lock";
-  amount: number;
-}
-
-export interface BalanceTxsPage {
-  items: BalanceTx[];
-  nextPageKey?: string;
-}
-
-export interface BalanceTxsQueryParams {
-  endowId: number;
-  nextPageKey?: string;
-}

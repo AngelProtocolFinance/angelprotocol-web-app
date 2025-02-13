@@ -3,7 +3,7 @@ import { Arrow, Content, Tooltip } from "components/tooltip";
 import { Heart } from "lucide-react";
 import { Suspense } from "react";
 import type { DetailedUser, UserV2 } from "types/auth";
-import type { EndowmentBookmark } from "types/aws";
+import type { EndowmentBookmark } from "types/aws/ap";
 
 type Props = {
   classes?: string;

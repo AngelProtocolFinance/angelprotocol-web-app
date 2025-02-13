@@ -2,7 +2,7 @@ import type { EndowsPage } from "@better-giving/endowment";
 import { ver } from "api/api";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type { Crypto } from "types/aws";
+import type { Crypto } from "types/aws/common";
 
 export const handlers = [
   http.post(APIs.aws + "/v2/file/upload", () => {

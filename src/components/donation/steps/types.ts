@@ -1,5 +1,5 @@
 import type { DonateMethodId } from "@better-giving/endowment";
-import type { Donor } from "types/aws";
+import type { Donor } from "types/aws/apes/donation";
 import type {
   DetailedCurrency,
   OptionType,

@@ -1,6 +1,6 @@
 import { tables } from "@better-giving/types/list";
 import type * as db from "@better-giving/user/db";
-import type { EndowmentBookmark } from "../types/aws";
+import type { EndowmentBookmark } from "../types/aws/ap";
 import { DeleteCommand, PutCommand, QueryCommand, ap } from "./aws/db";
 import { env } from "./env";
 import { getNpoByIdOrSlug } from "./npo";

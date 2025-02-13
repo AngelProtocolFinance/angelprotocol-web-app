@@ -1,10 +1,10 @@
+import type { BankingApplication } from "types/applications";
 import type {
-  BankingApplication,
   EndowmentAllocationUpdate,
   EndowmentProfileUpdate,
   EndowmentSettingsUpdate,
-  V2RecipientAccount,
-} from "types/aws";
+} from "types/aws/ap";
+import type { V2RecipientAccount } from "types/bank-details";
 
 export type EndowmentUpdate = Partial<
   EndowmentProfileUpdate & EndowmentSettingsUpdate & EndowmentAllocationUpdate

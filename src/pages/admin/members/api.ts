@@ -7,7 +7,7 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { parseWithValibot } from "conform-to-valibot";
 import type { UserV2 } from "types/auth";
-import type { EndowAdmin } from "types/aws";
+import type { EndowAdmin } from "types/aws/ap";
 import { schema } from "./schema";
 import { cognito, toAuth } from ".server/auth";
 

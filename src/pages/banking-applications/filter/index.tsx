@@ -6,7 +6,7 @@ import { FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
-import type { BankingApplicationsQueryParams } from "types/aws";
+import type { BankingApplicationsQueryParams } from "types/applications";
 import { statuses } from "./constants";
 import Form from "./form";
 import type { FormValues as FV } from "./types";

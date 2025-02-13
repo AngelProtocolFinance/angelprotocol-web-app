@@ -2,7 +2,7 @@ import type { Endow } from "@better-giving/endowment";
 import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import type { EndowmentOption } from "types/aws";
+import type { EndowmentOption } from "types/aws/ap";
 import * as v from "valibot";
 import { getNpos } from ".server/npos";
 

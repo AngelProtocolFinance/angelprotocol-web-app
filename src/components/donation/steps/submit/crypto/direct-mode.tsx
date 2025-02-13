@@ -7,7 +7,7 @@ import QueryLoader from "components/query-loader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import useSWR from "swr/immutable";
-import type { Crypto } from "types/aws";
+import type { Crypto } from "types/aws/common";
 import { toDonor } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";

@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import type { FileObject } from "../common";
+import type { FileObject } from "./aws/common";
 
 const bankApplicationStatuses = [
   "under-review",

@@ -1,4 +1,4 @@
-import type { BalanceTx } from "types/aws";
+import type { BalanceTx } from "types/balance-tx";
 
 export interface TableProps {
   records: BalanceTx[];

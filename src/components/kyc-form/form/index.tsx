@@ -7,7 +7,7 @@ import { NativeField as Field } from "components/form";
 import { List as Selector } from "components/selector";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useController, useForm } from "react-hook-form";
-import type { ReceiptPayload } from "types/aws";
+import type { ReceiptPayload } from "types/aws/apes/donation";
 import { type FV, schema } from "../schema";
 import { Tooltip } from "./tooltip";
 import { states } from "./us-states";

@@ -4,7 +4,7 @@ import CsvExporter from "components/csv-exporter";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { Donation } from "types/aws";
+import type { Donation } from "types/aws/ap/donations";
 import type { DonationsData } from "./donations-loader";
 import Filter from "./filter";
 import MobileTable from "./mobile-table";

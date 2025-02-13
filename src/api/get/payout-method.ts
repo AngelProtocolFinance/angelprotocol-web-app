@@ -1,4 +1,5 @@
-import type { BankingApplication, V2RecipientAccount } from "types/aws";
+import type { BankingApplication } from "types/applications";
+import type { V2RecipientAccount } from "types/bank-details";
 import { ap, toSearch, ver } from "../api";
 
 export interface BankDetails extends V2RecipientAccount, BankingApplication {}

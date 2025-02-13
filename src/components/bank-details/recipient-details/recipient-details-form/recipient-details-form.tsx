@@ -12,7 +12,11 @@ import { logger } from "helpers";
 import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
-import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";
+import type {
+  Group,
+  V1RecipientAccount,
+  ValidationContent,
+} from "types/bank-details";
 import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
 import { useRequirements } from "../use-requirements";

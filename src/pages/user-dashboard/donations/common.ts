@@ -1,4 +1,4 @@
-import type { Donation } from "types/aws";
+import type { Donation } from "types/aws/ap/donations";
 
 export const lastHeaderName: { [K in Donation.Status]: string } = {
   final: "Receipt",

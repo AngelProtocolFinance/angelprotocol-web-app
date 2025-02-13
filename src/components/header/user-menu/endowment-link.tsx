@@ -3,7 +3,7 @@ import { MenuItem } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
 import Image from "components/image";
 import { appRoutes } from "constants/routes";
-import type { EndowmentBookmark } from "types/aws";
+import type { EndowmentBookmark } from "types/aws/ap";
 import ContentLoader from "../../content-loader";
 
 interface IBookmarkLink extends EndowmentBookmark {}

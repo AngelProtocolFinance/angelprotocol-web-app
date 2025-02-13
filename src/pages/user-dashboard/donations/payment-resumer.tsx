@@ -7,7 +7,7 @@ import { roundDown } from "helpers";
 import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { toast } from "sonner";
-import type { Crypto } from "types/aws";
+import type { Crypto } from "types/aws/common";
 
 interface IQrModal extends Crypto.PaymentStatus {
   orderAmount: number;

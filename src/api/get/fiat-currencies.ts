@@ -1,4 +1,4 @@
-import type { FiatCurrencyData } from "types/aws";
+import type { FiatCurrencyData } from "types/aws/apes/donation";
 import type { DetailedCurrency } from "types/components";
 import { apesUrl } from "../api";
 

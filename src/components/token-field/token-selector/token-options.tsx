@@ -17,7 +17,7 @@ import Fuse from "fuse.js";
 import { logger } from "helpers";
 import { SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
-import type { Crypto } from "types/aws";
+import type { Crypto } from "types/aws/common";
 import type { TokenV2 } from "types/components";
 import Image from "../../image";
 import type { Token } from "../types";

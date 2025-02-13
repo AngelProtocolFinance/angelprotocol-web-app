@@ -5,7 +5,7 @@ import type {
   AccountRequirements,
   CreateRecipientRequest,
   Quote,
-} from "types/aws";
+} from "types/bank-details";
 
 interface Input {
   amount: number;

@@ -4,7 +4,7 @@ import { Info } from "components/status";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { FileSpreadsheet } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { Donation, DonationsPage } from "types/aws";
+import type { Donation, DonationsPage } from "types/aws/ap/donations";
 import type { Ensure } from "types/utils";
 import Table from "./table";
 

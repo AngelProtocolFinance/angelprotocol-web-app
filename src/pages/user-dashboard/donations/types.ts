@@ -1,4 +1,4 @@
-import type { Donation } from "types/aws";
+import type { Donation } from "types/aws/ap/donations";
 
 export type TableProps = {
   donations: Donation.Record[];

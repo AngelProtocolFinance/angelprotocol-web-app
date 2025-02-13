@@ -4,7 +4,7 @@ import Image from "components/image";
 import { ErrorStatus, Info, LoadingStatus } from "components/status";
 import useDebouncer from "hooks/use-debouncer";
 import useSWR from "swr/immutable";
-import type { EndowFundMembersOptionsPage } from "types/aws";
+import type { EndowFundMembersOptionsPage } from "types/aws/ap";
 import type { EndowOption } from "../schema";
 
 interface Props {

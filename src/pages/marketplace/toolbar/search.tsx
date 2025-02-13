@@ -2,7 +2,7 @@ import { useFetcher, useSearchParams } from "@remix-run/react";
 import debounce from "lodash/debounce";
 import { SearchIcon } from "lucide-react";
 import type { ChangeEventHandler } from "react";
-import type { EndowCardsPage } from "types/aws";
+import type { EndowCardsPage } from "types/aws/ap";
 
 export default function Search({ classes = "" }: { classes?: string }) {
   const [params] = useSearchParams();
