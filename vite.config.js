@@ -123,6 +123,7 @@ const rmx = remix({
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
         r("donor", "./pages/informational/donor-info/index.ts");
         r("wp-plugin", "./pages/informational/wp-plugin.tsx");
+        r("zapier-integration","./pages/informational/zapier-integration/index.tsx")
         r("about-us", "./pages/informational/about/index.tsx");
         r("blog", "./pages/blog/posts.tsx");
         r("blog/:slug", "./pages/blog/post.tsx");
