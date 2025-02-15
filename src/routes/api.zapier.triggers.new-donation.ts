@@ -26,8 +26,8 @@ interface Item {
 export const loader: LoaderFunction = async ({ request }) => {
   const result = await validateApiKey(request.headers.get("x-api-key"));
   if (isResponse(result)) return result;
-  const { npoId } = result;
-  const page1 = await getDonations({ asker: npoId, limit: 3 });
+  const { npoId, env } = result;
+  const page1 = await getDonations({ asker: npoId, limit: 3 }, env);
   const items = page1.Items.map((i) => {
     const x: Item = {
       id: i.id,
