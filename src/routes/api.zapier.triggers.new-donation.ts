@@ -54,12 +54,12 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await validateApiKey(request.headers.get("x-api-key"));
   if (isResponse(result)) return result;
 
-  const { npoId } = result;
+  const { npoId, env } = result;
   const data = await request.json();
 
   //subscribe
   if (request.method === "POST") {
-    const id = await saveZapierHookUrl(data.hookUrl, npoId);
+    const id = await saveZapierHookUrl(data.hookUrl, npoId, env);
     return new Response(JSON.stringify({ id }), { status: 200 });
   }
 

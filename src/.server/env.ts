@@ -5,6 +5,7 @@ export const envSchema = v.fallback(
   v.union([v.literal("staging"), v.literal("production")]),
   "staging"
 );
+export type Env = v.InferOutput<typeof envSchema>;
 export const env = v.parse(envSchema, process.env.ENVIRONMENT);
 export const cloudsearchNpoSearchEndpoint = v.parse(
   urlSchema,

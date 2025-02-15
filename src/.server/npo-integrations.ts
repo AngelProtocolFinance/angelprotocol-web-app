@@ -1,11 +1,11 @@
 import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
 import { DeleteCommand, GetCommand, PutCommand, ap } from "./aws/db";
-import { api_encryption_key, env } from "./env";
+import { type Env, api_encryption_key, env } from "./env";
 
 export interface ApiKeyPayload {
   npoId: number;
-  env: string;
+  env: Env;
   timestamp: number;
 }
 
@@ -71,7 +71,8 @@ export const getZapierApiKey = async (
 
 export const saveZapierHookUrl = async (
   hookUrl: string,
-  npoId: number
+  npoId: number,
+  env: Env
 ): Promise<string> => {
   const id = crypto.randomUUID();
   const cmd = new PutCommand({
