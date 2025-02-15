@@ -1,7 +1,7 @@
 import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
 import { DeleteCommand, GetCommand, PutCommand, ap } from "./aws/db";
-import { type Env, api_encryption_key, env } from "./env";
+import { type Env, api_encryption_key, env as nv } from "./env";
 
 export interface ApiKeyPayload {
   npoId: number;
@@ -12,7 +12,7 @@ export interface ApiKeyPayload {
 const encryptionKey = Buffer.from(api_encryption_key, "base64");
 
 export const generateZapierApiKey = async (npoId: number): Promise<string> => {
-  const payload: ApiKeyPayload = { npoId, env, timestamp: Date.now() };
+  const payload: ApiKeyPayload = { npoId, env: nv, timestamp: Date.now() };
 
   const iv = crypto.randomBytes(12);
   const cipher = crypto.createCipheriv("aes-256-gcm", encryptionKey, iv);
@@ -29,7 +29,7 @@ export const generateZapierApiKey = async (npoId: number): Promise<string> => {
     TableName: "api-keys",
     Item: {
       PK: `Zapier#${npoId}`,
-      SK: env,
+      SK: nv,
       apiKey: key,
       ...payload,
     },
@@ -79,7 +79,7 @@ export const saveZapierHookUrl = async (
   const cmd = new PutCommand({
     TableName: "webhooks",
     Item: {
-      PK: `Zapier#${env}#${npoId}`,
+      PK: `Zapier#${environment}#${npoId}`,
       SK: id,
       id,
       npoId,
@@ -91,10 +91,14 @@ export const saveZapierHookUrl = async (
   return id;
 };
 
-export const deleteZapierHookUrl = async (id: string, npoId: number) => {
+export const deleteZapierHookUrl = async (
+  id: string,
+  npoId: number,
+  environment: Env
+) => {
   const cmd = new DeleteCommand({
     TableName: "webhooks",
-    Key: { PK: `Zapier#${env}#${npoId}`, SK: id },
+    Key: { PK: `Zapier#${environment}#${npoId}`, SK: id },
   });
   return ap.send(cmd);
 };
