@@ -6,12 +6,13 @@ import type {
 
 import { tables } from "@better-giving/types/list";
 import { QueryCommand, apes } from "../aws/db";
-import { env } from "../env";
+import { env as nv } from "../env";
 import { askerIsDonor, toItems, toSorted } from "./helpers";
 import type { DBRecord, Index, Key } from "./types";
 
 export const getDonations = async (
-  params: DonationsQueryParamsParsed
+  params: DonationsQueryParamsParsed,
+  environment = nv
 ): Promise<DonationsPage> => {
   const { page = 1, limit = 10, asker, status = "final", ...p } = params;
 
@@ -69,7 +70,7 @@ export const getDonations = async (
         }),
       },
       ExpressionAttributeValues: {
-        ":env": env,
+        ":env": environment,
         ":asker": asker,
         ...(p.startDate && { ":start_date": p.startDate }),
         ...(p.endDate && { ":end_date": p.endDate }),
