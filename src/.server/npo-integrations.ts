@@ -57,13 +57,14 @@ export const decodeApiKey = (apiKey: string): ApiKeyPayload => {
 };
 
 export const getZapierApiKey = async (
-  npoId: number
+  npoId: number,
+  environment: Env
 ): Promise<string | undefined> => {
   const cmd = new GetCommand({
     TableName: "api-keys",
     Key: {
       PK: `Zapier#${npoId}`,
-      SK: env,
+      SK: environment,
     },
   });
   return ap.send(cmd).then((res) => res.Item?.apiKey);
@@ -72,7 +73,7 @@ export const getZapierApiKey = async (
 export const saveZapierHookUrl = async (
   hookUrl: string,
   npoId: number,
-  env: Env
+  environment: Env
 ): Promise<string> => {
   const id = crypto.randomUUID();
   const cmd = new PutCommand({
@@ -82,7 +83,7 @@ export const saveZapierHookUrl = async (
       SK: id,
       id,
       npoId,
-      env,
+      env: environment,
       url: hookUrl,
     },
   });

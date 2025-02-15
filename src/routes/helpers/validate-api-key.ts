@@ -13,7 +13,10 @@ export async function validateApiKey(
   const payload = decodeApiKey(apiKey);
 
   //npoId indeed has api key saved/active
-  const retrieved: string | undefined = await getZapierApiKey(payload.npoId);
+  const retrieved: string | undefined = await getZapierApiKey(
+    payload.npoId,
+    payload.env
+  );
   if (!retrieved) return new Response(null, { status: 404 });
 
   // api key used in this request is the same as the one saved/active

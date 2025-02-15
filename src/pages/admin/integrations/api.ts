@@ -1,6 +1,7 @@
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import { parse } from "valibot";
+import { env } from ".server/env";
 import {
   generateZapierApiKey,
   getZapierApiKey,
@@ -18,6 +19,6 @@ export interface LoaderData {
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = parse(plusInt, params.id);
-  const apiKey = await getZapierApiKey(id);
+  const apiKey = await getZapierApiKey(id, env);
   return { apiKey };
 };
