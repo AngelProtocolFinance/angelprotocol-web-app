@@ -65,7 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   //unsubscribe
   if (request.method === "DELETE") {
-    await deleteZapierHookUrl(data.id, npoId);
+    await deleteZapierHookUrl(data.id, npoId, env);
     return new Response(null, { status: 200 });
   }
 
