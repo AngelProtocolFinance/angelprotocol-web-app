@@ -88,3 +88,4 @@ export const kv_envs = {
 };
 
 export const gemini_api_key = _var("GEMINI_API_KEY");
+export const mongodb_url = _var("MONGODB_URL");
