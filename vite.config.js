@@ -170,6 +170,7 @@ const rmx = remix({
         r("login/reset", "./pages/reset-password/reset-password.tsx");
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
+        r("nonprofit-outreach","./pages/nonprofit-outreach/index.tsx")
         r("donor", "./pages/informational/donor-info/index.ts");
         r("wp-plugin", "./pages/informational/wp-plugin.tsx");
         r(
