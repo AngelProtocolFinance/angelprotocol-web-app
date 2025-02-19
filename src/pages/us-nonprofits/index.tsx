@@ -33,8 +33,7 @@ export default function Component() {
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
         <DonationFormInfo className="mt-60 xl:container xl:mx-auto px-5" />
       </div>
-      <div className="bg-gradient-to-bl from-lilac/50  via-50% via-transparent to-transparent"></div>
-      <div className="mt-48">
+      <div className="pt-56 bg-gradient-to-bl from-lilac/50  via-50% via-transparent to-transparent">
         <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 xl:container xl:mx-auto px-5" />
       </div>
       <Footer classes="mt-20" />
