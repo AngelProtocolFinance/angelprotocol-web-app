@@ -94,7 +94,7 @@
     "swr": "2.3.2",
     "type-fest": "4.20.0",
     "valibot": "0.42.0",
-    "vanilla-cookieconsent": "3.0.1",
+    "vanilla-cookieconsent": "3.1.0",
     "yup": "1.4.0"
   },
   "devDependencies": {
