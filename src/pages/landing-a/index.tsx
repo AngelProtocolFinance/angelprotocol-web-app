@@ -61,8 +61,8 @@ export default function Component() {
       <div className="bg-gradient-to-bl from-lilac/50 via-50% via-transparent to-transparent">
         <Testimonials classes="xl:container xl:mx-auto px-10" />
       </div>
-      <div className="mt-48">
-        <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 xl:container xl:mx-auto px-10" />
+      <div className="my-20 xl:my-40">
+        <BottomCta className="max-w-5xl justify-self-center px-10" />
       </div>
       <Footer />
     </main>
