@@ -35,7 +35,7 @@ export default function Component() {
           observer.observe(node);
         }}
       >
-        <div className="xl:container xl:mx-auto px-5 py-4 flex justify-between items-center">
+        <div className="xl:container xl:mx-auto px-10 py-4 flex justify-between items-center">
           <DappLogo classes="w-48 h-12" />
           <Link
             to={appRoutes.signup}
@@ -47,22 +47,22 @@ export default function Component() {
       </div>
 
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
-        <Top className="xl:container xl:mx-auto px-5 px-10 bg-transparent" />
+        <Top className="xl:container xl:mx-auto px-10 bg-transparent" />
       </div>
       <div className="bg-gradient-to-bl via-transparent via-50% from-peach/50 to-lilac/50">
-        <Brands className="my-20" />
+        <Brands className="my-20 xl:my-56" />
       </div>
       <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
-        <Feature className="xl:container xl:mx-auto px-5" />
+        <Feature className="xl:container xl:mx-auto px-10" />
       </div>
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
-        <DonationFormInfo className="mt-60 xl:container xl:mx-auto px-5" />
+        <DonationFormInfo className="mt-20 xl:mt-60 xl:container xl:mx-auto px-10" />
       </div>
-      <div className="bg-gradient-to-bl from-lilac/50  via-50% via-transparent to-transparent">
+      <div className="bg-gradient-to-bl from-lilac/50 via-50% via-transparent to-transparent">
         <Testimonials />
       </div>
       <div className="mt-48">
-        <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 xl:container xl:mx-auto px-5" />
+        <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 xl:container xl:mx-auto px-10" />
       </div>
       <Footer />
     </main>
