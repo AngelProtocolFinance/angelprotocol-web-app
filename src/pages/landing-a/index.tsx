@@ -62,7 +62,7 @@ export default function Component() {
         <Testimonials classes="xl:container xl:mx-auto px-10" />
       </div>
       <div className="my-20 xl:my-40">
-        <BottomCta className="max-w-5xl justify-self-center px-10" />
+        <BottomCta className="max-w-4xl w-full justify-self-center px-10" />
       </div>
       <Footer />
     </main>
