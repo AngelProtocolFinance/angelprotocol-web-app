@@ -266,6 +266,7 @@ export const useConsent = () => {
 
     cc.run({
       onConsent,
+      onFirstConsent: onConsent,
       categories,
       language: {
         default: "en",
