@@ -102,7 +102,7 @@ const sections: cc.Section[] = [
   {
     title: "Analytics",
     description:
-      "Cookies used for analytics help collect data that allows services to understand how users interact with a particular service. These insights allow services both to improve content and to build better features that improve the user’s experience.",
+      "Cookies used for analytics help collect data that allows services to understand how users interact with a particular service. These insights allow services both to improve content and to build better features that improve the user's experience.",
     linkedCategory: cat.analytics,
     cookieTable: {
       headers: {
@@ -138,7 +138,7 @@ const sections: cc.Section[] = [
   {
     title: "Functionality",
     description:
-      "Cookies used for functionality allow users to interact with a service or site to access features that are fundamental to that service. Things considered fundamental to the service include preferences like the user’s choice of language, product optimizations that help maintain and improve a service, and maintaining information relating to a user’s session, such as the content of a shopping cart.",
+      "Cookies used for functionality allow users to interact with a service or site to access features that are fundamental to that service. Things considered fundamental to the service include preferences like the user's choice of language, product optimizations that help maintain and improve a service, and maintaining information relating to a user's session, such as the content of a shopping cart.",
     linkedCategory: cat.functionality,
   },
   {
@@ -190,6 +190,7 @@ export const useConsent = () => {
       window.dataLayer.push(args);
     }
 
+    // Set initial denied state for all consent types
     gtag("consent", "default", {
       [gas.ad_storage]: "denied",
       [gas.ad_user_data]: "denied",
@@ -201,23 +202,7 @@ export const useConsent = () => {
     });
 
     const onConsent = async () => {
-      //necessary
-      await load("/scripts/intercom.js");
-
-      if (cc.acceptedCategory(cat.tracking)) {
-        await load("/scripts/twitter-conversion-tracking.js");
-        await load("/scripts/meta-pixel.js");
-        await load("/scripts/linkedin-tracking.js");
-        await load("/scripts/hotjar-tracking.js");
-        await load("//js-eu1.hs-scripts.com/24900163.js");
-      }
-
-      //enable gtm if analytics is accepted
-      if (cc.acceptedCategory(cat.analytics)) {
-        await load("/scripts/gtm-init.js");
-      }
-
-      //consent for each service
+      // Update consent state before loading any scripts
       gtag("consent", "update", {
         [gas.ad_storage]: cc.acceptedService(gas.ad_storage, cat.advertisement)
           ? "granted"
@@ -259,6 +244,21 @@ export const useConsent = () => {
           ? "granted"
           : "denied",
       });
+
+      // Load necessary scripts after consent update
+      await load("/scripts/intercom.js");
+
+      if (cc.acceptedCategory(cat.tracking)) {
+        await load("/scripts/twitter-conversion-tracking.js");
+        await load("/scripts/meta-pixel.js");
+        await load("/scripts/linkedin-tracking.js");
+        await load("/scripts/hotjar-tracking.js");
+        await load("//js-eu1.hs-scripts.com/24900163.js");
+      }
+
+      if (cc.acceptedCategory(cat.analytics)) {
+        await load("/scripts/gtm-init.js");
+      }
     };
 
     if (import.meta.env.VITE_ENVIRONMENT !== "production") return;
