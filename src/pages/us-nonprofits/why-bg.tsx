@@ -65,10 +65,10 @@ function ListItem(props: TListItem) {
       <h5 className="text-center font-body font-medium text-2xl text-navy">
         {props.title1}
       </h5>
-      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-navy-l1 mb-4">
+      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-gray mb-4">
         {props.title2}
       </h6>
-      <p className="pt-4 text-center @6xl:text-lg text-navy-l3 border-t-[3px] border-blue-d1 ">
+      <p className="pt-4 text-center @6xl:text-lg text-gray border-t-[3px] border-blue-d1 ">
         {props.description}
       </p>
     </li>

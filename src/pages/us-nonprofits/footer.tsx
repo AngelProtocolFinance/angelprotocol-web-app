@@ -34,29 +34,26 @@ export function Footer({ classes = "" }: Props) {
 
         <div className="xl:@container/links xl:w-full justify-self-center">
           <div className="grid grid-cols-2 @md/links:grid-cols-[auto_auto_auto] content-center gap-4 w-full @md:pl-20 xl:pl-0">
-            <Link
-              className="underline text-navy-l1"
-              to={appRoutes.privacy_policy}
-            >
+            <Link className="underline text-gray" to={appRoutes.privacy_policy}>
               Privacy Policy
             </Link>
-            <Link className="underline text-navy-l1" to="#">
+            <Link className="underline text-gray" to="#">
               Security
             </Link>
             <Link
-              className="underline text-navy-l1 @sm/links:text-nowrap order-5 @md/links:order-none "
+              className="underline text-gray @sm/links:text-nowrap order-5 @md/links:order-none "
               to={appRoutes.terms_donors}
             >
               Terms of Use (Donors)
             </Link>
-            <Link className="underline text-navy-l1" to={appRoutes.about}>
+            <Link className="underline text-gray" to={appRoutes.about}>
               About Us
             </Link>
-            <a className="underline text-navy-l1" href={INTERCOM_HELP}>
+            <a className="underline text-gray" href={INTERCOM_HELP}>
               FAQs
             </a>
             <Link
-              className="underline text-navy-l1 @sm/links:text-nowrap"
+              className="underline text-gray @sm/links:text-nowrap"
               to={appRoutes.terms_nonprofits}
             >
               Terms of Use (Nonprofits)
