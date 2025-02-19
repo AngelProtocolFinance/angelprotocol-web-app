@@ -15,7 +15,7 @@ const cat = {
   functionality: "functionality",
   security: "security",
   tracking: "tracking",
-};
+} as const;
 
 const gas = {
   ad_storage: "ad_storage",
@@ -25,7 +25,7 @@ const gas = {
   functionality_storage: "functionality_storage",
   personalization_storage: "personalization_storage",
   security_storage: "security_storage",
-};
+} as const;
 
 const categories: { [name: string]: cc.Category } = {
   [cat.necessary]: {
@@ -185,66 +185,25 @@ const load = (url: string) => {
 
 export const useConsent = () => {
   useEffect(() => {
-    //init data layer
+    if (import.meta.env.VITE_ENVIRONMENT !== "production") return;
+    if (window.location.pathname.startsWith("/donate-widget")) return;
+
+    // Initialize dataLayer
     window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
-    }
 
-    // Set default consent to 'denied' as a placeholder
-    gtag("consent", "default", {
-      [gas.ad_storage]: "denied",
-      [gas.ad_user_data]: "denied",
-      [gas.ad_personalization]: "denied",
-      [gas.analytics_storage]: "denied",
-      [gas.functionality_storage]: "denied",
-      [gas.personalization_storage]: "denied",
-      [gas.security_storage]: "denied",
-    });
-
-    const onConsent = async () => {
-      // Update consent state using dataLayer.push for GTM
-      // Update consent state
-      gtag("consent", "update", {
-        [gas.ad_storage]: cc.acceptedService(gas.ad_storage, cat.advertisement)
-          ? "granted"
-          : "denied",
-        [gas.ad_user_data]: cc.acceptedService(
-          gas.ad_user_data,
-          cat.advertisement
-        )
-          ? "granted"
-          : "denied",
-        [gas.ad_personalization]: cc.acceptedService(
-          gas.ad_personalization,
-          cat.advertisement
-        )
-          ? "granted"
-          : "denied",
-        [gas.analytics_storage]: cc.acceptedService(
-          gas.analytics_storage,
-          cat.analytics
-        )
-          ? "granted"
-          : "denied",
-        [gas.functionality_storage]: cc.acceptedService(
-          gas.functionality_storage,
-          cat.functionality
-        )
-          ? "granted"
-          : "denied",
-        [gas.personalization_storage]: cc.acceptedService(
-          gas.personalization_storage,
-          cat.functionality
-        )
-          ? "granted"
-          : "denied",
-        [gas.security_storage]: cc.acceptedService(
-          gas.security_storage,
-          cat.security
-        )
-          ? "granted"
-          : "denied",
+    const onConsentChange = async () => {
+      // Push consent update to dataLayer for GTM
+      window.dataLayer.push({
+        event: "consent_update",
+        cookie_consent: {
+          analytics: cc.acceptedService(gas.analytics_storage, cat.analytics),
+          advertising: cc.acceptedService(gas.ad_storage, cat.advertisement),
+          functionality: cc.acceptedService(
+            gas.functionality_storage,
+            cat.functionality
+          ),
+          security: cc.acceptedService(gas.security_storage, cat.security),
+        },
       });
 
       await load("/scripts/intercom.js");
@@ -262,14 +221,8 @@ export const useConsent = () => {
       }
     };
 
-    if (import.meta.env.VITE_ENVIRONMENT !== "production") return;
-    if (window.location.pathname.startsWith("/donate-widget")) return;
-
     cc.run({
-      onConsent,
-      onFirstConsent: onConsent,
       categories,
-      autoShow: true,
       language: {
         default: "en",
         translations: {
@@ -279,6 +232,9 @@ export const useConsent = () => {
           },
         },
       },
+      onFirstConsent: onConsentChange,
+      onConsent: onConsentChange,
+      autoShow: true,
     });
   }, []);
 };
