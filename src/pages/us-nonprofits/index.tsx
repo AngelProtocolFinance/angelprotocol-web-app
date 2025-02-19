@@ -22,7 +22,7 @@ export default function Component() {
         <DappLogo classes="w-48 h-12" />
       </div>
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
-        <Top className="xl:container xl:mx-auto px-5 px-10 bg-transparent" />
+        <Top className="xl:container xl:mx-auto px-5 bg-transparent" />
       </div>
       <div className="bg-gradient-to-bl via-transparent via-50% from-peach/50 to-lilac/50">
         <Brands className="my-20 md:my-44" />
