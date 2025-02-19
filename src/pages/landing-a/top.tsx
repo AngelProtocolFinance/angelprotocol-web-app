@@ -5,25 +5,35 @@ import { ArrowRight } from "lucide-react";
 export function Top({ className = "" }) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-2 pt-12 pb-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1 grid">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
           Setup Today, Grow Forever
         </h4>
-        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-6xl @6xl:leading-tight text-balance mb-4 text-gray-d4">
+        <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-gray-d4">
           Simplify Fundraising, Maximize Impact
         </h1>
         <p className="text-lg @6xl:text-xl text-center @6xl:text-left">
-          Accept donations seamlessly—whether it’s credit card, crypto, stock,
-          or DAF gifts—while paying zero platform fees. Simplify administration
-          with automated tax reporting, customizable forms, and grow your funds
-          sustainably with high-yield savings and investment options.
+          Better Giving streamlines donations, simplifies administration, and
+          helps your nonprofit grow its funds—all through an easily embeddable
+          donation form.
         </p>
-        <p className="mb-10 mt-4 text-lg @6xl:text-xl text-center @6xl:text-left">
-          Your free Better Giving donation Page is ready to receive donations
-          and ready for you to claim! Start your journey today.
-        </p>
+        <ul className="pl-5 my-4 text-lg @6xl:text-xl space-y-4 text-center @6xl:text-left list-disc list-outside">
+          <li>
+            Accept donations seamlessly: credit card, crypto, stock, and DAF
+            gifts —
+            <span className="font-bold">Zero&nbsp;Platform&nbsp;Fees</span>.
+          </li>
+          <li>
+            Simplify operations with automated tax reporting and customizable
+            forms.
+          </li>
+          <li>
+            Grow funds sustainably with high-yield savings and investment
+            options.
+          </li>
+        </ul>
 
         <button
           type="button"
@@ -40,9 +50,9 @@ export function Top({ className = "" }) {
       </div>
       <Image
         src={benefits.donors[1].img}
-        width={600}
-        height={600}
-        className="rounded-full order-1 @6xl:order-2 w-96 @6xl:w-auto shadow-2xl shadow-black/20"
+        width={500}
+        height={500}
+        className="rounded-full self-center order-1 @6xl:order-2 w-96 @6xl:w-auto shadow-2xl shadow-black/20"
       />
     </section>
   );

@@ -18,7 +18,7 @@ const Testimonials = () => {
   });
 
   return (
-    <div className="grid relative pt-48 bg-linear-to-b from-peach/20 to-transparent overflow-x-clip">
+    <div className="grid relative pt-48">
       <img
         src={quotation}
         alt="quotation mark"

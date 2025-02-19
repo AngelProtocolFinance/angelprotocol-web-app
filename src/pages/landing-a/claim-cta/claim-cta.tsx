@@ -1,6 +1,5 @@
-import type { EndowClaim } from "@better-giving/registration/models";
 import { Link } from "@remix-run/react";
-import { appRoutes } from "constants/routes";
+import { appRoutes, regRoutes } from "constants/routes";
 import { useState } from "react";
 import type { EndowmentOption } from "types/npo";
 import { EndowSelector } from "./endow-selector";
@@ -14,16 +13,7 @@ export function ClaimCta({ classes = "" }) {
         onChange={setEndow}
       />
       <Link
-        state={
-          endow
-            ? ({
-                id: endow?.id,
-                name: endow?.name,
-                ein: endow?.registration_number,
-              } satisfies EndowClaim)
-            : undefined
-        }
-        to={`${appRoutes.register}/welcome`}
+        to={`${appRoutes.register}/${regRoutes.welcome}?claim=${endow?.registration_number}`}
         aria-disabled={!endow?.id}
         className="h-full flex items-center text-sm uppercase font-bold font-heading bg-blue-d1 text-white shadow-xl enabled:active:translate-x-1 hover:bg-blue-d2 rounded-full px-6 py-2 aria-disabled:bg-gray"
       >
