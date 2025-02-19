@@ -11,7 +11,7 @@ export function Top({ className = "" }) {
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
           Setup Today, Grow Forever
         </h4>
-        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-6xl @6xl:leading-tight text-balance mb-4 text-navy-d4">
+        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-6xl @6xl:leading-tight text-balance mb-4 text-gray-d4">
           Simplify Fundraising, Maximize Impact
         </h1>
         <p className="text-lg @6xl:text-xl text-center @6xl:text-left">
@@ -50,7 +50,7 @@ export function Top({ className = "" }) {
 
 function Tooltip({ className = "" }) {
   return (
-    <span className={`text-navy-d4 ${className}`}>
+    <span className={`text-gray-d4 ${className}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="82"
@@ -63,7 +63,7 @@ function Tooltip({ className = "" }) {
           fill="#183244"
         />
       </svg>
-      <p className="text-navy-d4 translate-x-12 -rotate-[12deg] font-gochi text-nowrap">
+      <p className="text-gray-d4 translate-x-12 -rotate-[12deg] font-gochi text-nowrap">
         It’s totally free!
       </p>
     </span>

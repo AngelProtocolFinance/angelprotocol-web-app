@@ -35,30 +35,30 @@ export function Footer({ classes = "" }: Props) {
 
       <div className="justify-self-center 2xl:justify-self-start order-3 2xl:order-2 max-2xl:col-span-full grid max-2xl:justify-items-center">
         <Socials classes="order-3 2xl:order-1 max-2xl:mt-4" />
-        <div className="flex items-center max-2xl:justify-center flex-wrap 2xl:divide-x divide-navy-l1 my-2 order-2">
+        <div className="flex items-center max-2xl:justify-center flex-wrap 2xl:divide-x divide-gray my-2 order-2">
           <Link
-            className="underline pr-2 text-navy-l1"
+            className="underline pr-2 text-gray"
             to={appRoutes.privacy_policy}
           >
             Privacy Policy
           </Link>
-          <Link className="underline px-2 text-navy-l1" to="#">
+          <Link className="underline px-2 text-gray" to="#">
             Security
           </Link>
           <Link
-            className="underline px-2 text-navy-l1 @sm/links:text-nowrap order-5 @md/links:order-none "
+            className="underline px-2 text-gray @sm/links:text-nowrap order-5 @md/links:order-none "
             to={appRoutes.terms_donors}
           >
             Terms of Use (Donors)
           </Link>
-          <Link className="underline px-2 text-navy-l1" to={appRoutes.about}>
+          <Link className="underline px-2 text-gray" to={appRoutes.about}>
             About Us
           </Link>
-          <a className="underline px-2 text-navy-l1" href={INTERCOM_HELP}>
+          <a className="underline px-2 text-gray" href={INTERCOM_HELP}>
             FAQs
           </a>
           <Link
-            className="underline px-2 text-navy-l1 @sm/links:text-nowrap"
+            className="underline px-2 text-gray @sm/links:text-nowrap"
             to={appRoutes.terms_nonprofits}
           >
             Terms of Use (Nonprofits)
@@ -74,9 +74,7 @@ export function Footer({ classes = "" }: Props) {
 
 function Copyright({ classes = "" }) {
   return (
-    <p
-      className={`text-[0.93rem] flex max-xl:flex-col text-navy-l1 ${classes}`}
-    >
+    <p className={`text-[0.93rem] flex max-xl:flex-col text-gray ${classes}`}>
       <span>
         © Copyright {new Date().getFullYear()} {APP_NAME}
       </span>

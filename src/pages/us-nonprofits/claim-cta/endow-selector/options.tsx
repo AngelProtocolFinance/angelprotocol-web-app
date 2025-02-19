@@ -48,7 +48,7 @@ export function Options({ searchText }: Props) {
             ? `${searchText} not found or already claimed`
             : "not found or already claimed",
         }}
-        classes={{ container: "w-full p-2 text-navy-l1" }}
+        classes={{ container: "w-full p-2 text-gray" }}
       >
         {(endowments) => (
           <>
