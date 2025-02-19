@@ -35,11 +35,11 @@ export default function Component() {
           observer.observe(node);
         }}
       >
-        <div className="xl:container xl:mx-auto px-10 py-4 flex justify-between items-center">
+        <div className="xl:container xl:mx-auto px-10 py-4 flex justify-between gap-x-4 items-center">
           <DappLogo classes="w-48 h-12" />
           <Link
             to={appRoutes.signup}
-            className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
+            className="btn btn-blue max-xl:text-sm normal-case text-nowrap px-6 py-2 rounded-full"
           >
             Sign up
           </Link>
@@ -59,7 +59,7 @@ export default function Component() {
         <DonationFormInfo className="mt-20 xl:mt-60 xl:container xl:mx-auto px-10" />
       </div>
       <div className="bg-gradient-to-bl from-lilac/50 via-50% via-transparent to-transparent">
-        <Testimonials />
+        <Testimonials classes="xl:container xl:mx-auto px-10" />
       </div>
       <div className="mt-48">
         <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 xl:container xl:mx-auto px-10" />

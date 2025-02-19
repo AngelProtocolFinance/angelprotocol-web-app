@@ -4,7 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import TestimonialCard from "./testimonial-card";
 
-const Testimonials = () => {
+const Testimonials = ({ classes = "" }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
@@ -18,17 +18,17 @@ const Testimonials = () => {
   });
 
   return (
-    <div className="grid relative pt-48">
+    <div className={`grid relative pt-48 ${classes}`}>
       <img
         src={quotation}
         alt="quotation mark"
         className="justify-self-center w-24 lg:w-36 mb-8"
       />
-      <h3 className="text-center text-3xl/tight md:text-4.5xl/tight text-pretty justify-self-center mb-14">
+      <h3 className="px-5 text-center text-3xl/tight md:text-4.5xl/tight text-pretty justify-self-center mb-14">
         Nonprofit Success Stories: <br /> Inspiring Change Together
       </h3>
 
-      <div className="relative w-[90vw] lg:w-[80vw] mx-auto">
+      <div className="relative">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex">
             {testimonials.map((testimonial, index) => (
