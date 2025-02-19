@@ -35,14 +35,17 @@ export function Footer({ classes = "" }: Props) {
 
       <div className="justify-self-center 2xl:justify-self-start order-3 2xl:order-2 max-2xl:col-span-full grid max-2xl:justify-items-center">
         <Socials classes="order-3 2xl:order-1 max-2xl:mt-4" />
-        <div className="flex items-center max-2xl:justify-center flex-wrap 2xl:divide-x divide-gray my-2 order-2">
+        <div className="flex items-center max-2xl:justify-center flex-wrap my-2 order-2">
           <Link
-            className="underline pr-2 text-gray"
+            className="underline pr-2 text-gray 2xl:border-r border-gray"
             to={appRoutes.privacy_policy}
           >
             Privacy Policy
           </Link>
-          <Link className="underline px-2 text-gray" to="#">
+          <Link
+            className="underline px-2 text-gray 2xl:border-r border-gray"
+            to="#"
+          >
             Security
           </Link>
           <Link
@@ -51,14 +54,20 @@ export function Footer({ classes = "" }: Props) {
           >
             Terms of Use (Donors)
           </Link>
-          <Link className="underline px-2 text-gray" to={appRoutes.about}>
+          <Link
+            className="underline px-2 text-gray 2xl:border-r border-gray"
+            to={appRoutes.about}
+          >
             About Us
           </Link>
-          <a className="underline px-2 text-gray" href={INTERCOM_HELP}>
+          <a
+            className="underline px-2 text-gray 2xl:border-r border-gray"
+            href={INTERCOM_HELP}
+          >
             FAQs
           </a>
           <Link
-            className="underline px-2 text-gray @sm/links:text-nowrap"
+            className="underline px-2 text-gray 2xl:border-r border-gray @sm/links:text-nowrap"
             to={appRoutes.terms_nonprofits}
           >
             Terms of Use (Nonprofits)
