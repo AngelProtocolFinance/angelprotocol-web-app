@@ -20,6 +20,8 @@ const rmx = remix({
       r("donate/:id", "./pages/donate/index.tsx");
       r("donate-fund/:fundId", "./pages/donate-fund/index.tsx");
       r("donate-thanks", "./pages/donate-thanks.tsx");
+      r("us-nonprofits","./pages/us-nonprofits/index.tsx")
+      r("us-nonprofits-b","./pages/us-nonprofits-b/index.tsx")
       r("form-builder", "./pages/widget/form-builder-layout.tsx", () => {
         r("", "./pages/widget/index.ts", {
           index: true,

@@ -2,11 +2,9 @@ import { brands } from "content/brands";
 
 export function Brands({ className = "" }) {
   return (
-    <section
-      className={`grid content-start gap-14 bg-gradient-to-b from-transparent to-peach/20 ${className}`}
-    >
-      <h2 className="text-3xl/tight md:text-4.5xl/tight text-gray-d4 px-8 text-center max-w-lg mx-auto text-balance">
-        Over $6M raised for nonprofits worldwide
+    <section className={`${className} grid`}>
+      <h2 className="text-center text-3xl/tight md:text-4.5xl/tight text-navy-d4 text-pretty mb-16 px-4 capitalize">
+        Over $6 million donations <br /> processed for nonprofits worldwide
       </h2>
       <div className="flex items-center flex-wrap justify-center gap-4 xl:container xl:mx-auto px-5">
         {brands.map((b, idx) => (
@@ -22,3 +20,5 @@ export function Brands({ className = "" }) {
     </section>
   );
 }
+
+export default Brands;

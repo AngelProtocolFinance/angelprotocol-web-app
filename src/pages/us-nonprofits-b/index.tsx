@@ -1,16 +1,23 @@
-import { DappLogo } from "components/Image";
-import Seo from "components/Seo";
+import { Link } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
+import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
-import { Horizontal } from "pages/@sections/testimonials";
-import { Link } from "react-router-dom";
+import { metas } from "helpers/seo";
 import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 import { DonationFormInfo } from "./donation-form-info";
 import { Feature } from "./feature";
 import { Footer } from "./footer";
+import Testimonials from "./testimonials";
 import { Top } from "./top";
 
-export function Component() {
+export const meta: MetaFunction = () =>
+  metas({
+    title: "US Nonprofits",
+    description:
+      "Simplify Fundraising, Maximize Impact: Claim Your Better Giving Account Today",
+  });
+export default function Component() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <div
@@ -28,7 +35,7 @@ export function Component() {
           observer.observe(node);
         }}
       >
-        <div className="padded-container py-4 flex justify-between items-center">
+        <div className="xl:container xl:mx-auto px-5 py-4 flex justify-between items-center">
           <DappLogo classes="w-48 h-12" />
           <Link
             to={appRoutes.signup}
@@ -38,34 +45,24 @@ export function Component() {
           </Link>
         </div>
       </div>
-      <Seo
-        title="US Nonprofits"
-        description="Simplify Fundraising, Maximize Impact: Claim Your Better Giving Account Today"
-      />
+
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
-        <Top className="padded-container px-10 bg-transparent" />
+        <Top className="xl:container xl:mx-auto px-5 px-10 bg-transparent" />
       </div>
       <div className="bg-gradient-to-bl via-transparent via-50% from-peach/50 to-lilac/50">
         <Brands className="my-20" />
       </div>
       <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
-        <Feature className="padded-container" />
+        <Feature className="xl:container xl:mx-auto px-5" />
       </div>
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
-        <DonationFormInfo className="mt-60 padded-container" />
+        <DonationFormInfo className="mt-60 xl:container xl:mx-auto px-5" />
       </div>
       <div className="bg-gradient-to-bl from-lilac/50  via-50% via-transparent to-transparent">
-        <Horizontal
-          heading="Nonprofit Success Stories"
-          classes={{
-            container: "mt-56 padded-container",
-            quote: "w-20",
-            heading: "text-2xl",
-          }}
-        />
+        <Testimonials />
       </div>
       <div className="mt-48">
-        <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 padded-container" />
+        <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 xl:container xl:mx-auto px-5" />
       </div>
       <Footer />
     </main>

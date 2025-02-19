@@ -1,5 +1,5 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/Image";
+import Image from "components/image";
 
 type TListItem = {
   title1: string;

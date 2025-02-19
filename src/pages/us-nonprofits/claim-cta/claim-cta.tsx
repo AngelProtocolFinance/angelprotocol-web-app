@@ -1,8 +1,8 @@
 import type { EndowClaim } from "@better-giving/registration/models";
+import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import type { EndowmentOption } from "types/aws";
+import type { EndowmentOption } from "types/npo";
 import { EndowSelector } from "./endow-selector";
 
 export function ClaimCta({ classes = "" }) {

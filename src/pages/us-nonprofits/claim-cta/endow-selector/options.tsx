@@ -1,19 +1,33 @@
+import type { EndowsPage } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import Image from "components/Image";
-import QueryLoader from "components/QueryLoader";
-import { useEndowmentOptionsQuery } from "services/aws/aws";
+import Image from "components/image";
+import QueryLoader from "components/query-loader";
+import useDebouncer from "hooks/use-debouncer";
+import useSWR from "swr/immutable";
 
 type Props = {
   searchText: string;
-  isDebouncing?: boolean;
 };
 
-export function Options({ searchText, isDebouncing = false }: Props) {
-  const queryState = useEndowmentOptionsQuery({
+const fields = ["id", "name", "card_img", "registration_number"] as const;
+type Field = (typeof fields)[number];
+
+const fetcher = async (path: string) =>
+  fetch(path).then<EndowsPage<Field>>((res) => res.json());
+
+export function Options({ searchText }: Props) {
+  const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 200);
+
+  const params = {
+    query: debouncedSearchText,
     page: "1",
-    query: searchText,
     claimed: "false",
-  });
+    fields: fields.join(","),
+  };
+  const endows = useSWR(
+    `/api/npos?${new URLSearchParams(params).toString()}`,
+    fetcher
+  );
 
   return (
     <ComboboxOptions
@@ -22,8 +36,10 @@ export function Options({ searchText, isDebouncing = false }: Props) {
     >
       <QueryLoader
         queryState={{
-          ...queryState,
-          isLoading: queryState.isLoading || isDebouncing,
+          isLoading: endows.isLoading || isDebouncing,
+          isFetching: endows.isValidating,
+          isError: !!endows.error,
+          data: endows.data?.items,
         }}
         messages={{
           loading: searchText ? "searching..." : "loading nonprofit...",

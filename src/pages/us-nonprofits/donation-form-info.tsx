@@ -1,6 +1,6 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/Image";
 import { StepsCarousel } from "components/donation";
+import Image from "components/image";
 
 type TListItem = {
   title: string;

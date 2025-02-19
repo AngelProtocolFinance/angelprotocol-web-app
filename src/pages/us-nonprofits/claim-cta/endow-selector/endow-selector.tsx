@@ -1,9 +1,8 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
-import { DrawerIcon } from "components/Icon";
-import useDebouncer from "hooks/useDebouncer";
+import { DrawerIcon } from "components/icon";
 import { SearchIcon } from "lucide-react";
 import { forwardRef, useState } from "react";
-import type { EndowmentOption } from "types/aws";
+import type { EndowmentOption } from "types/npo";
 import { Options } from "./options";
 
 interface Props {
@@ -17,7 +16,6 @@ type El = HTMLInputElement;
 
 export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
   const [searchText, setSearchText] = useState("");
-  const [debouncedQuery, isDebouncing] = useDebouncer(searchText, 500);
 
   return (
     <Combobox
@@ -51,7 +49,7 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
         )}
       </ComboboxButton>
 
-      <Options searchText={debouncedQuery} isDebouncing={isDebouncing} />
+      <Options searchText={searchText} />
       {props.error && (
         <span className="field-error" data-error>
           {props.error}
