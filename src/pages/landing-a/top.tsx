@@ -35,7 +35,7 @@ export function Top({ className = "" }) {
           </li>
         </ul>
 
-        <div className="mt-8 isolate z-10 justify-self-center relative">
+        <div className="mt-8 isolate z-10 justify-self-center @6xl:justify-self-start relative">
           <button
             type="button"
             onClick={async () => {
@@ -54,7 +54,7 @@ export function Top({ className = "" }) {
         src={benefits.donors[1].img}
         width={500}
         height={500}
-        className="rounded-full self-center order-1 @6xl:order-2 w-96 @6xl:w-auto shadow-2xl shadow-black/20"
+        className="rounded-full justify-self-center self-center order-1 @6xl:order-2 w-96 @6xl:w-auto shadow-2xl shadow-black/20"
       />
     </section>
   );
