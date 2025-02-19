@@ -35,16 +35,16 @@ const items: TListItem[] = [
 export function Feature({ className = "" }) {
   return (
     <section
-      className={`${className} pt-10 pb-20 lg:pb-0 lg:grid-cols-2 grid content-start`}
+      className={`${className} pt-10 pb-20 lg:pb-0 lg:grid-cols-2 lg:gap-10 grid content-start`}
     >
       <div className="self-center max-lg:contents">
-        <h2 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
+        <h2 className="text-sm md:text-lg text-blue-d1 max-lg:text-center mb-4">
           Easy as 1-2-3
         </h2>
-        <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
+        <h3 className="max-lg:text-center text-3xl md:text-4.5xl text-balance mb-6 max-lg:px-4">
           How Better Giving Works
         </h3>
-        <p className="text-gray px-10 text-center mb-2 text-xl">
+        <p className="text-gray max-lg:px-10 max-lg:text-center mb-2 text-xl">
           Discover how easy it is to boost your nonprofit’s donations and
           achieve long-term financial sustainability.
         </p>
