@@ -29,7 +29,8 @@ export interface EndowCardsPage
   // "endow_designation"
   // "kyc_donors_only"
 }
-export interface EndowOptionsPage extends EndowsPage<"id" | "name"> {}
+export interface EndowOptionsPage
+  extends EndowsPage<"id" | "name" | "registration_number"> {}
 export interface EndowFundMembersOptionsPage
   extends EndowsPage<"id" | "name" | "card_img"> {}
 

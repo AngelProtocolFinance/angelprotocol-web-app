@@ -1,12 +1,10 @@
-import Image from "components/Image";
+import { Link } from "@remix-run/react";
+import Image from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
-import { useRendered } from "hooks/use-rendered";
-import { Link } from "react-router-dom";
 
 export function Top({ className = "" }) {
-  useRendered();
   return (
     <section
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-2 py-24`}

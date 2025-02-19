@@ -1,10 +1,8 @@
-import Image from "components/Image";
+import Image from "components/image";
 import { benefits } from "content/benefits";
-import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
 
 export function Top({ className = "" }) {
-  useRendered();
   return (
     <section
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
