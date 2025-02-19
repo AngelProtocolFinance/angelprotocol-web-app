@@ -4,7 +4,6 @@ import * as cc from "vanilla-cookieconsent";
 declare global {
   interface Window {
     dataLayer: any[];
-    gtag: (...args: any[]) => void;
   }
 }
 
@@ -163,6 +162,7 @@ const consent: cc.ConsentModalOptions = {
   acceptNecessaryBtn: "Reject all",
   showPreferencesBtn: "Manage Individual preferences",
 };
+
 const preference: cc.PreferencesModalOptions = {
   title: "Manage cookie preferences",
   acceptAllBtn: "Accept all",
@@ -186,66 +186,73 @@ export const useConsent = () => {
   useEffect(() => {
     //init data layer
     window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
-    }
 
-    // Set initial denied state for all consent types
-    gtag("consent", "default", {
-      [gas.ad_storage]: "denied",
-      [gas.ad_user_data]: "denied",
-      [gas.ad_personalization]: "denied",
-      [gas.analytics_storage]: "denied",
-      [gas.functionality_storage]: "denied",
-      [gas.personalization_storage]: "denied",
-      [gas.security_storage]: "denied",
-    });
+    // Set default consent state using dataLayer.push array syntax for GTM
+    window.dataLayer.push([
+      "consent",
+      "default",
+      {
+        [gas.ad_storage]: "denied",
+        [gas.ad_user_data]: "denied",
+        [gas.ad_personalization]: "denied",
+        [gas.analytics_storage]: "denied",
+        [gas.functionality_storage]: "denied",
+        [gas.personalization_storage]: "denied",
+        [gas.security_storage]: "denied",
+      },
+    ]);
 
     const onConsent = async () => {
-      // Update consent state before loading any scripts
-      gtag("consent", "update", {
-        [gas.ad_storage]: cc.acceptedService(gas.ad_storage, cat.advertisement)
-          ? "granted"
-          : "denied",
-        [gas.ad_user_data]: cc.acceptedService(
-          gas.ad_user_data,
-          cat.advertisement
-        )
-          ? "granted"
-          : "denied",
-        [gas.ad_personalization]: cc.acceptedService(
-          gas.ad_personalization,
-          cat.advertisement
-        )
-          ? "granted"
-          : "denied",
-        [gas.analytics_storage]: cc.acceptedService(
-          gas.analytics_storage,
-          cat.analytics
-        )
-          ? "granted"
-          : "denied",
-        [gas.functionality_storage]: cc.acceptedService(
-          gas.functionality_storage,
-          cat.functionality
-        )
-          ? "granted"
-          : "denied",
-        [gas.personalization_storage]: cc.acceptedService(
-          gas.personalization_storage,
-          cat.functionality
-        )
-          ? "granted"
-          : "denied",
-        [gas.security_storage]: cc.acceptedService(
-          gas.security_storage,
-          cat.security
-        )
-          ? "granted"
-          : "denied",
-      });
+      // Update consent state using dataLayer.push for GTM
+      window.dataLayer.push([
+        "consent",
+        "update",
+        {
+          [gas.ad_storage]: cc.acceptedService(
+            gas.ad_storage,
+            cat.advertisement
+          )
+            ? "granted"
+            : "denied",
+          [gas.ad_user_data]: cc.acceptedService(
+            gas.ad_user_data,
+            cat.advertisement
+          )
+            ? "granted"
+            : "denied",
+          [gas.ad_personalization]: cc.acceptedService(
+            gas.ad_personalization,
+            cat.advertisement
+          )
+            ? "granted"
+            : "denied",
+          [gas.analytics_storage]: cc.acceptedService(
+            gas.analytics_storage,
+            cat.analytics
+          )
+            ? "granted"
+            : "denied",
+          [gas.functionality_storage]: cc.acceptedService(
+            gas.functionality_storage,
+            cat.functionality
+          )
+            ? "granted"
+            : "denied",
+          [gas.personalization_storage]: cc.acceptedService(
+            gas.personalization_storage,
+            cat.functionality
+          )
+            ? "granted"
+            : "denied",
+          [gas.security_storage]: cc.acceptedService(
+            gas.security_storage,
+            cat.security
+          )
+            ? "granted"
+            : "denied",
+        },
+      ]);
 
-      // Load necessary scripts after consent update
       await load("/scripts/intercom.js");
 
       if (cc.acceptedCategory(cat.tracking)) {
@@ -268,6 +275,7 @@ export const useConsent = () => {
       onConsent,
       onFirstConsent: onConsent,
       categories,
+      autoShow: true,
       language: {
         default: "en",
         translations: {
