@@ -35,22 +35,24 @@ const items: TListItem[] = [
 export function Feature({ className = "" }) {
   return (
     <section
-      className={`${className} pt-10 pb-20 lg:pb-0 grid content-start bg-linear-to-b from-transparent to-peach/20`}
+      className={`${className} pt-10 pb-20 lg:pb-0 lg:grid-cols-2 grid content-start bg-linear-to-b from-transparent to-peach/20`}
     >
-      <h2 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
-        Easy as 1-2-3
-      </h2>
-      <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
-        How Better Giving Works
-      </h3>
-      <p className="text-gray px-10 text-center mb-2 text-xl">
-        Discover how easy it is to boost your nonprofit’s donations and achieve
-        long-term financial sustainability.
-      </p>
+      <div className="self-center max-lg:contents">
+        <h2 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
+          Easy as 1-2-3
+        </h2>
+        <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
+          How Better Giving Works
+        </h3>
+        <p className="text-gray px-10 text-center mb-2 text-xl">
+          Discover how easy it is to boost your nonprofit’s donations and
+          achieve long-term financial sustainability.
+        </p>
+      </div>
 
       <AboutVideo classes="max-w-2xl justify-self-center p-4" />
 
-      <ul className="mt-20 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
+      <ul className="col-span-full mt-10 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}
