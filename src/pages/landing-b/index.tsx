@@ -3,7 +3,7 @@ import type { MetaFunction } from "@vercel/remix";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
-// import { BottomCta } from "./bottom-cta";
+import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 // import { DonationFormInfo } from "./donation-form-info";
 import { Feature } from "./feature";
@@ -62,11 +62,8 @@ export default function Component() {
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
         <ProbSol className="xl:container xl:mx-auto px-10 pt-40" />
       </div>
-      <div className="bg-gradient-to-bl from-lilac/50 via-50% via-transparent to-transparent">
-        {/* <Testimonials classes="xl:container xl:mx-auto px-10" /> */}
-      </div>
-      <div className="my-20 xl:my-40">
-        {/* <BottomCta className="max-w-4xl w-full justify-self-center px-10" /> */}
+      <div className="bg-gradient-to-bl from-lilac/50 via-transparent to-transparent mb-40">
+        <BottomCta className="max-w-4xl w-full justify-self-center px-10" />
       </div>
       <Footer />
     </main>
