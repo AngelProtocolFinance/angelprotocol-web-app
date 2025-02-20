@@ -3,11 +3,12 @@ import type { MetaFunction } from "@vercel/remix";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
-import { Footer } from "./footer";
 // import { BottomCta } from "./bottom-cta";
-// import { Brands } from "./brands";
+import { Brands } from "./brands";
 // import { DonationFormInfo } from "./donation-form-info";
-// import { Feature } from "./feature";
+import { Feature } from "./feature";
+import { Footer } from "./footer";
+import { Top } from "./top";
 // import { Footer } from "./footer";
 // import Testimonials from "./testimonials";
 // import { Top } from "./top";
@@ -48,13 +49,14 @@ export default function Component() {
       </div>
 
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
+        <Top classes="-mt-24" />
         {/* <Top className="xl:container xl:mx-auto px-10 bg-transparent" /> */}
       </div>
       <div className="bg-gradient-to-bl via-transparent via-50% from-peach/50 to-lilac/50">
-        {/* <Brands className="my-20 xl:my-56" /> */}
+        <Brands className="my-20 xl:my-56" />
       </div>
       <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
-        {/* <Feature className="xl:container xl:mx-auto px-10" /> */}
+        <Feature className="xl:container xl:mx-auto px-10" />
       </div>
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
         {/* <DonationFormInfo className="mt-20 xl:mt-60 xl:container xl:mx-auto px-10" /> */}
