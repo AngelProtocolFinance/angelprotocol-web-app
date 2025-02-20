@@ -33,7 +33,7 @@ export function BottomCta({ className = "" }) {
             <svg className="absolute -bottom-3 z-0" width="100%" height="20">
               <defs>
                 <filter id="blur">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" />
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
                 </filter>
               </defs>
               <ellipse
@@ -41,8 +41,8 @@ export function BottomCta({ className = "" }) {
                 cy="50%"
                 rx="40"
                 ry="6"
-                fill="rgba(0,0,0,0.3)"
                 filter="url(#blur)"
+                className="fill-gray-l3"
                 // className="blur-sm"
               />
             </svg>

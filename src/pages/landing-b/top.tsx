@@ -1,4 +1,6 @@
 import { Link } from "@remix-run/react";
+import { laira } from "assets/laira/laira";
+import Image from "components/image";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 
@@ -8,15 +10,69 @@ export const Top = ({ classes = "" }) => {
       <p className="text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider text-blue-d1">
         By a nonprofit, for nonprofits
       </p>
-      <h1 className="mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
+      <h1 className="mx-auto text-3xl/tight md:text-4xl/tight lg:text-5xl/tight text-center text-pretty mb-6 px-6 ">
         The Smart Move to Make for <br /> Accepting Crypto Donations
       </h1>
-      <p className="px-6 text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
-        Why should your nonprofit lose funds to annual subscriptions and
-        platform fees? Better Giving ensures 100% of your donations go toward
-        your mission—no hidden fees, no unnecessary costs, just seamless crypto,
-        stock, and DAF giving.
-      </p>
+      <div className="relative">
+        <div className="max-xl:hidden absolute left-16 isolate top-1/2 -translate-y-1/2">
+          <Image
+            src={laira.coin}
+            width={180}
+            className="z-10 max-sm:w-24 rotate-y-180"
+          />
+          {/** shadow */}
+          <svg
+            className="absolute -bottom-5 left-8 z-0"
+            width="100%"
+            height="20"
+          >
+            <defs>
+              <filter id="blur">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+              </filter>
+            </defs>
+            <ellipse
+              cx="50%"
+              cy="50%"
+              rx="80"
+              ry="12"
+              filter="url(#blur)"
+              className="fill-gray-l4"
+              // className="blur-sm"
+            />
+          </svg>
+        </div>
+        <p className="px-6 max-w-5xl mx-auto text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
+          Why should your nonprofit lose funds to annual subscriptions and
+          platform fees? Better Giving ensures 100% of your donations go toward
+          your mission—no hidden fees, no unnecessary costs, just seamless
+          crypto, stock, and DAF giving.
+        </p>
+        <div className="max-xl:hidden absolute right-28 top-1/3">
+          <Image
+            src={laira.yellow}
+            width={90}
+            className="z-10 max-sm:w-24 rotate-y-180"
+          />
+          {/** shadow */}
+          <svg className="absolute -bottom-3 z-0" width="100%" height="20">
+            <defs>
+              <filter id="blur">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+              </filter>
+            </defs>
+            <ellipse
+              cx="50%"
+              cy="50%"
+              rx="40"
+              ry="6"
+              filter="url(#blur)"
+              className="fill-gray-l3"
+              // className="blur-sm"
+            />
+          </svg>
+        </div>
+      </div>
 
       <div className="mt-8 isolate z-10 justify-self-center relative">
         <Link
