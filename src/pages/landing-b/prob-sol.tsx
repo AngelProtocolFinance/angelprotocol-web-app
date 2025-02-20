@@ -74,9 +74,13 @@ export function ProbSol({ className = "" }) {
           High Fees, Limited Options, and <br /> Unnecessary Complexity
         </h1>
         <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">
-          Many donation platforms take a cut of your funds, limit the types of
-          donations you can accept, or require complicated onboarding—hurting
-          your nonprofit’s ability to maximize impact.
+          Many donation platforms{" "}
+          <span className="text-amber-d1">take a cut of your funds</span>, limit
+          the types of donations you can accept, or require complicated
+          onboarding—
+          <span className="text-amber-d1">
+            hurting your nonprofit’s ability to maximize impact.
+          </span>
         </p>
       </div>
 
