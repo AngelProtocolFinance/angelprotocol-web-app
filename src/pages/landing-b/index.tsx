@@ -51,7 +51,6 @@ export default function Component() {
 
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
         <Top classes="-mt-24" />
-        {/* <Top className="xl:container xl:mx-auto px-10 bg-transparent" /> */}
       </div>
       <div className="bg-gradient-to-bl via-transparent via-50% from-peach/50 to-lilac/50">
         <Brands className="my-20 xl:my-56" />
