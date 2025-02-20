@@ -66,7 +66,7 @@ convert_to_webp() {
     if [[ "$input_file" =~ \.webp$ ]]; then
         echo "Skipping $input_file (already WebP)"
         return
-    }
+    fi
 
     echo "Converting: $input_file"
 
