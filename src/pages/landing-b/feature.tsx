@@ -58,7 +58,7 @@ export function Feature({ className = "" }) {
         height={350}
         src={photo}
         alt="Better Giving logo with leaves background"
-        className="max-w-2xl justify-self-center p-4"
+        className="w-full max-w-80 justify-self-center p-4"
       />
 
       <ul className="col-span-full mt-10 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-4">
