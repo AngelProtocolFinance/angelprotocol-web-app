@@ -11,3 +11,8 @@ export const APIs = {
 export const PRIVACY_POLICY = `${BASE_URL}/privacy-policy/`;
 export const TERMS_OF_USE_NPO = `${BASE_URL}/terms-of-use-npo/`;
 export const TERMS_OF_USE_DONOR = `${BASE_URL}/terms-of-use/`;
+export const guidestar = {
+  seal: "https://widgets.guidestar.org/TransparencySeal/87-3758939",
+  profile:
+    "https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5",
+};
