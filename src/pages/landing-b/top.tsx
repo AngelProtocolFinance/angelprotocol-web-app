@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 export const Top = ({ classes = "" }) => {
   return (
     <section className={`${classes} relative grid pt-36 pb-20`}>
-      <p className="text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
+      <p className="text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider text-blue-d1">
         By a nonprofit, for nonprofits
       </p>
       <h1 className="mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">

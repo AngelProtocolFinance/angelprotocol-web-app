@@ -8,6 +8,7 @@ import { Brands } from "./brands";
 // import { DonationFormInfo } from "./donation-form-info";
 import { Feature } from "./feature";
 import { Footer } from "./footer";
+import { ProbSol } from "./prob-sol";
 import { Top } from "./top";
 // import { Footer } from "./footer";
 // import Testimonials from "./testimonials";
@@ -59,7 +60,7 @@ export default function Component() {
         <Feature className="xl:container xl:mx-auto px-10" />
       </div>
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
-        {/* <DonationFormInfo className="mt-20 xl:mt-60 xl:container xl:mx-auto px-10" /> */}
+        <ProbSol className="xl:container xl:mx-auto px-10 pt-40" />
       </div>
       <div className="bg-gradient-to-bl from-lilac/50 via-50% via-transparent to-transparent">
         {/* <Testimonials classes="xl:container xl:mx-auto px-10" /> */}
