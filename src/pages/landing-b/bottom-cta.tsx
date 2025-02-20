@@ -1,32 +1,59 @@
 import { Link } from "@remix-run/react";
 import logo from "assets/images/bg-logo.webp";
+import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { appRoutes } from "constants/routes";
 
 export function BottomCta({ className = "" }) {
   return (
     <div
-      className={`${className} relative grid md:grid-cols-[3fr_1fr] bg-linear-to-br from-blue-d1 to-white rounded-3xl md:rounded-4xl px-10 py-12 md:px-16 md:py-[4.5rem]`}
+      className={`${className} grid sm:grid-cols-[3fr_1fr] bg-linear-to-tr from-blue-d1 to-white rounded-3xl sm:rounded-4xl px-8 py-8 sm:px-12 sm:py-12`}
     >
-      <div className="order-2 md:order-1">
-        <h4 className="text-center md:text-left uppercase [28rem]:text-lg text-white leading-normal mb-6">
+      <div className="order-2 sm:order-1">
+        <h4 className="text-center sm:text-left uppercase sm:text-lg text-white leading-normal mb-6">
           Simple. Sustainable. Free.
         </h4>
-        <h3 className="text-center md:text-left md:leading-snug font-heading text-xl @md:text-3xl text-white mb-9">
+        <h3 className="text-center sm:text-left sm:leading-snug font-heading text-2xl text-white mb-9">
           Stop paying for what should be free
         </h3>
-        <Link
-          to={appRoutes.register}
-          className="btn-blue active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-full px-6 py-2 md:px-10 md:py-4"
-        >
-          Start today
-        </Link>
+        <div className="relative max-sm:justify-self-center">
+          <Link
+            to={`${appRoutes.register}/welcome`}
+            className="btn-blue active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-full px-6 py-2 sm:px-10 sm:py-4"
+          >
+            Start today
+          </Link>
+          <div className="absolute -left-20 isolate">
+            <Image
+              src={laira.pointing}
+              width={90}
+              className="z-10 max-sm:w-24"
+            />
+            {/** shadow */}
+            <svg className="absolute -bottom-3 z-0" width="100%" height="20">
+              <defs>
+                <filter id="blur">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" />
+                </filter>
+              </defs>
+              <ellipse
+                cx="50%"
+                cy="50%"
+                rx="40"
+                ry="6"
+                fill="rgba(0,0,0,0.3)"
+                filter="url(#blur)"
+                // className="blur-sm"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
       <Image
         alt="Letters B & G forming a circle like 8"
-        width={140}
+        width={120}
         src={logo}
-        className="place-self-center mb-8 order-1 md:order-2"
+        className="place-self-center mb-8 order-1 sm:order-2 max-xl:w-28"
       />
     </div>
   );

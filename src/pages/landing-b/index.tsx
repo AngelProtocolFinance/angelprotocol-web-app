@@ -62,8 +62,8 @@ export default function Component() {
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
         <ProbSol className="xl:container xl:mx-auto px-10 pt-40" />
       </div>
-      <div className="bg-gradient-to-bl from-lilac/50 via-transparent to-transparent mb-40">
-        <BottomCta className="max-w-4xl w-full justify-self-center px-10" />
+      <div className="bg-gradient-to-bl from-lilac/50 via-transparent to-transparent mb-40 px-10">
+        <BottomCta className="max-w-2xl xl:max-w-4xl mx-auto" />
       </div>
       <Footer />
     </main>

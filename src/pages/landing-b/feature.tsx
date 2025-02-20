@@ -61,7 +61,7 @@ export function Feature({ className = "" }) {
         className="w-full max-w-80 justify-self-center p-4"
       />
 
-      <ul className="col-span-full mt-10 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-4">
+      <ul className="col-span-full mt-10 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 md:grid-cols-2 lg:grid-cols-4">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}
