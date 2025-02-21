@@ -19,12 +19,12 @@ const cat = {
 
 const gas = {
   ad_storage: "ad_storage",
-  ad_user_data: "ad_user_data",
-  ad_personalization: "ad_personalization",
   analytics_storage: "analytics_storage",
   functionality_storage: "functionality_storage",
   personalization_storage: "personalization_storage",
   security_storage: "security_storage",
+  ad_user_data: "ad_user_data",
+  ad_personalization: "ad_personalization",
 } as const;
 
 const categories: { [name: string]: cc.Category } = {
@@ -34,33 +34,25 @@ const categories: { [name: string]: cc.Category } = {
   },
   [cat.analytics]: {
     autoClear: {
-      cookies: [
-        {
-          name: /^_ga/,
-        },
-        {
-          name: "_gid",
-        },
-      ],
+      cookies: [{ name: /^_ga/ }, { name: "_gid" }],
     },
     services: {
       [gas.analytics_storage]: {
         label:
-          "Enables storage (such as cookies) related to analytics e.g. visit duration.",
+          "Controls storage for audience measurement and behavioral modeling",
       },
     },
   },
   [cat.advertisement]: {
     services: {
       [gas.ad_storage]: {
-        label: "Enables storage (such as cookies) related to advertising.",
+        label: "Controls cookie storage for advertising measurement purposes",
       },
       [gas.ad_user_data]: {
-        label:
-          "Sets consent for sending user data related to advertising to Google.",
+        label: "Controls user data collection for advertising measurement",
       },
       [gas.ad_personalization]: {
-        label: "Sets consent for personalized advertising.",
+        label: "Controls personalized advertising and audience remarketing",
       },
     },
   },
@@ -68,19 +60,17 @@ const categories: { [name: string]: cc.Category } = {
     services: {
       [gas.functionality_storage]: {
         label:
-          "Enables storage that supports the functionality of the website or app e.g. language settings.",
+          "Controls storage for website functionality and user preferences",
       },
       [gas.personalization_storage]: {
-        label:
-          "Enables storage related to personalization e.g. video recommendations.",
+        label: "Controls storage for personalized content and recommendations",
       },
     },
   },
   [cat.security]: {
     services: {
       [gas.security_storage]: {
-        label:
-          "Enables storage related to security such as authentication functionality, fraud prevention, and other user protection.",
+        label: "Controls storage for security features and fraud prevention",
       },
     },
   },
@@ -91,18 +81,20 @@ const sections: cc.Section[] = [
   {
     title: "Cookie usage",
     description:
-      "We use cookies to ensure the basic functionalities of the website and to enhance your online experience.",
+      "We use cookies and similar technologies to provide, protect, and improve our services.",
   },
   {
     title: "Strictly necessary cookies",
     description:
-      "These cookies are essential for the proper functioning of the website, for example for user authentication.",
+      "These cookies are essential for the proper functioning of the website and cannot be disabled.",
     linkedCategory: cat.necessary,
   },
   {
-    title: "Analytics",
-    description:
-      "Cookies used for analytics help collect data that allows services to understand how users interact with a particular service. These insights allow services both to improve content and to build better features that improve the user's experience.",
+    title: "Google Analytics",
+    description: `These cookies help us understand how users interact with our service:
+      • User and event reporting
+      • Behavioral modeling to improve our service
+      • Measurement of user engagement`,
     linkedCategory: cat.analytics,
     cookieTable: {
       headers: {
@@ -116,59 +108,69 @@ const sections: cc.Section[] = [
           name: "_ga",
           domain: "Google Analytics",
           description:
-            'Cookie set by <a href="https://business.safety.google/adscookies/">Google Analytics</a>',
+            'Cookie set by <a href="https://business.safety.google/adscookies/">Google Analytics</a> for audience measurement',
           expiration: "Expires after 12 days",
         },
         {
           name: "_gid",
           domain: "Google Analytics",
           description:
-            'Cookie set by <a href="https://business.safety.google/adscookies/">Google Analytics</a>',
+            'Cookie set by <a href="https://business.safety.google/adscookies/">Google Analytics</a> for session tracking',
           expiration: "Session",
         },
       ],
     },
   },
   {
-    title: "Advertising",
-    description:
-      'Google uses cookies for advertising, including serving and rendering ads, personalizing ads (depending on your ad settings at <a href="https://g.co/adsettings">g.co/adsettings</a>), limiting the number of times an ad is shown to a user, muting ads you have chosen to stop seeing, and measuring the effectiveness of ads.',
+    title: "Google Ads",
+    description: `These cookies are used for advertising purposes:
+      • Ad measurement and conversion tracking
+      • Demographics insights
+      • Audience remarketing`,
     linkedCategory: cat.advertisement,
   },
   {
-    title: "Functionality",
-    description:
-      "Cookies used for functionality allow users to interact with a service or site to access features that are fundamental to that service. Things considered fundamental to the service include preferences like the user's choice of language, product optimizations that help maintain and improve a service, and maintaining information relating to a user's session, such as the content of a shopping cart.",
+    title: "Functionality & Preferences",
+    description: `These cookies enable website functionality:
+      • Language preferences
+      • User interface customization
+      • Session management`,
     linkedCategory: cat.functionality,
   },
   {
     title: "Security",
-    description:
-      "Cookies used for security authenticate users, prevent fraud, and protect users as they interact with a service.",
+    description: `These cookies help protect you and our service:
+      • Authentication
+      • Fraud prevention
+      • User protection`,
     linkedCategory: cat.security,
   },
   {
-    title: "Tracking",
-    description:
-      "These cookies are used to track visitor information and analyze activities on our site. They can be used to create a profile of your actions and preferences to make the site more relevant to you.",
+    title: "Third-Party Tracking",
+    description: `Optional tracking scripts from our partners:
+      • Meta Pixel
+      • Twitter Conversion
+      • LinkedIn Insight
+      • HotJar
+      • HubSpot`,
     linkedCategory: cat.tracking,
   },
 ];
 
 const consent: cc.ConsentModalOptions = {
-  title: "We use cookies",
+  title: "Cookie Preferences",
   description:
-    "This website uses essential cookies to ensure its proper operation and tracking cookies to understand how you interact with it. The latter will be set only after consent.",
+    "We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. Please select your preferences below.",
   acceptAllBtn: "Accept all",
   acceptNecessaryBtn: "Reject all",
-  showPreferencesBtn: "Manage Individual preferences",
+  showPreferencesBtn: "Manage preferences",
 };
 
 const preference: cc.PreferencesModalOptions = {
-  title: "Manage cookie preferences",
+  title: "Manage Cookie Preferences",
   acceptAllBtn: "Accept all",
   acceptNecessaryBtn: "Reject all",
-  savePreferencesBtn: "Accept current selection",
+  savePreferencesBtn: "Save preferences",
   closeIconLabel: "Close modal",
   sections: sections,
 };
@@ -198,11 +200,20 @@ export const useConsent = () => {
         cookie_consent: {
           analytics: cc.acceptedService(gas.analytics_storage, cat.analytics),
           advertising: cc.acceptedService(gas.ad_storage, cat.advertisement),
+          ad_user_data: cc.acceptedService(gas.ad_user_data, cat.advertisement),
+          ad_personalization: cc.acceptedService(
+            gas.ad_personalization,
+            cat.advertisement
+          ),
           functionality: cc.acceptedService(
             gas.functionality_storage,
             cat.functionality
           ),
           security: cc.acceptedService(gas.security_storage, cat.security),
+          personalization: cc.acceptedService(
+            gas.personalization_storage,
+            cat.functionality
+          ),
         },
       });
 

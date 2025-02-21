@@ -31,7 +31,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.738.0",
     "@aws-sdk/lib-dynamodb": "3.738.0",
-    "@better-giving/assets": "1.0.18",
+    "@better-giving/assets": "1.0.20",
     "@better-giving/balance-tx": "1.0.3",
     "@better-giving/donation": "1.0.12",
     "@better-giving/endowment": "1.0.36",

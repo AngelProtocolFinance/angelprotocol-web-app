@@ -15,8 +15,8 @@ importers:
         specifier: 3.738.0
         version: 3.738.0(@aws-sdk/client-dynamodb@3.738.0)
       '@better-giving/assets':
-        specifier: 1.0.18
-        version: 1.0.18
+        specifier: 1.0.20
+        version: 1.0.20
       '@better-giving/balance-tx':
         specifier: 1.0.3
         version: 1.0.3(@better-giving/types@1.0.5)
@@ -552,8 +552,8 @@ packages:
     resolution: {integrity: sha512-t8kDRGrKXyp6+tjUh7hw2RLyclsW4TRoRvRHtSyAX9Bb5ldlFh+90YAYY6awRXrlB4G5G2izNeGySpATlFzmOg==}
     engines: {node: '>=6.9.0'}
 
-  '@better-giving/assets@1.0.18':
-    resolution: {integrity: sha512-FGM1fyGpuPVZroTJOXBHpQ2bEf1BXgsmH4XS9CEm6WWD+MCQcPSA+9Ydig4YMl543oITXm8JqLiVAzFJ2/Qj9A==}
+  '@better-giving/assets@1.0.20':
+    resolution: {integrity: sha512-ZxdApR8p8QAj3ESQ54XnA/Hs/6LMO2TRFs2XYKlRiUfOtV2zEL2ffewEGkvaRBRPSn+wyMqQFAcMsxPIcb50eQ==}
 
   '@better-giving/balance-tx@1.0.3':
     resolution: {integrity: sha512-4pgoIHo7g6djCgjIfaezmwbunTF0dTTakWsOr7s4hJC7D8yK7eUunZRzR0GPB+hrrV/xY2NZ//ysJjQ+i1tMDQ==}
@@ -5512,7 +5512,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@better-giving/assets@1.0.18': {}
+  '@better-giving/assets@1.0.20': {}
 
   '@better-giving/balance-tx@1.0.3(@better-giving/types@1.0.5)':
     dependencies:

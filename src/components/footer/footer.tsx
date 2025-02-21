@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 import dappLogo from "assets/images/bg-logo-503c.webp";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { guidestar } from "constants/urls";
 import type { ReactNode } from "react";
 import ExtLink from "../ext-link";
 import Newsletter from "./newsletter";
@@ -38,12 +39,12 @@ function Footer({ classes = "" }: Props) {
             />
             <ExtLink
               aria-label="View our GuideStar profile"
-              href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5"
+              href={guidestar.profile}
             >
               <img
                 alt="GuideStar Seal"
                 loading="lazy"
-                src="https://widgets.guidestar.org/TransparencySeal/10103678"
+                src={guidestar.seal}
                 width={100}
                 height={100}
               />
