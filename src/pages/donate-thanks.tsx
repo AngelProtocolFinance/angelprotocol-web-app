@@ -36,8 +36,10 @@ export default function DonateThanks() {
       </h3>
       <p className="text-center text-navy-l1">
         We'll process your donation to{" "}
-        {recipientName ?? "the nonprofit you specified"} as soon as the payment
-        has cleared.
+        <span className="font-bold">
+          {recipientName ?? "the nonprofit you specified"}
+        </span>{" "}
+        as soon as the payment has cleared.
         {widgetVersion
           ? ""
           : " You can safely navigate away using the button below."}
