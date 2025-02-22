@@ -64,9 +64,9 @@ const solutions = [
 export function ProbSol({ className = "" }) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[4fr_1fr] py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[2fr_1fr] py-24`}
     >
-      <div className="max-w-2xl order-2 @6xl:order-1">
+      <div className="order-2 @6xl:order-1">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
           CHALLENGES AND BETTER GIVING SOLUTIONS
         </h4>
@@ -88,7 +88,7 @@ export function ProbSol({ className = "" }) {
         src={laira.laptopFull}
         width={180}
         height={180}
-        className="order-1 @6xl:order-2 justify-self-start self-center rotate-y-180"
+        className="order-1 @6xl:order-2 justify-self-center @max-6xl:w-40 @6xl:justify-self-start self-center rotate-y-180"
       />
 
       <article className="col-span-full order-3">
