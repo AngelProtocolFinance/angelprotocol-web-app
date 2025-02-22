@@ -58,7 +58,7 @@ export function Feature({ className = "" }) {
         height={350}
         src={photo}
         alt="Better Giving logo with leaves background"
-        className="w-full max-w-80 justify-self-center p-4"
+        className="w-full max-w-80 justify-self-center p-4 max-lg:hidden"
       />
 
       <ul className="col-span-full mt-10 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 md:grid-cols-2 lg:grid-cols-4">
@@ -72,7 +72,7 @@ export function Feature({ className = "" }) {
 
 function ListItem(props: TListItem) {
   return (
-    <li className="grid lg:grid-rows-subgrid row-span-4 px-9 justify-items-center">
+    <li className="grid gap-y-2 md:grid-rows-subgrid row-span-4 px-9 justify-items-center">
       <Image
         src={props.image.src}
         height={props.image.height}
