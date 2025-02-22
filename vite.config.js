@@ -26,6 +26,7 @@ const rmx = remix({
           id: "public-form-builder",
         });
       });
+      r("the-smart-move-to-make-for-accepting-crypto-donations",'./pages/landing-b/index.tsx')
       // no robots
       r("admin/:id", "./pages/admin/layout.tsx", () => {
         r("", "./pages/admin/redirect.ts", { index: true });

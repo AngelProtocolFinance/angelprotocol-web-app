@@ -1,49 +1,51 @@
-import laira10 from "./laira-announce.webp";
-import laira11 from "./laira-calling.webp";
-import laira12 from "./laira-cheering.webp";
-import laira13 from "./laira-coin.webp";
-import laira14 from "./laira-gift.webp";
-import laira15 from "./laira-giggling.webp";
-import laira1 from "./laira-happy-jump.webp";
-import laira16 from "./laira-heart.webp";
-import laira8 from "./laira-laptop.webp";
-import laira17 from "./laira-like.webp";
-import laira7 from "./laira-negotiating.webp";
-import laira18 from "./laira-note.webp";
-import laira2 from "./laira-open-arms.webp";
-import laira19 from "./laira-pointing.webp";
-import laira9 from "./laira-presentation.webp";
-import laira3 from "./laira-sitting.webp";
-import laira22 from "./laira-standing-front.webp";
-import laira4 from "./laira-standing.webp";
-import laira20 from "./laira-trophy.webp";
-import laira5 from "./laira-waiving.webp";
-import laira6 from "./laira-walking.webp";
-import laira21 from "./laira-yellow.webp";
+import lairaAnnounce from "./laira-announce.webp";
+import lairaCalling from "./laira-calling.webp";
+import lairaCheering from "./laira-cheering.webp";
+import lairaCoin from "./laira-coin.webp";
+import lairaGift from "./laira-gift.webp";
+import lairaGiggling from "./laira-giggling.webp";
+import lairaHappyJump from "./laira-happy-jump.webp";
+import lairaHeart from "./laira-heart.webp";
+import lairaLaptopFull from "./laira-laptop-full.webp";
+import lairaLaptop from "./laira-laptop.webp";
+import lairaLike from "./laira-like.webp";
+import lairaNegotiating from "./laira-negotiating.webp";
+import lairaNote from "./laira-note.webp";
+import lairaOpenArms from "./laira-open-arms.webp";
+import lairaPointing from "./laira-pointing.webp";
+import lairaPresentation from "./laira-presentation.webp";
+import lairaSitting from "./laira-sitting.webp";
+import lairaStandingFront from "./laira-standing-front.webp";
+import lairaStanding from "./laira-standing.webp";
+import lairaTrophy from "./laira-trophy.webp";
+import lairaWaiving from "./laira-waiving.webp";
+import lairaWalking from "./laira-walking.webp";
+import lairaYellow from "./laira-yellow.webp";
 
 export const laira = {
-  jumping: laira1,
-  openArms: laira2,
-  sitting: laira3,
-  standing: laira4,
-  standingFront: laira22,
-  waiving: laira5,
-  walking: laira6,
-  negotiating: laira7,
-  laptop: laira8,
-  presentation: laira9,
-  announce: laira10,
-  calling: laira11,
-  cheering: laira12,
-  coin: laira13,
-  gift: laira14,
-  giggling: laira15,
-  heart: laira16,
-  like: laira17,
-  note: laira18,
-  pointing: laira19,
-  trophy: laira20,
-  yellow: laira21,
+  jumping: lairaHappyJump,
+  openArms: lairaOpenArms,
+  sitting: lairaSitting,
+  standing: lairaStanding,
+  standingFront: lairaStandingFront,
+  waiving: lairaWaiving,
+  walking: lairaWalking,
+  negotiating: lairaNegotiating,
+  laptop: lairaLaptop,
+  laptopFull: lairaLaptopFull,
+  presentation: lairaPresentation,
+  announce: lairaAnnounce,
+  calling: lairaCalling,
+  cheering: lairaCheering,
+  coin: lairaCoin,
+  gift: lairaGift,
+  giggling: lairaGiggling,
+  heart: lairaHeart,
+  like: lairaLike,
+  note: lairaNote,
+  pointing: lairaPointing,
+  trophy: lairaTrophy,
+  yellow: lairaYellow,
 };
 
 const lairas = Object.values(laira);
