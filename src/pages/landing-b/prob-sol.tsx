@@ -98,37 +98,39 @@ export function ProbSol({ className = "" }) {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead className="bg-gray-50">
-              <tr>
-                <th className="text-left p-3 font-semibold border-b w-1/2">
-                  <div className="flex items-center gap-2 text-red">
-                    <X className="w-4 h-4 text-red-600" strokeWidth={3} />
+              <tr className="border-b border-gray-l3">
+                <th className="text-left font-semibold pb-2">
+                  <div className="text-lg flex items-center gap-2 text-red">
+                    <X className="text-red" strokeWidth={3} />
                     Problem
                   </div>
                 </th>
-                <th className="text-left p-3 font-semibold text-gray-900 border-b w-1/2">
-                  <div className="flex items-center gap-2 text-blue-d1">
-                    <Heart className="w-4 h-4" />
-                    Better Giving Solution
+                <th className="text-left font-semibold pb-2 pl-4 @container/solution">
+                  <div className="text-lg flex items-center gap-2 text-blue-d1">
+                    <Heart className="shrink-0" />
+                    <span className="">Better Giving Solution</span>
                   </div>
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-l2">
+            <tbody className="">
               {solutions.map((solution, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-gray-50 transition-colors duration-150"
-                >
-                  <td className="p-3 text-gray-600">
-                    <div className="font-semibold text-gray-900 mb-1">
+                <>
+                  <tr>
+                    <td className="font-bold text-sm py-2 font-heading">
                       {solution.problem}
-                    </div>
-                    {solution.problemDescription}
-                  </td>
-                  <td className="p-3 text-gray-600">
-                    {solution.solutionDescription}
-                  </td>
-                </tr>
+                    </td>
+                    <td />
+                  </tr>
+                  <tr key={index} className="border-b border-gray-l3">
+                    <td className="pb-3 text-gray-d1 text-balance align-top">
+                      {solution.problemDescription}
+                    </td>
+                    <td className="pb-3 pl-4 text-balance text-gray-d1 align-top">
+                      {solution.solutionDescription}
+                    </td>
+                  </tr>
+                </>
               ))}
             </tbody>
           </table>
