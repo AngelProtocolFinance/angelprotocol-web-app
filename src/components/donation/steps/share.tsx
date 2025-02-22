@@ -3,6 +3,7 @@ import linkedin from "assets/icons/social/linkedin.webp";
 import telegram from "assets/icons/social/telegram.webp";
 import x from "assets/icons/social/x.webp";
 import { APP_NAME, BASE_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { X } from "lucide-react";
 import { useCallback, useState } from "react";
 import ExtLink from "../../ext-link";
@@ -121,7 +122,7 @@ function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
         .
       </p>
       <ExtLink
-        href={generateShareLink(shareText, social.id)}
+        href={generateShareLink(shareText, social.id, recipientName)}
         className="btn btn-outline btn-donate hover:bg-blue-l4 gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center">
@@ -137,7 +138,11 @@ function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
   );
 }
 
-function generateShareLink(rawText: string, type: SocialMedia["id"]) {
+function generateShareLink(
+  rawText: string,
+  type: SocialMedia["id"],
+  recipientName: string
+) {
   const encodedText = encodeURIComponent(rawText);
   const encodedURL = encodeURIComponent(BASE_URL);
   switch (type) {
@@ -151,7 +156,7 @@ function generateShareLink(rawText: string, type: SocialMedia["id"]) {
      */
     case "fb":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        BASE_URL
+        `${BASE_URL}/${appRoutes.donate_thanks}?recipient_name=${recipientName}`
       )}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons
