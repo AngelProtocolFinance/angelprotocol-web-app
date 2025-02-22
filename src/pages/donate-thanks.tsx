@@ -4,13 +4,27 @@ import {
   useOutletContext,
   useSearchParams,
 } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
 import char from "assets/images/celebrating-character.webp";
+import { laira } from "assets/laira/laira";
 import { Share } from "components/donation";
 import ExtLink from "components/ext-link";
 import Image from "components/image";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
+import { metas } from "helpers/seo";
+
+export const meta: MetaFunction = ({ location }) => {
+  const s = new URLSearchParams(location.search);
+  const recipientName = s.get("recipient_name");
+  return metas({
+    title: `Donation to ${recipientName ?? "a Nonprofit"}`,
+    image: laira.gift,
+    description: `I just donated to ${recipientName ?? "a nonprofit"} on Better Giving! They can choose to use my gift today, or save and invest it for sustainable growth. When you give today, you give forever. Join me: ${BASE_URL}`,
+    url: `${BASE_URL}${location.pathname}${location.search}`,
+  });
+};
 
 export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
