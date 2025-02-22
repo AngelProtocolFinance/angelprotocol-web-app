@@ -19,7 +19,7 @@
 }
 
 @utility overlay {
-  @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 dark:before:bg-blue-d3/90;
+  @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/70 dark:before:bg-blue-d3/70;
 }
 
 @utility check-field {

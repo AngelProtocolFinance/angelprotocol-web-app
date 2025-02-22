@@ -82,7 +82,6 @@ export const getDonations = async (
     });
 
     const result = await apes.send(command);
-    console.log(result, environment, params);
     items.push(...toItems((result.Items || []) as DBRecord[], asker));
     startKey = result.LastEvaluatedKey;
   } while (startKey);

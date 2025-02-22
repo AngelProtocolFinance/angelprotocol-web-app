@@ -46,7 +46,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     };
     return x;
   });
-  console.log(items);
   return new Response(JSON.stringify(items), { status: 200 });
 };
 

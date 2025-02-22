@@ -47,13 +47,13 @@ export default function Fund() {
   return (
     <section className="grid pb-10">
       <div
-        className="relative w-full h-52 sm:h-72 bg-cover bg-center overlay"
+        className="relative w-full h-52 sm:h-72 bg-cover bg-center peer overlay"
         style={{
           backgroundImage: `url('${fund.banner || fallback_banner}')`,
         }}
       />
-      <div className="xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
-        <div className="self-start -mt-12 md:-mt-24 z-10 grid gap-4 relative">
+      <div className="group peer-hover:[&>div]:mt-1 xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
+        <div className="self-start -mt-12 md:-mt-24 transition-[margin] ease-in-out z-10 grid gap-4 relative">
           <div className="absolute -top-8 flex justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
@@ -131,7 +131,10 @@ export default function Fund() {
             </div>
           ))}
         </div>
-        <div className="md:-mt-24 md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
+        <div
+          id="info-card"
+          className="md:-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4"
+        >
           <DonateSection
             {...fund}
             classes={{ container: "max-md:hidden", link: "mb-4 order-first" }}
