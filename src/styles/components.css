@@ -158,10 +158,6 @@
     &[aria-invalid="true"] {
       @apply border-red;
     }
-    &:read-only {
-      background-color: var(--color-gray-l5);
-      pointer-events: none;
-    }
   }
 
   .field-err {
