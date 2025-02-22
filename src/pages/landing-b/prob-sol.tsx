@@ -85,42 +85,54 @@ export function ProbSol({ className = "" }) {
       </div>
 
       <Image
-        src={laira.laptop}
-        width={120}
-        height={120}
-        className="order-1 @6xl:order-2 justify-self-center self-center rotate-y-180"
+        src={laira.laptopFull}
+        width={180}
+        height={180}
+        className="order-1 @6xl:order-2 justify-self-start self-center rotate-y-180"
       />
 
       <article className="col-span-full order-3">
         <h4 className="text-center @6xl:text-left text-lg @6xl:text-3xl uppercase text-gray-d2 mb-6">
           How Better Giving Solves It
         </h4>
-        <ol type="1" className="pl-3 list-decimal grid gap-y-4">
-          {solutions.map((solution, index) => (
-            <li key={index} className="mb-4 space-y-2">
-              <p className="font-semibold text-lg">{solution.problem}</p>
-              <p>
-                <X
-                  size={20}
-                  strokeWidth={3}
-                  className="stroke-red inline-block"
-                />{" "}
-                <span className="text-red font-medium">Problem:</span>{" "}
-                {solution.problemDescription}
-              </p>
-              <p className="text">
-                <Heart
-                  size={18}
-                  className="stroke-blue  fill-blue inline-block relative bottom-px"
-                />{" "}
-                <span className="text-blue-d1 font-medium">
-                  Better Giving Solution:
-                </span>{" "}
-                {solution.solutionDescription}
-              </p>
-            </li>
-          ))}
-        </ol>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="text-left p-3 font-semibold border-b w-1/2">
+                  <div className="flex items-center gap-2 text-red">
+                    <X className="w-4 h-4 text-red-600" strokeWidth={3} />
+                    Problem
+                  </div>
+                </th>
+                <th className="text-left p-3 font-semibold text-gray-900 border-b w-1/2">
+                  <div className="flex items-center gap-2 text-blue-d1">
+                    <Heart className="w-4 h-4" />
+                    Better Giving Solution
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-l2">
+              {solutions.map((solution, index) => (
+                <tr
+                  key={index}
+                  className="hover:bg-gray-50 transition-colors duration-150"
+                >
+                  <td className="p-3 text-gray-600">
+                    <div className="font-semibold text-gray-900 mb-1">
+                      {solution.problem}
+                    </div>
+                    {solution.problemDescription}
+                  </td>
+                  <td className="p-3 text-gray-600">
+                    {solution.solutionDescription}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </article>
     </section>
   );
