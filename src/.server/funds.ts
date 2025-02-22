@@ -113,7 +113,7 @@ export const hitToItem = (hit: FundHit) => {
     featured: hit.featured === "1",
     active: hit.active === "1",
     verified: hit.verified === "1",
-    donation_total_usd: Number.parseInt(hit.donation_total_usd[0], 10),
+    donation_total_usd: Number.parseInt(hit.donation_total_usd, 10),
     expiration: hit.expiration,
     members: (hit.members || []).map((m) => Number.parseInt(m, 10)),
     target: hit.target,
