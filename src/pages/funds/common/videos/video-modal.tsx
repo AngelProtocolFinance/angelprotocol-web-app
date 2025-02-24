@@ -20,7 +20,7 @@ export function VideoModal(props: IVideoModal) {
     formState: { errors, isDirty },
   } = useForm({
     resolver: valibotResolver(object({ url: videoUrl })),
-    defaultValues: { url: props.initUrl ?? "" },
+    values: { url: props.initUrl ?? "" },
   });
 
   return (
@@ -31,9 +31,12 @@ export function VideoModal(props: IVideoModal) {
     >
       <form
         className="contents"
-        onSubmit={handleSubmit(async (fv) => {
-          props.onSubmit(fv.url);
-        })}
+        onSubmit={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleSubmit((data) => props.onSubmit(data.url))();
+          props.setOpen(false);
+        }}
       >
         <div className="relative">
           <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">

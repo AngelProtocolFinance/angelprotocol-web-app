@@ -5,6 +5,7 @@ export {
   QueryCommand,
   DeleteCommand,
   PutCommand,
+  UpdateCommand,
   type QueryCommandInput,
 } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";

@@ -1,9 +1,12 @@
 import type { SingleFund } from "@better-giving/fundraiser";
+import { fundId, fundUpdate } from "@better-giving/fundraiser/schema";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
+import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
+import { closeFund, editFund } from ".server/fund";
 
 export interface LoaderData {
   fund: SingleFund;
@@ -23,23 +26,17 @@ export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
+  const id = parse(fundId, params.fundId);
+
   const { close = false, ...update } = await request.json();
 
   if (close) {
-    await ap
-      .post<unknown>(`${ver(1)}/funds/${params.fundId}/close`, {
-        headers: { authorization: user.idToken },
-      })
-      .json();
+    await closeFund(id);
     return { __ok: "Fund closed" } satisfies ActionData;
   }
 
-  await ap
-    .patch<SingleFund>(`${ver(1)}/funds/${params.fundId}`, {
-      json: update,
-      headers: { authorization: user.idToken },
-    })
-    .json();
+  const parsed = parse(fundUpdate, update);
+  await editFund(id, parsed);
 
   return { __ok: "Fund updated" } satisfies ActionData;
 };

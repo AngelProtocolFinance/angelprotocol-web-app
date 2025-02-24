@@ -17,7 +17,7 @@ export function Form({
 }: SingleFund & { classes?: string }) {
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
-  const rhf = useRhf(props);
+  const { dirtyFields: df, ...rhf } = useRhf(props);
 
   const isSubmitting = fetcher.state !== "idle";
   const isUploading =
@@ -28,10 +28,10 @@ export function Form({
     /// BUILD UPDATE ///
     const update: FundUpdate = {};
 
-    if (rhf.dirtyFields.banner) update.banner = fv.banner;
-    if (rhf.dirtyFields.logo) update.logo = fv.logo;
+    if (df.banner) update.banner = fv.banner;
+    if (df.logo) update.logo = fv.logo;
 
-    if (rhf.dirtyFields.target) {
+    if (df.target) {
       update.target =
         target.type === "none"
           ? "0"
@@ -40,12 +40,11 @@ export function Form({
             : target.value;
     }
 
-    if (rhf.dirtyFields.name) update.name = fv.name;
-    if (rhf.dirtyFields.description) update.description = fv.description.value;
-    if (rhf.dirtyFields.videos) update.videos = fv.videos.map((v) => v.url);
+    if (df.name) update.name = fv.name;
+    if (df.description) update.description = fv.description.value;
+    if (df.videos) update.videos = fv.videos.map((v) => v.url);
 
     fetcher.submit(update, {
-      action: ".",
       method: "POST",
       encType: "application/json",
     });

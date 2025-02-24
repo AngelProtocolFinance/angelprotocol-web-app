@@ -1,9 +1,10 @@
 import type * as endowDb from "@better-giving/endowment/db";
-import type { SingleFund } from "@better-giving/fundraiser";
+import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import type * as db from "@better-giving/fundraiser/db";
 import { tables } from "@better-giving/types/list";
 import type { AttrNames } from "@better-giving/types/utils";
-import { BatchGetCommand, GetCommand, ap } from "./aws/db";
+import { BatchGetCommand, GetCommand, UpdateCommand, ap } from "./aws/db";
+import { dbUpdate } from "./aws/helpers";
 import { env } from "./env";
 
 export const cacheControl =
@@ -72,4 +73,32 @@ export const getFund = async (
       banner: m.image,
     })),
   };
+};
+
+export const editFund = async (
+  fundId: string,
+  { target, ...update }: FundUpdate
+) => {
+  const command = new UpdateCommand({
+    TableName: tables.funds,
+    Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies db.Keys,
+    ReturnValues: "ALL_NEW",
+    ...dbUpdate({
+      ...update,
+      ...((target || target === "0") && { target: `${target}` }),
+    }),
+  });
+
+  return ap.send(command).then((res) => res.Attributes ?? {});
+};
+
+export const closeFund = async (fundId: string) => {
+  const command = new UpdateCommand({
+    TableName: tables.funds,
+    Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies db.Keys,
+    ReturnValues: "ALL_NEW",
+    ...dbUpdate({ active: false }),
+  });
+
+  return ap.send(command);
 };
