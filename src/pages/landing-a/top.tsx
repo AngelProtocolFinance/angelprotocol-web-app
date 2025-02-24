@@ -14,11 +14,6 @@ export function Top({ className = "" }) {
         <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-gray-d4">
           Simplify Fundraising, Maximize Impact
         </h1>
-        <p className="text-lg @6xl:text-xl text-center @6xl:text-left">
-          Better Giving streamlines donations, simplifies administration, and
-          helps your nonprofit grow its funds—all through an easily embeddable
-          donation form.
-        </p>
         <ul className="pl-5 my-4 text-lg @6xl:text-xl space-y-4 text-center @6xl:text-left list-disc list-outside">
           <li>
             Accept donations seamlessly: credit card, crypto, stock, and DAF

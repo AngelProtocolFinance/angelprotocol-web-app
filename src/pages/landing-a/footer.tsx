@@ -4,6 +4,7 @@ import ExtLink from "components/ext-link";
 import Newsletter from "components/footer/newsletter";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { guidestar } from "constants/urls";
 import Socials from "./socials";
 
 type Props = { classes?: string };
@@ -21,15 +22,8 @@ export function Footer({ classes = "" }: Props) {
           className="object-contain my-4"
           alt="logo"
         />
-        <ExtLink
-          href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5"
-          className="shrink-0"
-        >
-          <img
-            src="https://widgets.guidestar.org/TransparencySeal/10103678"
-            width={100}
-            height={100}
-          />
+        <ExtLink href={guidestar.profile} className="shrink-0">
+          <img src={guidestar.seal} width={100} height={100} />
         </ExtLink>
       </div>
 
