@@ -38,3 +38,9 @@ export const api_encryption_key = v.parse(
   required,
   process.env.API_ENCRYPTION_KEY
 );
+
+export const nowPayments = {
+  apiToken: v.parse(required, process.env.NOWPAYMENTS_API_KEY),
+  baseUrl: v.parse(required, process.env.NOWPAYMENTS_API_URL),
+  webhookUrl: v.parse(required, process.env.NOWPAYMENTS_WEBHOOK_URL),
+};
