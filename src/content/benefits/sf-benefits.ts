@@ -1,8 +1,8 @@
+import icon4 from "assets/images/bg-logo-leaf-bg.webp";
 import { APP_NAME } from "constants/env";
 import icon1 from "./icons/roadmap1_wb.webp";
 import icon2 from "./icons/roadmap2_wb.webp";
 import icon3 from "./icons/roadmap3_wb.webp";
-import icon4 from "./icons/roadmap4_wb.webp";
 import type { Benefit } from "./types";
 
 export const sf: Benefit[] = [
