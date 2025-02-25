@@ -13,7 +13,7 @@ import { Top } from "./top";
 
 export const meta: MetaFunction = () =>
   metas({
-    title: "US Nonprofits",
+    title: "Simplify Fundraising, Maximize Impact",
     description:
       "Simplify Fundraising, Maximize Impact: Claim Your Better Giving Account Today",
   });
