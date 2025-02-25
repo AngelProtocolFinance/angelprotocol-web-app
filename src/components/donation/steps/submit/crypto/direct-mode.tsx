@@ -1,13 +1,12 @@
 import chains from "@better-giving/assets/chains";
 import type { DonationIntent } from "@better-giving/donation/intent";
+import type { NP } from "@better-giving/nowpayments/types";
 import { useNavigate } from "@remix-run/react";
-import { apes } from "api/api";
 import ContentLoader from "components/content-loader";
 import QueryLoader from "components/query-loader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import useSWR from "swr/immutable";
-import type { Crypto } from "types/crypto";
 import { toDonor } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";
@@ -18,11 +17,11 @@ type Props = {
   donation: CryptoSubmitStep;
 };
 
-const fetcher = async (intent: DonationIntent) => {
-  return apes
-    .post<Crypto.NewPayment>("crypto-intents", { json: intent })
-    .json();
-};
+const fetcher = async (intent: DonationIntent) =>
+  fetch("/api/crypto-intents", {
+    method: "POST",
+    body: JSON.stringify(intent),
+  }).then<NP.NewPayment>((res) => res.json());
 
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();

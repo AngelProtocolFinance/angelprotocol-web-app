@@ -1,4 +1,5 @@
 import tokens from "@better-giving/assets/tokens/map";
+import type { NP } from "@better-giving/nowpayments/types";
 import { ap, ver } from "api/api";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
@@ -7,9 +8,8 @@ import { roundDown } from "helpers";
 import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { toast } from "sonner";
-import type { Crypto } from "types/crypto";
 
-interface IQrModal extends Crypto.PaymentStatus {
+interface IQrModal extends NP.PaymentStatus {
   orderAmount: number;
 }
 interface Props {
@@ -31,9 +31,7 @@ export default function PaymentResumer({ paymentId, classes, amount }: Props) {
         try {
           setIntentState("pending");
           const payment = await ap
-            .get<Crypto.PaymentStatus>(
-              `${ver(1)}/crypto/v1/payment/${paymentId}`
-            )
+            .get<NP.PaymentStatus>(`${ver(1)}/crypto/v1/payment/${paymentId}`)
             .json();
           if (payment.payment_status !== "waiting") {
             return toast.error("Donation is already processing.");

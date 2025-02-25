@@ -1,6 +1,7 @@
 import chains from "@better-giving/assets/chains";
 import prod_tokens from "@better-giving/assets/tokens";
 import test_tokens from "@better-giving/assets/tokens/test";
+import type { NP } from "@better-giving/nowpayments/types";
 import {
   CloseButton,
   Combobox,
@@ -18,7 +19,6 @@ import { logger } from "helpers";
 import { SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { TokenV2 } from "types/components";
-import type { Crypto } from "types/crypto";
 import Image from "../../image";
 import type { Token } from "../types";
 import type { OnTokenChange } from "./types";
@@ -84,7 +84,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
           const {
             min_amount: min,
             fiat_equivalent: min_usd,
-          }: Required<Crypto.Estimate> = await res.json();
+          }: Required<NP.Estimate> = await res.json();
 
           const rate = min_usd / min;
 

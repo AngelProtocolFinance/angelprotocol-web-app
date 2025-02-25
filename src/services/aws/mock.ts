@@ -1,8 +1,8 @@
 import type { EndowsPage } from "@better-giving/endowment";
+import type { NP } from "@better-giving/nowpayments/types";
 import { ver } from "api/api";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type { Crypto } from "types/crypto";
 
 export const handlers = [
   http.post(APIs.aws + "/v2/file/upload", () => {
@@ -18,7 +18,7 @@ export const handlers = [
   }),
   http.get(APIs.aws + `/${ver(1)}/crypto/v1/min-amount`, ({ request }) => {
     const url = new URL(request.url);
-    const data: Required<Crypto.Estimate> = {
+    const data: Required<NP.Estimate> = {
       min_amount: 1,
       currency_from: url.searchParams.get("currency_from")!,
       currency_to: "false",
