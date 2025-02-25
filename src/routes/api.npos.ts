@@ -14,5 +14,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     return new Response(params.issues[0].message, { status: 400 });
   }
   const page = await getNpos(params.output);
-  return page;
+  return new Response(JSON.stringify(page), {
+    headers: { "Content-Type": "application/json" },
+  });
 };
