@@ -155,7 +155,6 @@ export async function createPayment(
     if (!deposit_addr) {
       return [500, "Deposit address not defined"];
     }
-    console.log(deposit_addr);
     return {
       id: order.transactionId,
       address: deposit_addr,
