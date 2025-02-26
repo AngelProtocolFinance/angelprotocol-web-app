@@ -21,4 +21,5 @@ export const DONATION_INCREMENTS: Increment[] = [
 ];
 export const BG_ID = IS_TEST ? 8 : 1;
 
-export const logoUrl = (path: string) => `https://nowpayments.io${path}`;
+export const logoUrl = (path: string, isBg = false) =>
+  isBg ? path : `https://nowpayments.io${path}`;
