@@ -145,7 +145,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                 value={{ ...token, amount: "" }}
               >
                 <Image
-                  src={logoUrl(token.logo, token.id.includes("_"))}
+                  src={logoUrl(token.logo, isCustom(token.id))}
                   className="w-6 h-6 rounded-full row-span-2"
                 />
 
