@@ -7,6 +7,8 @@ export interface Payment {
   address: string;
   extra_address?: string | null;
   amount: number;
+  /** usd / amount, use to determine optimal number of decimals */
+  rate: number;
   currency: string;
   description: string;
   /** token.code */

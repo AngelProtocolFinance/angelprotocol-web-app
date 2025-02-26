@@ -17,11 +17,15 @@ export const getPendingIntent = async (
   if (typeof paymentId === "number") {
     const p = await np.get_payment_invoice(paymentId);
     if (p.payment_status !== "waiting") return 410;
+
+    const estimated = await np.estimate(p.pay_currency);
+
     return {
       id: p.payment_id,
       address: p.pay_address,
       amount: p.pay_amount,
       currency: p.pay_currency,
+      rate: estimated.rate,
       description: p.order_description,
     };
   }
@@ -48,6 +52,7 @@ export const getPendingIntent = async (
     amount: item.amount,
     currency: item.denomination,
     description: `Donation to ${recipient}`,
+    rate: item.usdValue / item.amount,
   };
 };
 
@@ -161,6 +166,7 @@ export async function createPayment(
       amount: order.amount,
       currency: token.code,
       description: order_description,
+      rate,
     } satisfies Payment;
   }
 
@@ -188,6 +194,7 @@ export async function createPayment(
     amount: p.pay_amount,
     currency: p.pay_currency,
     description: order_description,
+    rate,
   };
 }
 

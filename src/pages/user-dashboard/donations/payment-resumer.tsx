@@ -2,7 +2,7 @@ import tokens from "@better-giving/assets/tokens/map";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
 import PromptV2, { type IPromptV2 } from "components/prompt";
-import { roundDown } from "helpers";
+import { roundToCents } from "helpers";
 import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -69,7 +69,7 @@ function QrModal(props: IQrModal) {
 
       <p className="text-gray text-balance text-center mb-3.5 max-w-sm justify-self-center">
         To complete your donation, send{" "}
-        {roundDown(props.orderAmount, token.precision)}
+        {roundToCents(props.orderAmount, props.rate, token.precision)}
         &nbsp;
         {token.symbol} from your crypto wallet to the address below
       </p>
