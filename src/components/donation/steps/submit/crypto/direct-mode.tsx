@@ -1,12 +1,12 @@
 import chains from "@better-giving/assets/chains";
 import type { DonationIntent } from "@better-giving/donation/intent";
-import type { NP } from "@better-giving/nowpayments/types";
 import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
 import QueryLoader from "components/query-loader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import useSWR from "swr/immutable";
+import type { Payment } from "types/crypto";
 import { toDonor } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";
@@ -21,7 +21,7 @@ const fetcher = async (intent: DonationIntent) =>
   fetch("/api/crypto-intents", {
     method: "POST",
     body: JSON.stringify(intent),
-  }).then<NP.NewPayment>((res) => res.json());
+  }).then<Payment>((res) => res.json());
 
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
@@ -95,9 +95,8 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         {(payment) => (
           <PayQr
             token={details.token}
-            amount={totalDisplayAmount}
-            recipient={payment.pay_address}
-            extraId={payment.payin_extra_id}
+            recipient={payment.address}
+            extraId={payment.extra_address ?? null}
           />
         )}
       </QueryLoader>

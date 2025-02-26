@@ -1,6 +1,4 @@
 import tokens from "@better-giving/assets/tokens/map";
-import type { NP } from "@better-giving/nowpayments/types";
-import { ap, ver } from "api/api";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
 import PromptV2, { type IPromptV2 } from "components/prompt";
@@ -8,12 +6,13 @@ import { roundDown } from "helpers";
 import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { toast } from "sonner";
+import type { Payment } from "types/crypto";
 
-interface IQrModal extends NP.PaymentStatus {
+interface IQrModal extends Payment {
   orderAmount: number;
 }
 interface Props {
-  paymentId: number;
+  paymentId: number | string;
   classes?: string;
   amount: number;
 }
@@ -30,12 +29,11 @@ export default function PaymentResumer({ paymentId, classes, amount }: Props) {
       onClick={async () => {
         try {
           setIntentState("pending");
-          const payment = await ap
-            .get<NP.PaymentStatus>(`${ver(1)}/crypto/v1/payment/${paymentId}`)
-            .json();
-          if (payment.payment_status !== "waiting") {
+          const res = await fetch(`/api/crypto-intents/${paymentId}`);
+          if (res.status === 410) {
             return toast.error("Donation is already processing.");
           }
+          const payment: Payment = await res.json();
           setQr({ ...payment, orderAmount: amount });
         } catch (err) {
           setQr(undefined);
@@ -53,14 +51,16 @@ export default function PaymentResumer({ paymentId, classes, amount }: Props) {
 }
 
 function QrModal(props: IQrModal) {
-  const token = tokens[props.pay_currency.toUpperCase()];
+  const token = tokens[props.currency.toUpperCase()];
   return (
     <Modal
       open={true}
       onClose={() => {}}
       classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden px-4 py-8"
     >
-      <h4 className="text-lg text-center mb-2">{props.order_description}</h4>
+      <h4 className="text-lg text-center mb-2">
+        Donation to {props.description}
+      </h4>
 
       <p className="text-gray text-balance text-center mb-3.5 max-w-sm justify-self-center">
         To complete your donation, send{" "}
@@ -70,10 +70,9 @@ function QrModal(props: IQrModal) {
       </p>
 
       <PayQr
-        amount={roundDown(props.pay_amount, token.precision)}
         token={token}
-        recipient={props.pay_address}
-        extraId={props.payin_extra_id}
+        recipient={props.address}
+        extraId={props.extra_address ?? null}
       />
     </Modal>
   );

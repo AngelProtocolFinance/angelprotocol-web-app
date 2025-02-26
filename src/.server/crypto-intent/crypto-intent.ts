@@ -1,45 +1,102 @@
 import crypto from "node:crypto";
+import { isCustom } from "@better-giving/assets/tokens";
+import tokenMap from "@better-giving/assets/tokens/map";
 import type { OnHoldDonation } from "@better-giving/donation";
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { getRecipient } from "@better-giving/helpers-donation";
-import { Nowpayments } from "@better-giving/nowpayments";
 import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
-import { PutCommand, ap, apes } from "./aws/db";
-import { env, nowPayments as npEnvs } from "./env";
+import type { Payment } from "types/crypto";
+import { GetCommand, PutCommand, ap, apes } from "../aws/db";
+import { env, nowPayments as npEnvs } from "../env";
+import { np } from "./np";
+
+export const getPendingIntent = async (
+  paymentId: string | number
+): Promise<Payment | number> => {
+  if (typeof paymentId === "number") {
+    const p = await np.get_payment_invoice(paymentId);
+    if (p.payment_status !== "waiting") return 410;
+    return {
+      id: p.payment_id,
+      address: p.pay_address,
+      amount: p.pay_amount,
+      currency: p.pay_currency,
+      description: p.order_description,
+    };
+  }
+  //non nowpayments intents are saved in db
+  const cmd = new GetCommand({
+    TableName: tables.on_hold_donations,
+    Key: { transactionId: paymentId } satisfies OnHoldDonation.PrimaryKey,
+  });
+  const res = await apes.send(cmd);
+  if (!res.Item) return 404;
+
+  const item = res.Item as OnHoldDonation.DBRecord;
+  if (item.status !== "intent") return 410;
+
+  const token = tokenMap[item.denomination];
+  const deposit_addr =
+    process.env[`DEPOSIT_ADDR_${token.network.toUpperCase()}`];
+
+  if (!deposit_addr) return 500;
+  const recipient = item.fund_id ? item.fund_name : item.charityName;
+  return {
+    id: item.transactionId,
+    address: deposit_addr,
+    amount: item.amount,
+    currency: item.denomination,
+    description: `Donation to ${recipient}`,
+  };
+};
 
 export async function createPayment(
   intent: DonationIntent
-): Promise<NP.NewPayment | [number, string]> {
-  const np = new Nowpayments(npEnvs);
-
+): Promise<Payment | [number, string]> {
   const recipient = await getRecipient(intent.recipient, env, ap);
   if (!recipient) {
     return [404, "Recipient not found"];
   }
 
   //custom bg token, return
-  if (!intent.amount.currency.startsWith("__BG")) {
-  }
+  const token = tokenMap[intent.amount.currency];
 
   const totalAmount =
     intent.amount.amount + intent.amount.tip + intent.amount.feeAllowance;
-  const estimate = await np.estimate(intent.amount.currency);
 
-  if (totalAmount < estimate.min) {
-    return [400, `Min amount is:${estimate.min}`];
+  const [min, rate] = await (async (t) => {
+    if (isCustom(t.id)) {
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/simple/price?ids=${t.cg_id}&vs_currencies=usd`
+      );
+      if (!res.ok) throw res;
+      const {
+        [t.cg_id]: { usd: rate },
+      } = await res.json();
+      return [1 / rate, rate];
+    }
+
+    const estimate = await np.estimate(intent.amount.currency);
+    return [estimate.min, estimate.rate];
+  })(token);
+
+  if (totalAmount < min) {
+    return [400, `Min amount is:${min}`];
   }
 
-  const amount_to_pay_usd = totalAmount * estimate.rate;
+  const usdValue = totalAmount * rate;
   const dateNow = new Date();
 
+  const orderId = crypto.randomUUID();
+
   const order: OnHoldDonation.CryptoDBRecord = {
-    transactionId: crypto.randomUUID(),
+    transactionId: orderId,
     transactionDate: dateNow.toISOString(),
     amount: totalAmount,
     tipAmount: intent.amount.tip,
     feeAllowance: intent.amount.feeAllowance,
-    usdValue: amount_to_pay_usd,
+    usdValue,
     appUsed: intent.source,
     chainId: intent.viaId as any,
     destinationChainId: env === "production" ? "137" : "80002",
@@ -78,6 +135,7 @@ export async function createPayment(
     ...(env === "staging" && {
       expireAt: Math.floor(dateNow.getTime() / 1_000 + 86_400),
     }),
+    ...(isCustom(token.id) && { payment_id: orderId }),
     third_party: true,
   };
 
@@ -91,8 +149,24 @@ export async function createPayment(
 
   const order_description = `Donation to ${order.charityName}`;
 
+  if (isCustom(token.id)) {
+    const deposit_addr =
+      process.env[`DEPOSIT_ADDR_${token.network.toUpperCase()}`];
+    if (!deposit_addr) {
+      return [500, "Deposit address not defined"];
+    }
+    console.log(deposit_addr);
+    return {
+      id: order.transactionId,
+      address: deposit_addr,
+      amount: order.amount,
+      currency: token.code,
+      description: order_description,
+    } satisfies Payment;
+  }
+
   const invoice = await np.invoice({
-    price_amount: amount_to_pay_usd,
+    price_amount: usdValue,
     price_currency: "usd",
     pay_currency: order.denomination,
     ipn_callback_url: npEnvs.webhookUrl,
@@ -100,7 +174,7 @@ export async function createPayment(
     order_description,
   });
 
-  const payment = np.payment_invoice({
+  const p = await np.payment_invoice({
     iid: invoice.id,
     pay_currency: order.denomination,
     order_description,
@@ -108,7 +182,14 @@ export async function createPayment(
     case: env === "production" ? undefined : randomCase(),
   });
 
-  return payment;
+  return {
+    id: p.payment_id,
+    address: p.pay_address,
+    extra_address: p.payin_extra_id ?? undefined,
+    amount: p.pay_amount,
+    currency: p.pay_currency,
+    description: order_description,
+  };
 }
 
 function randomCase() {

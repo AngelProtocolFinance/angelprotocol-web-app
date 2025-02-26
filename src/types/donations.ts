@@ -90,6 +90,7 @@ const amountStr = v.pipe(
   v.transform((x) => +x),
   amountNum
 );
+const uuid = v.pipe(v.string(), v.uuid());
 const amount = v.union([amountNum, amountStr]);
 export const pct = v.pipe(amount, v.maxValue(100));
 export const donationItem = v.object({
@@ -114,7 +115,7 @@ export const donationItem = v.object({
   bankVerificationUrl: v.optional(v.pipe(v.string(), v.url())),
   viaId: v.fallback(viaId, "staging"),
   viaName: v.optional(v.string(), "Unknown"),
-  payment_id: v.optional(int),
+  payment_id: v.optional(v.union([int, uuid])),
 });
 
 export namespace Donation {

@@ -1,5 +1,5 @@
 import chains from "@better-giving/assets/chains";
-import prod_tokens from "@better-giving/assets/tokens";
+import prod_tokens, { isCustom } from "@better-giving/assets/tokens";
 import test_tokens from "@better-giving/assets/tokens/test";
 import type { NP } from "@better-giving/nowpayments/types";
 import {
@@ -77,6 +77,20 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         if (!tkn) return;
         try {
           tokenEv("loading");
+
+          if (isCustom(tkn.id)) {
+            //get usd rate from coingecko
+            const res = await fetch(
+              `https://api.coingecko.com/api/v3/simple/price?ids=${tkn.cg_id}&vs_currencies=usd`
+            );
+            if (!res.ok) throw res;
+            const {
+              [tkn.cg_id]: { usd: rate },
+            } = await res.json();
+            onChange({ ...tkn, amount: "", min: 1 / rate, rate });
+            return tokenEv("ok");
+          }
+
           const res = await fetch(
             `${APIs.aws}/${ver(1)}/crypto/v1/min-amount?currency_from=${tkn.code}&fiat_equivalent=usd`
           );
@@ -131,7 +145,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                 value={{ ...token, amount: "" }}
               >
                 <Image
-                  src={logoUrl(token.logo)}
+                  src={logoUrl(token.logo, token.id.includes("_"))}
                   className="w-6 h-6 rounded-full row-span-2"
                 />
 
