@@ -10,6 +10,7 @@ import type { Payment } from "types/crypto";
 
 interface IQrModal extends Payment {
   orderAmount: number;
+  onClose: () => void;
 }
 interface Props {
   paymentId: number | string;
@@ -34,7 +35,11 @@ export default function PaymentResumer({ paymentId, classes, amount }: Props) {
             return toast.error("Donation is already processing.");
           }
           const payment: Payment = await res.json();
-          setQr({ ...payment, orderAmount: amount });
+          setQr({
+            ...payment,
+            orderAmount: amount,
+            onClose: () => setQr(undefined),
+          });
         } catch (err) {
           setQr(undefined);
           setPrompt(errorPrompt(err));
@@ -44,18 +49,18 @@ export default function PaymentResumer({ paymentId, classes, amount }: Props) {
       }}
     >
       {intentState === "pending" ? "Loading..." : "Finish paying"}
-      {qr && <QrModal {...qr} />}
+      {qr && <QrModal {...qr} onClose={() => setQr(undefined)} />}
       {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </button>
   );
 }
 
 function QrModal(props: IQrModal) {
-  const token = tokens[props.currency.toUpperCase()];
+  const token = tokens[props.currency];
   return (
     <Modal
       open={true}
-      onClose={() => {}}
+      onClose={props.onClose ?? (() => {})}
       classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden px-4 py-8"
     >
       <h4 className="text-lg text-center mb-2">
@@ -66,7 +71,7 @@ function QrModal(props: IQrModal) {
         To complete your donation, send{" "}
         {roundDown(props.orderAmount, token.precision)}
         &nbsp;
-        {token.code} from your crypto wallet to the address below
+        {token.symbol} from your crypto wallet to the address below
       </p>
 
       <PayQr

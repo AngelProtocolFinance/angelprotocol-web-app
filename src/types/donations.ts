@@ -37,11 +37,7 @@ export const viaIds = [
 export const viaId = v.picklist(viaIds);
 
 const email = v.pipe(v.string(), v.email());
-const date = v.pipe(
-  v.string(),
-  v.isoTimestamp(),
-  v.maxValue(new Date().toISOString())
-);
+const date = v.pipe(v.string(), v.isoTimestamp());
 
 export const donationsQueryParams = v.pipe(
   v.object({
