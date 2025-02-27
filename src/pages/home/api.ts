@@ -6,7 +6,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const page1 = await getNpos({
     query: source.searchParams.get("query") ?? "",
     page: 1,
-    fund_opt_in: [true],
   });
   return page1;
 };
