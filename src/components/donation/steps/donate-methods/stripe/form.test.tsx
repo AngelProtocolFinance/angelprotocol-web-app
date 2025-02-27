@@ -122,7 +122,9 @@ describe("Stripe form test", () => {
     expect(mockSetState).not.toHaveBeenCalled();
 
     //frequency selector errors out and corrected
-    expect(screen.getByText(/required/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/please select donation frequency/i)
+    ).toBeInTheDocument();
     const freqOptions = screen.getAllByRole("radio");
     await userEvent.click(freqOptions[0]);
     expect(freqOptions[0]).toBeChecked();

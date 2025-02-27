@@ -2,8 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { roundDown } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { requiredString } from "schemas/string";
 import type { Currency } from "types/components";
+import { string } from "yup";
 import { usdOption } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import type { FormValues as FV, Props } from "./types";
@@ -29,7 +29,7 @@ export function useRhf(props: Props) {
     defaultValues: props.details || initial,
     resolver: yupResolver(
       schema<FV>({
-        frequency: requiredString,
+        frequency: string().required("Please select donation frequency"),
         amount: stringNumber(
           (s) => s.required("Please enter an amount"),
           (n) =>
