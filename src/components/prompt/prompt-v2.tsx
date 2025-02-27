@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { X } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Modal } from "../modal";
@@ -44,15 +44,13 @@ export function PromptV2({
         {children}
       </div>
       <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-blue-l5 border-t border-gray-l3">
-        <Link
-          to=".."
-          preventScrollReset
-          replace
+        <button
+          onClick={close}
           type="button"
           className="inline-block btn btn-blue px-8 py-2 max-sm:w-full"
         >
           {type === "success" ? "Done" : "Ok"}
-        </Link>
+        </button>
       </div>
     </Modal>
   );
