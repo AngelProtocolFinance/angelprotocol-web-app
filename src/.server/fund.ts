@@ -7,9 +7,6 @@ import { BatchGetCommand, GetCommand, UpdateCommand, ap } from "./aws/db";
 import { dbUpdate } from "./aws/helpers";
 import { env } from "./env";
 
-export const cacheControl =
-  "public, max-age=0, s-max-age=30, stale-while-revalidate=60";
-
 export const getFund = async (
   fundId: string
 ): Promise<SingleFund | undefined> => {

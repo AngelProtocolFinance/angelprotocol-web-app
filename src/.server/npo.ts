@@ -8,8 +8,6 @@ type K = keyof Endow;
 type ArrayValues<T extends readonly unknown[]> = T[number];
 type R<T> = T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow;
 
-export const cacheControl =
-  "public, max-age=0, s-max-age=30, stale-while-revalidate=60";
 /**@param id number - endow-id; string - slug */
 export async function getNpoByIdOrSlug<T extends K[]>(
   id: number | string,

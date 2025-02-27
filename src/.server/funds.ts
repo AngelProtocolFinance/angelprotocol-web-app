@@ -11,9 +11,6 @@ const HITS_PER_PAGE = 25;
 
 type FundHit = ToDoc<cs.CloudsearchFund>;
 
-export const cacheControl =
-  "public, max-age=0, s-max-age=30, stale-while-revalidate=60";
-
 export const getFunds = async ({
   query = "",
   page = 1,
