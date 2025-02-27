@@ -23,7 +23,7 @@ export function FundCard({ classes = "", ...props }: Props) {
           className="size-14 border border-gray-l3 rounded-lg object-cover bg-white row-span-2"
         />
         <Link
-          to={`${appRoutes.marketplace}/${props.id}`}
+          to={`${appRoutes.funds}/${props.id}`}
           className="hover:text-blue-d1 text-ellipsis overflow-hidden text-nowrap @xl/fund-card:text-balance col-start-2 w-full"
         >
           {props.name}
