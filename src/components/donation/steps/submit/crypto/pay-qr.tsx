@@ -1,3 +1,4 @@
+import { isCustom } from "@better-giving/assets/tokens";
 import Copier from "components/copier";
 import { logoUrl } from "constants/common";
 import { QRCodeSVG } from "qrcode.react";
@@ -5,7 +6,6 @@ import type { TokenV2 } from "types/components";
 
 interface Props {
   classes?: string;
-  amount: string;
   token: TokenV2;
   recipient: string;
   extraId: string | null;
@@ -16,7 +16,7 @@ export function PayQr({ classes = "", ...props }: Props) {
     <div className={`${classes} grid justify-items-center`}>
       <QRCodeSVG
         imageSettings={{
-          src: logoUrl(props.token.logo),
+          src: logoUrl(props.token.logo, isCustom(props.token.id)),
           height: 20,
           width: 20,
           excavate: true,

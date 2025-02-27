@@ -1,6 +1,7 @@
 import chains from "@better-giving/assets/chains";
-import prod_tokens from "@better-giving/assets/tokens";
+import prod_tokens, { isCustom } from "@better-giving/assets/tokens";
 import test_tokens from "@better-giving/assets/tokens/test";
+import type { NP } from "@better-giving/nowpayments/types";
 import {
   CloseButton,
   Combobox,
@@ -18,7 +19,6 @@ import { logger } from "helpers";
 import { SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { TokenV2 } from "types/components";
-import type { Crypto } from "types/crypto";
 import Image from "../../image";
 import type { Token } from "../types";
 import type { OnTokenChange } from "./types";
@@ -77,6 +77,20 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         if (!tkn) return;
         try {
           tokenEv("loading");
+
+          if (isCustom(tkn.id)) {
+            //get usd rate from coingecko
+            const res = await fetch(
+              `https://api.coingecko.com/api/v3/simple/price?ids=${tkn.cg_id}&vs_currencies=usd`
+            );
+            if (!res.ok) throw res;
+            const {
+              [tkn.cg_id]: { usd: rate },
+            } = await res.json();
+            onChange({ ...tkn, amount: "", min: 1 / rate, rate });
+            return tokenEv("ok");
+          }
+
           const res = await fetch(
             `${APIs.aws}/${ver(1)}/crypto/v1/min-amount?currency_from=${tkn.code}&fiat_equivalent=usd`
           );
@@ -84,7 +98,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
           const {
             min_amount: min,
             fiat_equivalent: min_usd,
-          }: Required<Crypto.Estimate> = await res.json();
+          }: Required<NP.Estimate> = await res.json();
 
           const rate = min_usd / min;
 
@@ -131,7 +145,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                 value={{ ...token, amount: "" }}
               >
                 <Image
-                  src={logoUrl(token.logo)}
+                  src={logoUrl(token.logo, isCustom(token.id))}
                   className="w-6 h-6 rounded-full row-span-2"
                 />
 
