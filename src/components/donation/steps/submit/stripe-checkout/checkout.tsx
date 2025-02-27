@@ -17,6 +17,7 @@ type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
+  const [complete, setComplete] = useState(false);
   const [prompt, setPrompt] = useState<IPromptV2>();
   const stripe = useStripe();
   const elements = useElements();
@@ -103,13 +104,14 @@ export default function Checkout(props: StripeCheckoutStep) {
         onReady={() => setStatus("ready")}
         onLoadError={(error) => setStatus({ error })}
         onLoaderStart={() => setStatus("loading")}
+        onChange={(x) => setComplete(x.complete)}
       />
       {status === "init" ? (
         <Loader />
       ) : (
         <button
-          className="btn btn-blue btn-donate bg-(--accent-primary) hover:enabled:bg-(--accent-primary) w-full mt-6"
-          disabled={!stripe || !elements || status !== "ready"}
+          className="btn btn-blue btn-donate enabled:bg-(--accent-primary) hover:enabled:bg-(--accent-primary) w-full mt-6"
+          disabled={!stripe || !elements || status !== "ready" || !complete}
           type="submit"
         >
           <LoadText text="Processing..." isLoading={status === "submitting"}>

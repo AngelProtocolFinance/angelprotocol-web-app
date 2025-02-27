@@ -22,13 +22,14 @@ const confirmSetupMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@stripe/react-stripe-js", () => ({
   Elements: vi.fn(({ children }) => children),
-  PaymentElement: vi.fn(({ onReady }: any) => {
+  PaymentElement: vi.fn(({ onReady, onChange }: any) => {
     useEffect(() => {
+      onChange({ complete: true });
       const id = setTimeout(onReady, 50);
       return () => {
         clearTimeout(id);
       };
-    }, [onReady]);
+    }, [onReady, onChange]);
     return <div />;
   }),
   useStripe: vi.fn(() => {
