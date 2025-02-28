@@ -1,6 +1,5 @@
 import type { EndowsPage } from "@better-giving/endowment";
 import type { NP } from "@better-giving/nowpayments/types";
-import { ver } from "api/api";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
 
@@ -16,7 +15,7 @@ export const handlers = [
     };
     return HttpResponse.json(data);
   }),
-  http.get(APIs.aws + `/${ver(1)}/crypto/v1/min-amount`, ({ request }) => {
+  http.get("/api/nowpayments/v1/min-amount", ({ request }) => {
     const url = new URL(request.url);
     const data: Required<NP.Estimate> = {
       min_amount: 1,

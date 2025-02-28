@@ -10,10 +10,8 @@ import {
   ComboboxOptions,
   PopoverPanel,
 } from "@headlessui/react";
-import { ver } from "api/api";
 import { logoUrl } from "constants/common";
 import { IS_TEST } from "constants/env";
-import { APIs } from "constants/urls";
 import Fuse from "fuse.js";
 import { logger } from "helpers";
 import { SearchIcon } from "lucide-react";
@@ -92,7 +90,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
           }
 
           const res = await fetch(
-            `${APIs.aws}/${ver(1)}/crypto/v1/min-amount?currency_from=${tkn.code}&fiat_equivalent=usd`
+            `/api/nowpayments/v1/min-amount?currency_from=${tkn.code}&fiat_equivalent=usd`
           );
           if (!res.ok) throw res;
           const {
