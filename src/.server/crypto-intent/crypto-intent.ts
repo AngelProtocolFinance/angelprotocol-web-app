@@ -8,8 +8,8 @@ import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
 import type { Payment } from "types/crypto";
 import { GetCommand, PutCommand, ap, apes } from "../aws/db";
-import { env, nowPayments as npEnvs } from "../env";
-import { np } from "./np";
+import { env, npEnvs } from "../env";
+import { np } from ".server/sdks";
 
 export const getPendingIntent = async (
   paymentId: string | number

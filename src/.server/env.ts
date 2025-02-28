@@ -39,8 +39,13 @@ export const api_encryption_key = v.parse(
   process.env.API_ENCRYPTION_KEY
 );
 
-export const nowPayments = {
+export const npEnvs = {
   apiToken: v.parse(required, process.env.NOWPAYMENTS_API_KEY),
   baseUrl: v.parse(required, process.env.NOWPAYMENTS_API_URL),
   webhookUrl: v.parse(required, process.env.NOWPAYMENTS_WEBHOOK_URL),
+  ipnSecret: v.parse(required, process.env.NOWPAYMENTS_IPN_SECRET),
+};
+
+export const discordEnvs = {
+  awsMonitorUrl: v.parse(required, process.env.DISCORD_AWS_MONITOR_WEBHOOK_URL),
 };
