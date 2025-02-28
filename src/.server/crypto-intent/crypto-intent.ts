@@ -7,7 +7,7 @@ import { getRecipient } from "@better-giving/helpers-donation";
 import { tables } from "@better-giving/types/list";
 import type { Payment } from "types/crypto";
 import { GetCommand, PutCommand, ap, apes } from "../aws/db";
-import { env, npEnvs } from "../env";
+import { env } from "../env";
 import { np } from ".server/sdks";
 
 export const getPendingIntent = async (
@@ -56,7 +56,8 @@ export const getPendingIntent = async (
 };
 
 export async function createPayment(
-  intent: DonationIntent
+  intent: DonationIntent,
+  webhookUrl: string
 ): Promise<Payment | [number, string]> {
   const recipient = await getRecipient(intent.recipient, env, ap);
   if (!recipient) {
@@ -173,7 +174,7 @@ export async function createPayment(
     price_amount: usdValue,
     price_currency: "usd",
     pay_currency: order.denomination,
-    ipn_callback_url: npEnvs.webhookUrl,
+    ipn_callback_url: webhookUrl,
     order_id: order.transactionId,
     order_description,
   });
