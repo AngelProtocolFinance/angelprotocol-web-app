@@ -167,7 +167,7 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
 
       builder.append(_txs);
       await ap
-        .send(fundContribUpdate(settledUsd.endow, order.fund_id))
+        .send(fundContribUpdate(processed.net, order.fund_id))
         .catch(console.error);
     }
     // to single endowments
