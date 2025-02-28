@@ -4,7 +4,6 @@ import tokenMap from "@better-giving/assets/tokens/map";
 import type { OnHoldDonation } from "@better-giving/donation";
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { getRecipient } from "@better-giving/helpers-donation";
-import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
 import type { Payment } from "types/crypto";
 import { GetCommand, PutCommand, ap, apes } from "../aws/db";
@@ -184,7 +183,7 @@ export async function createPayment(
     pay_currency: order.denomination,
     order_description,
     // nowpayments only simulates in test
-    case: env === "production" ? undefined : randomCase(),
+    case: env === "production" ? undefined : "success",
   });
 
   return {
@@ -196,15 +195,4 @@ export async function createPayment(
     description: order_description,
     rate,
   };
-}
-
-function randomCase() {
-  const statuses: NP.Payment.TestCase[] = [
-    "success",
-    "common",
-    "failed",
-    "partially_paid",
-  ];
-  const randomIdx = Math.floor(Math.random() * statuses.length);
-  return statuses[randomIdx];
 }

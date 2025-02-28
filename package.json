@@ -7,7 +7,7 @@
   "scripts": {
     "build": "remix vite:build",
     "start": "remix vite:dev",
-    "test": "vitest",
+    "test": "vitest --run",
     "lint": "biome check ./src",
     "format": "biome check --write src",
     "format-unsafe": "biome check --write-unsafe src",
