@@ -5,7 +5,7 @@ import { np } from ".server/sdks";
 /**
  * reasons:
  *  - paid below minimum amount
- *  - ??
+ *  - ???
  */
 export async function handleFailed(payment: NP.PaymentPayload) {
   const pay = await np.estimate(payment.pay_currency);
