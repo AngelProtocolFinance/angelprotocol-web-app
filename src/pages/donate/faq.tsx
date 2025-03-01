@@ -150,7 +150,7 @@ const faqs = [
           intensity={1}
           classes="text-gray-d4 text-xs font-mono bg-blue-l4 p-0.5"
         >
-          BG:&nbsp;Amount
+          BG:&nbsp;$amount
         </Em>
         .
       </p>,
