@@ -119,7 +119,7 @@ function Prompt({ recipientName, open, setOpen, url, ...social }: IPrompt) {
       >
         Donate to <span className="font-bold">{recipientName}</span> fundraiser
         on <span className="font-bold">{social.handle}</span>!{" "}
-        {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever. Help join the cause: ${new URL(url).origin}.`}
+        {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever.`}
       </p>
       <ExtLink
         href={generateShareLink(shareText, social.id, url)}
@@ -163,6 +163,6 @@ function generateShareLink(
 
     //Linkedin
     default:
-      return `https://www.linkedin.com/feed/?shareActive=true&text=${encodedText}`;
+      return `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${rawText} ${url}`)}`;
   }
 }
