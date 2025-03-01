@@ -140,6 +140,10 @@ const faqs = [
         </Em>
       </p>,
       <p>
+        IMPORTANT: Add the name of the Nonprofit you are donating to in the
+        memo.
+      </p>,
+      <p>
         If you would like to add a contribution for Better Giving to help keep
         our services free, you may add that in the memo with{" "}
         <Em
