@@ -1,35 +1,53 @@
 import {
   Link,
   NavLink,
+  useLoaderData,
   useOutletContext,
-  useSearchParams,
 } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import char from "assets/images/celebrating-character.webp";
 import { laira } from "assets/laira/laira";
-import { Share } from "components/donation";
+import {
+  type DonationRecipient,
+  Share,
+  donationRecipient,
+  isFund,
+} from "components/donation";
 import ExtLink from "components/ext-link";
 import Image from "components/image";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { metas } from "helpers/seo";
+import { safeParse } from "valibot";
 
-export const meta: MetaFunction = ({ location }) => {
-  const s = new URLSearchParams(location.search);
-  const recipientName = s.get("recipient_name");
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const recipient = safeParse(
+    donationRecipient,
+    Object.fromEntries(url.searchParams.entries())
+  );
+  if (recipient.issues) return null;
+  return recipient.output;
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  const d = data as DonationRecipient | null;
+  const donateUrl = d
+    ? `${BASE_URL}${isFund(d.id) ? appRoutes.donate_fund : appRoutes.donate}/${d.id}`
+    : undefined;
+
   return metas({
-    title: `Donation to ${recipientName ?? "a Nonprofit"}`,
+    title: `Donation to ${d?.name ?? "a Nonprofit"}`,
     image: laira.gift,
-    description: `I just donated to ${recipientName ?? "a nonprofit"} on Better Giving! They can choose to use my gift today, or save and invest it for sustainable growth. When you give today, you give forever. Join me: ${BASE_URL}`,
-    url: `${BASE_URL}${location.pathname}${location.search}`,
+    description: `I just donated to ${d?.name ?? "a nonprofit"} on Better Giving! ${d && isFund(d.id) ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
+    url: donateUrl,
   });
 };
 
 export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const [params] = useSearchParams();
-  const recipientName = params.get("recipient_name");
+  const recipient = useLoaderData() as DonationRecipient | null;
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
@@ -51,7 +69,7 @@ export default function DonateThanks() {
       <p className="text-center text-gray">
         We'll process your donation to{" "}
         <span className="font-bold">
-          {recipientName ?? "the nonprofit you specified"}
+          {recipient?.name ?? "the nonprofit you specified"}
         </span>{" "}
         as soon as the payment has cleared.
         {widgetVersion
@@ -60,7 +78,8 @@ export default function DonateThanks() {
       </p>
 
       <Share
-        recipientName={recipientName ?? "a nonprofit"}
+        name={recipient?.name ?? "Better Giving"}
+        id={recipient?.id ?? "1"}
         className="mt-6 border border-gray-l3 rounded-xl"
       />
 

@@ -1,4 +1,5 @@
 import type { DonateMethodId } from "@better-giving/endowment";
+import { plusInt } from "api/schema/endow-id";
 import type {
   DetailedCurrency,
   OptionType,
@@ -8,6 +9,7 @@ import type { Donor } from "types/donate";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
+import * as v from "valibot";
 
 export type Frequency = "one-time" | "subscription";
 
@@ -16,12 +18,22 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = {
-  id: string;
-  name: string;
-  hide_bg_tip?: boolean;
-  progDonationsAllowed?: boolean;
-};
+const uuid = v.pipe(v.string(), v.trim(), v.uuid());
+export const recipientId = v.pipe(
+  v.union([uuid, plusInt]),
+  v.transform((x) => x.toString())
+);
+export const donationRecipient = v.object({
+  id: v.fallback(recipientId, "1"),
+  name: v.fallback(v.pipe(v.string(), v.nonEmpty()), "Better Giving"),
+  hide_bg_tip: v.optional(v.boolean()),
+  progDonationsAllowed: v.optional(v.boolean()),
+});
+export const isFund = (recipient: string) =>
+  v.safeParse(uuid, recipient).success; //is uuid
+
+export interface DonationRecipient
+  extends v.InferOutput<typeof donationRecipient> {}
 
 type BaseDonationDetails = {
   /** value is "" if no program is selected   */

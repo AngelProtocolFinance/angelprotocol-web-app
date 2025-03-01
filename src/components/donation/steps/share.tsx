@@ -8,6 +8,7 @@ import { X } from "lucide-react";
 import { useCallback, useState } from "react";
 import ExtLink from "../../ext-link";
 import { Modal } from "../../modal";
+import { type DonationRecipient, isFund } from "./types";
 
 interface SocialMedia {
   id: "x" | "telegram" | "linkedin" | "fb";
@@ -36,14 +37,18 @@ const socials: SocialMedia[] = [
   },
 ];
 
-type ShareProps = {
-  recipientName: string;
-  className?: string;
-};
+interface Recipient extends Pick<DonationRecipient, "id" | "name"> {}
 
-export default function ShareContainer(props: ShareProps) {
+interface ShareProps extends Recipient {
+  className?: string;
+}
+
+export default function ShareContainer({
+  className = "",
+  ...recipient
+}: ShareProps) {
   return (
-    <div className={`${props.className ?? ""} grid justify-items-center py-2`}>
+    <div className={`${className} grid justify-items-center py-2`}>
       <h2 className="w-full pt-2 text-center font-medium text-[color:var(--accent-primary)] mb-2">
         Spread the word!
       </h2>
@@ -53,7 +58,7 @@ export default function ShareContainer(props: ShareProps) {
       </p>
       <div className="flex items-center gap-2 mt-1">
         {socials.map((s) => (
-          <Share key={s.id} {...s} recipientName={props.recipientName} />
+          <Share key={s.id} {...s} recipient={recipient} />
         ))}
       </div>
     </div>
@@ -61,7 +66,7 @@ export default function ShareContainer(props: ShareProps) {
 }
 
 interface IShare extends SocialMedia {
-  recipientName: string;
+  recipient: Recipient;
 }
 function Share(props: IShare) {
   const [open, setOpen] = useState(false);
@@ -84,7 +89,7 @@ interface IPrompt extends IShare {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
+function Prompt({ recipient, open, setOpen, ...social }: IPrompt) {
   //shareText will always hold some value
   const [shareText, setShareText] = useState("");
   const msgRef = useCallback((node: HTMLParagraphElement | null) => {
@@ -112,17 +117,15 @@ function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
         ref={msgRef}
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l3 rounded-sm"
       >
-        I just donated to <span className="font-bold">{recipientName}</span> on{" "}
-        <span className="font-bold">@BetterDotGiving</span>! They can choose to
-        use my gift today, or save and invest it for sustainable growth. When
-        you give today, you give forever. Join me:{" "}
-        <a href={BASE_URL} className="font-bold">
-          https://better.giving
-        </a>
-        .
+        I just donated to <span className="font-bold">{recipient.name}</span> on{" "}
+        <span className="font-bold">@BetterDotGiving</span>!{" "}
+        {isFund(recipient.id)
+          ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?"
+          : "They can choose to use my gift today, or save and invest it for sustainable growth"}
+        . When you give today, you give forever.
       </p>
       <ExtLink
-        href={generateShareLink(shareText, social.id, recipientName)}
+        href={generateShareLink(shareText, social.id, recipient)}
         className="btn btn-outline btn-donate hover:bg-blue-l4 gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center">
@@ -141,14 +144,13 @@ function Prompt({ recipientName, open, setOpen, ...social }: IPrompt) {
 function generateShareLink(
   rawText: string,
   type: SocialMedia["id"],
-  recipientName: string
+  recipient: Recipient
 ) {
-  const encodedText = encodeURIComponent(rawText);
-  const encodedURL = encodeURIComponent(BASE_URL);
+  const donateUrl = `${BASE_URL}${isFund(recipient.id) ? appRoutes.donate_fund : appRoutes.donate}/${recipient.id}`;
   switch (type) {
     case "x":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
-      return `https://x.com/intent/tweet?text=${encodedText}`;
+      return `https://x.com/intent/tweet?text=${encodeURIComponent(`${rawText} ${donateUrl}`)}`;
     /**
      * feed description is depracated
      * https://developers.facebook.com/docs/sharing/reference/feed-dialog#response
@@ -156,15 +158,15 @@ function generateShareLink(
      */
     case "fb":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        `${BASE_URL}/${appRoutes.donate_thanks}?recipient_name=${recipientName}`
-      )}&quote=${encodedText}`;
+        `${BASE_URL}/${appRoutes.donate_thanks}?name=${recipient.name}&id=${recipient.id}`
+      )}&quote=${encodeURIComponent(rawText)}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons
     case "telegram":
-      return `https://telegram.me/share/url?url=${encodedURL}&text=${encodedText}`;
+      return `https://telegram.me/share/url?url=${encodeURIComponent(donateUrl)}&text=${encodeURIComponent(rawText)}`;
 
     //Linkedin
     default:
-      return `https://www.linkedin.com/feed/?shareActive=true&text=${encodedText}`;
+      return `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(`${rawText} ${donateUrl}`)}`;
   }
 }

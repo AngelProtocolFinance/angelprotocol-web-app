@@ -1,8 +1,10 @@
 export * from "./steps";
-export type {
-  DonationState,
-  DonationRecipient,
-  DetailedCurrency,
+export {
+  type DonationState,
+  type DonationRecipient,
+  type DetailedCurrency,
+  donationRecipient,
+  isFund,
 } from "./steps/types";
 export { Steps } from "./steps";
 export { default as Share } from "./steps/share";

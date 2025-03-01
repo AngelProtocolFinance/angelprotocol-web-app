@@ -117,7 +117,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         disabled={!!error || isLoading}
         onClick={() =>
           navigate(
-            `${appRoutes.donate_thanks}?recipient_name=${init.recipient.name}`
+            `${appRoutes.donate_thanks}?name=${init.recipient.name}&id=${init.recipient.id}`
           )
         }
         text="I have completed the payment"
