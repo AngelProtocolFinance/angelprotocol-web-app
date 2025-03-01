@@ -141,10 +141,10 @@ const rmx = remix({
           });
         });
         r("profile/:id", "./pages/profile/profile-redirect.ts");
-        r("funds", "./pages/funds/funds.tsx");
-        r("funds/:fundId", "./pages/funds/fund/index.tsx");
-        r("funds/:fundId/edit", "./pages/funds/edit-fund/index.ts");
-        r("funds/new", "./pages/funds/create-fund/index.ts");
+        r("fundraisers", "./pages/funds/funds.tsx");
+        r("fundraisers/:fundId", "./pages/funds/fund/index.tsx");
+        r("fundraisers/:fundId/edit", "./pages/funds/edit-fund/index.ts");
+        r("fundraisers/new", "./pages/funds/create-fund/index.ts");
         r("privacy-policy", "./pages/legal/privacy-policy.tsx");
         r("terms-of-use-npo", "./pages/legal/terms-nonprofits.tsx");
         r("terms-of-use", "./pages/legal/terms-donors.tsx");

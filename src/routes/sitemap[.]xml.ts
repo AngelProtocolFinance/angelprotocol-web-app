@@ -21,7 +21,7 @@ const staticUrls: SitemapUrl[] = [
   { url: "/about", changeFrequency: "monthly", priority: 0.7 },
   { url: "/blog", changeFrequency: "daily", priority: 0.8 },
   { url: "/marketplace", changeFrequency: "daily", priority: 0.9 },
-  { url: "/funds", changeFrequency: "daily", priority: 0.9 },
+  { url: "/fundraisers", changeFrequency: "daily", priority: 0.9 },
   { url: "/wp-plugin", changeFrequency: "monthly", priority: 0.6 },
   { url: "/privacy-policy", changeFrequency: "monthly", priority: 0.4 },
   { url: "/terms-of-use", changeFrequency: "monthly", priority: 0.4 },
