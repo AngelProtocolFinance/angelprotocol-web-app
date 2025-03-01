@@ -57,7 +57,7 @@ export default function Fund() {
           <div className="absolute -top-8 flex justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
-              to="../funds"
+              to="../fundraisers"
             >
               <ArrowLeft size={16} />
               <span>Fundraisers</span>
