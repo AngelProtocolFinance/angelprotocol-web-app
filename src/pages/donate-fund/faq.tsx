@@ -54,7 +54,7 @@ export default function FAQ({ classes = "", endowId }: Props) {
   );
 }
 
-const faqs = (endowId: number) => [
+const faqs = (_: number) => [
   {
     id: 1,
     question: "How does my donation work to benefit nonprofits?",
