@@ -134,7 +134,7 @@ export function Team({ classes = "" }) {
         Backed by a passionate team with deep nonprofit, finance, and tech
         experience
       </h2>
-      <div className="grid max-sm:justify-items-center gap-y-16">
+      <div className="grid xl:grid-cols-2 xl:grid-rows-[auto_1fr] max-sm:justify-items-center gap-y-18 xl:gap-y-24 xl:gap-x-8">
         {members.map((member) => (
           <Member key={member.id} {...member} />
         ))}
@@ -159,10 +159,10 @@ interface IMember {
 function Member({ bio: [tagline, ...more], ...props }: IMember) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <div className="grid md:grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-4 max-md:justify-items-center">
+    <div className="grid md:grid-cols-[auto_1fr] xl:grid-rows-subgrid xl:row-span-2 gap-4 max-md:justify-items-center">
       <div className="space-y-4 self-start row-span-2 relative">
         <img
-          width={200}
+          width={150}
           className="-mt-1 rounded-full bg-gray-d1 object-contain shadow-2xl aspect-square md:row-span-3"
           src={props.image}
         />
