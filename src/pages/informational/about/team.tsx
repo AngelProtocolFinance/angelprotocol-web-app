@@ -2,7 +2,7 @@ import github from "assets/icons/social/github.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
 import brylle from "assets/people/brylle.webp";
 import chauncey from "assets/people/chauncey.webp";
-import diane from "assets/people/diane.webp";
+import dianne from "assets/people/dianne.webp";
 import john from "assets/people/john.webp";
 import justin from "assets/people/justin.webp";
 import pallav from "assets/people/pallav.webp";
@@ -50,7 +50,7 @@ const members: IMember[] = [
       linkedin: "https://www.linkedin.com/in/shaun-robinson",
       email: "mailto:shaun@better.giving",
     },
-    image: diane,
+    image: dianne,
     bio: [
       "Dianne is a dedicated Customer Success and Outreach Manager with a passion for building strong client relationships and driving impactful engagement strategies.",
       "With expertise in customer support, team leadership, and outreach initiatives, Dianne ensures clients achieve their goals while fostering long-term partnerships. Focused on delivering exceptional service and innovative solutions, Dianne is committed to customer satisfaction and organizational growth.",
