@@ -1,6 +1,9 @@
 import github from "assets/icons/social/github.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
-import chauncey from "assets/people/chauncey2.webp";
+import brylle from "assets/people/brylle.webp";
+import chauncey from "assets/people/chauncey.webp";
+import diane from "assets/people/diane.webp";
+import john from "assets/people/john.webp";
 import justin from "assets/people/justin.webp";
 import pallav from "assets/people/pallav.webp";
 import shaun from "assets/people/shaun.webp";
@@ -18,7 +21,7 @@ const members: IMember[] = [
       linkedin: "https://www.linkedin.com/in/timstirrup",
       email: "mailto:tim@better.giving",
     },
-    image: tim,
+    image: brylle,
     bio: [
       "Specializing in content strategy, social media management, digital marketing, and partnership development. His role involves crafting compelling campaigns, managing strategic collaborations, and ensuring consistent and impactful messaging across all platforms.",
       "Before entering the world of outsourcing, Brylle honed his skills as a writer for a broadcasting company, where he developed a strong foundation in storytelling and audience engagement. With his expertise and diverse experience, Brylle brings a strategic approach to managing content and fostering meaningful partnerships.",
@@ -47,7 +50,7 @@ const members: IMember[] = [
       linkedin: "https://www.linkedin.com/in/shaun-robinson",
       email: "mailto:shaun@better.giving",
     },
-    image: shaun,
+    image: diane,
     bio: [
       "Dianne is a dedicated Customer Success and Outreach Manager with a passion for building strong client relationships and driving impactful engagement strategies.",
       "With expertise in customer support, team leadership, and outreach initiatives, Dianne ensures clients achieve their goals while fostering long-term partnerships. Focused on delivering exceptional service and innovative solutions, Dianne is committed to customer satisfaction and organizational growth.",
@@ -61,7 +64,7 @@ const members: IMember[] = [
       linkedin: "https://www.linkedin.com/in/shaun-robinson",
       email: "mailto:shaun@better.giving",
     },
-    image: shaun,
+    image: john,
     bio: [
       "John Mark is a full-stack marketer specializing in digital marketing, content creation, project management, analytics, and web design to help nonprofits grow sustainably and achieve their goals.",
       "A proud dog lover who believes every wagging tail deserves a happy ending and an avid photographer with a passion for capturing moments that tell a story, John combines his skills and passions to make a difference—one campaign, one snapshot, and one cause at a time.",

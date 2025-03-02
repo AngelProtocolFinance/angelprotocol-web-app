@@ -126,14 +126,37 @@ if [ -d "$input_path" ]; then
     echo "Processing directory: $input_path"
     echo "----------------------------"
     
-    # Find all image files in directory (case insensitive)
-    find "$input_path" -type f -regextype posix-extended -iregex ".*\.(jpg|jpeg|png|gif|bmp|tiff)$" | while read -r image; do
-        convert_to_webp "$image"
-    done
+    # Find all image files in directory (cross-platform compatible version)
+    # This uses a for loop with shell pattern matching instead of -regextype
+    shopt -s nullglob nocaseglob  # Enable shell options for case-insensitive matching
+    
+    process_directory() {
+        local dir="$1"
+        local file
+        
+        # Process files in current directory
+        for ext in jpg jpeg png gif bmp tiff; do
+            for file in "$dir"/*.$ext "$dir"/*.$ext; do
+                if [ -f "$file" ]; then
+                    convert_to_webp "$file"
+                fi
+            done
+        done
+        
+        # Process subdirectories recursively
+        for subdir in "$dir"/*/; do
+            if [ -d "$subdir" ]; then
+                process_directory "$subdir"
+            fi
+        done
+    }
+    
+    process_directory "$input_path"
+    shopt -u nullglob nocaseglob  # Disable shell options when done
     
     echo "Directory processing complete!"
 else
-    # Check if file is an image
+    # Check if file is an image (case insensitive)
     if [[ "$input_path" =~ \.(jpg|jpeg|png|gif|bmp|tiff)$ ]]; then
         convert_to_webp "$input_path"
     else
