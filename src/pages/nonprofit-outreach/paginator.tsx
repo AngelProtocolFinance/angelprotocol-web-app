@@ -8,7 +8,7 @@ interface Props {
   className?: string;
 }
 
-export default function Pagination({
+export function Paginator({
   page,
   size,
   num_items,
@@ -64,7 +64,7 @@ export default function Pagination({
     >
       {/* Previous button */}
       <button
-        className={`flex items-center justify-center size-8 rounded-md border border-gray-l3 ${
+        className={`flex items-center justify-center size-8 rounded-md border border-gray-l1 ${
           page <= 1
             ? "bg-gray-l3 text-gray-l1 cursor-not-allowed"
             : "bg-white text-gray-d3 hover:bg-gray-l4 hover:text-gray-d4"
@@ -96,10 +96,10 @@ export default function Pagination({
           return (
             <button
               key={pageNumber}
-              className={`flex items-center justify-center size-8 rounded-md ${
+              className={`flex items-center justify-center p-1 min-w-8 rounded-md ${
                 page === pageNumber
-                  ? "bg-blue-d1 text-white"
-                  : "bg-white border text-gray-d2 hover:bg-gray-50 hover:text-gray-d4"
+                  ? "bg-blue-d1 border border-blue-d1 text-white"
+                  : "bg-white border border-gray-l1 text-gray-d2 hover:bg-gray-50 hover:text-gray-d4"
               }`}
               onClick={() => onPageChange(Number(pageNumber))}
               aria-label={`Page ${pageNumber}`}
@@ -113,7 +113,7 @@ export default function Pagination({
 
       {/* Next button */}
       <button
-        className={`flex items-center justify-center size-8 rounded-md border ${
+        className={`flex items-center justify-center size-8 rounded-md border border-gray-l1 ${
           page >= totalPages
             ? "bg-gray-l3 text-gray-l1 cursor-not-allowed"
             : "bg-white text-gray-d2 hover:bg-gray-l4 hover:text-gray-d4"
