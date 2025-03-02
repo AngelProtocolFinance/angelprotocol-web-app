@@ -6,7 +6,8 @@ import { nonprofits } from ".server/mongodb/db";
 export interface LoaderData {
   items: NonprofitItem[];
   page: number;
-  pages: number;
+  size: number;
+  num_items: number;
 }
 
 const plusInt = v.pipe(
@@ -26,7 +27,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const skip = (page - 1) * limit;
 
   const all = await nonprofits.countDocuments({});
-  const pages = Math.ceil(all / limit);
   const items = await nonprofits
     .find({})
     .sort({ assets: -1 })
@@ -37,6 +37,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return {
     items,
     page,
-    pages,
+    size: limit,
+    num_items: all,
   } satisfies LoaderData;
 };
