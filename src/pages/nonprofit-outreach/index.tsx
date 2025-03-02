@@ -1,5 +1,5 @@
 import { useLoaderData } from "@remix-run/react";
-import type { NonprofitItem } from "types/mongodb/nonprofits";
+import type { LoaderData } from "./api";
 export { loader } from "./api";
 
 const _usd = new Intl.NumberFormat("en-US", {
@@ -8,7 +8,7 @@ const _usd = new Intl.NumberFormat("en-US", {
 });
 
 export default function Page() {
-  const data = useLoaderData<NonprofitItem[]>();
+  const data = useLoaderData<LoaderData>();
 
   console.log(data);
   return (
@@ -24,7 +24,7 @@ export default function Page() {
           </tr>
         </thead>
         <tbody>
-          {data.map((d) => (
+          {data.items.map((d) => (
             <tr key={d._id}>
               <td className="border border-gray-l3 p-2">{d.ein}</td>
               <td className="border border-gray-l3 p-2">{d.name}</td>
