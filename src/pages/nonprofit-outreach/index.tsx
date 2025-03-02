@@ -1,5 +1,6 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import type { LoaderData } from "./api";
+import Pagination from "./paginator";
 export { loader } from "./api";
 
 const _usd = new Intl.NumberFormat("en-US", {
@@ -9,8 +10,8 @@ const _usd = new Intl.NumberFormat("en-US", {
 
 export default function Page() {
   const data = useLoaderData<LoaderData>();
+  const [, setParams] = useSearchParams();
 
-  console.log(data);
   return (
     <div className="xl:mx-auto xl:container pt-16 font-heading text-sm">
       <table className="self-start border-collapse">
@@ -21,6 +22,9 @@ export default function Page() {
             <th className="text-left p-2 border border-gray-l3">Assets</th>
             <th className="text-left p-2 border border-gray-l3">Income</th>
             <th className="text-left p-2 border border-gray-l3">Revenue</th>
+            <th className="text-left p-2 border border-gray-l3">City</th>
+            <th className="text-left p-2 border border-gray-l3">State</th>
+            <th className="text-left p-2 border border-gray-l3">State</th>
           </tr>
         </thead>
         <tbody>
@@ -43,10 +47,24 @@ export default function Page() {
                   ? _usd.format(d.revenue)
                   : "-"}
               </td>
+              <td className="border border-gray-l3 p-2">{d.city}</td>
+              <td className="border border-gray-l3 p-2">{d.state}</td>
+              <td className="border border-gray-l3 p-2">{d.country}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Pagination
+        onPageChange={(page: number) =>
+          setParams((p) => {
+            p.set("page", page.toString());
+            return p;
+          })
+        }
+        size={data.size}
+        num_items={data.num_items}
+        page={data.page}
+      />
     </div>
   );
 }
