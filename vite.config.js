@@ -141,6 +141,7 @@ const rmx = remix({
           });
         });
         r("profile/:id", "./pages/profile/profile-redirect.ts");
+        r("funds/*", "./pages/funds/redirect.ts");
         r("fundraisers", "./pages/funds/funds.tsx");
         r("fundraisers/:fundId", "./pages/funds/fund/index.tsx");
         r("fundraisers/:fundId/edit", "./pages/funds/edit-fund/index.ts");
