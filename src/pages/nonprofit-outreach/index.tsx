@@ -1,6 +1,6 @@
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import type { LoaderData } from "./api";
-import Pagination from "./paginator";
+import { Paginator } from "./paginator";
 export { loader } from "./api";
 
 const _usd = new Intl.NumberFormat("en-US", {
@@ -54,7 +54,8 @@ export default function Page() {
           ))}
         </tbody>
       </table>
-      <Pagination
+      <Paginator
+        className="mt-4"
         onPageChange={(page: number) =>
           setParams((p) => {
             p.set("page", page.toString());
