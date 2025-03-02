@@ -1,6 +1,14 @@
 import type { WithId } from "mongodb";
 
-export interface Nonprofit {
+export interface Indexed {
+  /** Asset amount (can be NaN) */
+  assets?: number; //-1
+  /** Income amount (can be NaN) */
+  income?: number; //-1
+  /** Revenue amount (can be NaN) */
+  revenue?: number; //-1
+}
+export interface Nonprofit extends Indexed {
   /** Employer Identification Number (unique identifier) */
   ein: string;
 
@@ -30,15 +38,6 @@ export interface Nonprofit {
 
   /** National Taxonomy of Exempt Entities code (can be NaN for string fields) */
   ntee_code?: string;
-
-  /** Asset amount (can be NaN) */
-  assets?: number;
-
-  /** Income amount (can be NaN) */
-  income?: number;
-
-  /** Revenue amount (can be NaN) */
-  revenue?: number;
 
   /** Record creation timestamp */
   created_at: Date;

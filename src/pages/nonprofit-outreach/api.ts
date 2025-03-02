@@ -1,5 +1,6 @@
 import type { LoaderFunction } from "@vercel/remix";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
+import * as v from "valibot";
 import { nonprofits } from ".server/mongodb/db";
 
 export interface LoaderData {
@@ -8,10 +9,20 @@ export interface LoaderData {
   pages: number;
 }
 
-const limit = 2;
+const plusInt = v.pipe(
+  v.string(),
+  v.transform((x) => +x),
+  v.minValue(1)
+);
+export const queryParams = v.object({
+  page: v.optional(plusInt, "1"),
+  limit: v.optional(plusInt, "10"),
+});
+
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
-  const page = Number(url.searchParams.get("page")) || 1;
+  const raw = Object.fromEntries(url.searchParams.entries());
+  const { page, limit } = v.parse(queryParams, raw);
   const skip = (page - 1) * limit;
 
   const all = await nonprofits.countDocuments({});
