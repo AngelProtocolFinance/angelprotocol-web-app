@@ -10,6 +10,7 @@ const _usd = new Intl.NumberFormat("en-US", {
 
 export default function Page() {
   const data = useLoaderData<LoaderData>();
+  console.log(data.stats);
   const [, setParams] = useSearchParams();
 
   return (
@@ -28,8 +29,8 @@ export default function Page() {
           </tr>
         </thead>
         <tbody>
-          {data.items.map((d) => (
-            <tr key={d._id}>
+          {data.items.map((d, i) => (
+            <tr key={d._id + i}>
               <td className="border border-gray-l3 p-2">{d.ein}</td>
               <td className="border border-gray-l3 p-2">{d.name}</td>
               <td className="border border-gray-l3 p-2 text-sm">
