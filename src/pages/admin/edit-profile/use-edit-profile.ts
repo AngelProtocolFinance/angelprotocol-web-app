@@ -25,13 +25,15 @@ export default function useEditProfile(df: DirtyFields) {
       if (df.card_img) update.card_img = fv.card_img;
 
       if (df.slug) {
-        const result = await getEndow(fv.slug, ["id"], false);
-        //endow is found with update.slug
-        if (result.id) {
-          return setPrompt({
-            type: "error",
-            children: `Slug "${fv.slug}" is already taken`,
-          });
+        if (fv.slug !== "") {
+          const result = await getEndow(fv.slug, ["id"], false);
+          //endow is found with update.slug
+          if (result.id) {
+            return setPrompt({
+              type: "error",
+              children: `Slug "${fv.slug}" is already taken`,
+            });
+          }
         }
         update.slug = fv.slug;
       }
