@@ -42,7 +42,7 @@ export default function Funds() {
           <Link
             to={{
               pathname: appRoutes.funds + "/new",
-              search: `npo=$ endowId}`,
+              search: `npo=${endow.id}`,
             }}
             className="btn btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4 col-span-full justify-self-start"
           >
