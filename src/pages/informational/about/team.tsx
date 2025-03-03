@@ -18,8 +18,8 @@ const members: IMember[] = [
     name: "Brylle Gutierrez",
     title: "Content and Partnership Manager",
     socials: {
-      linkedin: "https://www.linkedin.com/in/timstirrup",
-      email: "mailto:tim@better.giving",
+      linkedin: "https://www.linkedin.com/in/brylle-gutierrez-b03188340/",
+      email: "mailto:brylle@better.givingg",
     },
     image: brylle,
     bio: [
@@ -47,8 +47,8 @@ const members: IMember[] = [
     name: "Dianne Grace Leopardas",
     title: "Customer Success and Outreach Manager",
     socials: {
-      linkedin: "https://www.linkedin.com/in/shaun-robinson",
-      email: "mailto:shaun@better.giving",
+      linkedin: "https://www.linkedin.com/in/dianne-agbada-22ab63340/",
+      email: "mailto:dianne@better.giving",
     },
     image: dianne,
     bio: [
@@ -61,8 +61,8 @@ const members: IMember[] = [
     name: "John Mark Velasco",
     title: "Digital Marketing and Media Manager",
     socials: {
-      linkedin: "https://www.linkedin.com/in/shaun-robinson",
-      email: "mailto:shaun@better.giving",
+      linkedin: "https://www.linkedin.com/in/jmvelascoph/",
+      email: "mailto:john@better.giving",
     },
     image: john,
     bio: [
