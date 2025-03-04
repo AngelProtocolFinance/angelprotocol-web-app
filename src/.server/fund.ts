@@ -14,7 +14,7 @@ import {
   UpdateCommand,
   ap,
 } from "./aws/db";
-import { dbUpdate } from "./aws/helpers";
+import { buildProfileUpdateParams, dbUpdate } from "./aws/helpers";
 import { env } from "./env";
 
 export const getFund = async (
@@ -32,7 +32,7 @@ export const getFund = async (
     };
   } else {
     const slug = v.parse(segment, fundIdOrSlug);
-    queryParams.IndexName = "fundGsi.slugEnv"; // TODO: add in lib
+    queryParams.IndexName = "slug-env-gsi"; // TODO: add in lib
     queryParams.KeyConditionExpression = "slug = :slug AND env = :env";
     queryParams.ExpressionAttributeValues = {
       ":slug": slug, // TODO: add type def here
@@ -93,15 +93,33 @@ export const getFund = async (
 
 export const editFund = async (
   fundId: string,
-  { target, ...update }: FundUpdate
+  { slug = "test", target, ...update }: FundUpdate
 ) => {
-  // console.log({ target, ...update });
+  // check if slug is already taken
+  // if (slug) {
+  //   const res = await ap.send(
+  //     new QueryCommand({
+  //       TableName: tables.funds,
+  //       IndexName: "slug-env-gsi", // TODO: add in lib
+  //       KeyConditionExpression: "slug = :slug and env = :env",
+  //       ExpressionAttributeValues: {
+  //         ":slug": slug,
+  //         ":env": env,
+  //       },
+  //     })
+  //   );
+  //   if (res.Items?.[0]) {
+  //     return { message: "Slug already taken" }; // TODO: how to handle errors here
+  //   }
+  // }
+
   const command = new UpdateCommand({
     TableName: tables.funds,
     Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies db.Keys,
     ReturnValues: "ALL_NEW",
-    ...dbUpdate({
+    ...buildProfileUpdateParams({
       ...update,
+      ...((slug || slug === "") && { slug }),
       ...((target || target === "0") && { target: `${target}` }),
     }),
   });
