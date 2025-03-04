@@ -93,33 +93,14 @@ export const getFund = async (
 
 export const editFund = async (
   fundId: string,
-  { slug = "test", target, ...update }: FundUpdate
+  { target, ...update }: FundUpdate
 ) => {
-  // check if slug is already taken
-  // if (slug) {
-  //   const res = await ap.send(
-  //     new QueryCommand({
-  //       TableName: tables.funds,
-  //       IndexName: "slug-env-gsi", // TODO: add in lib
-  //       KeyConditionExpression: "slug = :slug and env = :env",
-  //       ExpressionAttributeValues: {
-  //         ":slug": slug,
-  //         ":env": env,
-  //       },
-  //     })
-  //   );
-  //   if (res.Items?.[0]) {
-  //     return { message: "Slug already taken" }; // TODO: how to handle errors here
-  //   }
-  // }
-
   const command = new UpdateCommand({
     TableName: tables.funds,
     Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies db.Keys,
     ReturnValues: "ALL_NEW",
     ...buildProfileUpdateParams({
       ...update,
-      ...((slug || slug === "") && { slug }),
       ...((target || target === "0") && { target: `${target}` }),
     }),
   });
