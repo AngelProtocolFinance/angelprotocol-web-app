@@ -130,6 +130,7 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
   /** donation to a fund */
   if (order.fund_id && order.fund_name && order.fund_members) {
     const num = order.fund_members.length;
+    let fund_net = 0;
     for (const member of order.fund_members) {
       const endow = await getEndow(member, order.network);
       if (!endow) {
@@ -166,10 +167,12 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
       });
 
       builder.append(_txs);
-      await ap
-        .send(fundContribUpdate(processed.net, order.fund_id))
-        .catch(console.error);
+      // net amount reflects fee-allowance add-back
+      fund_net += processed.net;
     }
+    await ap
+      .send(fundContribUpdate(fund_net, order.fund_id))
+      .catch(console.error);
     // to single endowments
   } else {
     const processed = applyFees(
