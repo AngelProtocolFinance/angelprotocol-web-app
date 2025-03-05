@@ -1,12 +1,16 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import { fundId, fundUpdate } from "@better-giving/fundraiser/schema";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  redirect,
+} from "@vercel/remix";
+import { appRoutes } from "constants/routes";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
-import { closeFund, editFund } from ".server/fund";
+import { closeFund, editFund, getFund } from ".server/fund";
 
 export interface LoaderData {
   fund: SingleFund;
@@ -16,9 +20,10 @@ export interface LoaderData {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
-  const fund = await ap
-    .get<SingleFund>(`${ver(1)}/funds/${params.fundId}`)
-    .json();
+
+  const fund = await getFund(`${params.fundId}`);
+  if (!fund) return redirect(appRoutes.funds);
+
   const origin = new URL(request.url).origin;
 
   return { fund, user, origin } satisfies LoaderData;
