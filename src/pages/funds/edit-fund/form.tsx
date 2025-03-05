@@ -9,12 +9,19 @@ import type { SubmitHandler } from "react-hook-form";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
+import Slug from "./slug";
 import { useRhf } from "./use-rhf";
+
+interface Props {
+  classes?: string;
+  initSlug?: string;
+}
 
 export function Form({
   classes = "",
+  initSlug = "",
   ...props
-}: SingleFund & { classes?: string }) {
+}: SingleFund & Props) {
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
   const { dirtyFields: df, ...rhf } = useRhf(props);
@@ -43,6 +50,15 @@ export function Form({
     if (df.name) update.name = fv.name;
     if (df.description) update.description = fv.description.value;
     if (df.videos) update.videos = fv.videos.map((v) => v.url);
+
+    if (df.slug) {
+      // TODO!
+      // const result = await getFund(fv.slug);
+      // if (result && result.id) {
+      //   return;
+      // }
+      update.slug = fv.slug;
+    }
 
     fetcher.submit(update, {
       method: "POST",
@@ -81,6 +97,18 @@ export function Form({
         error={
           rhf.errors.description?.value?.message ||
           rhf.errors.description?.length?.message
+        }
+      />
+      <Slug
+        initSlug={initSlug}
+        newSlug={rhf.slug}
+        slugField={
+          <Field
+            {...rhf.register("slug")}
+            label="Custom Fundraiser URL"
+            placeholder="myFundraiser"
+            error={rhf.errors.slug?.message}
+          />
         }
       />
       <Videos {...rhf.videos} classes="mt-4 mb-8" />

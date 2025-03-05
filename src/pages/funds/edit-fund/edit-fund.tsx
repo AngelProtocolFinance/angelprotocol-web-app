@@ -28,5 +28,5 @@ export default function EditFund() {
     );
   }
 
-  return <Form {...fund} classes={containerClass} />;
+  return <Form {...fund} classes={containerClass} initSlug={fund.slug} />;
 }

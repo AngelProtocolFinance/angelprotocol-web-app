@@ -10,6 +10,7 @@ import { closeFund, editFund } from ".server/fund";
 
 export interface LoaderData {
   fund: SingleFund;
+  origin: string;
   user: UserV2;
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -18,8 +19,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const fund = await ap
     .get<SingleFund>(`${ver(1)}/funds/${params.fundId}`)
     .json();
+  const origin = new URL(request.url).origin;
 
-  return { fund, user } satisfies LoaderData;
+  return { fund, user, origin } satisfies LoaderData;
 };
 
 export const action: ActionFunction = async ({ request, params }) => {

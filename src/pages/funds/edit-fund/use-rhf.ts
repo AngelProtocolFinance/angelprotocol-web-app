@@ -11,12 +11,14 @@ export function useRhf(init: SingleFund) {
     control,
     trigger,
     resetField,
+    watch,
     formState: { errors, isDirty, dirtyFields },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     values: {
       name: init.name,
       description: toContent(init.description),
+      slug: init.slug,
       target:
         init.target === "0"
           ? { type: "none" }
@@ -28,6 +30,8 @@ export function useRhf(init: SingleFund) {
       videos: init.videos.map((v) => ({ url: v })),
     },
   });
+
+  const slug = watch("slug");
 
   const { field: targetType } = useController({
     control,
@@ -55,6 +59,7 @@ export function useRhf(init: SingleFund) {
     trigger,
     resetField,
     //controllers
+    slug,
     targetType,
     logo,
     banner,
