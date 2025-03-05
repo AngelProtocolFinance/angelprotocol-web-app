@@ -18,7 +18,7 @@ const rmx = remix({
     return defineRoutes((r) => {
       r("", "./pages/home/home.tsx", { index: true });
       r("donate/:id", "./pages/donate/index.tsx");
-      r("donate-fund/:fundId", "./pages/donate-fund/index.tsx");
+      r("donate-fund/:id", "./pages/donate-fund/index.tsx");
       r("donate-thanks", "./pages/donate-thanks.tsx");
       r("simply-fundraising-maximize-impact","./pages/landing-a/index.tsx")
       r("the-smart-move-to-make-for-accepting-crypto-donations",'./pages/landing-b/index.tsx')
@@ -143,7 +143,7 @@ const rmx = remix({
         r("profile/:id", "./pages/profile/profile-redirect.ts");
         r("funds/*", "./pages/funds/redirect.ts");
         r("fundraisers", "./pages/funds/funds.tsx");
-        r("fundraisers/:fundId", "./pages/funds/fund/index.tsx");
+        r("fundraisers/:id", "./pages/funds/fund/index.tsx");
         r("fundraisers/:fundId/edit", "./pages/funds/edit-fund/index.ts");
         r("fundraisers/new", "./pages/funds/create-fund/index.ts");
         r("privacy-policy", "./pages/legal/privacy-policy.tsx");
