@@ -1,6 +1,6 @@
 import type * as endowDb from "@better-giving/endowment/db";
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
-// import { fundGsi } from "@better-giving/fundraiser/db";
+import { type SlugEnvGsi, fundGsi } from "@better-giving/fundraiser/db";
 import type * as db from "@better-giving/fundraiser/db";
 import { fundId as fundIdSchema } from "@better-giving/fundraiser/schema";
 import { tables } from "@better-giving/types/list";
@@ -32,11 +32,11 @@ export const getFund = async (
     };
   } else {
     const slug = v.parse(segment, fundIdOrSlug);
-    queryParams.IndexName = "slug-env-gsi"; // TODO: add in lib
+    queryParams.IndexName = fundGsi.slugEnv;
     queryParams.KeyConditionExpression = "slug = :slug AND env = :env";
     queryParams.ExpressionAttributeValues = {
-      ":slug": slug, // TODO: add type def here
-      ":env": env,
+      ":slug": slug satisfies SlugEnvGsi.Keys["slug"],
+      ":env": env satisfies SlugEnvGsi.Keys["env"],
     };
   }
 
