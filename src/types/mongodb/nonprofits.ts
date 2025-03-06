@@ -1,49 +1,76 @@
 import type { WithId } from "mongodb";
-
-export interface Indexed {
-  /** Asset amount (can be NaN) */
-  assets?: number; //-1
-  /** Income amount (can be NaN) */
-  income?: number; //-1
-  /** Revenue amount (can be NaN) */
-  revenue?: number; //-1
-}
-export interface Nonprofit extends Indexed {
-  /** Employer Identification Number (unique identifier) */
+interface IBmf {
   ein: string;
-
-  /** Organization name */
   name: string;
-
-  /** City */
-  city: string;
-
-  /** State */
-  state: string;
-
-  /** Country */
-  country: string;
-
-  /** IRS deductibility code (e.g. "PC", "POF") */
-  deductibility_code: string;
-
-  /** ZIP code (can be missing/undefined) */
+  in_care_of_name?: string;
+  street?: string;
+  city?: string;
+  //filter
+  state?: string;
   zip?: string;
-
-  /** Tax subsection (501(c)(3), etc.) - numeric (can be NaN) */
-  subsection?: number;
-
-  /** Foundation status code - numeric (can be NaN) */
-  foundation?: number;
-
-  /** National Taxonomy of Exempt Entities code (can be NaN for string fields) */
+  //filter
+  group_exemption_number?: string;
+  //filter
+  subsection_code?: string;
+  //filter
+  affilation_code?: string;
+  //filter
+  classification_code?: string;
+  ruling_date?: string;
+  //filter
+  deductibility_code?: string;
+  //filter
+  foundation_code?: string;
+  //filter
+  activity_code?: string;
+  //filter
+  organization_code?: string;
+  //filter
+  exempt_organization_status_code?: string;
+  tax_period?: string;
+  asset_code?: string;
+  income_code?: string;
+  //filter
+  filing_requirement_code?: string;
+  //filter
+  pf_filing_requirement_code?: string;
+  accounting_period?: string;
+  asset_amount?: number;
+  income_amount?: number;
+  revenue_amount?: number;
   ntee_code?: string;
-
-  /** Record creation timestamp */
-  created_at: Date;
-
-  /** Record update timestamp */
-  updated_at: Date;
+  sort_name?: string;
 }
 
+interface Address {
+  line1?: string;
+  line2?: string;
+  city?: string;
+  province?: string;
+  state?: string;
+  country?: string;
+}
+export interface PrincipalOfficer {
+  name?: string;
+  address?: Address & { zipcode?: string };
+}
+
+export interface MailingAddress extends Address {
+  postal_code?: string;
+}
+
+interface IPostCardItem {
+  ein: string;
+  tax_year?: string;
+  name: string;
+  gross_receipts_not_greater_than?: boolean;
+  tax_period_begin?: string;
+  tax_period_end?: string;
+  website_url?: string;
+  principal_officer?: PrincipalOfficer;
+  mailing_address?: MailingAddress;
+  dba?: string[];
+}
+
+export interface Nonprofit extends IBmf, IPostCardItem {}
 export interface NonprofitItem extends WithId<Nonprofit> {}
