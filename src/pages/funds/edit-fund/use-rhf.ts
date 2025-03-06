@@ -18,7 +18,7 @@ export function useRhf(init: SingleFund) {
     values: {
       name: init.name,
       description: toContent(init.description),
-      slug: init.slug,
+      slug: init.slug ?? "",
       target:
         init.target === "0"
           ? { type: "none" }
