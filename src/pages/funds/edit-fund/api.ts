@@ -43,6 +43,16 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 
   const parsed = parse(fundUpdate, update);
+
+  // check if new slug is already taken
+  if (parsed.slug) {
+    const res = await getFund(parsed.slug);
+    if (res && res.id)
+      return {
+        __err: `Slug ${parsed.slug} is already taken`,
+      } satisfies ActionData;
+  }
+
   await editFund(id, parsed);
 
   return { __ok: "Fund updated" } satisfies ActionData;
