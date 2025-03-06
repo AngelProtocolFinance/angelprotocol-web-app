@@ -49,19 +49,11 @@ export function Form({
 
     if (df.name) update.name = fv.name;
     if (df.description) update.description = fv.description.value;
+    if (df.slug) update.slug = fv.slug;
     if (df.videos) update.videos = fv.videos.map((v) => v.url);
 
-    if (df.slug) {
-      // TODO!
-      // const result = await getFund(fv.slug);
-      // if (result && result.id) {
-      //   return;
-      // }
-      update.slug = fv.slug;
-    }
-
     fetcher.submit(update, {
-      method: "POST",
+      method: "PATCH",
       encType: "application/json",
     });
   };
