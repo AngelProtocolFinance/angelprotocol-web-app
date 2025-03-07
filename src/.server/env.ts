@@ -48,3 +48,4 @@ export const npEnvs = {
 export const discordEnvs = {
   awsMonitorUrl: v.parse(required, process.env.DISCORD_AWS_MONITOR_WEBHOOK_URL),
 };
+export const mongo_url = v.parse(required, process.env.MONGODB_URL);
