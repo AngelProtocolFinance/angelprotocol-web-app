@@ -1,11 +1,6 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import { fundId, fundUpdate } from "@better-giving/fundraiser/schema";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
-import { appRoutes } from "constants/routes";
+import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
@@ -21,8 +16,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const fund = await getFund(`${params.fundId}`);
-  if (!fund) return redirect(appRoutes.funds);
+  const id = parse(fundId, params.fundId);
+  const fund = await getFund(id);
+  if (!fund) throw new Response(null, { status: 404 });
 
   const origin = new URL(request.url).origin;
 
