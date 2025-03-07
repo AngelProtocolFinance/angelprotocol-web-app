@@ -13,6 +13,5 @@ export const loader: LoaderFunction = async ({ params }) => {
       .then((s) => s.filter((x) => x != null));
     return new Response(JSON.stringify(states));
   }
-
   return new Response(null, { status: 404 });
 };
