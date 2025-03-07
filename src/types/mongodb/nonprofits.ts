@@ -97,7 +97,6 @@ export interface DistinctFilters
 
 export const distinctFilters: { [K in keyof DistinctFilters]-?: K } = {
   state: "state",
-  activity_code: "activity_code",
   affilation_code: "affilation_code",
   classification_code: "classification_code",
   asset_code: "asset_code",
