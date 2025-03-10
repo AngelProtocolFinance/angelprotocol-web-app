@@ -2,7 +2,6 @@ import type * as endowDb from "@better-giving/endowment/db";
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import { type SlugEnvGsi, fundGsi } from "@better-giving/fundraiser/db";
 import type * as db from "@better-giving/fundraiser/db";
-import { fundId as fundIdSchema } from "@better-giving/fundraiser/schema";
 import { tables } from "@better-giving/types/list";
 import type { AttrNames } from "@better-giving/types/utils";
 import * as v from "valibot";
@@ -20,11 +19,9 @@ import { env } from "./env";
 export const getFund = async (
   fundIdOrSlug: string
 ): Promise<SingleFund | undefined> => {
-  const byFundId = v.safeParse(fundIdSchema, fundIdOrSlug);
-
   const queryParams: QueryCommandInput = { TableName: tables.funds, Limit: 1 };
-  if (byFundId.success) {
-    const fundId = byFundId.output;
+  if (v.UUID_REGEX.test(fundIdOrSlug)) {
+    const fundId = fundIdOrSlug;
     queryParams.KeyConditionExpression = "PK = :PK AND SK = :SK";
     queryParams.ExpressionAttributeValues = {
       ":PK": `Fund#${fundId}` satisfies db.Keys["PK"],
