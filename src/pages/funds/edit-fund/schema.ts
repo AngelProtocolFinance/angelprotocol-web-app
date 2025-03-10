@@ -1,3 +1,4 @@
+import { slug } from "@better-giving/endowment/schema";
 import { target } from "components/goal-selector";
 import { imgOutput } from "components/img-editor";
 import { richTextContent } from "types/components";
@@ -13,6 +14,7 @@ export const schema = v.object({
     maxChars: MAX_DESCRIPTION_CHARS,
     required: true,
   }),
+  slug,
   target,
   videos: v.array(video),
   banner: imgOutput({ required: true }),

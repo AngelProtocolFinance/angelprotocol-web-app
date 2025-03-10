@@ -1,29 +1,45 @@
 import type * as endowDb from "@better-giving/endowment/db";
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
+import { type SlugEnvGsi, fundGsi } from "@better-giving/fundraiser/db";
 import type * as db from "@better-giving/fundraiser/db";
 import { tables } from "@better-giving/types/list";
 import type { AttrNames } from "@better-giving/types/utils";
-import { BatchGetCommand, GetCommand, UpdateCommand, ap } from "./aws/db";
-import { dbUpdate } from "./aws/helpers";
+import * as v from "valibot";
+import { segment } from "../api/schema/segment";
+import {
+  BatchGetCommand,
+  QueryCommand,
+  type QueryCommandInput,
+  UpdateCommand,
+  ap,
+} from "./aws/db";
+import { buildProfileUpdateParams, dbUpdate } from "./aws/helpers";
 import { env } from "./env";
 
 export const getFund = async (
-  fundId: string
+  uuidOrSlug: string
 ): Promise<SingleFund | undefined> => {
-  const command = new GetCommand({
-    TableName: tables.funds,
-    Key: {
-      PK: `Fund#${fundId}`,
-      SK: `Fund#${fundId}`,
-    },
-  });
+  const queryParams: QueryCommandInput = { TableName: tables.funds, Limit: 1 };
+  if (v.UUID_REGEX.test(uuidOrSlug)) {
+    const uuid = uuidOrSlug;
+    queryParams.KeyConditionExpression = "PK = :PK AND SK = :SK";
+    queryParams.ExpressionAttributeValues = {
+      ":PK": `Fund#${uuid}` satisfies db.Keys["PK"],
+      ":SK": `Fund#${uuid}` satisfies db.Keys["SK"],
+    };
+  } else {
+    const slug = v.parse(segment, uuidOrSlug);
+    queryParams.IndexName = fundGsi.slugEnv;
+    queryParams.KeyConditionExpression = "slug = :slug AND env = :env";
+    queryParams.ExpressionAttributeValues = {
+      ":slug": slug satisfies SlugEnvGsi.Keys["slug"],
+      ":env": env satisfies SlugEnvGsi.Keys["env"],
+    };
+  }
 
-  const res = await ap.send(command);
-
-  const item = res.Item as db.DbRecord | undefined;
+  const res = await ap.send(new QueryCommand(queryParams));
+  const item = res.Items?.[0] as db.DbRecord | undefined;
   if (!item) return;
-
-  //   const res = await dynamo.send(command);
 
   const fund = (({ PK, SK, ...f }) => f)(item);
 
@@ -80,7 +96,7 @@ export const editFund = async (
     TableName: tables.funds,
     Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies db.Keys,
     ReturnValues: "ALL_NEW",
-    ...dbUpdate({
+    ...buildProfileUpdateParams({
       ...update,
       ...((target || target === "0") && { target: `${target}` }),
     }),
