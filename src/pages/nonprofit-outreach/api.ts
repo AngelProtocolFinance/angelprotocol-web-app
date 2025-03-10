@@ -18,14 +18,28 @@ export interface LoaderData {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
-  const { page = "1", limit = "10" } = Object.fromEntries(
-    url.searchParams.entries()
-  );
+  const {
+    page = "1",
+    limit = "10",
+    asset_code = "",
+    income_code = "",
+  } = Object.fromEntries(url.searchParams.entries());
+
+  const filter: any = {};
+  if (asset_code) {
+    filter.$or ||= [];
+    filter.$or.push({ asset_code: { $in: asset_code.split(",") } });
+  }
+  if (income_code) {
+    filter.$or ||= [];
+    filter.$or.push({ income_code: { $in: income_code.split(",") } });
+  }
+
   const skip = (+page - 1) * +limit;
 
-  const all = await nonprofits.countDocuments({});
+  const all = await nonprofits.countDocuments(filter as any);
   const items = await nonprofits
-    .find({})
+    .find(filter as any)
     .sort({ asset_amount: -1 })
     .skip(skip)
     .limit(+limit)
