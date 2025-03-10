@@ -17,18 +17,18 @@ import { buildProfileUpdateParams, dbUpdate } from "./aws/helpers";
 import { env } from "./env";
 
 export const getFund = async (
-  fundIdOrSlug: string
+  uuidOrSlug: string
 ): Promise<SingleFund | undefined> => {
   const queryParams: QueryCommandInput = { TableName: tables.funds, Limit: 1 };
-  if (v.UUID_REGEX.test(fundIdOrSlug)) {
-    const fundId = fundIdOrSlug;
+  if (v.UUID_REGEX.test(uuidOrSlug)) {
+    const uuid = uuidOrSlug;
     queryParams.KeyConditionExpression = "PK = :PK AND SK = :SK";
     queryParams.ExpressionAttributeValues = {
-      ":PK": `Fund#${fundId}` satisfies db.Keys["PK"],
-      ":SK": `Fund#${fundId}` satisfies db.Keys["SK"],
+      ":PK": `Fund#${uuid}` satisfies db.Keys["PK"],
+      ":SK": `Fund#${uuid}` satisfies db.Keys["SK"],
     };
   } else {
-    const slug = v.parse(segment, fundIdOrSlug);
+    const slug = v.parse(segment, uuidOrSlug);
     queryParams.IndexName = fundGsi.slugEnv;
     queryParams.KeyConditionExpression = "slug = :slug AND env = :env";
     queryParams.ExpressionAttributeValues = {
