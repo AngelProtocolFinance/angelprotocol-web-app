@@ -1,5 +1,6 @@
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import type { LoaderData } from "./api";
+import { Header } from "./header";
 import { Paginator } from "./paginator";
 export { loader } from "./api";
 
@@ -10,8 +11,7 @@ const _usd = new Intl.NumberFormat("en-US", {
 
 export default function Page() {
   const data = useLoaderData<LoaderData>();
-  console.log(data.stats);
-  const [, setParams] = useSearchParams();
+  const [params, setParams] = useSearchParams();
 
   return (
     <div className="xl:mx-auto xl:container py-16 font-heading text-sm">
@@ -22,9 +22,46 @@ export default function Page() {
               <tr>
                 <th>EIN</th>
                 <th>Name</th>
-                <th>Asset code</th>
+                <th>Website</th>
+                <th>
+                  <Header
+                    _key="asset_code"
+                    name="Asset code"
+                    filter={{
+                      values: params.get("asset_code")?.split(",") || [],
+                      onChange(vs) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete("asset_code");
+                            return p;
+                          }
+                          p.set("asset_code", vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
                 <th>Assets</th>
-                <th>Income code</th>
+                <th>
+                  <Header
+                    _key="income_code"
+                    name="Income code"
+                    filter={{
+                      values: params.get("income_code")?.split(",") || [],
+                      onChange(vs) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete("income_code");
+                            return p;
+                          }
+                          p.set("income_code", vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
                 <th>Income</th>
                 <th>Revenue</th>
                 <th>City</th>
@@ -32,6 +69,7 @@ export default function Page() {
                 <th>Country</th>
                 <th>NTEE code</th>
                 <th>In care of</th>
+                <th>Principal officer</th>
                 <th>Group exemption number</th>
                 <th>Subsection code</th>
                 <th>Affiliation code</th>
@@ -49,6 +87,7 @@ export default function Page() {
                 <tr key={d._id + i}>
                   <td>{d.ein}</td>
                   <td>{d.name}</td>
+                  <td>{d.website_url}</td>
                   <td>{d.asset_code}</td>
                   <td>
                     {d.asset_amount && !Number.isNaN(d.asset_amount)
@@ -72,6 +111,7 @@ export default function Page() {
 
                   <td>{d.ntee_code}</td>
                   <td>{d.in_care_of_name?.replace("%", "")}</td>
+                  <td>{d.principal_officer?.name}</td>
                   <td>{d.group_exemption_number}</td>
                   <td>{d.subsection_code}</td>
                   <td>{d.affilation_code}</td>
@@ -82,7 +122,6 @@ export default function Page() {
                   <td>{d.organization_code}</td>
                   <td>{d.exempt_organization_status_code}</td>
                   <td>{d.filing_requirement_code}</td>
-
                   <td>{d.sort_name}</td>
                 </tr>
               ))}
