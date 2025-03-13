@@ -49,7 +49,7 @@ export function ListFilter(props: IListFilter) {
                 className={`${is_active ? "text-green stroke-3" : ""}`}
               />
             </ListboxButton>
-            <FilterOptions _key={props._key} optsFn={props.filter.optsFn} />
+            <FilterOptions _key={props._key} {...props.filter} />
           </Listbox>
         </>
       )}
@@ -61,7 +61,7 @@ const getFilter = async (path: string) => {
   return fetch(path).then<string[]>((res) => res.json());
 };
 
-interface IFilterOptions extends Pick<Filter, "optsFn"> {
+interface IFilterOptions extends Filter {
   _key: string;
 }
 export function FilterOptions(props: IFilterOptions) {
@@ -109,11 +109,22 @@ export function FilterOptions(props: IFilterOptions) {
     );
   }
 
+  const is_active = (props.values?.(props._key)?.length ?? 0) > 0;
+
   return (
     <ListboxOptions
       anchor={{ to: "bottom", gap: 8 }}
       className="grid grid-cols-[auto_1fr] bg-white w-max h-40 border border-gray-l3 p-2 rounded-sm gap-2 focus:ring focus:ring-blue-d1 ring-offset-1"
     >
+      {is_active && (
+        <button
+          className="col-span-full"
+          type="button"
+          onClick={() => props.onChange([], props._key)}
+        >
+          clear filters
+        </button>
+      )}
       {["blank"].concat(vals.data).map((opt) => (
         <ListboxOption
           key={opt}

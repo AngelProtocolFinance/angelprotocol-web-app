@@ -1,8 +1,11 @@
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { Link, useSearchParams } from "@remix-run/react";
 import type { LoaderData } from "./api";
 import { ListFilter } from "./list-filter";
 import { Paginator } from "./paginator";
 export { loader } from "./api";
+export { clientLoader } from "api/cache";
+import { useCachedLoaderData } from "api/cache";
+import { XIcon } from "lucide-react";
 
 const _usd = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -10,13 +13,43 @@ const _usd = new Intl.NumberFormat("en-US", {
 });
 
 export default function Page() {
-  const data = useLoaderData<LoaderData>();
+  const data = useCachedLoaderData<LoaderData>();
   const [params, setParams] = useSearchParams();
+  const active_filters = Array.from(params.entries()).map(([k, v]) => (
+    <div key={k} className="flex items-center gap-x-2">
+      <button
+        type="button"
+        onClick={() =>
+          setParams((p) => {
+            p.delete(k);
+            return p;
+          })
+        }
+      >
+        <XIcon size={14} className="text-red" />
+      </button>
+      <p>
+        {k}: {v}
+      </p>
+    </div>
+  ));
 
   return (
     <div className="xl:mx-auto xl:container py-16 font-heading text-sm">
       <div className="w-full">
         <div className="overflow-x-auto relative">
+          {active_filters.length > 0 && (
+            <div>
+              <div className="flex items-center gap-x-2">
+                <Link to=".">
+                  <XIcon size={14} className="text-red" />
+                </Link>
+                <p>Active filters</p>
+              </div>
+              {active_filters}
+            </div>
+          )}
+          <p className="font-bold my-2"> found: {data.num_items}</p>
           <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_td]:align-top [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
             <thead>
               <tr>
@@ -88,24 +121,32 @@ export default function Page() {
                   <ListFilter
                     _key="state"
                     name="State"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
+                    filter={
+                      // filter only available for US
+                      !params.get("country") ||
+                      /\b(USA|United\s+States)\b/i.test(
+                        params.get("country") || ""
+                      )
+                        ? {
+                            values: (k) => params.get(k)?.split(",") || [],
+                            onChange(vs, k) {
+                              setParams((p) => {
+                                if (vs.length === 0) {
+                                  p.delete(k);
+                                  return p;
+                                }
+                                p.set(k, vs.join(","));
+                                return p;
+                              });
+                            },
                           }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
+                        : undefined
+                    }
                   />
                 </th>
                 <th>
                   <ListFilter
-                    _key="mailing_address.country"
+                    _key="country"
                     name="Country"
                     filter={{
                       values: (k) => params.get(k)?.split(",") || [],
@@ -160,9 +201,13 @@ export default function Page() {
                       ? _usd.format(d.revenue_amount)
                       : "-"}
                   </td>
-                  <td>{d.city}</td>
+                  <td>
+                    {d.city?.toLowerCase() === d.country?.toLowerCase()
+                      ? ""
+                      : d.city}
+                  </td>
                   <td>{d.state}</td>
-                  <td>{d.mailing_address?.country}</td>
+                  <td>{d.country}</td>
 
                   <td>{d.ntee_code}</td>
                   <td>{d.in_care_of_name?.replace("%", "")}</td>
