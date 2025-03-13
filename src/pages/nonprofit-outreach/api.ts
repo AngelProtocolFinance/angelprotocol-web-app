@@ -19,19 +19,24 @@ export interface LoaderData {
 class Filter {
   filter: any = {};
 
-  with_blank(key: string, csv: string) {
+  set_opts(key: string, csv: string) {
     // const conds: any = [];
-    const codes = csv.split(",");
-    const blank = codes.findIndex((x) => x === "blank");
-    if (blank !== -1) {
+    const opts = csv.split(",");
+    const blank_idx = opts.findIndex((x) => x === "blank");
+    const non_blank_idx = opts.findIndex((x) => x === "exist");
+    if (blank_idx !== -1) {
       this.filter.$or ||= [];
       this.filter.$or.push({ [key]: { $exists: false } });
-      codes.splice(blank, 1);
+      opts.splice(blank_idx, 1);
     }
-    if (codes.length > 0) {
-      // conds.push({ [key]: { $in: codes } });
+    if (non_blank_idx !== -1) {
       this.filter.$or ||= [];
-      this.filter.$or.push({ [key]: { $in: codes } });
+      this.filter.$or.push({ [key]: { $exists: true } });
+      opts.splice(non_blank_idx, 1);
+    }
+    if (opts.length > 0) {
+      this.filter.$or ||= [];
+      this.filter.$or.push({ [key]: { $in: opts } });
     }
   }
 
@@ -47,11 +52,13 @@ export const loader: LoaderFunction = async ({ request }) => {
     limit = "10",
     asset_code = "",
     income_code = "",
+    website_url = "",
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
-  if (asset_code) filter.with_blank("asset_code", asset_code);
-  if (income_code) filter.with_blank("income_code", income_code);
+  if (asset_code) filter.set_opts("asset_code", asset_code);
+  if (income_code) filter.set_opts("income_code", income_code);
+  if (website_url) filter.set_opts("website_url", website_url);
 
   const skip = (+page - 1) * +limit;
 
