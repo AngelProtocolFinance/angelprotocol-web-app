@@ -7,6 +7,7 @@ import { HeaderButton } from "components/header-button";
 import { Info } from "components/status";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
+import { dateFormat } from "helpers/date-format";
 import useSort from "hooks/use-sort";
 import { Folder } from "lucide-react";
 import LoadMoreBtn from "./load-more-btn";
@@ -96,7 +97,7 @@ export default function Table({
                 {isIrs501c3(row.docs) && row.docs.claim ? "Claim" : "New"}
               </span>
               <>{row.org_name}</>
-              <>{new Date(row.updated_at).toLocaleDateString()}</>
+              <>{dateFormat(row.updated_at)}</>
               <>{row.hq_country}</>
               <td className="text-center">
                 <Status status={row.status} />

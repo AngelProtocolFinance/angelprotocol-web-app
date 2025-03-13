@@ -1,6 +1,7 @@
 import TableSection, { Cells } from "components/table-section";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { humanize } from "helpers";
+import { dateFormat } from "helpers/date-format";
 import {
   ArrowLeft,
   ArrowLeftRight,
@@ -140,7 +141,7 @@ export default function Table({
                 }`}
               >
                 <td className="w-4">{tx(row.amount).icon}</td>
-                <>{new Date(row.date).toLocaleDateString()}</>
+                <>{dateFormat(row.date)}</>
                 <>{tx(row.amount).description}</>
                 <>$ {humanize(row.amount)}</>
               </Cells>
