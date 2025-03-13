@@ -55,6 +55,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     website_url = "",
     state = "",
     country = "",
+    subsection_code = "",
+    affilation_code = "",
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
@@ -63,6 +65,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (website_url) filter.set_opts("website_url", website_url);
   if (state) filter.set_opts("state", state);
   if (country) filter.set_opts("country", country);
+  if (subsection_code) filter.set_opts("subsection_code", subsection_code);
+  if (affilation_code) filter.set_opts("affilation_code", affilation_code);
 
   const skip = (+page - 1) * +limit;
 
