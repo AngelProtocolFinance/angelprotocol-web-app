@@ -8,7 +8,7 @@ interface IBmf {
   //filter
   state?: string;
   zip?: string;
-  //filter
+  //text filter - exact
   group_exemption_number?: string;
   //filter
   subsection_code?: string;

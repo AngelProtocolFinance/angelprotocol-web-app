@@ -1,6 +1,6 @@
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import type { LoaderData } from "./api";
-import { Header } from "./header";
+import { ListFilter } from "./list-filter";
 import { Paginator } from "./paginator";
 export { loader } from "./api";
 
@@ -22,9 +22,28 @@ export default function Page() {
               <tr>
                 <th>EIN</th>
                 <th>Name</th>
-                <th>Website</th>
                 <th>
-                  <Header
+                  <ListFilter
+                    _key="website_url"
+                    name="Website"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      valuesFn: async () => ["exist"],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
+                <th>
+                  <ListFilter
                     _key="asset_code"
                     name="Asset code"
                     filter={{
@@ -44,7 +63,7 @@ export default function Page() {
                 </th>
                 <th>Assets</th>
                 <th>
-                  <Header
+                  <ListFilter
                     _key="income_code"
                     name="Income code"
                     filter={{
