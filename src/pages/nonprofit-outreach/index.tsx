@@ -28,7 +28,7 @@ export default function Page() {
                     name="Website"
                     filter={{
                       values: (k) => params.get(k)?.split(",") || [],
-                      valuesFn: async () => ["exist"],
+                      optsFn: async () => ["exist"],
                       onChange(vs, k) {
                         setParams((p) => {
                           if (vs.length === 0) {
@@ -84,8 +84,44 @@ export default function Page() {
                 <th>Income</th>
                 <th>Revenue</th>
                 <th>City</th>
-                <th>State</th>
-                <th>Country</th>
+                <th>
+                  <ListFilter
+                    _key="state"
+                    name="State"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
+                <th>
+                  <ListFilter
+                    _key="mailing_address.country"
+                    name="Country"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
                 <th>NTEE code</th>
                 <th>In care of</th>
                 <th>Principal officer</th>
