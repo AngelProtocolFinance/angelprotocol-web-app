@@ -53,12 +53,16 @@ export const loader: LoaderFunction = async ({ request }) => {
     asset_code = "",
     income_code = "",
     website_url = "",
+    state = "",
+    country = "",
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
   if (asset_code) filter.set_opts("asset_code", asset_code);
   if (income_code) filter.set_opts("income_code", income_code);
   if (website_url) filter.set_opts("website_url", website_url);
+  if (state) filter.set_opts("state", state);
+  if (country) filter.set_opts("mailing_address.country", country);
 
   const skip = (+page - 1) * +limit;
 
@@ -68,11 +72,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     .skip(skip)
     .limit(+limit)
     .toArray();
+  const count = await nonprofits.countDocuments(filter.all);
 
   return {
     items,
     page: +page,
     size: +limit,
-    num_items: items.length,
+    num_items: count,
   } satisfies LoaderData;
 };
