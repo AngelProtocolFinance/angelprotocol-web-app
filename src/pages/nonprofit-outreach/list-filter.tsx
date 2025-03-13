@@ -4,10 +4,11 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { CheckIcon, ListFilter } from "lucide-react";
+import { CheckIcon, ListFilterIcon } from "lucide-react";
 import useSWR from "swr/immutable";
 
 interface Filter {
+  valuesFn?: () => Promise<string[]>;
   values?: (key: string) => string[];
   onChange: (values: string[], key: string) => void;
 }
@@ -18,7 +19,7 @@ interface Sorter {
   onChange: (value: Sort) => void;
 }
 
-interface IHeader {
+interface IListFilter {
   name: string;
   //filtered by key
   _key: string;
@@ -27,7 +28,7 @@ interface IHeader {
   classes?: string;
 }
 
-export function Header(props: IHeader) {
+export function ListFilter(props: IListFilter) {
   const is_active =
     (props.filter?.values?.(props._key).length ?? 0) > 0 || props.sorter?.value;
 
@@ -44,12 +45,12 @@ export function Header(props: IHeader) {
             onChange={(x) => props.filter?.onChange(x, props._key)}
           >
             <ListboxButton>
-              <ListFilter
+              <ListFilterIcon
                 size={14}
                 className={`${is_active ? "text-green stroke-3" : ""}`}
               />
             </ListboxButton>
-            <FilterOptions _key={props._key} />
+            <FilterOptions _key={props._key} valuesFn={props.filter.valuesFn} />
           </Listbox>
         </>
       )}
@@ -61,11 +62,14 @@ const getFilter = async (path: string) => {
   return fetch(path).then<string[]>((res) => res.json());
 };
 
-interface IFilterOptions {
+interface IFilterOptions extends Pick<Filter, "valuesFn"> {
   _key: string;
 }
 export function FilterOptions(props: IFilterOptions) {
-  const vals = useSWR(`/api/irs-npos/aggregates/${props._key}`, getFilter);
+  const vals = useSWR(
+    `/api/irs-npos/aggregates/${props._key}`,
+    props.valuesFn || getFilter
+  );
 
   if (vals.isLoading) {
     return (
