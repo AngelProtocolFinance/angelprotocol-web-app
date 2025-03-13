@@ -167,8 +167,44 @@ export default function Page() {
                 <th>In care of</th>
                 <th>Principal officer</th>
                 <th>Group exemption number</th>
-                <th>Subsection code</th>
-                <th>Affiliation code</th>
+                <th>
+                  <ListFilter
+                    _key="subsection_code"
+                    name="Subsection code"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
+                <th>
+                  <ListFilter
+                    _key="affilation_code"
+                    name="Affiliation code"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
                 <th>Classification code</th>
                 <th>Deductability code</th>
                 <th>Foundation code</th>
