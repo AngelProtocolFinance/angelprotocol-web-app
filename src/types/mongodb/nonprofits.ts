@@ -73,44 +73,5 @@ interface IPostCardItem {
 }
 
 export interface Nonprofit extends IBmf, IPostCardItem {}
-export interface DistinctFilters
-  extends Pick<
-    Nonprofit,
-    | "state"
-    // | "ntee_code" - too many, will be input type
-    // | "activity_code" - too many, will be input type
-    | "affilation_code"
-    | "classification_code"
-    | "asset_code"
-    | "deductibility_code"
-    | "city"
-    | "exempt_organization_status_code"
-    | "filing_requirement_code"
-    | "group_exemption_number"
-    | "foundation_code"
-    | "income_code"
-    | "organization_code"
-    | "pf_filing_requirement_code"
-    | "subsection_code"
-    | "tax_year"
-  > {}
-
-export const distinctFilters: { [K in keyof DistinctFilters]-?: K } = {
-  state: "state",
-  affilation_code: "affilation_code",
-  classification_code: "classification_code",
-  asset_code: "asset_code",
-  deductibility_code: "deductibility_code",
-  city: "city",
-  exempt_organization_status_code: "exempt_organization_status_code",
-  filing_requirement_code: "filing_requirement_code",
-  group_exemption_number: "group_exemption_number",
-  foundation_code: "foundation_code",
-  income_code: "income_code",
-  organization_code: "organization_code",
-  pf_filing_requirement_code: "pf_filing_requirement_code",
-  subsection_code: "subsection_code",
-  tax_year: "tax_year",
-};
 
 export interface NonprofitItem extends WithId<Nonprofit> {}
