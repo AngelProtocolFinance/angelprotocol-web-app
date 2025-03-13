@@ -8,8 +8,8 @@ import { CheckIcon, ListFilter } from "lucide-react";
 import useSWR from "swr/immutable";
 
 interface Filter {
-  values?: string[];
-  onChange: (values: string[]) => void;
+  values?: (key: string) => string[];
+  onChange: (values: string[], key: string) => void;
 }
 
 type Sort = "asc" | "desc" | null;
@@ -38,8 +38,8 @@ export function Header(props: IHeader) {
         <>
           <Listbox
             multiple
-            value={props.filter.values}
-            onChange={props.filter.onChange}
+            value={props.filter.values?.(props._key)}
+            onChange={(x) => props.filter?.onChange(x, props._key)}
           >
             <ListboxButton>
               <ListFilter
@@ -109,7 +109,7 @@ export function FilterOptions(props: IFilterOptions) {
       anchor={{ to: "bottom", gap: 8 }}
       className="bg-white w-max border border-gray-l3 p-2 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
     >
-      {vals.data.map((opt) => (
+      {["blank"].concat(vals.data).map((opt) => (
         <ListboxOption
           key={opt}
           value={opt}
