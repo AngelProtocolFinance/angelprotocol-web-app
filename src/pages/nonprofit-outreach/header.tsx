@@ -29,7 +29,9 @@ interface IHeader {
 
 export function Header(props: IHeader) {
   const is_active =
-    (props.filter?.values?.length ?? 0) > 0 || props.sorter?.value;
+    (props.filter?.values?.(props._key).length ?? 0) > 0 || props.sorter?.value;
+
+  console.log(props.filter?.values);
   return (
     <div className="flex items-center justify-between gap-x-2">
       <span>{props.name}</span>
@@ -71,7 +73,7 @@ export function FilterOptions(props: IFilterOptions) {
         anchor={{ to: "bottom", gap: 8 }}
         className="bg-white w-max border border-gray-l3 p-2 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
       >
-        <ListboxOption value="" disabled={true}>
+        <ListboxOption value="" disabled={true} className="text-sm">
           Loading..
         </ListboxOption>
       </ListboxOptions>
@@ -84,7 +86,7 @@ export function FilterOptions(props: IFilterOptions) {
         anchor={{ to: "bottom", gap: 8 }}
         className="bg-white w-max border border-gray-l3 p-2 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
       >
-        <ListboxOption value="" disabled={true} className="text-red">
+        <ListboxOption value="" disabled={true} className="text-red text-sm">
           Failed to get filter options
         </ListboxOption>
       </ListboxOptions>
@@ -97,7 +99,7 @@ export function FilterOptions(props: IFilterOptions) {
         anchor={{ to: "bottom", gap: 8 }}
         className="bg-white w-max border border-gray-l3 p-2 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
       >
-        <ListboxOption value="" disabled={true}>
+        <ListboxOption value="" disabled={true} className="text-sm">
           No options found
         </ListboxOption>
       </ListboxOptions>
@@ -107,19 +109,19 @@ export function FilterOptions(props: IFilterOptions) {
   return (
     <ListboxOptions
       anchor={{ to: "bottom", gap: 8 }}
-      className="bg-white w-max border border-gray-l3 p-2 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
+      className="grid grid-cols-[auto_1fr] bg-white w-max border border-gray-l3 p-2 rounded-lg gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
     >
       {["blank"].concat(vals.data).map((opt) => (
         <ListboxOption
           key={opt}
           value={opt}
-          className="group gap-2 bg-white data-[focus]:bg-blue-l4 flex justify-between items-center px-2 py-1"
+          className="group grid grid-cols-subgrid col-span-2 gap-x-4 bg-white data-[focus]:bg-blue-l4 items-center px-2 py-1"
         >
           <CheckIcon
             size={14}
-            className="invisible group-data-[selected]:visible text-green"
+            className="invisible group-data-[selected]:visible text-green justify-self-end"
           />
-          {opt}
+          <span className="justify-self-start text-sm">{opt}</span>
         </ListboxOption>
       ))}
     </ListboxOptions>
