@@ -16,6 +16,30 @@ export interface LoaderData {
   stats?: Stats;
 }
 
+class Filter {
+  filter: any = {};
+
+  with_blank(key: string, csv: string) {
+    // const conds: any = [];
+    const codes = csv.split(",");
+    const blank = codes.findIndex((x) => x === "blank");
+    if (blank !== -1) {
+      this.filter.$or ||= [];
+      this.filter.$or.push({ [key]: { $exists: false } });
+      codes.splice(blank, 1);
+    }
+    if (codes.length > 0) {
+      // conds.push({ [key]: { $in: codes } });
+      this.filter.$or ||= [];
+      this.filter.$or.push({ [key]: { $in: codes } });
+    }
+  }
+
+  get all() {
+    return this.filter;
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const {
@@ -25,21 +49,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     income_code = "",
   } = Object.fromEntries(url.searchParams.entries());
 
-  const filter: any = {};
-  if (asset_code) {
-    filter.$or ||= [];
-    filter.$or.push({ asset_code: { $in: asset_code.split(",") } });
-  }
-  if (income_code) {
-    filter.$or ||= [];
-    filter.$or.push({ income_code: { $in: income_code.split(",") } });
-  }
+  const filter = new Filter();
+  if (asset_code) filter.with_blank("asset_code", asset_code);
+  if (income_code) filter.with_blank("income_code", income_code);
 
   const skip = (+page - 1) * +limit;
 
-  const all = await nonprofits.countDocuments(filter as any);
   const items = await nonprofits
-    .find(filter as any)
+    .find(filter.all)
     .sort({ asset_amount: -1 })
     .skip(skip)
     .limit(+limit)
@@ -49,6 +66,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     items,
     page: +page,
     size: +limit,
-    num_items: all,
+    num_items: items.length,
   } satisfies LoaderData;
 };

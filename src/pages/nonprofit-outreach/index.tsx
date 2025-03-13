@@ -28,14 +28,14 @@ export default function Page() {
                     _key="asset_code"
                     name="Asset code"
                     filter={{
-                      values: params.get("asset_code")?.split(",") || [],
-                      onChange(vs) {
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
                         setParams((p) => {
                           if (vs.length === 0) {
-                            p.delete("asset_code");
+                            p.delete(k);
                             return p;
                           }
-                          p.set("asset_code", vs.join(","));
+                          p.set(k, vs.join(","));
                           return p;
                         });
                       },
@@ -48,14 +48,14 @@ export default function Page() {
                     _key="income_code"
                     name="Income code"
                     filter={{
-                      values: params.get("income_code")?.split(",") || [],
-                      onChange(vs) {
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
                         setParams((p) => {
                           if (vs.length === 0) {
-                            p.delete("income_code");
+                            p.delete(k);
                             return p;
                           }
-                          p.set("income_code", vs.join(","));
+                          p.set(k, vs.join(","));
                           return p;
                         });
                       },
