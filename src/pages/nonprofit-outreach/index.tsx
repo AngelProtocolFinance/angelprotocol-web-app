@@ -37,19 +37,19 @@ export default function Page() {
   return (
     <div className="xl:mx-auto xl:container py-16 font-heading text-sm">
       <div className="w-full">
-        <div className="overflow-x-auto relative">
-          {active_filters.length > 0 && (
-            <div>
-              <div className="flex items-center gap-x-2">
-                <Link to=".">
-                  <XIcon size={14} className="text-red" />
-                </Link>
-                <p>Active filters</p>
-              </div>
-              {active_filters}
+        {active_filters.length > 0 && (
+          <div>
+            <div className="flex items-center gap-x-2">
+              <Link to=".">
+                <XIcon size={14} className="text-red" />
+              </Link>
+              <p>Active filters</p>
             </div>
-          )}
-          <p className="font-bold my-2"> found: {data.num_items}</p>
+            {active_filters}
+          </div>
+        )}
+        <p className="font-bold my-2"> found: {data.num_items}</p>
+        <div className="overflow-x-auto relative">
           <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_td]:align-top [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
             <thead>
               <tr>
