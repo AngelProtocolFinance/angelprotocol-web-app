@@ -4,7 +4,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { CheckIcon, ListFilterIcon } from "lucide-react";
+import { CheckIcon, ListFilterIcon, XIcon } from "lucide-react";
 import useSWR from "swr/immutable";
 
 interface Filter {
@@ -39,6 +39,8 @@ export function ListFilter(props: IListFilter) {
       {props.filter && (
         <>
           <Listbox
+            as="div"
+            className="relative"
             multiple
             value={values}
             onChange={(x) => props.filter?.onChange(x, props._key)}
@@ -49,7 +51,12 @@ export function ListFilter(props: IListFilter) {
                 className={`${is_active ? "text-green stroke-3" : ""}`}
               />
             </ListboxButton>
-            <FilterOptions _key={props._key} {...props.filter} />
+            <ListboxOptions
+              anchor={{ to: "bottom", gap: 8 }}
+              className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2"
+            >
+              <Options _key={props._key} {...props.filter} />
+            </ListboxOptions>
           </Listbox>
         </>
       )}
@@ -64,7 +71,7 @@ const getFilter = async (path: string) => {
 interface IFilterOptions extends Filter {
   _key: string;
 }
-export function FilterOptions(props: IFilterOptions) {
+export function Options(props: IFilterOptions) {
   const vals = useSWR(
     `/api/irs-npos/aggregates/${props._key}`,
     props.optsFn || getFilter
@@ -72,57 +79,40 @@ export function FilterOptions(props: IFilterOptions) {
 
   if (vals.isLoading) {
     return (
-      <ListboxOptions
-        anchor={{ to: "bottom", gap: 8 }}
-        className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2 focus:ring focus:ring-blue-d1 ring-offset-1"
-      >
-        <ListboxOption value="" disabled={true} className="text-sm">
-          Loading..
-        </ListboxOption>
-      </ListboxOptions>
+      <ListboxOption value="" disabled={true} className="text-sm">
+        Loading..
+      </ListboxOption>
     );
   }
 
   if (vals.error) {
     return (
-      <ListboxOptions
-        anchor={{ to: "bottom", gap: 8 }}
-        className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2 focus:ring focus:ring-blue-d1 ring-offset-1"
-      >
-        <ListboxOption value="" disabled={true} className="text-red text-sm">
-          Failed to get filter options
-        </ListboxOption>
-      </ListboxOptions>
+      <ListboxOption value="" disabled={true} className="text-red text-sm">
+        Failed to get filter options
+      </ListboxOption>
     );
   }
 
   if (!vals.data || vals.data.length === 0) {
     return (
-      <ListboxOptions
-        anchor={{ to: "bottom", gap: 8 }}
-        className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2 focus:ring focus:ring-blue-d1 ring-offset-1"
-      >
-        <ListboxOption value="" disabled={true} className="text-sm">
-          No options found
-        </ListboxOption>
-      </ListboxOptions>
+      <ListboxOption value="" disabled={true} className="text-sm">
+        No options found
+      </ListboxOption>
     );
   }
 
   const is_active = (props.values?.(props._key)?.length ?? 0) > 0;
 
   return (
-    <ListboxOptions
-      anchor={{ to: "bottom", gap: 8 }}
-      className="grid grid-cols-[auto_1fr] bg-white w-max h-40 border border-gray-l3 p-2 rounded-sm gap-2 focus:ring focus:ring-blue-d1 ring-offset-1"
-    >
+    <>
       {is_active && (
         <button
-          className="col-span-full"
+          className="grid grid-cols-subgrid col-span-2 text-sm text-red "
           type="button"
           onClick={() => props.onChange([], props._key)}
         >
-          clear filters
+          <XIcon size={15} className="justify-self-end" />
+          <span className="justify-self-start text-xs uppercase">clear</span>
         </button>
       )}
       {["blank"].concat(vals.data).map((opt) => (
@@ -138,6 +128,6 @@ export function FilterOptions(props: IFilterOptions) {
           <span className="justify-self-start text-sm">{opt}</span>
         </ListboxOption>
       ))}
-    </ListboxOptions>
+    </>
   );
 }
