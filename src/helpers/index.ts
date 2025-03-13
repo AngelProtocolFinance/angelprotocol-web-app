@@ -1,4 +1,5 @@
 export * from "./create-navlink-styler";
+export * from "./date-format";
 export * from "./decimal";
 export * from "./id-param-to-num";
 export * from "./is-empty";

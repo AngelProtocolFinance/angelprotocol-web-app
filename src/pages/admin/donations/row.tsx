@@ -2,8 +2,7 @@ import { Link } from "@remix-run/react";
 import Copier from "components/copier";
 import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { humanize, maskAddress } from "helpers";
-import { dateFormat } from "helpers/date-format";
+import { dateFormat, humanize, maskAddress } from "helpers";
 import { CircleCheck, X } from "lucide-react";
 import type { Donation } from "types/donations";
 

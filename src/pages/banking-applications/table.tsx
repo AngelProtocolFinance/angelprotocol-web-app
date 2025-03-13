@@ -1,7 +1,7 @@
 import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { dateFormat } from "helpers/date-format";
+import { dateFormat } from "helpers";
 import { Folder } from "lucide-react";
 import type { BankingApplicationStatus } from "types/applications";
 import LoadMoreBtn from "./load-more-btn";
