@@ -25,18 +25,18 @@ class Filter {
     const blank_idx = opts.findIndex((x) => x === "blank");
     const non_blank_idx = opts.findIndex((x) => x === "exist");
     if (blank_idx !== -1) {
-      this.filter.$or ||= [];
-      this.filter.$or.push({ [key]: { $exists: false } });
+      this.filter.$and ||= [];
+      this.filter.$and.push({ [key]: { $exists: false } });
       opts.splice(blank_idx, 1);
     }
     if (non_blank_idx !== -1) {
-      this.filter.$or ||= [];
-      this.filter.$or.push({ [key]: { $exists: true } });
+      this.filter.$and ||= [];
+      this.filter.$and.push({ [key]: { $exists: true } });
       opts.splice(non_blank_idx, 1);
     }
     if (opts.length > 0) {
-      this.filter.$or ||= [];
-      this.filter.$or.push({ [key]: { $in: opts } });
+      this.filter.$and ||= [];
+      this.filter.$and.push({ [key]: { $in: opts } });
     }
   }
 
@@ -62,7 +62,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (income_code) filter.set_opts("income_code", income_code);
   if (website_url) filter.set_opts("website_url", website_url);
   if (state) filter.set_opts("state", state);
-  if (country) filter.set_opts("mailing_address.country", country);
+  if (country) filter.set_opts("country", country);
 
   const skip = (+page - 1) * +limit;
 

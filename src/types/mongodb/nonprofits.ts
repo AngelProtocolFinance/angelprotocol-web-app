@@ -1,4 +1,5 @@
 import type { WithId } from "mongodb";
+
 interface IBmf {
   ein: string;
   name: string;
@@ -40,6 +41,7 @@ interface IBmf {
   revenue_amount?: number;
   ntee_code?: string;
   sort_name?: string;
+  terminated?: boolean;
 }
 
 interface Address {
@@ -72,6 +74,16 @@ interface IPostCardItem {
   dba?: string[];
 }
 
-export interface Nonprofit extends IBmf, IPostCardItem {}
+interface IPub78 {
+  ein: string;
+  name: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  deductibility_code_pub78?: string;
+}
+
+// bmf fields take precedence in actual
+export interface Nonprofit extends IBmf, IPostCardItem, IPub78 {}
 
 export interface NonprofitItem extends WithId<Nonprofit> {}
