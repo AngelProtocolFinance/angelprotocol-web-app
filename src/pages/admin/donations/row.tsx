@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import Copier from "components/copier";
 import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { humanize, maskAddress } from "helpers";
+import { dateFormat, humanize, maskAddress } from "helpers";
 import { CircleCheck, X } from "lucide-react";
 import type { Donation } from "types/donations";
 
@@ -18,9 +18,7 @@ export default function Row(
       type="td"
       cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${props.classes}`}
     >
-      <span className="text-sm">
-        {new Date(props.date).toLocaleDateString()}
-      </span>
+      <span className="text-sm">{dateFormat(props.date)}</span>
 
       {props.programId ? (
         <Link

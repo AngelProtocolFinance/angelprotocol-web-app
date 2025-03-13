@@ -4,7 +4,7 @@ import ExtLink from "components/ext-link";
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { humanize, maskAddress } from "helpers";
+import { dateFormat, humanize, maskAddress } from "helpers";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
 import type { Donation } from "types/donations";
@@ -114,7 +114,7 @@ export default function Table({
               ) : (
                 <>--</>
               )}
-              <>{new Date(row.date).toLocaleDateString()}</>
+              <>{dateFormat(row.date)}</>
               <span className="capitalize">
                 {donationMethod(
                   row.paymentMethod ?? { id: row.viaId, name: row.viaName }
