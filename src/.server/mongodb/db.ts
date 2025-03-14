@@ -5,6 +5,6 @@ import { mongo_url } from ".server/env";
 const db = new MongoClient(mongo_url)
   .connect()
   .then((c) => c.db("better-giving"));
-export const nonprofits = await db.then((d) =>
+export const nonprofits = db.then((d) =>
   d.collection<NonprofitItem>("nonprofits")
 );

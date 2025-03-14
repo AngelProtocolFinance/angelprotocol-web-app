@@ -80,7 +80,7 @@ interface IPub78 {
   city?: string;
   state?: string;
   country?: string;
-  deductibility_code_pub78?: string;
+  deductibility_code_pub78?: string[];
 }
 
 // bmf fields take precedence in actual

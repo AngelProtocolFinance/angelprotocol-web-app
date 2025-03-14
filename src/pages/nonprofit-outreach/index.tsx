@@ -50,7 +50,7 @@ export default function Page() {
         )}
         <p className="font-bold my-2"> found: {data.num_items}</p>
         <div className="overflow-x-auto relative">
-          <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_td]:align-top [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
+          <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_th]:align-top [&_th]:text-balance [&_td]:align-top [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
             <thead>
               <tr>
                 <th>EIN</th>
@@ -206,7 +206,46 @@ export default function Page() {
                   />
                 </th>
                 <th>Classification code</th>
-                <th>Deductability code</th>
+                <th>
+                  {" "}
+                  <ListFilter
+                    _key="deductibility_code"
+                    name="Deductibility code"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
+                <th>
+                  {" "}
+                  <ListFilter
+                    _key="deductibility_code_pub78"
+                    name="Deductibility code (Pub 78)"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
                 <th>Foundation code</th>
                 <th>Activity code</th> <th>Organization code</th>
                 <th>Exempt organinzation status code</th>
@@ -253,6 +292,7 @@ export default function Page() {
                   <td>{d.affilation_code}</td>
                   <td>{d.classification_code}</td>
                   <td>{d.deductibility_code}</td>
+                  <td>{d.deductibility_code_pub78?.join(", ")}</td>
                   <td>{d.foundation_code}</td>
                   <td>{d.activity_code}</td>
                   <td>{d.organization_code}</td>
