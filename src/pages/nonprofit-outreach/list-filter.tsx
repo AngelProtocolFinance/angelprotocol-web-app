@@ -33,7 +33,7 @@ export function ListFilter(props: IListFilter) {
   const is_active = (values?.length ?? 0) > 0 || props.sorter?.value;
 
   return (
-    <div className="flex items-center justify-between gap-x-2">
+    <div className="flex items-start justify-between gap-x-2">
       <span>{props.name}</span>
 
       {props.filter && (
@@ -45,7 +45,7 @@ export function ListFilter(props: IListFilter) {
             value={values}
             onChange={(x) => props.filter?.onChange(x, props._key)}
           >
-            <ListboxButton>
+            <ListboxButton className="mt-1">
               <ListFilterIcon
                 size={14}
                 className={`${is_active ? "text-green stroke-3" : ""}`}

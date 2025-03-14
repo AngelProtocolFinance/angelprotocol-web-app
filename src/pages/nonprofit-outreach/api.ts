@@ -57,6 +57,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     country = "",
     subsection_code = "",
     affilation_code = "",
+    deductibility_code = "",
+    deductibility_code_pub78 = "",
+    ntee_code = "",
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
@@ -67,16 +70,22 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (country) filter.set_opts("country", country);
   if (subsection_code) filter.set_opts("subsection_code", subsection_code);
   if (affilation_code) filter.set_opts("affilation_code", affilation_code);
+  if (deductibility_code)
+    filter.set_opts("deductibility_code", deductibility_code);
+  if (deductibility_code_pub78)
+    filter.set_opts("deductibility_code_pub78", deductibility_code_pub78);
+  if (ntee_code) filter.set_opts("ntee_code", ntee_code);
 
   const skip = (+page - 1) * +limit;
 
-  const items = await nonprofits
+  const collection = await nonprofits;
+  const items = await collection
     .find(filter.all)
     .sort({ asset_amount: -1 })
     .skip(skip)
     .limit(+limit)
     .toArray();
-  const count = await nonprofits.countDocuments(filter.all);
+  const count = await collection.countDocuments(filter.all);
 
   return {
     items,

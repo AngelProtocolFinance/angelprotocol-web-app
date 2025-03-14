@@ -3,11 +3,12 @@ import { nonprofits } from ".server/mongodb/db";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const type = params.type;
-  if (!type)
+  if (!type) {
     return new Response("aggregate type not specified", { status: 400 });
+  }
 
-  const states = await nonprofits
-    .distinct(type)
-    .then((s) => s.filter((x) => x != null));
+  const c = await nonprofits;
+
+  const states = await c.distinct(type).then((s) => s.filter((x) => x != null));
   return new Response(JSON.stringify(states));
 };
