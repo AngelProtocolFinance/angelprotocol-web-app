@@ -43,7 +43,7 @@ class Filter {
     return vals;
   }
 
-  set_opts<T extends string>(kv: { [key in T]: T }) {
+  opts<T extends string>(kv: { [key in T]: T }) {
     const [[k, v]] = Object.entries(kv);
     if (!v) return;
     const opts = this.extract_blank_exists(k, v as string);
@@ -52,7 +52,7 @@ class Filter {
       this.filter.$and.push({ [k]: { $in: opts } });
     }
   }
-  set_texts<T extends string>(kv: { [key in T]: T }) {
+  texts<T extends string>(kv: { [key in T]: T }) {
     const [[k, v]] = Object.entries(kv);
     if (!v) return;
     const texts = this.extract_blank_exists(k, v as string);
@@ -61,6 +61,17 @@ class Filter {
       this.filter.$and ||= [];
       this.filter.$and.push({
         $and: distinct.map((t) => ({ [k]: { $regex: t, $options: "i" } })),
+      });
+    }
+  }
+  starts_with<T extends string>(kv: { [key in T]: T }) {
+    const [[k, v]] = Object.entries(kv);
+    if (!v) return;
+    const starts = this.extract_blank_exists(k, v as string);
+    if (starts.length > 0) {
+      this.filter.$and ||= [];
+      this.filter.$and.push({
+        $and: starts.map((t) => ({ [k]: { $regex: `^${t}`, $options: "i" } })),
       });
     }
   }
@@ -94,22 +105,22 @@ export const loader: LoaderFunction = async ({ request }) => {
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
-  filter.set_opts({ asset_code });
-  filter.set_opts({ income_code });
-  filter.set_opts({ website_url });
-  filter.set_opts({ state });
-  filter.set_opts({ country });
-  filter.set_opts({ subsection_code });
-  filter.set_opts({ affilation_code });
-  filter.set_opts({ deductibility_code });
-  filter.set_opts({ deductibility_code_pub78 });
-  filter.set_opts({ ntee_code });
-  filter.set_texts({ classification_code });
-  filter.set_texts({ activity_code });
-  filter.set_opts({ foundation_code });
-  filter.set_opts({ organization_code });
-  filter.set_opts({ exempt_organization_status_code });
-  filter.set_opts({ filing_requirement_code });
+  filter.opts({ asset_code });
+  filter.opts({ income_code });
+  filter.opts({ website_url });
+  filter.opts({ state });
+  filter.opts({ country });
+  filter.opts({ subsection_code });
+  filter.opts({ affilation_code });
+  filter.opts({ deductibility_code });
+  filter.opts({ deductibility_code_pub78 });
+  filter.texts({ classification_code });
+  filter.texts({ activity_code });
+  filter.opts({ foundation_code });
+  filter.opts({ organization_code });
+  filter.opts({ exempt_organization_status_code });
+  filter.opts({ filing_requirement_code });
+  filter.starts_with({ ntee_code });
 
   const skip = (+page - 1) * +limit;
 

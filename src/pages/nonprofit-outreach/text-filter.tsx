@@ -74,8 +74,8 @@ export function TextFilter(props: Props) {
         {Array.from({ length: props.num }, (_, i) => (
           <Field
             key={i}
+            label=""
             {...register(`text${i}` as any)}
-            label={`Code ${i + 1}`}
             classes={{ input: "text-xs py-1 px-2", label: "mb-0! text-xs" }}
           />
         ))}
