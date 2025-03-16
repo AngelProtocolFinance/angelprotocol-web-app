@@ -247,7 +247,6 @@ export default function Page() {
                   />
                 </th>
                 <th>
-                  {" "}
                   <ListFilter
                     _key="deductibility_code_pub78"
                     name="Deductibility code (Pub 78)"
@@ -266,8 +265,44 @@ export default function Page() {
                     }}
                   />
                 </th>
-                <th>Foundation code</th>
-                <th>Activity code</th> <th>Organization code</th>
+                <th>
+                  <ListFilter
+                    _key="foundation_code"
+                    name="Foundation code"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
+                <th>
+                  <TextFilter
+                    num={3}
+                    label="Activity code"
+                    _key="activity_code"
+                    values={(k) => params.get(k)?.split(",") || []}
+                    onChange={(vs, k) => {
+                      setParams((p) => {
+                        if (vs.length === 0) {
+                          p.delete(k);
+                          return p;
+                        }
+                        p.set(k, vs.join(","));
+                        return p;
+                      });
+                    }}
+                  />
+                </th>
+                <th>Organization code</th>
                 <th>Exempt organinzation status code</th>
                 <th>Filing requirement code</th>
                 <th>Sort Name</th>
