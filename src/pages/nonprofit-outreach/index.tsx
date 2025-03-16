@@ -302,9 +302,63 @@ export default function Page() {
                     }}
                   />
                 </th>
-                <th>Organization code</th>
-                <th>Exempt organinzation status code</th>
-                <th>Filing requirement code</th>
+                <th>
+                  <ListFilter
+                    _key="organization_code"
+                    name="Organization code"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
+                <th>
+                  <ListFilter
+                    _key="exempt_organization_status_code"
+                    name="Exempt organization status code"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
+                <th>
+                  <ListFilter
+                    name="Filing requirement code"
+                    _key="filing_requirement_code"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
                 <th>Sort Name</th>
               </tr>
             </thead>

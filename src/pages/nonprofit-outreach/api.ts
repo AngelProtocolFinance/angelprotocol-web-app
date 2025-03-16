@@ -75,19 +75,22 @@ export const loader: LoaderFunction = async ({ request }) => {
   const {
     page = "1",
     limit = "10",
-    asset_code = "",
-    income_code = "",
-    website_url = "",
-    state = "",
-    country = "",
-    subsection_code = "",
-    affilation_code = "",
-    deductibility_code = "",
-    deductibility_code_pub78 = "",
-    ntee_code = "",
-    classification_code = "",
-    foundation_code = "",
-    activity_code = "",
+    asset_code,
+    income_code,
+    website_url,
+    state,
+    country,
+    subsection_code,
+    affilation_code,
+    deductibility_code,
+    deductibility_code_pub78,
+    ntee_code,
+    classification_code,
+    foundation_code,
+    activity_code,
+    exempt_organization_status_code,
+    organization_code,
+    filing_requirement_code,
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
@@ -104,6 +107,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   filter.set_texts({ classification_code });
   filter.set_texts({ activity_code });
   filter.set_opts({ foundation_code });
+  filter.set_opts({ organization_code });
+  filter.set_opts({ exempt_organization_status_code });
+  filter.set_opts({ filing_requirement_code });
 
   const skip = (+page - 1) * +limit;
 
