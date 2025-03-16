@@ -85,18 +85,10 @@ export function Options(props: IFilterOptions) {
     );
   }
 
-  if (vals.error) {
+  if (vals.error || !vals.data) {
     return (
       <ListboxOption value="" disabled={true} className="text-red text-sm">
         Failed to get filter options
-      </ListboxOption>
-    );
-  }
-
-  if (!vals.data || vals.data.length === 0) {
-    return (
-      <ListboxOption value="" disabled={true} className="text-sm">
-        No options found
       </ListboxOption>
     );
   }
@@ -115,7 +107,7 @@ export function Options(props: IFilterOptions) {
           <span className="justify-self-start text-xs uppercase">clear</span>
         </button>
       )}
-      {["blank"].concat(vals.data).map((opt) => (
+      {["blank", "exists"].concat(vals.data).map((opt) => (
         <ListboxOption
           key={opt}
           value={opt}

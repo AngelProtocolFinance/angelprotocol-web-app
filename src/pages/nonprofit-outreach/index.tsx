@@ -6,6 +6,7 @@ export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
 import { XIcon } from "lucide-react";
+import { TextFilter } from "./text-filter";
 
 const _usd = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -39,12 +40,14 @@ export default function Page() {
       <div className="w-full">
         {active_filters.length > 0 && (
           <div>
-            <div className="flex items-center gap-x-2">
-              <Link to=".">
-                <XIcon size={14} className="text-red" />
-              </Link>
-              <p>Active filters</p>
-            </div>
+            {active_filters.length > 1 && (
+              <div className="flex items-center gap-x-2">
+                <Link to=".">
+                  <XIcon size={14} className="text-red" />
+                </Link>
+                <p>Active filters</p>
+              </div>
+            )}
             {active_filters}
           </div>
         )}
@@ -61,7 +64,7 @@ export default function Page() {
                     name="Website"
                     filter={{
                       values: (k) => params.get(k)?.split(",") || [],
-                      optsFn: async () => ["exist"],
+                      optsFn: async () => [],
                       onChange(vs, k) {
                         setParams((p) => {
                           if (vs.length === 0) {
@@ -205,7 +208,24 @@ export default function Page() {
                     }}
                   />
                 </th>
-                <th>Classification code</th>
+                <th>
+                  <TextFilter
+                    num={4}
+                    label="Classification code"
+                    _key="classification_code"
+                    values={(k) => params.get(k)?.split(",") || []}
+                    onChange={(vs, k) => {
+                      setParams((p) => {
+                        if (vs.length === 0) {
+                          p.delete(k);
+                          return p;
+                        }
+                        p.set(k, vs.join(","));
+                        return p;
+                      });
+                    }}
+                  />
+                </th>
                 <th>
                   {" "}
                   <ListFilter
