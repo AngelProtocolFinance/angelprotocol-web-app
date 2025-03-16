@@ -43,20 +43,24 @@ class Filter {
     return vals;
   }
 
-  set_opts(key: string, csv: string) {
-    const opts = this.extract_blank_exists(key, csv);
+  set_opts<T extends string>(kv: { [key in T]: T }) {
+    const [[k, v]] = Object.entries(kv);
+    if (!v) return;
+    const opts = this.extract_blank_exists(k, v as string);
     if (opts.length > 0) {
       this.filter.$and ||= [];
-      this.filter.$and.push({ [key]: { $in: opts } });
+      this.filter.$and.push({ [k]: { $in: opts } });
     }
   }
-  set_texts(key: string, csv: string) {
-    const texts = this.extract_blank_exists(key, csv);
+  set_texts<T extends string>(kv: { [key in T]: T }) {
+    const [[k, v]] = Object.entries(kv);
+    if (!v) return;
+    const texts = this.extract_blank_exists(k, v as string);
     const distinct = Array.from(new Set(texts).values());
     if (distinct.length > 0) {
       this.filter.$and ||= [];
       this.filter.$and.push({
-        $and: distinct.map((t) => ({ [key]: { $regex: t, $options: "i" } })),
+        $and: distinct.map((t) => ({ [k]: { $regex: t, $options: "i" } })),
       });
     }
   }
@@ -82,23 +86,24 @@ export const loader: LoaderFunction = async ({ request }) => {
     deductibility_code_pub78 = "",
     ntee_code = "",
     classification_code = "",
+    foundation_code = "",
+    activity_code = "",
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
-  if (asset_code) filter.set_opts("asset_code", asset_code);
-  if (income_code) filter.set_opts("income_code", income_code);
-  if (website_url) filter.set_opts("website_url", website_url);
-  if (state) filter.set_opts("state", state);
-  if (country) filter.set_opts("country", country);
-  if (subsection_code) filter.set_opts("subsection_code", subsection_code);
-  if (affilation_code) filter.set_opts("affilation_code", affilation_code);
-  if (deductibility_code)
-    filter.set_opts("deductibility_code", deductibility_code);
-  if (deductibility_code_pub78)
-    filter.set_opts("deductibility_code_pub78", deductibility_code_pub78);
-  if (ntee_code) filter.set_opts("ntee_code", ntee_code);
-  if (classification_code)
-    filter.set_texts("classification_code", classification_code);
+  filter.set_opts({ asset_code });
+  filter.set_opts({ income_code });
+  filter.set_opts({ website_url });
+  filter.set_opts({ state });
+  filter.set_opts({ country });
+  filter.set_opts({ subsection_code });
+  filter.set_opts({ affilation_code });
+  filter.set_opts({ deductibility_code });
+  filter.set_opts({ deductibility_code_pub78 });
+  filter.set_opts({ ntee_code });
+  filter.set_texts({ classification_code });
+  filter.set_texts({ activity_code });
+  filter.set_opts({ foundation_code });
 
   const skip = (+page - 1) * +limit;
 
