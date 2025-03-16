@@ -166,7 +166,24 @@ export default function Page() {
                     }}
                   />
                 </th>
-                <th>NTEE code</th>
+                <th>
+                  <TextFilter
+                    num={1}
+                    label="NTEE code"
+                    _key="ntee_code"
+                    values={(k) => params.get(k)?.split(",") || []}
+                    onChange={(vs, k) => {
+                      setParams((p) => {
+                        if (vs.length === 0) {
+                          p.delete(k);
+                          return p;
+                        }
+                        p.set(k, vs.join(","));
+                        return p;
+                      });
+                    }}
+                  />
+                </th>
                 <th>In care of</th>
                 <th>Principal officer</th>
                 <th>Group exemption number</th>
