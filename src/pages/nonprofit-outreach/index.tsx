@@ -18,7 +18,6 @@ const _usd = new Intl.NumberFormat("en-US", {
 });
 
 export default function Page() {
-  console.log("render");
   const data = useCachedLoaderData<LoaderData>();
   const [params, setParams] = useSearchParams();
   const { sort, ...filters } = Object.fromEntries(params.entries());
