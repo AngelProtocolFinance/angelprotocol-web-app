@@ -90,6 +90,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const {
     page = "1",
     limit = "10",
+    sort = "",
     asset_code,
     income_code,
     website_url,
@@ -135,11 +136,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   filter.range({ revenue_amount });
 
   const skip = (+page - 1) * +limit;
+  const [sort_key, sort_dir] = sort.split("+");
 
   const collection = await nonprofits;
   const items = await collection
     .find(filter.all)
-    .sort({ revenue_amount: -1 })
+    .sort(sort ? { [sort_key]: sort_dir === "asc" ? 1 : -1 } : {})
     .skip(skip)
     .limit(+limit)
     .toArray();

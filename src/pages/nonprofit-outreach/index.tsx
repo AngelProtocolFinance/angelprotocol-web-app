@@ -7,6 +7,8 @@ export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
 import { XIcon } from "lucide-react";
+import { filter_factory } from "./common";
+import type { ISort } from "./sort";
 import { TextFilter } from "./text-filter";
 
 const _usd = new Intl.NumberFormat("en-US", {
@@ -15,11 +17,23 @@ const _usd = new Intl.NumberFormat("en-US", {
 });
 
 export default function Page() {
+  console.log("render");
   const data = useCachedLoaderData<LoaderData>();
   const [params, setParams] = useSearchParams();
-  const { sort, sort_direction, ...filters } = Object.fromEntries(
-    params.entries()
-  );
+  const { sort, ...filters } = Object.fromEntries(params.entries());
+  const sort_obj: ISort = {
+    value: sort
+      ? { key: sort.split("+")[0], direction: sort.split("+")[1] as any }
+      : undefined,
+    onChange: (v) => {
+      setParams((p) => {
+        p.set("sort", `${v.key}+${v.direction}`);
+        return p;
+      });
+    },
+  };
+  const filter_props = filter_factory(params, setParams);
+
   const active_filters = Object.entries(filters).map(([k, v]) => (
     <div key={k} className="flex items-center gap-x-2">
       <button
@@ -63,392 +77,111 @@ export default function Page() {
                 <th>EIN</th>
                 <th>Name</th>
                 <th>
+                  Website
                   <ListFilter
-                    _key="website_url"
-                    name="Website"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      optsFn: async () => [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
+                    {...filter_props("website_url")}
+                    optsFn={async () => []}
                   />
                 </th>
                 <th>
-                  <ListFilter
-                    _key="asset_code"
-                    name="Asset code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Asset Code
+                  <ListFilter {...filter_props("asset_code")} />
                 </th>
                 <th>
-                  <RangeFilter
-                    _key="asset_amount"
-                    label="Assets"
-                    values={(k) => params.get(k)?.split(",") || []}
-                    onChange={(vs, k) => {
-                      setParams((p) => {
-                        if (vs.length === 0) {
-                          p.delete(k);
-                          return p;
-                        }
-                        p.set(k, vs.join(","));
-                        return p;
-                      });
-                    }}
-                  />
+                  Assets
+                  <RangeFilter {...filter_props("asset_amount")} />
                 </th>
                 <th>
-                  <ListFilter
-                    _key="income_code"
-                    name="Income code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Income code
+                  <ListFilter {...filter_props("income_code")} />
                 </th>
                 <th>
-                  <RangeFilter
-                    _key="income_amount"
-                    label="Income"
-                    values={(k) => params.get(k)?.split(",") || []}
-                    onChange={(vs, k) => {
-                      setParams((p) => {
-                        if (vs.length === 0) {
-                          p.delete(k);
-                          return p;
-                        }
-                        p.set(k, vs.join(","));
-                        return p;
-                      });
-                    }}
-                  />
+                  Income
+                  <RangeFilter {...filter_props("income_amount")} />
                 </th>
                 <th>
-                  <RangeFilter
-                    _key="revenue_amount"
-                    label="Revenue"
-                    values={(k) => params.get(k)?.split(",") || []}
-                    onChange={(vs, k) => {
-                      setParams((p) => {
-                        if (vs.length === 0) {
-                          p.delete(k);
-                          return p;
-                        }
-                        p.set(k, vs.join(","));
-                        return p;
-                      });
-                    }}
-                  />
+                  Revenue
+                  <RangeFilter {...filter_props("revenue_amount")} />
                 </th>
                 <th>City</th>
                 <th>
-                  <ListFilter
-                    _key="state"
-                    name="State"
-                    filter={
-                      // filter only available for US
-                      !params.get("country") ||
-                      /\b(USA|United\s+States)\b/i.test(
-                        params.get("country") || ""
-                      )
-                        ? {
-                            values: (k) => params.get(k)?.split(",") || [],
-                            onChange(vs, k) {
-                              setParams((p) => {
-                                if (vs.length === 0) {
-                                  p.delete(k);
-                                  return p;
-                                }
-                                p.set(k, vs.join(","));
-                                return p;
-                              });
-                            },
-                          }
-                        : undefined
-                    }
-                  />
+                  State
+                  {!params.get("country") ||
+                  /\b(USA|United\s+States)\b/i.test(
+                    params.get("country") || ""
+                  ) ? (
+                    <ListFilter {...filter_props("state")} />
+                  ) : null}
                 </th>
                 <th>
-                  <ListFilter
-                    _key="country"
-                    name="Country"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Country
+                  <ListFilter {...filter_props("country")} />
                 </th>
                 <th>
+                  NTEE Code
                   <TextFilter
                     num={1}
-                    label="NTEE code"
                     description="can query partial e.g. A (starts with A) or complete (A80)"
-                    _key="ntee_code"
-                    values={(k) => params.get(k)?.split(",") || []}
-                    onChange={(vs, k) => {
-                      setParams((p) => {
-                        if (vs.length === 0) {
-                          p.delete(k);
-                          return p;
-                        }
-                        p.set(k, vs.join(","));
-                        return p;
-                      });
-                    }}
+                    {...filter_props("ntee_code")}
                   />
                 </th>
                 <th>In care of</th>
                 <th>Principal officer</th>
                 <th>Group exemption number</th>
                 <th>
-                  <ListFilter
-                    _key="subsection_code"
-                    name="Subsection code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Subsection code
+                  <ListFilter {...filter_props("subsection_code")} />
                 </th>
                 <th>
-                  <ListFilter
-                    _key="affilation_code"
-                    name="Affiliation code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Affiliation code
+                  <ListFilter {...filter_props("affilation_code")} />
                 </th>
                 <th>
+                  Classification code
                   <TextFilter
                     num={4}
-                    label="Classification code"
                     description="NPOs may have up to 4 classification codes"
-                    _key="classification_code"
-                    values={(k) => params.get(k)?.split(",") || []}
-                    onChange={(vs, k) => {
-                      setParams((p) => {
-                        if (vs.length === 0) {
-                          p.delete(k);
-                          return p;
-                        }
-                        p.set(k, vs.join(","));
-                        return p;
-                      });
-                    }}
+                    {...filter_props("classification_code")}
                   />
                 </th>
                 <th>
-                  {" "}
-                  <ListFilter
-                    _key="deductibility_code"
-                    name="Deductibility code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Deductibility code
+                  <ListFilter {...filter_props("deductibility_code")} />
                 </th>
                 <th>
-                  <ListFilter
-                    _key="deductibility_code_pub78"
-                    name="Deductibility code (Pub 78)"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  <ListFilter {...filter_props("deductibility_code_pub78")} />
                 </th>
                 <th>
-                  <ListFilter
-                    _key="foundation_code"
-                    name="Foundation code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Foundation code
+                  <ListFilter {...filter_props("foundation_code")} />
                 </th>
                 <th>
+                  Activity code
                   <TextFilter
                     num={3}
-                    label="Activity code"
                     description="NPOs may have up to 3 activity codes"
-                    _key="activity_code"
-                    values={(k) => params.get(k)?.split(",") || []}
-                    onChange={(vs, k) => {
-                      setParams((p) => {
-                        if (vs.length === 0) {
-                          p.delete(k);
-                          return p;
-                        }
-                        p.set(k, vs.join(","));
-                        return p;
-                      });
-                    }}
+                    {...filter_props("activity_code")}
                   />
                 </th>
                 <th>
+                  Organization code
+                  <ListFilter {...filter_props("organization_code")} />
+                </th>
+                <th>
+                  <span>Exempt organization status code</span>
                   <ListFilter
-                    _key="organization_code"
-                    name="Organization code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
+                    {...filter_props("exempt_organization_status_code")}
                   />
                 </th>
                 <th>
-                  <ListFilter
-                    _key="exempt_organization_status_code"
-                    name="Exempt organization status code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
+                  Filing requirement code
+                  <ListFilter {...filter_props("filing_requirement_code")} />
                 </th>
                 <th>
+                  Sort name
                   <ListFilter
-                    name="Filing requirement code"
-                    _key="filing_requirement_code"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
-                  />
-                </th>
-                <th>
-                  <ListFilter
-                    name="Sort name"
-                    _key="sort_name"
-                    filter={{
-                      values: (k) => params.get(k)?.split(",") || [],
-                      optsFn: async () => [],
-                      onChange(vs, k) {
-                        setParams((p) => {
-                          if (vs.length === 0) {
-                            p.delete(k);
-                            return p;
-                          }
-                          p.set(k, vs.join(","));
-                          return p;
-                        });
-                      },
-                    }}
+                    {...filter_props("sort_name")}
+                    optsFn={async () => []}
                   />
                 </th>
               </tr>

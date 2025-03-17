@@ -5,18 +5,14 @@ import {
 } from "components/form";
 import { ListFilterIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import type { IFilter } from "./common";
 
-interface Props {
-  label: string;
-  _key: string;
-  values?: (k: string) => string[];
-  onChange?: (v: string[], k: string) => void;
+interface Props extends IFilter {
   classes?: string;
 }
 
 export function RangeFilter(props: Props) {
-  const raw = props.values?.(props._key) || [];
-  const is_active = raw.length > 0;
+  const raw = props.values || [];
   const is_blank = raw.includes("blank");
   const is_exists = raw.includes("exists");
   const range = raw.filter((t) => t !== "blank" && t !== "exists");
@@ -38,29 +34,28 @@ export function RangeFilter(props: Props) {
 
   const min = watch("min");
   return (
-    <Popover className="relative flex items-start justify-between gap-x-2">
-      <p>{props.label}</p>
+    <Popover className="flex items-start justify-between gap-x-2">
       <PopoverButton className="mt-1">
         <ListFilterIcon
           size={14}
-          className={`${is_active ? "text-green stroke-3" : ""}`}
+          className={`${props.is_active ? "text-green stroke-3" : ""}`}
         />
       </PopoverButton>
       <PopoverPanel
         as="form"
         anchor={{ to: "bottom", gap: 8 }}
-        className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2"
+        className="grid bg-white w-max border border-gray-l3 p-2 rounded-sm gap-2"
         onReset={(e) => {
           e.preventDefault();
           reset(undefined, { keepDirtyValues: false });
-          props.onChange?.([], props._key);
+          props.onChange?.([]);
         }}
         onSubmit={handleSubmit(({ blank, exists, ...texts }) => {
           const text = Object.values(texts) as string[];
           const vals = text
             .concat([blank ? "blank" : "", exists ? "exists" : ""])
             .filter((x) => x);
-          props.onChange?.(vals, props._key);
+          props.onChange?.(vals);
         })}
       >
         <CheckField {...register("blank")} classes="text-xs">

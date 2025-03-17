@@ -6,61 +6,28 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ListFilterIcon, XIcon } from "lucide-react";
 import useSWR from "swr/immutable";
+import type { IFilter } from "./common";
 
-interface Filter {
+interface Props extends IFilter {
   optsFn?: () => Promise<string[]>;
-  values?: (key: string) => string[];
-  onChange: (values: string[], key: string) => void;
 }
 
-type Sort = "asc" | "desc" | null;
-interface Sorter {
-  value?: Sort;
-  onChange: (value: Sort) => void;
-}
-
-interface IListFilter {
-  name: string;
-  //filtered by key
-  _key: string;
-  filter?: Filter;
-  sorter?: Sorter;
-  classes?: string;
-}
-
-export function ListFilter(props: IListFilter) {
-  const values = props.filter?.values?.(props._key);
-  const is_active = (values?.length ?? 0) > 0 || props.sorter?.value;
-
+export function ListFilter(props: Props) {
   return (
-    <div className="flex items-start justify-between gap-x-2">
-      <span>{props.name}</span>
-
-      {props.filter && (
-        <>
-          <Listbox
-            as="div"
-            className="relative"
-            multiple
-            value={values}
-            onChange={(x) => props.filter?.onChange(x, props._key)}
-          >
-            <ListboxButton className="mt-1">
-              <ListFilterIcon
-                size={14}
-                className={`${is_active ? "text-green stroke-3" : ""}`}
-              />
-            </ListboxButton>
-            <ListboxOptions
-              anchor={{ to: "bottom", gap: 8 }}
-              className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2"
-            >
-              <Options _key={props._key} {...props.filter} />
-            </ListboxOptions>
-          </Listbox>
-        </>
-      )}
-    </div>
+    <Listbox multiple value={props.values} onChange={props.onChange}>
+      <ListboxButton className="mt-1">
+        <ListFilterIcon
+          size={14}
+          className={`${props.is_active ? "text-green stroke-3" : ""}`}
+        />
+      </ListboxButton>
+      <ListboxOptions
+        anchor={{ to: "bottom", gap: 8 }}
+        className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2"
+      >
+        <Options {...props} />
+      </ListboxOptions>
+    </Listbox>
   );
 }
 
@@ -68,10 +35,7 @@ const getFilter = async (path: string) => {
   return fetch(path).then<string[]>((res) => res.json());
 };
 
-interface IFilterOptions extends Filter {
-  _key: string;
-}
-export function Options(props: IFilterOptions) {
+export function Options(props: Props) {
   const vals = useSWR(
     `/api/irs-npos/aggregates/${props._key}`,
     props.optsFn || getFilter
@@ -93,15 +57,13 @@ export function Options(props: IFilterOptions) {
     );
   }
 
-  const is_active = (props.values?.(props._key)?.length ?? 0) > 0;
-
   return (
     <>
-      {is_active && (
+      {props.is_active && (
         <button
           className="grid grid-cols-subgrid col-span-2 text-sm text-red "
           type="button"
-          onClick={() => props.onChange([], props._key)}
+          onClick={() => props.onChange([])}
         >
           <XIcon size={15} className="justify-self-end" />
           <span className="justify-self-start text-xs uppercase">clear</span>

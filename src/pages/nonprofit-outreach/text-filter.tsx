@@ -5,20 +5,16 @@ import {
 } from "components/form";
 import { ListFilterIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import type { IFilter } from "./common";
 
-interface Props {
-  label: string;
+interface Props extends IFilter {
   description: string;
-  _key: string;
   num: number;
-  values?: (k: string) => string[];
-  onChange?: (values: string[], k: string) => void;
   classes?: string;
 }
 
 export function TextFilter(props: Props) {
-  const raw = props.values?.(props._key) || [];
-  const is_active = raw.length > 0;
+  const raw = props.values || [];
   const is_blank = raw.includes("blank");
   const is_exists = raw.includes("exists");
   const filtered = raw.filter((t) => t !== "blank" && t !== "exists");
@@ -42,11 +38,10 @@ export function TextFilter(props: Props) {
   });
   return (
     <Popover className="relative flex items-start justify-between gap-x-2">
-      <p>{props.label}</p>
       <PopoverButton className="mt-1">
         <ListFilterIcon
           size={14}
-          className={`${is_active ? "text-green stroke-3" : ""}`}
+          className={`${props.is_active ? "text-green stroke-3" : ""}`}
         />
       </PopoverButton>
       <PopoverPanel
@@ -56,14 +51,14 @@ export function TextFilter(props: Props) {
         onReset={(e) => {
           e.preventDefault();
           reset(undefined, { keepDirtyValues: false });
-          props.onChange?.([], props._key);
+          props.onChange?.([]);
         }}
         onSubmit={handleSubmit(({ blank, exists, ...texts }) => {
           const text = Object.values(texts) as string[];
           const vals = text
             .concat([blank ? "blank" : "", exists ? "exists" : ""])
             .filter((x) => x);
-          props.onChange?.(vals, props._key);
+          props.onChange?.(vals);
         })}
       >
         <CheckField {...register("blank")} classes="text-xs">
