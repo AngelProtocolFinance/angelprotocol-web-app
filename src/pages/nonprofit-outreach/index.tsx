@@ -17,7 +17,10 @@ const _usd = new Intl.NumberFormat("en-US", {
 export default function Page() {
   const data = useCachedLoaderData<LoaderData>();
   const [params, setParams] = useSearchParams();
-  const active_filters = Array.from(params.entries()).map(([k, v]) => (
+  const { sort, sort_direction, ...filters } = Object.fromEntries(
+    params.entries()
+  );
+  const active_filters = Object.entries(filters).map(([k, v]) => (
     <div key={k} className="flex items-center gap-x-2">
       <button
         type="button"
@@ -54,7 +57,7 @@ export default function Page() {
         )}
         <p className="font-bold my-2"> found: {data.num_items}</p>
         <div className="overflow-x-auto relative">
-          <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_th]:align-top [&_th]:text-balance [&_td]:align-top [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
+          <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_th]:align-top [&_th]:text-balance [&_td]:text-nowrap [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
             <thead>
               <tr>
                 <th>EIN</th>
@@ -219,6 +222,7 @@ export default function Page() {
                   <TextFilter
                     num={1}
                     label="NTEE code"
+                    description="can query partial e.g. A (starts with A) or complete (A80)"
                     _key="ntee_code"
                     values={(k) => params.get(k)?.split(",") || []}
                     onChange={(vs, k) => {
@@ -278,6 +282,7 @@ export default function Page() {
                   <TextFilter
                     num={4}
                     label="Classification code"
+                    description="NPOs may have up to 4 classification codes"
                     _key="classification_code"
                     values={(k) => params.get(k)?.split(",") || []}
                     onChange={(vs, k) => {
@@ -354,6 +359,7 @@ export default function Page() {
                   <TextFilter
                     num={3}
                     label="Activity code"
+                    description="NPOs may have up to 3 activity codes"
                     _key="activity_code"
                     values={(k) => params.get(k)?.split(",") || []}
                     onChange={(vs, k) => {
@@ -425,7 +431,26 @@ export default function Page() {
                     }}
                   />
                 </th>
-                <th>Sort Name</th>
+                <th>
+                  <ListFilter
+                    name="Sort name"
+                    _key="sort_name"
+                    filter={{
+                      values: (k) => params.get(k)?.split(",") || [],
+                      optsFn: async () => [],
+                      onChange(vs, k) {
+                        setParams((p) => {
+                          if (vs.length === 0) {
+                            p.delete(k);
+                            return p;
+                          }
+                          p.set(k, vs.join(","));
+                          return p;
+                        });
+                      },
+                    }}
+                  />
+                </th>
               </tr>
             </thead>
             <tbody>
