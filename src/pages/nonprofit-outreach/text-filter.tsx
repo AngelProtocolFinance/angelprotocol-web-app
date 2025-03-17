@@ -80,11 +80,7 @@ export function TextFilter(props: Props) {
           />
         ))}
         <div className="flex justify-end space-x-2 mt-4">
-          <button
-            disabled={!isDirty}
-            type="reset"
-            className="btn btn-outline text-xs px-2 py-1"
-          >
+          <button type="reset" className="btn btn-outline text-xs px-2 py-1">
             clear
           </button>
           <button

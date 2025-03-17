@@ -1,95 +1,102 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
-import { NativeField as Field, Form } from "components/form";
-import { Modal } from "components/modal";
-import { FilterIcon } from "lucide-react";
-import { useState } from "react";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+import {
+  NativeCheckField as CheckField,
+  NativeField as Field,
+} from "components/form";
+import { ListFilterIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import * as v from "valibot";
-
-type Val = [number, number];
-interface Init {
-  min: number;
-  max: number;
-}
 
 interface Props {
-  value: Val | Init;
-  onChange: (value: [number, number]) => void;
+  label: string;
+  _key: string;
+  values?: (k: string) => string[];
+  onChange?: (v: string[], k: string) => void;
   classes?: string;
 }
 
-const amnt = v.pipe(
-  v.string(),
-  v.transform((x) => +x),
-  v.minValue(0),
-  v.transform((x) => +x)
-);
-const schema = v.pipe(
-  v.object({
-    min: v.optional(amnt),
-    max: v.optional(amnt),
-  }),
-  v.forward(
-    v.partialCheck(
-      [["min"], ["max"]],
-      ({ min, max }) => (min && max ? min <= max : true),
-      "min must be less than or equal to max"
-    ),
-    ["min"]
-  )
-);
-
-interface Fv extends v.InferInput<typeof schema> {}
-interface FvParsed extends v.InferOutput<typeof schema> {}
-
 export function RangeFilter(props: Props) {
-  const [open, setOpen] = useState(false);
-  const isInit = !props.value || !Array.isArray(props.value);
-
-  const vmin =
-    props.value && Array.isArray(props.value)
-      ? props.value[0]
-      : props.value?.min;
-  const vmax =
-    props.value && Array.isArray(props.value)
-      ? props.value[1]
-      : props.value?.max;
+  const raw = props.values?.(props._key) || [];
+  const is_active = raw.length > 0;
+  const is_blank = raw.includes("blank");
+  const is_exists = raw.includes("exists");
+  const range = raw.filter((t) => t !== "blank" && t !== "exists");
 
   const {
-    handleSubmit,
     register,
-    formState: { errors },
-  } = useForm<Fv>({
-    resolver: valibotResolver(schema),
-    defaultValues: { min: vmin?.toString(), max: vmax?.toString() },
+    handleSubmit,
+    reset,
+    formState: { isDirty, errors },
+    watch,
+  } = useForm({
+    values: {
+      blank: is_blank,
+      exists: is_exists,
+      min: range[0] || "",
+      max: range[1] || "",
+    },
   });
-  return (
-    <div className={`flex items-center ${props.classes}`}>
-      <button type="button">
-        <FilterIcon
-          size={16}
-          className={`${isInit ? "text-gray-l1" : "text-blue-d1"}`}
-        />
-      </button>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        classes="max-w-xl rounded"
-      >
-        <Form
-          onSubmit={handleSubmit((fv) => {
-            const { min, max } = fv as FvParsed;
 
-            props.onChange([min, max]);
-            setOpen(false);
-          })}
-          className="rounded p-4"
-        >
-          <Field label="Min" {...register("min")} error={errors.min?.message} />
-          <Field label="Max" {...register("min")} error={errors.max?.message} />
-          <button className="btn btn-blue px-4 py-1 text-sm">Apply</button>
-        </Form>
-      </Modal>
-    </div>
+  const min = watch("min");
+  return (
+    <Popover className="relative flex items-start justify-between gap-x-2">
+      <p>{props.label}</p>
+      <PopoverButton className="mt-1">
+        <ListFilterIcon
+          size={14}
+          className={`${is_active ? "text-green stroke-3" : ""}`}
+        />
+      </PopoverButton>
+      <PopoverPanel
+        as="form"
+        anchor={{ to: "bottom", gap: 8 }}
+        className="bg-white w-max border border-gray-l3 p-2 grid rounded-sm gap-2"
+        onReset={(e) => {
+          e.preventDefault();
+          reset(undefined, { keepDirtyValues: false });
+          props.onChange?.([], props._key);
+        }}
+        onSubmit={handleSubmit(({ blank, exists, ...texts }) => {
+          const text = Object.values(texts) as string[];
+          const vals = text
+            .concat([blank ? "blank" : "", exists ? "exists" : ""])
+            .filter((x) => x);
+          props.onChange?.(vals, props._key);
+        })}
+      >
+        <CheckField {...register("blank")} classes="text-xs">
+          Blank
+        </CheckField>
+        <CheckField {...register("exists")} classes="mb-2 text-xs">
+          Exists
+        </CheckField>
+
+        <Field
+          label="Min"
+          type="number"
+          error={errors.min?.message}
+          {...register("min", { min: 0 })}
+          classes={{ input: "text-xs py-1 px-2", label: "mb-0! text-xs" }}
+        />
+        <Field
+          label="Max"
+          type="number"
+          error={errors.max?.message}
+          {...register("max", { min, max: 10_000_000_000 })}
+          classes={{ input: "text-xs py-1 px-2", label: "mb-0! text-xs" }}
+        />
+        <div className="flex justify-end space-x-2 mt-4">
+          <button type="reset" className="btn btn-outline text-xs px-2 py-1">
+            clear
+          </button>
+          <button
+            disabled={!isDirty}
+            type="submit"
+            className="btn btn-blue text-xs px-2 py-1"
+          >
+            apply
+          </button>
+        </div>
+      </PopoverPanel>
+    </Popover>
   );
 }
