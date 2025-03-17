@@ -8,6 +8,7 @@ export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
 import { XIcon } from "lucide-react";
 import { filter_factory } from "./common";
+import { H } from "./header";
 import type { ISort } from "./sort";
 import { TextFilter } from "./text-filter";
 
@@ -74,116 +75,170 @@ export default function Page() {
           <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_th]:align-top [&_th]:text-balance [&_td]:text-nowrap [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
             <thead>
               <tr>
-                <th>EIN</th>
-                <th>Name</th>
-                <th>
+                <H>EIN</H>
+                <H>Name</H>
+                <H
+                  k="website_url"
+                  filter={(k) => (
+                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
+                  )}
+                >
                   Website
-                  <ListFilter
-                    {...filter_props("website_url")}
-                    optsFn={async () => []}
-                  />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="asset_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Asset Code
-                  <ListFilter {...filter_props("asset_code")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="asset_amount"
+                  filter={(k) => <RangeFilter {...filter_props(k)} />}
+                  sort={sort_obj}
+                >
                   Assets
-                  <RangeFilter {...filter_props("asset_amount")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="income_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Income code
-                  <ListFilter {...filter_props("income_code")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="income_amount"
+                  filter={(k) => <RangeFilter {...filter_props(k)} />}
+                  sort={sort_obj}
+                >
                   Income
-                  <RangeFilter {...filter_props("income_amount")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="revenue_amount"
+                  filter={(k) => <RangeFilter {...filter_props(k)} />}
+                  sort={sort_obj}
+                >
                   Revenue
-                  <RangeFilter {...filter_props("revenue_amount")} />
-                </th>
-                <th>City</th>
-                <th>
+                </H>
+                <H>City</H>
+                <H
+                  k={
+                    !params.get("country") ||
+                    /\b(USA|United\s+States)\b/i.test(
+                      params.get("country") || ""
+                    )
+                      ? "state"
+                      : undefined
+                  }
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   State
-                  {!params.get("country") ||
-                  /\b(USA|United\s+States)\b/i.test(
-                    params.get("country") || ""
-                  ) ? (
-                    <ListFilter {...filter_props("state")} />
-                  ) : null}
-                </th>
-                <th>
+                </H>
+                <H
+                  k="country"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Country
-                  <ListFilter {...filter_props("country")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="ntee_code"
+                  filter={(k) => (
+                    <TextFilter
+                      num={1}
+                      description="can query partial e.g. A (starts with A) or complete (A80)"
+                      {...filter_props(k)}
+                    />
+                  )}
+                >
                   NTEE Code
-                  <TextFilter
-                    num={1}
-                    description="can query partial e.g. A (starts with A) or complete (A80)"
-                    {...filter_props("ntee_code")}
-                  />
-                </th>
-                <th>In care of</th>
-                <th>Principal officer</th>
-                <th>Group exemption number</th>
-                <th>
+                </H>
+                <H>In care of</H>
+                <H>Principal officer</H>
+                <H>Group exemption number</H>
+                <H
+                  k="subsection_code"
+                  filter={(k) => (
+                    <TextFilter
+                      num={1}
+                      description="can query partial e.g. A (starts with A) or complete (A80)"
+                      {...filter_props(k)}
+                    />
+                  )}
+                >
                   Subsection code
-                  <ListFilter {...filter_props("subsection_code")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="affilation_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Affiliation code
-                  <ListFilter {...filter_props("affilation_code")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="classification_code"
+                  filter={(k) => (
+                    <TextFilter
+                      num={4}
+                      description="NPOs may have up to 4 classification codes"
+                      {...filter_props(k)}
+                    />
+                  )}
+                >
                   Classification code
-                  <TextFilter
-                    num={4}
-                    description="NPOs may have up to 4 classification codes"
-                    {...filter_props("classification_code")}
-                  />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="deductibility_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Deductibility code
-                  <ListFilter {...filter_props("deductibility_code")} />
-                </th>
-                <th>
-                  <ListFilter {...filter_props("deductibility_code_pub78")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="deductibility_code_pub78"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
+                  Deductibility code (Pub. 78)
+                </H>
+                <H
+                  k="foundation_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Foundation code
-                  <ListFilter {...filter_props("foundation_code")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="activity_code"
+                  filter={(k) => (
+                    <TextFilter
+                      num={3}
+                      description="NPOs may have up to 3 activity codes"
+                      {...filter_props(k)}
+                    />
+                  )}
+                >
                   Activity code
-                  <TextFilter
-                    num={3}
-                    description="NPOs may have up to 3 activity codes"
-                    {...filter_props("activity_code")}
-                  />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="organization_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Organization code
-                  <ListFilter {...filter_props("organization_code")} />
-                </th>
-                <th>
-                  <span>Exempt organization status code</span>
-                  <ListFilter
-                    {...filter_props("exempt_organization_status_code")}
-                  />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="exempt_organization_status_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
+                  Exempt organization status code
+                </H>
+                <H
+                  k="filing_requirement_code"
+                  filter={(k) => <ListFilter {...filter_props(k)} />}
+                >
                   Filing requirement code
-                  <ListFilter {...filter_props("filing_requirement_code")} />
-                </th>
-                <th>
+                </H>
+                <H
+                  k="sort_name"
+                  filter={(k) => (
+                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
+                  )}
+                >
                   Sort name
-                  <ListFilter
-                    {...filter_props("sort_name")}
-                    optsFn={async () => []}
-                  />
-                </th>
+                </H>
               </tr>
             </thead>
             <tbody>

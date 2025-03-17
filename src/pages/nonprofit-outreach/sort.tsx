@@ -26,7 +26,7 @@ export function Sort({ _key, value, onChange, classes = "" }: Props) {
   return (
     <button
       type="button"
-      className={`${classes} text-sm`}
+      className={`${classes} mt-0.5 text-sm`}
       onClick={() =>
         onChange &&
         onChange({
@@ -36,7 +36,6 @@ export function Sort({ _key, value, onChange, classes = "" }: Props) {
       }
     >
       <Icon size={16} />
-      <span className="text-left"> sort</span>
     </button>
   );
 }
