@@ -2,6 +2,7 @@ import { Link, useSearchParams } from "@remix-run/react";
 import type { LoaderData } from "./api";
 import { ListFilter } from "./list-filter";
 import { Paginator } from "./paginator";
+import { RangeFilter } from "./range-filter";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
@@ -97,7 +98,23 @@ export default function Page() {
                     }}
                   />
                 </th>
-                <th>Assets</th>
+                <th>
+                  <RangeFilter
+                    _key="asset_amount"
+                    label="Assets"
+                    values={(k) => params.get(k)?.split(",") || []}
+                    onChange={(vs, k) => {
+                      setParams((p) => {
+                        if (vs.length === 0) {
+                          p.delete(k);
+                          return p;
+                        }
+                        p.set(k, vs.join(","));
+                        return p;
+                      });
+                    }}
+                  />
+                </th>
                 <th>
                   <ListFilter
                     _key="income_code"
@@ -117,8 +134,40 @@ export default function Page() {
                     }}
                   />
                 </th>
-                <th>Income</th>
-                <th>Revenue</th>
+                <th>
+                  <RangeFilter
+                    _key="income_amount"
+                    label="Income"
+                    values={(k) => params.get(k)?.split(",") || []}
+                    onChange={(vs, k) => {
+                      setParams((p) => {
+                        if (vs.length === 0) {
+                          p.delete(k);
+                          return p;
+                        }
+                        p.set(k, vs.join(","));
+                        return p;
+                      });
+                    }}
+                  />
+                </th>
+                <th>
+                  <RangeFilter
+                    _key="revenue_amount"
+                    label="Revenue"
+                    values={(k) => params.get(k)?.split(",") || []}
+                    onChange={(vs, k) => {
+                      setParams((p) => {
+                        if (vs.length === 0) {
+                          p.delete(k);
+                          return p;
+                        }
+                        p.set(k, vs.join(","));
+                        return p;
+                      });
+                    }}
+                  />
+                </th>
                 <th>City</th>
                 <th>
                   <ListFilter

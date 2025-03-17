@@ -75,6 +75,17 @@ class Filter {
       });
     }
   }
+  range<T extends string>(kv: { [key in T]: T }) {
+    const [[k, v]] = Object.entries(kv);
+    if (!v) return;
+    const range = this.extract_blank_exists(k, v as string);
+    if (range.length > 1) {
+      this.filter.$and ||= [];
+      this.filter.$and.push({
+        [k]: { $gte: Number(range[0]), $lte: Number(range[1]) },
+      });
+    }
+  }
 
   get all() {
     return this.filter;
@@ -102,6 +113,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     exempt_organization_status_code,
     organization_code,
     filing_requirement_code,
+    income_amount,
+    asset_amount,
+    revenue_amount,
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
@@ -121,6 +135,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   filter.opts({ exempt_organization_status_code });
   filter.opts({ filing_requirement_code });
   filter.starts_with({ ntee_code });
+  filter.range({ income_amount });
+  filter.range({ asset_amount });
+  filter.range({ revenue_amount });
 
   const skip = (+page - 1) * +limit;
 
