@@ -5,15 +5,6 @@ export interface IFilter {
   values?: string[];
   onChange: (v: string[]) => void;
 }
-interface ActiveSort {
-  key: string;
-  direction: "asc" | "desc";
-}
-
-export interface ISort {
-  value?: ActiveSort;
-  onChange: (value: ActiveSort) => void;
-}
 
 export const filter_factory =
   (...[params, setParams]: ReturnType<typeof useSearchParams>) =>
