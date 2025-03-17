@@ -2,18 +2,11 @@ import type { LoaderFunction } from "@vercel/remix";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
 import { nonprofits } from ".server/mongodb/db";
 
-interface Stats {
-  assets: { min: number | null; max: number | null };
-  income: { min: number | null; max: number | null };
-  revenue: { min: number | null; max: number | null };
-}
-
 export interface LoaderData {
   items: NonprofitItem[];
   page: number;
   size: number;
   num_items: number;
-  stats?: Stats;
 }
 
 class Filter {
@@ -116,6 +109,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     income_amount,
     asset_amount,
     revenue_amount,
+    sort_name,
   } = Object.fromEntries(url.searchParams.entries());
 
   const filter = new Filter();
@@ -134,6 +128,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   filter.opts({ organization_code });
   filter.opts({ exempt_organization_status_code });
   filter.opts({ filing_requirement_code });
+  filter.opts({ sort_name });
   filter.starts_with({ ntee_code });
   filter.range({ income_amount });
   filter.range({ asset_amount });
@@ -144,7 +139,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const collection = await nonprofits;
   const items = await collection
     .find(filter.all)
-    .sort({ asset_amount: -1 })
+    .sort({ revenue_amount: -1 })
     .skip(skip)
     .limit(+limit)
     .toArray();

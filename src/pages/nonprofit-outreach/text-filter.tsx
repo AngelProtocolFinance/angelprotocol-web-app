@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 
 interface Props {
   label: string;
+  description: string;
   _key: string;
   num: number;
   values?: (k: string) => string[];
@@ -71,6 +72,7 @@ export function TextFilter(props: Props) {
         <CheckField {...register("exists")} classes="mb-2 text-xs">
           Exists
         </CheckField>
+        <p className="text-xs text-gray max-w-40">{props.description}</p>
         {Array.from({ length: props.num }, (_, i) => (
           <Field
             key={i}
