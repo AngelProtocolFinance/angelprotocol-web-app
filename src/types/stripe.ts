@@ -19,14 +19,12 @@ export type GetCustomerId = (
 ) => Promise<Stripe.Customer["id"]>;
 
 /**
- * Sanitizes specific payload, creates Subscription object, and returns client secret
+ * Creates Payment/Setup Intent and returns client secret
  * @throws if client secret is null
  */
-export type Processor = (
-  stripe: Stripe,
-  payload: DonationIntent,
+export type IntentCreator = (
+  intent: DonationIntent,
   recipient: Recipient,
-  env: Environment,
   /** The amount of `currency` per 1 USD */
   usdRate: number
 ) => Promise<string>;

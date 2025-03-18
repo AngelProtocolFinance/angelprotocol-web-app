@@ -1,5 +1,5 @@
 import type Stripe from "stripe";
-import type { GetCustomerId } from "../types";
+import type { GetCustomerId } from "types/stripe";
 import { stripe } from ".server/sdks";
 
 export const getCustomerId: GetCustomerId = async (intent) => {
