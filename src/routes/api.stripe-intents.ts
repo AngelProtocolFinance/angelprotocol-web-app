@@ -1,16 +1,16 @@
 import { intent as schema } from "@better-giving/donation/intent";
 import type { ActionFunction } from "@vercel/remix";
 import { parse } from "valibot";
-import { createPayment } from ".server/crypto-intent";
+import { createStripeIntent } from ".server/fiat-intent";
 
 export const action: ActionFunction = async ({ request }) => {
   const intent = parse(schema, await request.json());
 
-  const payment = await createPayment(intent, hook);
-  if (Array.isArray(payment)) {
-    return new Response(payment[1], { status: payment[0] });
+  const stripeIntent = await createStripeIntent(intent);
+  if (Array.isArray(stripeIntent)) {
+    return new Response(stripeIntent[1], { status: stripeIntent[0] });
   }
-  return new Response(JSON.stringify(payment), {
+  return new Response(JSON.stringify(stripeIntent), {
     headers: { "content-type": "application/json" },
   });
 };

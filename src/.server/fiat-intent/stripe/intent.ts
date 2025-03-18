@@ -10,7 +10,7 @@ import { createPaymentIntent, createSetupIntent } from ".server/stripe/action";
 import { getCustomerId } from ".server/stripe/get";
 import { buildMetadata } from ".server/stripe/helpers";
 
-export default async function createIntent(
+export async function createStripeIntent(
   intent: DonationIntent
 ): Promise<{ clientSecret: string } | [number, string]> {
   const recipient = await getRecipient(intent.recipient, env, ap);
