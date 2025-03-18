@@ -1,7 +1,7 @@
 import { intent as schema } from "@better-giving/donation/intent";
 import type { ActionFunction } from "@vercel/remix";
 import { parse } from "valibot";
-import { createStripeIntent } from ".server/fiat-intent";
+import { createStripeIntent } from ".server/fiat-intent/stripe";
 
 export const action: ActionFunction = async ({ request }) => {
   const intent = parse(schema, await request.json());
