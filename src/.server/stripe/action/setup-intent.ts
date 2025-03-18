@@ -13,9 +13,6 @@ export async function createSetupIntent(
 ): Promise<string> {
   const currency = amount.currency.toLowerCase();
 
-  // Fetch Subs Product ID
-  const product_id = stripeEnvs.subsProductId;
-
   // Compute for Subs Quantity
   const totalAmount = amount.amount + amount.tip;
   const totalAmountUsd = totalAmount / usdRate;
