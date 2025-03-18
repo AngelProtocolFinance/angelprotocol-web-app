@@ -201,7 +201,6 @@
   .label {
     display: block;
     font-size: var(--text-sm);
-    margin-left: calc(var(--spacing) * 1);
     &[data-required="true"]::after {
       content: "*";
       color: var(--color-red);
