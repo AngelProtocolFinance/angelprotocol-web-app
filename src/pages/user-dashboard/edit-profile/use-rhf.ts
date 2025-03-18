@@ -7,7 +7,7 @@ import { type FV, schema } from "./types";
 export const avatarSpec: ImgSpec = {
   type: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
   aspect: [1, 1],
-  maxSize: 1e6,
+  maxSize: 4e6,
   rounded: true,
 };
 

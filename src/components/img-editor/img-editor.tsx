@@ -79,6 +79,28 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
   return (
     <div className={`${styles.container} grid grid-rows-[1fr_auto]`}>
+      <p className="text-xs text-gray dark:text-gray mb-2">
+        <span>
+          Valid types are:{" "}
+          {props.spec.type
+            .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
+            .join(", ")}
+          .{" "}
+          {props.spec.maxSize ? (
+            <>
+              Image should be less than {props.spec.maxSize / BYTES_IN_MB}MB in
+              size.
+              <br />
+              {file?.size
+                ? `Current image size: ${humanize(file.size / BYTES_IN_MB)}MB.`
+                : ""}
+            </>
+          ) : (
+            ""
+          )}
+        </span>{" "}
+        <AspectTooltip aspect={props.spec.aspect} />
+      </p>
       {file && (
         <ImgCropper
           classes={
@@ -163,31 +185,10 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           </div>
         )}
       </div>
-      <p className="text-xs text-gray dark:text-gray mt-2">
-        <span>
-          Valid types are:{" "}
-          {props.spec.type
-            .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
-            .join(", ")}
-          .{" "}
-          {props.spec.maxSize ? (
-            <>
-              Image should be less than {props.spec.maxSize / BYTES_IN_MB}MB in
-              size.
-              <br />
-              {file?.size
-                ? `Current image size: ${humanize(file.size / BYTES_IN_MB)}MB.`
-                : ""}
-            </>
-          ) : (
-            ""
-          )}
-        </span>{" "}
-        <AspectTooltip aspect={props.spec.aspect} />
-        <span className="empty:hidden text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden">
-          {props.error}
-        </span>
-      </p>
+
+      <span className="empty:hidden text-red dark:text-red-l2 text-xs mt-1">
+        {props.error}
+      </span>
     </div>
   );
 }
