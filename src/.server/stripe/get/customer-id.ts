@@ -1,7 +1,6 @@
 import type Stripe from "stripe";
 import { stripe } from ".server/sdks";
 
-/** Fetches most appropriate Customer Profile to use, returns Customer ID */
 export async function getCustomerId(
   currency: string,
   email: string

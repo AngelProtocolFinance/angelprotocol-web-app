@@ -4,11 +4,15 @@ import type { DonationIntent } from "@better-giving/donation/intent";
 import { getUsdRate } from "@better-giving/helpers-db";
 import { getRecipient } from "@better-giving/helpers-donation";
 import { PROCESSING_RATES } from "constants/common";
-import { GetCommand, ap, apes } from "../../aws/db";
-import { env } from "../../env";
+import { GetCommand, ap, apes } from ".server/aws/db";
+import { env } from ".server/env";
+import { createPaymentIntent, createSetupIntent } from ".server/stripe/action";
 import { getCustomerId } from ".server/stripe/get";
+import { buildMetadata } from ".server/stripe/helpers";
 
-export default async function createIntent(intent: DonationIntent) {
+export default async function createIntent(
+  intent: DonationIntent
+): Promise<{ clientSecret: string } | [number, string]> {
   const recipient = await getRecipient(intent.recipient, env, ap);
   if (!recipient) return [404, `Recipient:${intent.recipient} not found`];
 
@@ -27,16 +31,20 @@ export default async function createIntent(intent: DonationIntent) {
     }
   }
 
-  const amountToPay =
-    intent.frequency === "one-time"
-      ? donationAmount + intent.amount.feeAllowance
-      : donationAmount;
-  const currency = intent.amount.currency.toLowerCase();
+  // Build metadata
   const intentTxId = crypto.randomUUID();
+  const metadata = buildMetadata(intentTxId, intent, recipient, usdRate);
 
   // Get Customer ID
-  const customerId = await getCustomerId(intent);
+  const customerId = await getCustomerId(
+    intent.amount.currency,
+    intent.donor.email
+  );
 
-  // TODO: create payment intent or setup intent
-  // TODO: return client secret
+  const clientSecret =
+    intent.frequency === "one-time"
+      ? await createPaymentIntent(intent.amount, metadata, customerId)
+      : await createSetupIntent(intent.amount, metadata, customerId, usdRate);
+
+  return { clientSecret };
 }
