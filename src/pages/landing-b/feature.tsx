@@ -17,7 +17,7 @@ const items: TListItem[] = [
   {
     title1: "Nonprofit-Owned",
     description: "We exist to support nonprofits, not to profit from them.",
-    image: { src: laira.negotiating, width: 100, alt: "Laira using laptop" },
+    image: { src: laira.shakeHands, width: 100, alt: "Laira using laptop" },
   },
   {
     title1: "Zero Platform Fees",

@@ -19,7 +19,7 @@ export function BottomCta({ className = "" }) {
         className="from-blue-d1 "
         title="Ready to unlock your fundraising potential?"
         to={{ href: appRoutes.register, title: "Get started" }}
-        img={{ src: laira.negotiating, width: 140 }}
+        img={{ src: laira.shakeHands, width: 140 }}
       />
       <CtaCard
         className="from-gray-d1"

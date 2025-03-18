@@ -9,11 +9,12 @@ import lairaHeart from "./laira-heart.webp";
 import lairaLaptopFull from "./laira-laptop-full.webp";
 import lairaLaptop from "./laira-laptop.webp";
 import lairaLike from "./laira-like.webp";
-import lairaNegotiating from "./laira-negotiating.webp";
 import lairaNote from "./laira-note.webp";
 import lairaOpenArms from "./laira-open-arms.webp";
 import lairaPointing from "./laira-pointing.webp";
 import lairaPresentation from "./laira-presentation.webp";
+import lairaShakeHandsX2 from "./laira-shaking-hands-x2.webp";
+import lairaShakeHands from "./laira-shaking-hands.webp";
 import lairaSitting from "./laira-sitting.webp";
 import lairaStandingFront from "./laira-standing-front.webp";
 import lairaStanding from "./laira-standing.webp";
@@ -30,7 +31,8 @@ export const laira = {
   standingFront: lairaStandingFront,
   waiving: lairaWaiving,
   walking: lairaWalking,
-  negotiating: lairaNegotiating,
+  shakeHands: lairaShakeHands,
+  shakeHandsX2: lairaShakeHandsX2,
   laptop: lairaLaptop,
   laptopFull: lairaLaptopFull,
   presentation: lairaPresentation,
