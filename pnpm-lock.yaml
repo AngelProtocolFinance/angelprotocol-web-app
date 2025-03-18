@@ -215,6 +215,9 @@ importers:
       sonner:
         specifier: 1.7.0
         version: 1.7.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      stripe:
+        specifier: ^17.7.0
+        version: 17.7.0
       swr:
         specifier: 2.3.2
         version: 2.3.2(react@18.2.0)
@@ -4502,6 +4505,10 @@ packages:
   strip-indent@3.0.0:
     resolution: {integrity: sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==}
     engines: {node: '>=8'}
+
+  stripe@17.7.0:
+    resolution: {integrity: sha512-aT2BU9KkizY9SATf14WhhYVv2uOapBWX0OFWF4xvcj1mPaNotlSc2CsxpS4DS46ZueSppmCF5BX1sNYBtwBvfw==}
+    engines: {node: '>=12.*'}
 
   strnum@1.0.5:
     resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
@@ -9764,6 +9771,11 @@ snapshots:
   strip-indent@3.0.0:
     dependencies:
       min-indent: 1.0.1
+
+  stripe@17.7.0:
+    dependencies:
+      '@types/node': 18.18.13
+      qs: 6.13.0
 
   strnum@1.0.5: {}
 
