@@ -2,13 +2,13 @@ import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
 import { Outlet } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
-import hero from "assets/images/hero.webp?url";
 import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/npo";
 import { safeParse } from "valibot";
 import ActiveFilters from "./active-filters";
 import Cards from "./cards";
 import Hero from "./hero";
+import hero from "./hero.webp?url";
 import Toolbar from "./toolbar";
 import { getNpos } from ".server/npos";
 
@@ -40,9 +40,7 @@ export default function Marketplace() {
   const page1 = useCachedLoaderData<EndowCardsPage>();
   return (
     <div className="w-full grid content-start pb-16">
-      <div className="relative overlay bg-cover bg-left-top">
-        <Hero classes="grid isolate mt-28 mb-16" />
-      </div>
+      <Hero classes="grid isolate mt-8 xl:container xl:mx-auto px-5 " />
 
       <div className="grid gap-y-4 content-start xl:container xl:mx-auto px-5 min-h-screen">
         <Toolbar classes="mt-10" />
