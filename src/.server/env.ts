@@ -48,3 +48,7 @@ export const npEnvs = {
 export const discordEnvs = {
   awsMonitorUrl: v.parse(required, process.env.DISCORD_AWS_MONITOR_WEBHOOK_URL),
 };
+
+export const stripeEnvs = {
+  secretKey: v.parse(required, process.env.STRIPE_SECRET_KEY),
+};
