@@ -31,7 +31,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const meta: MetaFunction = () =>
   metas({
     title: "Marketplace",
-    description: "Better Giving redefines global nonprofit financing.",
+    description:
+      "Find and support charities, nonprofits, universities, and faith-based organizations—all in one place.",
     image: hero,
   });
 
@@ -40,7 +41,7 @@ export default function Marketplace() {
   const page1 = useCachedLoaderData<EndowCardsPage>();
   return (
     <div className="w-full grid content-start pb-16">
-      <Hero classes="grid isolate mt-8 xl:container xl:mx-auto px-5 " />
+      <Hero classes="grid isolate mt-8 xl:container xl:mx-auto px-5" />
 
       <div className="grid gap-y-4 content-start xl:container xl:mx-auto px-5 min-h-screen">
         <Toolbar classes="mt-10" />
