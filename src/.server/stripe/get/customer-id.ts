@@ -1,18 +1,20 @@
 import type Stripe from "stripe";
-import type { GetCustomerId } from "types/stripe";
 import { stripe } from ".server/sdks";
 
-export const getCustomerId: GetCustomerId = async (intent) => {
+/** Fetches most appropriate Customer Profile to use, returns Customer ID */
+export async function getCustomerId(
+  currency: string,
+  email: string
+): Promise<Stripe.Customer["id"]> {
   // Search for existing Stripe Customer data
   const customerList = [];
   let loadMore = false;
   let nextPage: string | undefined = undefined;
-  const currency = intent.amount.currency.toUpperCase();
-  const currencies = ["USD", currency];
+  const currencies = ["USD", currency.toUpperCase()];
   do {
     const customers = await stripe.customers.search({
       expand: ["data.subscriptions"], // needed so we can check if customer has existing subs
-      query: `email:"${intent.donor.email}"`,
+      query: `email:"${email}"`,
       page: nextPage,
     });
 
@@ -47,7 +49,7 @@ export const getCustomerId: GetCustomerId = async (intent) => {
           return _customer;
       }) ?? customerList[0];
   } else {
-    customer = await stripe.customers.create({ email: intent.donor.email });
+    customer = await stripe.customers.create({ email });
   }
   return customer.id;
-};
+}
