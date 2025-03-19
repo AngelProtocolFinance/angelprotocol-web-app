@@ -273,12 +273,19 @@ export default function Page() {
                   <td>{d.ein}</td>
                   <td>{d.name}</td>
                   <td>
-                    <ExtLink
-                      className="text-blue-d1 hover:text-blue"
-                      href={d.website}
-                    >
-                      {d.website}
-                    </ExtLink>
+                    {d.website && (
+                      <ExtLink
+                        className="text-blue-d1 hover:text-blue text-wrap "
+                        href={((x) => {
+                          if (!x.startsWith("http")) {
+                            return `http://${x}`;
+                          }
+                          return x;
+                        })(d.website)}
+                      >
+                        {d.website}
+                      </ExtLink>
+                    )}
                   </td>
                   <td>
                     <Contacts contacts={d.contacts ?? []} />
@@ -286,7 +293,9 @@ export default function Page() {
                   <td>
                     <Socials socials={d.social_media ?? []} />
                   </td>
-                  <td>{d.donation_platform}</td>
+                  <td>
+                    <p className="text-wrap">{d.donation_platform}</p>
+                  </td>
                   <td>{d.asset_code}</td>
                   <td>
                     {d.asset_amount && !Number.isNaN(d.asset_amount)
