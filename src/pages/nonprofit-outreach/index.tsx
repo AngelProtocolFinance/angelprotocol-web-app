@@ -6,9 +6,12 @@ import { RangeFilter } from "./range-filter";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
+import ExtLink from "components/ext-link";
 import { XIcon } from "lucide-react";
 import { filter_factory } from "./common";
+import { Contacts } from "./contacts";
 import { H } from "./header";
+import { Socials } from "./socials";
 import type { ISort } from "./sort";
 import { TextFilter } from "./text-filter";
 
@@ -77,6 +80,38 @@ export default function Page() {
                 <H>EIN</H>
                 <H>Name</H>
                 <H
+                  k="website"
+                  filter={(k) => (
+                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
+                  )}
+                >
+                  Website
+                </H>
+                <H
+                  k="contacts"
+                  filter={(k) => (
+                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
+                  )}
+                >
+                  Contacts
+                </H>
+                <H
+                  k="social_media"
+                  filter={(k) => (
+                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
+                  )}
+                >
+                  Socials
+                </H>
+                <H
+                  k="donation_platform"
+                  filter={(k) => (
+                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
+                  )}
+                >
+                  Donation platform
+                </H>
+                <H
                   k="asset_code"
                   filter={(k) => <ListFilter {...filter_props(k)} />}
                 >
@@ -109,6 +144,7 @@ export default function Page() {
                 >
                   Revenue
                 </H>
+
                 <H>City</H>
                 <H
                   k={
@@ -141,7 +177,7 @@ export default function Page() {
                 >
                   NTEE Code
                 </H>
-                <H>In care of</H>
+
                 <H>Group exemption number</H>
                 <H
                   k="subsection_code"
@@ -236,6 +272,21 @@ export default function Page() {
                 <tr key={d._id + i}>
                   <td>{d.ein}</td>
                   <td>{d.name}</td>
+                  <td>
+                    <ExtLink
+                      className="text-blue-d1 hover:text-blue"
+                      href={d.website}
+                    >
+                      {d.website}
+                    </ExtLink>
+                  </td>
+                  <td>
+                    <Contacts contacts={d.contacts ?? []} />
+                  </td>
+                  <td>
+                    <Socials socials={d.social_media ?? []} />
+                  </td>
+                  <td>{d.donation_platform}</td>
                   <td>{d.asset_code}</td>
                   <td>
                     {d.asset_amount && !Number.isNaN(d.asset_amount)
@@ -253,6 +304,7 @@ export default function Page() {
                       ? _usd.format(d.revenue_amount)
                       : "-"}
                   </td>
+
                   <td>
                     {d.city?.toLowerCase() === d.country?.toLowerCase()
                       ? ""
@@ -262,7 +314,7 @@ export default function Page() {
                   <td>{d.country}</td>
 
                   <td>{d.ntee_code}</td>
-                  <td>{d.in_care_of_name?.replace("%", "")}</td>
+
                   <td>{d.group_exemption_number}</td>
                   <td>{d.subsection_code}</td>
                   <td>{d.affilation_code}</td>

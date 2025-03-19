@@ -43,24 +43,6 @@ interface IBmf {
   sort_name?: string;
   terminated?: boolean;
 }
-
-interface Address {
-  line1?: string;
-  line2?: string;
-  city?: string;
-  province?: string;
-  state?: string;
-  country?: string;
-}
-export interface PrincipalOfficer {
-  name?: string;
-  address?: Address & { zipcode?: string };
-}
-
-export interface MailingAddress extends Address {
-  postal_code?: string;
-}
-
 interface IPub78 {
   ein: string;
   name: string;
@@ -70,7 +52,25 @@ interface IPub78 {
   deductibility_code_pub78?: string[];
 }
 
+export interface Contact {
+  phone?: string;
+  email?: string;
+  name?: string;
+  role?: string;
+}
+
+export interface SocialMedia {
+  url: string;
+  name: string;
+}
+
 // bmf fields take precedence in actual
-export interface Nonprofit extends IBmf, IPub78 {}
+export interface Nonprofit extends IBmf, IPub78 {
+  last_updated?: string;
+  website?: string;
+  contacts?: Contact[];
+  social_media?: SocialMedia[];
+  donation_platform?: string;
+}
 
 export interface NonprofitItem extends WithId<Nonprofit> {}

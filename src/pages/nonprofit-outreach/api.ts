@@ -30,7 +30,7 @@ class Filter {
     }
     if (exists_idx !== -1) {
       this.filter.$and ||= [];
-      this.filter.$and.push({ [key]: { $exists: true } });
+      this.filter.$and.push({ [key]: { $exists: true, $not: { $size: 0 } } });
       vals.splice(exists_idx, 1);
     }
     return vals;
@@ -93,7 +93,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     sort = "",
     asset_code,
     income_code,
-    website_url,
+    website,
+    contacts,
+    social_media,
+    donation_platform,
     state,
     country,
     subsection_code,
@@ -116,7 +119,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const filter = new Filter();
   filter.opts({ asset_code });
   filter.opts({ income_code });
-  filter.opts({ website_url });
+  filter.opts({ website });
+  filter.opts({ contacts });
+  filter.opts({ social_media });
+  filter.opts({ donation_platform });
   filter.opts({ state });
   filter.opts({ country });
   filter.opts({ subsection_code });
