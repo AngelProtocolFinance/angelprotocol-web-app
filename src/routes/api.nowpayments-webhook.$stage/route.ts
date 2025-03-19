@@ -1,12 +1,12 @@
 import crypto from "node:crypto";
 import type { NP } from "@better-giving/nowpayments/types";
 import type { ActionFunction } from "@vercel/remix";
+import { parse, stage as schema } from "routes/types";
 import { handleConfirming } from "./handlers/confirming";
 import { handleExpired } from "./handlers/expired";
 import { handleFailed } from "./handlers/failed";
 import { handleSettled } from "./handlers/settled";
 import { handleWaiting } from "./handlers/waiting";
-import { parse, stage as schema } from "./types";
 import { npEnvs } from ".server/env";
 import { discordAwsMonitor } from ".server/sdks";
 

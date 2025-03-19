@@ -3,8 +3,8 @@ import { partition } from "@better-giving/helpers";
 import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
 import type { AttrNames } from "@better-giving/types/utils";
+import type { Stage } from "routes/types";
 import { getOrder } from "../helpers";
-import type { Stage } from "../types";
 import { UpdateCommand, apes } from ".server/aws/db";
 import { np } from ".server/sdks";
 
