@@ -77,14 +77,6 @@ export default function Page() {
                 <H>EIN</H>
                 <H>Name</H>
                 <H
-                  k="website_url"
-                  filter={(k) => (
-                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
-                  )}
-                >
-                  Website
-                </H>
-                <H
                   k="asset_code"
                   filter={(k) => <ListFilter {...filter_props(k)} />}
                 >
@@ -150,7 +142,6 @@ export default function Page() {
                   NTEE Code
                 </H>
                 <H>In care of</H>
-                <H>Principal officer</H>
                 <H>Group exemption number</H>
                 <H
                   k="subsection_code"
@@ -245,7 +236,6 @@ export default function Page() {
                 <tr key={d._id + i}>
                   <td>{d.ein}</td>
                   <td>{d.name}</td>
-                  <td>{d.website_url}</td>
                   <td>{d.asset_code}</td>
                   <td>
                     {d.asset_amount && !Number.isNaN(d.asset_amount)
@@ -273,7 +263,6 @@ export default function Page() {
 
                   <td>{d.ntee_code}</td>
                   <td>{d.in_care_of_name?.replace("%", "")}</td>
-                  <td>{d.principal_officer?.name}</td>
                   <td>{d.group_exemption_number}</td>
                   <td>{d.subsection_code}</td>
                   <td>{d.affilation_code}</td>
