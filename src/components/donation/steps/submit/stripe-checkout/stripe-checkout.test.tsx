@@ -3,7 +3,7 @@ import type { Stripe, StripeError } from "@stripe/stripe-js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode, useEffect } from "react";
-import { fiatDonationIntentCreationErrorHandler } from "services/apes/mock";
+import { fiatDonationIntentCreationErrorHandler } from "services/api/mock";
 import { mswServer } from "setup-tests";
 import { describe, expect, test, vi } from "vitest";
 import { DEFAULT_PROGRAM } from "../../common/constants";
