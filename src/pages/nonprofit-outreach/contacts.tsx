@@ -9,13 +9,10 @@ export function Contacts(props: Props) {
   return (
     <div className="flex max-w-40 max-h-40 overflow-y-auto scroller flex-wrap gap-2">
       {props.contacts
-        .filter((x) => x.email)
+        .filter((x) => x.email || x.phone)
         .map((x, index) => (
           <div key={index} className="grid">
-            <span className="whitespace-normal">
-              {x.name || x.email || x.phone}
-            </span>
-
+            <span className="whitespace-normal">{x.name || "--"}</span>
             <span className="text-2xs whitespace-normal">{x.role}</span>
 
             {x.email && (
