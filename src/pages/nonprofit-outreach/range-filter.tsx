@@ -1,8 +1,5 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import {
-  NativeCheckField as CheckField,
-  NativeField as Field,
-} from "components/form";
+import { CheckField, Field } from "components/form";
 import { ListFilterIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import type { IFilter } from "./common";

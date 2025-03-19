@@ -61,19 +61,6 @@ export interface MailingAddress extends Address {
   postal_code?: string;
 }
 
-interface IPostCardItem {
-  ein: string;
-  tax_year?: string;
-  name: string;
-  gross_receipts_not_greater_than?: boolean;
-  tax_period_begin?: string;
-  tax_period_end?: string;
-  website_url?: string;
-  principal_officer?: PrincipalOfficer;
-  mailing_address?: MailingAddress;
-  dba?: string[];
-}
-
 interface IPub78 {
   ein: string;
   name: string;
@@ -84,6 +71,6 @@ interface IPub78 {
 }
 
 // bmf fields take precedence in actual
-export interface Nonprofit extends IBmf, IPostCardItem, IPub78 {}
+export interface Nonprofit extends IBmf, IPub78 {}
 
 export interface NonprofitItem extends WithId<Nonprofit> {}
