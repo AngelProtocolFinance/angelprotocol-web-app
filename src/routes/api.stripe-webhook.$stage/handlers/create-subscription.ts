@@ -1,9 +1,9 @@
-import { PutCommand, SubsTable, apesDynamo } from "../sdk.mjs";
-import stripeClient from "../stripe-client.mjs";
-
 import type { Donation, StripeDonation } from "@better-giving/donation";
 import type { Subscription } from "@better-giving/donation/subscription";
+import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
+import { PutCommand, apes } from ".server/aws/db";
+import { createSubscription } from ".server/stripe/action";
 
 /**
  * Updates Customer's default payment method which will be used for recurring payments.
@@ -23,7 +23,6 @@ export async function handleCreateSubscription({
       `Endowment ID must be a positive number, provided value was: ${+metadata.endowmentId}`
     );
 
-  /** UPDATE CUSTOMER DEFAULT PAYMENT METHOD */
   if (
     typeof intent.customer !== "string" ||
     typeof intent.payment_method !== "string"
@@ -31,12 +30,12 @@ export async function handleCreateSubscription({
     throw new Error("Invalid Customer or Payment Method ID");
   }
 
-  const stripe = await stripeClient(intent.livemode);
-
-  await stripe.updateCustomer(intent.customer, intent.payment_method);
-
   /** CREATE SUBSCRIPTION */
-  const subs = await stripe.createSubscription(intent.customer, metadata);
+  const subs = await createSubscription(
+    intent.customer,
+    intent.payment_method,
+    metadata
+  );
 
   /** SUBS DB RECORD CREATION */
   const subsFields: Subscription.DBRecord = {
@@ -57,9 +56,9 @@ export async function handleCreateSubscription({
     status: "incomplete",
   };
 
-  await apesDynamo.send(
+  await apes.send(
     new PutCommand({
-      TableName: SubsTable,
+      TableName: tables.subscriptions,
       Item: subsFields,
     })
   );
