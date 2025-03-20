@@ -73,10 +73,12 @@ export const action: ActionFunction = async ({
       case "payment_intent.payment_failed":
       case "setup_intent.setup_failed":
         const reason = await handleIntentFailed(event);
-        throw {
-          name: "Intent Failed",
-          message: `Intent ID: ${event.data.object.id}\nReason: ${reason}`,
-        };
+        await discordAwsMonitor.sendAlert({
+          from: `stripe-event-handler-${stage}`,
+          title: "Intent failed",
+          body: `Intent ID: ${event.data.object.id}\nReason: ${reason}`,
+        });
+        return new Response("Received", { status: 200 });
       case "payment_intent.requires_action":
         await handlePaymentRequiresAction(event.data);
         break;
@@ -94,7 +96,7 @@ export const action: ActionFunction = async ({
         ? err.message
         : JSON.stringify(err, Object.getOwnPropertyNames(err));
     await discordAwsMonitor.sendAlert({
-      from: `stripe-webhook-${stage}`,
+      from: `stripe-event-handler-${stage}`,
       title: "Stripe event processing error",
       body: errorMessage,
     });
