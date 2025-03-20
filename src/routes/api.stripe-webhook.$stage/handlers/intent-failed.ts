@@ -1,16 +1,12 @@
-import { getDonationIntent, isLegacy, sendEmail } from "../helper.mjs";
-import stripeClient from "../stripe-client.mjs";
-
 import type { StripeDonation } from "@better-giving/donation";
 import type Stripe from "stripe";
+import { sendEmail } from "../helpers";
+import { getSubsInvoice } from ".server/stripe/get";
 
 type Ev =
   | Stripe.PaymentIntentPaymentFailedEvent
   | Stripe.SetupIntentSetupFailedEvent;
-type GenericMetadata =
-  | StripeDonation.Metadata
-  | StripeDonation.LegacyMetadata
-  | null;
+type GenericMetadata = StripeDonation.Metadata | null;
 
 /** Sends an email to donor as to why the payment failed */
 export async function handleIntentFailed(ev: Ev) {
@@ -25,9 +21,8 @@ export async function handleIntentFailed(ev: Ev) {
       throw new Error("Invalid invoice ID");
 
     // Stripe Invoice query
-    const stripe = await stripeClient(ev.data.object.livemode);
     const { subscription_details: subsDetails } =
-      await stripe.getSubsInvoice(invoiceId);
+      await getSubsInvoice(invoiceId);
     if (
       !subsDetails ||
       !subsDetails.metadata ||
@@ -38,33 +33,14 @@ export async function handleIntentFailed(ev: Ev) {
     meta = subsDetails.metadata as NonNullable<GenericMetadata>;
   }
 
-  const mail = await (async (meta) => {
-    if (!isLegacy(meta)) {
-      return {
-        toEmail: meta.email,
-        toName: meta.fullName,
-        npoName: meta.charityName,
-      };
-    }
-    const intentRecord = await getDonationIntent(meta.intent_tx_id);
-    if (!intentRecord) return;
-    return {
-      toEmail: intentRecord.email,
-      toName: intentRecord.kycEmail ? intentRecord.fullName : "",
-      npoName: intentRecord.charityName,
-    };
-  })(meta);
-
   const err = new Err(ev);
 
-  if (!mail) return err.reason;
-
   await sendEmail({
-    recipients: [mail.toEmail],
+    recipients: [meta.email],
     template: "donation-error",
     data: {
-      donorFirstName: mail.toName.split(" ")[0],
-      recipientName: mail.npoName,
+      donorFirstName: meta.fullName.split(" ")[0],
+      recipientName: meta.charityName,
       errorMessage: err.msg,
     },
   });

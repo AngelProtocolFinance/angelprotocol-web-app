@@ -1,3 +1,4 @@
+import type { StripeDonation } from "@better-giving/donation";
 import type { ActionFunction } from "@vercel/remix";
 import { parse, stage as schema } from "routes/types";
 import type Stripe from "stripe";
@@ -10,7 +11,6 @@ import {
   handleSetupRequiresAction,
   handleUpdateSubscription,
 } from "./handlers";
-import { isOneTime } from "./helpers";
 import { stripeEnvs } from ".server/env";
 import { discordAwsMonitor, stripe } from ".server/sdks";
 
@@ -103,3 +103,8 @@ export const action: ActionFunction = async ({
     return new Response(errorMessage, { status: 400 });
   }
 };
+
+// One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice
+function isOneTime(metadata: any): metadata is StripeDonation.Metadata {
+  return Object.keys(metadata).length > 0;
+}

@@ -1,6 +1,22 @@
-import type { StripeDonation } from "@better-giving/donation";
+import type { EmailSQS } from "@better-giving/types/email-sqs";
+import { SendEmailCommand, ses } from ".server/aws/ses";
 
-// One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice
-export function isOneTime(metadata: any): metadata is StripeDonation.Metadata {
-  return Object.keys(metadata).length > 0;
+export async function sendEmail(
+  payload: Extract<
+    EmailSQS.Payload,
+    { template: "donation-error" | "donation-microdeposit-action" }
+  >
+) {
+  const emailInput = {
+    FromEmailAddress: "Better Giving 😇 <hello@better.giving>",
+    Destination: { ToAddresses: payload.recipients },
+    Content: {
+      Template: {
+        TemplateName: payload.template,
+        TemplateData: JSON.stringify(payload.data),
+      },
+    },
+  };
+  const response = await ses.send(new SendEmailCommand(emailInput));
+  console.log(`Sent ${payload.template}: ${response.MessageId}`);
 }
