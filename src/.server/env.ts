@@ -52,4 +52,5 @@ export const discordEnvs = {
 export const stripeEnvs = {
   secretKey: v.parse(required, process.env.STRIPE_SECRET_KEY),
   subsProductId: v.parse(required, process.env.STRIPE_SUBS_PRODUCT_ID),
+  webhookSecret: v.parse(required, process.env.STRIPE_WEBHOOK_SECRET),
 };
