@@ -15,7 +15,7 @@ import type { Subscription } from "@better-giving/donation/subscription";
 import type Stripe from "stripe";
 
 /** Updates record from subscription DB and creates a new record in on hold donations DB */
-export async function UpdateSubscription({
+export async function handleUpdateSubscription({
   object: paymentIntent,
 }: Stripe.PaymentIntentSucceededEvent.Data) {
   if (!paymentIntent.invoice || typeof paymentIntent.invoice === "object")

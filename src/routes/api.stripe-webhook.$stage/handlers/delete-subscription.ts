@@ -4,7 +4,7 @@ import type { Subscription } from "@better-giving/donation/subscription";
 import type Stripe from "stripe";
 
 /** Removes record from subscription DB */
-export async function DeleteSubscription({
+export async function handleDeleteSubscription({
   object,
 }: Stripe.CustomerSubscriptionDeletedEvent.Data) {
   await apesDynamo.send(

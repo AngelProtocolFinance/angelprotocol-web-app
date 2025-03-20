@@ -2,13 +2,13 @@ import type { ActionFunction } from "@vercel/remix";
 import { parse, stage as schema } from "routes/types";
 import type Stripe from "stripe";
 import {
-  CreateSubscription,
-  DeleteSubscription,
-  IntentFailed,
-  OneTimeDonation,
-  PaymentRequiresAction,
-  SetupRequiresAction,
-  UpdateSubscription,
+  handleCreateSubscription,
+  handleDeleteSubscription,
+  handleIntentFailed,
+  handleOneTimeDonation,
+  handlePaymentRequiresAction,
+  handleSetupRequiresAction,
+  handleUpdateSubscription,
 } from "./handlers";
 import { isOneTime } from "./helpers";
 import { stripeEnvs } from ".server/env";
@@ -60,28 +60,28 @@ export const action: ActionFunction = async ({
   try {
     switch (event.type) {
       case "customer.subscription.deleted":
-        await DeleteSubscription(event.data);
+        await handleDeleteSubscription(event.data);
         break;
       case "payment_intent.succeeded":
         if (isOneTime(event.data.object.metadata))
-          await OneTimeDonation(event.data);
-        else await UpdateSubscription(event.data);
+          await handleOneTimeDonation(event.data);
+        else await handleUpdateSubscription(event.data);
         break;
       case "setup_intent.succeeded":
-        await CreateSubscription(event.data);
+        await handleCreateSubscription(event.data);
         break;
       case "payment_intent.payment_failed":
       case "setup_intent.setup_failed":
-        const reason = await IntentFailed(event);
+        const reason = await handleIntentFailed(event);
         throw {
           name: "Intent Failed",
           message: `Intent ID: ${event.data.object.id}\nReason: ${reason}`,
         };
       case "payment_intent.requires_action":
-        await PaymentRequiresAction(event.data);
+        await handlePaymentRequiresAction(event.data);
         break;
       case "setup_intent.requires_action":
-        await SetupRequiresAction(event.data);
+        await handleSetupRequiresAction(event.data);
         break;
       default:
         throw new Error(`Invalid event type, ${event.type}`);

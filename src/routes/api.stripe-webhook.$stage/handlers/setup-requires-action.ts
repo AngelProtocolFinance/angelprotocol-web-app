@@ -6,7 +6,7 @@ import type { StripeDonation } from "@better-giving/donation";
 import type Stripe from "stripe";
 
 /** Creates an "intent" donation record with deposit verification URL */
-export async function SetupRequiresAction({
+export async function handleSetupRequiresAction({
   object: intent,
 }: Stripe.SetupIntentSucceededEvent.Data) {
   const verificationLink =

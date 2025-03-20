@@ -11,7 +11,7 @@ import stripeClient from "../stripe-client.mjs";
  * Queries data for "intent" donation then creates new donation record with `status === "pending"` and
  * deletes the "intent" donation record
  */
-export async function OneTimeDonation({
+export async function handleOneTimeDonation({
   object: paymentIntent,
 }: Stripe.PaymentIntentSucceededEvent.Data) {
   if (typeof paymentIntent.payment_method !== "string")

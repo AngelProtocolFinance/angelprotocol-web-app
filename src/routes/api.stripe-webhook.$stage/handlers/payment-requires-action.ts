@@ -11,7 +11,7 @@ import type { Donation, StripeDonation } from "@better-giving/donation";
 import type Stripe from "stripe";
 
 /** Updates intent transaction with deposit verification URL, status is still "intent" */
-export async function PaymentRequiresAction({
+export async function handlePaymentRequiresAction({
   object: paymentIntent,
 }: Stripe.PaymentIntentRequiresActionEvent.Data) {
   const verificationLink =

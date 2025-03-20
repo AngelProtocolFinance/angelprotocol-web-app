@@ -13,7 +13,7 @@ type GenericMetadata =
   | null;
 
 /** Sends an email to donor as to why the payment failed */
-export async function IntentFailed(ev: Ev) {
+export async function handleIntentFailed(ev: Ev) {
   let meta = ev.data.object.metadata as GenericMetadata;
   if (!meta || (Object.keys(meta).length === 0 && !isPaymentIntent(ev)))
     throw new Error("Invalid intent metadata");

@@ -10,7 +10,7 @@ import type Stripe from "stripe";
  * Creates Subscription object in Stripe.
  * Creates an item in subscriptions DB table.
  */
-export async function CreateSubscription({
+export async function handleCreateSubscription({
   object: intent,
 }: Stripe.SetupIntentSucceededEvent.Data) {
   if (!intent.metadata || Object.keys(intent.metadata).length === 0)
