@@ -6,9 +6,8 @@ import {
   handleCreateSubscription,
   handleDeleteSubscription,
   handleIntentFailed,
+  handleIntentRequiresAction,
   handleOneTimeDonation,
-  handlePaymentRequiresAction,
-  handleSetupRequiresAction,
   handleUpdateSubscription,
 } from "./handlers";
 import { stripeEnvs } from ".server/env";
@@ -80,10 +79,8 @@ export const action: ActionFunction = async ({
         });
         return new Response("Received", { status: 200 });
       case "payment_intent.requires_action":
-        await handlePaymentRequiresAction(event.data);
-        break;
       case "setup_intent.requires_action":
-        await handleSetupRequiresAction(event.data);
+        await handleIntentRequiresAction(event);
         break;
       default:
         throw new Error(`Invalid event type, ${event.type}`);
