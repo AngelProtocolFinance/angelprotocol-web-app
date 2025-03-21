@@ -5,6 +5,7 @@ import { handlers as programsHandlers } from "services/aws/programs/mock";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { postsMock } from "./api/get/wp-posts";
 import { handlers as apesHandlers } from "./services/apes/mock";
+import { handlers as apiHandlers } from "./services/api/mock";
 import { handlers as awsHandlers } from "./services/aws/mock";
 
 class IntersectionObserver {
@@ -59,6 +60,7 @@ vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(() => ({
 export const mswServer = setupServer(
   ...programsHandlers,
   ...apesHandlers,
+  ...apiHandlers,
   ...awsHandlers,
   ...[postsMock]
 );

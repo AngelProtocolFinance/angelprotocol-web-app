@@ -31,6 +31,7 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.485.0",
     "@aws-sdk/client-sesv2": "3.485.0",
+    "@aws-sdk/client-sqs": "3.485.0",
     "@aws-sdk/lib-dynamodb": "3.485.0",
     "@better-giving/assets": "1.0.33",
     "@better-giving/balance-tx": "1.1.2",
@@ -98,6 +99,7 @@
     "remix-client-cache": "1.1.0",
     "remix-utils": "8.1.0",
     "sonner": "1.7.0",
+    "stripe": "17.7.0",
     "swr": "2.3.2",
     "type-fest": "4.20.0",
     "valibot": "0.42.0",
