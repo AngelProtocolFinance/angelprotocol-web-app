@@ -33,6 +33,10 @@ export const apes_aws_secret_access_key = v.parse(
   process.env.APES_AWS_SECRET_ACCESS_KEY
 );
 export const aws_region = v.parse(required, process.env.AWS_REGION);
+export const q_url_donation_processor = v.parse(
+  required,
+  process.env.Q_URL_DONATION_PROCESSOR
+);
 
 export const api_encryption_key = v.parse(
   required,

@@ -1,5 +1,8 @@
+import type { FinalRecorderPayload } from "@better-giving/donation/final-recorder";
 import type { EmailSQS } from "@better-giving/types/email-sqs";
 import { SendEmailCommand, ses } from ".server/aws/ses";
+import { SendMessageCommand, apes as apesSQS } from ".server/aws/sqs";
+import { q_url_donation_processor } from ".server/env";
 
 export async function sendEmail(
   payload: Extract<
@@ -19,4 +22,13 @@ export async function sendEmail(
   };
   const response = await ses.send(new SendEmailCommand(emailInput));
   console.log(`Sent ${payload.template}: ${response.MessageId}`);
+}
+
+export async function sendMessage(body: FinalRecorderPayload) {
+  await apesSQS.send(
+    new SendMessageCommand({
+      MessageBody: JSON.stringify(body),
+      QueueUrl: q_url_donation_processor,
+    })
+  );
 }
