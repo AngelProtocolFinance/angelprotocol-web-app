@@ -1,14 +1,22 @@
-import type { Donation, StripeDonation } from "@better-giving/donation";
+import type {
+  Donation,
+  OnHoldDonation,
+  StripeDonation,
+} from "@better-giving/donation";
 import type { FinalRecorderPayload } from "@better-giving/donation/final-recorder";
 import { toPrettyAmount } from "@better-giving/helpers";
 import { getUsdRate } from "@better-giving/helpers-db";
+import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
-import { sendMessage } from "../helpers";
-import { GetCommand, apes } from ".server/aws/db";
+import { getDonationIntent, sendMessage } from "../helpers";
+import { DeleteCommand, GetCommand, apes } from ".server/aws/db";
 import { env } from ".server/env";
 import { getBalanceTx, getPaymentMethod } from ".server/stripe/get";
 
-/** Sends message to `final-donation-processor` for DB recording */
+/**
+ * Sends message to `final-donation-processor` for DB recording
+ * and deletes record in on hold donations DB if applicable
+ */
 export async function handleOneTimeDonation({
   object: paymentIntent,
 }: Stripe.PaymentIntentSucceededEvent.Data) {
@@ -80,4 +88,17 @@ export async function handleOneTimeDonation({
 
   // Send msg to `final-donation-processor`
   await sendMessage(body);
+
+  // Delete if record exists on OnHoldTable
+  const intentRecord = await getDonationIntent(meta.transactionId);
+  if (intentRecord && intentRecord.transactionId) {
+    await apes.send(
+      new DeleteCommand({
+        TableName: tables.on_hold_donations,
+        Key: {
+          transactionId: meta.transactionId,
+        } satisfies OnHoldDonation.PrimaryKey,
+      })
+    );
+  }
 }
