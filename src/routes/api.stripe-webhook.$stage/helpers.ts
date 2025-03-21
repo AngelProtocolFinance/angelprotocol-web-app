@@ -5,7 +5,8 @@ import type {
 } from "@better-giving/donation";
 import type { FinalRecorderPayload } from "@better-giving/donation/final-recorder";
 import type { EmailSQS } from "@better-giving/types/email-sqs";
-import type { Environment } from "@better-giving/types/list";
+import { type Environment, tables } from "@better-giving/types/list";
+import { GetCommand, apes as apesDB } from ".server/aws/db";
 import { SendEmailCommand, ses } from ".server/aws/ses";
 import { SendMessageCommand, apes as apesSQS } from ".server/aws/sqs";
 import { q_url_donation_processor } from ".server/env";
@@ -68,6 +69,16 @@ export function buildOnHoldRecord(
         }
       : {}),
   };
+}
+
+export async function getDonationIntent(transactionId: string) {
+  const getIntent = await apesDB.send(
+    new GetCommand({
+      TableName: tables.on_hold_donations,
+      Key: { transactionId } satisfies Donation.PrimaryKey,
+    })
+  );
+  return getIntent.Item as OnHoldDonation.FiatDBRecord | undefined;
 }
 
 export async function sendEmail(

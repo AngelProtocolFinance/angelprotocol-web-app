@@ -1,35 +1,35 @@
-import { toPrettyAmount } from "@better-giving/helpers";
-import { TxBuilder } from "@better-giving/helpers-db";
-import { getDonationIntent, sendMessage } from "../helper.mjs";
-import {
-  OnHoldTable,
-  SubsTable,
-  TransactWriteCommand,
-  apesDynamo,
-} from "../sdk.mjs";
-import stripeClient from "../stripe-client.mjs";
-
 import type { Donation, StripeDonation } from "@better-giving/donation";
 import type { FinalRecorderPayload } from "@better-giving/donation/final-recorder";
 import type { Subscription } from "@better-giving/donation/subscription";
+import { toPrettyAmount } from "@better-giving/helpers";
+import { TxBuilder } from "@better-giving/helpers-db";
+import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
+import { getDonationIntent, sendMessage } from "../helpers";
+import { TransactWriteCommand, apes } from ".server/aws/db";
+import { env } from ".server/env";
+import {
+  getBalanceTx,
+  getPaymentMethod,
+  getSubsInvoice,
+} from ".server/stripe/get";
 
-/** Updates record from subscription DB and creates a new record in on hold donations DB */
+/**
+ * Sends message to `final-donation-processor` for DB recording
+ * Updates record in subscription DB and deletes record in on hold donations DB if applicable
+ */
 export async function handleUpdateSubscription({
   object: paymentIntent,
 }: Stripe.PaymentIntentSucceededEvent.Data) {
   if (!paymentIntent.invoice || typeof paymentIntent.invoice === "object")
     throw new Error("Invalid invoice ID for subscription");
 
-  const env = paymentIntent.livemode ? "production" : "staging";
-  const stripe = await stripeClient(paymentIntent.livemode);
-
   // PaymentIntent Event does not contain subs metadata so we query for Invoice
   const {
     subscription: subsId,
     subscription_details: subsDetails,
     hosted_invoice_url,
-  } = await stripe.getSubsInvoice(paymentIntent.invoice);
+  } = await getSubsInvoice(paymentIntent.invoice);
 
   if (typeof subsId !== "string")
     throw new Error("Invoice is not for subscription");
@@ -56,16 +56,10 @@ export async function handleUpdateSubscription({
     throw new Error("Invalid payment method ID for subscription");
 
   // PaymentIntent Event does not have expandable field so we query for PaymentMethod
-  const paymentMethod = await stripe.getPaymentMethod(
-    paymentIntent.payment_method
-  );
+  const paymentMethod = await getPaymentMethod(paymentIntent.payment_method);
 
   // Fetch settled amount and fee
-  const {
-    amount: gross,
-    fee,
-    net,
-  } = await stripe.getBalanceTx(paymentIntent.id);
+  const { amount: gross, fee, net } = await getBalanceTx(paymentIntent.id);
 
   const settledAmt = toPrettyAmount(gross, "USD");
 
@@ -126,7 +120,7 @@ export async function handleUpdateSubscription({
   // DB Ops
   const builder = new TxBuilder();
   builder.update({
-    TableName: SubsTable,
+    TableName: tables.subscriptions,
     Key: { subscription_id: subsId } satisfies Subscription.PrimaryKey,
     UpdateExpression: "SET latest_invoice = :latest_invoice, #status = :status",
     ExpressionAttributeNames: { "#status": "status" },
@@ -139,12 +133,10 @@ export async function handleUpdateSubscription({
   const intentRecord = await getDonationIntent(meta.transactionId);
   if (intentRecord && intentRecord.transactionId) {
     builder.del({
-      TableName: OnHoldTable,
+      TableName: tables.on_hold_donations,
       Key: { transactionId: meta.transactionId } satisfies Donation.PrimaryKey,
     });
   }
 
-  await apesDynamo.send(
-    new TransactWriteCommand({ TransactItems: builder.txs })
-  );
+  await apes.send(new TransactWriteCommand({ TransactItems: builder.txs }));
 }
