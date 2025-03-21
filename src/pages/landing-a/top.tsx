@@ -34,7 +34,9 @@ export function Top({ className = "" }) {
           </li>
         </ul>
 
-        <div className="mt-8 isolate z-10 justify-self-center @6xl:justify-self-start relative">
+        <div
+          className={`mt-8 isolate z-10 justify-self-center ${is_page_b ? "" : "@6xl:justify-self-start"}  relative`}
+        >
           <button
             type="button"
             onClick={async () => {
