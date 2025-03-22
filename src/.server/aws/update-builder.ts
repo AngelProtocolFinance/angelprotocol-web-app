@@ -28,8 +28,8 @@ export class UpdateBuilder {
     return this;
   }
 
-  remove(attributePath: string): this {
-    const parts = attributePath.split(".");
+  remove(path: string): this {
+    const parts = path.split(".");
     const safeNames = parts.map((part) => `#${part}`);
 
     this.removes.push(safeNames.join("."));
