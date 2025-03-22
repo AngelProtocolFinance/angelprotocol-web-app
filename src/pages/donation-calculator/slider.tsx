@@ -38,12 +38,11 @@ export function PctSlider({
         <div className="flex-1">
           <Slider.Root
             className="relative flex w-full touch-none select-none items-center"
-            defaultValue={[value]}
+            value={[value]}
             max={100}
             min={0}
             step={1}
             onValueChange={([x]) => onChange(x)}
-            aria-label="Processing fee percentage"
           >
             <Slider.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-gray-l4">
               <Slider.Range className="absolute h-full bg-blue-d1" />
