@@ -39,9 +39,9 @@ export function PctSlider({
           <Slider.Root
             className="relative flex w-full touch-none select-none items-center"
             value={[value]}
-            max={100}
+            max={1}
             min={0}
-            step={1}
+            step={0.01}
             onValueChange={([x]) => onChange(x)}
           >
             <Slider.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-gray-l4">
@@ -50,7 +50,7 @@ export function PctSlider({
             <Slider.Thumb className="block size-4 rounded-full border-2 border-white bg-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-blue focus-visible:ring-opacity-75" />
           </Slider.Root>
         </div>
-        <div className="text-sm text-right">{value.toFixed(1)}%</div>
+        <div className="text-sm text-right">{(value * 100).toFixed(1)}%</div>
       </div>
     </div>
   );

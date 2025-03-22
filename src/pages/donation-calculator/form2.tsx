@@ -1,21 +1,21 @@
-import { useCtx } from "./context";
-import { PctSlider } from "./slider";
+import { PctSlider } from "./pct-slider";
+import type { State } from "./types";
 
 interface Props {
   classes?: string;
+  state: State;
+  setState: (x: State) => void;
 }
 
-export function Form2({ classes = "" }: Props) {
-  const [state, setState] = useCtx();
-
+export function Form2({ classes = "", state, setState }: Props) {
   return (
     <div className={`${classes} border border-gray-l3 p-6 rounded-lg mt-4`}>
       <h2 className="text-xl mb-2">Projected Savings & Investment</h2>
 
       <PctSlider
         label="Percentage to allocate towards savings/investments"
-        value={+state.donationsToSavingsPct}
-        onChange={(x) => setState({ ...state, donationsToSavingsPct: x })}
+        value={+state.donationsToSavings}
+        onChange={(x) => setState({ ...state, donationsToSavings: x })}
         tooltip="Select the percentage of donations you would consider allocating towards savings and investments if it were handled effortlessly on your behalf."
       />
       <p className="text-sm text-gray mt-1">
@@ -29,15 +29,15 @@ export function Form2({ classes = "" }: Props) {
       <PctSlider
         label="Savings Account (4% yield)"
         classes="mt-2"
-        value={100 - +state.savingsInvestedPct}
-        onChange={(x) => setState({ ...state, savingsInvestedPct: 100 - x })}
+        value={1 - +state.savingsInvested}
+        onChange={(x) => setState({ ...state, savingsInvested: 1 - x })}
         tooltip="Projected yield based on average annual returns over the past 5 years."
       />
       <PctSlider
         label="Sustainability Fund (20% avg. return)"
         classes="mt-2"
-        value={+state.savingsInvestedPct}
-        onChange={(x) => setState({ ...state, savingsInvestedPct: x })}
+        value={+state.savingsInvested}
+        onChange={(x) => setState({ ...state, savingsInvested: x })}
         tooltip="Projected yield based on average annual returns over the past 5 years."
       />
     </div>

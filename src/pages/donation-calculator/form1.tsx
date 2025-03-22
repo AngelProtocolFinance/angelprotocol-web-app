@@ -1,21 +1,21 @@
 import { useMaskito } from "@maskito/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelpIcon } from "lucide-react";
-import { useCtx } from "./context";
 import { dollarMaskOpts } from "./dollar-mask";
-import { PctSlider } from "./slider";
-import { methods, methodsArr } from "./types";
+import { PctSlider } from "./pct-slider";
+import { type State, methods, methodsArr } from "./types";
 
 interface Props {
   classes?: string;
+  state: State;
+  setState: (x: State) => void;
 }
 
-export function Form1({ classes = "" }: Props) {
-  const [state, setState] = useCtx();
+export function Form1({ classes = "", state, setState }: Props) {
   const dollarMaskRef1 = useMaskito({ options: dollarMaskOpts });
   const dollarMaskRef2 = useMaskito({ options: dollarMaskOpts });
   return (
-    <form className={`${classes} border border-gray-l3 p-6 rounded-lg mt-4`}>
+    <form className={`${classes} border border-gray-l3 p-6 rounded-lg`}>
       <h2 className="text-xl mb-2">
         How Do You Manage Online Donations Today?
       </h2>
@@ -39,15 +39,15 @@ export function Form1({ classes = "" }: Props) {
       <PctSlider
         label="Average Processing Fees"
         classes="mt-8"
-        value={+state.averageProcessingFeePct}
-        onChange={(x) => setState({ ...state, averageProcessingFeePct: x })}
+        value={+state.averageProcessingFee}
+        onChange={(x) => setState({ ...state, averageProcessingFee: x })}
         tooltip="Processing fees are charges imposed by third-party payment processors (like banks and credit card companies) for handling online transactions."
       />
       <PctSlider
         label="Donation Platform Fees"
         classes="mt-8"
-        value={+state.platformFeesPct}
-        onChange={(x) => setState({ ...state, platformFeesPct: x })}
+        value={+state.platformFees}
+        onChange={(x) => setState({ ...state, platformFees: x })}
         tooltip="Platform fees are additional charges imposed by donation platform providers, separate from payment processing fees. These may include per-transaction fees or percentage-based platform fees."
       />
 
@@ -72,6 +72,13 @@ export function Form1({ classes = "" }: Props) {
       <div className="mt-4">
         <div className="">
           <input
+            checked={state.donorCanCoverProcessingFees}
+            onChange={(e) => {
+              setState({
+                ...state,
+                donorCanCoverProcessingFees: e.target.checked,
+              });
+            }}
             type="checkbox"
             className="accent-blue-d1 relative inline mr-2 top-px size-3"
           />
