@@ -3,7 +3,7 @@ import type * as db from "@better-giving/user/db";
 import type { EndowmentBookmark } from "types/user";
 import { DeleteCommand, PutCommand, QueryCommand, ap } from "./aws/db";
 import { env } from "./env";
-import { getNpoByIdOrSlug } from "./npo";
+import { getNpo } from "./npo";
 export async function getUserBookmarks(
   userId: string
 ): Promise<EndowmentBookmark[]> {
@@ -21,7 +21,7 @@ export async function getUserBookmarks(
 
   const bookmarks: EndowmentBookmark[] = [];
   for (const item of items) {
-    const endow = await getNpoByIdOrSlug(item.endowID, ["id", "name", "logo"]);
+    const endow = await getNpo(item.endowID, ["id", "name", "logo"]);
     if (!endow) continue;
     bookmarks.push({ ...endow, endowId: item.endowID });
   }

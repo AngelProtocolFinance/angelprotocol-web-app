@@ -4,7 +4,7 @@ import type { EndowmentBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { getEndowBalance } from "./get/endow-balance";
 import { plusInt } from "./schema/endow-id";
-import { getNpoByIdOrSlug } from ".server/npo";
+import { getNpo } from ".server/npo";
 
 export interface DonateData {
   id: number;
@@ -15,7 +15,7 @@ export interface DonateData {
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = v.parse(plusInt, params.id);
-  const endow = await getNpoByIdOrSlug(id);
+  const endow = await getNpo(id);
   if (!endow) throw new Response(null, { status: 404 });
 
   return data({
