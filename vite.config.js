@@ -206,6 +206,7 @@ const rmx = remix({
           id: "widget-donate-thanks",
         });
       });
+      r("donation-calculator", "./pages/donation-calculator/index.tsx");
     });
   },
 });
