@@ -8,7 +8,11 @@ interface Props extends View {
 
 export function Tables({ classes = "", ...v }: Props) {
   // Array of time periods
-  const periods = ["Annual", "3-Year", "5-Year"];
+  const periods = [
+    { label: "1 Year", value: 1 },
+    { label: "3 Years", value: 3 },
+    { label: "5 Years", value: 5 },
+  ];
 
   return (
     <div className={`${classes} bg-white rounded-lg shadow-sm p-6`}>
@@ -23,10 +27,11 @@ export function Tables({ classes = "", ...v }: Props) {
           Better Giving Annual
         </p>
         <p className="text-4xl font-heading font-bold text-green-d2 mb-2">
-          $27,163
+          {toUsd(v.notGranted)}
         </p>
         <p className="text-sm font-body text-gray-d1">
-          23% of donations automatically allocated
+          {(v.notGrantedRate * 100).toFixed(2)}% of donations automatically
+          allocated
         </p>
       </div>
 
@@ -35,53 +40,54 @@ export function Tables({ classes = "", ...v }: Props) {
         <TabList className="flex space-x-1 border-b border-gray-l2 mb-4">
           {periods.map((p) => (
             <Tab
-              key={p}
+              key={p.value}
               className={({ selected }) =>
-                `flex-1 py-2.5 text-sm font-body font-medium leading-5 focus:outline-none ${
+                `flex-1 py-2.5 text-sm font-medium leading-5 focus:outline-none ${
                   selected
                     ? "border-b-2 border-blue text-blue-d1"
                     : "text-gray-d1 hover:text-blue-d1"
                 }`
               }
             >
-              {p}
+              {p.label}
             </Tab>
           ))}
         </TabList>
 
         {/* Table Panels */}
         <TabPanels>
-          {periods.map((period, i) => {
-            const y = i + 1;
-            const x = v.projection[y];
+          {periods.map((p) => {
+            const x = v.projection[p.value - 1];
             return (
-              <TabPanel key={period}>
+              <TabPanel key={p.value}>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left text-sm">
+                  <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left text-sm  [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
                     <thead>
                       <tr>
                         <th>Account</th>
-                        <th>{i === 0 ? "Allocation" : "Total Invested"}</th>
-                        <th>Year {y} Balance</th>
+                        <th>
+                          {p.value === 1 ? "Allocation" : "Total Invested"}
+                        </th>
+                        <th>Year {p.value} Balance</th>
                         <th>Growth</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>LIQUID</td>
-                        <td>{toUsd(x.start.liq)}</td>
+                        <td>Savings Account (4%)</td>
+                        <td>{toUsd(x.end.liq - x.liq)}</td>
                         <td>{toUsd(x.end.liq)}</td>
                         <td>{toUsd(x.liq)}</td>
                       </tr>
                       <tr>
-                        <td>LOCKED</td>
-                        <td>{toUsd(x.start.lock)}</td>
+                        <td>Sustainability Fund (20%)</td>
+                        <td>{toUsd(x.end.lock - x.lock)}</td>
                         <td>{toUsd(x.end.lock)}</td>
                         <td>{toUsd(x.lock)}</td>
                       </tr>
                       <tr>
-                        <td>TOTAL</td>
-                        <td>{toUsd(x.start.total)}</td>
+                        <td>Total</td>
+                        <td>{toUsd(x.end.total - x.total)}</td>
                         <td>{toUsd(x.end.total)}</td>
                         <td>{toUsd(x.total)}</td>
                       </tr>

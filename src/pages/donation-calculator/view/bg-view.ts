@@ -14,8 +14,7 @@ interface Growth {
   liq: number;
   lock: number;
   total: number;
-  start: Omit<Growth, "start" | "end">;
-  end: Omit<Growth, "start" | "end">;
+  end: Omit<Growth, "end">;
 }
 
 const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
@@ -27,10 +26,6 @@ const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
   let susTotal = 0;
 
   for (let year = 1; year <= yrs; year++) {
-    // Capture starting balances (before new investment)
-    const savStart = savTotal;
-    const susStart = susTotal;
-
     // Add annual investments
     savTotal += savAmt;
     susTotal += susAmt;
@@ -46,11 +41,6 @@ const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
     const susGrowth = susTotal - susAmt * year;
 
     items.push({
-      start: {
-        liq: savStart,
-        lock: susStart,
-        total: savStart + susStart,
-      },
       end: {
         liq: savTotal,
         lock: susTotal,
@@ -65,12 +55,10 @@ const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
   return items;
 };
 
-// Example usage:
-const result = project(1000, 1000, 3);
-console.log(result);
-
 export interface View {
   amount: number;
+  notGranted: number;
+  notGrantedRate: number;
   bgNet: number;
   ogNet: number;
   ogFees: number;
@@ -82,12 +70,9 @@ export interface View {
 const donorCoverageReduction = 0.8;
 
 export function bgView(og: State): View {
-  // Parse and normalize inputs
   const amnt = unmask(og.annualAmount);
   const subscriptionCost = unmask(og.annualSubscriptionCost);
-  // Better Giving constants
 
-  // Calculate current amount received
   const ogProcessingFee =
     og.averageProcessingFee *
     (og.donorCanCoverProcessingFees ? 1 - donorCoverageReduction : 1);
@@ -102,10 +87,9 @@ export function bgView(og: State): View {
     (sum, type) => sum + (typeWeights[type] || 0),
     0
   );
-
   const ogMissed = amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
-  const bgRate = 0.02 * (1 - donorCoverageReduction);
 
+  const bgRate = 0.02 * (1 - donorCoverageReduction);
   const bgNet = amnt - amnt * bgRate + ogMissed;
   const diff = bgNet - ogNet;
 
@@ -115,6 +99,8 @@ export function bgView(og: State): View {
 
   return {
     amount: amnt,
+    notGranted,
+    notGrantedRate: og.donationsToSavings,
     ogNet,
     bgNet,
     ogFees: amnt - ogNet,
