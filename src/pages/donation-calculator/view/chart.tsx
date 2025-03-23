@@ -37,7 +37,9 @@ export function Chart({ classes = "", ...v }: Props) {
 
   return (
     <div className={`${classes} p-6 rounded-lg shadow-sm bg-white`}>
-      <h1 className="text-xl font-bold mb-4">Annual Impact Summary</h1>
+      <h1 className="text-lg sm:text-xl font-bold mb-4">
+        Annual Impact Summary
+      </h1>
 
       <p className="text-sm text-gray-d1 mb-4">
         This chart shows the financial advantage of Better Giving over time.
@@ -76,10 +78,7 @@ export function Chart({ classes = "", ...v }: Props) {
 
       <div className="h-96 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={data}
-            margin={{ top: 10, right: 30, left: 10, bottom: 0 }}
-          >
+          <AreaChart data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" tick={{ fontSize: 12 }} dy={4} />
             <YAxis
