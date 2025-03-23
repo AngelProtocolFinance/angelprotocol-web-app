@@ -16,7 +16,7 @@ export function Form1({ classes = "", state, setState }: Props) {
   const dollarMaskRef2 = useMaskito({ options: dollarMaskOpts });
   return (
     <form className={`${classes} bg-white shadow-sm p-6 rounded-lg`}>
-      <h2 className="text-xl mb-2">
+      <h2 className="text-lg sm:text-xl mb-2">
         How Do You Manage Online Donations Today?
       </h2>
 
