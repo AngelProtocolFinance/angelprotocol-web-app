@@ -24,7 +24,7 @@ export function Summary({ classes = "", ...v }: Props) {
 
       <div className="grid grid-cols-2 bg-gray-l5 rounded-lg mb-6">
         <div className="p-5 border-r border-gray-l3">
-          <p className="text-gray-500 mb-2">Current Amount Received</p>
+          <p className="text-gray mb-2">Current Amount Received</p>
           <p className="text-xl font-bold text-red">
             {toUsd(v.ogNet)}{" "}
             <span className="text-xl">(-{toUsd(v.ogFees)})</span>

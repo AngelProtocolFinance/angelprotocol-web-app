@@ -10,7 +10,7 @@ interface Props extends State {
 export function View({ classes = "", ...state }: Props) {
   const v = bgView(state);
   return (
-    <div className={`${classes} grid gap-y-6`}>
+    <div className={`${classes} grid gap-y-4`}>
       <Summary {...v} />
       <Chart {...v} />
       <Tables {...v} />
