@@ -65,7 +65,7 @@ export function Chart({ classes = "", ...v }: Props) {
           <Slider.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-gray-l4">
             <Slider.Range className="absolute h-full bg-blue-d1" />
           </Slider.Track>
-          <Slider.Thumb className="block size-4 rounded-full border-2 border-white bg-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-blue focus-visible:ring-opacity-75" />
+          <Slider.Thumb className="block size-4 rounded-full border-2 border-blue bg-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-blue focus-visible:ring-opacity-75" />
         </Slider.Root>
 
         <div className="flex justify-between mt-1 text-sm text-gray-d1">
