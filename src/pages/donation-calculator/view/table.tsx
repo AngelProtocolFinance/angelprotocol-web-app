@@ -1,6 +1,7 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import type { View } from "./bg-view";
 
-interface Props {
+interface Props extends View {
   classes?: string;
 }
 export function Tables({ classes = "" }: Props) {
@@ -90,21 +91,13 @@ export function Tables({ classes = "" }: Props) {
           {/* We can reuse the same panel since the data changes are minimal */}
           <TabPanel>
             <div className="overflow-x-auto">
-              <table className="min-w-full [&_th]:p-4 [&_td]:p-4 [&_td]:text-sm [&_td]:font-body [&_td]:text-gray-d2">
+              <table className="min-w-full [&_th,&_td]:p-2 text-sm">
                 <thead>
                   <tr>
-                    <th className="text-left text-xs font-body font-medium text-gray-d1">
-                      Account
-                    </th>
-                    <th className="text-left text-xs font-body font-medium text-gray-d1">
-                      Allocation
-                    </th>
-                    <th className="text-left text-xs font-body font-medium text-gray-d1">
-                      Year-End Balance
-                    </th>
-                    <th className="text-left text-xs font-body font-medium text-gray-d1">
-                      Growth
-                    </th>
+                    <th>Account</th>
+                    <th>Allocation</th>
+                    <th>Year-End Balance</th>
+                    <th>Growth</th>
                   </tr>
                 </thead>
                 <tbody>

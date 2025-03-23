@@ -11,133 +11,32 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { unmask } from "../dollar-mask"; // Add this import
-import type { State } from "../types";
-import { bgView, formatCurrency } from "./bg-view"; // Adjust the import path
+import { type Projection, type View, formatCurrency } from "./bg-view"; // Adjust the import path
 
-interface Props extends State {
+interface Props extends View {
   classes?: string;
 }
 
-export function Chart({ classes = "", ...state }: Props) {
+export function Chart({ classes = "", ...v }: Props) {
   const [projectionYears, setProjectionYears] = useState(5);
 
-  // Calculate results using getBgAmount
-  const v = bgView(state, projectionYears);
-
-  // Simplified inputs for demonstration
-  const inputs = {
-    annualDonations: unmask(state.annualAmount),
-    currentlySavesInvests: true,
-  };
-
-  // Function to calculate current investment growth
-  const calculateCurrentInvestmentGrowth = (years: number): number => {
-    const baseAmount = 5000;
-    const growthRate = 0.02;
-    return baseAmount * years * (1 + growthRate * years);
-  };
-
   // Generate chart data based on projection years
-  const generateChartData = () => {
-    const baseData = [
-      {
-        year: "Year 1",
-        annualDonations: inputs.annualDonations,
-        currentSavings: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(1)
-          : 0,
-        donationSavings: v.feeSavings + v.additionalFromTypes,
-        investmentGrowth: v.y1Growth.combined,
-        total: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(1) +
-            (v.feeSavings + v.additionalFromTypes) +
-            v.y1Growth.combined
-          : v.feeSavings + v.additionalFromTypes + v.y1Growth.combined,
-      },
-      {
-        year: "Year 3",
-        annualDonations: inputs.annualDonations,
-        currentSavings: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(3)
-          : 0,
-        donationSavings: (v.feeSavings + v.additionalFromTypes) * 3,
-        investmentGrowth: v.y3Growth.combined,
-        total: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(3) +
-            (v.feeSavings + v.additionalFromTypes) * 3 +
-            v.y3Growth.combined
-          : (v.feeSavings + v.additionalFromTypes) * 3 + v.y3Growth.combined,
-      },
-      {
-        year: "Year 5",
-        annualDonations: inputs.annualDonations,
-        currentSavings: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(5)
-          : 0,
-        donationSavings: (v.feeSavings + v.additionalFromTypes) * 5,
-        investmentGrowth: v.y5Growth.combined,
-        total: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(5) +
-            (v.feeSavings + v.additionalFromTypes) * 5 +
-            v.y5Growth.combined
-          : (v.feeSavings + v.additionalFromTypes) * 5 + v.y5Growth.combined,
-      },
-    ];
 
-    if (projectionYears >= 10 && v.y10Growth) {
-      baseData.push({
-        year: "Year 10",
-        annualDonations: inputs.annualDonations,
-        currentSavings: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(10)
-          : 0,
-        donationSavings: (v.feeSavings + v.additionalFromTypes) * 10,
-        investmentGrowth: v.y10Growth.combined,
-        total: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(10) +
-            (v.feeSavings + v.additionalFromTypes) * 10 +
-            v.y10Growth.combined
-          : (v.feeSavings + v.additionalFromTypes) * 10 + v.y10Growth.combined,
-      });
-    }
-
-    if (projectionYears >= 15 && v.y15Growth) {
-      baseData.push({
-        year: "Year 15",
-        annualDonations: inputs.annualDonations,
-        currentSavings: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(15)
-          : 0,
-        donationSavings: (v.feeSavings + v.additionalFromTypes) * 15,
-        investmentGrowth: v.y15Growth.combined,
-        total: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(15) +
-            (v.feeSavings + v.additionalFromTypes) * 15 +
-            v.y15Growth.combined
-          : (v.feeSavings + v.additionalFromTypes) * 15 + v.y15Growth.combined,
-      });
-    }
-
-    if (projectionYears >= 20 && v.y20Growth) {
-      baseData.push({
-        year: "Year 20",
-        annualDonations: inputs.annualDonations,
-        currentSavings: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(20)
-          : 0,
-        donationSavings: (v.feeSavings + v.additionalFromTypes) * 20,
-        investmentGrowth: v.y20Growth.combined,
-        total: inputs.currentlySavesInvests
-          ? calculateCurrentInvestmentGrowth(20) +
-            (v.feeSavings + v.additionalFromTypes) * 20 +
-            v.y20Growth.combined
-          : (v.feeSavings + v.additionalFromTypes) * 20 + v.y20Growth.combined,
-      });
-    }
-
-    return baseData;
-  };
+  const data = [1, 3, 5]
+    .concat(projectionYears >= 10 ? [10] : [])
+    .concat(projectionYears >= 15 ? [15] : [])
+    .concat(projectionYears >= 20 ? [20] : [])
+    .map((x) => {
+      const y = (v as any)[`y${x}`] as Projection;
+      return {
+        year: `Year ${x}`,
+        annualDonations: v.amount,
+        currentSavings: y.savings,
+        donationSavings: v.diff,
+        investmentGrowth: y.sustainability,
+        total: v.diff + y.combined,
+      };
+    });
 
   return (
     <div className={`${classes} p-6 border border-gray-l3 rounded-lg bg-white`}>
@@ -181,7 +80,7 @@ export function Chart({ classes = "", ...state }: Props) {
       <div className="h-96 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={generateChartData()}
+            data={data}
             margin={{ top: 10, right: 30, left: 10, bottom: 0 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -224,16 +123,14 @@ export function Chart({ classes = "", ...state }: Props) {
               strokeDasharray="5 5"
               fill="none"
             />
-            {inputs.currentlySavesInvests && (
-              <Area
-                type="monotone"
-                dataKey="currentSavings"
-                stackId="1"
-                name="Current Investment Growth"
-                fill="var(--color-gray-l1)"
-                stroke="var(--color-gray-d1)"
-              />
-            )}
+            <Area
+              type="monotone"
+              dataKey="currentSavings"
+              stackId="1"
+              name="Current Investment Growth"
+              fill="var(--color-gray-l1)"
+              stroke="var(--color-gray-d1)"
+            />
             <Area
               type="monotone"
               dataKey="donationSavings"
