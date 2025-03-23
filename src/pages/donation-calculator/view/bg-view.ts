@@ -12,8 +12,8 @@ const donationTypeWeights: { [key: string]: number } = {
 
 // Define a reusable type for growth projections
 interface GrowthProjection {
-  savings: number; // Renamed from savingsGrowth
-  sustainability: number; // Already renamed from sustainabilityGrowth
+  savings: number;
+  sustainability: number;
   combined: number;
 }
 
@@ -33,6 +33,22 @@ const compoundGrowth = (
     }
   }
   return total;
+};
+
+const projectFn = (savAmt: number, susAmt: number) => {
+  return (yrs: number): GrowthProjection => {
+    const totalSav = compoundGrowth(savAmt, 0.04, yrs);
+    const totalSus = compoundGrowth(susAmt, 0.2, yrs);
+
+    const savGrowth = totalSav - savAmt * yrs;
+    const susGrowth = totalSus - susAmt * yrs;
+
+    return {
+      savings: savGrowth,
+      sustainability: susGrowth,
+      combined: savGrowth + susGrowth,
+    };
+  };
 };
 
 interface View {
@@ -55,18 +71,12 @@ export function bgView(state: State, projectionYears = 5): View {
   const subscriptionCost = unmask(state.annualSubscriptionCost);
   const processingFeeRate = state.averageProcessingFee;
   const platformFeeRate = state.platformFees;
-  const savingsAllocation = state.savingsInvested;
-  const sustainabilityAllocation = 1 - state.savingsInvested;
 
   // Better Giving constants
   const processinFee = 0.02;
   const donorCoverage = 0.8;
   const effectiveRate = processinFee * (1 - donorCoverage);
   const donorDropoffFactor = 0.5;
-
-  // Investment constants
-  const savingsYield = 0.04;
-  const sustainabilityReturn = 0.2;
 
   // Calculate current amount received
   const effectiveProcessingFeeRate = state.donorCanCoverProcessingFees
@@ -86,13 +96,11 @@ export function bgView(state: State, projectionYears = 5): View {
   const allTypes = methodsArr;
   const missingTypes = allTypes.filter((type) => !enabledTypes.has(type));
 
-  // Sum the weights of missing donation types using for...of
-  let missedOpportunities = 0;
-  for (const type of missingTypes) {
-    if (type in donationTypeWeights) {
-      missedOpportunities += donationTypeWeights[type];
-    }
-  }
+  // Sum the weights of missing donation types
+  const missedOpportunities = missingTypes.reduce(
+    (sum, type) => sum + (donationTypeWeights[type] || 0),
+    0
+  );
 
   // Calculate additional donations
   const additionalFromTypes = amnt * missedOpportunities * donorDropoffFactor;
@@ -105,114 +113,22 @@ export function bgView(state: State, projectionYears = 5): View {
   const feeSavings = yearlyIncrease - additionalFromTypes;
 
   // Calculate investment amounts
-  const annualInvestmentAmount = bgAmount * state.donationsToSavings;
-  const annualSavingsAmount = annualInvestmentAmount * savingsAllocation;
-  const annualSustainabilityAmount =
-    annualInvestmentAmount * sustainabilityAllocation;
+  const notGranted = bgAmount * state.donationsToSavings;
+  const savings = notGranted * (1 - state.savingsInvested);
+  const invested = notGranted * state.savingsInvested;
 
-  // Year 1 growth as object literal
-  const y1Savings = compoundGrowth(annualSavingsAmount, savingsYield, 1);
-  const y1Sustainability = compoundGrowth(
-    annualSustainabilityAmount,
-    sustainabilityReturn,
-    1
-  );
-  const y1Growth: GrowthProjection = {
-    savings: y1Savings - annualSavingsAmount,
-    sustainability: y1Sustainability - annualSustainabilityAmount,
-    combined:
-      y1Savings -
-      annualSavingsAmount +
-      (y1Sustainability - annualSustainabilityAmount),
-  };
+  // Create a specialized projection calculator for our specific yields
+  const project = projectFn(savings, invested);
 
-  // Year 3 growth as object literal
-  const y3Savings = compoundGrowth(annualSavingsAmount, savingsYield, 3);
-  const y3Sustainability = compoundGrowth(
-    annualSustainabilityAmount,
-    sustainabilityReturn,
-    3
-  );
-  const y3Growth: GrowthProjection = {
-    savings: y3Savings - annualSavingsAmount * 3,
-    sustainability: y3Sustainability - annualSustainabilityAmount * 3,
-    combined:
-      y3Savings -
-      annualSavingsAmount * 3 +
-      (y3Sustainability - annualSustainabilityAmount * 3),
-  };
-
-  // Year 5 growth as object literal
-  const y5Savings = compoundGrowth(annualSavingsAmount, savingsYield, 5);
-  const y5Sustainability = compoundGrowth(
-    annualSustainabilityAmount,
-    sustainabilityReturn,
-    5
-  );
-  const y5Growth: GrowthProjection = {
-    savings: y5Savings - annualSavingsAmount * 5,
-    sustainability: y5Sustainability - annualSustainabilityAmount * 5,
-    combined:
-      y5Savings -
-      annualSavingsAmount * 5 +
-      (y5Sustainability - annualSustainabilityAmount * 5),
-  };
+  // Calculate growth projections for different years
+  const y1Growth = project(1);
+  const y3Growth = project(3);
+  const y5Growth = project(5);
 
   // Optional projections for 10, 15, 20 years
-  let y10Growth: GrowthProjection | undefined;
-  let y15Growth: GrowthProjection | undefined;
-  let y20Growth: GrowthProjection | undefined;
-
-  if (projectionYears >= 10) {
-    const y10Savings = compoundGrowth(annualSavingsAmount, savingsYield, 10);
-    const y10Sustainability = compoundGrowth(
-      annualSustainabilityAmount,
-      sustainabilityReturn,
-      10
-    );
-    y10Growth = {
-      savings: y10Savings - annualSavingsAmount * 10,
-      sustainability: y10Sustainability - annualSustainabilityAmount * 10,
-      combined:
-        y10Savings -
-        annualSavingsAmount * 10 +
-        (y10Sustainability - annualSustainabilityAmount * 10),
-    };
-  }
-
-  if (projectionYears >= 15) {
-    const y15Savings = compoundGrowth(annualSavingsAmount, savingsYield, 15);
-    const y15Sustainability = compoundGrowth(
-      annualSustainabilityAmount,
-      sustainabilityReturn,
-      15
-    );
-    y15Growth = {
-      savings: y15Savings - annualSavingsAmount * 15,
-      sustainability: y15Sustainability - annualSustainabilityAmount * 15,
-      combined:
-        y15Savings -
-        annualSavingsAmount * 15 +
-        (y15Sustainability - annualSustainabilityAmount * 15),
-    };
-  }
-
-  if (projectionYears >= 20) {
-    const y20Savings = compoundGrowth(annualSavingsAmount, savingsYield, 20);
-    const y20Sustainability = compoundGrowth(
-      annualSustainabilityAmount,
-      sustainabilityReturn,
-      20
-    );
-    y20Growth = {
-      savings: y20Savings - annualSavingsAmount * 20,
-      sustainability: y20Sustainability - annualSustainabilityAmount * 20,
-      combined:
-        y20Savings -
-        annualSavingsAmount * 20 +
-        (y20Sustainability - annualSustainabilityAmount * 20),
-    };
-  }
+  const y10Growth = projectionYears >= 10 ? project(10) : undefined;
+  const y15Growth = projectionYears >= 15 ? project(15) : undefined;
+  const y20Growth = projectionYears >= 20 ? project(20) : undefined;
 
   // Total annual impact for Year 1 (processing impact + combined growth)
   const totalAnnualImpact = yearlyIncrease + y1Growth.combined;
