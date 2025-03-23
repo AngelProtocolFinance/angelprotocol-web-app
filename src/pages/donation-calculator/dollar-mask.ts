@@ -6,7 +6,7 @@ export const dollarMaskOpts = maskitoNumberOptionsGenerator({
 });
 
 export function unmask(masked: string) {
-  if (!masked) return 0;
   const cleaned = masked.replace("$ ", "").replace(/,/g, "");
+  if (!cleaned) return 0;
   return Number.parseFloat(cleaned);
 }

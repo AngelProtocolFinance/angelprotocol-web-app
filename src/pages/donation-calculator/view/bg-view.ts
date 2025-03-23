@@ -52,7 +52,7 @@ export interface View {
   ogNet: number;
   ogFees: number;
   diff: number;
-  additionalFromTypes: number;
+  ogMissed: number;
   y1: Projection;
   y3: Projection;
   y5: Projection;
@@ -85,10 +85,10 @@ export function bgView(og: State): View {
     0
   );
 
-  const additionalFromTypes = amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
+  const ogMissed = amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
   const bgRate = 0.02 * (1 - donorCoverageReduction);
 
-  const bgNet = amnt - amnt * bgRate + additionalFromTypes;
+  const bgNet = amnt - amnt * bgRate + ogMissed;
   const diff = bgNet - ogNet;
 
   const notGranted = bgNet * og.donationsToSavings;
@@ -103,7 +103,7 @@ export function bgView(og: State): View {
     ogNet,
     bgNet,
     ogFees: amnt - ogNet,
-    additionalFromTypes,
+    ogMissed,
     diff,
     //projections
     y1: project(1),

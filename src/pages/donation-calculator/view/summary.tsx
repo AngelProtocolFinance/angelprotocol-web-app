@@ -20,7 +20,7 @@ export function Summary({ classes = "", ...v }: Props) {
 
       <div className="mb-6">
         <p className="text-gray">Current Online Donations</p>
-        <p className="text-xl font-bold">{v.amount}</p>
+        <p className="text-xl font-bold">{usd.format(v.amount)}</p>
       </div>
 
       <div className="border-t border-gray-l3 my-6"></div>
@@ -51,9 +51,7 @@ export function Summary({ classes = "", ...v }: Props) {
       <div className="space-y-3 mb-6">
         <div className="flex justify-between items-center">
           <p className="text-gray-d1">Fee Savings:</p>
-          <p className="font-semibold">
-            {usd.format(v.diff - v.additionalFromTypes)}
-          </p>
+          <p className="font-semibold">{usd.format(v.diff - v.ogMissed)}</p>
         </div>
 
         <div className="flex justify-between items-center">
@@ -77,7 +75,7 @@ export function Summary({ classes = "", ...v }: Props) {
             </Tooltip>
           </p>
 
-          <p className="font-semibold">{usd.format(v.additionalFromTypes)}</p>
+          <p className="font-semibold">{usd.format(v.ogMissed)}</p>
         </div>
 
         <div className="flex justify-between items-center text-green font-medium">
