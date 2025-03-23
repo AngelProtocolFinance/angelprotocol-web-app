@@ -1,7 +1,8 @@
-import { HelpCircle, TrendingUp } from "lucide-react";
+import { Arrow, Content, Tooltip } from "components/tooltip";
+import { CircleHelpIcon, TrendingUp } from "lucide-react";
 import { unmask } from "../dollar-mask";
 import type { State } from "../types";
-import { getBgAmount } from "./bg-amount";
+import { bgView } from "./bg-view";
 
 interface Props {
   classes?: string;
@@ -24,7 +25,7 @@ export function Summary({ classes = "", state }: Props) {
     (state.donorCanCoverProcessingFees ? 0.2 : 1);
   const ogFee = annualAmount * (ogProcessingFee + state.platformFees);
 
-  const bg = getBgAmount(state);
+  const v = bgView(state);
 
   return (
     <div className={`${classes} p-6 border border-gray-l3 rounded-lg bg-white`}>
@@ -50,9 +51,9 @@ export function Summary({ classes = "", state }: Props) {
         <div className="p-5">
           <p className="text-gray mb-2">With Better Giving</p>
           <p className="text-xl font-bold text-green">
-            {usd.format(bg.donationAmount)}{" "}
+            {usd.format(v.bgAmount)}{" "}
             <span className="text-xl">
-              (+{usd.format(bg.feeSavings + bg.additionalFromTypes)}){" "}
+              (+{usd.format(v.feeSavings + v.additionalFromTypes)}){" "}
             </span>
           </p>
         </div>
@@ -65,23 +66,37 @@ export function Summary({ classes = "", state }: Props) {
       <div className="space-y-3 mb-6">
         <div className="flex justify-between items-center">
           <p className="text-gray-d1">Fee Savings:</p>
-          <p className="font-semibold">{usd.format(bg.feeSavings)}</p>
+          <p className="font-semibold">{usd.format(v.feeSavings)}</p>
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <p className="text-gray-d1">
-              Additional donations from expanded payment types:
-            </p>
-            <HelpCircle className="w-5 h-5 text-gray-l1" />
-          </div>
-          <p className="font-semibold">{usd.format(bg.additionalFromTypes)}</p>
+          <p className="text-gray-d1">
+            Additional donations from expanded payment types:
+            <Tooltip
+              tip={
+                <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+                  Based on industry data, each payment type represents a portion
+                  of potential donations: Credit Card (63%), Bank/ACH (10%),
+                  Digital Wallets (7%), DAF (12%), Stocks (6%), Crypto (2%).
+                  Better Giving enables all these payment methods.
+                  <Arrow />
+                </Content>
+              }
+            >
+              <CircleHelpIcon
+                size={14}
+                className="relative inline bottom-px ml-1"
+              />
+            </Tooltip>
+          </p>
+
+          <p className="font-semibold">{usd.format(v.additionalFromTypes)}</p>
         </div>
 
         <div className="flex justify-between items-center text-green font-medium">
           <p className="">Subtotal - Processing Impact:</p>
           <p className=" font-semibold">
-            {usd.format(bg.feeSavings + bg.additionalFromTypes)}
+            {usd.format(v.feeSavings + v.additionalFromTypes)}
           </p>
         </div>
       </div>
@@ -93,24 +108,20 @@ export function Summary({ classes = "", state }: Props) {
       <div className="space-y-3 mb-6">
         <div className="flex justify-between items-center">
           <p className=" text-gray-d1">Savings Account Growth (4%):</p>
-          <p className=" font-semibold">
-            {usd.format(bg.yearOneSavingsGrowth)}
-          </p>
+          <p className=" font-semibold">{usd.format(v.y1Growth.savings)}</p>
         </div>
 
         <div className="flex justify-between items-center">
           <p className=" text-gray-d1">Sustainability Fund Growth (20%):</p>
           <p className=" font-semibold">
-            {usd.format(bg.yearOneSustainabilityGrowth)}
+            {usd.format(v.y1Growth.sustainability)}
           </p>
         </div>
 
         <div className="flex justify-between items-center text-[#A020F0] font-medium">
           <p className="">Subtotal - Investment Impact:</p>
           <p className=" font-semibold">
-            {usd.format(
-              bg.yearOneSavingsGrowth + bg.yearOneSustainabilityGrowth
-            )}
+            {usd.format(v.y1Growth.savings + v.y1Growth.sustainability)}
           </p>
         </div>
       </div>
@@ -122,7 +133,7 @@ export function Summary({ classes = "", state }: Props) {
         <div>
           <p className="text-xl font-bold uppercase">Total Annual Impact</p>
           <p className="text-lg font-bold text-green-d1">
-            {usd.format(bg.totalAnnualImpact)}
+            {usd.format(v.totalAnnualImpact)}
           </p>
         </div>
       </div>

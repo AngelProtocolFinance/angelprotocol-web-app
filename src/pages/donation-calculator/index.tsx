@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
-import { Summary } from "./summary";
 import type { State } from "./types";
+import { View } from "./view";
 
 export default function Page() {
   const [state, setState] = useState<State>({
@@ -25,7 +25,7 @@ export default function Page() {
         <Form1 state={state} setState={setState} classes="" />
         <Form2 state={state} setState={setState} classes="" />
       </div>
-      <Summary state={state} />
+      <View {...state} />
     </div>
   );
 }
