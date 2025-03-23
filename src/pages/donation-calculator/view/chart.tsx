@@ -1,4 +1,5 @@
 import * as Slider from "@radix-ui/react-slider";
+import { toUsd } from "helpers/to-usd";
 import { Info } from "lucide-react";
 import { useState } from "react";
 import {
@@ -11,32 +12,28 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { type Projection, type View, formatCurrency } from "./bg-view"; // Adjust the import path
+import type { View } from "./bg-view"; // Adjust the import path
 
 interface Props extends View {
   classes?: string;
 }
 
 export function Chart({ classes = "", ...v }: Props) {
-  const [projectionYears, setProjectionYears] = useState(5);
+  const [yrs, setYears] = useState(5);
 
   // Generate chart data based on projection years
 
-  const data = [1, 3, 5]
-    .concat(projectionYears >= 10 ? [10] : [])
-    .concat(projectionYears >= 15 ? [15] : [])
-    .concat(projectionYears >= 20 ? [20] : [])
-    .map((x) => {
-      const y = (v as any)[`y${x}`] as Projection;
-      return {
-        year: `Year ${x}`,
-        annualDonations: v.amount,
-        currentSavings: y.savings,
-        donationSavings: v.diff,
-        investmentGrowth: y.sustainability,
-        total: v.diff + y.combined,
-      };
-    });
+  const data = v.projection.slice(0, yrs).map((x, i) => {
+    const y = i + 1;
+    return {
+      year: `Year ${y}`,
+      amount: v.amount,
+      liq: x.liq,
+      savings: v.diff * y,
+      lock: x.lock,
+      total: v.diff * y + x.total,
+    };
+  });
 
   return (
     <div className={`${classes} p-6 border border-gray-l3 rounded-lg bg-white`}>
@@ -56,8 +53,8 @@ export function Chart({ classes = "", ...v }: Props) {
 
         <Slider.Root
           className="relative flex items-center select-none touch-none w-full h-5"
-          value={[projectionYears]}
-          onValueChange={(value) => setProjectionYears(value[0])}
+          value={[yrs]}
+          onValueChange={([x]) => setYears(x)}
           max={20}
           min={5}
           step={5}
@@ -101,39 +98,36 @@ export function Chart({ classes = "", ...v }: Props) {
               wrapperStyle={{ fontSize: 13 }}
               formatter={(value: any, name: any) => {
                 const labels: Record<string, string> = {
-                  annualDonations: "Annual Donations (Reference)",
-                  currentSavings: "Current Investment Growth",
-                  donationSavings: "Donation Processing Savings",
-                  investmentGrowth: "Better Giving Investment Returns",
+                  amount: "Annual Donations (Reference)",
+                  liq: "Current Investment Growth",
+                  savings: "Donation Processing Savings",
+                  lock: "Better Giving Investment Returns",
                   total: "Total Financial Advantage",
                 };
 
-                return [
-                  formatCurrency(Number(value)),
-                  labels[name] || String(name),
-                ];
+                return [toUsd(Number(value)), labels[name] || String(name)];
               }}
             />
-            <Legend wrapperStyle={{ fontSize: 13 }} />
+            <Legend iconType="circle" wrapperStyle={{ fontSize: 13 }} />
             <Area
               type="monotone"
-              dataKey="annualDonations"
+              dataKey="amount"
               name="Annual Donations (Reference)"
-              stroke="var(--color-gray-d1)"
+              stroke="var(--color-amber-d1)"
               strokeDasharray="5 5"
               fill="none"
             />
             <Area
               type="monotone"
-              dataKey="currentSavings"
+              dataKey="liq"
               stackId="1"
               name="Current Investment Growth"
               fill="var(--color-gray-l1)"
-              stroke="var(--color-gray-d1)"
+              stroke="var(--color-gray)"
             />
             <Area
               type="monotone"
-              dataKey="donationSavings"
+              dataKey="savings"
               stackId="1"
               name="Donation Processing Savings"
               fill="var(--color-green-l3)"
@@ -141,7 +135,7 @@ export function Chart({ classes = "", ...v }: Props) {
             />
             <Area
               type="monotone"
-              dataKey="investmentGrowth"
+              dataKey="lock"
               stackId="1"
               name="Better Giving Investment Returns"
               fill="var(--color-blue-l3)"
@@ -172,11 +166,11 @@ export function Chart({ classes = "", ...v }: Props) {
           The Power of Compound Growth
         </h3>
         <p className="text-sm text-blue-d2">
-          This {projectionYears}-year projection demonstrates how Better
-          Giving's integrated approach compounds over time. By Year{" "}
-          {projectionYears}, your organization could accumulate significant
-          additional funds through the combination of reduced processing fees,
-          expanded donation types, and strategic investments.
+          This {yrs}-year projection demonstrates how Better Giving's integrated
+          approach compounds over time. By Year {yrs}, your organization could
+          accumulate significant additional funds through the combination of
+          reduced processing fees, expanded donation types, and strategic
+          investments.
         </p>
       </div>
     </div>

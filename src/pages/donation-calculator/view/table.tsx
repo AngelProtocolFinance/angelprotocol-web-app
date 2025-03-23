@@ -1,32 +1,14 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { toUsd } from "helpers/to-usd";
 import type { View } from "./bg-view";
 
 interface Props extends View {
   classes?: string;
 }
-export function Tables({ classes = "" }: Props) {
-  // Data for the table
-  const data = [
-    {
-      account: "Savings Account (4%)",
-      allocation: "$0",
-      yearEnd3: "$0",
-      yearEnd5: "$0",
-    },
-    {
-      account: "Sustainability Fund (20%)",
-      allocation: "$27,163",
-      yearEnd3: "$33,175",
-      yearEnd5: "$6,012",
-    },
-  ];
 
-  // Total row
-  const total = {
-    allocation: "$27,163",
-    yearEnd3: "$33,175",
-    yearEnd5: "$6,012",
-  };
+export function Tables({ classes = "", ...v }: Props) {
+  // Array of time periods
+  const periods = ["Annual", "3-Year", "5-Year"];
 
   return (
     <div className={`${classes} bg-white rounded-lg shadow-sm p-6`}>
@@ -51,82 +33,64 @@ export function Tables({ classes = "" }: Props) {
       {/* Tabs */}
       <TabGroup>
         <TabList className="flex space-x-1 border-b border-gray-l2 mb-4">
-          <Tab
-            className={({ selected }) =>
-              `w-1/3 py-2.5 text-sm font-body font-medium leading-5 focus:outline-none ${
-                selected
-                  ? "border-b-2 border-blue text-blue-d1"
-                  : "text-gray-d1 hover:text-blue-d1"
-              }`
-            }
-          >
-            Annual
-          </Tab>
-          <Tab
-            className={({ selected }) =>
-              `w-1/3 py-2.5 text-sm font-body font-medium leading-5 focus:outline-none ${
-                selected
-                  ? "border-b-2 border-blue text-blue-d1"
-                  : "text-gray-d1 hover:text-blue-d1"
-              }`
-            }
-          >
-            3-Year
-          </Tab>
-          <Tab
-            className={({ selected }) =>
-              `w-1/3 py-2.5 text-sm font-body font-medium leading-5 focus:outline-none ${
-                selected
-                  ? "border-b-2 border-blue text-blue-d1"
-                  : "text-gray-d1 hover:text-blue-d1"
-              }`
-            }
-          >
-            5-Year
-          </Tab>
+          {periods.map((p) => (
+            <Tab
+              key={p}
+              className={({ selected }) =>
+                `flex-1 py-2.5 text-sm font-body font-medium leading-5 focus:outline-none ${
+                  selected
+                    ? "border-b-2 border-blue text-blue-d1"
+                    : "text-gray-d1 hover:text-blue-d1"
+                }`
+              }
+            >
+              {p}
+            </Tab>
+          ))}
         </TabList>
 
-        {/* Table */}
+        {/* Table Panels */}
         <TabPanels>
-          {/* We can reuse the same panel since the data changes are minimal */}
-          <TabPanel>
-            <div className="overflow-x-auto">
-              <table className="min-w-full [&_th,&_td]:p-2 text-sm">
-                <thead>
-                  <tr>
-                    <th>Account</th>
-                    <th>Allocation</th>
-                    <th>Year-End Balance</th>
-                    <th>Growth</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((row, index) => (
-                    <tr key={index} className="border-t border-gray-l3">
-                      <td>{row.account}</td>
-                      <td>{row.allocation}</td>
-                      <td>{index === 0 ? row.yearEnd3 : row.yearEnd3}</td>
-                      <td>{index === 0 ? row.yearEnd5 : row.yearEnd5}</td>
-                    </tr>
-                  ))}
-                  {/* Total Row */}
-                  <tr className="border-t border-gray-l3 [&_td]:font-bold">
-                    <td>TOTAL</td>
-                    <td>{total.allocation}</td>
-                    <td>{total.yearEnd3}</td>
-                    <td>{total.yearEnd5}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </TabPanel>
-          {/* Add other TabPanels if data changes per tab */}
-          <TabPanel>
-            {/* Same table structure, update data as needed */}
-          </TabPanel>
-          <TabPanel>
-            {/* Same table structure, update data as needed */}
-          </TabPanel>
+          {periods.map((period, i) => {
+            const y = i + 1;
+            const x = v.projection[y];
+            return (
+              <TabPanel key={period}>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left text-sm">
+                    <thead>
+                      <tr>
+                        <th>Account</th>
+                        <th>{i === 0 ? "Allocation" : "Total Invested"}</th>
+                        <th>Year {y} Balance</th>
+                        <th>Growth</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>LIQUID</td>
+                        <td>{toUsd(x.start.liq)}</td>
+                        <td>{toUsd(x.end.liq)}</td>
+                        <td>{toUsd(x.liq)}</td>
+                      </tr>
+                      <tr>
+                        <td>LOCKED</td>
+                        <td>{toUsd(x.start.lock)}</td>
+                        <td>{toUsd(x.end.lock)}</td>
+                        <td>{toUsd(x.lock)}</td>
+                      </tr>
+                      <tr>
+                        <td>TOTAL</td>
+                        <td>{toUsd(x.start.total)}</td>
+                        <td>{toUsd(x.end.total)}</td>
+                        <td>{toUsd(x.total)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </TabPanel>
+            );
+          })}
         </TabPanels>
       </TabGroup>
     </div>

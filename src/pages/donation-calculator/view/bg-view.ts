@@ -10,41 +10,64 @@ const typeWeights: { [key: string]: number } = {
   crypto: 0.02,
 };
 
-// Define a reusable type for growth projections
-export interface Projection {
-  savings: number;
-  sustainability: number;
-  combined: number;
+interface Growth {
+  liq: number;
+  lock: number;
+  total: number;
+  start: Omit<Growth, "start" | "end">;
+  end: Omit<Growth, "start" | "end">;
 }
 
-const compound = (annual: number, rate: number, years: number): number => {
-  const dailyRate = rate / 365;
+const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
+  const savDailyRate = 0.04 / 365; // 4% annual rate
+  const susDailyRate = 0.2 / 365; // 20% annual rate
   const daysPerYear = 365;
-  let total = 0;
-  for (let year = 0; year < years; year++) {
-    total += annual;
+  const items: Growth[] = [];
+  let savTotal = 0;
+  let susTotal = 0;
+
+  for (let year = 1; year <= yrs; year++) {
+    // Capture starting balances (before new investment)
+    const savStart = savTotal;
+    const susStart = susTotal;
+
+    // Add annual investments
+    savTotal += savAmt;
+    susTotal += susAmt;
+
+    // Apply daily compounding for one year
     for (let day = 0; day < daysPerYear; day++) {
-      total *= 1 + dailyRate;
+      savTotal *= 1 + savDailyRate;
+      susTotal *= 1 + susDailyRate;
     }
+
+    // Calculate growth by subtracting principal
+    const savGrowth = savTotal - savAmt * year;
+    const susGrowth = susTotal - susAmt * year;
+
+    items.push({
+      start: {
+        liq: savStart,
+        lock: susStart,
+        total: savStart + susStart,
+      },
+      end: {
+        liq: savTotal,
+        lock: susTotal,
+        total: savTotal + susTotal,
+      },
+      liq: savGrowth,
+      lock: susGrowth,
+      total: savGrowth + susGrowth,
+    });
   }
-  return total;
+
+  return items;
 };
 
-const projectFn = (savAmt: number, susAmt: number) => {
-  return (yrs: number): Projection => {
-    const totalSav = compound(savAmt, 0.04, yrs);
-    const totalSus = compound(susAmt, 0.2, yrs);
-
-    const savGrowth = totalSav - savAmt * yrs;
-    const susGrowth = totalSus - susAmt * yrs;
-
-    return {
-      savings: savGrowth,
-      sustainability: susGrowth,
-      combined: savGrowth + susGrowth,
-    };
-  };
-};
+// Example usage:
+const result = project(1000, 1000, 3);
+console.log(result);
 
 export interface View {
   amount: number;
@@ -53,12 +76,7 @@ export interface View {
   ogFees: number;
   diff: number;
   ogMissed: number;
-  y1: Projection;
-  y3: Projection;
-  y5: Projection;
-  y10: Projection;
-  y15: Projection;
-  y20: Projection;
+  projection: Growth[];
 }
 
 const donorCoverageReduction = 0.8;
@@ -95,9 +113,6 @@ export function bgView(og: State): View {
   const savings = notGranted * (1 - og.savingsInvested);
   const invested = notGranted * og.savingsInvested;
 
-  // Create a specialized projection calculator for our specific yields
-  const project = projectFn(savings, invested);
-
   return {
     amount: amnt,
     ogNet,
@@ -105,20 +120,6 @@ export function bgView(og: State): View {
     ogFees: amnt - ogNet,
     ogMissed,
     diff,
-    //projections
-    y1: project(1),
-    y3: project(3),
-    y5: project(5),
-    y10: project(10),
-    y15: project(15),
-    y20: project(20),
+    projection: project(savings, invested, 20),
   };
-}
-
-export function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(value);
 }
