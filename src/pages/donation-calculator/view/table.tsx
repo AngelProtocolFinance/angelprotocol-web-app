@@ -15,16 +15,16 @@ export function Tables({ classes = "", ...v }: Props) {
   ];
 
   return (
-    <div className={`${classes} bg-white rounded-lg shadow-sm p-6`}>
-      {/* Header */}
-      <h2 className="text-xl font-bold mb-4">Investment Growth Projections</h2>
+    <div className={`${classes} bg-white rounded-lg shadow-sm p-6 @container`}>
+      <h2 className="text-lg sm:text-xl font-bold mb-4">
+        Investment Growth Projections
+      </h2>
 
-      {/* Highlight Section */}
-      <div className="bg-green-l4 rounded-lg p-4 mb-4">
-        <p className="text-lg font-heading font-bold text-green-d2">
+      <div className="@md:bg-green-l5 rounded-lg @md:p-4 mb-4">
+        <p className="sm:text-lg font-heading font-bold text-green-d2">
           Better Giving Annual
         </p>
-        <p className="text-2xl font-heading font-bold text-green-d2 mb-2">
+        <p className="text-xl sm:text-2xl font-heading font-bold text-green-d2 mb-2">
           {toUsd(v.notGranted)}
         </p>
         <p className="text-sm font-body text-gray-d1">
