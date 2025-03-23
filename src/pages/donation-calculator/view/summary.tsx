@@ -11,7 +11,7 @@ export function Summary({ classes = "", ...v }: Props) {
   const y1 = v.projection[0];
   return (
     <div className={`${classes} p-6 border border-gray-l3 rounded-lg bg-white`}>
-      <h1 className="text-xl font-bold mb-4">Annual Impact Summary</h1>
+      <h2 className="text-xl font-bold mb-4">Annual Impact Summary</h2>
 
       <div className="mb-6">
         <p className="text-gray">Current Online Donations</p>

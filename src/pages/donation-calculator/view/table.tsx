@@ -17,16 +17,14 @@ export function Tables({ classes = "", ...v }: Props) {
   return (
     <div className={`${classes} bg-white rounded-lg shadow-sm p-6`}>
       {/* Header */}
-      <h2 className="text-lg font-heading font-medium text-gray-d2 mb-4">
-        Investment Growth Projections
-      </h2>
+      <h2 className="text-xl font-bold mb-4">Investment Growth Projections</h2>
 
       {/* Highlight Section */}
       <div className="bg-green-l4 rounded-lg p-4 mb-4">
-        <p className="text-2xl font-heading font-bold text-green-d2">
+        <p className="text-lg font-heading font-bold text-green-d2">
           Better Giving Annual
         </p>
-        <p className="text-4xl font-heading font-bold text-green-d2 mb-2">
+        <p className="text-2xl font-heading font-bold text-green-d2 mb-2">
           {toUsd(v.notGranted)}
         </p>
         <p className="text-sm font-body text-gray-d1">
@@ -64,12 +62,14 @@ export function Tables({ classes = "", ...v }: Props) {
                   <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left text-sm  [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
                     <thead>
                       <tr>
-                        <th>Account</th>
-                        <th>
+                        <th className="font-semibold">Account</th>
+                        <th className="font-semibold">
                           {p.value === 1 ? "Allocation" : "Total Invested"}
                         </th>
-                        <th>Year {p.value} Balance</th>
-                        <th>Growth</th>
+                        <th className="font-semibold">
+                          Year {p.value} Balance
+                        </th>
+                        <th className="font-semibold">Growth</th>
                       </tr>
                     </thead>
                     <tbody>

@@ -21,7 +21,7 @@ export default function Page() {
         Donation Processing & Investment Calculator
       </h1>
 
-      <div>
+      <div className="sticky top-0">
         <Form1 state={state} setState={setState} classes="" />
         <Form2 state={state} setState={setState} classes="" />
       </div>
