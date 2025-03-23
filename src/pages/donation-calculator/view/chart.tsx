@@ -108,7 +108,11 @@ export function Chart({ classes = "", ...v }: Props) {
                 return [toUsd(Number(value)), labels[name] || String(name)];
               }}
             />
-            <Legend iconType="circle" wrapperStyle={{ fontSize: 13 }} />
+            <Legend
+              iconSize={10}
+              iconType="circle"
+              wrapperStyle={{ fontSize: 13 }}
+            />
             <Area
               type="monotone"
               dataKey="amount"
