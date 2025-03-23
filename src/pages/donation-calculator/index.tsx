@@ -16,16 +16,18 @@ export default function Page() {
     savingsInvested: 0.5,
   });
   return (
-    <div className="xl:container px-5 mx-auto mt-4 py-8 grid grid-cols-2 gap-x-4 content-start">
-      <h1 className="text-3xl text-blue-d1 mb-12 text-center col-span-full">
-        Donation Processing & Investment Calculator
-      </h1>
+    <div className="bg-gray-l4">
+      <div className="xl:container px-5 mx-auto mt-4 py-8 grid grid-cols-2 gap-x-4 content-start">
+        <h1 className="text-3xl text-blue-d1 mb-12 text-center col-span-full">
+          Donation Processing & Investment Calculator
+        </h1>
 
-      <div className="sticky top-0">
-        <Form1 state={state} setState={setState} classes="" />
-        <Form2 state={state} setState={setState} classes="" />
+        <div className="sticky top-0">
+          <Form1 state={state} setState={setState} classes="" />
+          <Form2 state={state} setState={setState} classes="" />
+        </div>
+        <View {...state} />
       </div>
-      <View {...state} />
     </div>
   );
 }
