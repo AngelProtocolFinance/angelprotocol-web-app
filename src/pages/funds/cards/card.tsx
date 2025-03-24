@@ -3,6 +3,7 @@ import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/image";
 import { toText } from "components/rich-text";
+import { ShareButton } from "components/share-btn";
 import { Target, toTarget } from "components/target";
 import VerifiedIcon from "components/verified-icon";
 import { appRoutes } from "constants/routes";
@@ -70,7 +71,12 @@ export default function Card({
         >
           Donate
         </NavLink>
-        <div /> {/** future: bookmark button  */}
+        <ShareButton
+          classes="justify-self-end self-end"
+          organization={name}
+          platform=""
+          url={"https://better.giving"}
+        />
       </div>
     </div>
   );
