@@ -25,11 +25,11 @@ const Editor = forwardRef<El, Props>(({ classes, ...props }, ref) => {
           placeholder: props.placeHolder,
           readOnly: props.readOnly,
           theme: "snow",
-          formats: ["bold", "italic", "indent", "list"],
+          formats: ["bold", "italic", "indent", "list", "link"],
           modules: {
             toolbar: [
               ["bold", "italic"],
-              [{ list: "ordered" }, { list: "bullet" }],
+              [{ list: "ordered" }, { list: "bullet" }, "link"],
             ],
           },
         });

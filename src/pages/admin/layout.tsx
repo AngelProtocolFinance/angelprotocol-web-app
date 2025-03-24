@@ -12,7 +12,7 @@ import { linkGroups } from "./constants";
 import Header from "./header";
 import SidebarHeader from "./sidebar-header";
 import { cognito, toAuth } from ".server/auth";
-import { getNpoByIdOrSlug } from ".server/npo";
+import { getNpo } from ".server/npo";
 
 interface LoaderData {
   id: number;
@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const id = parse(plusInt, params.id);
 
-  const npo = await getNpoByIdOrSlug(id, ["name", "logo"]);
+  const npo = await getNpo(id, ["name", "logo"]);
   if (!npo) return new Response("Not found", { status: 404 });
 
   return {

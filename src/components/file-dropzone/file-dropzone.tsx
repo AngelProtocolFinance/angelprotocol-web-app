@@ -49,6 +49,13 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
   return (
     <div className={props.className}>
       {props.label}
+      <p className="text-xs text-gray dark:text-gray mb-2">
+        Valid types are:{" "}
+        {props.specs.mimeTypes
+          .map((m) => m.split("/")[1].toUpperCase())
+          .join(", ")}
+        . File should be less than {props.specs.mbLimit} MB{" "}
+      </p>
       <div
         data-invalid={!!props.error}
         data-drag={isDragActive}
@@ -66,18 +73,10 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
         <input {...getInputProps()} />
         <DropzoneText value={props.value || file} />
       </div>
-      <p className="text-xs text-gray dark:text-gray mt-2">
-        Valid types are:
-        {props.specs.mimeTypes
-          .map((m) => m.split("/")[1].toUpperCase())
-          .join(", ")}
-        . File should be less than {props.specs.mbLimit} MB{" "}
-        {props.error && (
-          <span className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden">
-            {props.error}
-          </span>
-        )}
-      </p>
+
+      {props.error && (
+        <span className="text-red dark:text-red-l2 text-xs">{props.error}</span>
+      )}
     </div>
   );
 });

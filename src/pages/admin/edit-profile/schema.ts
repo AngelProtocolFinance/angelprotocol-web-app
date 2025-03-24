@@ -24,17 +24,17 @@ export const MAX_CHARS = 4000;
 export const logoSpec: ImgSpec = {
   type: VALID_MIME_TYPES,
   aspect: [1, 1],
-  maxSize: 1e6,
+  maxSize: 4e6,
 };
 export const cardImgSpec: ImgSpec = {
   type: VALID_MIME_TYPES,
   aspect: [2, 1],
-  maxSize: 1e6,
+  maxSize: 4e6,
 };
 export const bannerSpec: ImgSpec = {
   type: VALID_MIME_TYPES,
   aspect: [4, 1],
-  maxSize: 1e6,
+  maxSize: 4e6,
 };
 
 const requiredStr = v.pipe(str, v.nonEmpty("required"));

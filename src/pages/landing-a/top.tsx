@@ -1,8 +1,12 @@
+import { useLocation } from "@remix-run/react";
+import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
 
 export function Top({ className = "" }) {
+  const location = useLocation();
+  const is_page_b = location.pathname.endsWith("s");
   return (
     <section
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-2 pt-12 pb-24`}
@@ -30,7 +34,9 @@ export function Top({ className = "" }) {
           </li>
         </ul>
 
-        <div className="mt-8 isolate z-10 justify-self-center @6xl:justify-self-start relative">
+        <div
+          className={`mt-8 isolate z-10 justify-self-center ${is_page_b ? "" : "@6xl:justify-self-start"}  relative`}
+        >
           <button
             type="button"
             onClick={async () => {
@@ -43,6 +49,32 @@ export function Top({ className = "" }) {
             <ArrowRight size={18} className="group-hover:translate-x-1" />
           </button>
           <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
+          {is_page_b && (
+            <div className="absolute top-1.5 max-sm:hidden -left-15 isolate">
+              <Image
+                src={laira.pointing}
+                width={80}
+                className="z-10 max-sm:w-24"
+              />
+              {/** shadow */}
+              <svg className="absolute -bottom-3 z-0" width="100%" height="20">
+                <defs>
+                  <filter id="blur">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+                  </filter>
+                </defs>
+                <ellipse
+                  cx="50%"
+                  cy="50%"
+                  rx="40"
+                  ry="6"
+                  filter="url(#blur)"
+                  className="fill-gray-l3"
+                  // className="blur-sm"
+                />
+              </svg>
+            </div>
+          )}
         </div>
       </div>
       <Image

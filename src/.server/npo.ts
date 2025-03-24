@@ -1,7 +1,8 @@
-import type { Endow } from "@better-giving/endowment";
+import type { Endow, EndowUpdate } from "@better-giving/endowment";
 import * as db from "@better-giving/endowment/db";
 import { tables } from "@better-giving/types/list";
-import { GetCommand, QueryCommand, ap } from "./aws/db";
+import { GetCommand, QueryCommand, UpdateCommand, ap } from "./aws/db";
+import { UpdateBuilder } from "./aws/update-builder";
 import { env } from "./env";
 
 type K = keyof Endow;
@@ -9,7 +10,7 @@ type ArrayValues<T extends readonly unknown[]> = T[number];
 type R<T> = T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow;
 
 /**@param id number - endow-id; string - slug */
-export async function getNpoByIdOrSlug<T extends K[]>(
+export async function getNpo<T extends K[]>(
   id: number | string,
   fields?: T
 ): Promise<R<T> | undefined> {
@@ -95,4 +96,40 @@ const profileFields: { [K in keyof Required<Endow>]: "" } = {
   fund_opt_in: "",
   env: "",
   target: "",
+};
+
+export const editNpo = async (
+  id: number,
+  { target, slug, social_media_urls, ...update }: EndowUpdate
+) => {
+  const updates = new UpdateBuilder();
+
+  if (slug) updates.set("slug", slug);
+  if (slug === "") updates.remove("slug");
+
+  if (target || target === "0") {
+    updates.set("target", target);
+  }
+
+  if (social_media_urls) {
+    for (const [k, v] of Object.entries(social_media_urls)) {
+      if (v === undefined) continue;
+      updates.set(`social_media_urls.${k}`, v);
+    }
+  }
+
+  for (const [k, v] of Object.entries(update)) {
+    if (v === undefined) continue;
+    updates.set(k, v);
+  }
+
+  console.log(updates.collect());
+  const command = new UpdateCommand({
+    TableName: tables.endowments_v3,
+    Key: { PK: `Endow#${id}`, SK: env } satisfies db.Endow.Keys,
+    ReturnValues: "ALL_NEW",
+    ...updates.collect(),
+  });
+
+  return ap.send(command).then((res) => res.Attributes ?? {});
 };

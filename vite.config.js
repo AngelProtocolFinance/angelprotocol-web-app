@@ -20,8 +20,18 @@ const rmx = remix({
       r("donate/:id", "./pages/donate/index.tsx");
       r("donate-fund/:fundId", "./pages/donate-fund/index.tsx");
       r("donate-thanks", "./pages/donate-thanks.tsx");
-      r("simplify-fundraising-maximize-impact","./pages/landing-a/index.tsx")
-      r("the-smart-move-to-make-for-accepting-crypto-donations",'./pages/landing-b/index.tsx')
+      r("simplify-fundraising-maximize-impact", "./pages/landing-a/index.tsx", {
+        id: "page-a",
+      });
+      r(
+        "simplify-fundraising-maximize-impacts",
+        "./pages/landing-a/index.tsx",
+        { id: "page-a2" }
+      );
+      r(
+        "the-smart-move-to-make-for-accepting-crypto-donations",
+        "./pages/landing-b/index.tsx"
+      );
       r("form-builder", "./pages/widget/form-builder-layout.tsx", () => {
         r("", "./pages/widget/index.ts", {
           index: true,
@@ -34,7 +44,7 @@ const rmx = remix({
         r("donations", "./pages/admin/donations/donations.tsx");
         r("programs", "./pages/admin/programs/programs.tsx");
         r("funds", "./pages/admin/funds/funds.tsx");
-        r("integrations","./pages/admin/integrations/index.tsx")
+        r("integrations", "./pages/admin/integrations/index.tsx");
         r(
           "program-editor/:programId",
           "./pages/admin/program-editor/program-editor.tsx"
@@ -49,10 +59,7 @@ const rmx = remix({
         );
         r("settings", "./pages/admin/settings/form.tsx");
         r("edit-profile", "./pages/admin/edit-profile/index.tsx");
-        r(
-          "banking",
-          "./pages/admin/banking/payout-methods/payout-methods.tsx"
-        );
+        r("banking", "./pages/admin/banking/payout-methods/payout-methods.tsx");
         r("banking/new", "./pages/admin/banking/banking.tsx");
         r(
           "banking/:bankId",
@@ -75,31 +82,21 @@ const rmx = remix({
             id: "media-edit",
           });
         });
-        r(
-          "media/videos",
-          "./pages/admin/media/videos/videos.tsx",
-          () => {
-            r("new", "./pages/admin/media/video-new.ts", {
-              id: "videos-new",
-            });
-            r(":mediaId", "./pages/admin/media/video-edit.ts", {
-              id: "videos-edit",
-            });
-          }
-        );
+        r("media/videos", "./pages/admin/media/videos/videos.tsx", () => {
+          r("new", "./pages/admin/media/video-new.ts", {
+            id: "videos-new",
+          });
+          r(":mediaId", "./pages/admin/media/video-edit.ts", {
+            id: "videos-edit",
+          });
+        });
         r(
           "dashboard",
           "./pages/admin/dashboard/dashboard.tsx",
           { id: "dashboard" },
           () => {
-            r(
-              "edit-alloc",
-              "./pages/admin/dashboard/schedule/edit.tsx"
-            );
-            r(
-              "move-funds",
-              "./pages/admin/dashboard/move-fund-form.tsx"
-            );
+            r("edit-alloc", "./pages/admin/dashboard/schedule/edit.tsx");
+            r("move-funds", "./pages/admin/dashboard/move-fund-form.tsx");
           }
         );
       });
@@ -125,7 +122,10 @@ const rmx = remix({
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
         r("donor", "./pages/informational/donor-info/index.ts");
         r("wp-plugin", "./pages/informational/wp-plugin.tsx");
-        r("zapier-integration","./pages/informational/zapier-integration/index.tsx")
+        r(
+          "zapier-integration",
+          "./pages/informational/zapier-integration/index.tsx"
+        );
         r("about-us", "./pages/informational/about/index.tsx");
         r("blog", "./pages/blog/posts.tsx");
         r("blog/:slug", "./pages/blog/post.tsx");

@@ -17,8 +17,8 @@ const requiredStr = pipe(string(), nonEmpty("required"));
 export const imgOutput = ({ required = false } = {}) =>
   pipe(
     required ? requiredStr : string(),
-    notValue(errors.invalidType, "invalid type"),
-    notValue(errors.exceedsSize, "exceeds limit"),
+    notValue(errors.invalidType, "invalid file type"),
+    notValue(errors.exceedsSize, "exceeds file size limit"),
     notValue(errors.failure, "failed to upload")
   );
 

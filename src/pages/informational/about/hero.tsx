@@ -37,7 +37,7 @@ export function Hero({ classes = "" }) {
           alt="laira looking up"
           className="object-contain"
         />
-        <img src={laira.negotiating} className="object-contain" />
+        <img src={laira.shakeHandsX2} width={150} className="object-contain" />
       </div>
     </section>
   );

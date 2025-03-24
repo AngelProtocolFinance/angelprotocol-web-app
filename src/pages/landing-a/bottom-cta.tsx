@@ -25,7 +25,7 @@ export function BottomCta({ className = "" }) {
         <p className="text-white text-lg font-bold mb-2 text-center capitalize">
           Claim your nonprofit
         </p>
-        <Image width={200} src={laira.negotiating} className="mt-4 mb-8" />
+        <Image width={200} src={laira.shakeHandsX2} className="mt-4 mb-8" />
         <ClaimCta classes="flex-col @4xl:flex-row" />
       </div>
     </div>

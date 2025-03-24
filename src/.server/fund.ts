@@ -13,7 +13,7 @@ import {
   UpdateCommand,
   ap,
 } from "./aws/db";
-import { buildProfileUpdateParams, dbUpdate } from "./aws/helpers";
+import { UpdateBuilder } from "./aws/update-builder";
 import { env } from "./env";
 
 export const getFund = async (
@@ -90,27 +90,41 @@ export const getFund = async (
 
 export const editFund = async (
   fundId: string,
-  { target, ...update }: FundUpdate
+  { target, slug, ...update }: FundUpdate
 ) => {
+  const updates = new UpdateBuilder();
+
+  if (slug) updates.set("slug", slug);
+  if (slug === "") updates.remove("slug");
+
+  if (target || target === "0") {
+    updates.set("target", target);
+  }
+
+  for (const [k, v] of Object.entries(update)) {
+    if (v === undefined) continue;
+    updates.set(k, v);
+  }
+
   const command = new UpdateCommand({
     TableName: tables.funds,
     Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies db.Keys,
     ReturnValues: "ALL_NEW",
-    ...buildProfileUpdateParams({
-      ...update,
-      ...((target || target === "0") && { target: `${target}` }),
-    }),
+    ...updates.collect(),
   });
 
   return ap.send(command).then((res) => res.Attributes ?? {});
 };
 
 export const closeFund = async (fundId: string) => {
+  const updates = new UpdateBuilder();
+  updates.set("active", false);
+
   const command = new UpdateCommand({
     TableName: tables.funds,
     Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies db.Keys,
     ReturnValues: "ALL_NEW",
-    ...dbUpdate({ active: false }),
+    ...updates.collect(),
   });
 
   return ap.send(command);

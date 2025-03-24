@@ -18,7 +18,7 @@ const items: TListItem[] = [
     title2: "Sign Up",
     description:
       "Get started in minutes with our quick and easy sign-up process, completely free of charge.",
-    image: { src: laira.negotiating, width: 100, alt: "Laira negotiating" },
+    image: { src: laira.shakeHands, width: 100, alt: "Laira negotiating" },
   },
   {
     title1: "Step 2",
