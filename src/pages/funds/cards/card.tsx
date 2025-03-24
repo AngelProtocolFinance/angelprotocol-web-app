@@ -64,7 +64,7 @@ export default function Card({
         </div>
       </NavLink>
       {/** absolute so above whole `Link` card */}
-      <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
+      <div className="absolute items-center grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
         <ShareButton
           classes="justify-self-start"
           orgName={name}
