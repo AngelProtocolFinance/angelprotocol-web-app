@@ -11,7 +11,7 @@ import {
   handleUpdateSubscription,
 } from "./handlers";
 import { stripeEnvs } from ".server/env";
-import { discordAwsMonitor, stripe } from ".server/sdks";
+import { discordFiatMonitor, stripe } from ".server/sdks";
 
 /**
  * Webhook signing logic inspired by stripe-node,
@@ -39,9 +39,10 @@ export const action: ActionFunction = async ({
       err instanceof Error
         ? err.message
         : JSON.stringify(err, Object.getOwnPropertyNames(err));
-    await discordAwsMonitor.sendAlert({
+    await discordFiatMonitor.sendAlert({
+      type: "ERROR",
       from: `stripe-webhook-${stage}`,
-      title: "Webhook error",
+      title: "Webhook Signing",
       body: errorMessage,
     });
     return new Response(errorMessage, { status: 400 });
@@ -72,9 +73,9 @@ export const action: ActionFunction = async ({
       case "payment_intent.payment_failed":
       case "setup_intent.setup_failed":
         const reason = await handleIntentFailed(event);
-        await discordAwsMonitor.sendAlert({
+        await discordFiatMonitor.sendAlert({
           from: `stripe-event-handler-${stage}`,
-          title: "Intent failed",
+          title: "Intent Failed",
           body: `Intent ID: ${event.data.object.id}\nReason: ${reason}`,
         });
         return new Response("Received", { status: 200 });
@@ -92,9 +93,10 @@ export const action: ActionFunction = async ({
       err instanceof Error
         ? err.message
         : JSON.stringify(err, Object.getOwnPropertyNames(err));
-    await discordAwsMonitor.sendAlert({
+    await discordFiatMonitor.sendAlert({
+      type: "ERROR",
       from: `stripe-event-handler-${stage}`,
-      title: "Stripe event processing error",
+      title: "Stripe Event Processing",
       body: errorMessage,
     });
     return new Response(errorMessage, { status: 400 });
