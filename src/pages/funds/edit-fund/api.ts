@@ -17,8 +17,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!user) return toAuth(request, headers);
 
   const id = parse(fundId, params.fundId);
+
   const fund = await getFund(id);
   if (!fund) throw new Response(null, { status: 404 });
+
+  if (
+    !user.funds.includes(id) &&
+    !user.groups.includes("ap-admin") &&
+    !user.endowments.map((n) => n.toString()).includes(fund.creator_id)
+  ) {
+    throw new Response(null, { status: 403 });
+  }
 
   const origin = new URL(request.url).origin;
 

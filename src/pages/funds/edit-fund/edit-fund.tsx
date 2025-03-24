@@ -9,7 +9,8 @@ export default function EditFund() {
 
   if (
     !user.funds.includes(fund.id) &&
-    !user.endowments.map((n) => n.toString()).includes(fund.creator_id)
+    !user.endowments.map((n) => n.toString()).includes(fund.creator_id) &&
+    !user.groups.includes("ap-admin")
   ) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">
