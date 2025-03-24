@@ -65,18 +65,18 @@ export default function Card({
       </NavLink>
       {/** absolute so above whole `Link` card */}
       <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
-        <div /> {/** future: share button  */}
+        <ShareButton
+          classes="justify-self-start"
+          orgName={name}
+          url={`${BASE_URL}${appRoutes.funds}/${id}`}
+        />
         <NavLink
           to={`${appRoutes.donate_fund}/${id}`}
           className="btn btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate
         </NavLink>
-        <ShareButton
-          classes="justify-self-end self-end"
-          orgName={name}
-          url={`${BASE_URL}${appRoutes.funds}/${id}`}
-        />
+        <div /> {/** future: like button  */}
       </div>
     </div>
   );

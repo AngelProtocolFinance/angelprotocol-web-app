@@ -59,7 +59,7 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
 
   return (
     <Menu as="div" className={classes}>
-      <MenuButton className="text-blue-d1 hover:text-blue-d2 transition-colors duration-200">
+      <MenuButton className="focus:outline-none text-blue-d1 hover:text-blue-d2 transition-colors duration-200">
         <ShareIcon size={20} />
       </MenuButton>
       <MenuItems
