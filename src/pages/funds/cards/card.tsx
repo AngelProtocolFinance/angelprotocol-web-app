@@ -6,6 +6,7 @@ import { toText } from "components/rich-text";
 import { ShareButton } from "components/share-btn";
 import { Target, toTarget } from "components/target";
 import VerifiedIcon from "components/verified-icon";
+import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 export default function Card({
@@ -73,9 +74,8 @@ export default function Card({
         </NavLink>
         <ShareButton
           classes="justify-self-end self-end"
-          organization={name}
-          platform=""
-          url={"https://better.giving"}
+          orgName={name}
+          url={`${BASE_URL}${appRoutes.funds}/${id}`}
         />
       </div>
     </div>

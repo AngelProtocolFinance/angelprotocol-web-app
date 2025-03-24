@@ -2,17 +2,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import facebook from "assets/icons/social/facebook.webp";
 import instagram from "assets/icons/social/instagram.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
-import reddit from "assets/icons/social/reddit.svg";
-import whatsapp from "assets/icons/social/whatsapp.svg";
 import x from "assets/icons/social/x.webp";
-import youtube from "assets/icons/social/youtube.webp";
 import { LinkIcon, MailIcon, ShareIcon } from "lucide-react";
 import Image from "./image";
 
 interface IShareButton {
-  organization: string;
+  orgName: string;
   url: string;
-  platform: string;
   classes?: string;
 }
 
@@ -23,62 +19,43 @@ interface IMenuItem {
 }
 
 export function ShareButton({ classes = "", ...p }: IShareButton) {
-  const shareText = `Please support ${p.organization} ${p.url} via @${p.platform}`;
-
   const menuItems: IMenuItem[] = [
     {
       name: "Facebook",
       icon: <Image src={facebook} width={18} alt="letter F" />,
-      getShareLink: () =>
-        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(p.url)}&quote=${encodeURIComponent(shareText)}`,
+      getShareLink: ($) => {
+        return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent($.url)}`;
+      },
     },
     {
       name: "Twitter",
       icon: <Image src={x} width={14} alt="letter X" />,
-      getShareLink: () =>
-        `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
+      getShareLink: ($) => {
+        const text = `Please support ${$.orgName} ${$.url} via @betterdotgiving`;
+        return `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
+      },
     },
     {
       name: "LinkedIn",
       icon: <Image src={linkedin} width={20} alt="letters i & n" />,
-      getShareLink: () =>
-        `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(p.url)}&title=${encodeURIComponent(shareText)}`,
-    },
-    {
-      name: "Reddit",
-      icon: <Image src={reddit} width={18} alt="alien head" />,
-      getShareLink: () =>
-        `https://www.reddit.com/submit?url=${encodeURIComponent(p.url)}&title=${encodeURIComponent(p.organization)}`,
-    },
-    {
-      name: "WhatsApp",
-      icon: <Image src={whatsapp} width={18} alt="green phone" />,
-      getShareLink: () =>
-        `https://wa.me/?text=${encodeURIComponent(shareText)}`,
-    },
-    {
-      name: "Youtube",
-      icon: <Image src={youtube} width={18} alt="red play button" />,
-      getShareLink: () =>
-        `instagram://share?text=${encodeURIComponent(shareText)}`,
+      getShareLink: ($) => {
+        const text = `Please support ${$.orgName} ${$.url} via @better giving`;
+        return `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
+      },
     },
     {
       name: "Instagram",
       icon: <Image src={instagram} width={14} alt="rounded corner camera" />,
-      getShareLink: () =>
-        `https://www.youtube.com/share?url=${encodeURIComponent(p.url)}`,
+      getShareLink: ($) =>
+        `https://www.instagram.com/?url=${encodeURIComponent($.url)}`,
     },
     {
       name: "Email",
       icon: <MailIcon size={16} />,
-      getShareLink: () =>
-        `mailto:?subject=${encodeURIComponent(`Check out ${p.organization}`)}&body=${encodeURIComponent(shareText)}`,
+      getShareLink: ($) =>
+        `mailto:?subject=${encodeURIComponent(`Support ${$.orgName}`)}`,
     },
   ];
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareText);
-  };
 
   return (
     <Menu as="div" className={classes}>
@@ -94,9 +71,8 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
           <MenuItem key={item.name}>
             <a
               href={item.getShareLink({
-                organization: p.organization,
+                orgName: p.orgName,
                 url: p.url,
-                platform: p.platform,
               })}
               target="_blank"
               rel="noopener noreferrer"
@@ -109,7 +85,9 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
         ))}
         <MenuItem>
           <button
-            onClick={copyToClipboard}
+            onClick={() => {
+              navigator.clipboard.writeText(p.url);
+            }}
             className={`hover:bg-gray-l4 border-t border-gray-l4 text-sm col-span-full flex items-center gap-3 w-full px-3 py-2 rounded-md text-gray-d2 hover:text-gray-900`}
           >
             <LinkIcon size={16} />
