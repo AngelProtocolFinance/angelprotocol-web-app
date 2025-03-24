@@ -107,9 +107,7 @@ export function Summary({ classes = "", ...v }: Props) {
         </div>
 
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center text-[#A020F0] font-medium">
-          <p className="max-sm:text-sm text-gray">
-            Subtotal - Investment Impact:
-          </p>
+          <p className="max-sm:text-sm">Subtotal - Investment Impact:</p>
           <p className=" font-semibold">{toUsd(y1.total)}</p>
         </div>
       </div>
