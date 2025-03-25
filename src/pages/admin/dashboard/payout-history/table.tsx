@@ -1,6 +1,7 @@
 import TableSection, { Cells } from "components/table-section";
 import { Arrow, Content, Tooltip } from "components/tooltip";
-import { dateFormat, humanize } from "helpers";
+import { dateFormat } from "helpers/date-format";
+import { humanize } from "helpers/decimal";
 import {
   ArrowLeft,
   ArrowLeftRight,

@@ -1,4 +1,4 @@
-import { unpack } from "helpers";
+import { unpack } from "helpers/unpack";
 import { Suspense, forwardRef, lazy } from "react";
 import ContentLoader from "../content-loader";
 import type { Props } from "./types";

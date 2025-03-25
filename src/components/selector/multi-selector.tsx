@@ -6,9 +6,8 @@ import {
   ComboboxOptions,
 } from "@headlessui/react";
 import { DrawerIcon } from "components/icon";
-import { isEmpty } from "helpers";
-import { unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
+import { unpack } from "helpers/unpack";
 import { Search, X } from "lucide-react";
 import { type ForwardedRef, type PropsWithChildren, useState } from "react";
 import {
@@ -36,7 +35,7 @@ function _MultiList<T extends ValKey>(
         )
       : props.options;
 
-  const optionsAvailable = !searchText || !isEmpty(filteredOptions);
+  const optionsAvailable = !searchText || filteredOptions.length > 0;
 
   const isAllSelected = props.value.length === props.options.length;
 

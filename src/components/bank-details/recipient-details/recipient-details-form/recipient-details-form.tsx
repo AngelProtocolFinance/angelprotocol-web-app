@@ -8,8 +8,8 @@ import {
 import { Form, Label } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { NativeSelect } from "components/selector";
-import { logger } from "helpers";
 import { errorPrompt } from "helpers/error-prompt";
+import { logger } from "helpers/logger";
 import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
 import type {

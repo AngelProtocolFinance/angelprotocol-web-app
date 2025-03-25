@@ -1,4 +1,4 @@
-import { humanize, roundToCents } from "helpers";
+import { humanize, roundToCents } from "helpers/decimal";
 
 export const token = (usdRate: number, decimals: number) =>
   function Amount(props: { amount: string | number; classes?: string }) {

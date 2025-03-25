@@ -1,5 +1,5 @@
 import diversity from "assets/icons/diversity.svg";
-import { prettyUsd } from "helpers";
+import { prettyUsd } from "helpers/decimal";
 import type { ReactNode } from "react";
 
 export interface ITarget {

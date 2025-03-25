@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import { humanize, roundDownToNum } from "helpers";
+import { humanize, roundDownToNum } from "helpers/decimal";
 import { HandCoins, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
 import type { BalanceMovement } from "types/npo-balance";

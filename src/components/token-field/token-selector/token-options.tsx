@@ -13,7 +13,7 @@ import {
 import { logoUrl } from "constants/common";
 import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
-import { logger } from "helpers";
+import { logger } from "helpers/logger";
 import { SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { TokenV2 } from "types/components";

@@ -2,7 +2,7 @@ import tokens from "@better-giving/assets/tokens/map";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
 import PromptV2, { type IPromptV2 } from "components/prompt";
-import { roundToCents } from "helpers";
+import { roundToCents } from "helpers/decimal";
 import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { toast } from "sonner";

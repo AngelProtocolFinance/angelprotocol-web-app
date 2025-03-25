@@ -1,7 +1,6 @@
 import { Label } from "components/form";
 import { NativeSelect } from "components/selector";
 import { Info, LoadingStatus } from "components/status";
-import { isEmpty } from "helpers";
 import { memo, useState } from "react";
 import type { IFormButtons, OnSubmit } from "../types";
 import RecipientDetailsForm from "./recipient-details-form";
@@ -38,7 +37,7 @@ function RecipientDetails({
     );
   }
 
-  if (isEmpty(requirements) || error) {
+  if (requirements.length === 0 || error) {
     return (
       <Info classes="text-sm">
         Target currency <span className="font-bold">{currency}</span> is not

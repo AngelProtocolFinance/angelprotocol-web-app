@@ -1,7 +1,6 @@
 import type { Milestone as TMilestone } from "@better-giving/endowment";
 import { useFetcher } from "@remix-run/react";
 import { Info } from "components/status";
-import { isEmpty } from "helpers";
 import { Plus } from "lucide-react";
 import Milestone from "./milestone";
 
@@ -44,7 +43,7 @@ export default function Milestones({ programId, milestones }: Props) {
           </span>
         </button>
       </div>
-      {!isEmpty(milestones) ? (
+      {milestones.length > 0 ? (
         <>
           <span className="text-sm text-gray dark:text-gray">
             Milestones will be publicly displayed in descending order by their

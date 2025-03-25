@@ -1,5 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
-import { humanize } from "helpers";
+import { humanize } from "helpers/decimal";
 import type { EndowmentBalances } from "types/npo-balance";
 
 export default function Balances() {

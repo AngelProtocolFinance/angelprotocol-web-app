@@ -13,7 +13,7 @@ import {
   useRouteLoaderData,
   useSearchParams,
 } from "@remix-run/react";
-import { humanize } from "helpers";
+import { humanize } from "helpers/decimal";
 import { ArrowLeft, Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";

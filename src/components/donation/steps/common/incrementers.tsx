@@ -1,5 +1,5 @@
 import { DONATION_INCREMENTS } from "constants/common";
-import { centsDecimals, humanize } from "helpers";
+import { centsDecimals, humanize } from "helpers/decimal";
 import type { Increment } from "types/widget";
 
 export type OnIncrement = (increment: number) => void;

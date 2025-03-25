@@ -1,6 +1,6 @@
 import type { Allocation } from "@better-giving/endowment";
 import { Arrow, Content, Tooltip } from "components/tooltip";
-import { humanize } from "helpers";
+import { humanize } from "helpers/decimal";
 import { ArrowLeft, ArrowRight, CircleAlert, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import type { BalanceMovement, EndowmentBalances } from "types/npo-balance";

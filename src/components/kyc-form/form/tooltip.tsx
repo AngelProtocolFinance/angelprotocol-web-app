@@ -1,4 +1,4 @@
-import { maskAddress } from "helpers";
+import { maskAddress } from "helpers/mask-address";
 
 interface ITooltip {
   txId: string;
