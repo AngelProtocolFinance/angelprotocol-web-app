@@ -33,6 +33,10 @@ export const apes_aws_secret_access_key = v.parse(
   process.env.APES_AWS_SECRET_ACCESS_KEY
 );
 export const aws_region = v.parse(required, process.env.AWS_REGION);
+export const q_url_donation_processor = v.parse(
+  required,
+  process.env.Q_URL_DONATION_PROCESSOR
+);
 
 export const api_encryption_key = v.parse(
   required,
@@ -47,4 +51,14 @@ export const npEnvs = {
 
 export const discordEnvs = {
   awsMonitorUrl: v.parse(required, process.env.DISCORD_AWS_MONITOR_WEBHOOK_URL),
+  fiatMonitorUrl: v.parse(
+    required,
+    process.env.DISCORD_FIAT_MONITOR_WEBHOOK_URL
+  ),
+};
+
+export const stripeEnvs = {
+  secretKey: v.parse(required, process.env.STRIPE_SECRET_KEY),
+  subsProductId: v.parse(required, process.env.STRIPE_SUBS_PRODUCT_ID),
+  webhookSecret: v.parse(required, process.env.STRIPE_WEBHOOK_SECRET),
 };

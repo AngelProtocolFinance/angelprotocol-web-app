@@ -3,7 +3,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
-import { APIs } from "constants/urls";
 import useSWR from "swr/immutable";
 import { toDonor } from "../../common/constants";
 import { currency } from "../../common/currency";
@@ -14,14 +13,13 @@ import { DonationTerms } from "../donation-terms";
 import Loader from "../loader";
 import Checkout from "./checkout";
 
-const fetcher = async (intent: DonationIntent) => {
-  const res = await fetch(`${APIs.apes}/fiat-donation/stripe`, {
+const fetcher = async (intent: DonationIntent) =>
+  fetch("/api/stripe-intents", {
     method: "POST",
     body: JSON.stringify(intent),
-  });
-  if (!res.ok) throw res;
-  return res.json().then((x) => x.clientSecret);
-};
+  })
+    .then<{ clientSecret: string }>((res) => res.json())
+    .then((x) => x.clientSecret);
 
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
