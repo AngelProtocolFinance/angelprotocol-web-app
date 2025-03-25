@@ -3,8 +3,10 @@ import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/image";
 import { toText } from "components/rich-text";
+import { ShareButton } from "components/share-btn";
 import { Target, toTarget } from "components/target";
 import VerifiedIcon from "components/verified-icon";
+import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 export default function Card({
@@ -62,15 +64,19 @@ export default function Card({
         </div>
       </NavLink>
       {/** absolute so above whole `Link` card */}
-      <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
-        <div /> {/** future: share button  */}
+      <div className="absolute items-center grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
+        <ShareButton
+          classes="justify-self-start"
+          orgName={name}
+          url={`${BASE_URL}${appRoutes.funds}/${id}`}
+        />
         <NavLink
           to={`${appRoutes.donate_fund}/${id}`}
           className="btn btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate
         </NavLink>
-        <div /> {/** future: bookmark button  */}
+        <div /> {/** future: like button  */}
       </div>
     </div>
   );

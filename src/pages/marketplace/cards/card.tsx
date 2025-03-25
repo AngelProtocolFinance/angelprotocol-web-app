@@ -2,8 +2,10 @@ import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import BookmarkBtn from "components/bookmark-btn";
 import Image from "components/image";
+import { ShareButton } from "components/share-btn";
 import { Target, toTarget } from "components/target";
 import VerifiedIcon from "components/verified-icon";
+import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import type { EndowmentCard } from "types/npo";
@@ -59,8 +61,12 @@ export default function Card({
         </div>
       </NavLink>
       {/** absolute so above whole `Link` card */}
-      <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
-        <div /> {/** future: share button  */}
+      <div className="absolute grid grid-cols-[1fr_auto_1fr] items-center mt-2 bottom-4 left-4 right-4">
+        <ShareButton
+          orgName={name}
+          url={`${BASE_URL}${appRoutes.marketplace}/${id}`}
+          classes=""
+        />
         <NavLink
           to={`${appRoutes.donate}/${id}`}
           className="btn btn-blue px-4 py-1 rounded-full text-sm normal-case"
