@@ -7,7 +7,7 @@ import { Link } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { appRoutes } from "constants/routes";
-import { humanize } from "helpers";
+import { humanize } from "helpers/decimal";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
 import type { PropsWithChildren } from "react";

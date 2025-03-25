@@ -2,7 +2,6 @@ import type { Milestone as TMilestone } from "@better-giving/endowment";
 import Image from "components/image";
 import { RichText } from "components/rich-text";
 import { Info } from "components/status";
-import { isEmpty } from "helpers";
 import Container from "../common/container";
 
 type Props = {
@@ -17,7 +16,7 @@ export default function Milestones({ classes = "", milestones }: Props) {
       classes={classes + " w-full lg:w-[29.75rem]"}
       expanded
     >
-      {!isEmpty(milestones) ? (
+      {milestones.length > 0 ? (
         <div className="m-6 sm:m-8">
           {milestones.map((m, idx) => (
             <Milestone {...m} key={idx} />

@@ -1,4 +1,4 @@
-import { unpack } from "helpers";
+import { unpack } from "helpers/unpack";
 import { Check, Copy } from "lucide-react";
 import type { ReactNode } from "react";
 import useCopier from "./use-copier";

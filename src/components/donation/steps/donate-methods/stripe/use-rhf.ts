@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { roundDown } from "helpers";
+import { roundDown } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { Currency } from "types/components";

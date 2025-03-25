@@ -1,6 +1,6 @@
 import { MAX_EXPIRATION } from "@better-giving/fundraiser";
 import { formatDistance } from "date-fns";
-import { unpack } from "helpers";
+import { unpack } from "helpers/unpack";
 
 interface IStatus {
   active: boolean;

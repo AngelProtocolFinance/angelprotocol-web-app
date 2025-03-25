@@ -6,7 +6,7 @@ import {
 } from "@headlessui/react";
 import { NavLink, useLocation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { createNavLinkStyler } from "helpers";
+import { createNavLinkStyler } from "helpers/create-navlink-styler";
 import { ChevronDown, CornerDownRight, MenuIcon } from "lucide-react";
 import type { DetailedUser } from "types/auth";
 import Menu from "./user-menu/menu";

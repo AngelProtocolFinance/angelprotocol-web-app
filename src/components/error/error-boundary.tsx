@@ -1,4 +1,4 @@
-import { logger } from "helpers";
+import { logger } from "helpers/logger";
 import {
   Component,
   type ErrorInfo,

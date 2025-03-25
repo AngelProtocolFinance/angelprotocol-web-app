@@ -1,5 +1,5 @@
 import { EMAIL_SUPPORT } from "constants/env";
-import { logger } from "helpers";
+import { logger } from "helpers/logger";
 import type { ReactNode } from "react";
 
 type Generic = {

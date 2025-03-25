@@ -6,7 +6,6 @@ import {
 } from "@headlessui/react";
 import { useSearchParams } from "@remix-run/react";
 import countries from "assets/countries/all.json";
-import { isEmpty } from "helpers";
 import { SearchIcon, X } from "lucide-react";
 import { useState } from "react";
 import { toParsed, toRaw } from "../helpers";
@@ -58,13 +57,13 @@ export default function Countries() {
         </div>
       </div>
       <ComboboxOptions className="rounded-xs text-sm border border-gray-l3 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
-        {!isEmpty(filteredOptions) &&
+        {filteredOptions.length > 0 &&
           filteredOptions.map((name) => (
             <ComboboxOption key={name} value={name} className={optionStyle}>
               {name}
             </ComboboxOption>
           ))}
-        {isEmpty(filteredOptions) && (
+        {filteredOptions.length === 0 && (
           <p className="text-gray dark:text-gray text-sm px-4 py-2">
             No options found
           </p>

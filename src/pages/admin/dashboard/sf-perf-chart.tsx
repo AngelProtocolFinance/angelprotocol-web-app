@@ -1,5 +1,5 @@
 import { Modal } from "components/modal";
-import { humanize } from "helpers";
+import { humanize } from "helpers/decimal";
 import {
   CartesianGrid,
   Line,

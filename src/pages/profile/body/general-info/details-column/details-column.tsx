@@ -1,7 +1,6 @@
 import { NavLink, useOutletContext } from "@remix-run/react";
 import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
-import { isEmpty } from "helpers";
 import type { PropsWithChildren } from "react";
 import type { EndowmentBalances } from "types/npo-balance";
 import { useProfileContext } from "../../../profile-context";
@@ -24,7 +23,7 @@ export default function DetailsColumn({ className = "" }) {
             <Detail title="address">{p.street_address}</Detail>
           )}
           <Detail title="active in">
-            {isEmpty(active_in_countries)
+            {active_in_countries.length === 0
               ? p.hq_country
               : active_in_countries.join(", ")}
           </Detail>

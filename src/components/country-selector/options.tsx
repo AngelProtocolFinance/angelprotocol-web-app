@@ -1,5 +1,4 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import { isEmpty } from "helpers";
 import type { Country } from "types/components";
 
 const containerStyle =
@@ -19,7 +18,7 @@ export default function Options({ query, options }: Props) {
       className={containerStyle}
       style={{ height: options.length <= 10 ? "auto" : "10rem" }}
     >
-      {(!isEmpty(options) &&
+      {(options.length > 0 &&
         filtered.map((country) => (
           <ComboboxOption
             className="data-selected:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm font-heading"

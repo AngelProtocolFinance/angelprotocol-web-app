@@ -1,4 +1,4 @@
-import { humanize } from "helpers";
+import { humanize } from "helpers/decimal";
 import type { Currency as TCurrency } from "types/components";
 
 type Props = { classes?: string; amount: string | number };

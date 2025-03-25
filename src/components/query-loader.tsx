@@ -1,5 +1,5 @@
 import Status, { ErrorStatus, LoadingStatus } from "components/status";
-import { isEmpty, logger } from "helpers";
+import { logger } from "helpers/logger";
 import { CircleAlert } from "lucide-react";
 import type { ReactElement } from "react";
 import type { QueryState } from "types/components";
@@ -55,7 +55,7 @@ export default function QueryLoader<T>({
   }
 
   if (Array.isArray(data)) {
-    if (isEmpty(data)) {
+    if (data.length === 0) {
       return renderMessage(
         (msg) => <Status icon={<CircleAlert />}>{msg || "No data"}</Status>,
         messages.empty,
@@ -65,7 +65,7 @@ export default function QueryLoader<T>({
 
     if (filterFn) {
       const filtered = data.filter(filterFn);
-      if (isEmpty(filtered)) {
+      if (filtered.length === 0) {
         return renderMessage(
           (msg) => <Status icon={<CircleAlert />}>{msg || "No data"}</Status>,
           messages.empty,

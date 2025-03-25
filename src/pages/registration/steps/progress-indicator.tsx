@@ -1,6 +1,6 @@
 import { useLocation } from "@remix-run/react";
 import { DrawerIcon } from "components/icon";
-import { idParamToNum } from "helpers";
+import { idParamToNum } from "helpers/id-param-to-num";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/use-handle-screen-resize";
