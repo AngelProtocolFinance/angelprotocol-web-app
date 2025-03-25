@@ -115,7 +115,7 @@ const processFields = (f: EndowHit): EndowItem => {
     ...kv("fund_opt_in", (v) => v === "1"),
     ...kv("contributions_count", (v) => Number.parseInt(v, 10)),
     ...kv("target", (v) => v),
-    contributions_total: Number.parseInt(f.contributions_total?.[0] ?? "0", 10),
+    contributions_total: Number.parseFloat(f.contributions_total),
   };
   return endow as EndowItem;
 };
