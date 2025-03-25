@@ -117,7 +117,7 @@ export function Form({
           rhf.resetField("logo");
         }}
         spec={imgSpec([1, 1])}
-        classes={{ container: "w-80 aspect-1/1" }}
+        classes={{ dropzone: "w-80 aspect-1/1" }}
         error={rhf.errors.logo?.message}
       />
 
@@ -134,7 +134,7 @@ export function Form({
           rhf.resetField("banner");
         }}
         spec={imgSpec([4, 1])}
-        classes={{ container: "w-full aspect-4/1" }}
+        classes={{ dropzone: "w-full aspect-4/1" }}
         error={rhf.errors.banner?.message}
       />
 
