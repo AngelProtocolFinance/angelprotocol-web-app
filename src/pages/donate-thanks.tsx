@@ -34,7 +34,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const meta: MetaFunction = ({ data }) => {
   const d = data as DonationRecipient | null;
   const donateUrl = d
-    ? `${BASE_URL}${isFund(d.id) ? appRoutes.donate_fund : appRoutes.donate}/${d.id}`
+    ? isFund(d.id)
+      ? `${BASE_URL}${appRoutes.funds}/${d.id}/donate`
+      : `${BASE_URL}${appRoutes.donate}/${d.id}`
     : undefined;
 
   return metas({

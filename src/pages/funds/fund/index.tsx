@@ -198,7 +198,7 @@ function DonateSection(props: IDonateSection) {
             props.donation_total_usd
           ).active
         }
-        to={appRoutes.donate_fund + `/${props.id}`}
+        to={`${appRoutes.funds}/${props.id}/donate`}
         className={`w-full btn btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >
         Donate now

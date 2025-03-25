@@ -10,7 +10,6 @@ export enum appRoutes {
   signup = "/signup",
   profile = "/profile",
   donate = "/donate",
-  donate_fund = "/donate-fund",
   donate_thanks = "/donate-thanks",
   donate_widget = "/donate-widget",
   reset_password = "/login/reset",

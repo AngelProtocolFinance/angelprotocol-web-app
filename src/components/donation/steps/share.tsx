@@ -146,7 +146,10 @@ function generateShareLink(
   type: SocialMedia["id"],
   recipient: Recipient
 ) {
-  const donateUrl = `${BASE_URL}${isFund(recipient.id) ? appRoutes.donate_fund : appRoutes.donate}/${recipient.id}`;
+  const donateUrl = isFund(recipient.id)
+    ? `${BASE_URL}/${appRoutes.funds}/${recipient.id}/donate`
+    : `${BASE_URL}/${appRoutes.donate}/${recipient.id}`;
+
   switch (type) {
     case "x":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent

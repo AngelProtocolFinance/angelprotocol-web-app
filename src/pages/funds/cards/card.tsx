@@ -71,7 +71,7 @@ export default function Card({
           url={`${BASE_URL}${appRoutes.funds}/${id}`}
         />
         <NavLink
-          to={`${appRoutes.donate_fund}/${id}`}
+          to={`${appRoutes.funds}/${id}/donate`}
           className="btn btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate

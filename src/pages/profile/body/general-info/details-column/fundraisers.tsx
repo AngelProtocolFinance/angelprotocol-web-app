@@ -51,7 +51,7 @@ function Fund(props: FundItem) {
         progress={props.donation_total_usd}
       />
       <NavLink
-        to={`${appRoutes.donate_fund}/${props.id}`}
+        to={`${appRoutes.funds}/${props.id}/donate`}
         className="btn btn-blue text-xs w-full col-span-full mt-4"
       >
         Donate

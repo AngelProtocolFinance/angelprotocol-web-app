@@ -18,7 +18,8 @@ const rmx = remix({
     return defineRoutes((r) => {
       r("", "./pages/home/home.tsx", { index: true });
       r("donate/:id", "./pages/donate/index.tsx");
-      r("donate-fund/:fundId", "./pages/donate-fund/index.tsx");
+      r("donate-fund/:fundId", "./pages/donate-fund/redirect.ts");
+      r("fundraisers/:fundId/donate", "./pages/donate-fund/index.tsx");
       r("donate-thanks", "./pages/donate-thanks.tsx");
       r("simplify-fundraising-maximize-impact", "./pages/landing-a/index.tsx", {
         id: "page-a",
