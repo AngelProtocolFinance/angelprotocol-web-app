@@ -3,7 +3,7 @@ import type { LoaderData } from "./api";
 import { ListFilter } from "./list-filter";
 import { Paginator } from "./paginator";
 import { RangeFilter } from "./range-filter";
-export { loader } from "./api";
+export { loader, action } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
 import ExtLink from "components/ext-link";
@@ -72,7 +72,18 @@ export default function Page() {
             {active_filters}
           </div>
         )}
-        <p className="font-bold my-2"> found: {data.num_items}</p>
+        <div className="font-bold my-2 flex items-center gap-x-2">
+          <p>found: {data.num_items}</p>
+          {data.num_items > 0 && (
+            <a
+              aria-disabled={data.num_items > 100_000}
+              href={`/api/marketing/npos/export?${params.toString()}`}
+              className="btn btn-blue text-xs px-3 py-1"
+            >
+              {data.num_items > 100_000 ? "Too many records" : "Export"}
+            </a>
+          )}
+        </div>
         <div className="overflow-x-auto relative">
           <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_th]:align-top [&_th]:text-balance [&_td]:text-nowrap [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
             <thead>
