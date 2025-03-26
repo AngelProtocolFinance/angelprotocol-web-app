@@ -13,7 +13,7 @@ export function H(props: Props) {
       <div className="flex items-start gap-x-2">
         {props.sort && props.k && <Sort _key={props.k} {...props.sort} />}
         {props.children}
-        {props.k && props.filter?.(props.k)}
+        <div className="ml-auto">{props.k && props.filter?.(props.k)}</div>
       </div>
     </th>
   );
