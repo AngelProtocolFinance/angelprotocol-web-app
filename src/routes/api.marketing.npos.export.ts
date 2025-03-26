@@ -7,10 +7,8 @@ const heads = [
   "ein",
   "name",
   "website",
-  "contact_name",
-  "contact_email",
-  "contact_role",
-  "social_media",
+  "contacts",
+  "socials",
   "donation_platform",
   "asset_code",
   "asset_amount",
@@ -54,14 +52,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
-      controller.enqueue(encoder.encode(`${Object.keys(heads).join(",")}\n`));
+      controller.enqueue(encoder.encode(`${heads.join(",")}\n`));
       source.on("data", (doc: NonprofitItem) => {
         const {
           ein,
           name,
           website,
-          contacts: [c1, ...cn] = [],
-          social_media: [s1, ...sn] = [],
+          contacts,
+          social_media,
           donation_platform,
           asset_code,
           asset_amount,
@@ -85,14 +83,20 @@ export const loader: LoaderFunction = async ({ request }) => {
           filing_requirement_code,
           sort_name,
         } = doc;
+
+        const cs = contacts?.map((c) => {
+          if (!c) return;
+          if (!c.email) return;
+          if (!c.email.includes("@")) return;
+          const { email, name = "Nameless" } = c;
+          return `${name}<${email}>`;
+        });
         const row1 = [
           ein,
           name,
           website,
-          c1?.name,
-          c1?.email,
-          c1?.role,
-          s1?.url,
+          cs?.filter((x) => x).join("|") ?? "",
+          social_media?.map((s) => s.url).join("|") ?? "",
           donation_platform,
           asset_code,
           asset_amount,
@@ -118,24 +122,6 @@ export const loader: LoaderFunction = async ({ request }) => {
         ];
 
         controller.enqueue(encoder.encode(`${row1.join(",")}\n`));
-
-        for (const contact of cn) {
-          if (!contact) continue;
-          if (!contact.email) continue;
-          //basic validation
-          if (!contact.email.includes("@")) continue;
-
-          const contactRow = [...row1];
-          contactRow[3] = contact.name || "";
-          contactRow[4] = contact.email || "";
-          contactRow[5] = contact.role || "";
-          controller.enqueue(encoder.encode(`${contactRow.join(",")}\n`));
-        }
-        for (const social of sn) {
-          const socialRow = [...row1];
-          socialRow[6] = social.url || "";
-          controller.enqueue(encoder.encode(`${socialRow.join(",")}\n`));
-        }
       });
       source.on("end", () => {
         controller.close();
