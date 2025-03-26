@@ -65,7 +65,7 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
       <MenuItems
         transition
         anchor="bottom"
-        className="mt-2 grid grid-cols-2 w-max p-3 rounded-lg bg-white shadow-xl shadow-black/5 transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+        className="z-10 mt-2 grid grid-cols-2 w-max p-3 rounded-lg bg-white shadow-xl shadow-black/5 transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
       >
         {menuItems.map((item) => (
           <MenuItem key={item.name}>
