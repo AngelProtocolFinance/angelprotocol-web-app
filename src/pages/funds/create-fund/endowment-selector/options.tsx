@@ -21,7 +21,7 @@ const fetcher = async ({
     query,
     page,
     fund_opt_in,
-    fields: "id,name,card_img",
+    fields: "id,name,card_img,registration_number",
   });
   const res = await fetch(`/api/npos?${search.toString()}`);
 
@@ -76,6 +76,7 @@ export function Options({ classes = "", searchText }: Props) {
         >
           <Image src={o.card_img} className="w-8" />
           <span>{o.name}</span>
+          <span>{o.registration_number}</span>
         </ComboboxOption>
       ))}
     </ComboboxOptions>
