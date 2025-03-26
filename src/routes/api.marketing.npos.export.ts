@@ -3,89 +3,154 @@ import { nposParams } from "helpers/npos-params";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
 import { nonprofits } from ".server/mongodb/db";
 
-const headers: { [K in keyof NonprofitItem]: K } = {
-  _id: "_id",
-  ein: "ein",
-  name: "name",
-  in_care_of_name: "in_care_of_name",
-  street: "street",
-  city: "city",
-  state: "state",
-  zip: "zip",
-  group_exemption_number: "group_exemption_number",
-  subsection_code: "subsection_code",
-  affilation_code: "affilation_code",
-  classification_code: "classification_code",
-  ruling_date: "ruling_date",
-  deductibility_code: "deductibility_code",
-  foundation_code: "foundation_code",
-  activity_code: "activity_code",
-  organization_code: "organization_code",
-  exempt_organization_status_code: "exempt_organization_status_code",
-  tax_period: "tax_period",
-  asset_code: "asset_code",
-  income_code: "income_code",
-  filing_requirement_code: "filing_requirement_code",
-  pf_filing_requirement_code: "pf_filing_requirement_code",
-  accounting_period: "accounting_period",
-  asset_amount: "asset_amount",
-  income_amount: "income_amount",
-  revenue_amount: "revenue_amount",
-  ntee_code: "ntee_code",
-  sort_name: "sort_name",
-  terminated: "terminated",
-  last_updated: "last_updated",
-  website: "website",
-  contacts: "contacts",
-  social_media: "social_media",
-  donation_platform: "donation_platform",
-};
+const heads = [
+  "ein",
+  "name",
+  "website",
+  "contact_name",
+  "contact_email",
+  "contact_role",
+  "social_media",
+  "donation_platform",
+  "asset_code",
+  "asset_amount",
+  "income_code",
+  "income_amount",
+  "revenue_amount",
+  "city",
+  "state",
+  "country",
+  "ntee_code",
+  "group_exemption_number",
+  "subsection_code",
+  "affilation_code",
+  "classification_code",
+  "deductibility_code",
+  "deductibility_code_pub78",
+  "foundation_code",
+  "activity_code",
+  "organization_code",
+  "exempt_organization_status_code",
+  "filing_requirement_code",
+  "sort_name",
+];
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { filter, sort } = nposParams(request);
   const [sort_key, sort_dir] = sort.split("+");
 
   const collection = await nonprofits;
+
+  const count = await collection.countDocuments(filter);
+  if (count > 100_000) {
+    return new Response("Too many records", { status: 400 });
+  }
+
   const source = collection
     .find(filter)
     .sort(sort ? { [sort_key]: sort_dir === "asc" ? 1 : -1 } : {})
     .stream();
 
   const encoder = new TextEncoder();
-  const output = new ReadableStream({
+  const stream = new ReadableStream({
     async start(controller) {
-      controller.enqueue(encoder.encode(`${Object.keys(headers).join(",")}\n`));
+      controller.enqueue(encoder.encode(`${Object.keys(heads).join(",")}\n`));
       source.on("data", (doc: NonprofitItem) => {
-        controller.enqueue(
-          encoder.encode(
-            `${Object.values(headers)
-              .map((k) => {
-                type V =
-                  | undefined
-                  | null
-                  | string
-                  | number
-                  | boolean
-                  | object
-                  | V[];
-                function toStr(v: V) {
-                  if (!v) return "";
-                  if (typeof v === "object")
-                    return {
-                      [k]: Object.entries(v)
-                        .map(([k, v]) => `${k}:${v}`)
-                        .join("|"),
-                    };
+        const {
+          ein,
+          name,
+          website,
+          contacts: [c1, ...cn] = [],
+          social_media: [s1, ...sn] = [],
+          donation_platform,
+          asset_code,
+          asset_amount,
+          income_code,
+          income_amount,
+          revenue_amount,
+          city,
+          state,
+          country,
+          ntee_code,
+          group_exemption_number,
+          subsection_code,
+          affilation_code,
+          classification_code,
+          deductibility_code,
+          deductibility_code_pub78,
+          foundation_code,
+          activity_code,
+          organization_code,
+          exempt_organization_status_code,
+          filing_requirement_code,
+          sort_name,
+        } = doc;
+        const row1 = [
+          ein,
+          name,
+          website,
+          c1?.name,
+          c1?.email,
+          c1?.role,
+          s1?.url,
+          donation_platform,
+          asset_code,
+          asset_amount,
+          income_code,
+          income_amount,
+          revenue_amount,
+          city,
+          state,
+          country,
+          ntee_code,
+          group_exemption_number,
+          subsection_code,
+          affilation_code,
+          classification_code,
+          deductibility_code,
+          deductibility_code_pub78,
+          foundation_code,
+          activity_code,
+          organization_code,
+          exempt_organization_status_code,
+          filing_requirement_code,
+          sort_name,
+        ];
 
-                  if (Array.isArray(v)) return v.join("|");
-                  return v;
-                }
-                return toStr(doc);
-              })
-              .join(",")}\n`
-          )
-        );
+        controller.enqueue(encoder.encode(`${row1.join(",")}\n`));
+
+        for (const contact of cn) {
+          if (!contact) continue;
+          if (!contact.email) continue;
+          //basic validation
+          if (!contact.email.includes("@")) continue;
+
+          const contactRow = [...row1];
+          contactRow[3] = contact.name || "";
+          contactRow[4] = contact.email || "";
+          contactRow[5] = contact.role || "";
+          controller.enqueue(encoder.encode(`${contactRow.join(",")}\n`));
+        }
+        for (const social of sn) {
+          const socialRow = [...row1];
+          socialRow[6] = social.url || "";
+          controller.enqueue(encoder.encode(`${socialRow.join(",")}\n`));
+        }
       });
+      source.on("end", () => {
+        controller.close();
+      });
+      source.on("error", (err) => {
+        console.error(err);
+        controller.error(err);
+      });
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/csv",
+      "Content-Disposition": `attachment; filename="nonprofits.csv"`,
     },
   });
 };
