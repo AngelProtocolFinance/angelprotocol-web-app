@@ -40,7 +40,6 @@ export default function Page() {
             classes="sm:border-r border-gray-l3"
           />
           <Result1 {...view} classes="" />
-          {/* <Form2 state={state} setState={setState} classes="" /> */}
         </div>
 
         <div className="max-sm:grid max-sm:justify-items-center max-sm:gap-y-2 sm:relative mt-14 col-span-2 justify-self-center">

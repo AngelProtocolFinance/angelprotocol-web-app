@@ -1,6 +1,9 @@
+import { laira } from "assets/laira/laira";
+import Image from "components/image";
 import { toUsd } from "helpers/to-usd";
-import { TrendingUp } from "lucide-react";
+import { TrendingDown, TrendingUp } from "lucide-react";
 import type { View } from "./bg-view";
+import { Usd } from "./usd";
 
 interface Props extends View {
   classes?: string;
@@ -35,14 +38,25 @@ export function Result2({ classes = "", ...v }: Props) {
         </div>
       </div>
 
-      <div className="bg-green-l5 p-4 @md:p-6 rounded-lg @md:flex items-center gap-4">
-        <div className="text-green">
-          <TrendingUp size={40} className="size-8 sm:size-10" />
-        </div>
+      <div
+        className={`${y1.total > 0 ? "bg-green-l5" : y1.total < 0 ? "bg-red-l5" : "bg-gray-l4"} p-4 @md:p-6 rounded-lg @md:flex items-center gap-4`}
+      >
+        {y1.total > 0 ? (
+          <TrendingUp size={40} className="size-8 sm:size-10 text-green" />
+        ) : y1.total < 0 ? (
+          <TrendingDown size={40} className="size-8 sm:size-10 text-red" />
+        ) : null}
         <div>
           <p className="sm:text-xl font-bold uppercase">Total Annual Impact</p>
-          <p className="text-lg font-bold text-green-d1">{toUsd(y1.total)}</p>
+          <Usd classes="text-lg font-bold">{y1.total}</Usd>
         </div>
+        {y1.total > 0 && (
+          <Image
+            src={laira.coin}
+            width={70}
+            className="@max-md:hidden ml-auto"
+          />
+        )}
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { laira } from "assets/laira/laira";
+import Image from "components/image";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { toUsd } from "helpers/to-usd";
 import { CircleHelpIcon, TrendingDown, TrendingUp } from "lucide-react";
@@ -109,6 +111,13 @@ export function Result1({ classes = "", ...v }: Props) {
           <p className="sm:text-xl font-bold uppercase">Total Annual Impact</p>
           <Usd classes="text-lg font-bold">{v.diff}</Usd>
         </div>
+        {v.diff > 0 && (
+          <Image
+            src={laira.coin}
+            width={70}
+            className="@max-md:hidden ml-auto"
+          />
+        )}
       </div>
     </div>
   );
