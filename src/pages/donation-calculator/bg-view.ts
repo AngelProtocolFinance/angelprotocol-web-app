@@ -74,6 +74,7 @@ export interface View {
 }
 
 const donorCoverageReduction = 0.8;
+const bgProcessingRate = 0.02;
 
 export function bgView(og: State): View {
   const amnt = unmask(og.annualAmount);
@@ -81,15 +82,20 @@ export function bgView(og: State): View {
 
   //processing fee comparison
   const ogProcessingFee = amnt * og.processingFeeRate;
+  const ogProcessingFeeDonorCovered =
+    //when og is to use bg, the processing fee rate is 2%
+    amnt *
+    (Math.min(bgProcessingRate, og.processingFeeRate) *
+      (1 - donorCoverageReduction));
+  const ogMissedFromDonorCoverage = og.donorCanCoverProcessingFees
+    ? 0
+    : ogProcessingFee - ogProcessingFeeDonorCovered;
+
   const ogPlatformFee = amnt * og.platformFeeRate;
   const ogFees = ogProcessingFee + ogPlatformFee;
 
-  const ogMissedFromDonorCoverage = og.donorCanCoverProcessingFees
-    ? 0
-    : ogProcessingFee * (1 - donorCoverageReduction);
-
   /** bg processing rate is 2% and no platform fee  */
-  const bgFees = amnt * 0.02 * (1 - donorCoverageReduction);
+  const bgFees = amnt * bgProcessingRate;
 
   const ogDonTypes = new Set(og.donationTypes);
   const ogMissedDonTypes = methodsArr.filter((type) => !ogDonTypes.has(type));
@@ -102,10 +108,11 @@ export function bgView(og: State): View {
   const ogDeductions = ogFees + subscriptionCost;
   const ogNet = amnt - ogDeductions;
 
-  const bgNet =
-    amnt - bgFees + ogMissedFromDonTypes + ogMissedFromDonorCoverage;
   const diff =
     ogFees - bgFees + ogMissedFromDonTypes + ogMissedFromDonorCoverage;
+
+  const bgNet =
+    amnt - bgFees + ogMissedFromDonTypes + ogMissedFromDonorCoverage;
 
   const notGranted = bgNet * og.donationsToSavings;
   const savings = notGranted * (1 - og.savingsInvested);
@@ -116,9 +123,7 @@ export function bgView(og: State): View {
     notGranted,
     notGrantedRate: og.donationsToSavings,
     ogMissedFromDonTypes,
-    ogMissedFromDonorCoverage: og.donorCanCoverProcessingFees
-      ? 0
-      : ogProcessingFee * (1 - donorCoverageReduction),
+    ogMissedFromDonorCoverage,
     ogFees,
     ogSubsCost: subscriptionCost,
     ogDeductions,

@@ -107,7 +107,7 @@ export function Result1({ classes = "", ...v }: Props) {
         ) : null}
         <div>
           <p className="sm:text-xl font-bold uppercase">Total Annual Impact</p>
-          <Usd classes="text-lg font-bold text-green-d1">{v.diff}</Usd>
+          <Usd classes="text-lg font-bold">{v.diff}</Usd>
         </div>
       </div>
     </div>
