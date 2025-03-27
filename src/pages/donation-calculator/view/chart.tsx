@@ -12,7 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { View } from "./bg-view"; // Adjust the import path
+import type { View } from "../bg-view"; // Adjust the import path
 
 interface Props extends View {
   classes?: string;

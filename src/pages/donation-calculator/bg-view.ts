@@ -1,5 +1,5 @@
-import { unmask } from "../dollar-mask";
-import { type State, methodsArr } from "../types";
+import { unmask } from "./dollar-mask";
+import { type State, methodsArr } from "./types";
 
 const typeWeights: { [key: string]: number } = {
   "credit-card": 0.63,
@@ -59,12 +59,17 @@ export interface View {
   amount: number;
   notGranted: number;
   notGrantedRate: number;
-  bgNet: number;
-  ogNet: number;
-  ogFees: number;
-  diff: number;
-  ogMissed: number;
+  ogMissedFromDonTypes: number;
+  ogMissedFromDonorCoverage: number;
   ogSubsCost: number;
+  ogFees: number;
+  ogDeductions: number;
+  ogNet: number;
+
+  bgFees: number;
+  bgNet: number;
+  diff: number;
+  // ogSubsCost: number;
   projection: Growth[];
 }
 
@@ -74,25 +79,33 @@ export function bgView(og: State): View {
   const amnt = unmask(og.annualAmount);
   const subscriptionCost = unmask(og.annualSubscriptionCost);
 
-  const ogProcessingFee =
-    og.averageProcessingFee *
-    (og.donorCanCoverProcessingFees ? 1 - donorCoverageReduction : 1);
+  //processing fee comparison
+  const ogProcessingFee = amnt * og.processingFeeRate;
+  const ogPlatformFee = amnt * og.platformFeeRate;
+  const ogFees = ogProcessingFee + ogPlatformFee;
 
-  const ogNet =
-    amnt - subscriptionCost - amnt * (ogProcessingFee + og.platformFees);
+  const ogMissedFromDonorCoverage = og.donorCanCoverProcessingFees
+    ? 0
+    : ogProcessingFee * (1 - donorCoverageReduction);
 
-  // Identify missing donation types
+  /** bg processing rate is 2% and no platform fee  */
+  const bgFees = amnt * 0.02 * (1 - donorCoverageReduction);
+
   const ogDonTypes = new Set(og.donationTypes);
   const ogMissedDonTypes = methodsArr.filter((type) => !ogDonTypes.has(type));
   const ogMissedRate = ogMissedDonTypes.reduce(
     (sum, type) => sum + (typeWeights[type] || 0),
     0
   );
-  const ogMissed = amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
+  const ogMissedFromDonTypes = amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
 
-  const bgRate = 0.02 * (1 - donorCoverageReduction);
-  const bgNet = amnt - amnt * bgRate + ogMissed;
-  const diff = bgNet - ogNet;
+  const ogDeductions = ogFees + subscriptionCost;
+  const ogNet = amnt - ogDeductions;
+
+  const bgNet =
+    amnt - bgFees + ogMissedFromDonTypes + ogMissedFromDonorCoverage;
+  const diff =
+    ogFees - bgFees + ogMissedFromDonTypes + ogMissedFromDonorCoverage;
 
   const notGranted = bgNet * og.donationsToSavings;
   const savings = notGranted * (1 - og.savingsInvested);
@@ -102,11 +115,16 @@ export function bgView(og: State): View {
     amount: amnt,
     notGranted,
     notGrantedRate: og.donationsToSavings,
-    ogNet,
-    bgNet,
-    ogFees: amnt - ogNet,
-    ogMissed,
+    ogMissedFromDonTypes,
+    ogMissedFromDonorCoverage: og.donorCanCoverProcessingFees
+      ? 0
+      : ogProcessingFee * (1 - donorCoverageReduction),
+    ogFees,
     ogSubsCost: subscriptionCost,
+    ogDeductions,
+    ogNet,
+    bgFees,
+    bgNet,
     diff,
     projection: project(savings, invested, 20),
   };

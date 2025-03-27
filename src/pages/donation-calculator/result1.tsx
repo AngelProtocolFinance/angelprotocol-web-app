@@ -1,16 +1,17 @@
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { toUsd } from "helpers/to-usd";
-import { CircleHelpIcon, TrendingUp } from "lucide-react";
+import { CircleHelpIcon, TrendingDown, TrendingUp } from "lucide-react";
 import type { View } from "./bg-view";
+import { Usd } from "./usd";
 
 interface Props extends View {
   classes?: string;
 }
 
-export function Summary({ classes = "", ...v }: Props) {
+export function Result1({ classes = "", ...v }: Props) {
   const y1 = v.projection[0];
   return (
-    <div className={`${classes} p-6 shadow-sm rounded-lg bg-white @container`}>
+    <div className={`${classes} @container p-6`}>
       <h2 className="text-lg sm:text-xl font-bold mb-4">
         Annual Impact Summary
       </h2>
@@ -31,16 +32,20 @@ export function Summary({ classes = "", ...v }: Props) {
           <p className="max-sm:text-sm text-gray mb-2">
             Current Amount Received
           </p>
-          <p className="text-lg sm:text-xl font-bold text-red">
-            {toUsd(v.ogNet)}{" "}
-            <span className="text-lg sm:text-xl">(-{toUsd(v.ogFees)})</span>
+          <p className="text-lg sm:text-xl font-bold">
+            <Usd relative={v.amount}>{v.ogNet}</Usd>{" "}
+            <Usd parens classes="text-lg sm:text-xl">
+              {-v.ogDeductions}
+            </Usd>
           </p>
         </div>
         <div className="@md:p-5 pt-2">
           <p className="max-sm:text-sm text-gray mb-2">With Better Giving</p>
-          <p className="text-lg sm:text-xl font-bold text-green">
-            {toUsd(v.bgNet)}{" "}
-            <span className="text-lg sm:text-xl">(+{toUsd(v.diff)}) </span>
+          <p className="text-lg sm:text-xl font-bold">
+            <Usd relative={v.ogNet}>{v.bgNet}</Usd>{" "}
+            <Usd sign parens classes="text-lg sm:text-xl">
+              {v.diff}
+            </Usd>
           </p>
         </div>
       </div>
@@ -52,7 +57,7 @@ export function Summary({ classes = "", ...v }: Props) {
       <div className="space-y-3 mb-6">
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
           <p className="max-sm:text-sm text-gray-d1">Fee Savings:</p>
-          <p className="font-semibold">{toUsd(v.diff - v.ogMissed)}</p>
+          <Usd classes="font-semibold">{v.ogFees - v.bgFees}</Usd>
         </div>
 
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
@@ -78,51 +83,31 @@ export function Summary({ classes = "", ...v }: Props) {
             </Tooltip>
           </p>
 
-          <p className="font-semibold">{toUsd(v.ogMissed)}</p>
+          <p className="font-semibold">{toUsd(v.ogMissedFromDonTypes)}</p>
         </div>
-
-        <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center text-green font-medium">
-          <p className="max-sm:text-sm">Subtotal - Processing Impact:</p>
-          <p className=" font-semibold">{toUsd(v.diff)}</p>
+        <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
+          <p className="max-sm:text-sm text-gray-d1">Subscription cost</p>
+          <p className="font-semibold">{toUsd(v.ogSubsCost)}</p>
+        </div>
+        <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
+          <p className="max-sm:text-sm text-gray-d1">
+            Donor can cover processing fees
+          </p>
+          <p className="font-semibold">{toUsd(v.ogMissedFromDonorCoverage)}</p>
         </div>
       </div>
 
-      <div className="border-t border-gray-l3 my-6"></div>
-
-      <h2 className="text-lg sm:text-xl font-bold mb-4">
-        First-Year Investment Impact
-      </h2>
-
-      <div className="space-y-3 mb-6">
-        <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
-          <p className="max-sm:text-sm text-gray">
-            Savings Account Growth (4%):
-          </p>
-          <p className=" font-semibold">{toUsd(y1.liq)}</p>
-        </div>
-
-        <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
-          <p className="max-sm:text-sm text-gray">
-            Sustainability Fund Growth (20%):
-          </p>
-          <p className=" font-semibold">{toUsd(y1.lock)}</p>
-        </div>
-
-        <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center text-[#A020F0] font-medium">
-          <p className="max-sm:text-sm">Subtotal - Investment Impact:</p>
-          <p className=" font-semibold">{toUsd(y1.total)}</p>
-        </div>
-      </div>
-
-      <div className="bg-green-l5 p-4 @md:p-6 rounded-lg @md:flex items-center gap-4">
-        <div className="text-green">
-          <TrendingUp size={40} className="size-8 sm:size-10" />
-        </div>
+      <div
+        className={`${v.diff > 0 ? "bg-green-l5" : v.diff < 0 ? "bg-red-l5" : "bg-gray-l4"} p-4 @md:p-6 rounded-lg @md:flex items-center gap-4`}
+      >
+        {v.diff > 0 ? (
+          <TrendingUp size={40} className="size-8 sm:size-10 text-green" />
+        ) : v.diff < 0 ? (
+          <TrendingDown size={40} className="size-8 sm:size-10 text-red" />
+        ) : null}
         <div>
           <p className="sm:text-xl font-bold uppercase">Total Annual Impact</p>
-          <p className="text-lg font-bold text-green-d1">
-            {toUsd(y1.total + v.diff)}
-          </p>
+          <Usd classes="text-lg font-bold text-green-d1">{v.diff}</Usd>
         </div>
       </div>
     </div>

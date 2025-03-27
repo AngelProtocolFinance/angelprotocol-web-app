@@ -15,7 +15,7 @@ export function Form1({ classes = "", state, setState }: Props) {
   const dollarMaskRef1 = useMaskito({ options: dollarMaskOpts });
   const dollarMaskRef2 = useMaskito({ options: dollarMaskOpts });
   return (
-    <form className={`${classes} bg-white shadow-sm p-6 rounded-lg`}>
+    <form className={`${classes} p-6 @container`}>
       <h2 className="text-lg sm:text-xl mb-2">
         How Do You Manage Online Donations Today?
       </h2>
@@ -40,16 +40,16 @@ export function Form1({ classes = "", state, setState }: Props) {
         range={[0, 0.1]}
         label="Average Processing Fees"
         classes="mt-8"
-        value={+state.averageProcessingFee}
-        onChange={(x) => setState({ ...state, averageProcessingFee: x })}
+        value={+state.processingFeeRate}
+        onChange={(x) => setState({ ...state, processingFeeRate: x })}
         tooltip="Processing fees are charges imposed by third-party payment processors (like banks and credit card companies) for handling online transactions."
       />
       <PctSlider
         range={[0, 0.1]}
         label="Donation Platform Fees"
         classes="mt-8"
-        value={+state.platformFees}
-        onChange={(x) => setState({ ...state, platformFees: x })}
+        value={+state.platformFeeRate}
+        onChange={(x) => setState({ ...state, platformFeeRate: x })}
         tooltip="Platform fees are additional charges imposed by donation platform providers, separate from payment processing fees. These may include per-transaction fees or percentage-based platform fees."
       />
 
@@ -113,8 +113,7 @@ export function Form1({ classes = "", state, setState }: Props) {
           />
         </Tooltip>
       </p>
-      <div className="grid gap-y-1 mt-2">
-         
+      <div className="grid gap-y-1 mt-2 @md:grid-cols-2 @lg:grid-cols-3">
         {methodsArr.map((m) => {
           return (
             <div key={m} className="">
@@ -129,6 +128,8 @@ export function Form1({ classes = "", state, setState }: Props) {
                       ...state,
                       donationTypes: [...state.donationTypes, m],
                     });
+                  } else if (state.donationTypes.length === 1) {
+                    // do nothing, at least 1 method must be selected
                   } else {
                     setState({
                       ...state,
