@@ -9,7 +9,7 @@ interface Props {
 
 export function Form2({ classes = "", state, setState }: Props) {
   return (
-    <div className={`${classes} bg-white shadow-sm p-6 rounded-lg mt-4`}>
+    <div className={`${classes} p-6`}>
       <h2 className="text-xl mb-2">Projected Savings & Investment</h2>
 
       <PctSlider

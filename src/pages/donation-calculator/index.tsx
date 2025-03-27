@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { bgView } from "./bg-view";
 import { Form1 } from "./form1";
+import { Form2 } from "./form2";
 import { Result1 } from "./result1";
+import { Result2 } from "./result2";
 import type { State } from "./types";
 
 export default function Page() {
@@ -34,7 +36,14 @@ export default function Page() {
           <Result1 {...view} classes="" />
           {/* <Form2 state={state} setState={setState} classes="" /> */}
         </div>
-        {/* <View {...state} classes="" /> */}
+        <div className="mt-4 grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-md">
+          <Form2
+            state={state}
+            setState={setState}
+            classes="sm:border-r border-gray-l3"
+          />
+          <Result2 {...view} classes="" />
+        </div>
       </div>
     </div>
   );

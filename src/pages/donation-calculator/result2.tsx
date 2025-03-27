@@ -6,7 +6,7 @@ interface Props extends View {
   classes?: string;
 }
 
-export function Result1({ classes = "", ...v }: Props) {
+export function Result2({ classes = "", ...v }: Props) {
   const y1 = v.projection[0];
   return (
     <div className={`${classes} @container p-6`}>
