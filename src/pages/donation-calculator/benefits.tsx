@@ -28,7 +28,7 @@ export function Benefits({ classes = "" }: Props) {
   ];
 
   return (
-    <div className={`${classes} bg-white shadow-sm rounded-lg p-6`}>
+    <div className={`${classes} h-fit bg-white shadow-sm rounded-lg p-6`}>
       <h3 className="text-lg sm:text-xl font-bold mb-4">
         Better Giving Benefits
       </h3>
@@ -38,7 +38,7 @@ export function Benefits({ classes = "" }: Props) {
           <div key={index} className="flex gap-4">
             <Check size={20} className="shrink-0 text-green mt-1.5" />
             <div>
-              <h4 className="sm:text-lg font-semibold mb-1">{benefit.title}</h4>
+              <h4 className="font-semibold mb-1">{benefit.title}</h4>
               <p className="text-gray">{benefit.description}</p>
             </div>
           </div>

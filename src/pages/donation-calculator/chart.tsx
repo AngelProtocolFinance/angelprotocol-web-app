@@ -12,7 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { View } from "../bg-view"; // Adjust the import path
+import type { View } from "./bg-view"; // Adjust the import path
 
 interface Props extends View {
   classes?: string;
@@ -36,7 +36,7 @@ export function Chart({ classes = "", ...v }: Props) {
   });
 
   return (
-    <div className={`${classes} p-6 rounded-lg shadow-sm bg-white`}>
+    <div className={`${classes} p-6 rounded-lg bg-white`}>
       <h1 className="text-lg sm:text-xl font-bold mb-4 text-blue-d1">
         5-Year Financial Advantage
       </h1>

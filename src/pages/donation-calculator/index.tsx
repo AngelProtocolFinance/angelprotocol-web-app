@@ -4,13 +4,13 @@ import { APP_NAME } from "constants/env";
 import { useState } from "react";
 import { Benefits } from "./benefits";
 import { bgView } from "./bg-view";
+import { Chart } from "./chart";
 import { Docs } from "./docs";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
 import { Result1 } from "./result1";
 import { Result2 } from "./result2";
 import type { State } from "./types";
-import { Chart } from "./view/chart";
 
 export default function Page() {
   const [state, setState] = useState<State>({
@@ -67,9 +67,10 @@ export default function Page() {
           />
           <Result2 {...view} classes="" />
         </div>
-        <Chart {...view} classes="mt-6 col-span-2" />
-        <Benefits classes="mt-6" />
-        <Docs classes="mt-6" />
+        <Chart {...view} classes="mt-6 row-span-3" />
+        {/* <Table {...view} classes="mt-6 " /> */}
+        <Benefits classes="mt-6 col-start-2" />
+        <Docs classes="mt-6 self-start" />
       </div>
     </div>
   );

@@ -1,36 +1,25 @@
-"use client";
-
-import { ChevronDown, ChevronUp, Info } from "lucide-react";
+import { DrawerIcon } from "components/icon";
+import { Info } from "lucide-react";
 import { useState } from "react";
 
 export function Docs({ classes = "" }) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className={`bg-white rounded-lg shadow-sm p-6 ${classes}`}>
       <div
-        className="flex items-center justify-between cursor-pointer"
+        className="flex items-center cursor-pointer gap-x-4"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="flex items-center gap-2">
-          <Info className="w-6 h-6 text-gray" />
-          <h2 className="text-2xl font-bold font-heading">
-            Calculation Details
-          </h2>
-        </div>
-        {isExpanded ? (
-          <ChevronUp size={24} className="" />
-        ) : (
-          <ChevronDown size={24} className="" />
-        )}
+        <Info size={20} className="text-gray" />
+        <h3 className="text-lg sm:text-xl font-bold">Calculation Details</h3>
+        <DrawerIcon size={20} isOpen={isExpanded} className="ml-auto" />
       </div>
 
       {isExpanded && (
         <div className="mt-8 space-y-8">
           <section>
-            <h3 className="text-xl font-semibold mb-4">
-              Better Giving Platform
-            </h3>
+            <h4 className="font-semibold mb-4">Better Giving Platform</h4>
             <ul className="space-y-4 list-disc pl-6">
               <li className="text-gray">
                 Better Giving doesn't charge processing fees, but third-party
@@ -48,9 +37,7 @@ export function Docs({ classes = "" }) {
           </section>
 
           <section>
-            <h3 className="text-xl font-semibold mb-4">
-              Donation Type Calculation
-            </h3>
+            <h4 className="font-semibold mb-4">Donation Type Calculation</h4>
             <p className="text-gray mb-4">
               These are approximate percentages for U.S.-based nonprofits,
               annualized and projected for 2025 based on trends. Our
@@ -76,7 +63,7 @@ export function Docs({ classes = "" }) {
           </section>
 
           <section>
-            <h3 className="text-xl font-semibold mb-4">Investment Returns</h3>
+            <h4 className="font-semibold mb-4">Investment Returns</h4>
             <ul className="space-y-4 list-disc pl-6">
               <li className="text-gray">Savings Account: 4% annual yield</li>
               <li className="text-gray">

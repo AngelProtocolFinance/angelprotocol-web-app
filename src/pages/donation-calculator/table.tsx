@@ -1,12 +1,12 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { toUsd } from "helpers/to-usd";
-import type { View } from "../bg-view";
+import type { View } from "./bg-view";
 
 interface Props extends View {
   classes?: string;
 }
 
-export function Tables({ classes = "", ...v }: Props) {
+export function Table({ classes = "", ...v }: Props) {
   // Array of time periods
   const periods = [
     { label: "1 Year", value: 1 },

@@ -1,7 +1,7 @@
 import { bgView } from "../bg-view";
+import { Chart } from "../chart";
+import { Tables } from "../table";
 import type { State } from "../types";
-import { Chart } from "./chart";
-import { Tables } from "./table";
 
 interface Props extends State {
   classes?: string;
