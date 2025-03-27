@@ -2,12 +2,15 @@ import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { APP_NAME } from "constants/env";
 import { useState } from "react";
+import { Benefits } from "./benefits";
 import { bgView } from "./bg-view";
+import { Docs } from "./docs";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
 import { Result1 } from "./result1";
 import { Result2 } from "./result2";
 import type { State } from "./types";
+import { Chart } from "./view/chart";
 
 export default function Page() {
   const [state, setState] = useState<State>({
@@ -30,7 +33,7 @@ export default function Page() {
           Donation Processing Calculator
         </h2>
 
-        <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-md">
+        <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-sm">
           <Form1
             state={state}
             setState={setState}
@@ -56,7 +59,7 @@ export default function Page() {
           Savings & Investment Calculator
         </h2>
 
-        <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-md">
+        <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-sm">
           <Form2
             state={state}
             setState={setState}
@@ -64,6 +67,9 @@ export default function Page() {
           />
           <Result2 {...view} classes="" />
         </div>
+        <Chart {...view} classes="mt-6 col-span-2" />
+        <Benefits classes="mt-6" />
+        <Docs classes="mt-6" />
       </div>
     </div>
   );
