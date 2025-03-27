@@ -13,6 +13,7 @@ export function Form2({ classes = "", state, setState }: Props) {
       <h2 className="text-xl mb-2">Projected Savings & Investment</h2>
 
       <PctSlider
+        range={[0, 1]}
         label="Percentage to allocate towards savings/investments"
         value={+state.donationsToSavings}
         onChange={(x) => setState({ ...state, donationsToSavings: x })}
@@ -27,6 +28,7 @@ export function Form2({ classes = "", state, setState }: Props) {
         Allocation between accounts
       </p>
       <PctSlider
+        range={[0, 1]}
         label="Savings Account (4% yield)"
         classes="mt-2"
         value={1 - +state.savingsInvested}
@@ -34,6 +36,7 @@ export function Form2({ classes = "", state, setState }: Props) {
         tooltip="Projected yield based on average annual returns over the past 5 years."
       />
       <PctSlider
+        range={[0, 1]}
         label="Sustainability Fund (20% avg. return)"
         classes="mt-2"
         value={+state.savingsInvested}

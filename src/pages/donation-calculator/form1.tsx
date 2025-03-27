@@ -37,6 +37,7 @@ export function Form1({ classes = "", state, setState }: Props) {
       </div>
 
       <PctSlider
+        range={[0, 0.1]}
         label="Average Processing Fees"
         classes="mt-8"
         value={+state.averageProcessingFee}
@@ -44,6 +45,7 @@ export function Form1({ classes = "", state, setState }: Props) {
         tooltip="Processing fees are charges imposed by third-party payment processors (like banks and credit card companies) for handling online transactions."
       />
       <PctSlider
+        range={[0, 0.1]}
         label="Donation Platform Fees"
         classes="mt-8"
         value={+state.platformFees}
