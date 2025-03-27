@@ -64,7 +64,9 @@ export function Summary({ classes = "", ...v }: Props) {
                   Based on industry data, each payment type represents a portion
                   of potential donations: Credit Card (63%), Bank/ACH (10%),
                   Digital Wallets (7%), DAF (12%), Stocks (6%), Crypto (2%).
-                  Better Giving enables all these payment methods.
+                  Better Giving enables all these payment methods. This assumes
+                  that 50% of donors will choose not to donate if their
+                  preferred payment type is unavailable
                   <Arrow />
                 </Content>
               }
