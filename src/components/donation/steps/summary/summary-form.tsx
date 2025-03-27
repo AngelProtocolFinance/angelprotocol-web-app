@@ -197,7 +197,9 @@ export default function SummaryForm({
       {withHonorary && (
         <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
           <Field
-            {...register("honoraryFullName")}
+            {...register("honoraryFullName", {
+              shouldUnregister: true,
+            })}
             label="Honoree's name"
             placeholder="e.g. Jane Doe"
             classes={{
@@ -217,7 +219,9 @@ export default function SummaryForm({
           {withTributeNotif && (
             <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
               <Field
-                {...register("tributeNotif.toFullName")}
+                {...register("tributeNotif.toFullName", {
+                  shouldUnregister: true,
+                })}
                 label="Recipient name"
                 placeholder="e.g. Jane Doe"
                 classes={{
@@ -228,7 +232,9 @@ export default function SummaryForm({
                 error={errors.tributeNotif?.toFullName?.message}
               />
               <Field
-                {...register("tributeNotif.toEmail")}
+                {...register("tributeNotif.toEmail", {
+                  shouldUnregister: true,
+                })}
                 label="Email address"
                 placeholder="e.g. janedoe@better.giving"
                 classes={{
@@ -239,7 +245,9 @@ export default function SummaryForm({
                 error={errors.tributeNotif?.toEmail?.message}
               />
               <Field
-                {...register("tributeNotif.fromMsg")}
+                {...register("tributeNotif.fromMsg", {
+                  shouldUnregister: true,
+                })}
                 rows={2}
                 type="textarea"
                 label="Custom message"
@@ -255,7 +263,8 @@ export default function SummaryForm({
                 data-exceed={errors.tributeNotif?.fromMsg?.type === "max"}
                 className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
               >
-                {customMsg.length}/{CUSTOM_MSG_MAX_LENGTH}
+                {/** customMsg becomes undefined when unmounted */}
+                {customMsg?.length}/{CUSTOM_MSG_MAX_LENGTH}
               </p>
             </div>
           )}
