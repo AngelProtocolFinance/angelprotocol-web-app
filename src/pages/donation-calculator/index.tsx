@@ -10,7 +10,7 @@ export default function Page() {
     averageProcessingFee: 0.029,
     platformFees: 0.02,
     annualSubscriptionCost: "$ 1,200",
-    donorCanCoverProcessingFees: true,
+    donorCanCoverProcessingFees: false,
     donationTypes: ["credit-card"],
     donationsToSavings: 0.1,
     savingsInvested: 0.5,
