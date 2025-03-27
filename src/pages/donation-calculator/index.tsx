@@ -67,10 +67,10 @@ export default function Page() {
           />
           <Result2 {...view} classes="" />
         </div>
-        <Chart {...view} classes="mt-6 row-span-3" />
+        <Chart {...view} classes="mt-6 sm:row-span-3 max-sm:col-span-2" />
         {/* <Table {...view} classes="mt-6 " /> */}
-        <Benefits classes="mt-6 col-start-2" />
-        <Docs classes="mt-6 self-start" />
+        <Benefits classes="mt-6 col-start-2 max-sm:col-span-2" />
+        <Docs classes="mt-6 max-sm:col-span-2" />
       </div>
     </div>
   );
