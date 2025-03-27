@@ -89,36 +89,42 @@ export const loader: LoaderFunction = async ({ request }) => {
           if (!c.email) return;
           if (!c.email.includes("@")) return;
           const { email, name = "Nameless" } = c;
-          return `${name}<${email}>`;
+          return `${name}#${email}`;
         });
+        const cleanValue = (value: string | undefined) =>
+          value?.replace(/,/g, "").replace(/\n/g, "").trim() ?? "";
+
         const row1 = [
-          ein,
-          name,
-          website,
-          cs?.filter((x) => x).join("|") ?? "",
-          social_media?.map((s) => s.url).join("|") ?? "",
-          donation_platform,
-          asset_code,
-          asset_amount,
-          income_code,
-          income_amount,
-          revenue_amount,
-          city,
-          state,
-          country,
-          ntee_code,
-          group_exemption_number,
-          subsection_code,
-          affilation_code,
-          classification_code,
-          deductibility_code,
-          deductibility_code_pub78,
-          foundation_code,
-          activity_code,
-          organization_code,
-          exempt_organization_status_code,
-          filing_requirement_code,
-          sort_name,
+          cleanValue(ein),
+          cleanValue(name),
+          cleanValue(website),
+          cs
+            ?.filter((x) => x)
+            .map(cleanValue)
+            .join("|") ?? "",
+          social_media?.map((s) => cleanValue(s.url)).join("|") ?? "",
+          cleanValue(donation_platform),
+          cleanValue(asset_code),
+          cleanValue(asset_amount?.toString()),
+          cleanValue(income_code),
+          cleanValue(income_amount?.toString()),
+          cleanValue(revenue_amount?.toString()),
+          cleanValue(city),
+          cleanValue(state),
+          cleanValue(country),
+          cleanValue(ntee_code),
+          cleanValue(group_exemption_number),
+          cleanValue(subsection_code),
+          cleanValue(affilation_code),
+          cleanValue(classification_code),
+          cleanValue(deductibility_code),
+          cleanValue(deductibility_code_pub78?.join("|")),
+          cleanValue(foundation_code),
+          cleanValue(activity_code),
+          cleanValue(organization_code),
+          cleanValue(exempt_organization_status_code),
+          cleanValue(filing_requirement_code),
+          cleanValue(sort_name),
         ];
 
         controller.enqueue(encoder.encode(`${row1.join(",")}\n`));
