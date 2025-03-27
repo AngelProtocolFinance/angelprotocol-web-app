@@ -1,3 +1,6 @@
+import { laira } from "assets/laira/laira";
+import Image from "components/image";
+import { APP_NAME } from "constants/env";
 import { useState } from "react";
 import { bgView } from "./bg-view";
 import { Form1 } from "./form1";
@@ -23,9 +26,9 @@ export default function Page() {
   return (
     <div className="bg-gray-l4 relative">
       <div className="xl:container px-5 mx-auto mt-4 py-8 grid sm:grid-cols-2 gap-x-4 content-start">
-        <h1 className="text-balance text-2xl sm:text-3xl text-blue-d1 mb-4 sm:mb-10 text-center col-span-full">
+        <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mb-6 text-center col-span-2">
           Donation Processing Calculator
-        </h1>
+        </h2>
 
         <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-md">
           <Form1
@@ -36,7 +39,24 @@ export default function Page() {
           <Result1 {...view} classes="" />
           {/* <Form2 state={state} setState={setState} classes="" /> */}
         </div>
-        <div className="mt-4 grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-md">
+
+        <div className="max-sm:grid max-sm:justify-items-center max-sm:gap-y-2 sm:relative mt-14 col-span-2 justify-self-center">
+          <Image
+            src={laira.announce}
+            width={80}
+            className="sm:absolute sm:left-0 sm:-bottom-2 shrink-0"
+          />
+          <p className="text-balance max-w-2xl text-center text-lg">
+            But wait! See how much more {APP_NAME}’s savings & investment
+            services can support your long term future
+          </p>
+        </div>
+
+        <h2 className="mt-8 text-balance text-2xl sm:text-3xl text-blue-d1 mb-6 text-center col-span-2">
+          Savings & Investment Calculator
+        </h2>
+
+        <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-md">
           <Form2
             state={state}
             setState={setState}

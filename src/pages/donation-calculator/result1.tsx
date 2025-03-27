@@ -12,9 +12,9 @@ export function Result1({ classes = "", ...v }: Props) {
   const y1 = v.projection[0];
   return (
     <div className={`${classes} @container p-6`}>
-      <h2 className="text-lg sm:text-xl font-bold mb-4">
+      <h3 className="text-lg sm:text-xl font-bold mb-4">
         Annual Impact Summary
-      </h2>
+      </h3>
 
       <div className="mb-6">
         <p className="text-gray">Current Online Donations</p>
@@ -23,9 +23,9 @@ export function Result1({ classes = "", ...v }: Props) {
 
       <div className="border-t border-gray-l3 my-6"></div>
 
-      <h2 className="text-lg sm:text-xl font-bold mb-4">
+      <h3 className="text-lg sm:text-xl font-bold mb-4">
         Donation Processing Impact
-      </h2>
+      </h3>
 
       <div className="grid @md:grid-cols-2 @md:bg-gray-l5 rounded-lg mb-6 divide-gray-l3 divide-y @md:divide-x @md:divide-y-0">
         <div className="@md:p-5 pb-2">
@@ -50,9 +50,9 @@ export function Result1({ classes = "", ...v }: Props) {
         </div>
       </div>
 
-      <h2 className="text-lg sm:text-xl font-bold mb-4 text-balance">
+      <h3 className="text-lg sm:text-xl font-bold mb-4 text-balance">
         Donation Processing Impact Details
-      </h2>
+      </h3>
 
       <div className="space-y-3 mb-6">
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">

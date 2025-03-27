@@ -10,9 +10,9 @@ export function Result2({ classes = "", ...v }: Props) {
   const y1 = v.projection[0];
   return (
     <div className={`${classes} @container p-6`}>
-      <h2 className="text-lg sm:text-xl font-bold mb-4">
+      <h3 className="text-lg sm:text-xl font-bold mb-4">
         First-Year Investment Impact
-      </h2>
+      </h3>
 
       <div className="space-y-3 mb-6">
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
