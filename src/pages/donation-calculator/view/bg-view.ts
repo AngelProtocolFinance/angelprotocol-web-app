@@ -64,6 +64,7 @@ export interface View {
   ogFees: number;
   diff: number;
   ogMissed: number;
+  ogSubsCost: number;
   projection: Growth[];
 }
 
@@ -105,6 +106,7 @@ export function bgView(og: State): View {
     bgNet,
     ogFees: amnt - ogNet,
     ogMissed,
+    ogSubsCost: subscriptionCost,
     diff,
     projection: project(savings, invested, 20),
   };
