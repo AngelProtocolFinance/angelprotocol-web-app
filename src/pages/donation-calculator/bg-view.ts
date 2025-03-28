@@ -68,7 +68,9 @@ export interface View {
 
   bgFees: number;
   bgNet: number;
-  diff: number;
+
+  feeSavings: number;
+  advantage: number;
   // ogSubsCost: number;
   projection: Growth[];
 }
@@ -108,11 +110,20 @@ export function bgView(og: State): View {
   const ogDeductions = ogFees + subscriptionCost;
   const ogNet = amnt - ogDeductions;
 
-  const diff =
-    ogFees - bgFees + ogMissedFromDonTypes + ogMissedFromDonorCoverage;
+  const feeSavings = ogFees - bgFees;
+
+  const advantage =
+    feeSavings +
+    ogMissedFromDonTypes +
+    ogMissedFromDonorCoverage +
+    subscriptionCost;
 
   const bgNet =
-    amnt - bgFees + ogMissedFromDonTypes + ogMissedFromDonorCoverage;
+    amnt -
+    bgFees +
+    ogMissedFromDonTypes +
+    ogMissedFromDonorCoverage +
+    subscriptionCost;
 
   const notGranted = bgNet * og.donationsToSavings;
   const savings = notGranted * (1 - og.savingsInvested);
@@ -130,7 +141,8 @@ export function bgView(og: State): View {
     ogNet,
     bgFees,
     bgNet,
-    diff,
+    feeSavings,
+    advantage,
     projection: project(savings, invested, 20),
   };
 }

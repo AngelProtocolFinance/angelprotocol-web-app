@@ -11,7 +11,6 @@ interface Props extends View {
 }
 
 export function Result1({ classes = "", ...v }: Props) {
-  const y1 = v.projection[0];
   return (
     <div className={`${classes} @container p-6`}>
       <h3 className="text-lg sm:text-xl font-bold mb-4">
@@ -46,7 +45,7 @@ export function Result1({ classes = "", ...v }: Props) {
           <p className="text-lg sm:text-xl font-bold">
             <Usd relative={v.ogNet}>{v.bgNet}</Usd>{" "}
             <Usd sign parens classes="text-lg sm:text-xl">
-              {v.diff}
+              {v.advantage}
             </Usd>
           </p>
         </div>
@@ -59,7 +58,9 @@ export function Result1({ classes = "", ...v }: Props) {
       <div className="space-y-3 mb-6">
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
           <p className="max-sm:text-sm text-gray-d1">Fee Savings:</p>
-          <Usd classes="font-semibold">{v.ogFees - v.bgFees}</Usd>
+          <Usd sign classes="font-semibold">
+            {v.feeSavings}
+          </Usd>
         </div>
 
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
@@ -85,33 +86,39 @@ export function Result1({ classes = "", ...v }: Props) {
             </Tooltip>
           </p>
 
-          <p className="font-semibold">{toUsd(v.ogMissedFromDonTypes)}</p>
+          <Usd sign classes="font-semibold">
+            {v.ogMissedFromDonTypes}
+          </Usd>
         </div>
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
           <p className="max-sm:text-sm text-gray-d1">Subscription cost</p>
-          <p className="font-semibold">{toUsd(v.ogSubsCost)}</p>
+          <Usd sign classes="font-semibold">
+            {v.ogSubsCost}
+          </Usd>
         </div>
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
           <p className="max-sm:text-sm text-gray-d1">
             Donor can cover processing fees
           </p>
-          <p className="font-semibold">{toUsd(v.ogMissedFromDonorCoverage)}</p>
+          <Usd sign classes="font-semibold">
+            {v.ogMissedFromDonorCoverage}
+          </Usd>
         </div>
       </div>
 
       <div
-        className={`${v.diff > 0 ? "bg-green-l5" : v.diff < 0 ? "bg-red-l5" : "bg-gray-l4"} p-4 @md:p-6 rounded-lg @md:flex items-center gap-4`}
+        className={`${v.advantage > 0 ? "bg-green-l5" : v.advantage < 0 ? "bg-red-l5" : "bg-gray-l4"} p-4 @md:p-6 rounded-lg @md:flex items-center gap-4`}
       >
-        {v.diff > 0 ? (
+        {v.advantage > 0 ? (
           <TrendingUp size={40} className="size-8 sm:size-10 text-green" />
-        ) : v.diff < 0 ? (
+        ) : v.advantage < 0 ? (
           <TrendingDown size={40} className="size-8 sm:size-10 text-red" />
         ) : null}
         <div>
           <p className="sm:text-xl font-bold uppercase">Total Annual Impact</p>
-          <Usd classes="text-lg font-bold">{v.diff}</Usd>
+          <Usd classes="text-lg font-bold">{v.advantage}</Usd>
         </div>
-        {v.diff > 0 && (
+        {v.advantage > 0 && (
           <Image
             src={laira.coin}
             width={70}
