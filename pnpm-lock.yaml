@@ -92,6 +92,12 @@ importers:
       '@hookform/resolvers':
         specifier: 3.9.0
         version: 3.9.0(react-hook-form@7.54.2(react@18.2.0))
+      '@maskito/kit':
+        specifier: 3.5.0
+        version: 3.5.0(@maskito/core@3.5.0)
+      '@maskito/react':
+        specifier: 3.5.0
+        version: 3.5.0(@maskito/core@3.5.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@paypal/react-paypal-js':
         specifier: 8.3.0
         version: 8.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1172,6 +1178,21 @@ packages:
 
   '@jspm/core@2.0.1':
     resolution: {integrity: sha512-Lg3PnLp0QXpxwLIAuuJboLeRaIhrgJjeuh797QADg3xz8wGLugQOS5DpsE8A6i6Adgzf+bacllkKZG3J0tGfDw==}
+
+  '@maskito/core@3.5.0':
+    resolution: {integrity: sha512-zgmBjXeXc7BSBaw8jQw25dnwkFmKDvdj5rHzhEIxYhgGtnpli236F0YWPIOYzIwADjbefwDq1o7qpJfMsdDO4Q==}
+
+  '@maskito/kit@3.5.0':
+    resolution: {integrity: sha512-QnpZsPTINgK4ScA4pMMJagoj+ufIXc/VGOP61AsQa/H/lmXII4pEZTLzpmMNUYmCEIEyjHR2DIbfEed04sktvQ==}
+    peerDependencies:
+      '@maskito/core': ^3.5.0
+
+  '@maskito/react@3.5.0':
+    resolution: {integrity: sha512-o3W+A5mQoSGi8vrmuJdhWUEuPsQ5ZDgUoyQtsOiNyp5YFVoImK343iR9LGy18biK9MEAQmN19jBVJSpgddiI0Q==}
+    peerDependencies:
+      '@maskito/core': ^3.5.0
+      react: '>=16.8'
+      react-dom: '>=16.8'
 
   '@mdx-js/mdx@2.3.0':
     resolution: {integrity: sha512-jLuwRlz8DQfQNiUCJR50Y09CGPq3fLtmtUQfVrj79E0JWu3dvsVcxVIcfhR5h0iXu+/z++zDrYeiJqifRynJkA==}
@@ -6145,6 +6166,18 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.0
 
   '@jspm/core@2.0.1': {}
+
+  '@maskito/core@3.5.0': {}
+
+  '@maskito/kit@3.5.0(@maskito/core@3.5.0)':
+    dependencies:
+      '@maskito/core': 3.5.0
+
+  '@maskito/react@3.5.0(@maskito/core@3.5.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@maskito/core': 3.5.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
 
   '@mdx-js/mdx@2.3.0':
     dependencies:
