@@ -47,9 +47,9 @@ export default function Page() {
           <Image
             src={laira.announce}
             width={80}
-            className="sm:absolute sm:left-0 sm:-bottom-2 shrink-0"
+            className="sm:absolute sm:-left-4 sm:-bottom-2 shrink-0"
           />
-          <p className="text-balance max-w-2xl text-center text-lg">
+          <p className="text-balance max-w-2xl text-center text-lg sm:text-xl">
             But wait! See how much more {APP_NAME}’s savings & investment
             services can support your long term future
           </p>
