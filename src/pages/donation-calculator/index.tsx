@@ -10,6 +10,7 @@ import { Form1 } from "./form1";
 import { Form2 } from "./form2";
 import { Result1 } from "./result1";
 import { Result2 } from "./result2";
+import { Table } from "./table";
 import type { State } from "./types";
 
 export default function Page() {
@@ -66,10 +67,10 @@ export default function Page() {
           />
           <Result2 {...view} classes="" />
         </div>
-        <Chart {...view} classes="mt-6 sm:row-span-3 max-sm:col-span-2" />
-        {/* <Table {...view} classes="mt-6 " /> */}
-        <Benefits classes="mt-6 col-start-2 max-sm:col-span-2" />
-        <Docs classes="mt-6 max-sm:col-span-2" />
+        <Chart {...view} classes="mt-6 max-sm:col-span-2" />
+        <Table {...view} classes="mt-6 max-sm:col-span-2" />
+        <Benefits classes="mt-6 max-sm:col-span-2" />
+        <Docs classes="mt-6 self-start max-sm:col-span-2" />
       </div>
     </div>
   );
