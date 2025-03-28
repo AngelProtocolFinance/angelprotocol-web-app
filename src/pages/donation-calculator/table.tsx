@@ -10,8 +10,8 @@ export function Table({ classes = "", ...v }: Props) {
   // Array of time periods
   const periods = [
     { label: "1 Year", value: 1 },
-    { label: "3 Years", value: 3 },
     { label: "5 Years", value: 5 },
+    { label: "10 Years", value: 10 },
   ];
 
   return (
