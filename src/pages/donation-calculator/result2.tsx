@@ -42,7 +42,9 @@ export function Result2({ classes = "", ...v }: Props) {
           <TrendingDown size={40} className="size-8 sm:size-10 text-red" />
         ) : null}
         <div>
-          <p className="sm:text-xl font-bold uppercase">Total Annual Impact</p>
+          <p className="sm:text-lg font-bold text-balance">
+            Annual Savings & Investment Impact
+          </p>
           <Usd classes="text-lg font-bold">{y1.total}</Usd>
         </div>
         {y1.total > 0 && (
