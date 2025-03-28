@@ -88,8 +88,8 @@ export const loader: LoaderFunction = async ({ request }) => {
           if (!c) return;
           if (!c.email) return;
           if (!c.email.includes("@")) return;
-          const { email, name = "", role = "" } = c;
-          return `${name}#${email}#${role}`.replace(/^#|#$/g, "");
+          const { email, name = "_", role = "_" } = c;
+          return `${name}#${email}#${role}`;
         });
         const cleanValue = (value: string | undefined) =>
           value?.replace(/,/g, "").replace(/\n/g, "").trim() ?? "";
