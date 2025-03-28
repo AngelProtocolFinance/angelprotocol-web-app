@@ -67,6 +67,9 @@ export default function Page() {
           />
           <Result2 {...view} classes="" />
         </div>
+        <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mt-12 mb-1 text-center col-span-2">
+          Total Annual Impact
+        </h2>
         <Chart {...view} classes="mt-6 max-sm:col-span-2" />
         <Table {...view} classes="mt-6 max-sm:col-span-2" />
         <Benefits classes="mt-6 max-sm:col-span-2" />

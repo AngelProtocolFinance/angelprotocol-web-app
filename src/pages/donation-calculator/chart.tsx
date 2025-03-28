@@ -29,9 +29,9 @@ export function Chart({ classes = "", ...v }: Props) {
       year: `Year ${y}`,
       amount: v.amount,
       liq: x.liq,
-      savings: v.diff * y,
+      savings: v.advantage * y,
       lock: x.lock,
-      total: v.diff * y + x.total,
+      total: v.advantage * y + x.total,
     };
   });
 
