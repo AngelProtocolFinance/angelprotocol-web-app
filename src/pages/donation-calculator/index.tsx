@@ -4,6 +4,7 @@ import { APP_NAME } from "constants/env";
 import { useState } from "react";
 import { Benefits } from "./benefits";
 import { bgView } from "./bg-view";
+import { BottomCta } from "./bottom-cta";
 import { Chart } from "./chart";
 import { Docs } from "./docs";
 import { Form1 } from "./form1";
@@ -28,7 +29,7 @@ export default function Page() {
   const view = bgView(state);
 
   return (
-    <div className="bg-gray-l4 relative">
+    <div className="bg-gray-l4 relative pb-8">
       <div className="xl:container px-5 mx-auto mt-4 py-8 grid sm:grid-cols-2 gap-x-4 content-start">
         <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mb-6 text-center col-span-2">
           Donation Processing Calculator
@@ -74,6 +75,7 @@ export default function Page() {
         <Table {...view} classes="mt-6 max-sm:col-span-2" />
         <Benefits classes="mt-6 max-sm:col-span-2" />
         <Docs classes="mt-6 self-start max-sm:col-span-2" />
+        <BottomCta className="col-span-2 sm:grid-cols-2 mt-6" />
       </div>
     </div>
   );
