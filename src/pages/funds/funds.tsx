@@ -74,7 +74,6 @@ export default function Funds() {
 
         <Cards page1={page1} classes="mt-4" />
       </div>
-      ◊
     </div>
   );
 }
