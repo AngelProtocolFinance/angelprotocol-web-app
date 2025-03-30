@@ -36,9 +36,9 @@ export function Chart({ classes = "", ...v }: Props) {
   });
 
   return (
-    <div className={`${classes} p-6 rounded-lg bg-white @container`}>
+    <div className={`${classes} p-6 rounded-lg grid bg-white @container`}>
       <h1 className="text-lg sm:text-xl font-bold mb-4 text-blue-d1">
-        5-Year Financial Advantage
+        {yrs}-Year Financial Advantage
       </h1>
 
       <p className="text-sm text-gray-d1 mb-4">
@@ -75,16 +75,24 @@ export function Chart({ classes = "", ...v }: Props) {
           <span>20 years</span>
         </div>
       </div>
-      <div className="text-xs @md:text-sm grid grid-cols-[1fr_auto_1fr] gap-x-4 w-full mb-4">
-        <p className="justify-self-end">
-          {(v.savingsRate * 100).toFixed(0)}% Saved
+      <div className="text-xs flex justify-end gap-x-4 justify-self-end pt-2 pr-4 bg-linear-to-tr from:transparent to-gray-l4">
+        <p className="grid pb-2 border-gray-l3 px-2">
+          <span className="text-right font-semibold text-xs">
+            Annual donations
+          </span>
+          <span className="text-right">{toUsd(v.notGranted)}</span>
         </p>
-        <p className="grid pb-2 border-x border-gray-l3 px-2">
-          <span className="text-center">Annual donations</span>
-          <span className="text-center font-semibold">{toUsd(v.amount)}</span>
+        <p className="grid pb-2 border-gray-l3 px-2">
+          <span className="text-right font-semibold text-xs">Saved</span>
+          <span className="text-right">
+            {(v.savingsRate * 100).toFixed(0)}%
+          </span>
         </p>
-        <p className="justify-self-start">
-          {(v.investedRate * 100).toFixed(0)}% Invested
+        <p className="grid pb-2 border-gray-l3 px-2">
+          <span className="text-right font-semibold text-xs">Invested</span>
+          <span className="text-right">
+            {(v.investedRate * 100).toFixed(0)}%
+          </span>
         </p>
       </div>
       <div className="h-96 w-full">
