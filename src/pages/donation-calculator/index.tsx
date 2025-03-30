@@ -71,10 +71,9 @@ export default function Page() {
         <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mt-12 mb-1 text-center col-span-2">
           Total Annual Impact
         </h2>
-        <Chart {...view} classes="mt-6 max-sm:col-span-2" />
-
+        <Chart {...view} classes="mt-6 max-sm:col-span-2 row-span-3" />
         <Benefits classes="mt-6 max-sm:col-span-2" />
-        <Docs classes="mt-6 self-start max-sm:col-span-2" />
+        <Docs classes="mt-6 self-start col-start-2 max-sm:col-span-2" />
         <BottomCta className="col-span-2 sm:grid-cols-2 mt-6" />
       </div>
     </div>

@@ -20,7 +20,7 @@ export function Table({ classes = "", ...v }: Props) {
     { label: "10 Year", value: 10 },
   ];
 
-  const p = v.projection[idx];
+  const p = v.projection[periods[idx].value - 1];
 
   return (
     <div className={`${classes} p-6 @container`}>
