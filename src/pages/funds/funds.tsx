@@ -11,6 +11,7 @@ import type { ChangeEventHandler } from "react";
 import { safeParse } from "valibot";
 import Cards from "./cards";
 import Hero from "./hero";
+import hero from "./hero.webp?url";
 import { getFunds } from ".server/funds";
 
 export { clientLoader } from "api/cache";
@@ -29,8 +30,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const meta: MetaFunction = () =>
   metas({
+    image: hero,
     title: "Fundraisers",
-    description: "Access our free fundraising technology and tools.",
+    description:
+      "Fundraisers that Support One or Several Nonprofits. Every Donation goes where you want it to.",
   });
 
 export { ErrorBoundary } from "components/error";
