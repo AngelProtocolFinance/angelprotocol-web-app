@@ -10,7 +10,6 @@ import { Docs } from "./docs";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
 import { Result1 } from "./result1";
-import { Result2 } from "./result2";
 import { Table } from "./table";
 import type { State } from "./types";
 
@@ -66,13 +65,14 @@ export default function Page() {
             setState={setState}
             classes="sm:border-r border-gray-l3"
           />
-          <Result2 {...view} classes="" />
+          <Table {...view} classes="" />
+          {/* <Result2 {...view} classes="" /> */}
         </div>
         <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mt-12 mb-1 text-center col-span-2">
           Total Annual Impact
         </h2>
         <Chart {...view} classes="mt-6 max-sm:col-span-2" />
-        <Table {...view} classes="mt-6 max-sm:col-span-2" />
+
         <Benefits classes="mt-6 max-sm:col-span-2" />
         <Docs classes="mt-6 self-start max-sm:col-span-2" />
         <BottomCta className="col-span-2 sm:grid-cols-2 mt-6" />

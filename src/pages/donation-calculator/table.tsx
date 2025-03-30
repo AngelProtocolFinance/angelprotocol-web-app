@@ -1,40 +1,55 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import { laira } from "assets/laira/laira";
+import Image from "components/image";
 import { toUsd } from "helpers/to-usd";
+import { TrendingDown, TrendingUp } from "lucide-react";
+import { useState } from "react";
 import type { View } from "./bg-view";
+import { Usd } from "./usd";
 
 interface Props extends View {
   classes?: string;
 }
 
 export function Table({ classes = "", ...v }: Props) {
+  const [idx, setIdx] = useState(0);
   // Array of time periods
   const periods = [
     { label: "1 Year", value: 1 },
-    { label: "5 Years", value: 5 },
-    { label: "10 Years", value: 10 },
+    { label: "5 Year", value: 5 },
+    { label: "10 Year", value: 10 },
   ];
 
+  const p = v.projection[idx];
+
   return (
-    <div className={`${classes} bg-white rounded-lg shadow-sm p-6 @container`}>
-      <h2 className="text-lg sm:text-xl font-bold mb-4">
-        Investment Growth Projections
-      </h2>
-
-      <div className="@md:bg-green-l5 rounded-lg @md:p-4 mb-4">
-        <p className="sm:text-lg font-heading font-bold text-green-d2">
-          Better Giving Annual
-        </p>
-        <p className="text-xl sm:text-2xl font-heading font-bold text-green-d2 mb-2">
-          {toUsd(v.notGranted)}
-        </p>
-        <p className="text-sm font-body text-gray-d1">
-          {(v.notGrantedRate * 100).toFixed(2)}% of donations automatically
-          allocated
-        </p>
+    <div className={`${classes} p-6 @container`}>
+      <div
+        className={`${
+          p.total > 0 ? "bg-green-l5" : p.total < 0 ? "bg-red-l5" : "bg-gray-l4"
+        } p-4 @md:p-6 rounded-lg @md:flex items-center gap-4 mb-2`}
+      >
+        {p.total > 0 ? (
+          <TrendingUp size={40} className="size-8 sm:size-10 text-green" />
+        ) : p.total < 0 ? (
+          <TrendingDown size={40} className="size-8 sm:size-10 text-red" />
+        ) : null}
+        <div>
+          <p className="sm:text-lg font-bold text-balance">
+            {periods[idx].label} Savings & Investment Impact
+          </p>
+          <Usd classes="text-lg font-bold">{p.total}</Usd>
+        </div>
+        {p.total > 0 && (
+          <Image
+            src={laira.coin}
+            width={70}
+            className="@max-md:hidden ml-auto"
+          />
+        )}
       </div>
-
       {/* Tabs */}
-      <TabGroup>
+      <TabGroup selectedIndex={idx} onChange={setIdx}>
         <TabList className="flex space-x-1 border-b border-gray-l2 mb-4">
           {periods.map((p) => (
             <Tab
