@@ -46,7 +46,7 @@ export default function Funds() {
 
   return (
     <div>
-      <div className="py-6 bg-blue">
+      <div className="py-6 bg-gradient-to-tr from-blue to-blue-d1">
         <Hero classes="grid isolate xl:container xl:mx-auto px-5" />
       </div>
       <div className="xl:container xl:mx-auto px-5 mt-8 pb-8">
