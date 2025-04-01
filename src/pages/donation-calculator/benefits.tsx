@@ -18,7 +18,7 @@ export function Benefits({ classes = "" }: Props) {
     {
       title: "Lower Processing Fees",
       description:
-        "Better Giving doesn't charge any processing fees, but the third-party services we utilize charge an average rate of 2% (reduced to less than 0.5% with donor coverage), compared to your current 4.9% combined fee.",
+        "Better Giving doesn't charge any processing fees, but the third-party services we utilize charge an average rate of 2% (reduced to less than 0.5% with donor coverage)",
     },
     {
       title: "Automated Investments",
