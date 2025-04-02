@@ -303,6 +303,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     .filter(Boolean)
                     .join(", "),
                   ukTaxResident: meta.ukTaxResident,
+                  isPublic: true,
+                  publicMsg: "",
                 }),
                 source: props.init.source,
               };
