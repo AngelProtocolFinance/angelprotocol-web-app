@@ -128,13 +128,13 @@ interface Props {
 
 export function DonorMsgs({ classes = "" }: Props) {
   return (
-    <div className={`${classes} w-full bg-white rounded-sm @container`}>
+    <div className={`${classes} w-full rounded-sm @container`}>
       <h2 className="text-xl font-bold mb-2">Donors</h2>
       <div className="grid gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4">
         {donors.map((donor) => (
           <div
             key={donor.id}
-            className="flex items-start gap-4 border border-gray-l3 p-4 rounded-lg"
+            className="flex bg-white items-start gap-4 border border-gray-l3 p-4 rounded-lg"
           >
             <Image
               src={laira.standing}
