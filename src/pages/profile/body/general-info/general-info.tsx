@@ -4,6 +4,7 @@ import { useProfileContext } from "../../profile-context";
 import Container from "../common/container";
 import type { LoaderData } from "./api";
 import DetailsColumn from "./details-column";
+import { DonorMsgs } from "./donor-msgs";
 import Media from "./media";
 import Programs from "./programs";
 
@@ -30,6 +31,7 @@ export default function GeneralInfo() {
         {media.length > 0 ? (
           <Container title="Media">{<Media media={media} />}</Container>
         ) : null}
+        <DonorMsgs id="1" />
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
     </div>
