@@ -132,7 +132,7 @@ export default function Fund() {
             </div>
           ))}
 
-          <DonorMsgs id="1" />
+          <DonorMsgs id="1" classes="mt-4" />
         </div>
         <div
           id="info-card"
