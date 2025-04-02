@@ -13,6 +13,7 @@ import { type IPromptV2, PromptV2 } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "helpers/error-prompt";
+import { Eraser, PenToolIcon } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
@@ -31,7 +32,12 @@ import type { DafCheckoutStep, Honorary } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { type AdjustedAmounts, toPlatformValues } from "./to-platform-values";
 
-type FV = Honorary & { coverFee: boolean; ukTaxResident: boolean };
+type FV = Honorary & {
+  coverFee: boolean;
+  ukTaxResident: boolean;
+  isPublic: boolean;
+  publicMsg: string;
+};
 type GrantMetaData = FV & {
   _totalCents: number;
   _tip: number;
@@ -42,6 +48,7 @@ type GrantMetaData = FV & {
 const withHonoraryKey: keyof FV = "withHonorary";
 const withTributeNotifKey: keyof FV = "withTributeNotif";
 const CUSTOM_MSG_MAX_LENGTH = 250;
+const PUBLIC_MSG_MAX_LENGTH = 500;
 
 export default function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
@@ -63,6 +70,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         honoraryFullName: "",
         withTributeNotif: false,
         tributeNotif: initTributeNotif,
+        publicMsg: "",
+        isPublic: true,
       }),
       coverFee: !!props.feeAllowance,
       ukTaxResident: false,
@@ -92,11 +101,13 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
   /** save actual grant amount and reflect in Summary form */
   const [adjusted, setAdjusted] = useState<AdjustedAmounts>();
-
+  const [withDonorMsg, setWithDonorMsg] = useState(false);
   const withHonorary = watch("withHonorary");
   const withTributeNotif = watch("withTributeNotif");
   const fvCoverFee = watch("coverFee");
   const customMsg = watch("tributeNotif.fromMsg");
+  const isPublic = watch("isPublic");
+  const publicMsg = watch("publicMsg");
 
   const newFeeAllowance = fvCoverFee
     ? minFeeAllowance(props.details, props.tip?.value ?? 0)
@@ -129,7 +140,49 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
     >
       <ErrorBoundaryClass>
         <Form className="grid grid-cols-2 gap-x-4 mt-4">
-          <CheckField {...register("coverFee")} classes="col-span-full">
+          <div className="col-span-full flex gap-x-2 flex-wrap gap-y-1 items-center">
+            <CheckField
+              {...register("isPublic", {
+                onChange: () => setWithDonorMsg(false),
+              })}
+            >
+              Share my support publicly
+            </CheckField>
+            {isPublic && (
+              <button
+                onClick={() => setWithDonorMsg((p) => !p)}
+                type="button"
+                className={`${withDonorMsg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"} font-semibold normal-case flex items-center gap-x-1 text-xs`}
+              >
+                {withDonorMsg ? (
+                  <Eraser size={12} className="shrink-0" />
+                ) : (
+                  <PenToolIcon size={12} className="rotate-z-270 shrink-0" />
+                )}
+                <span>{withDonorMsg ? "Remove" : "Add"} testimony</span>
+              </button>
+            )}
+          </div>
+          {isPublic && withDonorMsg && (
+            <div className="col-span-full">
+              <p
+                data-exceed={errors.publicMsg?.type === "max"}
+                className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
+              >
+                {/** customMsg becomes undefined when unmounted */}
+                {publicMsg?.length ?? 0}/{PUBLIC_MSG_MAX_LENGTH}
+              </p>
+              <textarea
+                {...register("publicMsg", { shouldUnregister: true })}
+                aria-invalid={!!errors.publicMsg?.message}
+                className="field-input w-full text-base font-semibold"
+              />
+              <p className="text-red text-xs empty:hidden text-right">
+                {errors.publicMsg?.message}
+              </p>
+            </div>
+          )}
+          <CheckField {...register("coverFee")} classes="col-span-full mt-4">
             Cover payment processing fees for your donation{" "}
             <span className="text-gray text-sm">
               (&nbsp;{props.init.recipient.name} receives the full amount&nbsp;)
