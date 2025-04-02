@@ -116,6 +116,10 @@ export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
   zipCode: string;
   /** initially empty `''` */
   streetAddress: string;
+
+  isPublic: boolean;
+  /** initially empty `''` */
+  publicMsg: string;
 };
 
 export type TributeNotif = {

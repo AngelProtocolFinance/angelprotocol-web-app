@@ -31,6 +31,8 @@ const donor: FormDonor = {
   title: { value: "Mr", label: "Mr" },
   zipCode: "12345",
   streetAddress: "123 Main St, Anytown, USA",
+  publicMsg: "",
+  isPublic: true,
 };
 
 const props: SummaryStep = {
