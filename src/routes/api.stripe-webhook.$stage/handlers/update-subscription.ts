@@ -154,7 +154,7 @@ export async function handleUpdateSubscription({
         gsi1PK: `Donor#${donor_id}#${env}`,
         gsi1SK: date,
         amount: +meta.usdValue,
-        donation_id: meta.transactionId,
+        donation_id: paymentIntent.id,
         donor_id,
         donor_message: meta.donor_message,
         donor_name: meta.fullName,
