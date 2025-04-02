@@ -131,6 +131,8 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
       ukTaxResident: false,
       streetAddress: "",
       zipCode: "",
+      isPublic: false,
+      publicMsg: "",
     },
     honorary: {
       honoraryFullName: "",
