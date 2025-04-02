@@ -118,7 +118,7 @@ export async function handleOneTimeDonation({
         gsi1PK: `Donor#${donor_id}#${env}`,
         gsi1SK: date,
         amount: +meta.usdValue,
-        donation_id: meta.transactionId,
+        donation_id: paymentIntentId,
         donor_id,
         donor_message: meta.donor_message,
         donor_name: meta.fullName,
