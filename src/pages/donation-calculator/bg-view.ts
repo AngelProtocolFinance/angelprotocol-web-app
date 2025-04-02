@@ -57,8 +57,7 @@ const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
 
 export interface View {
   amount: number;
-  notGranted: number;
-  notGrantedRate: number;
+
   ogMissedFromDonTypes: number;
   ogMissedFromDonorCoverage: number;
   ogSubsCost: number;
@@ -71,8 +70,13 @@ export interface View {
 
   feeSavings: number;
   advantage: number;
+
+  notGranted: number;
+  notGrantedRate: number;
   savingsRate: number;
+  savings: number;
   investedRate: number;
+  invested: number;
 
   projection: Growth[];
 }
@@ -135,8 +139,7 @@ export function bgView(og: State): View {
 
   return {
     amount: amnt,
-    notGranted,
-    notGrantedRate: og.donationsToSavings,
+
     ogMissedFromDonTypes,
     ogMissedFromDonorCoverage,
     ogFees,
@@ -147,7 +150,11 @@ export function bgView(og: State): View {
     bgNet,
     feeSavings,
     advantage,
+    notGranted,
+    notGrantedRate: og.donationsToSavings,
+    savings,
     savingsRate,
+    invested,
     investedRate,
     projection: project(savings, invested, 20),
   };

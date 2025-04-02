@@ -75,25 +75,35 @@ export function Chart({ classes = "", ...v }: Props) {
           <span>20 years</span>
         </div>
       </div>
-      <div className="text-xs flex justify-end gap-x-4 justify-self-end pt-2 pr-4 bg-linear-to-tr from:transparent to-gray-l4">
-        <p className="grid pb-2 border-gray-l3 px-2">
-          <span className="text-right font-semibold text-xs">
-            Annual donations
-          </span>
+      <div className="text-xs flex @max-lg:flex-col justify-end gap-4 justify-self-end pt-2 pr-4 bg-linear-to-tr from:transparent to-gray-l4">
+        <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
+          <p className="text-right font-semibold text-xs">
+            Annual Saved/Invested
+          </p>
           <span className="text-right">{toUsd(v.notGranted)}</span>
-        </p>
-        <p className="grid pb-2 border-gray-l3 px-2">
-          <span className="text-right font-semibold text-xs">Saved</span>
-          <span className="text-right">
-            {(v.savingsRate * 100).toFixed(0)}%
-          </span>
-        </p>
-        <p className="grid pb-2 border-gray-l3 px-2">
-          <span className="text-right font-semibold text-xs">Invested</span>
-          <span className="text-right">
-            {(v.investedRate * 100).toFixed(0)}%
-          </span>
-        </p>
+        </div>
+        <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
+          <p>
+            <span className="text-right font-semibold text-xs mr-1">
+              Annual Saved
+            </span>
+            <span className="text-right">
+              ({(v.savingsRate * 100).toFixed(0)}%)
+            </span>
+          </p>
+          <span className="text-right">{toUsd(v.savings)}</span>
+        </div>
+        <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
+          <p>
+            <span className="text-right font-semibold text-xs mr-1">
+              Annual Invested
+            </span>
+            <span className="text-right">
+              ({(v.investedRate * 100).toFixed(0)}%)
+            </span>
+          </p>
+          <span className="text-right">{toUsd(v.invested)}</span>
+        </div>
       </div>
       <div className="h-96 w-full">
         <ResponsiveContainer width="100%" height="100%">
