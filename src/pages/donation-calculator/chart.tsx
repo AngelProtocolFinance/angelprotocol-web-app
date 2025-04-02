@@ -140,30 +140,7 @@ export function Chart({ classes = "", ...v }: Props) {
               iconType="circle"
               wrapperStyle={{ fontSize: 13 }}
             />
-            <Area
-              type="monotone"
-              dataKey="total"
-              name="Total Financial Advantage"
-              strokeWidth={2}
-              stroke="var(--color-blue-l1)"
-              fill="none"
-            />
-            <Area
-              type="monotone"
-              dataKey="lock"
-              stackId="1"
-              name="Investment Returns"
-              fill="var(--color-blue-l3)"
-              stroke="var(--color-blue-d1)"
-            />
-            <Area
-              type="monotone"
-              dataKey="liq"
-              stackId="1"
-              name="Savings Returns"
-              fill="var(--color-gray-l1)"
-              stroke="var(--color-gray)"
-            />
+
             <Area
               type="monotone"
               dataKey="savings"
@@ -171,6 +148,30 @@ export function Chart({ classes = "", ...v }: Props) {
               name="Donation Processing Savings"
               fill="var(--color-green-l3)"
               stroke="var(--color-green-d1)"
+            />
+            <Area
+              type="monotone"
+              dataKey="liq"
+              stackId="1"
+              name="Savings Returns"
+              fill="var(--color-amber-l1)"
+              stroke="var(--color-amber)"
+            />
+            <Area
+              type="monotone"
+              dataKey="lock"
+              stackId="1"
+              name="Investment Returns"
+              fill="var(--color-blue-l1)"
+              stroke="var(--color-blue)"
+            />
+            <Area
+              type="monotone"
+              dataKey="total"
+              name="Total Financial Advantage"
+              strokeWidth={2}
+              stroke="var(--color-blue-d1)"
+              fill="none"
             />
           </AreaChart>
         </ResponsiveContainer>
