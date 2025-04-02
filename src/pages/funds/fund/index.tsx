@@ -16,6 +16,7 @@ import { metas } from "helpers/seo";
 import { unpack } from "helpers/unpack";
 import { ArrowLeft } from "lucide-react";
 import type { LoaderData } from "./api";
+import { DonorMsgs } from "./donor-msgs";
 import { Share } from "./share";
 import { Video } from "./video";
 
@@ -130,6 +131,8 @@ export default function Fund() {
               <Video url={v} />
             </div>
           ))}
+
+          <DonorMsgs id="1" />
         </div>
         <div
           id="info-card"
