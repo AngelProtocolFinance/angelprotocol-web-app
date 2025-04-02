@@ -7,15 +7,16 @@ const usd = (decimals = 0) =>
   });
 
 export function toUsd(num: number): string {
-  if (num < 1_000_000) {
-    return usd().format(num); // Exact whole-dollar amounts
+  const n = Math.abs(num);
+  if (n < 1_000_000) {
+    return usd().format(n); // Exact whole-dollar amounts
   }
 
-  if (num < 1_000_000_000) {
-    const millions = num / 1_000_000;
+  if (n < 1_000_000_000) {
+    const millions = n / 1_000_000;
     //millions with two decimal points
     return `${usd(2).format(millions)}M`;
   }
-  const billions = num / 1_000_000_000;
+  const billions = n / 1_000_000_000;
   return `${usd(2).format(billions)}B`;
 }
