@@ -70,7 +70,7 @@ export default function Summary(props: SummaryStep) {
             title: initDonorTitleOption,
             zipCode: "",
             streetAddress: "",
-            isPublic: false,
+            isPublic: true,
             publicMsg: "",
           }
         }
