@@ -1,8 +1,10 @@
 import type { Donation, StripeDonation } from "@better-giving/donation";
+import type { DonationMessage } from "@better-giving/donation/donation-message";
 import type { FinalRecorderPayload } from "@better-giving/donation/final-recorder";
 import type { Subscription } from "@better-giving/donation/subscription";
 import { toPrettyAmount } from "@better-giving/helpers";
 import { TxBuilder } from "@better-giving/helpers-db";
+import type { Environment } from "@better-giving/schemas";
 import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
 import { getDonationIntent, sendMessage } from "../helpers";
@@ -135,6 +137,30 @@ export async function handleUpdateSubscription({
     builder.del({
       TableName: tables.on_hold_donations,
       Key: { transactionId: meta.transactionId } satisfies Donation.PrimaryKey,
+    });
+  }
+
+  // Create donation message if applicable
+  if (meta.kycEmail && meta.donor_message && meta.donor_public) {
+    const date = meta.transactionDate;
+    const donor_id = meta.kycEmail;
+    const env = meta.network as Environment;
+    const recipient_id = meta.fund_id ? meta.fund_id : `${meta.endowmentId}`;
+    builder.put({
+      TableName: tables.donation_messages,
+      Item: {
+        PK: `Recipient#${recipient_id}#${env}`,
+        SK: date,
+        gsi1PK: `Donor#${donor_id}#${env}`,
+        gsi1SK: date,
+        amount: +meta.usdValue,
+        donation_id: meta.transactionId,
+        donor_id,
+        donor_message: meta.donor_message,
+        donor_name: meta.fullName,
+        env,
+        recipient_id,
+      } satisfies DonationMessage.DBRecord,
     });
   }
 

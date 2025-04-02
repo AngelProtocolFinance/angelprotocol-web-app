@@ -30,6 +30,9 @@ export const buildMetadata = (
     email: intent.donor.email,
     endowmentId: recipient.npo.id.toString(),
 
+    donor_message: intent.donor_message,
+    donor_public: String(intent.donor_public),
+
     fund_id: recipient.fund.id,
     fund_name: recipient.name,
     fund_members: recipient.fund.members.join(","),
