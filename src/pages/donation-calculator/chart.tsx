@@ -75,7 +75,7 @@ export function Chart({ classes = "", ...v }: Props) {
           <span>20 years</span>
         </div>
       </div>
-      <div className="text-xs flex @max-lg:flex-col justify-end gap-4 justify-self-end pt-2 pr-4 bg-linear-to-tr from:transparent to-gray-l4">
+      <div className="text-xs flex @max-lg:flex-col justify-end gap-4 justify-self-end">
         <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
           <p className="text-right font-semibold text-xs">
             Annual Saved/Invested
