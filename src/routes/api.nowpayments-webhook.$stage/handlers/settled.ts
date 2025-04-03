@@ -2,7 +2,6 @@ import crypto from "node:crypto";
 import tokens from "@better-giving/assets/tokens/map";
 import { fees } from "@better-giving/constants";
 import type { Donation, OnHoldDonation } from "@better-giving/donation";
-import type { DonationMessage } from "@better-giving/donation/donation-message";
 import { partition } from "@better-giving/helpers";
 import { TxBuilder } from "@better-giving/helpers-db";
 import {
@@ -15,6 +14,7 @@ import {
 } from "@better-giving/helpers-donation-settlement/txs";
 import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
+import { buildDonationMsg } from "routes/helpers/db";
 import { getEndow, getOrder } from "../helpers";
 import { TransactWriteCommand, ap, apes } from ".server/aws/db";
 import { np } from ".server/sdks";
@@ -208,25 +208,18 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
 
   /** donation message */
   if (order.kycEmail && order.donor_message && order.donor_public) {
-    const date = order.transactionDate;
-    const donor_id = order.kycEmail;
-    const env = order.network;
     const recipient_id = order.fund_id ? order.fund_id : `${order.endowmentId}`;
     builder.put({
       TableName: tables.donation_messages,
-      Item: {
-        PK: `Recipient#${recipient_id}#${env}`,
-        SK: date,
-        gsi1PK: `Donor#${donor_id}#${env}`,
-        gsi1SK: date,
-        amount: order.usdValue,
-        donation_id: order.transactionId,
-        donor_id,
+      Item: buildDonationMsg({
+        date: order.transactionDate,
+        donor_id: order.kycEmail,
         donor_message: order.donor_message,
         donor_name: order.fullName,
-        env,
         recipient_id,
-      } satisfies DonationMessage.DBRecord,
+        transaction_id: order.transactionId,
+        usd_value: order.usdValue,
+      }),
     });
   }
 
