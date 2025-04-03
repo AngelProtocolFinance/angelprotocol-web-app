@@ -81,7 +81,9 @@ export interface View {
   projection: Growth[];
 }
 
-const donorCoverageReduction = 0.8;
+const donorCoverageReduction = 0.8; // 80% of donors choose to cover when able to
+const donorCoverageFactor = (enabled = true) =>
+  enabled ? 1 - donorCoverageReduction : 1;
 const bgProcessingRate = 0.02;
 
 export function bgView(og: State): View {
@@ -89,21 +91,17 @@ export function bgView(og: State): View {
   const subscriptionCost = unmask(og.annualSubscriptionCost);
 
   //processing fee comparison
-  const ogProcessingFee = amnt * og.processingFeeRate;
-  const ogProcessingFeeDonorCovered =
-    //when og is to use bg, the processing fee rate is 2%
+  const ogProcessingFee =
     amnt *
-    (Math.min(bgProcessingRate, og.processingFeeRate) *
-      (1 - donorCoverageReduction));
-  const ogMissedFromDonorCoverage = og.donorCanCoverProcessingFees
-    ? 0
-    : ogProcessingFee - ogProcessingFeeDonorCovered;
+    og.processingFeeRate *
+    donorCoverageFactor(og.donorCanCoverProcessingFees);
 
   const ogPlatformFee = amnt * og.platformFeeRate;
   const ogFees = ogProcessingFee + ogPlatformFee;
 
   /** bg processing rate is 2% and no platform fee  */
   const bgFees = amnt * bgProcessingRate;
+  const bgDonorCoverage = bgFees * donorCoverageReduction;
 
   const ogDonTypes = new Set(og.donationTypes);
   const ogMissedDonTypes = methodsArr.filter((type) => !ogDonTypes.has(type));
@@ -112,24 +110,15 @@ export function bgView(og: State): View {
     0
   );
   const ogMissedFromDonTypes = amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
-
   const ogDeductions = ogFees + subscriptionCost;
   const ogNet = amnt - ogDeductions;
 
   const feeSavings = ogFees - bgFees;
 
   const advantage =
-    feeSavings +
-    ogMissedFromDonTypes +
-    ogMissedFromDonorCoverage +
-    subscriptionCost;
-
+    feeSavings + ogMissedFromDonTypes + subscriptionCost + bgDonorCoverage;
   const bgNet =
-    amnt -
-    bgFees +
-    ogMissedFromDonTypes +
-    ogMissedFromDonorCoverage +
-    subscriptionCost;
+    amnt - bgFees + ogMissedFromDonTypes + subscriptionCost + bgDonorCoverage;
 
   const notGranted = bgNet * og.donationsToSavings;
   const investedRate = og.savingsInvested;
@@ -139,9 +128,8 @@ export function bgView(og: State): View {
 
   return {
     amount: amnt,
-
     ogMissedFromDonTypes,
-    ogMissedFromDonorCoverage,
+    ogMissedFromDonorCoverage: bgDonorCoverage,
     ogFees,
     ogSubsCost: subscriptionCost,
     ogDeductions,
