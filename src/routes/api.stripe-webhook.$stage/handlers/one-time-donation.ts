@@ -120,5 +120,7 @@ export async function handleOneTimeDonation({
     });
   }
 
-  await apes.send(new TransactWriteCommand({ TransactItems: builder.txs }));
+  if (builder.txs.length > 0) {
+    await apes.send(new TransactWriteCommand({ TransactItems: builder.txs }));
+  }
 }
