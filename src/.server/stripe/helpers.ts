@@ -10,6 +10,7 @@ export const buildMetadata = (
   recipient: Recipient,
   usdRate: number
 ): StripeDonation.Metadata => {
+  const email = intent.donor.email.toLowerCase();
   const totalAmount =
     intent.amount.amount + intent.amount.tip + intent.amount.feeAllowance;
 
@@ -27,7 +28,7 @@ export const buildMetadata = (
     denomination: intent.amount.currency.toUpperCase(),
     destinationChainId: "fiat",
     donationFinalized: "false",
-    email: intent.donor.email,
+    email,
     endowmentId: recipient.npo.id.toString(),
 
     donor_message: intent.donor_message,
@@ -50,7 +51,7 @@ export const buildMetadata = (
     status: "intent",
     transactionDate: new Date().toISOString(),
     // KYC fields
-    kycEmail: intent.donor.email,
+    kycEmail: email,
     title: intent.donor?.title || undefined,
     fullName: `${intent.donor.firstName} ${intent.donor.lastName}`,
     ...intent.donor.address,
