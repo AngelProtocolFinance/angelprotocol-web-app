@@ -32,7 +32,7 @@ export interface EndowCardsPage
 export interface EndowOptionsPage
   extends EndowsPage<"id" | "name" | "registration_number"> {}
 export interface EndowFundMembersOptionsPage
-  extends EndowsPage<"id" | "name" | "card_img"> {}
+  extends EndowsPage<"id" | "name" | "card_img" | "registration_number"> {}
 
 export type EndowmentCard = EndowCardsPage["items"][number];
 export type EndowmentOption = EndowOptionsPage["items"][number];
