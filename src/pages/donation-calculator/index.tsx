@@ -9,6 +9,7 @@ import { Chart } from "./chart";
 import { Docs } from "./docs";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
+import { Hero } from "./hero";
 import { Result1 } from "./result1";
 import { Table } from "./table";
 import type { State } from "./types";
@@ -29,6 +30,9 @@ export default function Page() {
 
   return (
     <div className="bg-gray-l4 relative pb-8">
+      <div className="bg-blue-l1">
+        <Hero classes="xl:container px-5 mx-auto" />
+      </div>
       <div className="xl:container px-5 mx-auto mt-4 py-8 grid sm:grid-cols-2 gap-x-4 content-start">
         <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mb-6 text-center col-span-2">
           Donation Processing Calculator
