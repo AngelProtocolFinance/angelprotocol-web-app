@@ -50,8 +50,8 @@ export default function Page() {
             className="sm:absolute sm:-left-4 sm:-bottom-2 shrink-0"
           />
           <p className="text-balance max-w-2xl text-center text-lg sm:text-xl">
-            But wait! See how much more {APP_NAME}’s savings & investment
-            services can support your long term future
+            There's more! {APP_NAME}’s savings & investment services can support
+            your long term future
           </p>
         </div>
 
