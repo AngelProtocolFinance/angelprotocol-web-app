@@ -36,7 +36,9 @@ export function Chart({ classes = "", ...v }: Props) {
   });
 
   return (
-    <div className={`${classes} p-6 rounded-lg grid bg-white @container`}>
+    <div
+      className={`${classes} p-6 rounded-lg grid content-start bg-white @container`}
+    >
       <h1 className="text-lg sm:text-xl font-bold mb-4 text-blue-d1">
         {yrs}-Year Financial Advantage
       </h1>

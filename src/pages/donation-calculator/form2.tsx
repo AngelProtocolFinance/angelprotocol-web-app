@@ -24,7 +24,7 @@ export function Form2({ classes = "", state, setState }: Props) {
         and investment management.
       </p>
 
-      <p className="font-semibold mt-6 text-blue-d1">
+      <p className="font-semibold text-lg mt-6 text-blue-d1">
         Allocation between accounts
       </p>
       <PctSlider

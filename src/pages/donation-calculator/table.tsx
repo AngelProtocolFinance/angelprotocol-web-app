@@ -55,7 +55,7 @@ export function Table({ classes = "", ...v }: Props) {
             <Tab
               key={p.value}
               className={({ selected }) =>
-                `flex-1 py-2.5 text-sm font-medium leading-5 focus:outline-none ${
+                `flex-1 py-2.5 font-medium leading-5 focus:outline-none ${
                   selected
                     ? "border-b-2 border-blue text-blue-d1"
                     : "text-gray-d1 hover:text-blue-d1"
@@ -74,7 +74,7 @@ export function Table({ classes = "", ...v }: Props) {
             return (
               <TabPanel key={p.value}>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left text-sm  [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
+                  <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left  [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
                     <thead>
                       <tr>
                         <th className="font-semibold">Account</th>
