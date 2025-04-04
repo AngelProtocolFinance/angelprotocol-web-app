@@ -1,3 +1,4 @@
+import { Description, Field, Input, Label } from "@headlessui/react";
 import { useMaskito } from "@maskito/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelpIcon } from "lucide-react";
@@ -16,18 +17,20 @@ export function Form1({ classes = "", state, setState }: Props) {
   const dollarMaskRef2 = useMaskito({ options: dollarMaskOpts });
   return (
     <form className={`${classes} p-6 @container`}>
-      <h2 className="text-lg sm:text-xl mb-2">
+      <h2 className="text-lg sm:text-xl mb-4">
         How Do You Manage Online Donations Today?
       </h2>
 
       <div>
-        <label className="label font-semibold">Annual Online Donations</label>
-        <p className="text-sm text-gray mb-1">
+        <label className="label text-base font-semibold">
+          Annual Online Donations
+        </label>
+        <p className="text-gray mb-1">
           Total amount received through online platforms
         </p>
         <input
           placeholder="$"
-          className="field-input"
+          className="field-input text-base"
           ref={dollarMaskRef1}
           value={state.annualAmount}
           onInput={(e) =>
@@ -54,12 +57,12 @@ export function Form1({ classes = "", state, setState }: Props) {
       />
 
       <div className="mt-6">
-        <label className="label font-semibold mb-2">
+        <label className="label text-base font-semibold mb-2">
           Annual Platform Subscription Cost
         </label>
         <input
           placeholder="$"
-          className="field-input"
+          className="field-input text-base"
           ref={dollarMaskRef2}
           value={state.annualSubscriptionCost}
           onInput={(e) =>
@@ -71,9 +74,9 @@ export function Form1({ classes = "", state, setState }: Props) {
         />
       </div>
 
-      <div className="mt-4">
+      <Field className="mt-6">
         <div className="">
-          <input
+          <Input
             checked={state.donorCanCoverProcessingFees}
             onChange={(e) => {
               setState({
@@ -82,19 +85,19 @@ export function Form1({ classes = "", state, setState }: Props) {
               });
             }}
             type="checkbox"
-            className="accent-blue-d1 relative inline mr-2 top-px size-3"
+            className="accent-blue-d1 relative inline mr-2 top-px size-3.5"
           />
-          <span className="font-semibold text-sm">
+          <Label className="font-semibold ">
             Donors can cover processing fees
-          </span>
+          </Label>
         </div>
-        <p className="text-sm text-gray mt-1">
+        <Description className=" text-gray mt-1 text-sm">
           Better Giving enables donors to cover fees, and our data shows 80% opt
           to do so.
-        </p>
-      </div>
+        </Description>
+      </Field>
 
-      <p className="mt-6 font-semibold text-sm">
+      <p className="mt-6 font-semibold ">
         Donation types currently accepted
         <Tooltip
           tip={
@@ -116,11 +119,10 @@ export function Form1({ classes = "", state, setState }: Props) {
       <div className="grid gap-y-1 mt-2 @md:grid-cols-2 @lg:grid-cols-3">
         {methodsArr.map((m) => {
           return (
-            <div key={m} className="">
-              <input
-                id={m}
+            <Field key={m} className="">
+              <Input
                 type="checkbox"
-                className="accent-blue-d1 relative inline mr-2 top-px size-3"
+                className="accent-blue-d1 relative inline mr-2 top-px size-3.5"
                 checked={state.donationTypes.includes(m)}
                 onChange={(x) => {
                   if (x.target.checked) {
@@ -138,10 +140,8 @@ export function Form1({ classes = "", state, setState }: Props) {
                   }
                 }}
               />
-              <label htmlFor={m} className="text-sm">
-                {methods[m]}
-              </label>
-            </div>
+              <Label className="">{methods[m]}</Label>
+            </Field>
           );
         })}
       </div>
