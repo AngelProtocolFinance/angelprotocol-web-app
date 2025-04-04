@@ -96,14 +96,6 @@ export function Result1({ classes = "", ...v }: Props) {
             {v.ogSubsCost}
           </Usd>
         </div>
-        <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
-          <p className="max-sm:text-sm text-gray-d1">
-            Donor can cover processing fees
-          </p>
-          <Usd sign classes="font-semibold">
-            {v.ogMissedFromDonorCoverage}
-          </Usd>
-        </div>
       </div>
 
       <div
