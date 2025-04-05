@@ -46,19 +46,21 @@ export default function Page() {
           />
           <Result1 {...view} classes="" />
         </div>
-
-        <div className="max-sm:grid max-sm:justify-items-center max-sm:gap-y-2 sm:relative mt-14 col-span-2 justify-self-center">
+      </div>
+      <div className="py-4 grid content-center bg-blue-l1 py-8">
+        <div className="max-sm:grid max-sm:justify-items-center max-sm:gap-y-2 sm:relative justify-self-center">
           <Image
             src={laira.announce}
             width={80}
             className="sm:absolute sm:-left-4 sm:-bottom-2 shrink-0"
           />
-          <p className="text-balance max-w-2xl text-center text-lg sm:text-xl">
+          <p className="text-balance max-w-2xl text-center text-lg sm:text-xl text-white">
             There's more! {APP_NAME}’s savings & investment services can support
             your long term future
           </p>
         </div>
-
+      </div>
+      <div className="xl:container px-5 mx-auto mt-4 py-8 grid sm:grid-cols-2 gap-x-4 content-start">
         <h2 className="mt-8 text-balance text-2xl sm:text-3xl text-blue-d1 mb-6 text-center col-span-2">
           Savings & Investment Calculator
         </h2>
