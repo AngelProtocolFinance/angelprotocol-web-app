@@ -47,7 +47,7 @@ export default function Page() {
           <Result1 {...view} classes="" />
         </div>
       </div>
-      <div className="py-4 grid content-center bg-blue-l1 py-8">
+      <div className="grid content-center bg-blue-l1 py-8">
         <div className="max-sm:grid max-sm:justify-items-center max-sm:gap-y-2 sm:relative justify-self-center">
           <Image
             src={laira.announce}
