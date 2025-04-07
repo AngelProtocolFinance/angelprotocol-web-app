@@ -48,12 +48,31 @@ export default function Page() {
         </div>
       </div>
       <div className="grid content-center bg-blue-l1 py-8">
-        <div className="max-sm:grid max-sm:justify-items-center max-sm:gap-y-2 sm:relative justify-self-center">
-          <Image
-            src={laira.announce}
-            width={80}
-            className="sm:absolute sm:-left-4 sm:-bottom-2 shrink-0"
-          />
+        <div className="max-md:grid max-md:justify-items-center max-md:gap-y-2 md:relative justify-self-center">
+          <div className="md:absolute md:-left-4 md:-bottom-2 shrink-0">
+            <Image
+              src={laira.announce}
+              width={90}
+              className="z-10 max-md:w-24"
+            />
+            {/** shadow */}
+            <svg className="absolute -bottom-3 z-0" width="100%" height="20">
+              <defs>
+                <filter id="blur">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+                </filter>
+              </defs>
+              <ellipse
+                cx="50%"
+                cy="50%"
+                rx="40"
+                ry="6"
+                filter="url(#blur)"
+                className="fill-gray-d1/30"
+                // className="blur-sm"
+              />
+            </svg>
+          </div>
           <p className="text-balance max-w-2xl text-center text-lg sm:text-xl text-white">
             There's more! {APP_NAME}’s savings & investment services can support
             your long term future
