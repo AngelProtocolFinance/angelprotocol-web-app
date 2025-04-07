@@ -15,7 +15,7 @@ export const EMAIL_SUPPORT = "support@better.giving";
 export const APP_NAME = "Better Giving";
 export const BASE_URL = `https://${IS_TEST ? "staging." : ""}better.giving`;
 export const BOOK_A_DEMO =
-  "https://meetings-eu1.hubspot.com/tim-stirrup/better-giving-online-demonstration";
+  "https://meetings-eu1.hubspot.com/chauncey-st-john/better-giving-nonprofit-demo";
 export const INTERCOM_HELP = "https://intercom.help/better-giving/en";
 export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 
