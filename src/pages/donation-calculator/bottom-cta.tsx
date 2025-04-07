@@ -17,7 +17,7 @@ export function BottomCta({ className = "" }) {
         className="from-gray-d1"
         title="Want to learn more first?"
         to={{ href: BOOK_A_DEMO, title: "Book a demo" }}
-        img={{ src: laira.laptop, width: 70 }}
+        img={{ src: laira.calling, width: 80 }}
       />
     </div>
   );
