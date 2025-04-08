@@ -5,7 +5,7 @@ import { ImpactCard } from "./impact-card";
 
 export function Page1() {
   return (
-    <div className="w-full aspect-[297/210]">
+    <div className="w-full aspect-[1.41413]">
       <div className="bg-blue p-6">
         <div className="grid grid-cols-[1fr_auto] items-center">
           <div>
