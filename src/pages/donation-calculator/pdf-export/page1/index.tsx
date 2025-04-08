@@ -177,7 +177,7 @@ export function Page1() {
           Your Nonprofit's Resources
         </p>
 
-        <div className="mb-6 px-6">
+        <div className="mb-6 px-8">
           <p className="mb-2">
             <span className="text-gray-d1">
               Savings & Investment Allocation:
