@@ -19,6 +19,7 @@ export function Hero({ classes = "" }) {
       </div>
       <Image
         src={hero}
+        alt="laira showing savings and investments"
         width={500}
         className="rounded-4xl order-1 xl:order-2 justify-self-center"
       />

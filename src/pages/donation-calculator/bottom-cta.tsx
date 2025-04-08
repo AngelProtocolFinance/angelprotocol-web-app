@@ -11,13 +11,21 @@ export function BottomCta({ className = "" }) {
         className="from-blue-d1 "
         title="Ready to unlock your fundraising potential?"
         to={{ href: appRoutes.register, title: "Get started" }}
-        img={{ src: laira.shakeHands, width: 140 }}
+        img={{
+          src: laira.shakeHands,
+          width: 140,
+          alt: "laira shaking hands with another character",
+        }}
       />
       <CtaCard
         className="from-gray-d1"
         title="Want to learn more first?"
         to={{ href: BOOK_A_DEMO, title: "Book a demo" }}
-        img={{ src: laira.calling, width: 80 }}
+        img={{
+          src: laira.calling,
+          width: 80,
+          alt: "laira holding a phone to her ear",
+        }}
       />
     </div>
   );
@@ -27,7 +35,7 @@ interface ICtaCard {
   className?: string;
   title: string;
   to: { href: string; title: string };
-  img: { src: string; width: number };
+  img: { src: string; width: number; alt: string };
 }
 export function CtaCard({ className = "", title, to, img }: ICtaCard) {
   return (
@@ -46,6 +54,7 @@ export function CtaCard({ className = "", title, to, img }: ICtaCard) {
       <Image
         width={img.width}
         src={img.src}
+        alt={img.alt}
         className="justify-self-end mt-8"
       />
     </div>
