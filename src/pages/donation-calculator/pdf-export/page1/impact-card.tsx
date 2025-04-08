@@ -22,52 +22,50 @@ export function ImpactCard({
   investment,
 }: Props) {
   return (
-    <div className="bg-green-l5 p-4 rounded-lg grid grid-rows-subgrid row-span-10 content-start">
-      <h3 className="text-center font-semibold mb-2">{title}</h3>
-      <p className="text-center text-green text-2xl font-bold">{totalGrowth}</p>
-
-      <div className="mt-4 text-sm">
-        <div className="mb-3">
-          <p className="font-semibold">Savings Account (4%)</p>
-          <div className="flex justify-between">
-            <span>Invested:</span>
-            <span>{savings.invested}</span>
-          </div>
-          <div className="flex justify-between text-green">
-            <span>Growth:</span>
-            <span>{savings.growth}</span>
-          </div>
-          <div className="flex justify-between font-semibold">
-            <span>Balance:</span>
-            <span>{savings.balance}</span>
-          </div>
-        </div>
-
-        <div className="mb-3">
-          <p className="font-semibold">Investment Account (20%)</p>
-          <div className="flex justify-between">
-            <span>Invested:</span>
-            <span>{investment.invested}</span>
-          </div>
-          <div className="flex justify-between text-green">
-            <span>Growth:</span>
-            <span>{investment.growth}</span>
-          </div>
-          <div className="flex justify-between font-semibold">
-            <span>Balance:</span>
-            <span>{investment.balance}</span>
-          </div>
-        </div>
-
-        <div className="flex justify-between text-green font-semibold">
-          <span>Total Growth:</span>
-          <span>{totalGrowth}</span>
-        </div>
+    <div className="grid grid-rows-subgrid row-span-[13] content-start group">
+      <div className="bg-green-l5 grid grid-rows-subgrid row-span-2 py-2">
+        <h3 className="text-right font-semibold">{title}</h3>
+        <p className="text-right text-green text-2xl font-bold">
+          {totalGrowth}
+        </p>
       </div>
 
-      <div className="mt-4 pt-4 border-t border-gray-l3">
-        <p className="text-center font-semibold">1 Year Balance</p>
-        <p className="text-center text-green text-xl font-bold">{balance}</p>
+      <p className="font-semibold text-right mt-6">Savings Account (4%)</p>
+      <p className="text-right">
+        <span className="mr-2">Invested:</span>
+        <span>{savings.invested}</span>
+      </p>
+      <p className="text-right">
+        <span className="mr-2">Growth:</span>
+        <span>{savings.growth}</span>
+      </p>
+      <p className="text-right">
+        <span className="mr-2">Balance:</span>
+        <span>{savings.balance}</span>
+      </p>
+
+      <p className="font-semibold text-right mt-6">Investment Account (20%)</p>
+      <p className="text-right">
+        <span className="mr-2">Invested:</span>
+        <span>{investment.invested}</span>
+      </p>
+      <p className="text-right">
+        <span className="mr-2">Growth:</span>
+        <span className="text-green">{investment.growth}</span>
+      </p>
+      <p className="text-right">
+        <span className="mr-2">Balance:</span>
+        <span>{investment.balance}</span>
+      </p>
+
+      <p className="text-right ">
+        <span className="mr-2">Total Growth:</span>
+        <span className="text-green">{totalGrowth}</span>
+      </p>
+
+      <div className="grid grid-rows-subgrid row-span-2 mt-6 bg-green-l5 py-4">
+        <p className="text-right font-semibold">1 Year Balance</p>
+        <p className="text-right text-green text-xl font-bold">{balance}</p>
       </div>
     </div>
   );
