@@ -202,7 +202,7 @@ export function Page1() {
           </ul>
         </div>
 
-        <div className="grid grid-cols-3 mt-8">
+        <div className="grid grid-cols-3 mt-8 px-8">
           <ImpactCard
             title="1 Year Savings & Investment Impact"
             totalGrowth="$1,564"
