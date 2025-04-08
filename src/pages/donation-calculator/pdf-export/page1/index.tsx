@@ -1,6 +1,7 @@
 import bg from "assets/images/bettergiving-logo-white.webp";
 import Image from "components/image";
 import { format } from "date-fns";
+import { ImpactCard } from "./impact-card";
 
 export function Page1() {
   return (
@@ -156,18 +157,27 @@ export function Page1() {
             $119,300 (+$24,200)
           </p>
         </div>
+        <div className="text-right mx-8 p-6 bg-green-l5">
+          <p className="text-gray-d1 text-center">Total annual advantage</p>
+          <p className="text-2xl text-center font-semibold text-green">
+            +$24,200
+          </p>
+        </div>
       </section>
 
       <section className="mt-12">
-        <h2 className="text-blue text-xl font-semibold border-b-2 border-blue pb-2 mb-6">
-          LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
-        </h2>
-        <p className="text-gray-d1 mb-4">
+        <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
+          <h2 className="text-blue text-3xl font-semibold">
+            LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
+          </h2>
+          <div className="h-0.5 bg-blue" />
+        </div>
+        <p className="text-gray-d1 mt-2 mb-4 px-6 text-lg font-semibold">
           How Strategic Saving and Allocation Through Better Giving Could Grow
           Your Nonprofit's Resources
         </p>
 
-        <div className="mb-6">
+        <div className="mb-6 px-6">
           <p className="mb-2">
             <span className="text-gray-d1">
               Savings & Investment Allocation:
@@ -192,167 +202,52 @@ export function Page1() {
           </ul>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 mt-8">
-          <div className="bg-green-l5 p-4 rounded-lg">
-            <h3 className="text-center font-semibold mb-2">
-              1 Year Savings & Investment Impact
-            </h3>
-            <p className="text-center text-green text-2xl font-bold">$1,564</p>
-
-            <div className="mt-4 text-sm">
-              <div className="mb-3">
-                <p className="font-semibold">Savings Account (4%)</p>
-                <div className="flex justify-between">
-                  <span>Invested:</span>
-                  <span>$5,965</span>
-                </div>
-                <div className="flex justify-between text-green">
-                  <span>Growth:</span>
-                  <span>$243</span>
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span>Balance:</span>
-                  <span>$6,208</span>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <p className="font-semibold">Investment Account (20%)</p>
-                <div className="flex justify-between">
-                  <span>Invested:</span>
-                  <span>$5,965</span>
-                </div>
-                <div className="flex justify-between text-green">
-                  <span>Growth:</span>
-                  <span>$1,320</span>
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span>Balance:</span>
-                  <span>$7,285</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between text-green font-semibold">
-                <span>Total Growth:</span>
-                <span>$1,564</span>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-gray-l3">
-              <p className="text-center font-semibold">1 Year Balance</p>
-              <p className="text-center text-green text-xl font-bold">
-                $13,494
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-green-l5 p-4 rounded-lg">
-            <h3 className="text-center font-semibold mb-2">
-              5 Years Savings & Investment Impact
-            </h3>
-            <p className="text-center text-green text-2xl font-bold">$30,564</p>
-
-            <div className="mt-4 text-sm">
-              <div className="mb-3">
-                <p className="font-semibold">Savings Account (4%)</p>
-                <div className="flex justify-between">
-                  <span>Invested:</span>
-                  <span>$29,825</span>
-                </div>
-                <div className="flex justify-between text-green">
-                  <span>Growth:</span>
-                  <span>$3,856</span>
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span>Balance:</span>
-                  <span>$33,681</span>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <p className="font-semibold">Investment Account (20%)</p>
-                <div className="flex justify-between">
-                  <span>Invested:</span>
-                  <span>$29,825</span>
-                </div>
-                <div className="flex justify-between text-green">
-                  <span>Growth:</span>
-                  <span>$26,708</span>
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span>Balance:</span>
-                  <span>$56,533</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between text-green font-semibold">
-                <span>Total Growth:</span>
-                <span>$30,564</span>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-gray-l3">
-              <p className="text-center font-semibold">5 Year Balance</p>
-              <p className="text-center text-green text-xl font-bold">
-                $90,214
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-green-l5 p-4 rounded-lg">
-            <h3 className="text-center font-semibold mb-2">
-              10 Years Savings & Investment Impact
-            </h3>
-            <p className="text-center text-green text-2xl font-bold">
-              $165,682
-            </p>
-
-            <div className="mt-4 text-sm">
-              <div className="mb-3">
-                <p className="font-semibold">Savings Account (4%)</p>
-                <div className="flex justify-between">
-                  <span>Invested:</span>
-                  <span>$59,650</span>
-                </div>
-                <div className="flex justify-between text-green">
-                  <span>Growth:</span>
-                  <span>$15,169</span>
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span>Balance:</span>
-                  <span>$74,819</span>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <p className="font-semibold">Investment Account (20%)</p>
-                <div className="flex justify-between">
-                  <span>Invested:</span>
-                  <span>$59,650</span>
-                </div>
-                <div className="flex justify-between text-green">
-                  <span>Growth:</span>
-                  <span>$150,513</span>
-                </div>
-                <div className="flex justify-between font-semibold">
-                  <span>Balance:</span>
-                  <span>$210,163</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between text-green font-semibold">
-                <span>Total Growth:</span>
-                <span>$165,682</span>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-gray-l3">
-              <p className="text-center font-semibold">10 Year Balance</p>
-              <p className="text-center text-green text-xl font-bold">
-                $284,982
-              </p>
-            </div>
-          </div>
+        <div className="grid grid-cols-3 mt-8">
+          <ImpactCard
+            title="1 Year Savings & Investment Impact"
+            totalGrowth="$1,564"
+            balance="$13,494"
+            savings={{
+              invested: "$5,965",
+              growth: "$243",
+              balance: "$6,208",
+            }}
+            investment={{
+              invested: "$5,965",
+              growth: "$1,320",
+              balance: "$7,285",
+            }}
+          />
+          <ImpactCard
+            title="5 Years Savings & Investment Impact"
+            totalGrowth="$30,564"
+            balance="$90,214"
+            savings={{
+              invested: "$29,825",
+              growth: "$3,856",
+              balance: "$33,681",
+            }}
+            investment={{
+              invested: "$29,825",
+              growth: "$26,708",
+              balance: "$56,533",
+            }}
+          />
+          <ImpactCard
+            title="10 Years Savings & Investment Impact"
+            totalGrowth="$165,682"
+            balance="$284,982"
+            savings={{
+              invested: "$59,650",
+              growth: "$15,169",
+              balance: "$74,819",
+            }}
+            investment={{
+              invested: "$59,650",
+              growth: "$150,513",
+              balance: "$210,163",
+            }}
+          />
         </div>
       </section>
     </div>
