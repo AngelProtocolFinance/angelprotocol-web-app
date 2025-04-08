@@ -114,6 +114,7 @@ export function Result1({ classes = "", ...v }: Props) {
         </div>
         {v.advantage > 0 && (
           <Image
+            alt="laira holding coin"
             src={laira.coin}
             width={70}
             className="@max-md:hidden ml-auto"

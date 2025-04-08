@@ -1,6 +1,8 @@
+import type { MetaFunction } from "@vercel/remix";
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { APP_NAME } from "constants/env";
+import { metas } from "helpers/seo";
 import { useState } from "react";
 import { Benefits } from "./benefits";
 import { bgView } from "./bg-view";
@@ -10,9 +12,18 @@ import { Docs } from "./docs";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
 import { Hero } from "./hero";
+import heroImg from "./hero.png?url";
 import { Result1 } from "./result1";
 import { Table } from "./table";
 import type { State } from "./types";
+
+export const meta: MetaFunction = () =>
+  metas({
+    title: "Better Giving Donation Calculator | Save More, Raise More, Do More",
+    description:
+      " Use Better Giving’s Donation Calculator to see how your nonprofit can lower fees, accept more donation types, and grow funds automatically through smart processing and investing — all in one free platform.",
+    image: heroImg,
+  });
 
 export default function Page() {
   const [state, setState] = useState<State>({
@@ -51,6 +62,7 @@ export default function Page() {
         <div className="max-md:grid max-md:justify-items-center max-md:gap-y-2 md:relative justify-self-center">
           <div className="md:absolute md:-left-4 md:-bottom-2 shrink-0">
             <Image
+              alt="laira announce"
               src={laira.announce}
               width={90}
               className="z-10 max-md:w-24"
