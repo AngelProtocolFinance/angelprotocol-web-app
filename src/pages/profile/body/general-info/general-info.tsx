@@ -31,7 +31,7 @@ export default function GeneralInfo() {
         {media.length > 0 ? (
           <Container title="Media">{<Media media={media} />}</Container>
         ) : null}
-        <DonorMsgs id="1" />
+        <DonorMsgs id={profile.id.toString()} />
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
     </div>
