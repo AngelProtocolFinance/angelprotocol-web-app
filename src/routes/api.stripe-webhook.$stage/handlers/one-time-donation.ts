@@ -104,14 +104,14 @@ export async function handleOneTimeDonation({
   }
 
   // Create donation message if applicable
-  if (meta.kycEmail && meta.donor_message && meta.donor_public) {
+  if (meta.kycEmail && meta.donor_public) {
     const recipient_id = meta.fund_id ? meta.fund_id : `${meta.endowmentId}`;
     builder.put({
       TableName: tables.donation_messages,
       Item: buildDonationMsg({
         date: meta.transactionDate,
         donor_id: meta.kycEmail,
-        donor_message: meta.donor_message,
+        donor_message: meta.donor_message ?? "",
         donor_name: meta.fullName,
         recipient_id,
         transaction_id: paymentIntentId,

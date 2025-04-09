@@ -207,14 +207,14 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
   });
 
   /** donation message */
-  if (order.kycEmail && order.donor_message && order.donor_public) {
+  if (order.kycEmail && order.donor_public) {
     const recipient_id = order.fund_id ? order.fund_id : `${order.endowmentId}`;
     builder.put({
       TableName: tables.donation_messages,
       Item: buildDonationMsg({
         date: order.transactionDate,
         donor_id: order.kycEmail,
-        donor_message: order.donor_message,
+        donor_message: order.donor_message ?? "",
         donor_name: order.fullName,
         recipient_id,
         transaction_id: order.transactionId,
