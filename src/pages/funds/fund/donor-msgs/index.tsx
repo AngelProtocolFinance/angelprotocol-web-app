@@ -16,7 +16,6 @@ const fetcher = ([, id, key]: [string, string, string | null]) =>
   fetch(`/api/npo/${id}/donors${key ? `?nextKey=${key}` : ""}`).then<Page>(
     (res) => res.json()
   );
-
 export function DonorMsgs({ classes = "", id }: Props) {
   const { data, mutate, error } = useSWR(["txs", id, null], fetcher);
 
@@ -27,10 +26,12 @@ export function DonorMsgs({ classes = "", id }: Props) {
   async function load(nextKey: string) {
     const res = await fetcher(["txs", id, nextKey]);
     mutate(
-      (x) => ({
-        items: [...(x?.items || []), ...res.items],
-        nextPageKey: res.nextPageKey,
-      }),
+      (x) => {
+        return {
+          items: [...(x?.items || []), ...res.items],
+          nextPageKey: res.nextPageKey,
+        };
+      },
       { revalidate: false }
     );
   }
@@ -45,7 +46,7 @@ export function DonorMsgs({ classes = "", id }: Props) {
             className="flex bg-white items-start gap-4 border border-gray-l3 p-4 rounded-lg"
           >
             <Image
-              src={donor.avatar || laira.standing}
+              src={laira.standing}
               alt={donor.name}
               height={25}
               width={25}
@@ -53,12 +54,8 @@ export function DonorMsgs({ classes = "", id }: Props) {
             />
 
             <div>
-              <p className="text-nowrap text-sm font-semibold">
-                {donor.donor_name}
-              </p>
-              {donor.donor_message && (
-                <p className="text-gray mt-1">{donor.donor_message}</p>
-              )}
+              <p className="text-nowrap text-sm font-semibold">{donor.name}</p>
+              {donor.note && <p className="text-gray mt-1">{donor.note}</p>}
             </div>
           </div>
         ))}
