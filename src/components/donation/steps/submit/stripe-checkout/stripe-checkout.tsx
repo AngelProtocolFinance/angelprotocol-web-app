@@ -40,6 +40,8 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     source: init.source,
     viaId: "fiat",
     viaName: "Stripe",
+    donor_public: fvDonor.isPublic,
+    donor_message: fvDonor.publicMsg,
   };
 
   if (honorary.honoraryFullName) {
