@@ -75,7 +75,25 @@ export function Page2() {
           );
         })}
       </div>
-      <div className="mt-4 text-sm text-gray-d1 flex items-center px-8">
+      <div className="px-8 flex justify-center gap-x-8 mt-6">
+        <p className="flex gap-x-1 items-center">
+          <span className="block size-3 rounded-full bg-green-l4 border border-green"></span>
+          <span className="text-green">Donation Processing Savings</span>
+        </p>
+        <p className="flex gap-x-1 items-center">
+          <span className="block size-3 rounded-full bg-amber-l1 border border-amber"></span>
+          <span className="text-amber-l1">Savings Returns</span>
+        </p>
+        <p className="flex gap-x-1 items-center">
+          <span className="block size-3 rounded-full bg-blue-l1 border border-blue"></span>
+          <span className="text-blue-l1">Investment Returns</span>
+        </p>
+        <p className="flex gap-x-1 items-center">
+          <span className="block size-3 rounded-full bg-blue"></span>
+          <span className="text-blue">Total Financial Advantage</span>
+        </p>
+      </div>
+      <div className="mt-6 text-sm text-gray-d1 flex items-center px-8">
         <Info width={16} className="shrink-0 mr-2 text-amber" />
         <span>
           Investment yields based on average annual returns over past 5 years
