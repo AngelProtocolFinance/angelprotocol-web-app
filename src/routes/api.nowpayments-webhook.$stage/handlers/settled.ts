@@ -14,6 +14,7 @@ import {
 } from "@better-giving/helpers-donation-settlement/txs";
 import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
+import { buildDonationMsg } from "routes/helpers/db";
 import { getEndow, getOrder } from "../helpers";
 import { TransactWriteCommand, ap, apes } from ".server/aws/db";
 import { np } from ".server/sdks";
@@ -204,6 +205,23 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
       transactionId: order.transactionId,
     } as OnHoldDonation.PrimaryKey,
   });
+
+  /** donation message */
+  if (order.kycEmail && order.donor_public) {
+    const recipient_id = order.fund_id ? order.fund_id : `${order.endowmentId}`;
+    builder.put({
+      TableName: tables.donation_messages,
+      Item: buildDonationMsg({
+        date: order.transactionDate,
+        donor_id: order.kycEmail,
+        donor_message: order.donor_message ?? "",
+        donor_name: order.fullName,
+        recipient_id,
+        transaction_id: order.transactionId,
+        usd_value: order.usdValue,
+      }),
+    });
+  }
 
   return apes.send(new TransactWriteCommand({ TransactItems: builder.txs }));
 };
