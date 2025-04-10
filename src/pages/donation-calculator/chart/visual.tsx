@@ -19,10 +19,10 @@ interface Point {
   total: number;
 }
 interface Props {
-  legend?: true;
+  tools?: boolean;
   points: Point[];
 }
-export function Visual({ points, legend }: Props) {
+export function Visual({ points, tools = true }: Props) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart data={points}>
@@ -40,20 +40,22 @@ export function Visual({ points, legend }: Props) {
             return `$${value}`;
           }}
         />
-        <Tooltip
-          wrapperStyle={{ fontSize: 13 }}
-          formatter={(value: any, name: any) => {
-            const labels: Record<string, string> = {
-              liq: "Savings Returns",
-              savings: "Donation Processing Savings",
-              lock: "Investment Returns",
-              total: "Total Financial Advantage",
-            };
+        {tools && (
+          <Tooltip
+            wrapperStyle={{ fontSize: 13 }}
+            formatter={(value: any, name: any) => {
+              const labels: Record<string, string> = {
+                liq: "Savings Returns",
+                savings: "Donation Processing Savings",
+                lock: "Investment Returns",
+                total: "Total Financial Advantage",
+              };
 
-            return [toUsd(Number(value)), labels[name] || String(name)];
-          }}
-        />
-        {legend && (
+              return [toUsd(Number(value)), labels[name] || String(name)];
+            }}
+          />
+        )}
+        {tools && (
           <Legend
             iconSize={10}
             iconType="circle"

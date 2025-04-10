@@ -80,7 +80,7 @@ export function Chart({ classes = "", ...v }: Props) {
         investedRate={v.investedRate}
       />
       <div className="h-96 w-full">
-        <Visual points={data} legend />
+        <Visual points={data} />
       </div>
 
       <div className="mt-4 text-sm text-gray-d1 flex items-center">
