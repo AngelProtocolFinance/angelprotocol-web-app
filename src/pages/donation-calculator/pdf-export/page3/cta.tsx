@@ -8,7 +8,12 @@ export function Cta({ classes = "" }) {
   return (
     <div className={`relative ${classes}`}>
       <div className="max-xl:hidden absolute left-24 isolate top-1/2 -translate-y-1/2">
-        <Image src={laira.yellow} width={90} className="z-10 max-sm:w-24" />
+        <Image
+          src={laira.yellow}
+          width={90}
+          height={116}
+          className="z-10 max-sm:w-24"
+        />
         {/** shadow */}
         <svg className="absolute -bottom-3 z-0" width="100%" height="20">
           <defs>
@@ -42,6 +47,7 @@ export function Cta({ classes = "" }) {
         <Image
           src={laira.pointing}
           width={140}
+          height={177}
           className="z-10 max-sm:w-24 rotate-y-180"
         />
         {/** shadow */}
