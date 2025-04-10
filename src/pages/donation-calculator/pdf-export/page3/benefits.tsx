@@ -28,7 +28,7 @@ export function Benefits({ classes = "" }: Props) {
   ];
 
   return (
-    <div className={`${classes} h-fit bg-white px-24 pt-24`}>
+    <div className={`${classes} h-fit bg-white px-24`}>
       <h3 className="text-4xl font-bold mb-8">Better Giving Benefits</h3>
 
       <div className="space-y-8 text-2xl">
