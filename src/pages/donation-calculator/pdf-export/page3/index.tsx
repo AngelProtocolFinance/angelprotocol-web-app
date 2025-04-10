@@ -6,10 +6,10 @@ import footerImg from "./footer.webp";
 
 export function Page3() {
   return (
-    <div className="w-full grid">
+    <div className="w-full flex flex-col">
       <Benefits />
       <Cta classes="mt-28" />
-      <Image src={footerImg} />
+      <Image src={footerImg} className="mt-auto" />
       <Footer />
     </div>
   );

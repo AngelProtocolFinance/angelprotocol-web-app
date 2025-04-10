@@ -4,73 +4,48 @@ import { useRef } from "react";
 import type { View } from "./bg-view";
 import { Content } from "./pdf-export";
 
-export function Exporter({ view }: { view: View }) {
-  // Adjusted to accept view as a prop
-  const pageRef = useRef<HTMLDivElement>(null);
+const A4 = {
+  h: 297,
+  w: 210,
+};
 
-  const exportToPDF = async () => {
-    const input = pageRef.current;
-    if (!input) throw new Error("No input element found");
+export const Exporter = ({ view }: { view: View }) => {
+  const ref = useRef<HTMLDivElement>(null);
 
-    await html2canvas(input, { scale: 2 })
-      .then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
+  const generatePDF = async () => {
+    if (!ref.current) throw `content not found`;
 
-        const a4Width = 210; // A4 width in mm
-        const a4Height = 297; // A4 height in mm
+    await document.fonts.ready;
 
-        // Canvas dimensions (in pixels)
-        const contentWidth = canvas.width;
-        const contentHeight = canvas.height;
+    const canvas = await html2canvas(ref.current, { scale: 2 });
+    const pdf = new jsPDF("p", "mm", "a4");
 
-        // Calculate the height of the content when scaled to A4 width
-        const pdfContentWidth = a4Width;
-        const pdfContentHeight =
-          (contentHeight * pdfContentWidth) / contentWidth;
+    for (let i = 0; i < 4; i++) {
+      if (i > 0) {
+        pdf.addPage();
+      }
 
-        // Height of one A4 page in the scaled content
-        const pageContentHeight = a4Height; // Each page should be 297mm tall in the PDF
-        const totalPages = 4; // Fixed to 4 pages as per your requirement
+      pdf.addImage(
+        canvas.toDataURL("image/png"),
+        "PNG",
+        0,
+        -i * A4.h,
+        A4.w,
+        (A4.w / canvas.width) * canvas.height,
+        undefined,
+        "FAST"
+      );
+    }
 
-        // Ensure the content height matches 4 A4 pages (optional validation)
-        if (pdfContentHeight < a4Height * totalPages) {
-          console.warn(
-            "Content height is less than 4 A4 pages. Adjusting may be needed."
-          );
-        }
-
-        for (let i = 0; i < totalPages; i++) {
-          if (i > 0) pdf.addPage();
-
-          // Calculate the y-offset to show the correct portion of the image
-          const yOffset = i * pageContentHeight;
-
-          pdf.addImage(
-            imgData, // Image data
-            "PNG", // Format
-            0, // x position in the PDF
-            -yOffset, // y position (move the image up to show the correct section)
-            pdfContentWidth, // Width in the PDF (full A4 width)
-            pdfContentHeight, // Full height of the content
-            undefined, // No alias (optional)
-            "FAST" // Compression mode for faster rendering
-          );
-        }
-
-        pdf.save("four-page-document.pdf");
-      })
-      .catch((error) => {
-        console.error("Error generating PDF:", error);
-      });
+    pdf.save("four-page-document.pdf");
   };
 
   return (
     <>
-      <button onClick={exportToPDF} className="mt-4 btn-blue">
+      <button onClick={generatePDF} className="mt-4 btn-blue">
         Export to PDF
       </button>
-      <Content {...view} ref={pageRef} classes="absolute -left-[9999px]" />
+      <Content {...view} ref={ref} classes="absolute -left-[9999px]" />
     </>
   );
-}
+};
