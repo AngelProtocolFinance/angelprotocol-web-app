@@ -1,4 +1,4 @@
-import bg from "assets/images/bettergiving-logo-white.webp";
+import bg from "assets/images/bettergiving-logo-white.svg";
 import Image from "components/image";
 import { format } from "date-fns";
 import { ImpactCard } from "./impact-card";
@@ -33,132 +33,134 @@ export function Page1() {
 
       <section className="mt-8">
         <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-          <h2 className="text-blue text-3xl font-semibold">
+          <h2 className="text-blue text-2xl font-semibold">
             YOUR CURRENT ONLINE DONATIONS
           </h2>
           <div className="h-0.5 bg-blue" />
         </div>
 
-        <div className="grid grid-cols-2 content-start gap-x-4 px-12 mt-6">
-          <div className="flex justify-between mb-4">
+        <div className="grid grid-cols-2 content-start gap-x-4 px-8 mt-6">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Annual Online Donations</span>
             <span className="font-semibold">$100,000</span>
           </div>
-          <div className="flex justify-between mb-4">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Avg. Processing Fees</span>
             <span className="font-semibold">2.9%</span>
           </div>
-          <div className="flex justify-between mb-4">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Platform Fees</span>
             <span className="font-semibold">2.0%</span>
           </div>
-          <div className="flex justify-between mb-4">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Annual Platform Subscription</span>
             <span className="font-semibold">$1,200</span>
           </div>
-          <div className="col-span-full flex items-center gap-x-4">
+          <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
             <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
-            <div className="flex gap-x-6">
+            <div className="flex gap-x-6 text-sm font-semibold">
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" checked readOnly />
-                <span>Credit Card</span>
+                <span className="text-nowrap">Credit Card</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" readOnly />
-                <span>ACH (Bank Transfer)</span>
+                <span className="text-nowrap">ACH (Bank Transfer)</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" readOnly />
-                <span>Digital Wallets</span>
+                <span className="text-nowrap">Digital Wallets</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" readOnly />
-                <span>Crypto</span>
+                <span className="text-nowrap">Crypto</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" readOnly />
-                <span>Stocks</span>
+                <span className="text-nowrap">Stocks</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" readOnly />
-                <span>DAF</span>
+                <span className="text-nowrap">DAF</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 text-right mx-8 p-6 bg-gray-l4">
-          <p className="text-gray-d1">Current Amount Received</p>
+        <div className="mt-12 text-right mx-8 p-6 bg-gray-l4 font-heading">
+          <p className="text-gray-d1 text-lg">Current Amount Received</p>
           <p className="text-2xl font-semibold text-red">$93,900 (-$6,100)</p>
         </div>
       </section>
 
       <section className="mt-8">
         <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-          <h2 className="text-blue text-3xl font-semibold">
+          <h2 className="text-blue text-2xl font-semibold">
             ANNUAL DONATION PROCESSING IMPACT WITH BETTER GIVING
           </h2>
           <div className="h-0.5 bg-blue" />
         </div>
 
-        <div className="grid grid-cols-2 content-start gap-x-4 px-12 mt-6">
-          <div className="flex justify-between mb-4">
+        <div className="grid grid-cols-2 content-start gap-x-4 px-8 mt-6">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Fee Savings</span>
             <span className="font-semibold text-green">+$2,900</span>
           </div>
-          <div className="flex justify-between mb-4">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">
               Added Donations from New Payment Types
             </span>
             <span className="font-semibold text-green">+$18,500</span>
           </div>
-          <div className="flex justify-between mb-4">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Platform Subscription Savings</span>
             <span className="font-semibold text-green">+$1,200</span>
           </div>
-          <div className="flex justify-between mb-4">
+          <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Donor-Fee Coverage</span>
             <span className="font-semibold text-green">+$1,600</span>
           </div>
-          <div className="col-span-full flex items-center gap-x-4">
+          <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
             <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
-            <div className="flex gap-x-6">
+            <div className="flex gap-x-6 text-sm font-semibold">
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" checked readOnly />
-                <span>Credit Card</span>
+                <span className="text-nowrap">Credit Card</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" checked readOnly />
-                <span>ACH (Bank Transfer)</span>
+                <span className="text-nowrap">ACH (Bank Transfer)</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" checked readOnly />
-                <span>Digital Wallets</span>
+                <span className="text-nowrap">Digital Wallets</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" checked readOnly />
-                <span>Crypto</span>
+                <span className="text-nowrap">Crypto</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" checked readOnly />
-                <span>Stocks</span>
+                <span className="text-nowrap">Stocks</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <input className="size-3" type="checkbox" checked readOnly />
-                <span>DAF</span>
+                <span className="text-nowrap">DAF</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 text-right mx-8 p-6 bg-gray-l4">
-          <p className="text-gray-d1">With Better Giving</p>
+        <div className="mt-12 text-right mx-8 p-6 bg-gray-l4 font-heading">
+          <p className="text-gray-d1 text-lg">With Better Giving</p>
           <p className="text-2xl font-semibold text-green">
             $119,300 (+$24,200)
           </p>
         </div>
-        <div className="text-right mx-8 p-6 bg-green-l5">
-          <p className="text-gray-d1 text-center">Total annual advantage</p>
+        <div className="text-right mx-8 p-6 bg-green-l5 font-heading">
+          <p className="text-gray-d1 text-lg text-center">
+            Total annual advantage
+          </p>
           <p className="text-2xl text-center font-semibold text-green">
             +$24,200
           </p>
