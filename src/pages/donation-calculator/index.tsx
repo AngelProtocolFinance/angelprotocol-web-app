@@ -9,6 +9,7 @@ import { bgView } from "./bg-view";
 import { BottomCta } from "./bottom-cta";
 import { Chart } from "./chart";
 import { Docs } from "./docs";
+import { Exporter } from "./exporter";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
 import { Hero } from "./hero";
@@ -48,6 +49,7 @@ export default function Page() {
         <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mb-6 text-center col-span-2">
           Donation Processing Calculator
         </h2>
+        <Exporter view={view} />
 
         <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-sm">
           <Form1
