@@ -1,34 +1,30 @@
 import type {
+  DMKey,
   DonationMessage,
-  GSI1 as Index,
 } from "@better-giving/donation/donation-message";
 import { tables } from "@better-giving/types/list";
 import { DeleteCommand, GetCommand, apes } from "./aws/db";
 
-interface DM
-  extends DonationMessage.NonKeyAttributes,
-    Pick<Index.Key, "gsi1SK"> {}
-
 export const getDonationMessage = async (
-  id: DonationMessage.PrimaryKey["PK"]
-): Promise<DM | [number, string]> => {
+  id: string
+): Promise<DonationMessage.NonKeyAttributes | [number, string]> => {
+  const dm: DMKey = `DM#${id}`;
   const cmd = new GetCommand({
     TableName: tables.donation_messages,
-    Key: { PK: id, SK: id } satisfies DonationMessage.PrimaryKey,
+    Key: { PK: dm, SK: dm } satisfies DonationMessage.PrimaryKey,
   });
   const res = await apes.send(cmd);
   if (!res.Item) return [404, "Donation message not found"];
 
-  const { PK, SK, gsi1PK, ...dm } = res.Item as DonationMessage.DBRecord;
-  return dm;
+  const { PK, SK, gsi1PK, gsi1SK, ...i } = res.Item as DonationMessage.DBRecord;
+  return i;
 };
 
-export const delDonationMessage = async (
-  id: DonationMessage.PrimaryKey["PK"]
-) => {
+export const delDonationMessage = async (id: string) => {
+  const dm: DMKey = `DM#${id}`;
   const cmd = new DeleteCommand({
     TableName: tables.donation_messages,
-    Key: { PK: id, SK: id } satisfies DonationMessage.PrimaryKey,
+    Key: { PK: dm, SK: dm } satisfies DonationMessage.PrimaryKey,
   });
   return apes.send(cmd);
 };
