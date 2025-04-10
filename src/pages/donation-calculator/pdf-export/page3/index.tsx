@@ -6,7 +6,7 @@ import footerImg from "./footer.webp";
 
 export function Page3() {
   return (
-    <div className="w-full aspect-[1.41413]">
+    <div className="w-full grid">
       <Benefits />
       <Cta classes="mt-28" />
       <Image src={footerImg} />

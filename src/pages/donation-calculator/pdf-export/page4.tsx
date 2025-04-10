@@ -1,9 +1,10 @@
-import bg from "assets/images/bettergiving-logo-white.webp";
+import bg from "assets/images/bettergiving-logo-white.svg";
 import Image from "components/image";
-export function Page4() {
+import { Footer } from "./footer";
+export function Page4({ classes = "" }) {
   return (
-    <div className="w-full aspect-[297/210]">
-      <div className="bg-blue p-6">
+    <div className={`w-full ${classes} flex flex-col`}>
+      <div className="bg-blue px-6 py-12">
         <div className="grid grid-cols-[1fr_auto] items-center">
           <h2 className="uppercase text-white text-4xl font-bold leading-tight">
             Appendix
@@ -12,19 +13,18 @@ export function Page4() {
           <Image
             src={bg}
             alt="Better Giving Logo"
-            width={300}
-            height={60}
-            className="object-contain self-start"
+            width={280}
+            className="object-contain self-start relative top-4"
           />
         </div>
       </div>
-      <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-        <h2 className="text-3xl font-semibold uppercase">
+      <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6 mt-8">
+        <h2 className="text-2xl font-semibold uppercase">
           Calculation Details
         </h2>
-        <div className="h-0.5 bg-blue" />
+        <div className="h-0.5 bg-gray" />
       </div>
-      <div className="mt-8 space-y-8">
+      <div className="mt-8 space-y-8 text-xl px-12">
         <section>
           <h4 className="font-semibold mb-4">Better Giving Platform</h4>
           <ul className="space-y-4 list-disc pl-6">
@@ -80,6 +80,7 @@ export function Page4() {
           </ul>
         </section>
       </div>
+      <Footer classes="mt-auto" />
     </div>
   );
 }

@@ -5,11 +5,11 @@ import { Page4 } from "./page4";
 
 export default function Page() {
   return (
-    <div className="w-[1300px] [&>div]:h-[1795.238px] mx-auto font-heading border border-gray-l4">
+    <div className="w-[1300px] [&>div]:h-[1795.238px] mx-auto font-heading border-x divide-y divide-gray-l4 border-gray-l4">
       <Page1 />
       <Page2 />
       <Page3 />
-      <Page4 />
+      <Page4 classes="" />
     </div>
   );
 }

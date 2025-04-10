@@ -25,7 +25,7 @@ const views = [
 
 export function Page2() {
   return (
-    <div className="w-full aspect-[297/210] pt-8 bg-amber-l5">
+    <div className="w-full aspect-[297/210] pt-8 ">
       <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
         <h2 className="text-blue text-2xl font-semibold uppercase">
           Total 5 - 10 - 15 - 20 years financial advantage
