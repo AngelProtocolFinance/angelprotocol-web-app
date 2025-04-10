@@ -1,3 +1,4 @@
+import { Info } from "lucide-react";
 import { Splits } from "../chart/splits";
 import { Visual } from "../chart/visual";
 
@@ -73,6 +74,27 @@ export function Page2() {
             </div>
           );
         })}
+      </div>
+      <div className="mt-4 text-sm text-gray-d1 flex items-center px-8">
+        <Info width={16} className="shrink-0 mr-2 text-amber" />
+        <span>
+          Investment yields based on average annual returns over past 5 years
+          (4% for Savings Account, 20% for Sustainability Fund)
+        </span>
+      </div>
+
+      <div className="px-8">
+        <div className="mt-4 p-4 bg-blue-l5 rounded-lg">
+          <h3 className="font-medium text-blue-d3 mb-2">
+            The Power of Compound Growth
+          </h3>
+          <p className="text-sm text-blue-d2">
+            These projections demonstrates how Better Giving's integrated
+            approach compounds over time. our organization could accumulate
+            significant additional funds through the combination of reduced
+            processing fees, expanded donation types, and strategic investments.
+          </p>
+        </div>
       </div>
     </div>
   );
