@@ -31,7 +31,7 @@ export const getDonationMessages = async (
     : undefined;
 
   return {
-    items: items.map(({ PK, SK, gsi1PK, ...i }) => i),
+    items: items.map(({ PK, SK, gsi1PK, gsi1SK, ...i }) => i),
     nextPageKey,
   };
 };
