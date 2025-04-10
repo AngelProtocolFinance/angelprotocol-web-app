@@ -3,8 +3,8 @@ import { Info } from "lucide-react";
 import { useState } from "react";
 
 import type { View } from "../bg-view"; // Adjust the import path
+import { Chart as ChartComponent } from "../common/chart";
 import { Splits } from "./splits";
-import { Visual } from "./visual";
 
 interface Props extends View {
   classes?: string;
@@ -12,8 +12,6 @@ interface Props extends View {
 
 export function Chart({ classes = "", ...v }: Props) {
   const [yrs, setYears] = useState(5);
-
-  console.log(v);
 
   // Generate chart data based on projection years
 
@@ -80,7 +78,7 @@ export function Chart({ classes = "", ...v }: Props) {
         investedRate={v.investedRate}
       />
       <div className="h-96 w-full">
-        <Visual points={data} />
+        <ChartComponent points={data} />
       </div>
 
       <div className="mt-4 text-sm text-gray-d1 flex items-center">

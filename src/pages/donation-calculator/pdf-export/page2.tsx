@@ -1,8 +1,8 @@
 import { Info } from "lucide-react";
 import { Splits } from "../chart/splits";
-import { Visual } from "../chart/visual";
+import { Chart } from "../common/chart";
 
-import sample from "./data.json";
+import type { View } from "../bg-view";
 
 const views = [
   {
@@ -23,7 +23,7 @@ const views = [
   },
 ];
 
-export function Page2() {
+export function Page2(sample: View) {
   return (
     <div className="w-full aspect-[297/210] pt-8 ">
       <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
@@ -69,7 +69,7 @@ export function Page2() {
                 investedRate={0.5}
               />
               <div className="h-80 w-full">
-                <Visual points={data} tools={false} />
+                <Chart points={data} tools={false} />
               </div>
             </div>
           );

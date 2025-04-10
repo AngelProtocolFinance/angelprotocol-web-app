@@ -22,7 +22,7 @@ interface Props {
   tools?: boolean;
   points: Point[];
 }
-export function Visual({ points, tools = true }: Props) {
+export function Chart({ points, tools = true }: Props) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart data={points}>
