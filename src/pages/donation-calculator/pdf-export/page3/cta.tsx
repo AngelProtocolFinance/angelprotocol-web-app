@@ -4,9 +4,9 @@ import Image from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
 import { ArrowRight } from "lucide-react";
 
-export function Cta() {
+export function Cta({ classes = "" }) {
   return (
-    <div className="relative mt-28 ">
+    <div className={`relative ${classes}`}>
       <div className="max-xl:hidden absolute left-24 isolate top-1/2 -translate-y-1/2">
         <Image src={laira.yellow} width={90} className="z-10 max-sm:w-24" />
         {/** shadow */}
