@@ -25,17 +25,17 @@ const views = [
 
 export function Page2() {
   return (
-    <div className="w-full aspect-[297/210] pt-8">
+    <div className="w-full aspect-[297/210] pt-8 bg-amber-l5">
       <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-        <h2 className="text-blue text-3xl font-semibold uppercase">
+        <h2 className="text-blue text-2xl font-semibold uppercase">
           Total 5 - 10 - 15 - 20 years financial advantage
         </h2>
         <div className="h-0.5 bg-blue" />
-        <p className="text-blue text-3xl font-semibold uppercase">
+        <p className="text-blue text-2xl font-semibold uppercase">
           (Estimated Predictions)
         </p>
       </div>
-      <p className="text-2xl px-6 font-bold text-gray-d1 mt-4">
+      <p className="text-xl px-6 font-bold text-gray-d1 mt-4">
         Compound Growth = Exponential Impact
       </p>
       <div className="grid grid-cols-2 px-8 gap-16 mt-8">
@@ -93,7 +93,7 @@ export function Page2() {
           <span className="text-blue">Total Financial Advantage</span>
         </p>
       </div>
-      <div className="mt-6 text-sm text-gray-d1 flex items-center px-8">
+      <div className="mt-6 text-gray-d1 flex items-center px-8">
         <Info width={16} className="shrink-0 mr-2 text-amber" />
         <span>
           Investment yields based on average annual returns over past 5 years
@@ -103,10 +103,10 @@ export function Page2() {
 
       <div className="px-8">
         <div className="mt-4 p-4 bg-blue-l5 rounded-lg">
-          <h3 className="font-medium text-blue-d3 mb-2">
+          <h3 className="text-lg font-medium text-blue-d3 mb-2">
             The Power of Compound Growth
           </h3>
-          <p className="text-sm text-blue-d2">
+          <p className="text-blue-d2">
             These projections demonstrates how Better Giving's integrated
             approach compounds over time. our organization could accumulate
             significant additional funds through the combination of reduced

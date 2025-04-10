@@ -5,19 +5,19 @@ import { ImpactCard } from "./impact-card";
 
 export function Page1() {
   return (
-    <div className="w-full aspect-[1.41413]">
+    <div className="w-full">
       <div className="bg-blue p-6">
         <div className="grid grid-cols-[1fr_auto] items-center">
           <div>
-            <h1 className="text-white text-4xl font-bold leading-tight">
+            <h1 className="text-white text-4xl font-bold">
               YOUR NONPROFIT'S FINANCIAL
               <br />
               ADVANTAGE WITH BETTER GIVING
             </h1>
-            <p className="text-white mt-2">
+            <p className="text-white text-lg mt-2">
               Donation Processing & Investment Impact Calculator
             </p>
-            <p className="text-white text-sm">
+            <p className="text-white">
               Generated on {format(new Date(), "PP")}
             </p>
           </div>
@@ -25,8 +25,7 @@ export function Page1() {
             src={bg}
             alt="Better Giving Logo"
             width={300}
-            height={60}
-            className="object-contain self-start"
+            className="object-contain self-start relative top-4"
           />
         </div>
       </div>
@@ -169,7 +168,7 @@ export function Page1() {
 
       <section className="mt-12">
         <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-          <h2 className="text-blue text-3xl font-semibold">
+          <h2 className="text-blue text-2xl font-semibold">
             LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
           </h2>
           <div className="h-0.5 bg-blue" />
@@ -181,7 +180,7 @@ export function Page1() {
 
         <div className="mb-6 px-8">
           <p className="mb-2">
-            <span className="text-gray-d1">
+            <span className="text-gray-d1 text-lg">
               Savings & Investment Allocation:
             </span>
             <span className="font-semibold"> 10%</span> of Annual Donations
