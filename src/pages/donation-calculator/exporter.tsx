@@ -8,11 +8,11 @@ export function Exporter({ view }: { view: View }) {
   // Adjusted to accept view as a prop
   const pageRef = useRef<HTMLDivElement>(null);
 
-  const exportToPDF = () => {
+  const exportToPDF = async () => {
     const input = pageRef.current;
     if (!input) throw new Error("No input element found");
 
-    html2canvas(input, { scale: 2 })
+    await html2canvas(input, { scale: 2 })
       .then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4"); // Portrait, millimeters, A4 size
