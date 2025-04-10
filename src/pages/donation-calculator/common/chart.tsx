@@ -64,6 +64,7 @@ export function Chart({ points, tools = true }: Props) {
         )}
 
         <Area
+          isAnimationActive={false}
           type="monotone"
           dataKey="savings"
           stackId="1"
@@ -72,6 +73,7 @@ export function Chart({ points, tools = true }: Props) {
           stroke="var(--color-green-d1)"
         />
         <Area
+          isAnimationActive={false}
           type="monotone"
           dataKey="liq"
           stackId="1"
@@ -80,6 +82,7 @@ export function Chart({ points, tools = true }: Props) {
           stroke="var(--color-amber)"
         />
         <Area
+          isAnimationActive={false}
           type="monotone"
           dataKey="lock"
           stackId="1"
@@ -88,6 +91,7 @@ export function Chart({ points, tools = true }: Props) {
           stroke="var(--color-blue)"
         />
         <Area
+          isAnimationActive={false}
           type="monotone"
           dataKey="total"
           name="Total Financial Advantage"
