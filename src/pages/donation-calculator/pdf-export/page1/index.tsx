@@ -25,6 +25,7 @@ export function Page1() {
             src={bg}
             alt="Better Giving Logo"
             width={280}
+            height={95.8}
             className="object-contain self-start relative top-4"
           />
         </div>

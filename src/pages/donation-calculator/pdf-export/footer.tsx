@@ -19,6 +19,7 @@ function Socials({ classes = "" }) {
           src={linkedin}
           alt="linkedin"
           width={40}
+          height={28}
         />
       </ExtLink>
       <ExtLink
@@ -30,6 +31,7 @@ function Socials({ classes = "" }) {
           src={facebook}
           alt="facebook"
           width={36}
+          height={28}
         />
       </ExtLink>
       <ExtLink
@@ -47,6 +49,7 @@ function Socials({ classes = "" }) {
           src={youtube}
           alt="youtube"
           width={42}
+          height={28}
         />
       </ExtLink>
       <ExtLink
@@ -58,6 +61,7 @@ function Socials({ classes = "" }) {
           src={instagram}
           alt="discord"
           width={36}
+          height={28}
         />
       </ExtLink>
       <ExtLink
@@ -69,6 +73,7 @@ function Socials({ classes = "" }) {
           src={intercom}
           alt="discord"
           width={36}
+          height={28}
         />
       </ExtLink>
     </div>
