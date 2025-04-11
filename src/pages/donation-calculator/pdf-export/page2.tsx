@@ -107,8 +107,8 @@ export function Page2({ v }: { v: View }) {
             The Power of Compound Growth
           </h3>
           <p className="text-blue-d2">
-            These projections demonstrates how Better Giving's integrated
-            approach compounds over time. our organization could accumulate
+            These projections demonstrate how Better Giving's integrated
+            approach compounds over time. Our organization could accumulate
             significant additional funds through the combination of reduced
             processing fees, expanded donation types, and strategic investments.
           </p>
