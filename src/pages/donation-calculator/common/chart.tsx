@@ -69,8 +69,8 @@ export function Chart({ points, tools = true }: Props) {
           dataKey="savings"
           stackId="1"
           name="Donation Processing Savings"
-          fill="var(--color-green-l3)"
-          stroke="var(--color-green-d1)"
+          fill="#a7f3d0"
+          stroke="#059669"
         />
         <Area
           isAnimationActive={false}
@@ -78,8 +78,8 @@ export function Chart({ points, tools = true }: Props) {
           dataKey="liq"
           stackId="1"
           name="Savings Returns"
-          fill="var(--color-amber-l1)"
-          stroke="var(--color-amber)"
+          fill="#fbbf24"
+          stroke="#f59e0b"
         />
         <Area
           isAnimationActive={false}
@@ -87,8 +87,8 @@ export function Chart({ points, tools = true }: Props) {
           dataKey="lock"
           stackId="1"
           name="Investment Returns"
-          fill="var(--color-blue-l1)"
-          stroke="var(--color-blue)"
+          fill="#54a5dc"
+          stroke="#2d89c8)"
         />
         <Area
           isAnimationActive={false}
@@ -96,7 +96,7 @@ export function Chart({ points, tools = true }: Props) {
           dataKey="total"
           name="Total Financial Advantage"
           strokeWidth={2}
-          stroke="var(--color-blue-d1)"
+          stroke="#1e6dab"
           fill="none"
         />
       </AreaChart>
