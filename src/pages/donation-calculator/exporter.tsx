@@ -1,3 +1,4 @@
+import { BASE_URL, BOOK_A_DEMO } from "constants/env";
 import { toCanvas } from "html-to-image";
 import jsPDF from "jspdf";
 import { useCallback, useRef, useState } from "react";
@@ -81,10 +82,36 @@ export const Exporter = ({ view }: ExporterProps) => {
           compression: "FAST",
         });
 
-        if (i === 2) {
-          pdf.link(87, 113, 45, 15, {
-            url: "https://better.giving",
+        //page1 logo
+        if (i === 0) {
+          pdf.link(160, 7, 46, 20, {
+            url: BASE_URL,
           });
+        }
+
+        //page3 demo
+        if (i === 2) {
+          pdf.link(87, 110, 36, 10, {
+            url: BOOK_A_DEMO,
+          });
+        }
+        //page4 logo
+        if (i === 3) {
+          pdf.link(160, 10, 46, 17, {
+            url: BASE_URL,
+          });
+        }
+
+        //socials
+        if (i === 3 || i === 2) {
+          const size = [8, 8] as const;
+          const y = 284;
+          pdf.link(50, y, ...size, { url: "https://better.giving/1" });
+          pdf.link(62, y, ...size, { url: "https://better.giving/2" });
+          pdf.link(73, y, ...size, { url: "https://better.giving/3" });
+          pdf.link(85, y, ...size, { url: "https://better.giving/4" });
+          pdf.link(97, y, ...size, { url: "https://better.giving/5" });
+          pdf.link(109, y, ...size, { url: "https://better.giving/6" });
         }
       }
 
