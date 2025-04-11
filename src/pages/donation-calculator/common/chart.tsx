@@ -88,7 +88,7 @@ export function Chart({ points, tools = true }: Props) {
           stackId="1"
           name="Investment Returns"
           fill="#54a5dc"
-          stroke="#2d89c8)"
+          stroke="#2d89c8"
         />
         <Area
           isAnimationActive={false}
