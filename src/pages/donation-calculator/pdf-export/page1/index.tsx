@@ -206,18 +206,23 @@ export function Page1({ v }: Props) {
             Allocated to Savings/Investments
           </p>
           <p className="text-sm text-gray">
-            ($119,300 with Better Giving × 10% = $11,930)
+            ({toUsd(v.amount)} with Better Giving ×{" "}
+            {(v.notGrantedRate * 100).toFixed(2)}% = {toUsd(v.notGranted)})
           </p>
 
           <p className="mt-4 mb-2">Allocation Between Accounts:</p>
           <ul className="list-disc pl-8">
             <li className="mb-2">
-              <span className="font-semibold">50%</span> to High-Yield Savings
-              Account (4% Annual Yield)
+              <span className="font-semibold">
+                {(v.savingsRate * 100).toFixed(2)}%
+              </span>{" "}
+              to High-Yield Savings Account (4% Annual Yield)
             </li>
             <li>
-              <span className="font-semibold">50%</span> to Sustainability Fund
-              (20% Average Annual Return)
+              <span className="font-semibold">
+                {(v.investedRate * 100).toFixed(2)}%
+              </span>{" "}
+              to Sustainability Fund (20% Average Annual Return)
             </li>
           </ul>
         </div>
