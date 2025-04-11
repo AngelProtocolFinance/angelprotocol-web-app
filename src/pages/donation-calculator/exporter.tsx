@@ -117,7 +117,7 @@ export const Exporter = ({ view, classes = "" }: ExporterProps) => {
         }
       }
 
-      pdf.save(`document-${new Date().toISOString().split("T")[0]}.pdf`);
+      pdf.save(`better-giving-report.pdf`);
     } catch (error) {
       console.error("PDF generation failed:", error);
       // Optionally: Add user notification here
