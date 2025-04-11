@@ -13,9 +13,10 @@ const A4 = {
 
 interface ExporterProps {
   view: View;
+  classes?: string;
 }
 
-export const Exporter = ({ view }: ExporterProps) => {
+export const Exporter = ({ view, classes = "" }: ExporterProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -128,19 +129,19 @@ export const Exporter = ({ view }: ExporterProps) => {
   }, []);
 
   return (
-    <div className="exporter-container">
+    <>
       <button
         onClick={generatePDF}
         disabled={isExporting}
-        className={`mt-4 btn-blue ${isExporting ? "opacity-50 cursor-not-allowed" : ""}`}
+        className={`${classes} btn-blue px-4 py-1 rounded-full text-sm`}
       >
-        {isExporting ? "Exporting..." : "Export to PDF"}
+        {isExporting ? "Exporting.." : "Export to PDF"}
       </button>
       <Content
         view={view}
         ref={contentRef}
         classes="absolute -left-[9999px] invisible"
       />
-    </div>
+    </>
   );
 };
