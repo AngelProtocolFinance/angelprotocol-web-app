@@ -80,7 +80,7 @@
     "framer-motion": "11.2.10",
     "fuse.js": "7.0.0",
     "gsap": "3.12.5",
-    "html2canvas": "1.4.1",
+    "html-to-image": "1.11.13",
     "isbot": "4.1.0",
     "jose": "5.9.2",
     "jspdf": "3.0.1",
