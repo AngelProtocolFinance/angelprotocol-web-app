@@ -1,5 +1,5 @@
 import { unmask } from "./dollar-mask";
-import { type State, methodsArr } from "./types";
+import { type Growth, type State, type View, methodsArr } from "./types";
 
 const typeWeights: { [key: string]: number } = {
   "credit-card": 0.63,
@@ -9,13 +9,6 @@ const typeWeights: { [key: string]: number } = {
   stocks: 0.06,
   crypto: 0.02,
 };
-
-interface Growth {
-  liq: number;
-  lock: number;
-  total: number;
-  end: Omit<Growth, "end">;
-}
 
 const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
   const savDailyRate = 0.04 / 365; // 4% annual rate
@@ -54,31 +47,6 @@ const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
 
   return items;
 };
-
-export interface View {
-  amount: number;
-
-  ogMissedFromDonTypes: number;
-  ogSubsCost: number;
-  ogFees: number;
-  ogDeductions: number;
-  ogNet: number;
-
-  bgFees: number;
-  bgNet: number;
-
-  feeSavings: number;
-  advantage: number;
-
-  notGranted: number;
-  notGrantedRate: number;
-  savingsRate: number;
-  savings: number;
-  investedRate: number;
-  invested: number;
-
-  projection: Growth[];
-}
 
 const donorCoverageFactor = (enabled = true) =>
   enabled ? 1 - 0.8 /** 80% of donors choose to cover when able to */ : 1;
@@ -121,6 +89,8 @@ export function bgView(og: State): View {
 
   return {
     amount: amnt,
+    ogPlatformFeeRate: og.platformFeeRate,
+    ogProcessingFeeRate: og.processingFeeRate,
     ogMissedFromDonTypes,
     ogFees,
     ogSubsCost: subscriptionCost,

@@ -2,8 +2,8 @@ import * as Slider from "@radix-ui/react-slider";
 import { Info } from "lucide-react";
 import { useState } from "react";
 
-import type { View } from "../bg-view"; // Adjust the import path
 import { Chart as ChartComponent } from "../common/chart";
+import type { View } from "../types"; // Adjust the import path
 import { Splits } from "./splits";
 
 interface Props extends View {
