@@ -5,17 +5,17 @@ import linkedin from "assets/icons/social/linkedin.webp";
 import x from "assets/icons/social/x.webp";
 import youtube from "assets/icons/social/youtube.webp";
 import ExtLink from "components/ext-link";
-import { INTERCOM_HELP } from "constants/env";
+import { socials } from "constants/urls";
 
 function Socials({ classes = "" }) {
   return (
-    <div className={`flex  gap-3 md:gap-6 ${classes}`}>
+    <div className={`flex gap-3 md:gap-6 ${classes}`}>
       <ExtLink
-        href="https://www.linkedin.com/company/better-giving/"
+        href={socials.linkedin}
         className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
       >
         <img
-          className="absolute-center left-[26px]  p-1"
+          className="absolute-center left-[26px] p-1"
           src={linkedin}
           alt="linkedin"
           width={40}
@@ -23,7 +23,7 @@ function Socials({ classes = "" }) {
         />
       </ExtLink>
       <ExtLink
-        href="https://www.facebook.com/BetterGivingFB/"
+        href={socials.facebook}
         className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
       >
         <img
@@ -35,13 +35,13 @@ function Socials({ classes = "" }) {
         />
       </ExtLink>
       <ExtLink
-        href="https://x.com/BetterDotGiving"
+        href={socials.x}
         className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
       >
         <img className="absolute-center p-1" src={x} alt="x" width={30} />
       </ExtLink>
       <ExtLink
-        href="https://www.youtube.com/@BetterDotGiving"
+        href={socials.youtube}
         className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
       >
         <img
@@ -53,25 +53,25 @@ function Socials({ classes = "" }) {
         />
       </ExtLink>
       <ExtLink
-        href="https://www.instagram.com/better.giving"
+        href={socials.instagram}
         className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
       >
         <img
           className="absolute-center p-1"
           src={instagram}
-          alt="discord"
+          alt="instagram"
           width={36}
           height={28}
         />
       </ExtLink>
       <ExtLink
-        href={INTERCOM_HELP}
+        href={socials.intercom}
         className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
       >
         <img
           className="absolute-center p-1"
           src={intercom}
-          alt="discord"
+          alt="intercom"
           width={36}
           height={28}
         />

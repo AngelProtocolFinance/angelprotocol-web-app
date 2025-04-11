@@ -1,4 +1,5 @@
 import { BASE_URL, BOOK_A_DEMO } from "constants/env";
+import { socials } from "constants/urls";
 import { toCanvas } from "html-to-image";
 import jsPDF from "jspdf";
 import { useCallback, useRef, useState } from "react";
@@ -106,12 +107,12 @@ export const Exporter = ({ view }: ExporterProps) => {
         if (i === 3 || i === 2) {
           const size = [8, 8] as const;
           const y = 284;
-          pdf.link(50, y, ...size, { url: "https://better.giving/1" });
-          pdf.link(62, y, ...size, { url: "https://better.giving/2" });
-          pdf.link(73, y, ...size, { url: "https://better.giving/3" });
-          pdf.link(85, y, ...size, { url: "https://better.giving/4" });
-          pdf.link(97, y, ...size, { url: "https://better.giving/5" });
-          pdf.link(109, y, ...size, { url: "https://better.giving/6" });
+          pdf.link(50, y, ...size, { url: socials.linkedin });
+          pdf.link(62, y, ...size, { url: socials.facebook });
+          pdf.link(73, y, ...size, { url: socials.x });
+          pdf.link(85, y, ...size, { url: socials.youtube });
+          pdf.link(97, y, ...size, { url: socials.instagram });
+          pdf.link(109, y, ...size, { url: socials.intercom });
         }
       }
 
