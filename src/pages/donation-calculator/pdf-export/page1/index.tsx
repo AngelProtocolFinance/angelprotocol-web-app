@@ -1,9 +1,15 @@
 import bg from "assets/images/bettergiving-logo-white.svg";
 import Image from "components/image";
 import { format } from "date-fns";
+import { toUsd } from "helpers/to-usd";
+import type { View } from "../../types";
+import { Usd } from "../../usd";
 import { ImpactCard } from "./impact-card";
 
-export function Page1() {
+interface Props {
+  v: View;
+}
+export function Page1({ v }: Props) {
   return (
     <div className="w-full">
       <div className="bg-blue p-6">
@@ -42,19 +48,23 @@ export function Page1() {
         <div className="grid grid-cols-2 content-start gap-x-4 px-8 mt-6">
           <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Annual Online Donations</span>
-            <span className="font-semibold">$100,000</span>
+            <span className="font-semibold">{toUsd(v.amount)}</span>
           </div>
           <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Avg. Processing Fees</span>
-            <span className="font-semibold">2.9%</span>
+            <span className="font-semibold">
+              {(v.ogProcessingFeeRate * 100).toFixed(2)}%
+            </span>
           </div>
           <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Platform Fees</span>
-            <span className="font-semibold">2.0%</span>
+            <span className="font-semibold">
+              {(v.ogPlatformFeeRate * 100).toFixed(2)}%
+            </span>
           </div>
           <div className="flex font-heading justify-between mb-4 text-lg">
             <span className="text-gray-d1">Annual Platform Subscription</span>
-            <span className="font-semibold">$1,200</span>
+            <span className="font-semibold">{toUsd(v.ogSubsCost)}</span>
           </div>
           <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
             <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
@@ -89,7 +99,12 @@ export function Page1() {
 
         <div className="mt-12 text-right mx-8 p-6 bg-gray-l4 font-heading">
           <p className="text-gray-d1 text-lg">Current Amount Received</p>
-          <p className="text-2xl font-semibold text-red">$93,900 (-$6,100)</p>
+          <div className="text-2xl font-semibold">
+            <Usd relative={v.amount}>{v.ogNet}</Usd>{" "}
+            <Usd parens classes="text-lg sm:text-xl">
+              {-v.ogDeductions}
+            </Usd>
+          </div>
         </div>
       </section>
 
@@ -153,17 +168,20 @@ export function Page1() {
 
         <div className="mt-12 text-right mx-8 p-6 bg-gray-l4 font-heading">
           <p className="text-gray-d1 text-lg">With Better Giving</p>
-          <p className="text-2xl font-semibold text-green">
-            $119,300 (+$24,200)
+          <p className="text-2xl font-semibold ">
+            <Usd relative={v.ogNet}>{v.bgNet}</Usd>{" "}
+            <Usd sign parens classes="text-lg sm:text-xl">
+              {v.advantage}
+            </Usd>
           </p>
         </div>
         <div className="text-right mx-8 p-6 bg-green-l5 font-heading">
           <p className="text-gray-d1 text-lg text-center">
             Total annual advantage
           </p>
-          <p className="text-2xl text-center font-semibold text-green">
-            +$24,200
-          </p>
+          <Usd sign classes="text-2xl block text-center font-semibold">
+            {v.advantage}
+          </Usd>
         </div>
       </section>
 

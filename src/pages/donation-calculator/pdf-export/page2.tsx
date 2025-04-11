@@ -2,7 +2,7 @@ import { Info } from "lucide-react";
 import { Splits } from "../chart/splits";
 import { Chart } from "../common/chart";
 
-import type { View } from "../bg-view";
+import type { View } from "../types";
 
 const views = [
   {
@@ -23,7 +23,7 @@ const views = [
   },
 ];
 
-export function Page2(sample: View) {
+export function Page2({ v }: { v: View }) {
   return (
     <div className="w-full pt-8">
       <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
@@ -40,15 +40,15 @@ export function Page2(sample: View) {
       </p>
       <div className="grid grid-cols-2 px-8 gap-16 mt-8">
         {views.map((view) => {
-          const data = sample.projection.slice(0, view.key).map((x, i) => {
+          const data = v.projection.slice(0, view.key).map((x, i) => {
             const y = i + 1;
             return {
               year: `Year ${y}`,
-              amount: sample.amount,
+              amount: v.amount,
               liq: x.liq,
-              savings: sample.advantage * y,
+              savings: v.advantage * y,
               lock: x.lock,
-              total: sample.advantage * y + x.total,
+              total: v.advantage * y + x.total,
             };
           });
 

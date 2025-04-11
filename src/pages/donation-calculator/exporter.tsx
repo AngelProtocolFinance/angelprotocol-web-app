@@ -2,8 +2,8 @@ import { BASE_URL, BOOK_A_DEMO } from "constants/env";
 import { toCanvas } from "html-to-image";
 import jsPDF from "jspdf";
 import { useCallback, useRef, useState } from "react";
-import type { View } from "./bg-view";
 import { Content } from "./pdf-export";
+import type { View } from "./types";
 
 const A4 = {
   width: 210,
@@ -136,7 +136,7 @@ export const Exporter = ({ view }: ExporterProps) => {
         {isExporting ? "Exporting..." : "Export to PDF"}
       </button>
       <Content
-        {...view}
+        view={view}
         ref={contentRef}
         classes="absolute -left-[9999px] invisible"
       />

@@ -1,6 +1,8 @@
 {
   "amount": 100000,
   "ogMissedFromDonTypes": 18500,
+  "ogProcessingFeeRate": 0.029,
+  "ogPlatformFeeRate": 0.02,
   "ogFees": 4900,
   "ogSubsCost": 1200,
   "ogDeductions": 6100,
