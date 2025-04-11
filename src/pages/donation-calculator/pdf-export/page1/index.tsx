@@ -225,48 +225,15 @@ export function Page1({ v }: Props) {
         <div className="grid grid-cols-3 mt-8 px-8">
           <ImpactCard
             title="1 Year Savings & Investment Impact"
-            totalGrowth="$1,564"
-            balance="$13,494"
-            savings={{
-              invested: "$5,965",
-              growth: "$243",
-              balance: "$6,208",
-            }}
-            investment={{
-              invested: "$5,965",
-              growth: "$1,320",
-              balance: "$7,285",
-            }}
+            {...v.projection[0]}
           />
           <ImpactCard
             title="5 Years Savings & Investment Impact"
-            totalGrowth="$30,564"
-            balance="$90,214"
-            savings={{
-              invested: "$29,825",
-              growth: "$3,856",
-              balance: "$33,681",
-            }}
-            investment={{
-              invested: "$29,825",
-              growth: "$26,708",
-              balance: "$56,533",
-            }}
+            {...v.projection[4]}
           />
           <ImpactCard
             title="10 Years Savings & Investment Impact"
-            totalGrowth="$165,682"
-            balance="$284,982"
-            savings={{
-              invested: "$59,650",
-              growth: "$15,169",
-              balance: "$74,819",
-            }}
-            investment={{
-              invested: "$59,650",
-              growth: "$150,513",
-              balance: "$210,163",
-            }}
+            {...v.projection[9]}
           />
         </div>
       </section>
