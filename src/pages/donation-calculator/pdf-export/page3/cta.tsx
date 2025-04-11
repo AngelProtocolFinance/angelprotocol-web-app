@@ -7,12 +7,12 @@ import { ArrowRight } from "lucide-react";
 export function Cta({ classes = "" }) {
   return (
     <div className={`relative ${classes}`}>
-      <div className="max-xl:hidden absolute left-24 isolate top-1/2 -translate-y-1/2">
+      <div className="hidden absolute left-24 isolate top-1/2 -translate-y-1/2">
         <Image
           src={laira.yellow}
           width={90}
           height={116}
-          className="z-10 max-sm:w-24"
+          className="z-10 w-24"
         />
         {/** shadow */}
         <svg className="absolute -bottom-3 z-0" width="100%" height="20">
@@ -41,14 +41,14 @@ export function Cta({ classes = "" }) {
           <ArrowRight size={18} className="group-hover:translate-x-1" />
         </ExtLink>
 
-        <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
+        <Tooltip className="absolute left-[110%] top-3" />
       </div>
-      <div className="max-xl:hidden absolute right-28 -top-20">
+      <div className="absolute right-28 -top-20">
         <Image
           src={laira.pointing}
           width={140}
           height={177}
-          className="z-10 max-sm:w-24 rotate-y-180"
+          className="z-10 w-24 rotate-y-180"
         />
         {/** shadow */}
         <svg className="absolute -bottom-3 z-0" width="100%" height="20">
