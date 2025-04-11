@@ -3,7 +3,7 @@ import Image from "components/image";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { toUsd } from "helpers/to-usd";
 import { CircleHelpIcon, TrendingDown, TrendingUp } from "lucide-react";
-import type { View } from "./bg-view";
+import type { View } from "./types";
 import { Usd } from "./usd";
 
 interface Props extends View {
