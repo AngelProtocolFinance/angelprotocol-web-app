@@ -61,15 +61,16 @@ export const Exporter = ({ view }: ExporterProps) => {
 
       const imgWidth = A4.width;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const pageCount = Math.ceil(imgHeight / A4.height) || 1;
 
       const imgData = canvas.toDataURL("image/png", 0.9);
 
-      for (let i = 0; i < pageCount; i++) {
+      // Hardcode to 4 pages
+      for (let i = 0; i < 4; i++) {
         if (i > 0) {
           pdf.addPage();
         }
 
+        // Add image first
         pdf.addImage({
           imageData: imgData,
           format: "PNG",
@@ -79,6 +80,12 @@ export const Exporter = ({ view }: ExporterProps) => {
           height: imgHeight,
           compression: "FAST",
         });
+
+        if (i === 2) {
+          pdf.link(87, 113, 45, 15, {
+            url: "https://better.giving",
+          });
+        }
       }
 
       pdf.save(`document-${new Date().toISOString().split("T")[0]}.pdf`);
