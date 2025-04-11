@@ -27,7 +27,7 @@ export function Cta({ classes = "" }) {
             rx="40"
             ry="6"
             filter="url(#blur)"
-            className="fill-gray-l3"
+            fill="#e2e8f0"
             // className="blur-sm"
           />
         </svg>
@@ -63,8 +63,7 @@ export function Cta({ classes = "" }) {
             rx="60"
             ry="6"
             filter="url(#blur)"
-            className="fill-gray-l3"
-            // className="blur-sm"
+            fill="#e2e8f0"
           />
         </svg>
       </div>
