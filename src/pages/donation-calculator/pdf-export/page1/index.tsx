@@ -2,9 +2,19 @@ import bg from "assets/images/bettergiving-logo-white.svg";
 import Image from "components/image";
 import { format } from "date-fns";
 import { toUsd } from "helpers/to-usd";
-import type { View } from "../../types";
+import { type View, methodsArr } from "../../types";
 import { Usd } from "../../usd";
+import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
+
+export const methods: { [id: string]: string } = {
+  "credit-card": "Credit Card",
+  ach: "ACH (Bank Transfer)",
+  "digital-wallets": "Digital Wallets",
+  crypto: "Crypto",
+  stocks: "Stocks",
+  daf: "DAF",
+};
 
 interface Props {
   v: View;
@@ -68,32 +78,7 @@ export function Page1({ v }: Props) {
           </div>
           <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
             <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
-            <div className="flex gap-x-6 text-sm font-semibold">
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" checked readOnly />
-                <span className="text-nowrap">Credit Card</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" readOnly />
-                <span className="text-nowrap">ACH (Bank Transfer)</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" readOnly />
-                <span className="text-nowrap">Digital Wallets</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" readOnly />
-                <span className="text-nowrap">Crypto</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" readOnly />
-                <span className="text-nowrap">Stocks</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" readOnly />
-                <span className="text-nowrap">DAF</span>
-              </div>
-            </div>
+            <DonationMethods activeMethods={v.ogDonTypes} />
           </div>
         </div>
 
@@ -137,32 +122,7 @@ export function Page1({ v }: Props) {
           </div>
           <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
             <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
-            <div className="flex gap-x-6 text-sm font-semibold">
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" checked readOnly />
-                <span className="text-nowrap">Credit Card</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" checked readOnly />
-                <span className="text-nowrap">ACH (Bank Transfer)</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" checked readOnly />
-                <span className="text-nowrap">Digital Wallets</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" checked readOnly />
-                <span className="text-nowrap">Crypto</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" checked readOnly />
-                <span className="text-nowrap">Stocks</span>
-              </div>
-              <div className="flex items-center gap-x-1">
-                <input className="size-3" type="checkbox" checked readOnly />
-                <span className="text-nowrap">DAF</span>
-              </div>
-            </div>
+            <DonationMethods activeMethods={methodsArr} />
           </div>
         </div>
 

@@ -1,5 +1,6 @@
 {
   "amount": 100000,
+  "ogDonTypes": ["credit-card", "crypto"],
   "ogMissedFromDonTypes": 18500,
   "ogProcessingFeeRate": 0.029,
   "ogPlatformFeeRate": 0.02,

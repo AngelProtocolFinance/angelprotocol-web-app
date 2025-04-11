@@ -89,6 +89,7 @@ export function bgView(og: State): View {
 
   return {
     amount: amnt,
+    ogDonTypes: og.donationTypes,
     ogPlatformFeeRate: og.platformFeeRate,
     ogProcessingFeeRate: og.processingFeeRate,
     ogMissedFromDonTypes,

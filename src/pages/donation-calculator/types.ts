@@ -38,6 +38,8 @@ export interface View {
   ogFees: number;
   ogDeductions: number;
   ogNet: number;
+  /** credit-card, ach, digital-wallets, crypto, stocks, daf */
+  ogDonTypes: string[];
 
   bgFees: number;
   bgNet: number;
