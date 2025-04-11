@@ -14,9 +14,9 @@
   "notGranted": 11930,
   "notGrantedRate": 0.1,
   "savings": 5965,
-  "savingsRate": 0.5,
+  "savingsRate": 0.6,
   "invested": 5965,
-  "investedRate": 0.5,
+  "investedRate": 0.4,
   "projection": [
     {
       "end": {

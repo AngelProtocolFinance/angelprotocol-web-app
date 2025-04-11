@@ -62,11 +62,11 @@ export function Page2({ v }: { v: View }) {
               </div>
               <Splits
                 classes="justify-self-end"
-                notGranted={10}
-                savings={100_000}
-                savingsRate={0.5}
-                invested={100_000}
-                investedRate={0.5}
+                notGranted={v.notGranted}
+                savings={v.savings}
+                savingsRate={v.savingsRate}
+                invested={v.invested}
+                investedRate={v.investedRate}
               />
               <div className="h-80 w-full">
                 <Chart points={data} tools={false} />
