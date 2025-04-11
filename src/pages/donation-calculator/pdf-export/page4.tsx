@@ -1,4 +1,5 @@
 import bg from "assets/images/bettergiving-logo-white.svg";
+import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { Footer } from "./footer";
 export function Page4({ classes = "" }) {
@@ -80,6 +81,30 @@ export function Page4({ classes = "" }) {
             <li className="text-gray">Returns compound daily</li>
           </ul>
         </section>
+      </div>
+      <div className="relative self-end mr-10">
+        <Image
+          src={laira.laptopFull}
+          width={300}
+          height={177}
+          className="z-10"
+        />
+        {/** shadow */}
+        <svg className="absolute -bottom-1 z-0" width="100%" height="20">
+          <defs>
+            <filter id="blur">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+            </filter>
+          </defs>
+          <ellipse
+            cx="50%"
+            cy="50%"
+            rx="150"
+            ry="10"
+            filter="url(#blur)"
+            fill="#e2e8f060"
+          />
+        </svg>
       </div>
       <Footer classes="mt-auto" />
     </div>

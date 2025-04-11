@@ -15,7 +15,7 @@ export const Content = forwardRef<HTMLDivElement, IContent>(
     return (
       <div
         ref={ref}
-        className={`${classes} w-[1300px] [&>div]:h-[1838.571px] mx-auto font-heading divide-y`}
+        className={`${classes} w-[1300px] [&>div]:h-[1838.571px] mx-auto font-heading`}
       >
         <Page1 />
         <Page2 {...view} />
