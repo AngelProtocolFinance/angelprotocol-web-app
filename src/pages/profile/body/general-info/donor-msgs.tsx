@@ -1,4 +1,4 @@
-import { laira } from "assets/laira/laira";
+import laira from "assets/laira/laira-face.png";
 import Image from "components/image";
 import useSWR from "swr/immutable";
 
@@ -35,6 +35,8 @@ export function DonorMsgs({ classes = "", id }: Props) {
     );
   }
 
+  console.log({ items });
+
   return (
     <div className={`${classes} w-full rounded-sm @container`}>
       <h2 className="text-xl font-bold mb-2">Donors</h2>
@@ -45,11 +47,11 @@ export function DonorMsgs({ classes = "", id }: Props) {
             className="flex bg-white items-start gap-4 border border-gray-l3 p-4 rounded-lg"
           >
             <Image
-              src={donor.avatar || laira.standing}
+              src={donor.photo || laira}
               alt={donor.name}
-              height={25}
-              width={25}
-              className="shrink-0 object-contain"
+              height={35}
+              width={35}
+              className="shrink-0 object-contain rounded-full"
             />
 
             <div>
