@@ -7,7 +7,9 @@ import { DeleteCommand, GetCommand, apes } from "./aws/db";
 
 export const getDonationMessage = async (
   id: string
-): Promise<DonationMessage.NonKeyAttributes | [number, string]> => {
+): Promise<
+  Omit<DonationMessage.NonKeyAttributes, "donor_id"> | [number, string]
+> => {
   const dm: DMKey = `DM#${id}`;
   const cmd = new GetCommand({
     TableName: tables.donation_messages,
@@ -16,7 +18,8 @@ export const getDonationMessage = async (
   const res = await apes.send(cmd);
   if (!res.Item) return [404, "Donation message not found"];
 
-  const { PK, SK, gsi1PK, gsi1SK, ...i } = res.Item as DonationMessage.DBRecord;
+  const { PK, SK, gsi1PK, gsi1SK, donor_id, ...i } =
+    res.Item as DonationMessage.DBRecord;
   return i;
 };
 
