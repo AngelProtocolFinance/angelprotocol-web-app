@@ -5,12 +5,11 @@ import type {
 } from "@better-giving/donation";
 import type { FinalRecorderPayload } from "@better-giving/donation/final-recorder";
 import { toPrettyAmount } from "@better-giving/helpers";
-import { TxBuilder, getUsdRate } from "@better-giving/helpers-db";
+import { getUsdRate } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
-import { buildDonationMsg } from "routes/helpers/db";
 import type Stripe from "stripe";
 import { getDonationIntent, sendMessage } from "../helpers";
-import { GetCommand, TransactWriteCommand, apes } from ".server/aws/db";
+import { DeleteCommand, GetCommand, apes } from ".server/aws/db";
 import { env } from ".server/env";
 import { getBalanceTx, getPaymentMethod } from ".server/stripe/get";
 
@@ -71,6 +70,9 @@ export async function handleOneTimeDonation({
     intentId: meta.transactionId,
     usdValue: +meta.amount / latestUsdRate,
     hideBgTip: meta.hideBgTip === "true",
+    // Donation message
+    donor_message: meta.donor_message,
+    donor_public: meta.donor_public === "true",
     // KYC
     title: meta.title,
     kycEmail: meta.kycEmail ?? meta.email,
@@ -90,37 +92,16 @@ export async function handleOneTimeDonation({
   // Send msg to `final-donation-processor`
   await sendMessage(body);
 
-  const builder = new TxBuilder();
-
   // Delete if record exists on OnHoldTable
   const intentRecord = await getDonationIntent(meta.transactionId);
   if (intentRecord && intentRecord.transactionId) {
-    builder.del({
-      TableName: tables.on_hold_donations,
-      Key: {
-        transactionId: meta.transactionId,
-      } satisfies OnHoldDonation.PrimaryKey,
-    });
-  }
-
-  // Create donation message if applicable
-  if (meta.kycEmail && meta.donor_public) {
-    const recipient_id = meta.fund_id ? meta.fund_id : `${meta.endowmentId}`;
-    builder.put({
-      TableName: tables.donation_messages,
-      Item: buildDonationMsg({
-        date: meta.transactionDate,
-        donor_id: meta.kycEmail,
-        donor_message: meta.donor_message ?? "",
-        donor_name: meta.fullName,
-        recipient_id,
-        transaction_id: paymentIntentId,
-        usd_value: +meta.usdValue,
-      }),
-    });
-  }
-
-  if (builder.txs.length > 0) {
-    await apes.send(new TransactWriteCommand({ TransactItems: builder.txs }));
+    await apes.send(
+      new DeleteCommand({
+        TableName: tables.on_hold_donations,
+        Key: {
+          transactionId: meta.transactionId,
+        } satisfies OnHoldDonation.PrimaryKey,
+      })
+    );
   }
 }
