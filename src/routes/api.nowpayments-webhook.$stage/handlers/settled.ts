@@ -170,6 +170,22 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
       builder.append(_txs);
       // net amount reflects fee-allowance add-back
       fund_net += processed.net;
+
+      // creates single donation message record per fund member
+      if (order.kycEmail && order.donor_public) {
+        builder.put({
+          TableName: tables.donation_messages,
+          Item: buildDonationMsg({
+            date: order.transactionDate,
+            donor_id: order.kycEmail,
+            donor_message: order.donor_message ?? "",
+            donor_name: order.fullName,
+            recipient_id: `${endow.id}`,
+            transaction_id: order.transactionId,
+            usd_value: order.usdValue / num,
+          }),
+        });
+      }
     }
     await ap
       .send(fundContribUpdate(fund_net, order.fund_id))
@@ -206,7 +222,7 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
     } as OnHoldDonation.PrimaryKey,
   });
 
-  /** donation message */
+  /** creates donation message for single fund/npo donation */
   if (order.kycEmail && order.donor_public) {
     const recipient_id = order.fund_id ? order.fund_id : `${order.endowmentId}`;
     builder.put({
