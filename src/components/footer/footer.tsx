@@ -1,133 +1,88 @@
 import { Link } from "@remix-run/react";
 import dappLogo from "assets/images/bg-logo-503c.webp";
+import ExtLink from "components/ext-link";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { guidestar } from "constants/urls";
-import type { ReactNode } from "react";
-import ExtLink from "../ext-link";
 import Newsletter from "./newsletter";
 import Socials from "./socials";
 
 type Props = { classes?: string };
 
-function Footer({ classes = "" }: Props) {
-  function ref(node: HTMLElement | null) {
-    if (!node) return;
-    const observer = new IntersectionObserver(
-      ([e]) => {
-        const intercom = document.querySelector(".intercom-launcher");
-        intercom?.classList.toggle("hidden", e.isIntersecting);
-      },
-      { threshold: [0.5] }
-    );
-    observer.observe(node);
-  }
+export function Footer({ classes = "" }: Props) {
   return (
     <footer
-      ref={ref}
-      className={`grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] border-t border-gray-l3 ${classes}`}
+      className={`grid ${classes} grid-cols-[1fr_auto_1fr] max-2xl:gap-x-0 2xl:grid-cols-[auto_auto_1fr] items-center px-10 gap-10`}
     >
-      <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 xl:container xl:mx-auto px-5 p-4 md:p-10">
-        <div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96">
-          <div className="flex items-center gap-x-6 shrink-0">
-            <img
-              src={dappLogo}
-              height={40}
-              width={170}
-              className="object-contain my-4"
-              alt="logo"
-            />
-            <ExtLink
-              aria-label="View our GuideStar profile"
-              href={guidestar.profile}
-            >
-              <img
-                alt="GuideStar Seal"
-                loading="lazy"
-                src={guidestar.seal}
-                width={100}
-                height={100}
-              />
-            </ExtLink>
-          </div>
-
-          <p className="text-xs text-[#3D5361]">
-            Better Giving is your nonprofit's free one-stop solution to
-            fundraise, save, and invest. We financially empower fellow
-            nonprofits with free donation processing integrated with high-yield
-            savings and investment services, helping organizations grow their
-            funds while reducing administrative burdens. We believe that making
-            financial sustainability easy and accessible creates lasting change
-            for nonprofits.
-          </p>
-        </div>
-
-        <div className="xl:contents gap-4 gap-x-12 sm:gap-x-24 row-start-2 row-span-1 col-span-2 flex flex-wrap justify-self-center my-6 sm:my-14">
-          {/*<LinkGroup
-            classes="col-start-2 col-span-1"
-            title="How we can help"
-            links={[
-              <Link to={appRoutes.home}>Nonprofits</Link>,
-              "Giving Partners (CSR)",
-            ]}
-          />*/}
-          <LinkGroup
-            classes="col-start-2 col-span-1"
-            title="Resources"
-            links={[
-              <a href={INTERCOM_HELP}>FAQs</a>,
-              <Link to={appRoutes.blog}>News</Link>,
-              <Link to={appRoutes.about}>About Us</Link>,
-            ]}
-          />
-
-          <LinkGroup
-            classes="col-start-3 col-span-1"
-            title="Legal"
-            links={[
-              <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>,
-              <Link to={appRoutes.terms_donors}>
-                Terms of Use <br /> (Donors)
-              </Link>,
-              <Link to={appRoutes.terms_nonprofits}>
-                Terms of Use <br /> (Nonprofits)
-              </Link>,
-            ]}
-          />
-        </div>
-
-        <Newsletter classes="row-start-3 col-span-2 xl:row-start-1 xl:col-start-5" />
+      <div className="flex items-center gap-x-2 shrink-0 max-2xl:col-start-2">
+        <img
+          src={dappLogo}
+          height={40}
+          width={170}
+          className="object-contain my-4"
+          alt="logo"
+        />
+        <ExtLink href={guidestar.profile} className="shrink-0">
+          <img src={guidestar.seal} width={100} height={100} />
+        </ExtLink>
       </div>
 
-      <div className="col-span-2 xl:col-span-5 max-lg:flex-col py-2 px-4 md:px-10 md:py-4 flex gap-y-2 items-center justify-between text-[#316B9C] font-medium bg-[#F1FAFF]">
-        <p className="text-[0.93rem] text-center">
-          © Copyright {new Date().getFullYear()} {APP_NAME}, A Registered
-          Charitable 501(c)(3) (EIN 87-3758939)
-        </p>
-        <Socials />
+      <div className="justify-self-center 2xl:justify-self-start order-3 2xl:order-2 max-2xl:col-span-full grid max-2xl:justify-items-center">
+        <Socials classes="order-3 2xl:order-1 max-2xl:mt-4" />
+        <div className="flex items-center max-2xl:justify-center flex-wrap my-2 order-2">
+          <Link
+            className="underline pr-2 text-gray 2xl:border-r border-gray"
+            to={appRoutes.privacy_policy}
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            className="underline px-2 text-gray 2xl:border-r border-gray"
+            to="#"
+          >
+            Security
+          </Link>
+          <Link
+            className="underline px-2 text-gray @sm/links:text-nowrap order-5 @md/links:order-none "
+            to={appRoutes.terms_donors}
+          >
+            Terms of Use (Donors)
+          </Link>
+          <Link
+            className="underline px-2 text-gray 2xl:border-r border-gray"
+            to={appRoutes.about}
+          >
+            About Us
+          </Link>
+          <a
+            className="underline px-2 text-gray 2xl:border-r border-gray"
+            href={INTERCOM_HELP}
+          >
+            FAQs
+          </a>
+          <Link
+            className="underline px-2 text-gray 2xl:border-r border-gray @sm/links:text-nowrap"
+            to={appRoutes.terms_nonprofits}
+          >
+            Terms of Use (Nonprofits)
+          </Link>
+        </div>
+        <Copyright classes="order-1 2xl:order-3 max-2xl:text-center" />
       </div>
+
+      <Newsletter classes="2xl:justify-self-end 2xl:order-3 order-2 max-2xl:col-start-2" />
     </footer>
   );
 }
 
-type LinkGroupProps = {
-  links: ReactNode[];
-  title: string;
-  classes?: string;
-};
-function LinkGroup({ links, title, classes = "" }: LinkGroupProps) {
+function Copyright({ classes = "" }) {
   return (
-    <div className={`grid gap-2 content-start ${classes}`}>
-      <p className="font-semibold text-blue-d1 uppercase">{title}</p>
-      <ul className="contents text-sm text-gray">
-        {links.map((link, idx) => (
-          <li className="contents hover:underline" key={idx}>
-            {link}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <p className={`text-[0.93rem] flex max-xl:flex-col text-gray ${classes}`}>
+      <span>
+        © Copyright {new Date().getFullYear()} {APP_NAME}
+      </span>
+      <span className="hidden 2xl:inline">,</span>{" "}
+      <span>A Registered Charitable 501(c)(3) (EIN 87-3758939)</span>
+    </p>
   );
 }
-
-export default Footer;

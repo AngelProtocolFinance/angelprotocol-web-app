@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import type { MetaFunction } from "@vercel/remix";
+import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
@@ -7,7 +8,6 @@ import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 import { DonationFormInfo } from "./donation-form-info";
 import { Feature } from "./feature";
-import { Footer } from "./footer";
 import Testimonials from "./testimonials";
 import { Top } from "./top";
 
@@ -21,7 +21,7 @@ export default function Component() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <div
-        className="sticky top-[-1px] z-50"
+        className="sticky top-[-1px] z-50 bg-white"
         ref={(node) => {
           if (!node) return;
           const observer = new IntersectionObserver(
@@ -64,7 +64,7 @@ export default function Component() {
       <div className="my-20 xl:my-40">
         <BottomCta className="max-w-4xl w-full justify-self-center px-10" />
       </div>
-      <Footer />
+      <Footer classes="xl:container xl:mx-auto px-10" />
     </main>
   );
 }

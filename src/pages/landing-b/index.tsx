@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import type { MetaFunction } from "@vercel/remix";
+import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
@@ -7,7 +8,6 @@ import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 // import { DonationFormInfo } from "./donation-form-info";
 import { Feature } from "./feature";
-import { Footer } from "./footer";
 import { ProbSol } from "./prob-sol";
 import { Top } from "./top";
 // import { Footer } from "./footer";
@@ -64,7 +64,7 @@ export default function Component() {
       <div className="bg-gradient-to-bl from-lilac/50 via-transparent to-transparent mb-40 px-10">
         <BottomCta className="max-w-2xl xl:max-w-4xl mx-auto" />
       </div>
-      <Footer />
+      <Footer classes="xl:container xl:mx-auto px-10" />
     </main>
   );
 }
