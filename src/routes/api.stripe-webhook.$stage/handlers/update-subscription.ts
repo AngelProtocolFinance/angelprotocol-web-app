@@ -4,7 +4,6 @@ import type { Subscription } from "@better-giving/donation/subscription";
 import { toPrettyAmount } from "@better-giving/helpers";
 import { TxBuilder } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
-import { buildDonationMsg } from "routes/helpers/db";
 import type Stripe from "stripe";
 import { getDonationIntent, sendMessage } from "../helpers";
 import { TransactWriteCommand, apes } from ".server/aws/db";
@@ -99,6 +98,9 @@ export async function handleUpdateSubscription({
     transactionId: paymentIntent.id,
     usdValue: settledAmt,
     hideBgTip: meta.hideBgTip === "true",
+    // Donation message
+    donor_message: meta.donor_message,
+    donor_public: meta.donor_public === "true",
     // KYC
     title: meta.title,
     kycEmail: meta.kycEmail ?? meta.email,
@@ -136,23 +138,6 @@ export async function handleUpdateSubscription({
     builder.del({
       TableName: tables.on_hold_donations,
       Key: { transactionId: meta.transactionId } satisfies Donation.PrimaryKey,
-    });
-  }
-
-  // Create donation message if applicable
-  if (meta.kycEmail && meta.donor_public) {
-    const recipient_id = meta.fund_id ? meta.fund_id : `${meta.endowmentId}`;
-    builder.put({
-      TableName: tables.donation_messages,
-      Item: buildDonationMsg({
-        date: meta.transactionDate,
-        donor_id: meta.kycEmail,
-        donor_message: meta.donor_message ?? "",
-        donor_name: meta.fullName,
-        recipient_id,
-        transaction_id: paymentIntent.id,
-        usd_value: +meta.usdValue,
-      }),
     });
   }
 
