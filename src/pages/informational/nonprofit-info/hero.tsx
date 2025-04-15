@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import { AboutVideo } from "components/about-video";
+import { Video, videos } from "components/video";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 
@@ -38,7 +38,10 @@ export default function Hero({ className = "" }) {
           </Link>
         </div>
       </div>
-      <AboutVideo classes="max-w-2xl @6xl:max-w-auto order-1 @6xl:order-2 w-full self-center" />
+      <Video
+        classes="max-w-2xl @6xl:max-w-auto order-1 @6xl:order-2 w-full self-center"
+        vid={videos.about}
+      />
       {/* <Image
         src={benefits.donors[1].img}
         width={420}
