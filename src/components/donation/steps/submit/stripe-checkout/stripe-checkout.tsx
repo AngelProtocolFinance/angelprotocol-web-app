@@ -41,8 +41,11 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     viaId: "fiat",
     viaName: "Stripe",
     donor_public: fvDonor.isPublic,
-    donor_message: fvDonor.publicMsg,
   };
+
+  if (fvDonor.publicMsg) {
+    intent.donor_message = fvDonor.publicMsg;
+  }
 
   if (honorary.honoraryFullName) {
     intent.tribute = {

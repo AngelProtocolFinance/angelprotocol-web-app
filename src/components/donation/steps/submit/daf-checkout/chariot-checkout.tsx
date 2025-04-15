@@ -101,7 +101,9 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
   /** save actual grant amount and reflect in Summary form */
   const [adjusted, setAdjusted] = useState<AdjustedAmounts>();
-  const [withDonorMsg, setWithDonorMsg] = useState(false);
+  const [withDonorMsg, setWithDonorMsg] = useState(
+    props.donor.publicMsg.length > 0
+  );
   const withHonorary = watch("withHonorary");
   const withTributeNotif = watch("withTributeNotif");
   const fvCoverFee = watch("coverFee");
