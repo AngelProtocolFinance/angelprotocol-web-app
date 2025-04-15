@@ -6,6 +6,8 @@ import {
   Form,
 } from "components/form";
 import { List } from "components/selector";
+import { Eraser, PenToolIcon } from "lucide-react";
+import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { mixed, string } from "yup";
@@ -47,6 +49,7 @@ export default function SummaryForm({
   method,
 }: Props) {
   const CUSTOM_MSG_MAX_LENGTH = 250;
+  const PUBLIC_MSG_MAX_LENGTH = 500;
   const {
     handleSubmit,
     watch,
@@ -63,6 +66,10 @@ export default function SummaryForm({
       schema<FV>({
         firstName: string().required("Please enter your first name"),
         lastName: string().required("Please enter your last name"),
+        publicMsg: string().max(
+          PUBLIC_MSG_MAX_LENGTH,
+          `max ${PUBLIC_MSG_MAX_LENGTH} characters`
+        ),
         email: string()
           .required("Please enter your email")
           .email("Please check your email for correctness"),
@@ -95,6 +102,9 @@ export default function SummaryForm({
     ),
   });
 
+  const [withDonorMsg, setWithDonorMsg] = useState<boolean>(
+    donor.publicMsg.length > 0
+  );
   const { field: title } = useController<FV, "title">({
     name: "title",
     control,
@@ -104,6 +114,8 @@ export default function SummaryForm({
   const withHonorary = watch("withHonorary");
   const withTributeNotif = watch("withTributeNotif");
   const customMsg = watch("tributeNotif.fromMsg");
+  const isPublic = watch("isPublic");
+  const publicMsg = watch("publicMsg");
 
   return (
     <Form
@@ -155,8 +167,49 @@ export default function SummaryForm({
         error={errors.email?.message}
         required
       />
+      <div className="col-span-full flex gap-x-2 flex-wrap gap-y-1 items-center">
+        <CheckField
+          {...register("isPublic", { onChange: () => setWithDonorMsg(false) })}
+        >
+          Share my support publicly
+        </CheckField>
+        {isPublic && (
+          <button
+            onClick={() => setWithDonorMsg((p) => !p)}
+            type="button"
+            className={`${withDonorMsg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"} font-semibold normal-case flex items-center gap-x-1 text-xs`}
+          >
+            {withDonorMsg ? (
+              <Eraser size={12} className="shrink-0" />
+            ) : (
+              <PenToolIcon size={12} className="rotate-z-270 shrink-0" />
+            )}
+            <span>{withDonorMsg ? "Remove" : "Add"} testimony</span>
+          </button>
+        )}
+      </div>
+      {isPublic && withDonorMsg && (
+        <div className="col-span-full">
+          <p
+            data-exceed={errors.publicMsg?.type === "max"}
+            className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
+          >
+            {/** customMsg becomes undefined when unmounted */}
+            {publicMsg?.length ?? 0}/{PUBLIC_MSG_MAX_LENGTH}
+          </p>
+          <textarea
+            {...register("publicMsg", { shouldUnregister: true })}
+            aria-invalid={!!errors.publicMsg?.message}
+            className="field-input w-full text-base font-semibold"
+          />
+          <p className="text-red text-xs empty:hidden text-right">
+            {errors.publicMsg?.message}
+          </p>
+        </div>
+      )}
+
       {(method === "crypto" || method === "stripe") && (
-        <CheckField {...register("coverFee")} classes="col-span-full">
+        <CheckField {...register("coverFee")} classes="col-span-full mt-4">
           Cover payment processing fees for your donation{" "}
           <span className="text-gray text-sm">
             (&nbsp;{nonprofitName} receives the full amount&nbsp;)
@@ -264,7 +317,7 @@ export default function SummaryForm({
                 className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
               >
                 {/** customMsg becomes undefined when unmounted */}
-                {customMsg?.length}/{CUSTOM_MSG_MAX_LENGTH}
+                {customMsg?.length ?? 0}/{CUSTOM_MSG_MAX_LENGTH}
               </p>
             </div>
           )}

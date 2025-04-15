@@ -1,4 +1,5 @@
 import { useLoaderData } from "@remix-run/react";
+import { DonorMsgs } from "components/donor-msgs";
 import { RichText } from "components/rich-text";
 import { useProfileContext } from "../../profile-context";
 import Container from "../common/container";
@@ -30,6 +31,7 @@ export default function GeneralInfo() {
         {media.length > 0 ? (
           <Container title="Media">{<Media media={media} />}</Container>
         ) : null}
+        <DonorMsgs id={profile.id.toString()} />
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
     </div>

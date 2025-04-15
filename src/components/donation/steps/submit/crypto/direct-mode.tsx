@@ -48,7 +48,13 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     recipient: init.recipient.id,
     source: init.source,
     donor: toDonor(fvDonor),
+    donor_public: fvDonor.isPublic,
   };
+
+  if (fvDonor.publicMsg) {
+    intent.donor_message = fvDonor.publicMsg;
+  }
+
   if (honorary.honoraryFullName) {
     intent.tribute = {
       fullName: honorary.honoraryFullName,
