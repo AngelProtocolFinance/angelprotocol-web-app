@@ -1,12 +1,30 @@
-import poster from "assets/images/about-video-preview.webp";
+import aboutPoster from "assets/images/about-video-preview.webp";
 import { useEffect, useRef, useState } from "react";
 import subtitle from "./about-video.vtt";
 
 type VideoStatus = "loading" | "error" | "loaded";
 
-const videoUrl =
-  "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/about-better-giving-HXqlfIWwctto66xyOTStih3rWj9Ajg";
-export const AboutVideo = ({ classes = "" }) => {
+interface Vid {
+  url: string;
+  poster: string;
+}
+interface Props {
+  classes?: string;
+  vid: Vid;
+}
+
+export const videos = {
+  about: {
+    url: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/about-better-giving-HXqlfIWwctto66xyOTStih3rWj9Ajg",
+    poster: aboutPoster,
+  },
+  donation_calculator: {
+    url: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/donation-calculator-SZju4lCvUjU6HUYWi2adrQVR9NDCaz",
+    poster: "assets/images/about-video-preview.webp",
+  },
+};
+
+export const Video = ({ classes = "", vid }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isIntersecting, setIsIntersecting] = useState<boolean>(false);
@@ -67,8 +85,8 @@ export const AboutVideo = ({ classes = "" }) => {
             </div>
           )}
           <video
-            poster={poster}
-            src={videoUrl}
+            poster={vid.poster}
+            src={vid.url}
             ref={videoRef}
             className={`absolute top-0 left-0 w-full h-full object-cover`}
             playsInline

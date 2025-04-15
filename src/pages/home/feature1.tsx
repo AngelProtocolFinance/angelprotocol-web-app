@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
-import { AboutVideo } from "components/about-video";
 import Image from "components/image";
+import { Video, videos } from "components/video";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
@@ -52,7 +52,7 @@ export function Feature1({ className = "" }) {
         long-term financial sustainability.
       </p>
 
-      <AboutVideo classes="max-w-2xl justify-self-center p-4" />
+      <Video classes="max-w-2xl justify-self-center p-4" vid={videos.about} />
 
       <ul className="mt-20 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (
