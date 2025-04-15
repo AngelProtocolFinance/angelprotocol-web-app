@@ -86,7 +86,9 @@ export const initDonorTitleOption: OptionType<FormDonor["title"]["value"]> = {
   value: "",
 };
 
-export const toDonor = (fv: FormDonor): Donor => {
+export const toDonor = (
+  fv: Omit<FormDonor, "publicMsg" | "isPublic">
+): Donor => {
   return {
     title: fv.title.value,
     email: fv.email,

@@ -356,11 +356,14 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     .filter(Boolean)
                     .join(", "),
                   ukTaxResident: meta.ukTaxResident,
-                  isPublic: true,
-                  publicMsg: "",
                 }),
                 source: props.init.source,
+                donor_public: props.donor.isPublic,
               };
+
+              if (props.donor.publicMsg) {
+                intent.donor_message = props.donor.publicMsg;
+              }
 
               if (props.details.program.value) {
                 intent.program = {
