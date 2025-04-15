@@ -102,7 +102,9 @@ export default function SummaryForm({
     ),
   });
 
-  const [withDonorMsg, setWithDonorMsg] = useState(false);
+  const [withDonorMsg, setWithDonorMsg] = useState<boolean>(
+    donor.publicMsg.length > 0
+  );
   const { field: title } = useController<FV, "title">({
     name: "title",
     control,
