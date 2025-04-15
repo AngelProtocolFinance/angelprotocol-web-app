@@ -3,11 +3,11 @@ import instagram from "assets/icons/social/instagram.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
 import x from "assets/icons/social/x.webp";
 import youtube from "assets/icons/social/youtube.webp";
-import ExtLink from "../ext-link";
+import ExtLink from "components/ext-link";
 
-export default function Socials() {
+export default function Socials({ classes = "" }) {
   return (
-    <div className="flex items-center gap-3 md:gap-6">
+    <div className={`flex items-center gap-3 md:gap-6 ${classes}`}>
       <ExtLink
         href="https://www.linkedin.com/company/better-giving/"
         className="hover:scale-110 active:scale-110"
