@@ -6,11 +6,11 @@ export const GENERIC_ERROR_MESSAGE = `An unexpected error occurred and has been 
 export const BYTES_IN_MB = 1e6;
 
 export const PROCESSING_RATES = {
-  chariot: 0.029,
-  stripe: 0.022,
+  chariot: 0.04,
+  stripe: 0.04,
   /** $cents */
   stripe_flat: 0.3,
-  crypto: 0.01,
+  crypto: 0.04,
 };
 
 export const DONATION_INCREMENTS: Increment[] = [

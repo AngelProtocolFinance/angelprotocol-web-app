@@ -19,6 +19,9 @@ export const loader: LoaderFunction = async ({ params }) => {
   const [post] = await wp
     .get<Wordpress.Post[]>(`posts?slug=${params.slug}`)
     .json();
+
+  if (!post) throw new Response("Not Found", { status: 404 });
+
   const media = wp.get<Wordpress.Media>(`media/${post.featured_media}`).json();
   const author = wp.get<Wordpress.User>(`users/${post.author}`).json();
   const [m, a] = await Promise.all([media, author]);

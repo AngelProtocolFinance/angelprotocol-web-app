@@ -1,5 +1,5 @@
 // import HeroBottom from "../@sections/HeroBottom";
-import Footer from "components/footer";
+import { Footer } from "components/footer";
 import Animation from "./animation";
 import Benefits from "./benefits";
 import Blogs from "./blogs";
@@ -17,7 +17,7 @@ export { clientLoader } from "api/cache";
 export default function Home() {
   // const page1 = useLoaderData() as EndowsPage;
   return (
-    <div className="grid">
+    <div className="grid pb-4">
       <Header classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
       {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
