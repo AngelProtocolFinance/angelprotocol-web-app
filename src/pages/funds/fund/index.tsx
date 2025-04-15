@@ -4,6 +4,7 @@ import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
+import { DonorMsgs } from "components/donor-msgs";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, statusFn } from "components/fundraiser";
 import Image from "components/image";
@@ -16,7 +17,6 @@ import { metas } from "helpers/seo";
 import { unpack } from "helpers/unpack";
 import { ArrowLeft } from "lucide-react";
 import type { LoaderData } from "./api";
-import { DonorMsgs } from "./donor-msgs";
 import { Share } from "./share";
 import { Video } from "./video";
 
@@ -132,7 +132,7 @@ export default function Fund() {
             </div>
           ))}
 
-          <DonorMsgs id="1" classes="mt-4" />
+          <DonorMsgs id={fund.id} classes="mt-4" />
         </div>
         <div
           id="info-card"

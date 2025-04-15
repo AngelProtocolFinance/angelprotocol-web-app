@@ -1,10 +1,10 @@
 import { useLoaderData } from "@remix-run/react";
+import { DonorMsgs } from "components/donor-msgs";
 import { RichText } from "components/rich-text";
 import { useProfileContext } from "../../profile-context";
 import Container from "../common/container";
 import type { LoaderData } from "./api";
 import DetailsColumn from "./details-column";
-import { DonorMsgs } from "./donor-msgs";
 import Media from "./media";
 import Programs from "./programs";
 
