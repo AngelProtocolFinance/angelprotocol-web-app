@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import { Video, videos } from "components/video";
+import { Video, videos } from "components/video/video";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 

@@ -1,6 +1,6 @@
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
-import { Video, videos } from "components/video";
+import { Video, videos } from "components/video/video";
 
 type TListItem = {
   title1: string;
