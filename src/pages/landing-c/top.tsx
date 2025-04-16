@@ -1,7 +1,14 @@
-import { Link } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
+import { Modal } from "components/modal";
 import { Video, videos } from "components/video/video";
+import { useState } from "react";
+import { useHubspotForm } from "./use-hubspot-form";
 
 export function Top({ classes = "" }) {
+  const navigate = useNavigate();
+  const { state } = useHubspotForm();
+  const [open, setOpen] = useState(false);
+
   return (
     <section
       className={`${classes} grid grid-cols-1 lg:grid-cols-2 gap-12 p-4 @container`}
@@ -31,6 +38,21 @@ export function Top({ classes = "" }) {
           investing, and no platform fees — all set up in just minutes.
         </p>
 
+        {open && (
+          <Modal
+            classes="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
+            open={open}
+            onClose={() => setOpen(false)}
+          >
+            <div
+              className="hs-form-frame"
+              data-region="eu1"
+              data-form-id="17bb2a2b-322c-4a8c-b8d6-50bb1a59881c"
+              data-portal-id="24900163"
+            />
+          </Modal>
+        )}
+
         <div className="grid @md:grid-cols-2 gap-6 mb-6">
           <p className="max-lg:border-t-1 max-lg:pt-2 lg:border-r-4 max-lg:text-center text-right border-blue pr-4">
             80% of donors cover fees* — keep more of every gift
@@ -46,12 +68,18 @@ export function Top({ classes = "" }) {
           </p>
         </div>
 
-        <Link
-          to="/donation-calculator"
+        <button
+          onClick={() => {
+            if (state !== "loaded") {
+              return navigate("/donation-calculator");
+            }
+            setOpen(true);
+          }}
+          type="button"
           className="mt-4 btn btn-blue text-center lg:text-right lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
         >
           See Your Savings - Launch the Calculator
-        </Link>
+        </button>
 
         <p className="max-lg:text-center text-right text-sm text-gray mt-2">
           "It takes less than a minute — find out how much you're leaving on the
