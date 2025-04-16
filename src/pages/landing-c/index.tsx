@@ -40,9 +40,7 @@ export default function Component() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
-        <Top classes="xl:container xl:mx-auto px-10 bg-transparent" />
-      </div>
+      <Top classes="xl:container xl:mx-auto px-10 bg-transparent mt-16 mb-28" />
 
       <Footer classes="xl:container xl:mx-auto px-10" />
     </main>
