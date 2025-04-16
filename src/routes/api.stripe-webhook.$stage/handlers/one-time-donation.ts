@@ -70,6 +70,9 @@ export async function handleOneTimeDonation({
     intentId: meta.transactionId,
     usdValue: +meta.amount / latestUsdRate,
     hideBgTip: meta.hideBgTip === "true",
+    // Donation message
+    donor_message: meta.donor_message,
+    donor_public: meta.donor_public === "true",
     // KYC
     title: meta.title,
     kycEmail: meta.kycEmail ?? meta.email,

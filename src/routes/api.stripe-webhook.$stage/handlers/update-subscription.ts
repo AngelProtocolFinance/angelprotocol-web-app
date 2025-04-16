@@ -98,6 +98,9 @@ export async function handleUpdateSubscription({
     transactionId: paymentIntent.id,
     usdValue: settledAmt,
     hideBgTip: meta.hideBgTip === "true",
+    // Donation message
+    donor_message: meta.donor_message,
+    donor_public: meta.donor_public === "true",
     // KYC
     title: meta.title,
     kycEmail: meta.kycEmail ?? meta.email,
