@@ -1,6 +1,7 @@
-import aboutPoster from "assets/images/about-video-preview.webp";
 import { useEffect, useRef, useState } from "react";
-import aboutSubtitle from "./about-video.vtt";
+import aboutSubtitle from "./about.vtt";
+import aboutPoster from "./about.webp";
+import bgCalculatorPoster from "./bg-calculator.webp";
 
 type VideoStatus = "loading" | "error" | "loaded";
 
@@ -22,7 +23,7 @@ export const videos = {
   },
   donation_calculator: {
     url: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/donation-calculator-SZju4lCvUjU6HUYWi2adrQVR9NDCaz",
-    poster: "assets/images/about-video-preview.webp",
+    poster: bgCalculatorPoster,
   },
 };
 

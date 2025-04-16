@@ -1,4 +1,4 @@
-import { Video, videos } from "components/video";
+import { Video, videos } from "components/video/video";
 
 type IFeatureItem = {
   leftText: string;
