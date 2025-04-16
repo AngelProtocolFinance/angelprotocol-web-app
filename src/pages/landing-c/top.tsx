@@ -23,14 +23,14 @@ export function Top({ classes = "" }) {
 
       {/* Content section */}
       <div className="flex flex-col justify-center">
-        <div className="text-blue font-bold text-xl mb-2">
+        <div className="text-blue font-bold text-lg mb-2">
           SAVE MORE. RAISE MORE. DO MORE.
         </div>
 
         <div className="relative mb-6">
-          <h1 className="text-5xl font-bold font-heading">Smarter Donations</h1>
-          <h1 className="text-5xl font-bold font-heading">Bigger Impact</h1>
-          <div className="absolute -left-16 top-16 rotate-[-20deg] font-gochi text-lg">
+          <h1 className="text-4.5xl">Smarter Donations</h1>
+          <h1 className="text-4.5xl">Bigger Impact</h1>
+          <div className="absolute -left-16 top-16 rotate-[-20deg] font-gochi">
             Watch how it works!
           </div>
           <div className="absolute -left-12 top-10">
@@ -43,13 +43,13 @@ export function Top({ classes = "" }) {
             >
               <path
                 d="M10 30C25 15 30 5 30 5"
-                stroke="black"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
               />
               <path
                 d="M10 5L30 5L30 25"
-                stroke="black"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -59,7 +59,7 @@ export function Top({ classes = "" }) {
           <div className="absolute right-0 -z-10 top-12 bg-blue-l4 h-6 w-64"></div>
         </div>
 
-        <p className="mb-8 text-lg">
+        <p className="mb-8 text-gray-d4">
           Every day you're paying more in fees and missing out on growth. Better
           Giving helps turn that around with modern donation options, automatic
           investing, and no platform fees — all set up in just minutes.
@@ -77,11 +77,11 @@ export function Top({ classes = "" }) {
           />
         </div>
 
-        <button className="btn btn-blue rounded-full py-4 px-8 text-lg w-full md:w-auto self-center mb-4">
+        <button className="btn btn-blue rounded-full py-4 px-8 w-full md:w-auto self-center mb-4">
           See Your Savings - Launch the Calculator
         </button>
 
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-xs text-gray">
           *"It takes less than a minute — find out how much you're leaving on
           the table."
         </p>
