@@ -48,7 +48,7 @@ export function Top({ classes = "" }) {
 
         <Link
           to="/donation-calculator"
-          className="btn btn-blue text-center lg:text-right lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
+          className="mt-4 btn btn-blue text-center lg:text-right lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
         >
           See Your Savings - Launch the Calculator
         </Link>
