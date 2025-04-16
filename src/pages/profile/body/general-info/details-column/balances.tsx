@@ -1,5 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
-import { humanize } from "helpers/decimal";
+import { toUsd } from "helpers/to-usd";
 import type { EndowmentBalances } from "types/npo-balance";
 
 export default function Balances() {
@@ -19,7 +19,7 @@ function Balance(props: { title: string; amount: number }) {
         {props.title}
       </p>
       <p className="font-normal text-lg text-gray dark:text-gray">
-        ${humanize(props.amount)}
+        {toUsd(props.amount)}
       </p>
     </div>
   );

@@ -1,7 +1,7 @@
 import type { Program as IProgram } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
 import { RichText } from "components/rich-text";
-import { prettyUsd } from "helpers/decimal";
+import { toUsd } from "helpers/to-usd";
 import Container from "../common/container";
 import Milestones from "./milestones";
 
@@ -41,7 +41,7 @@ function TargetProgress({ target, total }: ProgressProps) {
     <div className="m-6 border-t border-gray-l3 pt-2 font-heading">
       <div className="mb-2 flex items-center gap-2">
         <p className="font-medium">Target raise:</p>
-        <p className="font-bold text-gray">${prettyUsd(target)}</p>
+        <p className="font-bold text-gray">{toUsd(target)}</p>
       </div>
       <div className="h-4 rounded-full bg-gray-l4 relative overflow-clip">
         <div className="h-full bg-green" style={{ width: `${progressPct}%` }} />
@@ -49,7 +49,7 @@ function TargetProgress({ target, total }: ProgressProps) {
       {total ? (
         <div className="mt-1 flex items-center gap-2 text-sm text-gray">
           <p>Donations received</p>
-          <p>${prettyUsd(total)}</p>
+          <p>{toUsd(total)}</p>
         </div>
       ) : null}
     </div>
