@@ -63,6 +63,7 @@
     "@paypal/react-paypal-js": "8.3.0",
     "@radix-ui/react-slider": "1.1.2",
     "@radix-ui/react-tooltip": "1.1.2",
+    "@react-pdf/renderer": "4.3.0",
     "@remix-run/node": "2.15.2",
     "@remix-run/react": "2.15.2",
     "@remix-run/server-runtime": "2.15.2",

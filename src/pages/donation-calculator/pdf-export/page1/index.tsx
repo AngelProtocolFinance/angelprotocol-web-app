@@ -1,26 +1,64 @@
-import bg from "assets/images/bettergiving-logo-white.svg";
+import { Image as Img, Page, Text as T, View as V } from "@react-pdf/renderer";
+import bg from "assets/images/bettergiving-logo-white.png";
 import Image from "components/image";
 import { format } from "date-fns";
 import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
-import type { View } from "../../types";
+import type { View as TView } from "../../types";
 import { Usd } from "../../usd";
+import { fs, spc, styles } from "../styles";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
 
-export const methods: { [id: string]: string } = {
-  "credit-card": "Credit Card",
-  ach: "ACH (Bank Transfer)",
-  "digital-wallets": "Digital Wallets",
-  crypto: "Crypto",
-  stocks: "Stocks",
-  daf: "DAF",
-};
-
 interface Props {
-  v: View;
+  v: TView;
 }
+
 export function Page1({ v }: Props) {
+  return (
+    <Page style={styles.page} size="A4">
+      <V
+        style={{
+          ...styles.header,
+          padding: spc._3,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <V style={{ width: "70%" }}>
+          <T
+            wrap
+            style={{
+              textTransform: "uppercase",
+              fontWeight: 700,
+            }}
+          >
+            Your Nonprofit’s Financial
+          </T>
+          <T
+            style={{
+              textTransform: "uppercase",
+              fontWeight: 700,
+            }}
+          >
+            Advantage with Better giving
+          </T>
+          <T style={{ fontSize: fs.sm, marginTop: spc._1 }}>
+            Donation Processing & Investment Impact Calculator
+          </T>
+          <T style={{ fontSize: fs.dxs }}>
+            Generated on {format(new Date(), "PP")}
+          </T>
+        </V>
+        <Img src={bg} style={{ width: 120 }} />
+      </V>
+    </Page>
+  );
+}
+
+export function PageOne({ v }: Props) {
   return (
     <div className="w-full">
       <div className="bg-blue p-6">
