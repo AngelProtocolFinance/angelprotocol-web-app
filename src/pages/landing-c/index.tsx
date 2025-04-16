@@ -5,12 +5,11 @@ import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { Top } from "./top";
-
 export const meta: MetaFunction = () =>
   metas({
-    title: "Simplify Fundraising, Maximize Impact",
+    title: "Access the Better Giving Donation Calculator",
     description:
-      "Simplify Fundraising, Maximize Impact: Claim Your Better Giving Account Today",
+      "Ready to reduce fees and grow your nonprofit’s impact? Access Better Giving’s Donation Calculator to see how smarter processing and crypto donations can help you raise more — starting now.",
   });
 export default function Component() {
   return (
