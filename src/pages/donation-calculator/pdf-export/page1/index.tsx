@@ -2,7 +2,8 @@ import bg from "assets/images/bettergiving-logo-white.svg";
 import Image from "components/image";
 import { format } from "date-fns";
 import { toUsd } from "helpers/to-usd";
-import { type View, methodsArr } from "../../types";
+import { methodsArr } from "types/donation-calculator";
+import type { View } from "../../types";
 import { Usd } from "../../usd";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
@@ -78,7 +79,7 @@ export function Page1({ v }: Props) {
           </div>
           <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
             <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
-            <DonationMethods activeMethods={v.ogDonTypes} />
+            <DonationMethods activeMethods={v.ogDonMethods} />
           </div>
         </div>
 

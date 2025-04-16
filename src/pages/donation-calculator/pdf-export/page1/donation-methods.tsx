@@ -1,4 +1,4 @@
-import { methods } from "../../types";
+import { methods } from "types/donation-calculator";
 
 export function DonationMethods({
   activeMethods,
