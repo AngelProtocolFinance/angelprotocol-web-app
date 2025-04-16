@@ -93,6 +93,9 @@ export const Video = ({ classes = "", vid }: Props) => {
             className={`absolute top-0 left-0 w-full h-full object-cover`}
             playsInline
             controls
+            autoPlay
+            muted
+            loop
             preload="none"
             onError={handleError}
           >
