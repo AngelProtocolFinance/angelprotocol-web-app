@@ -1,6 +1,20 @@
 import { StyleSheet } from "@react-pdf/renderer";
 
-const blue = "#2d89c8";
+export const blue = {
+  d7: "#050c1a",
+  d6: "#0d1e30",
+  d5: "#112840",
+  d4: "#1a3f60",
+  d3: "#194b73",
+  d2: "#1a578a",
+  d1: "#1e6dab",
+  _: "#2d89c8",
+  l1: "#54a5dc",
+  l2: "#8fc4ea",
+  l3: "#c4def3",
+  l4: "#e4effa",
+  l5: "#f2f8fd",
+};
 
 export const spc = {
   _0: 0,
@@ -67,7 +81,7 @@ export const styles = StyleSheet.create({
     padding: spc._3,
   },
   header: {
-    backgroundColor: blue,
+    backgroundColor: blue._,
     color: "white",
   },
 });

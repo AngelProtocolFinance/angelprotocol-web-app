@@ -6,7 +6,7 @@ import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
 import { Usd } from "../../usd";
-import { fs, spc, styles } from "../styles";
+import { fs, blue, spc, styles } from "../styles";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
 
@@ -33,6 +33,7 @@ export function Page1({ v }: Props) {
             style={{
               textTransform: "uppercase",
               fontWeight: 700,
+              fontSize: fs.xl,
             }}
           >
             Your Nonprofit’s Financial
@@ -41,6 +42,7 @@ export function Page1({ v }: Props) {
             style={{
               textTransform: "uppercase",
               fontWeight: 700,
+              fontSize: fs.xl,
             }}
           >
             Advantage with Better giving
@@ -53,6 +55,29 @@ export function Page1({ v }: Props) {
           </T>
         </V>
         <Img src={bg} style={{ width: 120 }} />
+      </V>
+      <V
+        style={{
+          padding: spc._3,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <T
+          style={{
+            color: blue._,
+            fontWeight: 600,
+            fontSize: fs.base,
+          }}
+        >
+          YOUR CURRENT ONLINE DONATIONS
+        </T>
+        <V
+          style={{ height: spc._0_5, backgroundColor: blue._, width: spc._64 }}
+        />
+        <div className="h-0.5 bg-blue" />
       </V>
     </Page>
   );
