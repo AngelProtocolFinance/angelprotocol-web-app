@@ -1,5 +1,6 @@
 import type { View } from "../types";
 import { Chart, Pg, T, V } from "./components";
+import { Splits } from "./splits";
 import { fs, blue, fw, w } from "./styles";
 
 const row1 = [
@@ -64,8 +65,7 @@ export function Page2({ v }: { v: View }) {
           fontWeight: fw.b,
           paddingHorizontal: w["10"],
           fontSize: fs.lg,
-          marginTop: w["6"],
-          marginBottom: w["6"],
+          marginVertical: w["14"],
         }}
       >
         Compound Growth = Exponential Impact
@@ -92,16 +92,17 @@ export function Page2({ v }: { v: View }) {
           });
 
           return (
-            <V key={row.key} style={{ width: "50%" }}>
-              <T style={{ fontSize: fs.base }}>{row.label}</T>
-              {/* <Splits
-                classes="justify-self-end"
+            <V key={row.key} style={{ width: "50%", display: "flex" }}>
+              <T style={{ fontSize: fs.base, marginLeft: w["6"] + 2 }}>
+                {row.label}
+              </T>
+              <Splits
                 notGranted={v.notGranted}
                 savings={v.savings}
                 savingsRate={v.savingsRate}
                 invested={v.invested}
                 investedRate={v.investedRate}
-              /> */}
+              />
 
               <Chart points={data} width={310} height={260} />
             </V>
@@ -131,15 +132,16 @@ export function Page2({ v }: { v: View }) {
 
           return (
             <V key={row.key} style={{ width: "50%" }}>
-              <T style={{ fontSize: fs.base }}>{row.label}</T>
-              {/* <Splits
-                classes="justify-self-end"
+              <T style={{ fontSize: fs.base, marginLeft: w["6"] + 2 }}>
+                {row.label}
+              </T>
+              <Splits
                 notGranted={v.notGranted}
                 savings={v.savings}
                 savingsRate={v.savingsRate}
                 invested={v.invested}
                 investedRate={v.investedRate}
-              /> */}
+              />
 
               <Chart points={data} width={310} height={260} />
             </V>

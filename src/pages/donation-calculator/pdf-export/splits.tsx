@@ -1,6 +1,7 @@
 import { toUsd } from "helpers/to-usd";
+import { T, V } from "./components";
+import { fs, fw, w } from "./styles";
 interface Props {
-  classes?: string;
   notGranted: number;
   savingsRate: number;
   investedRate: number;
@@ -8,39 +9,37 @@ interface Props {
   invested: number;
 }
 
-export function Splits({ classes = "", ...v }: Props) {
+export function Splits(v: Props) {
   return (
-    <div
-      className={`text-xs flex @max-lg:flex-col justify-end gap-4 ${classes}`}
+    <V
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: 4,
+        fontSize: fs.sm - 2,
+        marginTop: w["6"],
+      }}
     >
-      <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
-        <p className="text-right font-semibold text-xs">
+      <V style={{ width: "31%" }}>
+        <T style={{ textAlign: "right", fontWeight: fw.sb }}>
           Annual Saved/Invested
-        </p>
-        <span className="text-right">{toUsd(v.notGranted)}</span>
-      </div>
-      <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
-        <p>
-          <span className="text-right font-semibold text-xs mr-1">
-            Annual Saved
-          </span>
-          <span className="text-right">
-            ({(v.savingsRate * 100).toFixed(0)}%)
-          </span>
-        </p>
-        <span className="text-right">{toUsd(v.savings)}</span>
-      </div>
-      <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
-        <p>
-          <span className="text-right font-semibold text-xs mr-1">
-            Annual Invested
-          </span>
-          <span className="text-right">
-            ({(v.investedRate * 100).toFixed(0)}%)
-          </span>
-        </p>
-        <span className="text-right">{toUsd(v.invested)}</span>
-      </div>
-    </div>
+        </T>
+        <T style={{ textAlign: "right" }}>{toUsd(v.notGranted)}</T>
+      </V>
+      <V style={{ width: "31%" }}>
+        <T style={{ textAlign: "right" }}>
+          <T style={{ fontWeight: fw.sb }}>Annual Saved</T> (
+          {(v.savingsRate * 100).toFixed(0)}%)
+        </T>
+        <T style={{ textAlign: "right" }}>{toUsd(v.savings)}</T>
+      </V>
+      <V style={{ width: "31%" }}>
+        <T style={{ textAlign: "right" }}>
+          <T style={{ fontWeight: fw.sb }}>Annual Invested</T> (
+          {(v.investedRate * 100).toFixed(0)}%)
+        </T>
+        <T style={{ textAlign: "right" }}>{toUsd(v.invested)}</T>
+      </V>
+    </V>
   );
 }
