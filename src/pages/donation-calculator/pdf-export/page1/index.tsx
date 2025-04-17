@@ -1,4 +1,3 @@
-import { Image as Img, Page, Text as T, View as V } from "@react-pdf/renderer";
 import bg from "assets/images/bettergiving-logo-white.png";
 import Image from "components/image";
 import { format } from "date-fns";
@@ -6,7 +5,8 @@ import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
 import { Usd } from "../../usd";
-import { fs, blue, spc, styles } from "../styles";
+import { Img, Pg, T, V } from "../components";
+import { blue, styles } from "../styles";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
 
@@ -16,11 +16,11 @@ interface Props {
 
 export function Page1({ v }: Props) {
   return (
-    <Page style={styles.page} size="A4">
+    <Pg size="A4">
       <V
         style={{
           ...styles.header,
-          padding: spc._3,
+          padding: 14,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -33,7 +33,7 @@ export function Page1({ v }: Props) {
             style={{
               textTransform: "uppercase",
               fontWeight: 700,
-              fontSize: fs.xl,
+              fontSize: 20,
             }}
           >
             Your Nonprofit’s Financial
@@ -42,15 +42,15 @@ export function Page1({ v }: Props) {
             style={{
               textTransform: "uppercase",
               fontWeight: 700,
-              fontSize: fs.xl,
+              fontSize: 20,
             }}
           >
             Advantage with Better giving
           </T>
-          <T style={{ fontSize: fs.sm, marginTop: spc._1 }}>
+          <T style={{ fontSize: 14, marginTop: 4 }}>
             Donation Processing & Investment Impact Calculator
           </T>
-          <T style={{ fontSize: fs.dxs }}>
+          <T style={{ fontSize: 12 }}>
             Generated on {format(new Date(), "PP")}
           </T>
         </V>
@@ -58,7 +58,7 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          padding: spc._3,
+          padding: 14,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -67,19 +67,64 @@ export function Page1({ v }: Props) {
       >
         <T
           style={{
-            color: blue._,
+            color: blue,
             fontWeight: 600,
-            fontSize: fs.base,
+            fontSize: 16,
           }}
         >
           YOUR CURRENT ONLINE DONATIONS
         </T>
-        <V
-          style={{ height: spc._0_5, backgroundColor: blue._, width: spc._64 }}
-        />
-        <div className="h-0.5 bg-blue" />
+        <V style={{ height: 2, backgroundColor: blue, width: 280 }} />
       </V>
-    </Page>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: 20,
+          gap: 20,
+          marginTop: -20,
+        }}
+      >
+        <V style={{ width: "50%", display: "flex", gap: 4 }}>
+          <V style={styles.kv}>
+            <T style={{ fontSize: 11 }}>Annual Online Donations</T>
+            <T style={{ fontSize: 10, fontWeight: 600 }}>{toUsd(v.amount)}</T>
+          </V>
+          <V style={styles.kv}>
+            <T style={{ fontSize: 11 }}>Avg. Processing Fees</T>
+            <T style={{ fontSize: 10, fontWeight: 600 }}>
+              {(v.ogProcessingFeeRate * 100).toFixed(2)}%
+            </T>
+          </V>
+        </V>
+        <V style={{ width: "50%", display: "flex", gap: 4 }}>
+          <V style={styles.kv}>
+            <T style={{ fontSize: 11 }}>Platform Fees</T>
+            <T style={{ fontSize: 10, fontWeight: 600 }}>
+              {(v.ogPlatformFeeRate * 100).toFixed(2)}%
+            </T>
+          </V>
+          <V style={styles.kv}>
+            <T style={{ fontSize: 11 }}>Annual Platform Subscription</T>
+            <T style={{ fontSize: 10, fontWeight: 600 }}>
+              {toUsd(v.ogSubsCost)}
+            </T>
+          </V>
+        </V>
+      </V>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: 20,
+          gap: 10,
+          marginTop: -35,
+        }}
+      >
+        <T style={{ fontSize: 11 }}>Accepted Donation Types</T>
+        <DonationMethods activeMethods={v.ogDonMethods} />
+      </V>
+    </Pg>
   );
 }
 

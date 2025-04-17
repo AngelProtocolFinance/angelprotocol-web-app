@@ -2,7 +2,6 @@ import { useSearchParams } from "@remix-run/react";
 import { ogInput, ogInputDefault } from "types/donation-calculator";
 import { safeParse } from "valibot";
 import { bgView } from "../bg-view";
-import "./fonts";
 import { Page1 } from "./page1";
 // import { Page2 } from "./page2";
 // import { Page3 } from "./page3";
