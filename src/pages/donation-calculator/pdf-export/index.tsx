@@ -24,12 +24,5 @@ export default function PdfExport() {
         </PDFViewer>
       )}
     </ClientOnly>
-
-    // <div className="w-[1300px] [&>div]:h-[1838.571px] mx-auto font-heading">
-    //   <Page1 v={view} />
-    //   <Page2 v={view} />
-    //   <Page3 />
-    //   <Page4 />
-    // </div>
   );
 }

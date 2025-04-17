@@ -38,6 +38,7 @@ export function ImpactCard(p: Props) {
           textAlign: "right",
           fontSize: 9,
           marginTop: 4,
+          paddingRight: 4,
         }}
       >
         Savings Account (4%)
@@ -49,42 +50,107 @@ export function ImpactCard(p: Props) {
           display: "flex",
           flexDirection: "row",
           marginTop: 2,
+          paddingRight: 4,
         }}
       >
         <T style={{ marginRight: 2 }}>Invested:</T>
         <T>{toUsd(p.liq)}</T>
       </V>
-      <p className="text-right px-2">
-        <span className="mr-2">Growth:</span>
-        <span>{toUsd(p.end.liq - p.liq)}</span>
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Balance:</span>
-        <span>{toUsd(p.end.liq)}</span>
-      </p>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: 9,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 2,
+          paddingRight: 4,
+        }}
+      >
+        <T style={{ marginRight: 2 }}>Growth:</T>
+        <T>{toUsd(p.end.liq - p.liq)}</T>
+      </V>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: 9,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 2,
+          paddingRight: 4,
+        }}
+      >
+        <T style={{ marginRight: 2 }}>Balance:</T>
+        <T>{toUsd(p.end.liq)}</T>
+      </V>
 
-      <p className="font-semibold text-right mt-6 px-2">
+      <T
+        style={{
+          fontWeight: 600,
+          textAlign: "right",
+          fontSize: 9,
+          marginTop: 4,
+          paddingRight: 4,
+        }}
+      >
         Investment Account (20%)
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Invested:</span>
-        <span>{toUsd(p.lock)}</span>
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Growth:</span>
-        <span className="text-green">{toUsd(p.end.lock - p.lock)}</span>
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Balance:</span>
-        <span>{toUsd(p.end.lock)}</span>
-      </p>
+      </T>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: 9,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 2,
+          paddingRight: 4,
+        }}
+      >
+        <T style={{ marginRight: 2 }}>Invested:</T>
+        <T>{toUsd(p.lock)}</T>
+      </V>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: 9,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 2,
+          paddingRight: 4,
+        }}
+      >
+        <T style={{ marginRight: 2 }}>Growth:</T>
+        <T style={{ color: "#10b981", fontWeight: 600 }}>
+          {toUsd(p.end.lock - p.lock)}
+        </T>
+      </V>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: 9,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 2,
+          paddingRight: 4,
+        }}
+      >
+        <T style={{ marginRight: 2 }}>Balance:</T>
+        <T>{toUsd(p.end.lock)}</T>
+      </V>
 
-      <p className="text-right px-2">
-        <span className="mr-2">Total Growth:</span>
-        <span className="text-green">{toUsd(p.total)}</span>
-      </p>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: 9,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 2,
+          paddingRight: 4,
+        }}
+      >
+        <T style={{ marginRight: 2 }}>Total Growth:</T>
+        <T style={{ color: "#10b981", fontWeight: 600 }}>{toUsd(p.total)}</T>
+      </V>
 
-      <V style={{ backgroundColor: "#ecfdf5", padding: 4, marginTop: 24 }}>
+      <V style={{ backgroundColor: "#ecfdf5", padding: 4, marginTop: 10 }}>
         <T
           style={{
             textAlign: "right",
