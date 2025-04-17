@@ -30,7 +30,7 @@ export function DonationMethods({
               width: w["6"],
               height: w["6"],
               borderRadius: w["6"],
-              backgroundColor: activeMethods.includes(id) ? blue : "white",
+              backgroundColor: activeMethods.includes(id) ? blue.d : "white",
               border: activeMethods.includes(id)
                 ? undefined
                 : "1px solid #94a3b8",

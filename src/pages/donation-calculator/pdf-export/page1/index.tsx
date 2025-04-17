@@ -5,7 +5,7 @@ import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
 import { A, Img, Pg, T, V } from "../components";
-import { fs, blue, fw, styles, w } from "../styles";
+import { fs, blue, fw, green, styles, w } from "../styles";
 import { Usd } from "../usd";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
@@ -76,7 +76,7 @@ export function Page1({ v }: Props) {
       >
         <T
           style={{
-            color: blue,
+            color: blue.d,
             fontWeight: fw.sb,
             fontSize: fs.lg,
             textTransform: "uppercase",
@@ -84,7 +84,7 @@ export function Page1({ v }: Props) {
         >
           Your current online donations
         </T>
-        <V style={{ height: w["2"], backgroundColor: blue, width: 322 }} />
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 322 }} />
       </V>
       <V
         style={{
@@ -175,7 +175,7 @@ export function Page1({ v }: Props) {
       >
         <T
           style={{
-            color: blue,
+            color: blue.d,
             fontWeight: fw.sb,
             fontSize: fs.lg,
             textTransform: "uppercase",
@@ -183,7 +183,7 @@ export function Page1({ v }: Props) {
         >
           Annual Donation Processing Impact With Better Giving
         </T>
-        <V style={{ height: 2, backgroundColor: blue, width: 145 }} />
+        <V style={{ height: 2, backgroundColor: blue.d, width: 145 }} />
       </V>
       <V
         style={{
@@ -267,7 +267,7 @@ export function Page1({ v }: Props) {
         style={{
           padding: w["10"],
           marginHorizontal: w["14"],
-          backgroundColor: "#ecfdf5",
+          backgroundColor: green.l5,
           display: "flex",
           alignItems: "center",
         }}
@@ -290,7 +290,7 @@ export function Page1({ v }: Props) {
       >
         <T
           style={{
-            color: blue,
+            color: blue.d,
             fontWeight: fw.sb,
             fontSize: fs.lg,
             textTransform: "uppercase",
@@ -298,7 +298,7 @@ export function Page1({ v }: Props) {
         >
           LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
         </T>
-        <V style={{ height: w["2"], backgroundColor: blue, width: 165 }} />
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 165 }} />
       </V>
       <T
         style={{

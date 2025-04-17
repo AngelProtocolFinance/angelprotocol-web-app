@@ -1,7 +1,7 @@
 import type { View } from "../types";
 import { Chart, Pg, T, V } from "./components";
 import { Splits } from "./splits";
-import { fs, blue, fw, w } from "./styles";
+import { fs, blue, fw, green, w } from "./styles";
 
 const row1 = [
   {
@@ -39,7 +39,7 @@ export function Page2({ v }: { v: View }) {
       >
         <T
           style={{
-            color: blue,
+            color: blue.d,
             fontWeight: fw.sb,
             fontSize: fs.xl - 4,
             textTransform: "uppercase",
@@ -47,12 +47,12 @@ export function Page2({ v }: { v: View }) {
         >
           Total 5 - 10 - 15 - 20 years financial advantage
         </T>
-        <V style={{ height: w["2"], backgroundColor: blue, width: 175 }} />
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 175 }} />
       </V>
       <T
         style={{
           paddingHorizontal: w["10"],
-          color: blue,
+          color: blue.d,
           fontWeight: fw.sb,
           fontSize: fs.xl - 4,
           textTransform: "uppercase",
@@ -172,12 +172,12 @@ export function Page2({ v }: { v: View }) {
               width: w["6"],
               height: w["6"],
               borderRadius: 999,
-              backgroundColor: "#61C554",
+              backgroundColor: green.l1,
               borderWidth: 1,
-              borderColor: "#2B9A28",
+              borderColor: green.d1,
             }}
           />
-          <T style={{ color: "#2B9A28" }}>Donation Processing Savings</T>
+          <T style={{ color: green.d1 }}>Donation Processing Savings</T>
         </V>
         <V
           style={{
@@ -212,12 +212,12 @@ export function Page2({ v }: { v: View }) {
               width: w["6"],
               height: w["6"],
               borderRadius: 999,
-              backgroundColor: "#7EB6FF",
+              backgroundColor: blue.l1,
               borderWidth: 1,
-              borderColor: blue,
+              borderColor: blue.d,
             }}
           />
-          <T style={{ color: "#7EB6FF" }}>Investment Returns</T>
+          <T style={{ color: blue.l1 }}>Investment Returns</T>
         </V>
         <V
           style={{
@@ -232,10 +232,10 @@ export function Page2({ v }: { v: View }) {
               width: w["6"],
               height: w["6"],
               borderRadius: 999,
-              backgroundColor: blue,
+              backgroundColor: blue.d,
             }}
           />
-          <T style={{ color: blue }}>Total Financial Advantage</T>
+          <T style={{ color: blue.d }}>Total Financial Advantage</T>
         </V>
       </V>
       <V

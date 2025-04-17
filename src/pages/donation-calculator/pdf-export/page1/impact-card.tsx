@@ -1,7 +1,7 @@
 import { toUsd } from "helpers/to-usd";
 import type { Growth } from "../../types";
 import { T, V } from "../components";
-import { fs, fw, w } from "../styles";
+import { fs, fw, green, w } from "../styles";
 
 interface Props extends Growth {
   yr: number;
@@ -10,7 +10,7 @@ interface Props extends Growth {
 export function ImpactCard(p: Props) {
   return (
     <V style={{ width: "33%" }}>
-      <V style={{ backgroundColor: "#ecfdf5", padding: w["4"] }}>
+      <V style={{ backgroundColor: green.l5, padding: w["4"] }}>
         <T
           style={{
             textAlign: "right",
@@ -25,7 +25,7 @@ export function ImpactCard(p: Props) {
           style={{
             textAlign: "right",
             fontWeight: fw.b,
-            color: "#10b981",
+            color: green.d,
             fontSize: fs.sm,
           }}
         >
@@ -119,7 +119,7 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Growth:</T>
-        <T style={{ color: "#10b981", fontWeight: fw.sb }}>
+        <T style={{ color: green.d, fontWeight: fw.sb }}>
           {toUsd(p.end.lock - p.lock)}
         </T>
       </V>
@@ -153,7 +153,7 @@ export function ImpactCard(p: Props) {
 
       <V
         style={{
-          backgroundColor: "#ecfdf5",
+          backgroundColor: green.l5,
           padding: w["4"],
           marginTop: w["10"],
         }}
@@ -172,7 +172,7 @@ export function ImpactCard(p: Props) {
           style={{
             textAlign: "right",
             fontWeight: fw.b,
-            color: "#10b981",
+            color: green.d,
             fontSize: fs.sm,
           }}
         >

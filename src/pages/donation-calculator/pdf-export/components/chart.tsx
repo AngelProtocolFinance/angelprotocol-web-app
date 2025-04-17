@@ -1,4 +1,5 @@
 import { G, Line, Path, Svg, Text as SvgText, View } from "@react-pdf/renderer";
+import { amber, blue, gray, green } from "../styles";
 
 interface Point {
   year: string;
@@ -102,7 +103,7 @@ export const Chart: React.FC<PDFChartProps> = ({
           y1={y}
           x2={margin.left}
           y2={y}
-          stroke="#666"
+          stroke={gray.d1}
           strokeWidth={1}
         />
         <SvgText
@@ -117,7 +118,7 @@ export const Chart: React.FC<PDFChartProps> = ({
           y1={y}
           x2={width - margin.right}
           y2={y}
-          stroke="#e0e0e0"
+          stroke={gray.l2}
           strokeWidth={0.5}
           strokeDasharray="3,3"
         />
@@ -168,29 +169,29 @@ export const Chart: React.FC<PDFChartProps> = ({
         {/* Savings area */}
         <Path
           d={generateAreaPath(["savings"])}
-          fill="#a7f3d0"
-          stroke="#059669"
+          fill={green.l3}
+          stroke={green.d1}
           strokeWidth={1}
         />
         {/* Liquid area (stacked on savings) */}
         <Path
           d={generateAreaPath(["savings", "liq"])}
-          fill="#fbbf24"
-          stroke="#f59e0b"
+          fill={amber.l1}
+          stroke={amber.d}
           strokeWidth={1}
         />
         {/* Locked area (stacked on savings + liquid) */}
         <Path
           d={generateAreaPath(["savings", "liq", "lock"])}
-          fill="#54a5dc"
-          stroke="#2d89c8"
+          fill={blue.l1}
+          stroke={blue.d}
           strokeWidth={1}
         />
         {/* Total line */}
         <Path
           d={generateLinePath("total")}
           fill="none"
-          stroke="#1e6dab"
+          stroke={blue.d1}
           strokeWidth={2}
         />
         {/* Axes */}
@@ -199,7 +200,7 @@ export const Chart: React.FC<PDFChartProps> = ({
           y1={height - margin.bottom}
           x2={width - margin.right}
           y2={height - margin.bottom}
-          stroke="#666"
+          stroke={gray.d1}
           strokeWidth={1}
         />
         <Line
@@ -207,7 +208,7 @@ export const Chart: React.FC<PDFChartProps> = ({
           y1={margin.top}
           x2={margin.left}
           y2={height - margin.bottom}
-          stroke="#666"
+          stroke={gray.d1}
           strokeWidth={1}
         />
         {yAxisTicks}
