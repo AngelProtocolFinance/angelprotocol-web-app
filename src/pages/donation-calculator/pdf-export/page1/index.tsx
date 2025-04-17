@@ -140,7 +140,7 @@ export function Page1({ v }: Props) {
         style={{
           marginTop: -w["4"],
           padding: w["10"],
-          marginHorizontal: w["20"],
+          marginHorizontal: w["14"],
           backgroundColor: "#f1f5f9",
           display: "flex",
           flexDirection: "row",
@@ -266,7 +266,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           padding: w["10"],
-          marginHorizontal: w["20"],
+          marginHorizontal: w["14"],
           backgroundColor: "#ecfdf5",
           display: "flex",
           alignItems: "center",

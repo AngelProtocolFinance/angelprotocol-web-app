@@ -38,7 +38,7 @@ export function ImpactCard(p: Props) {
           fontWeight: fw.sb,
           textAlign: "right",
           fontSize: fs.sm,
-          marginTop: w["4"],
+          marginTop: w["6"],
           paddingRight: w["4"],
         }}
       >
@@ -89,7 +89,7 @@ export function ImpactCard(p: Props) {
           fontWeight: fw.sb,
           textAlign: "right",
           fontSize: fs.sm,
-          marginTop: w["4"],
+          marginTop: w["6"],
           paddingRight: w["4"],
         }}
       >
