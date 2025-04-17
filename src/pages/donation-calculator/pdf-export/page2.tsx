@@ -148,6 +148,121 @@ export function Page2({ v }: { v: View }) {
           );
         })}
       </V>
+      <V
+        style={{
+          fontSize: fs.sm,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          paddingHorizontal: w["10"],
+          marginTop: w["6"],
+          gap: w["10"],
+        }}
+      >
+        <V
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: w["2"],
+          }}
+        >
+          <V
+            style={{
+              width: w["6"],
+              height: w["6"],
+              borderRadius: 999,
+              backgroundColor: "#61C554",
+              borderWidth: 1,
+              borderColor: "#2B9A28",
+            }}
+          />
+          <T style={{ color: "#2B9A28" }}>Donation Processing Savings</T>
+        </V>
+        <V
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: w["2"],
+          }}
+        >
+          <V
+            style={{
+              width: w["6"],
+              height: w["6"],
+              borderRadius: 999,
+              backgroundColor: "#FFCA70",
+              borderWidth: 1,
+              borderColor: "#D89F36",
+            }}
+          />
+          <T style={{ color: "#FFCA70" }}>Savings Returns</T>
+        </V>
+        <V
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: w["2"],
+          }}
+        >
+          <V
+            style={{
+              width: w["6"],
+              height: w["6"],
+              borderRadius: 999,
+              backgroundColor: "#7EB6FF",
+              borderWidth: 1,
+              borderColor: blue,
+            }}
+          />
+          <T style={{ color: "#7EB6FF" }}>Investment Returns</T>
+        </V>
+        <V
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: w["2"],
+          }}
+        >
+          <V
+            style={{
+              width: w["6"],
+              height: w["6"],
+              borderRadius: 999,
+              backgroundColor: blue,
+            }}
+          />
+          <T style={{ color: blue }}>Total Financial Advantage</T>
+        </V>
+      </V>
+      <V
+        style={{
+          marginTop: w["6"],
+          color: "#4F5C68",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          paddingHorizontal: w["6"],
+        }}
+      >
+        {/* You'll need to import or create an Info icon component for react-pdf */}
+        {/* Info icon component */}
+        <V
+          style={{
+            width: 16,
+            height: 16,
+            marginRight: w["2"],
+            color: "#D89F36",
+          }}
+        />
+        <T>
+          Investment yields based on average annual returns over past 5 years
+          (4% for Savings Account, 20% for Sustainability Fund)
+        </T>
+      </V>
     </Pg>
   );
 }
