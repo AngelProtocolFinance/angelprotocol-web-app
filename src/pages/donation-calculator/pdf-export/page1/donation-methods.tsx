@@ -1,6 +1,6 @@
 import { methods } from "types/donation-calculator";
 import { T, V } from "../components";
-import { blue } from "../styles";
+import { fs, blue, spc } from "../styles";
 
 export function DonationMethods({
   activeMethods,
@@ -10,8 +10,8 @@ export function DonationMethods({
       style={{
         flexDirection: "row",
         display: "flex",
-        gap: 10,
-        fontSize: 9,
+        gap: spc["10"],
+        fontSize: fs.sm,
         alignItems: "center",
       }}
     >
@@ -21,7 +21,7 @@ export function DonationMethods({
           style={{
             flexDirection: "row",
             display: "flex",
-            gap: 2,
+            gap: spc["2"],
             alignItems: "center",
           }}
         >

@@ -5,7 +5,7 @@ import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
 import { A, Img, Pg, T, V } from "../components";
-import { blue, pd, styles } from "../styles";
+import { fs, blue, fw, pd, spc, styles } from "../styles";
 import { Usd } from "../usd";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
@@ -39,8 +39,8 @@ export function Page1({ v }: Props) {
             wrap
             style={{
               textTransform: "uppercase",
-              fontWeight: 700,
-              fontSize: 20,
+              fontWeight: fw.b,
+              fontSize: fs["2xl"],
             }}
           >
             Your Nonprofit’s Financial
@@ -48,16 +48,16 @@ export function Page1({ v }: Props) {
           <T
             style={{
               textTransform: "uppercase",
-              fontWeight: 700,
-              fontSize: 20,
+              fontWeight: fw.b,
+              fontSize: fs["2xl"],
             }}
           >
             Advantage with Better giving
           </T>
-          <T style={{ fontSize: 14, marginTop: 4 }}>
+          <T style={{ fontSize: fs.xl, marginTop: spc["4"], fontWeight: fw.n }}>
             Donation Processing & Investment Impact Calculator
           </T>
-          <T style={{ fontSize: 10 }}>
+          <T style={{ fontSize: fs.base }}>
             Generated on {format(new Date(), "PP")}
           </T>
         </V>
@@ -77,32 +77,34 @@ export function Page1({ v }: Props) {
         <T
           style={{
             color: blue,
-            fontWeight: 600,
-            fontSize: 15,
+            fontWeight: fw.sb,
+            fontSize: fs.xl,
             textTransform: "uppercase",
           }}
         >
           Your current online donations
         </T>
-        <V style={{ height: 2, backgroundColor: blue, width: 295 }} />
+        <V style={{ height: spc["2"], backgroundColor: blue, width: 295 }} />
       </V>
       <V
         style={{
           display: "flex",
           flexDirection: "row",
           padding: pd.l3,
-          gap: 20,
-          marginTop: -20,
+          gap: spc["20"],
+          marginTop: spc["-20"],
         }}
       >
-        <V style={{ width: "50%", display: "flex", gap: 4 }}>
+        <V style={{ width: "50%", display: "flex", gap: spc["4"] }}>
           <V style={styles.kv}>
-            <T style={{ fontSize: 10 }}>Annual Online Donations</T>
-            <T style={{ fontSize: 9, fontWeight: 600 }}>{toUsd(v.amount)}</T>
+            <T style={{ fontSize: fs.base }}>Annual Online Donations</T>
+            <T style={{ fontSize: fs.sm, fontWeight: 600 }}>
+              {toUsd(v.amount)}
+            </T>
           </V>
           <V style={styles.kv}>
-            <T style={{ fontSize: 10 }}>Avg. Processing Fees</T>
-            <T style={{ fontSize: 9, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.base }}>Avg. Processing Fees</T>
+            <T style={{ fontSize: fs.sm, fontWeight: 600 }}>
               {(v.ogProcessingFeeRate * 100).toFixed(2)}%
             </T>
           </V>
@@ -308,7 +310,7 @@ export function Page1({ v }: Props) {
         Your Nonprofit's Resources
       </T>
 
-      <V style={{ fontSize: 11, paddingHorizontal: pd.l4, marginTop: 4 }}>
+      <V style={{ fontSize: 11, paddingHorizontal: spc[20], marginTop: 4 }}>
         <T>
           <T>Savings & Investment Allocation:</T>
           <T style={{ fontWeight: 600 }}> 10%</T> of Annual Donations Allocated
