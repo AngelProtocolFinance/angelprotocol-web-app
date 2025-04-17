@@ -304,7 +304,7 @@ export function Page1({ v }: Props) {
         style={{
           paddingHorizontal: w["10"],
           fontSize: fs.base,
-          marginTop: -w["10"] + 2,
+          marginTop: -w["6"],
           fontWeight: fw.sb,
         }}
       >
