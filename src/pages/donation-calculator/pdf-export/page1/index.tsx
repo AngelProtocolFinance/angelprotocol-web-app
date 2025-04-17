@@ -1,12 +1,13 @@
 import bg from "assets/images/bettergiving-logo-white.png";
 import Image from "components/image";
+import { BASE_URL } from "constants/env";
 import { format } from "date-fns";
 import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
-import { Usd } from "../../usd";
-import { Img, Pg, T, V } from "../components";
+import { A, Img, Pg, T, V } from "../components";
 import { blue, styles } from "../styles";
+import { Usd } from "../usd";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
 
@@ -16,7 +17,14 @@ interface Props {
 
 export function Page1({ v }: Props) {
   return (
-    <Pg size="A4">
+    <Pg
+      size="A4"
+      style={{
+        display: "flex",
+        alignContent: "flex-start",
+        flexDirection: "column",
+      }}
+    >
       <V
         style={{
           ...styles.header,
@@ -54,7 +62,9 @@ export function Page1({ v }: Props) {
             Generated on {format(new Date(), "PP")}
           </T>
         </V>
-        <Img src={bg} style={{ width: 120 }} />
+        <A href={BASE_URL}>
+          <Img src={bg} style={{ width: 120 }} />
+        </A>
       </V>
       <V
         style={{
@@ -69,10 +79,11 @@ export function Page1({ v }: Props) {
           style={{
             color: blue,
             fontWeight: 600,
-            fontSize: 16,
+            fontSize: 15,
+            textTransform: "uppercase",
           }}
         >
-          YOUR CURRENT ONLINE DONATIONS
+          Your current online donations
         </T>
         <V style={{ height: 2, backgroundColor: blue, width: 280 }} />
       </V>
@@ -123,6 +134,36 @@ export function Page1({ v }: Props) {
       >
         <T style={{ fontSize: 11 }}>Accepted Donation Types</T>
         <DonationMethods activeMethods={v.ogDonMethods} />
+      </V>
+      <V
+        style={{
+          marginTop: -5,
+          padding: 10,
+          marginHorizontal: 20,
+          backgroundColor: "#f1f5f9",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
+      >
+        <V>
+          <T style={{ fontSize: 11 }}>Current Amount Received</T>
+          <V
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              gap: 4,
+              marginTop: 2,
+              fontWeight: 700,
+            }}
+          >
+            <Usd relative={v.amount}>{v.ogNet}</Usd>{" "}
+            <Usd parens classes="text-lg sm:text-xl">
+              {-v.ogDeductions}
+            </Usd>
+          </V>
+        </V>
       </V>
     </Pg>
   );
