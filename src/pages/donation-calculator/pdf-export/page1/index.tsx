@@ -5,7 +5,7 @@ import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
 import { A, Img, Pg, T, V } from "../components";
-import { fs, blue, fw, pd, spc, styles } from "../styles";
+import { fs, blue, fw, styles, w } from "../styles";
 import { Usd } from "../usd";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
@@ -27,7 +27,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           ...styles.header,
-          padding: pd.l2,
+          padding: w["10"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -40,7 +40,7 @@ export function Page1({ v }: Props) {
             style={{
               textTransform: "uppercase",
               fontWeight: fw.b,
-              fontSize: fs["2xl"],
+              fontSize: fs.xl,
             }}
           >
             Your Nonprofit’s Financial
@@ -49,12 +49,12 @@ export function Page1({ v }: Props) {
             style={{
               textTransform: "uppercase",
               fontWeight: fw.b,
-              fontSize: fs["2xl"],
+              fontSize: fs.xl,
             }}
           >
             Advantage with Better giving
           </T>
-          <T style={{ fontSize: fs.xl, marginTop: spc["4"], fontWeight: fw.n }}>
+          <T style={{ fontSize: fs.lg, marginTop: w["4"], fontWeight: fw.n }}>
             Donation Processing & Investment Impact Calculator
           </T>
           <T style={{ fontSize: fs.base }}>
@@ -67,7 +67,7 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          padding: pd.l2,
+          padding: w["10"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -78,47 +78,47 @@ export function Page1({ v }: Props) {
           style={{
             color: blue,
             fontWeight: fw.sb,
-            fontSize: fs.xl,
+            fontSize: fs.lg,
             textTransform: "uppercase",
           }}
         >
           Your current online donations
         </T>
-        <V style={{ height: spc["2"], backgroundColor: blue, width: 295 }} />
+        <V style={{ height: w["2"], backgroundColor: blue, width: 322 }} />
       </V>
       <V
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: pd.l3,
-          gap: spc["20"],
-          marginTop: spc["-20"],
+          padding: w["14"],
+          gap: w["20"],
+          marginTop: -w["20"] - 2,
         }}
       >
-        <V style={{ width: "50%", display: "flex", gap: spc["4"] }}>
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
           <V style={styles.kv}>
             <T style={{ fontSize: fs.base }}>Annual Online Donations</T>
-            <T style={{ fontSize: fs.sm, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               {toUsd(v.amount)}
             </T>
           </V>
           <V style={styles.kv}>
             <T style={{ fontSize: fs.base }}>Avg. Processing Fees</T>
-            <T style={{ fontSize: fs.sm, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               {(v.ogProcessingFeeRate * 100).toFixed(2)}%
             </T>
           </V>
         </V>
-        <V style={{ width: "50%", display: "flex", gap: 4 }}>
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
           <V style={styles.kv}>
-            <T style={{ fontSize: 10 }}>Platform Fees</T>
-            <T style={{ fontSize: 9, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.base }}>Platform Fees</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               {(v.ogPlatformFeeRate * 100).toFixed(2)}%
             </T>
           </V>
           <V style={styles.kv}>
-            <T style={{ fontSize: 10 }}>Annual Platform Subscription</T>
-            <T style={{ fontSize: 9, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.base }}>Annual Platform Subscription</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               {toUsd(v.ogSubsCost)}
             </T>
           </V>
@@ -128,19 +128,19 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: pd.l3,
-          gap: 10,
-          marginTop: -35,
+          padding: w["14"],
+          gap: w["10"],
+          marginTop: -w["20"] - 2,
         }}
       >
-        <T style={{ fontSize: 10 }}>Accepted Donation Types</T>
+        <T style={{ fontSize: fs.base }}>Accepted Donation Types</T>
         <DonationMethods activeMethods={v.ogDonMethods} />
       </V>
       <V
         style={{
-          marginTop: -5,
-          padding: pd.l1,
-          marginHorizontal: 20,
+          marginTop: -w["4"],
+          padding: w["10"],
+          marginHorizontal: w["20"],
           backgroundColor: "#f1f5f9",
           display: "flex",
           flexDirection: "row",
@@ -148,15 +148,15 @@ export function Page1({ v }: Props) {
         }}
       >
         <V>
-          <T style={{ fontSize: 10 }}>Current Amount Received</T>
+          <T style={{ fontSize: fs.base }}>Current Amount Received</T>
           <V
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-end",
-              gap: 4,
-              marginTop: 2,
-              fontWeight: 700,
+              gap: w["4"],
+              marginTop: w["2"],
+              fontWeight: fw.b,
             }}
           >
             <Usd relative={v.amount}>{v.ogNet}</Usd>{" "}
@@ -166,7 +166,7 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          padding: 14,
+          padding: w["10"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -176,44 +176,44 @@ export function Page1({ v }: Props) {
         <T
           style={{
             color: blue,
-            fontWeight: 600,
-            fontSize: 15,
+            fontWeight: fw.sb,
+            fontSize: fs.lg,
             textTransform: "uppercase",
           }}
         >
           Annual Donation Processing Impact With Better Giving
         </T>
-        <V style={{ height: 2, backgroundColor: blue, width: 110 }} />
+        <V style={{ height: 2, backgroundColor: blue, width: 145 }} />
       </V>
       <V
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: pd.l3,
-          gap: 20,
-          marginTop: -20,
+          padding: w["14"],
+          gap: w["20"],
+          marginTop: -w["20"],
         }}
       >
-        <V style={{ width: "50%", display: "flex", gap: 4 }}>
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
           <V style={styles.kv}>
-            <T style={{ fontSize: 10 }}>Fee Savings</T>
-            <T style={{ fontSize: 9, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.base }}>Fee Savings</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               <Usd sign>{v.feeSavings}</Usd>
             </T>
           </V>
           <V style={styles.kv}>
-            <T style={{ fontSize: 10 }}>
+            <T style={{ fontSize: fs.base }}>
               Added Donations from New Payment Types
             </T>
-            <T style={{ fontSize: 9, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               <Usd sign>{v.ogMissedFromDonTypes}</Usd>
             </T>
           </V>
         </V>
-        <V style={{ width: "50%", display: "flex", gap: 4 }}>
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
           <V style={styles.kv}>
-            <T style={{ fontSize: 10 }}>Platform Subscription Savings</T>
-            <V style={{ fontSize: 9, fontWeight: 600 }}>
+            <T style={{ fontSize: fs.base }}>Platform Subscription Savings</T>
+            <V style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               <Usd sign>{v.ogSubsCost}</Usd>
             </V>
           </V>
@@ -223,19 +223,19 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: pd.l3,
-          gap: 10,
-          marginTop: -35,
+          padding: w["14"],
+          gap: w["10"],
+          marginTop: -w["20"] - 2,
         }}
       >
-        <T style={{ fontSize: 10 }}>Accepted Donation Types</T>
+        <T style={{ fontSize: fs.base }}>Accepted Donation Types</T>
         <DonationMethods activeMethods={methodsArr} />
       </V>
       <V
         style={{
-          marginTop: -5,
-          padding: pd.l1,
-          marginHorizontal: pd.l3,
+          marginTop: -w["4"],
+          padding: w["10"],
+          marginHorizontal: w["14"],
           backgroundColor: "#f1f5f9",
           display: "flex",
           flexDirection: "row",
@@ -243,15 +243,17 @@ export function Page1({ v }: Props) {
         }}
       >
         <V>
-          <T style={{ fontSize: 10, fontWeight: 600 }}>With Better Giving</T>
+          <T style={{ fontSize: fs.base, fontWeight: fw.sb }}>
+            With Better Giving
+          </T>
           <V
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-end",
-              gap: 4,
-              marginTop: 2,
-              fontWeight: 700,
+              gap: w["4"],
+              marginTop: w["2"],
+              fontWeight: fw.b,
             }}
           >
             <Usd relative={v.ogNet}>{v.bgNet}</Usd>{" "}
@@ -263,23 +265,23 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          padding: pd.l1,
-          marginHorizontal: 20,
+          padding: w["10"],
+          marginHorizontal: w["20"],
           backgroundColor: "#ecfdf5",
           display: "flex",
           alignItems: "center",
         }}
       >
-        <T style={{ fontSize: 11, textAlign: "center" }}>
+        <T style={{ fontSize: fs.base, textAlign: "center" }}>
           Total annual advantage
         </T>
-        <V style={{ fontWeight: 700 }}>
+        <V style={{ fontWeight: fw.b }}>
           <Usd sign>{v.advantage}</Usd>s
         </V>
       </V>
       <V
         style={{
-          padding: 14,
+          padding: w["10"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -289,53 +291,59 @@ export function Page1({ v }: Props) {
         <T
           style={{
             color: blue,
-            fontWeight: 600,
-            fontSize: 15,
+            fontWeight: fw.sb,
+            fontSize: fs.lg,
             textTransform: "uppercase",
           }}
         >
           LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
         </T>
-        <V style={{ height: 2, backgroundColor: blue, width: 125 }} />
+        <V style={{ height: w["2"], backgroundColor: blue, width: 165 }} />
       </V>
       <T
         style={{
-          paddingHorizontal: pd.l2,
-          fontSize: 11,
-          marginTop: -10,
-          fontWeight: 600,
+          paddingHorizontal: w["10"],
+          fontSize: fs.base,
+          marginTop: -w["10"] + 2,
+          fontWeight: fw.sb,
         }}
       >
         How Strategic Saving and Allocation Through Better Giving Could Grow
         Your Nonprofit's Resources
       </T>
 
-      <V style={{ fontSize: 11, paddingHorizontal: spc[20], marginTop: 4 }}>
+      <V
+        style={{
+          fontSize: fs.base,
+          paddingHorizontal: w["20"],
+          marginTop: w["4"],
+        }}
+      >
         <T>
           <T>Savings & Investment Allocation:</T>
-          <T style={{ fontWeight: 600 }}> 10%</T> of Annual Donations Allocated
-          to Savings/Investments
+          <T style={{ fontWeight: fw.sb }}> 10%</T> of Annual Donations
+          Allocated to Savings/Investments
         </T>
-        <T style={{ fontSize: 9 }}>
+        <T style={{ fontSize: fs.sm - 1 }}>
           ({toUsd(v.amount)}{" "}
-          <T style={{ fontWeight: 600 }}>with Better Giving</T> ×{" "}
+          <T style={{ fontWeight: fw.sb }}>with Better Giving</T> ×{" "}
           {(v.notGrantedRate * 100).toFixed(2)}% = {toUsd(v.notGranted)})
         </T>
 
-        <T style={{ marginTop: 3, marginBottom: 2 }}>
+        <T style={{ marginTop: w["6"], marginBottom: w["2"] }}>
           Allocation Between Accounts:
         </T>
-        <V style={{ paddingHorizontal: 2, fontSize: 10 }}>
+        <V style={{ paddingHorizontal: w["2"], fontSize: fs.base }}>
           <T>
             &#8226;{" "}
-            <T style={{ fontWeight: 600 }}>
+            <T style={{ fontWeight: fw.sb }}>
               {(v.savingsRate * 100).toFixed(2)}%
             </T>{" "}
             to High-Yield Savings Account (4% Annual Yield)
           </T>
           <T>
             &#8226;{" "}
-            <T style={{ fontWeight: 600 }}>
+            <T style={{ fontWeight: fw.sb }}>
               {(v.investedRate * 100).toFixed(2)}%
             </T>{" "}
             to Sustainability Fund (20% Average Annual Return)
@@ -346,8 +354,7 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: pd.l3,
-          marginTop: -8,
+          padding: w["14"],
         }}
       >
         <ImpactCard yr={1} {...v.projection[0]} />

@@ -1,6 +1,6 @@
 import { methods } from "types/donation-calculator";
 import { T, V } from "../components";
-import { fs, blue, spc } from "../styles";
+import { fs, blue, w } from "../styles";
 
 export function DonationMethods({
   activeMethods,
@@ -10,7 +10,7 @@ export function DonationMethods({
       style={{
         flexDirection: "row",
         display: "flex",
-        gap: spc["10"],
+        gap: w["10"],
         fontSize: fs.sm,
         alignItems: "center",
       }}
@@ -21,15 +21,15 @@ export function DonationMethods({
           style={{
             flexDirection: "row",
             display: "flex",
-            gap: spc["2"],
+            gap: w["2"],
             alignItems: "center",
           }}
         >
           <V
             style={{
-              width: 7,
-              height: 7,
-              borderRadius: 7,
+              width: w["6"],
+              height: w["6"],
+              borderRadius: w["6"],
               backgroundColor: activeMethods.includes(id) ? blue : "white",
               border: activeMethods.includes(id)
                 ? undefined
