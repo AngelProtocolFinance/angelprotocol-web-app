@@ -6,7 +6,6 @@ interface Props {
   parens?: true;
   sign?: true;
   relative?: number;
-  classes?: string;
 }
 export function Usd({ parens, relative = 0, sign, children: num }: Props) {
   const is_plus = num !== relative && num > relative;

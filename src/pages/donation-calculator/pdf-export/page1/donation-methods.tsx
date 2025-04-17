@@ -11,7 +11,7 @@ export function DonationMethods({
         flexDirection: "row",
         display: "flex",
         gap: 10,
-        fontSize: 10,
+        fontSize: 9,
         alignItems: "center",
       }}
     >
@@ -21,8 +21,7 @@ export function DonationMethods({
           style={{
             flexDirection: "row",
             display: "flex",
-            gap: 4,
-            fontSize: 10,
+            gap: 2,
             alignItems: "center",
           }}
         >
