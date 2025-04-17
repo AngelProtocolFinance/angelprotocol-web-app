@@ -1,7 +1,7 @@
 import type { View } from "../types";
 import { Chart, Pg, T, V } from "./components";
 import { Splits } from "./splits";
-import { fs, blue, fw, green, w } from "./styles";
+import { fs, amber, blue, fw, gray, green, w } from "./styles";
 
 const row1 = [
   {
@@ -192,12 +192,12 @@ export function Page2({ v }: { v: View }) {
               width: w["6"],
               height: w["6"],
               borderRadius: 999,
-              backgroundColor: "#FFCA70",
+              backgroundColor: amber.l1,
               borderWidth: 1,
-              borderColor: "#D89F36",
+              borderColor: amber.d1,
             }}
           />
-          <T style={{ color: "#FFCA70" }}>Savings Returns</T>
+          <T style={{ color: amber.l1 }}>Savings Returns</T>
         </V>
         <V
           style={{
@@ -241,21 +241,19 @@ export function Page2({ v }: { v: View }) {
       <V
         style={{
           marginTop: w["6"],
-          color: "#4F5C68",
+          color: gray.d1,
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
           paddingHorizontal: w["6"],
         }}
       >
-        {/* You'll need to import or create an Info icon component for react-pdf */}
-        {/* Info icon component */}
         <V
           style={{
             width: 16,
             height: 16,
             marginRight: w["2"],
-            color: "#D89F36",
+            color: amber.d1,
           }}
         />
         <T>

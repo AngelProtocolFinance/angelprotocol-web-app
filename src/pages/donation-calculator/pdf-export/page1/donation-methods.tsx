@@ -1,6 +1,6 @@
 import { methods } from "types/donation-calculator";
 import { T, V } from "../components";
-import { fs, blue, w } from "../styles";
+import { fs, blue, gray, w } from "../styles";
 
 export function DonationMethods({
   activeMethods,
@@ -33,7 +33,7 @@ export function DonationMethods({
               backgroundColor: activeMethods.includes(id) ? blue.d : "white",
               border: activeMethods.includes(id)
                 ? undefined
-                : "1px solid #94a3b8",
+                : `1px solid ${gray.l1}`,
             }}
           />
           <T>{name}</T>

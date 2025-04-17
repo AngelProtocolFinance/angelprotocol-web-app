@@ -5,7 +5,7 @@ import { toUsd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
 import { A, Img, Pg, T, V } from "../components";
-import { fs, blue, fw, green, styles, w } from "../styles";
+import { fs, blue, fw, gray, green, styles, w } from "../styles";
 import { Usd } from "../usd";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
@@ -141,7 +141,7 @@ export function Page1({ v }: Props) {
           marginTop: -w["4"],
           padding: w["10"],
           marginHorizontal: w["14"],
-          backgroundColor: "#f1f5f9",
+          backgroundColor: gray.l4,
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-end",
@@ -236,7 +236,7 @@ export function Page1({ v }: Props) {
           marginTop: -w["4"],
           padding: w["10"],
           marginHorizontal: w["14"],
-          backgroundColor: "#f1f5f9",
+          backgroundColor: gray.l4,
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-end",

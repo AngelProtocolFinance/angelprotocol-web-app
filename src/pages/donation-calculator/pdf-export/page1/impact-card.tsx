@@ -148,7 +148,7 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Total Growth:</T>
-        <T style={{ color: "#10b981", fontWeight: fw.b }}>{toUsd(p.total)}</T>
+        <T style={{ color: green.d, fontWeight: fw.b }}>{toUsd(p.total)}</T>
       </V>
 
       <V
