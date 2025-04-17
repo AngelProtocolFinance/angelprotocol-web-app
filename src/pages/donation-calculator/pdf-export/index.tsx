@@ -8,8 +8,8 @@ import { Page2 } from "./page2";
 
 import { Document, PDFViewer } from "@react-pdf/renderer";
 import { ClientOnly } from "remix-utils/client-only";
+import { Page3 } from "./page3";
 import { styles } from "./styles";
-// import { Page3 } from "./page3";
 
 export default function PdfExport() {
   const [params] = useSearchParams();
@@ -22,6 +22,7 @@ export default function PdfExport() {
           <Document style={styles.doc}>
             <Page1 v={view} />
             <Page2 v={view} />
+            <Page3 />
           </Document>
         </PDFViewer>
       )}

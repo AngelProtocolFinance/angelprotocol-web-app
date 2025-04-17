@@ -1,9 +1,7 @@
-import { Check } from "lucide-react";
+import { T, V } from "../components";
+import { fs, blue, fw, gray, green, w } from "../styles";
 
-interface Props {
-  classes?: string;
-}
-export function Benefits({ classes = "" }: Props) {
+export function Benefits() {
   const benefits = [
     {
       title: "80% Donor Fee Coverage",
@@ -28,20 +26,47 @@ export function Benefits({ classes = "" }: Props) {
   ];
 
   return (
-    <div className={`${classes} h-fit bg-white px-24`}>
-      <h3 className="text-4xl font-bold mb-8">Better Giving Benefits</h3>
+    <V style={{ paddingHorizontal: w["14"], paddingTop: w["10"] }}>
+      <T
+        style={{
+          fontSize: fs.xl,
+          fontWeight: fw.b,
+          marginBottom: w["6"],
+          color: blue.d,
+        }}
+      >
+        Better Giving Benefits
+      </T>
 
-      <div className="space-y-8 text-2xl">
-        {benefits.map((benefit, index) => (
-          <div key={index} className="flex gap-4">
-            <Check size={20} className="shrink-0 text-green mt-1.5" />
-            <div>
-              <h4 className="font-semibold mb-1">{benefit.title}</h4>
-              <p className="text-gray">{benefit.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+      {benefits.map((benefit, index) => (
+        <V
+          key={index}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: w["4"],
+            marginBottom: w["6"],
+          }}
+        >
+          <V style={{ color: green.d, marginTop: 4 }}>
+            <T>✔</T>
+          </V>
+          <V>
+            <T
+              style={{
+                fontSize: fs.lg,
+                fontWeight: fw.sb,
+                marginBottom: w["2"],
+              }}
+            >
+              {benefit.title}
+            </T>
+            <T style={{ fontSize: fs.base, color: gray.d2 }}>
+              {benefit.description}
+            </T>
+          </V>
+        </V>
+      ))}
+    </V>
   );
 }

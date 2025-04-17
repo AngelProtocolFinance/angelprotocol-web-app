@@ -1,16 +1,23 @@
-import Image from "components/image";
+import { Img, Pg } from "../components";
 import { Footer } from "../footer";
 import { Benefits } from "./benefits";
 import { Cta } from "./cta";
-import footerImg from "./footer.webp";
+import footerImg from "./footer.png";
 
 export function Page3() {
   return (
-    <div className="w-full flex flex-col pt-16">
-      <Benefits classes="" />
-      <Cta classes="mt-28" />
-      <Image width={1300} height={917} src={footerImg} className="mt-auto" />
+    <Pg style={{ display: "flex", position: "relative" }}>
+      <Benefits />
+      <Cta />
+      <Img
+        src={footerImg}
+        style={{
+          width: "100%",
+          position: "absolute",
+          bottom: 0,
+        }}
+      />
       <Footer />
-    </div>
+    </Pg>
   );
 }
