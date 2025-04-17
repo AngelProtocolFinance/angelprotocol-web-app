@@ -58,7 +58,7 @@ export function Page1({ v }: Props) {
           <T style={{ fontSize: 14, marginTop: 4 }}>
             Donation Processing & Investment Impact Calculator
           </T>
-          <T style={{ fontSize: 12 }}>
+          <T style={{ fontSize: 10 }}>
             Generated on {format(new Date(), "PP")}
           </T>
         </V>
@@ -170,12 +170,10 @@ export function Page1({ v }: Props) {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          marginTop: 20,
         }}
       >
         <T
           style={{
-            marginTop: -20,
             color: blue,
             fontWeight: 600,
             fontSize: 15,
@@ -326,7 +324,7 @@ export function Page1({ v }: Props) {
         <T style={{ marginTop: 3, marginBottom: 2 }}>
           Allocation Between Accounts:
         </T>
-        <V style={{ paddingHorizontal: 2 }}>
+        <V style={{ paddingHorizontal: 2, fontSize: 10 }}>
           <T>
             &#8226;{" "}
             <T style={{ fontWeight: 600 }}>
@@ -344,20 +342,11 @@ export function Page1({ v }: Props) {
         </V>
       </V>
 
-      <div className="grid grid-cols-3 mt-8 px-8">
-        <ImpactCard
-          title="1 Year Savings & Investment Impact"
-          {...v.projection[0]}
-        />
-        <ImpactCard
-          title="5 Years Savings & Investment Impact"
-          {...v.projection[4]}
-        />
-        <ImpactCard
-          title="10 Years Savings & Investment Impact"
-          {...v.projection[9]}
-        />
-      </div>
+      <V style={{ display: "flex", flexDirection: "row", padding: pd.l3 }}>
+        <ImpactCard yr={1} {...v.projection[0]} />
+        <ImpactCard yr={5} {...v.projection[4]} />
+        <ImpactCard yr={10} {...v.projection[9]} />
+      </V>
     </Pg>
   );
 }

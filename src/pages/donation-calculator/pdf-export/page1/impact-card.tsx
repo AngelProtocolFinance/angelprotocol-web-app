@@ -1,25 +1,59 @@
 import { toUsd } from "helpers/to-usd";
 import type { Growth } from "../../types";
+import { T, V } from "../components";
 
 interface Props extends Growth {
-  title: string;
+  yr: number;
 }
 
 export function ImpactCard(p: Props) {
   return (
-    <div className="grid grid-rows-subgrid row-span-[13] content-start group">
-      <div className="bg-green-l5 grid grid-rows-subgrid row-span-2 py-2 px-2">
-        <h3 className="text-right font-semibold">{p.title}</h3>
-        <p className="text-right text-green text-2xl font-bold">
+    <V style={{ width: "33%" }}>
+      <V style={{ backgroundColor: "#ecfdf5", padding: 4 }}>
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: 600,
+            fontSize: 9.5,
+            marginBottom: 2,
+          }}
+        >
+          {p.yr} {p.yr > 1 ? "Years" : "Year"} Savings & Investment Impact
+        </T>
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: 700,
+            color: "#10b981",
+            fontSize: 10,
+          }}
+        >
           {toUsd(p.total)}
-        </p>
-      </div>
+        </T>
+      </V>
 
-      <p className="font-semibold text-right mt-6 px-2">Savings Account (4%)</p>
-      <p className="text-right px-2">
-        <span className="mr-2">Invested:</span>
-        <span>{toUsd(p.liq)}</span>
-      </p>
+      <T
+        style={{
+          fontWeight: 600,
+          textAlign: "right",
+          fontSize: 9,
+          marginTop: 4,
+        }}
+      >
+        Savings Account (4%)
+      </T>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: 9,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 2,
+        }}
+      >
+        <T style={{ marginRight: 2 }}>Invested:</T>
+        <T>{toUsd(p.liq)}</T>
+      </V>
       <p className="text-right px-2">
         <span className="mr-2">Growth:</span>
         <span>{toUsd(p.end.liq - p.liq)}</span>
@@ -50,12 +84,28 @@ export function ImpactCard(p: Props) {
         <span className="text-green">{toUsd(p.total)}</span>
       </p>
 
-      <div className="grid grid-rows-subgrid row-span-2 mt-6 bg-green-l5 py-4 px-2">
-        <p className="text-right font-semibold">1 Year Balance</p>
-        <p className="text-right text-green text-xl font-bold">
+      <V style={{ backgroundColor: "#ecfdf5", padding: 4, marginTop: 24 }}>
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: 600,
+            fontSize: 9.5,
+            marginBottom: 2,
+          }}
+        >
+          {p.yr} {p.yr > 1 ? "Years" : "Year"} Balance
+        </T>
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: 700,
+            color: "#10b981",
+            fontSize: 10,
+          }}
+        >
           {toUsd(p.end.total)}
-        </p>
-      </div>
-    </div>
+        </T>
+      </V>
+    </V>
   );
 }
