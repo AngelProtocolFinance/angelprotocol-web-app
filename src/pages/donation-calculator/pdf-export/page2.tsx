@@ -1,7 +1,7 @@
 import type { View } from "../types";
 import { Chart, Pg, T, V } from "./components";
 import { Splits } from "./splits";
-import { fs, amber, blue, fw, gray, green, w } from "./styles";
+import { fs, amber, blue, fw, green, w } from "./styles";
 
 const row1 = [
   {
@@ -155,7 +155,7 @@ export function Page2({ v }: { v: View }) {
           flexDirection: "row",
           justifyContent: "center",
           paddingHorizontal: w["10"],
-          marginTop: w["6"],
+          marginTop: -w["10"],
           gap: w["10"],
         }}
       >
@@ -238,27 +238,50 @@ export function Page2({ v }: { v: View }) {
           <T style={{ color: blue.d }}>Total Financial Advantage</T>
         </V>
       </V>
+
       <V
         style={{
-          marginTop: w["6"],
-          color: gray.d1,
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: w["6"],
+          backgroundColor: amber.l4,
+          marginHorizontal: w["14"],
+          padding: w["6"],
+          borderRadius: 6,
+          marginTop: w["10"],
         }}
       >
-        <V
+        <T
           style={{
-            width: 16,
-            height: 16,
-            marginRight: w["2"],
-            color: amber.d1,
+            fontSize: fs.base + 1,
+            color: amber.d3,
           }}
-        />
-        <T>
+        >
           Investment yields based on average annual returns over past 5 years
           (4% for Savings Account, 20% for Sustainability Fund)
+        </T>
+      </V>
+      <V
+        style={{
+          marginHorizontal: w["14"],
+          padding: w["6"],
+          backgroundColor: blue.l4,
+          borderRadius: 6,
+          marginTop: w["6"],
+        }}
+      >
+        <T
+          style={{
+            fontSize: fs.lg,
+            fontWeight: fw.m,
+            color: blue.d3,
+            marginBottom: w["2"],
+          }}
+        >
+          The Power of Compound Growth
+        </T>
+        <T style={{ color: blue.d2, fontSize: fs.base + 1 }}>
+          These projections demonstrate how Better Giving's integrated approach
+          compounds over time. Our organization could accumulate significant
+          additional funds through the combination of reduced processing fees,
+          expanded donation types, and strategic investments.
         </T>
       </V>
     </Pg>
