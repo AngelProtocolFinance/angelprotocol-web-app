@@ -1,207 +1,366 @@
-import bg from "assets/images/bettergiving-logo-white.svg";
-import Image from "components/image";
+import bg from "assets/images/bettergiving-logo-white.png";
+import { BASE_URL } from "constants/env";
 import { format } from "date-fns";
 import { toUsd } from "helpers/to-usd";
-import { type View, methodsArr } from "../../types";
-import { Usd } from "../../usd";
+import { methodsArr } from "types/donation-calculator";
+import type { View as TView } from "../../types";
+import { A, Img, Pg, T, V } from "../components";
+import { fs, blue, fw, gray, green, styles, w } from "../styles";
+import { Usd } from "../usd";
 import { DonationMethods } from "./donation-methods";
 import { ImpactCard } from "./impact-card";
 
-export const methods: { [id: string]: string } = {
-  "credit-card": "Credit Card",
-  ach: "ACH (Bank Transfer)",
-  "digital-wallets": "Digital Wallets",
-  crypto: "Crypto",
-  stocks: "Stocks",
-  daf: "DAF",
-};
-
 interface Props {
-  v: View;
+  v: TView;
 }
+
 export function Page1({ v }: Props) {
   return (
-    <div className="w-full">
-      <div className="bg-blue p-6">
-        <div className="grid grid-cols-[1fr_auto] items-center">
-          <div>
-            <h1 className="text-white text-4xl font-bold">
-              YOUR NONPROFIT'S FINANCIAL
-              <br />
-              ADVANTAGE WITH BETTER GIVING
-            </h1>
-            <p className="text-white text-lg mt-2">
-              Donation Processing & Investment Impact Calculator
-            </p>
-            <p className="text-white">
-              Generated on {format(new Date(), "PP")}
-            </p>
-          </div>
-          <Image
-            src={bg}
-            alt="Better Giving Logo"
-            width={280}
-            height={95.8}
-            className="object-contain self-start relative top-4"
-          />
-        </div>
-      </div>
-
-      <section className="mt-8">
-        <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-          <h2 className="text-blue text-2xl font-semibold">
-            YOUR CURRENT ONLINE DONATIONS
-          </h2>
-          <div className="h-0.5 bg-blue" />
-        </div>
-
-        <div className="grid grid-cols-2 content-start gap-x-4 px-8 mt-6">
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">Annual Online Donations</span>
-            <span className="font-semibold">{toUsd(v.amount)}</span>
-          </div>
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">Avg. Processing Fees</span>
-            <span className="font-semibold">
+    <Pg
+      size="A4"
+      style={{
+        display: "flex",
+        alignContent: "flex-start",
+        flexDirection: "column",
+      }}
+    >
+      <V
+        style={{
+          ...styles.header,
+          padding: w["10"],
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <V style={{ width: "70%" }}>
+          <T
+            wrap
+            style={{
+              textTransform: "uppercase",
+              fontWeight: fw.b,
+              fontSize: fs.xl,
+            }}
+          >
+            Your Nonprofit’s Financial
+          </T>
+          <T
+            style={{
+              textTransform: "uppercase",
+              fontWeight: fw.b,
+              fontSize: fs.xl,
+            }}
+          >
+            Advantage with Better giving
+          </T>
+          <T style={{ fontSize: fs.lg, marginTop: w["4"], fontWeight: fw.n }}>
+            Donation Processing & Investment Impact Calculator
+          </T>
+          <T style={{ fontSize: fs.base }}>
+            Generated on {format(new Date(), "PP")}
+          </T>
+        </V>
+        <A href={BASE_URL}>
+          <Img src={bg} style={{ width: 120 }} />
+        </A>
+      </V>
+      <V
+        style={{
+          padding: w["10"],
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <T
+          style={{
+            color: blue.d,
+            fontWeight: fw.sb,
+            fontSize: fs.lg,
+            textTransform: "uppercase",
+          }}
+        >
+          Your current online donations
+        </T>
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 322 }} />
+      </V>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: w["14"],
+          gap: w["20"],
+          marginTop: -w["20"] - 2,
+        }}
+      >
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
+          <V style={styles.kv}>
+            <T style={{ fontSize: fs.base }}>Annual Online Donations</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
+              {toUsd(v.amount)}
+            </T>
+          </V>
+          <V style={styles.kv}>
+            <T style={{ fontSize: fs.base }}>Avg. Processing Fees</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               {(v.ogProcessingFeeRate * 100).toFixed(2)}%
-            </span>
-          </div>
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">Platform Fees</span>
-            <span className="font-semibold">
+            </T>
+          </V>
+        </V>
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
+          <V style={styles.kv}>
+            <T style={{ fontSize: fs.base }}>Platform Fees</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
               {(v.ogPlatformFeeRate * 100).toFixed(2)}%
-            </span>
-          </div>
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">Annual Platform Subscription</span>
-            <span className="font-semibold">{toUsd(v.ogSubsCost)}</span>
-          </div>
-          <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
-            <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
-            <DonationMethods activeMethods={v.ogDonTypes} />
-          </div>
-        </div>
-
-        <div className="mt-12 text-right mx-8 p-6 bg-gray-l4 font-heading">
-          <p className="text-gray-d1 text-lg">Current Amount Received</p>
-          <div className="text-2xl font-semibold">
+            </T>
+          </V>
+          <V style={styles.kv}>
+            <T style={{ fontSize: fs.base }}>Annual Platform Subscription</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
+              {toUsd(v.ogSubsCost)}
+            </T>
+          </V>
+        </V>
+      </V>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: w["14"],
+          gap: w["10"],
+          marginTop: -w["20"] - 2,
+        }}
+      >
+        <T style={{ fontSize: fs.base }}>Accepted Donation Types</T>
+        <DonationMethods activeMethods={v.ogDonMethods} />
+      </V>
+      <V
+        style={{
+          marginTop: -w["4"],
+          padding: w["10"],
+          marginHorizontal: w["14"],
+          backgroundColor: gray.l4,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
+      >
+        <V>
+          <T style={{ fontSize: fs.base }}>Current Amount Received</T>
+          <V
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              gap: w["4"],
+              marginTop: w["2"],
+              fontWeight: fw.b,
+            }}
+          >
             <Usd relative={v.amount}>{v.ogNet}</Usd>{" "}
-            <Usd parens classes="text-lg sm:text-xl">
-              {-v.ogDeductions}
-            </Usd>
-          </div>
-        </div>
-      </section>
-
-      <section className="mt-8">
-        <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-          <h2 className="text-blue text-2xl font-semibold">
-            ANNUAL DONATION PROCESSING IMPACT WITH BETTER GIVING
-          </h2>
-          <div className="h-0.5 bg-blue" />
-        </div>
-
-        <div className="grid grid-cols-2 content-start gap-x-4 px-8 mt-6">
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">Fee Savings</span>
-            <span className="font-semibold text-green">+$2,900</span>
-          </div>
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">
+            <Usd parens>{-v.ogDeductions}</Usd>
+          </V>
+        </V>
+      </V>
+      <V
+        style={{
+          padding: w["10"],
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <T
+          style={{
+            color: blue.d,
+            fontWeight: fw.sb,
+            fontSize: fs.lg,
+            textTransform: "uppercase",
+          }}
+        >
+          Annual Donation Processing Impact With Better Giving
+        </T>
+        <V style={{ height: 2, backgroundColor: blue.d, width: 145 }} />
+      </V>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: w["14"],
+          gap: w["20"],
+          marginTop: -w["20"],
+        }}
+      >
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
+          <V style={styles.kv}>
+            <T style={{ fontSize: fs.base }}>Fee Savings</T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
+              <Usd sign>{v.feeSavings}</Usd>
+            </T>
+          </V>
+          <V style={styles.kv}>
+            <T style={{ fontSize: fs.base }}>
               Added Donations from New Payment Types
-            </span>
-            <span className="font-semibold text-green">+$18,500</span>
-          </div>
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">Platform Subscription Savings</span>
-            <span className="font-semibold text-green">+$1,200</span>
-          </div>
-          <div className="flex font-heading justify-between mb-4 text-lg">
-            <span className="text-gray-d1">Donor-Fee Coverage</span>
-            <span className="font-semibold text-green">+$1,600</span>
-          </div>
-          <div className="col-span-full flex items-center gap-x-4 font-heading text-lg">
-            <span className="text-gray-d1 mr-8">Accepted Donation Types</span>
-            <DonationMethods activeMethods={methodsArr} />
-          </div>
-        </div>
-
-        <div className="mt-12 text-right mx-8 p-6 bg-gray-l4 font-heading">
-          <p className="text-gray-d1 text-lg">With Better Giving</p>
-          <p className="text-2xl font-semibold ">
+            </T>
+            <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
+              <Usd sign>{v.ogMissedFromDonTypes}</Usd>
+            </T>
+          </V>
+        </V>
+        <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
+          <V style={styles.kv}>
+            <T style={{ fontSize: fs.base }}>Platform Subscription Savings</T>
+            <V style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
+              <Usd sign>{v.ogSubsCost}</Usd>
+            </V>
+          </V>
+        </V>
+      </V>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: w["14"],
+          gap: w["10"],
+          marginTop: -w["20"] - 2,
+        }}
+      >
+        <T style={{ fontSize: fs.base }}>Accepted Donation Types</T>
+        <DonationMethods activeMethods={methodsArr} />
+      </V>
+      <V
+        style={{
+          marginTop: -w["4"],
+          padding: w["10"],
+          marginHorizontal: w["14"],
+          backgroundColor: gray.l4,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
+      >
+        <V>
+          <T style={{ fontSize: fs.base, fontWeight: fw.sb }}>
+            With Better Giving
+          </T>
+          <V
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              gap: w["4"],
+              marginTop: w["2"],
+              fontWeight: fw.b,
+            }}
+          >
             <Usd relative={v.ogNet}>{v.bgNet}</Usd>{" "}
-            <Usd sign parens classes="text-lg sm:text-xl">
+            <Usd sign parens>
               {v.advantage}
             </Usd>
-          </p>
-        </div>
-        <div className="text-right mx-8 p-6 bg-green-l5 font-heading">
-          <p className="text-gray-d1 text-lg text-center">
-            Total annual advantage
-          </p>
-          <Usd sign classes="text-2xl block text-center font-semibold">
-            {v.advantage}
-          </Usd>
-        </div>
-      </section>
+          </V>
+        </V>
+      </V>
+      <V
+        style={{
+          padding: w["10"],
+          marginHorizontal: w["14"],
+          backgroundColor: green.l5,
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <T style={{ fontSize: fs.base, textAlign: "center" }}>
+          Total annual advantage
+        </T>
+        <V style={{ fontWeight: fw.b }}>
+          <Usd sign>{v.advantage}</Usd>s
+        </V>
+      </V>
+      <V
+        style={{
+          padding: w["10"],
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <T
+          style={{
+            color: blue.d,
+            fontWeight: fw.sb,
+            fontSize: fs.lg,
+            textTransform: "uppercase",
+          }}
+        >
+          LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
+        </T>
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 165 }} />
+      </V>
+      <T
+        style={{
+          paddingHorizontal: w["10"],
+          fontSize: fs.base,
+          marginTop: -w["6"],
+          fontWeight: fw.sb,
+        }}
+      >
+        How Strategic Saving and Allocation Through Better Giving Could Grow
+        Your Nonprofit's Resources
+      </T>
 
-      <section className="mt-12">
-        <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6">
-          <h2 className="text-blue text-2xl font-semibold">
-            LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
-          </h2>
-          <div className="h-0.5 bg-blue" />
-        </div>
-        <p className="text-gray-d1 mt-2 mb-4 px-6 text-lg font-semibold">
-          How Strategic Saving and Allocation Through Better Giving Could Grow
-          Your Nonprofit's Resources
-        </p>
+      <V
+        style={{
+          fontSize: fs.base,
+          paddingHorizontal: w["20"],
+          marginTop: w["4"],
+        }}
+      >
+        <T>
+          <T>Savings & Investment Allocation:</T>
+          <T style={{ fontWeight: fw.sb }}> 10%</T> of Annual Donations
+          Allocated to Savings/Investments
+        </T>
+        <T style={{ fontSize: fs.sm - 1 }}>
+          ({toUsd(v.amount)}{" "}
+          <T style={{ fontWeight: fw.sb }}>with Better Giving</T> ×{" "}
+          {(v.notGrantedRate * 100).toFixed(2)}% = {toUsd(v.notGranted)})
+        </T>
 
-        <div className="mb-6 px-8">
-          <p className="mb-2">
-            <span className="text-gray-d1 text-lg">
-              Savings & Investment Allocation:
-            </span>
-            <span className="font-semibold"> 10%</span> of Annual Donations
-            Allocated to Savings/Investments
-          </p>
-          <p className="text-sm text-gray">
-            ({toUsd(v.amount)} with Better Giving ×{" "}
-            {(v.notGrantedRate * 100).toFixed(2)}% = {toUsd(v.notGranted)})
-          </p>
-
-          <p className="mt-4 mb-2">Allocation Between Accounts:</p>
-          <ul className="list-disc pl-8">
-            <li className="mb-2">
-              <span className="font-semibold">
-                {(v.savingsRate * 100).toFixed(2)}%
-              </span>{" "}
-              to High-Yield Savings Account (4% Annual Yield)
-            </li>
-            <li>
-              <span className="font-semibold">
-                {(v.investedRate * 100).toFixed(2)}%
-              </span>{" "}
-              to Sustainability Fund (20% Average Annual Return)
-            </li>
-          </ul>
-        </div>
-
-        <div className="grid grid-cols-3 mt-8 px-8">
-          <ImpactCard
-            title="1 Year Savings & Investment Impact"
-            {...v.projection[0]}
-          />
-          <ImpactCard
-            title="5 Years Savings & Investment Impact"
-            {...v.projection[4]}
-          />
-          <ImpactCard
-            title="10 Years Savings & Investment Impact"
-            {...v.projection[9]}
-          />
-        </div>
-      </section>
-    </div>
+        <T style={{ marginTop: w["6"], marginBottom: w["2"] }}>
+          Allocation Between Accounts:
+        </T>
+        <V style={{ paddingHorizontal: w["2"], fontSize: fs.base }}>
+          <T>
+            &#8226;{" "}
+            <T style={{ fontWeight: fw.sb }}>
+              {(v.savingsRate * 100).toFixed(2)}%
+            </T>{" "}
+            to High-Yield Savings Account (4% Annual Yield)
+          </T>
+          <T>
+            &#8226;{" "}
+            <T style={{ fontWeight: fw.sb }}>
+              {(v.investedRate * 100).toFixed(2)}%
+            </T>{" "}
+            to Sustainability Fund (20% Average Annual Return)
+          </T>
+        </V>
+      </V>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          padding: w["14"],
+        }}
+      >
+        <ImpactCard yr={1} {...v.projection[0]} />
+        <ImpactCard yr={5} {...v.projection[4]} />
+        <ImpactCard yr={10} {...v.projection[9]} />
+      </V>
+    </Pg>
   );
 }

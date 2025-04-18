@@ -1,22 +1,26 @@
+import { Link } from "@remix-run/react";
 import type { MetaFunction } from "@vercel/remix";
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
 import { useState } from "react";
+import {
+  type OgInput,
+  type OgInputParams,
+  ogInputDefault,
+} from "types/donation-calculator";
 import { Benefits } from "./benefits";
 import { bgView } from "./bg-view";
 import { BottomCta } from "./bottom-cta";
 import { Chart } from "./chart";
 import { Docs } from "./docs";
-import { Exporter } from "./exporter";
 import { Form1 } from "./form1";
 import { Form2 } from "./form2";
 import { Hero } from "./hero";
 import heroImg from "./hero.png?url";
 import { Result1 } from "./result1";
 import { Table } from "./table";
-import type { State } from "./types";
 
 export const meta: MetaFunction = () =>
   metas({
@@ -27,16 +31,17 @@ export const meta: MetaFunction = () =>
   });
 
 export default function Page() {
-  const [state, setState] = useState<State>({
-    annualAmount: "$ 100,000",
-    processingFeeRate: 0.029,
-    platformFeeRate: 0.02,
-    annualSubscriptionCost: "$ 1,200",
-    donorCanCoverProcessingFees: false,
-    donationTypes: ["credit-card"],
-    donationsToSavings: 0.1,
-    savingsInvested: 0.5,
-  });
+  const [state, setState] = useState<OgInput>(ogInputDefault);
+  const params: OgInputParams = {
+    amnt: state.amnt.toString(),
+    processingFeeRate: state.processingFeeRate.toString(),
+    processingFeeCovered: state.processingFeeCovered.toString(),
+    platformFeeRate: state.platformFeeRate.toString(),
+    subsCost: state.subsCost.toString(),
+    donMethods: ["credit-card"].join(","),
+    notGrantedRate: state.notGrantedRate.toString(),
+    investRate: state.investRate.toString(),
+  };
 
   const view = bgView(state);
 
@@ -49,7 +54,16 @@ export default function Page() {
         <h2 className="text-balance text-2xl sm:text-3xl text-blue-d1 mb-6 text-center col-span-2">
           Donation Processing Calculator
         </h2>
-        <Exporter view={view} classes="col-start-2 justify-self-end mb-2" />
+        <Link
+          className="col-start-2 justify-self-end mb-2 btn-blue px-4 py-1 rounded-full text-sm"
+          to={{
+            pathname: "../donation-calculator-export",
+            search: new URLSearchParams(params).toString(),
+          }}
+        >
+          Export to pdf
+        </Link>
+        {/* <Exporter view={view} classes="col-start-2 justify-self-end mb-2" /> */}
 
         <div className="grid sm:grid-cols-subgrid col-span-2 bg-white p-4 rounded-lg shadow-sm">
           <Form1

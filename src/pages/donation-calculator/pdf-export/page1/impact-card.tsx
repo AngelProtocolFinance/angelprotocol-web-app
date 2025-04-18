@@ -1,61 +1,185 @@
 import { toUsd } from "helpers/to-usd";
 import type { Growth } from "../../types";
+import { T, V } from "../components";
+import { fs, fw, green, w } from "../styles";
 
 interface Props extends Growth {
-  title: string;
+  yr: number;
 }
 
 export function ImpactCard(p: Props) {
+  const fontSizeIncrease = 1.1;
   return (
-    <div className="grid grid-rows-subgrid row-span-[13] content-start group">
-      <div className="bg-green-l5 grid grid-rows-subgrid row-span-2 py-2 px-2">
-        <h3 className="text-right font-semibold">{p.title}</h3>
-        <p className="text-right text-green text-2xl font-bold">
+    <V style={{ width: "33%" }}>
+      <V style={{ backgroundColor: green.l5, padding: w["4"] }}>
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: fw.sb,
+            fontSize: fs.sm * fontSizeIncrease,
+            marginBottom: w["2"],
+          }}
+        >
+          {p.yr} {p.yr > 1 ? "Years" : "Year"} Savings & Investment Impact
+        </T>
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: fw.b,
+            color: green.d,
+            fontSize: fs.sm * fontSizeIncrease,
+          }}
+        >
           {toUsd(p.total)}
-        </p>
-      </div>
+        </T>
+      </V>
 
-      <p className="font-semibold text-right mt-6 px-2">Savings Account (4%)</p>
-      <p className="text-right px-2">
-        <span className="mr-2">Invested:</span>
-        <span>{toUsd(p.liq)}</span>
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Growth:</span>
-        <span>{toUsd(p.end.liq - p.liq)}</span>
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Balance:</span>
-        <span>{toUsd(p.end.liq)}</span>
-      </p>
+      <T
+        style={{
+          fontWeight: fw.sb,
+          textAlign: "right",
+          fontSize: fs.sm * fontSizeIncrease,
+          marginTop: w["6"],
+          paddingRight: w["4"],
+        }}
+      >
+        Savings Account (4%)
+      </T>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: fs.sm * fontSizeIncrease,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: w["2"],
+          paddingRight: w["4"],
+        }}
+      >
+        <T style={{ marginRight: w["2"] }}>Invested:</T>
+        <T>{toUsd(p.liq)}</T>
+      </V>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: fs.sm * fontSizeIncrease,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: w["2"],
+          paddingRight: w["4"],
+        }}
+      >
+        <T style={{ marginRight: w["2"] }}>Growth:</T>
+        <T>{toUsd(p.end.liq - p.liq)}</T>
+      </V>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: fs.sm * fontSizeIncrease,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: w["2"],
+          paddingRight: w["4"],
+        }}
+      >
+        <T style={{ marginRight: w["2"] }}>Balance:</T>
+        <T>{toUsd(p.end.liq)}</T>
+      </V>
 
-      <p className="font-semibold text-right mt-6 px-2">
+      <T
+        style={{
+          fontWeight: fw.sb,
+          textAlign: "right",
+          fontSize: fs.sm * fontSizeIncrease,
+          marginTop: w["6"],
+          paddingRight: w["4"],
+        }}
+      >
         Investment Account (20%)
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Invested:</span>
-        <span>{toUsd(p.lock)}</span>
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Growth:</span>
-        <span className="text-green">{toUsd(p.end.lock - p.lock)}</span>
-      </p>
-      <p className="text-right px-2">
-        <span className="mr-2">Balance:</span>
-        <span>{toUsd(p.end.lock)}</span>
-      </p>
+      </T>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: fs.sm * fontSizeIncrease,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: w["2"],
+          paddingRight: w["4"],
+        }}
+      >
+        <T style={{ marginRight: w["2"] }}>Invested:</T>
+        <T>{toUsd(p.lock)}</T>
+      </V>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: fs.sm * fontSizeIncrease,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: w["2"],
+          paddingRight: w["4"],
+        }}
+      >
+        <T style={{ marginRight: w["2"] }}>Growth:</T>
+        <T style={{ color: green.d, fontWeight: fw.sb }}>
+          {toUsd(p.end.lock - p.lock)}
+        </T>
+      </V>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: fs.sm * fontSizeIncrease,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: w["2"],
+          paddingRight: w["4"],
+        }}
+      >
+        <T style={{ marginRight: w["2"] }}>Balance:</T>
+        <T>{toUsd(p.end.lock)}</T>
+      </V>
 
-      <p className="text-right px-2">
-        <span className="mr-2">Total Growth:</span>
-        <span className="text-green">{toUsd(p.total)}</span>
-      </p>
+      <V
+        style={{
+          justifyContent: "flex-end",
+          fontSize: fs.sm * fontSizeIncrease,
+          display: "flex",
+          flexDirection: "row",
+          marginTop: w["2"],
+          paddingRight: w["4"],
+        }}
+      >
+        <T style={{ marginRight: w["2"] }}>Total Growth:</T>
+        <T style={{ color: green.d, fontWeight: fw.b }}>{toUsd(p.total)}</T>
+      </V>
 
-      <div className="grid grid-rows-subgrid row-span-2 mt-6 bg-green-l5 py-4 px-2">
-        <p className="text-right font-semibold">1 Year Balance</p>
-        <p className="text-right text-green text-xl font-bold">
+      <V
+        style={{
+          backgroundColor: green.l5,
+          padding: w["4"],
+          marginTop: w["10"],
+        }}
+      >
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: fw.sb,
+            fontSize: fs.sm * fontSizeIncrease,
+            marginBottom: w["2"],
+          }}
+        >
+          {p.yr} {p.yr > 1 ? "Years" : "Year"} Balance
+        </T>
+        <T
+          style={{
+            textAlign: "right",
+            fontWeight: fw.b,
+            color: green.d,
+            fontSize: fs.sm * fontSizeIncrease,
+          }}
+        >
           {toUsd(p.end.total)}
-        </p>
-      </div>
-    </div>
+        </T>
+      </V>
+    </V>
   );
 }

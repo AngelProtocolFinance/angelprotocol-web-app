@@ -19,10 +19,9 @@ interface Point {
   total: number;
 }
 interface Props {
-  tools?: boolean;
   points: Point[];
 }
-export function Chart({ points, tools = true }: Props) {
+export function Chart({ points }: Props) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart data={points}>
@@ -40,28 +39,24 @@ export function Chart({ points, tools = true }: Props) {
             return `$${value}`;
           }}
         />
-        {tools && (
-          <Tooltip
-            wrapperStyle={{ fontSize: 13 }}
-            formatter={(value: any, name: any) => {
-              const labels: Record<string, string> = {
-                liq: "Savings Returns",
-                savings: "Donation Processing Savings",
-                lock: "Investment Returns",
-                total: "Total Financial Advantage",
-              };
+        <Tooltip
+          wrapperStyle={{ fontSize: 13 }}
+          formatter={(value: any, name: any) => {
+            const labels: Record<string, string> = {
+              liq: "Savings Returns",
+              savings: "Donation Processing Savings",
+              lock: "Investment Returns",
+              total: "Total Financial Advantage",
+            };
 
-              return [toUsd(Number(value)), labels[name] || String(name)];
-            }}
-          />
-        )}
-        {tools && (
-          <Legend
-            iconSize={10}
-            iconType="circle"
-            wrapperStyle={{ fontSize: 13 }}
-          />
-        )}
+            return [toUsd(Number(value)), labels[name] || String(name)];
+          }}
+        />
+        <Legend
+          iconSize={10}
+          iconType="circle"
+          wrapperStyle={{ fontSize: 13 }}
+        />
 
         <Area
           isAnimationActive={false}
