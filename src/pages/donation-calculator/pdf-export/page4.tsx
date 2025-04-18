@@ -1,112 +1,220 @@
-import bg from "assets/images/bettergiving-logo-white.svg";
-import { laira } from "assets/laira/laira";
-import Image from "components/image";
+import bg from "assets/images/bettergiving-logo-white.png"; // Ensure this path works with react-pdf build
+import { laira } from "assets/laira/laira"; // Ensure this path works with react-pdf build
+import { Img, Pg, type Style, T, V } from "./components"; // Import react-pdf components
 import { Footer } from "./footer";
-export function Page4({ classes = "" }) {
+import { fs, blue, fw, gray, w } from "./styles"; // Import styles
+
+export function Page4() {
+  const listItemStyle: Style = {
+    color: gray.d1, // text-gray
+    marginBottom: w["4"], // space-y-4 approximation
+    display: "flex",
+    flexDirection: "row",
+    fontSize: fs.lg * 0.9, // Increased font size for list items
+  };
+  const bulletStyle = { marginRight: w["4"] }; // Adjust spacing as needed
+
   return (
-    <div className={`w-full ${classes} flex flex-col`}>
-      <div className="bg-blue px-6 py-12">
-        <div className="grid grid-cols-[1fr_auto] items-center">
-          <h2 className="uppercase text-white text-4xl font-bold leading-tight">
+    <Pg size="A4" style={{ display: "flex", flexDirection: "column" }}>
+      <V
+        style={{
+          backgroundColor: blue.d, // bg-blue
+          paddingHorizontal: w["10"], // px-6
+          paddingVertical: w["20"], // py-12 (adjust value)
+        }}
+      >
+        <V
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <T
+            style={{
+              textTransform: "uppercase",
+              color: gray.l6, // text-white
+              fontSize: fs.xl, // text-4xl (adjust value)
+              fontWeight: fw.b, // font-bold
+            }}
+          >
             Appendix
-          </h2>
+          </T>
 
-          <Image
+          <Img
             src={bg}
-            alt="Better Giving Logo"
-            width={280}
-            height={95.8}
-            className="object-contain self-start relative top-4"
+            style={{
+              width: 120, // Changed width from 140 to 120
+              objectFit: "contain",
+              alignSelf: "flex-start",
+              position: "relative",
+              top: w["4"], // top-4
+            }}
           />
-        </div>
-      </div>
-      <div className="grid grid-cols-[auto_1fr] gap-x-4 items-center px-6 mt-8">
-        <h2 className="text-2xl font-semibold uppercase">
+        </V>
+      </V>
+      <V
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: w["4"], // gap-x-4
+          alignItems: "center",
+          paddingHorizontal: w["10"], // px-6
+          marginTop: w["14"], // mt-8 (adjust value)
+        }}
+      >
+        <T
+          style={{
+            fontSize: fs.lg + 2, // text-2xl (adjust value)
+            fontWeight: fw.sb, // font-semibold
+            textTransform: "uppercase",
+          }}
+        >
           Calculation Details
-        </h2>
-        <div className="h-0.5 bg-gray" />
-      </div>
-      <div className="mt-8 space-y-8 text-xl px-12">
-        <section>
-          <h4 className="font-semibold mb-4">Better Giving Platform</h4>
-          <ul className="space-y-4 list-disc pl-6">
-            <li className="text-gray">
-              Better Giving doesn't charge processing fees, but third-party
-              services charge an average of 2% (no platform fees)
-            </li>
-            <li className="text-gray">
-              80% of donors opt to cover processing fees (based on platform
-              data)
-            </li>
-            <li className="text-gray">
-              Better Giving accepts all donation types (credit cards, ACH,
-              digital wallets, crypto, stocks, DAF)
-            </li>
-          </ul>
-        </section>
+        </T>
+        <V
+          style={{
+            height: 1, // h-0.5 (adjust value)
+            backgroundColor: gray.d, // bg-gray
+            flexGrow: 1,
+          }}
+        />
+      </V>
+      <V
+        style={{
+          marginTop: w["14"], // mt-8 (adjust value)
+          paddingHorizontal: w["20"], // px-12 (adjust value)
+        }}
+      >
+        <V style={{ marginBottom: w["14"] }}>
+          <T
+            style={{
+              fontWeight: fw.sb,
+              marginBottom: w["4"],
+              fontSize: fs.lg, // Increased section heading size
+            }}
+          >
+            Better Giving Platform
+          </T>
+          <V style={{ marginLeft: w["6"] }}>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>
+                Better Giving doesn't charge processing fees, but third-party
+                services charge an average of 2% (no platform fees)
+              </T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>
+                80% of donors opt to cover processing fees (based on platform
+                data)
+              </T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>
+                Better Giving accepts all donation types (credit cards, ACH,
+                digital wallets, crypto, stocks, DAF)
+              </T>
+            </V>
+          </V>
+        </V>
 
-        <section>
-          <h4 className="font-semibold mb-4">Donation Type Calculation</h4>
-          <p className="text-gray mb-4">
+        <V style={{ marginBottom: w["14"] }}>
+          <T
+            style={{
+              fontWeight: fw.sb,
+              marginBottom: w["4"],
+              fontSize: fs.lg, // Increased section heading size
+            }}
+          >
+            Donation Type Calculation
+          </T>
+          <T
+            style={{
+              color: gray.d1,
+              marginBottom: w["4"],
+              fontSize: fs.lg * 0.9, // Increased paragraph font size
+            }}
+          >
             These are approximate percentages for U.S.-based nonprofits,
             annualized and projected for 2025 based on trends. Our calculations
             assume 50% of donors will not proceed to make a donation if their
             preferred donation method is unavailable.
-          </p>
-          <ul className="space-y-4 list-disc pl-6">
-            <li className="text-gray">
-              Credit card donations: 63% of total volume
-            </li>
-            <li className="text-gray">
-              ACH/Bank Transfer donations: 10% of total volume
-            </li>
-            <li className="text-gray">
-              Digital Wallet donations: 7% of total volume
-            </li>
-            <li className="text-gray">
-              Cryptocurrency donations: 2% of total volume
-            </li>
-            <li className="text-gray">Stock donations: 6% of total volume</li>
-            <li className="text-gray">DAF donations: 12% of total volume</li>
-          </ul>
-        </section>
+          </T>
+          <V style={{ marginLeft: w["6"] }}>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>Credit card donations: 63% of total volume</T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>ACH/Bank Transfer donations: 10% of total volume</T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>Digital Wallet donations: 7% of total volume</T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>Cryptocurrency donations: 2% of total volume</T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>Stock donations: 6% of total volume</T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>DAF donations: 12% of total volume</T>
+            </V>
+          </V>
+        </V>
 
-        <section>
-          <h4 className="font-semibold mb-4">Investment Returns</h4>
-          <ul className="space-y-4 list-disc pl-6">
-            <li className="text-gray">Savings Account: 4% annual yield</li>
-            <li className="text-gray">
-              Sustainability Fund: 20% average annual return
-            </li>
-            <li className="text-gray">Returns compound daily</li>
-          </ul>
-        </section>
-      </div>
-      <div className="relative self-end mr-10">
-        <Image
+        <V style={{ marginBottom: w["14"] }}>
+          <T
+            style={{
+              fontWeight: fw.sb,
+              marginBottom: w["4"],
+              fontSize: fs.lg, // Increased section heading size
+            }}
+          >
+            Investment Returns
+          </T>
+          <V style={{ marginLeft: w["6"] }}>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>Savings Account: 4% annual yield</T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>Sustainability Fund: 20% average annual return</T>
+            </V>
+            <V style={listItemStyle}>
+              <T style={bulletStyle}>•</T>
+              <T>Returns compound daily</T>
+            </V>
+          </V>
+        </V>
+      </V>
+      <V
+        style={{
+          position: "relative",
+          alignSelf: "flex-end",
+          marginRight: w["20"], // mr-10 (adjust value)
+          marginTop: "auto", // Push image towards bottom before footer
+          marginBottom: 80, // Space above footer
+        }}
+      >
+        <Img
           src={laira.laptopFull}
-          width={300}
-          height={177}
-          className="z-10"
+          style={{
+            width: 150, // width={300} (adjust value)
+          }}
         />
-        {/** shadow */}
-        <svg className="absolute -bottom-1 z-0" width="100%" height="20">
-          <defs>
-            <filter id="blur">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
-            </filter>
-          </defs>
-          <ellipse
-            cx="50%"
-            cy="50%"
-            rx="150"
-            ry="10"
-            filter="url(#blur)"
-            fill="#e2e8f060"
-          />
-        </svg>
-      </div>
-      <Footer classes="mt-auto" />
-    </div>
+      </V>
+      <Footer />
+    </Pg>
   );
 }
