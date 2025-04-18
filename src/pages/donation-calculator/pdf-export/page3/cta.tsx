@@ -1,23 +1,22 @@
-import { laira } from "assets/laira/laira";
+import lairaPointing from "assets/laira/laira-pointing-x2-left.png";
+import lairaYellow from "assets/laira/laira-yellow-x2.png";
 import { BOOK_A_DEMO } from "constants/env";
-import { A, Img, T, V } from "../components";
-import { fs, amber, fw, w } from "../styles";
+import { A, Img, V } from "../components";
+import { fs, blue, fw, w } from "../styles";
 
 export function Cta() {
   return (
-    <V style={{ position: "relative", marginTop: w["10"] }}>
-      <V
-        style={{
-          position: "absolute",
-          left: w["14"],
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
-      >
-        <A href={BOOK_A_DEMO}>
-          <Img src={laira.yellow} style={{ width: 90, height: 116 }} />
-        </A>
-      </V>
+    <V
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+        gap: w["4"],
+        marginTop: 100,
+      }}
+    >
+      <Img src={lairaYellow} style={{ width: 60 }} />
       <V
         style={{
           display: "flex",
@@ -28,34 +27,27 @@ export function Cta() {
         <A
           href={BOOK_A_DEMO}
           style={{
-            backgroundColor: amber.d,
-            paddingVertical: w["4"],
-            paddingHorizontal: w["6"],
-            borderRadius: 6,
+            left: w["20"],
+            backgroundColor: blue.d,
+            paddingVertical: w["10"],
+            paddingHorizontal: w["14"],
+            borderRadius: 999,
+            fontSize: fs.lg,
+            fontWeight: fw.b,
+            color: "white",
             textDecoration: "none",
+            textTransform: "uppercase",
+            alignSelf: "flex-start",
           }}
         >
-          <T
-            style={{
-              fontSize: fs.lg,
-              fontWeight: fw.b,
-              color: "white",
-            }}
-          >
-            Book A Demo!
-          </T>
+          Book A Demo!
         </A>
       </V>
-      <V
-        style={{
-          position: "absolute",
-          right: w["14"],
-          top: "50%",
-          transform: "translateY(-50%)",
-        }}
-      >
-        <Img src={laira.pointing} style={{ width: 120, height: 177 }} />
-      </V>
+
+      <Img
+        src={lairaPointing}
+        style={{ width: 70, position: "relative", bottom: w["20"] }}
+      />
     </V>
   );
 }
