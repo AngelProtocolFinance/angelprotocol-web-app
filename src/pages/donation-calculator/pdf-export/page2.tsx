@@ -26,7 +26,7 @@ const row2 = [
 
 export function Page2({ v }: { v: View }) {
   return (
-    <Pg>
+    <Pg size="A4">
       <V
         style={{
           padding: w["10"],

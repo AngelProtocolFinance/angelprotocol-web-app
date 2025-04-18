@@ -64,8 +64,11 @@ function Socials({ style = {} }: { style?: object }) {
 export function Footer({ style = {} }: { style?: object }) {
   return (
     <V
-      fixed
       style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
         backgroundColor: blue.d,
         display: "flex",
         flexDirection: "row",

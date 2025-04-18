@@ -13,10 +13,10 @@ export function Cta() {
         alignItems: "center",
         justifyContent: "space-around",
         gap: w["4"],
-        marginTop: 100,
+        marginTop: 6,
       }}
     >
-      <Img src={lairaYellow} style={{ width: 60 }} />
+      <Img src={lairaYellow} style={{ width: 40 }} />
       <V
         style={{
           display: "flex",
@@ -30,23 +30,21 @@ export function Cta() {
             left: w["20"],
             backgroundColor: blue.d,
             paddingVertical: w["10"],
-            paddingHorizontal: w["14"],
+            paddingHorizontal: w["20"],
             borderRadius: 999,
             fontSize: fs.lg,
             fontWeight: fw.b,
             color: "white",
             textDecoration: "none",
             textTransform: "uppercase",
-            alignSelf: "flex-start",
           }}
         >
           Book A Demo!
         </A>
       </V>
-
       <Img
         src={lairaPointing}
-        style={{ width: 70, position: "relative", bottom: w["20"] }}
+        style={{ width: 70, position: "relative", top: w["20"] }}
       />
     </V>
   );

@@ -1,5 +1,5 @@
 import { T, V } from "../components";
-import { fs, blue, fw, gray, green, w } from "../styles";
+import { fs, blue, fw, gray, w } from "../styles";
 
 export function Benefits() {
   const benefits = [
@@ -31,7 +31,7 @@ export function Benefits() {
         style={{
           fontSize: fs.xl,
           fontWeight: fw.b,
-          marginBottom: w["6"],
+          marginBottom: w["10"],
           color: blue.d,
         }}
       >
@@ -45,12 +45,9 @@ export function Benefits() {
             display: "flex",
             flexDirection: "row",
             gap: w["4"],
-            marginBottom: w["6"],
+            marginBottom: w["20"],
           }}
         >
-          <V style={{ color: green.d, marginTop: 4 }}>
-            <T>✔</T>
-          </V>
           <V>
             <T
               style={{
@@ -61,7 +58,9 @@ export function Benefits() {
             >
               {benefit.title}
             </T>
-            <T style={{ fontSize: fs.base, color: gray.d2 }}>
+            <T
+              style={{ fontSize: fs.lg * 0.9, color: gray.d2, maxWidth: "90%" }}
+            >
               {benefit.description}
             </T>
           </V>
