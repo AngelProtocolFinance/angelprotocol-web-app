@@ -1,97 +1,104 @@
-import facebook from "assets/icons/social/facebook.webp";
-import instagram from "assets/icons/social/instagram.webp";
-import intercom from "assets/icons/social/intercom.svg";
-import linkedin from "assets/icons/social/linkedin.webp";
-import x from "assets/icons/social/x.webp";
-import youtube from "assets/icons/social/youtube.webp";
-import ExtLink from "components/ext-link";
 import { socials } from "constants/urls";
+import { A, Img, type Style, T, V } from "./components";
+import facebook from "./icons/facebook.png";
+import instagram from "./icons/instagram.png";
+import intercom from "./icons/intercom.png";
+import linkedin from "./icons/linkedin.png";
+import x from "./icons/x.png";
+import youtube from "./icons/youtube.png";
+import { fs, blue, fw, gray, w } from "./styles";
 
-function Socials({ classes = "" }) {
+function Socials({ style = {} }: { style?: object }) {
+  const iconContainerStyle: Style = {
+    backgroundColor: gray.l6,
+    width: 28,
+    height: 28,
+    borderRadius: 6,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  const iconStyle: Style = {};
+
   return (
-    <div className={`flex gap-3 md:gap-6 ${classes}`}>
-      <ExtLink
-        href={socials.linkedin}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center left-[26px] p-1"
+    <V
+      style={{
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "row",
+        gap: w["6"],
+        ...style,
+      }}
+    >
+      <A href={socials.linkedin} style={iconContainerStyle}>
+        <Img
+          style={{
+            ...iconStyle,
+            width: 27 * 0.8,
+            left: 2,
+            position: "relative",
+          }}
           src={linkedin}
-          alt="linkedin"
-          width={40}
-          height={28}
         />
-      </ExtLink>
-      <ExtLink
-        href={socials.facebook}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
-          src={facebook}
-          alt="facebook"
-          width={36}
-          height={28}
-        />
-      </ExtLink>
-      <ExtLink
-        href={socials.x}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img className="absolute-center p-1" src={x} alt="x" width={30} />
-      </ExtLink>
-      <ExtLink
-        href={socials.youtube}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
-          src={youtube}
-          alt="youtube"
-          width={42}
-          height={28}
-        />
-      </ExtLink>
-      <ExtLink
-        href={socials.instagram}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
-          src={instagram}
-          alt="instagram"
-          width={36}
-          height={28}
-        />
-      </ExtLink>
-      <ExtLink
-        href={socials.intercom}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
-          src={intercom}
-          alt="intercom"
-          width={36}
-          height={28}
-        />
-      </ExtLink>
-    </div>
+      </A>
+      <A href={socials.facebook} style={iconContainerStyle}>
+        <Img style={{ ...iconStyle, width: 25.2 * 0.7 }} src={facebook} />
+      </A>
+      <A href={socials.x} style={iconContainerStyle}>
+        <Img style={{ ...iconStyle, width: 20 * 0.7 }} src={x} />
+      </A>
+      <A href={socials.youtube} style={iconContainerStyle}>
+        <Img style={{ ...iconStyle, width: 28.8 * 0.7 }} src={youtube} />
+      </A>
+      <A href={socials.instagram} style={iconContainerStyle}>
+        <Img style={{ ...iconStyle, width: 25.2 * 0.7 }} src={instagram} />
+      </A>
+      <A href={socials.intercom} style={iconContainerStyle}>
+        <Img style={{ ...iconStyle, width: 25.2 * 0.7 }} src={intercom} />
+      </A>
+    </V>
   );
 }
 
-export function Footer({ classes = "" }) {
+export function Footer({ style = {} }: { style?: object }) {
   return (
-    <div className={`bg-blue flex items-center p-8 ${classes}`}>
-      <p className="text-4xl font-heading font-bold text-white text-nowrap">
+    <V
+      style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: blue.d,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: w["14"],
+        color: gray.l6,
+        ...style,
+      }}
+    >
+      <T
+        style={{
+          fontSize: fs.xl - 2,
+          fontWeight: fw.b,
+        }}
+      >
         Keep in touch!
-      </p>
-      <Socials classes="ml-auto" />
-      <p className="text-white max-w-lg ml-auto">
-        Copyright © 4024 Better Giving. All rights reserved. The information
-        provided by Better Giving in this material is for informational and
-        illustrative purposes only, and is subject to change.
-      </p>
-    </div>
+      </T>
+      <Socials style={{ marginLeft: "auto" }} />
+      <T
+        style={{
+          maxWidth: 220,
+          marginLeft: "auto",
+          fontSize: fs.sm,
+        }}
+      >
+        Copyright © {new Date().getFullYear()} Better Giving. All rights
+        reserved. The information provided by Better Giving in this material is
+        for informational and illustrative purposes only, and is subject to
+        change.
+      </T>
+    </V>
   );
 }
