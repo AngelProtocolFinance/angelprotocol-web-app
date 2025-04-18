@@ -9,14 +9,7 @@ export function Page3() {
     <Pg style={{ display: "flex", position: "relative" }}>
       <Benefits />
       <Cta />
-      <Img
-        src={footerImg}
-        style={{
-          width: "100%",
-          position: "absolute",
-          bottom: 0,
-        }}
-      />
+      <Img src={footerImg} style={{}} />
       <Footer />
     </Pg>
   );

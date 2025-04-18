@@ -1,97 +1,110 @@
-import facebook from "assets/icons/social/facebook.webp";
-import instagram from "assets/icons/social/instagram.webp";
-import intercom from "assets/icons/social/intercom.svg";
-import linkedin from "assets/icons/social/linkedin.webp";
-import x from "assets/icons/social/x.webp";
-import youtube from "assets/icons/social/youtube.webp";
-import ExtLink from "components/ext-link";
 import { socials } from "constants/urls";
+import { A, Img, type Style, T, V } from "./components"; // Import react-pdf components
+import facebook from "./icons/facebook.png";
+import instagram from "./icons/instagram.png";
+import intercom from "./icons/intercom.png";
+import linkedin from "./icons/linkedin.png";
+import x from "./icons/x.png";
+import youtube from "./icons/youtube.png";
+import { fs, blue, fw, gray, w } from "./styles"; // Import styles
 
-function Socials({ classes = "" }) {
+function Socials({ style = {} }: { style?: object }) {
+  const iconContainerStyle: Style = {
+    backgroundColor: gray.l6, // bg-white
+    padding: w["2"], // p-1 (adjust value as needed)
+    width: 36, // size-12 (adjust value as needed)
+    height: 36, // size-12 (adjust value as needed)
+    borderRadius: 6, // rounded-lg (adjust value as needed)
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  const iconStyle = {
+    padding: w["2"], // p-1
+  };
+
   return (
-    <div className={`flex gap-3 md:gap-6 ${classes}`}>
-      <ExtLink
-        href={socials.linkedin}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center left-[26px] p-1"
+    <V style={{ display: "flex", flexDirection: "row", gap: w["6"], ...style }}>
+      <A href={socials.linkedin} style={iconContainerStyle}>
+        <Img
+          style={{ ...iconStyle, width: 30 /* width={40} */ }} // Adjusted width
           src={linkedin}
-          alt="linkedin"
-          width={40}
-          height={28}
         />
-      </ExtLink>
-      <ExtLink
-        href={socials.facebook}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
+      </A>
+      <A href={socials.facebook} style={iconContainerStyle}>
+        <Img
+          style={{ ...iconStyle, width: 28 /* width={36} */ }} // Adjusted width
           src={facebook}
-          alt="facebook"
-          width={36}
-          height={28}
         />
-      </ExtLink>
-      <ExtLink
-        href={socials.x}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img className="absolute-center p-1" src={x} alt="x" width={30} />
-      </ExtLink>
-      <ExtLink
-        href={socials.youtube}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
+      </A>
+      <A href={socials.x} style={iconContainerStyle}>
+        <Img
+          style={{ ...iconStyle, width: 24 /* width={30} */ }} // Adjusted width
+          src={x}
+        />
+      </A>
+      <A href={socials.youtube} style={iconContainerStyle}>
+        <Img
+          style={{ ...iconStyle, width: 32 /* width={42} */ }} // Adjusted width
           src={youtube}
-          alt="youtube"
-          width={42}
-          height={28}
         />
-      </ExtLink>
-      <ExtLink
-        href={socials.instagram}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
+      </A>
+      <A href={socials.instagram} style={iconContainerStyle}>
+        <Img
+          style={{ ...iconStyle, width: 28 /* width={36} */ }} // Adjusted width
           src={instagram}
-          alt="instagram"
-          width={36}
-          height={28}
         />
-      </ExtLink>
-      <ExtLink
-        href={socials.intercom}
-        className="relative bg-white p-1 block shrink-0 size-12 rounded-lg"
-      >
-        <img
-          className="absolute-center p-1"
+      </A>
+      <A href={socials.intercom} style={iconContainerStyle}>
+        <Img
+          style={{ ...iconStyle, width: 28 /* width={36} */ }} // Adjusted width
           src={intercom}
-          alt="intercom"
-          width={36}
-          height={28}
         />
-      </ExtLink>
-    </div>
+      </A>
+    </V>
   );
 }
 
-export function Footer({ classes = "" }) {
+export function Footer({ style = {} }: { style?: object }) {
   return (
-    <div className={`bg-blue flex items-center p-8 ${classes}`}>
-      <p className="text-4xl font-heading font-bold text-white text-nowrap">
+    <V
+      fixed // Make footer appear on every page
+      style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: blue.d, // bg-blue
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: w["14"], // p-8 (adjust value as needed)
+        color: gray.l6, // text-white
+        ...style,
+      }}
+    >
+      <T
+        style={{
+          fontSize: fs.xl, // text-4xl (adjust value as needed)
+          fontWeight: fw.b, // font-bold
+        }}
+      >
         Keep in touch!
-      </p>
-      <Socials classes="ml-auto" />
-      <p className="text-white max-w-lg ml-auto">
-        Copyright © 4024 Better Giving. All rights reserved. The information
-        provided by Better Giving in this material is for informational and
-        illustrative purposes only, and is subject to change.
-      </p>
-    </div>
+      </T>
+      <Socials style={{ marginLeft: "auto" }} />
+      <T
+        style={{
+          maxWidth: 300, // max-w-lg (adjust value as needed)
+          marginLeft: "auto",
+          fontSize: fs.sm, // Adjust size as needed
+        }}
+      >
+        Copyright © {new Date().getFullYear()} Better Giving. All rights
+        reserved. The information provided by Better Giving in this material is
+        for informational and illustrative purposes only, and is subject to
+        change.
+      </T>
+    </V>
   );
 }
