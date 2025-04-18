@@ -8,6 +8,7 @@ interface Props extends Growth {
 }
 
 export function ImpactCard(p: Props) {
+  const fontSizeIncrease = 1.1;
   return (
     <V style={{ width: "33%" }}>
       <V style={{ backgroundColor: green.l5, padding: w["4"] }}>
@@ -15,7 +16,7 @@ export function ImpactCard(p: Props) {
           style={{
             textAlign: "right",
             fontWeight: fw.sb,
-            fontSize: fs.sm,
+            fontSize: fs.sm * fontSizeIncrease,
             marginBottom: w["2"],
           }}
         >
@@ -26,7 +27,7 @@ export function ImpactCard(p: Props) {
             textAlign: "right",
             fontWeight: fw.b,
             color: green.d,
-            fontSize: fs.sm,
+            fontSize: fs.sm * fontSizeIncrease,
           }}
         >
           {toUsd(p.total)}
@@ -37,7 +38,7 @@ export function ImpactCard(p: Props) {
         style={{
           fontWeight: fw.sb,
           textAlign: "right",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           marginTop: w["6"],
           paddingRight: w["4"],
         }}
@@ -47,7 +48,7 @@ export function ImpactCard(p: Props) {
       <V
         style={{
           justifyContent: "flex-end",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           display: "flex",
           flexDirection: "row",
           marginTop: w["2"],
@@ -60,7 +61,7 @@ export function ImpactCard(p: Props) {
       <V
         style={{
           justifyContent: "flex-end",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           display: "flex",
           flexDirection: "row",
           marginTop: w["2"],
@@ -73,7 +74,7 @@ export function ImpactCard(p: Props) {
       <V
         style={{
           justifyContent: "flex-end",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           display: "flex",
           flexDirection: "row",
           marginTop: w["2"],
@@ -88,7 +89,7 @@ export function ImpactCard(p: Props) {
         style={{
           fontWeight: fw.sb,
           textAlign: "right",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           marginTop: w["6"],
           paddingRight: w["4"],
         }}
@@ -98,7 +99,7 @@ export function ImpactCard(p: Props) {
       <V
         style={{
           justifyContent: "flex-end",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           display: "flex",
           flexDirection: "row",
           marginTop: w["2"],
@@ -111,7 +112,7 @@ export function ImpactCard(p: Props) {
       <V
         style={{
           justifyContent: "flex-end",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           display: "flex",
           flexDirection: "row",
           marginTop: w["2"],
@@ -126,7 +127,7 @@ export function ImpactCard(p: Props) {
       <V
         style={{
           justifyContent: "flex-end",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           display: "flex",
           flexDirection: "row",
           marginTop: w["2"],
@@ -140,7 +141,7 @@ export function ImpactCard(p: Props) {
       <V
         style={{
           justifyContent: "flex-end",
-          fontSize: fs.sm,
+          fontSize: fs.sm * fontSizeIncrease,
           display: "flex",
           flexDirection: "row",
           marginTop: w["2"],
@@ -162,7 +163,7 @@ export function ImpactCard(p: Props) {
           style={{
             textAlign: "right",
             fontWeight: fw.sb,
-            fontSize: fs.sm,
+            fontSize: fs.sm * fontSizeIncrease,
             marginBottom: w["2"],
           }}
         >
@@ -173,7 +174,7 @@ export function ImpactCard(p: Props) {
             textAlign: "right",
             fontWeight: fw.b,
             color: green.d,
-            fontSize: fs.sm,
+            fontSize: fs.sm * fontSizeIncrease,
           }}
         >
           {toUsd(p.end.total)}
