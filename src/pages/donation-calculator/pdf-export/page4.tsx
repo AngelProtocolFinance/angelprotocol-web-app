@@ -1,27 +1,27 @@
-import bg from "assets/images/bettergiving-logo-white.png"; // Ensure this path works with react-pdf build
-import { laira } from "assets/laira/laira"; // Ensure this path works with react-pdf build
+import bg from "assets/images/bettergiving-logo-white.png";
+import { laira } from "assets/laira/laira";
 import { BASE_URL } from "constants/env";
-import { A, Img, Pg, type Style, T, V } from "./components"; // Import react-pdf components
+import { A, Img, Pg, type Style, T, V } from "./components";
 import { Footer } from "./footer";
-import { fs, blue, fw, gray, w } from "./styles"; // Import styles
+import { fs, blue, fw, gray, w } from "./styles";
 
 export function Page4() {
   const listItemStyle: Style = {
-    color: gray.d1, // text-gray
-    marginBottom: w["4"], // space-y-4 approximation
+    color: gray.d1,
+    marginBottom: w["4"],
     display: "flex",
     flexDirection: "row",
-    fontSize: fs.lg * 0.9, // Increased font size for list items
+    fontSize: fs.lg * 0.9,
   };
-  const bulletStyle = { marginRight: w["4"] }; // Adjust spacing as needed
+  const bulletStyle = { marginRight: w["4"] };
 
   return (
     <Pg size="A4" style={{ display: "flex", flexDirection: "column" }}>
       <V
         style={{
-          backgroundColor: blue.d, // bg-blue
-          paddingHorizontal: w["10"], // px-6
-          paddingVertical: w["20"], // py-12 (adjust value)
+          backgroundColor: blue.d,
+          paddingHorizontal: w["10"],
+          paddingVertical: w["20"],
         }}
       >
         <V
@@ -35,9 +35,9 @@ export function Page4() {
           <T
             style={{
               textTransform: "uppercase",
-              color: gray.l6, // text-white
-              fontSize: fs.xl, // text-4xl (adjust value)
-              fontWeight: fw.b, // font-bold
+              color: gray.l6,
+              fontSize: fs.xl,
+              fontWeight: fw.b,
             }}
           >
             Appendix
@@ -47,11 +47,11 @@ export function Page4() {
             <Img
               src={bg}
               style={{
-                width: 120, // Changed width from 140 to 120
+                width: 120,
                 objectFit: "contain",
                 alignSelf: "flex-start",
                 position: "relative",
-                top: w["4"], // top-4
+                top: w["4"],
               }}
             />
           </A>
@@ -61,16 +61,16 @@ export function Page4() {
         style={{
           display: "flex",
           flexDirection: "row",
-          gap: w["4"], // gap-x-4
+          gap: w["4"],
           alignItems: "center",
-          paddingHorizontal: w["10"], // px-6
-          marginTop: w["14"], // mt-8 (adjust value)
+          paddingHorizontal: w["10"],
+          marginTop: w["14"],
         }}
       >
         <T
           style={{
-            fontSize: fs.lg + 2, // text-2xl (adjust value)
-            fontWeight: fw.sb, // font-semibold
+            fontSize: fs.lg + 2,
+            fontWeight: fw.sb,
             textTransform: "uppercase",
           }}
         >
@@ -78,16 +78,16 @@ export function Page4() {
         </T>
         <V
           style={{
-            height: 1, // h-0.5 (adjust value)
-            backgroundColor: gray.d, // bg-gray
+            height: 1,
+            backgroundColor: gray.d,
             flexGrow: 1,
           }}
         />
       </V>
       <V
         style={{
-          marginTop: w["14"], // mt-8 (adjust value)
-          paddingHorizontal: w["20"], // px-12 (adjust value)
+          marginTop: w["14"],
+          paddingHorizontal: w["20"],
         }}
       >
         <V style={{ marginBottom: w["14"] }}>
@@ -95,7 +95,7 @@ export function Page4() {
             style={{
               fontWeight: fw.sb,
               marginBottom: w["4"],
-              fontSize: fs.lg, // Increased section heading size
+              fontSize: fs.lg,
             }}
           >
             Better Giving Platform
@@ -130,7 +130,7 @@ export function Page4() {
             style={{
               fontWeight: fw.sb,
               marginBottom: w["4"],
-              fontSize: fs.lg, // Increased section heading size
+              fontSize: fs.lg,
             }}
           >
             Donation Type Calculation
@@ -139,7 +139,7 @@ export function Page4() {
             style={{
               color: gray.d1,
               marginBottom: w["4"],
-              fontSize: fs.lg * 0.9, // Increased paragraph font size
+              fontSize: fs.lg * 0.9,
             }}
           >
             These are approximate percentages for U.S.-based nonprofits,
@@ -180,7 +180,7 @@ export function Page4() {
             style={{
               fontWeight: fw.sb,
               marginBottom: w["4"],
-              fontSize: fs.lg, // Increased section heading size
+              fontSize: fs.lg,
             }}
           >
             Investment Returns
@@ -205,15 +205,15 @@ export function Page4() {
         style={{
           position: "relative",
           alignSelf: "flex-end",
-          marginRight: w["20"], // mr-10 (adjust value)
-          marginTop: "auto", // Push image towards bottom before footer
-          marginBottom: 80, // Space above footer
+          marginRight: w["20"],
+          marginTop: "auto",
+          marginBottom: 80,
         }}
       >
         <Img
           src={laira.laptopFull}
           style={{
-            width: 150, // width={300} (adjust value)
+            width: 150,
           }}
         />
       </V>
