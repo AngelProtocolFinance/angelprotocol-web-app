@@ -6,7 +6,7 @@ import footerImg from "./footer.png";
 
 export function Page3() {
   return (
-    <Pg style={{ display: "flex", position: "relative" }}>
+    <Pg style={{ display: "flex" }}>
       <Benefits />
       <Cta />
       <Img src={footerImg} style={{}} />
