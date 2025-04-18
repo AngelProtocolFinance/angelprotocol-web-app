@@ -1,6 +1,7 @@
 import bg from "assets/images/bettergiving-logo-white.png"; // Ensure this path works with react-pdf build
 import { laira } from "assets/laira/laira"; // Ensure this path works with react-pdf build
-import { Img, Pg, type Style, T, V } from "./components"; // Import react-pdf components
+import { BASE_URL } from "constants/env";
+import { A, Img, Pg, type Style, T, V } from "./components"; // Import react-pdf components
 import { Footer } from "./footer";
 import { fs, blue, fw, gray, w } from "./styles"; // Import styles
 
@@ -42,16 +43,18 @@ export function Page4() {
             Appendix
           </T>
 
-          <Img
-            src={bg}
-            style={{
-              width: 120, // Changed width from 140 to 120
-              objectFit: "contain",
-              alignSelf: "flex-start",
-              position: "relative",
-              top: w["4"], // top-4
-            }}
-          />
+          <A href={BASE_URL}>
+            <Img
+              src={bg}
+              style={{
+                width: 120, // Changed width from 140 to 120
+                objectFit: "contain",
+                alignSelf: "flex-start",
+                position: "relative",
+                top: w["4"], // top-4
+              }}
+            />
+          </A>
         </V>
       </V>
       <V
