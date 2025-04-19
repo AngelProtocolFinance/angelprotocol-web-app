@@ -9,16 +9,13 @@ import {
   type Regs,
   sansKeys,
 } from "@better-giving/registration/db";
-import { type Environment, tables } from "@better-giving/types/list";
+import { tables } from "@better-giving/types/list";
 import { QueryCommand, type QueryCommandInput, ap } from "../aws/db";
+import { env } from "../env";
 import { nextKeyBase64 } from "./helpers";
 
-export async function getRegs(
-  params: QueryParams,
-  env: Environment
-): Promise<Page> {
-  const { startDate = minDate, endDate = maxDate, status } = params;
-
+export async function getRegs(params: QueryParams): Promise<Page> {
+  const { startDate = minDate, endDate = maxDate, status = "02" } = params;
   const skStart: Regs["gsi2SK"] = `${status ?? "02"}#${startDate}`;
   const skEnd: Regs["gsi2SK"] = `${status ?? "04"}#${endDate}`;
 
@@ -36,7 +33,7 @@ export async function getRegs(
       ":end": skEnd,
     },
     ExclusiveStartKey: startKey,
-    Limit: 10,
+    Limit: 15,
   };
 
   if (params.country) {
@@ -52,9 +49,7 @@ export async function getRegs(
     };
   }
 
-  const command = new QueryCommand(query);
-  const res = await ap.send(command);
-
+  const res = await ap.send(new QueryCommand(query));
   const items = (res.Items || []) as ApplicationDbRecord[];
   return {
     items: items.map((i) => ({
