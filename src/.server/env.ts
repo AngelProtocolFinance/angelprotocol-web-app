@@ -62,3 +62,4 @@ export const stripeEnvs = {
   subsProductId: v.parse(required, process.env.STRIPE_SUBS_PRODUCT_ID),
   webhookSecret: v.parse(required, process.env.STRIPE_WEBHOOK_SECRET),
 };
+export const mongo_url = v.parse(required, process.env.MONGODB_URL);
