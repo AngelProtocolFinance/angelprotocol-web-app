@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 type State = "loading" | "loaded" | "error";
 
-export function useHubspotForm() {
+export function useHubspotDonCalculatorForm() {
   const [state, setState] = useState<State | undefined>();
 
   //biome-ignore lint: no deps

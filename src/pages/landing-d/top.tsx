@@ -1,14 +1,13 @@
 import { useNavigate } from "@remix-run/react";
 import { Modal } from "components/modal";
-import { Video, videos } from "components/video/video";
+import { Video, videos } from "components/video";
 import { useHubspotDonCalculatorForm } from "hooks/use-hubspot-don-calculator-form";
 import { useState } from "react";
 
 export function Top({ classes = "" }) {
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { state } = useHubspotDonCalculatorForm();
-  const [open, setOpen] = useState(false);
-
   return (
     <section
       className={`${classes} grid grid-cols-1 lg:grid-cols-2 gap-12 p-4 @container`}
@@ -17,27 +16,51 @@ export function Top({ classes = "" }) {
         <Tooltip className="max-xl:hidden absolute -right-24 z-10" />
         <Video vid={videos.donation_calculator} classes="relative" />
       </div>
-
-      <div className="grid content-start">
-        <div className="text-blue font-bold max-lg:text-center text-right uppercase">
-          Save more. Raise more. Do more.
-        </div>
-
-        <h1 className="relative mb-6 text-4.5xl leading-snug max-lg:text-center text-right">
-          <span className="">Smarter Donations</span>
-          <br />
-          <div className="relative h-fit inline-block">
-            Bigger Impact
+      <div>
+        <h1 className="text-4.5xl leading-snug max-lg:text-center text-right lg:mt-20">
+          <div className="relative w-fit max-lg:mx-auto lg:ml-auto text-nowrap">
+            You're Losing Donations{" "}
             <span className="absolute bottom-2 left-0 w-full h-4 bg-blue-l3 -z-10"></span>
           </div>
+          And Don't Even Know It
         </h1>
-
-        <p className="mb-8 text-gray-d4 text-lg max-lg:text-center text-right">
-          Every day you're paying more in fees and missing out on growth. Better
-          Giving helps turn that around with modern donation options, automatic
-          investing, and no platform fees — all set up in just minutes.
+        <p className="mb-4 text-gray-d4 text-lg max-lg:text-center text-right mt-4">
+          Thousands of dollars are slipping through the cracks every year – lost
+          to fees, idle cash, and outdated donation methods your nonprofit may
+          still be using.
         </p>
-
+        <p className="mb-4 text-gray-d4 font-semibold text-lg max-lg:text-center text-right mt-4">
+          The longer you wait, the more you miss.
+        </p>
+        <div className="mb-4 text-gray-d4 text-lg max-lg:text-center text-right">
+          Use the{" "}
+          <button
+            onClick={() => {
+              if (state !== "loaded") {
+                return navigate("/donation-calculator");
+              }
+              setOpen(true);
+            }}
+            type="button"
+            className="inline text-blue hover:text-blue-d1 font-semibold"
+          >
+            Better Giving Donation Calculator
+          </button>{" "}
+          now to see exactly how much revenue is being left on the table – and
+          how quickly you could turn that around.
+        </div>
+        <button
+          onClick={() => {
+            if (state !== "loaded") {
+              return navigate("/donation-calculator");
+            }
+            setOpen(true);
+          }}
+          type="button"
+          className="mt-4 btn btn-blue text-center lg:text-right justify-self-center lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
+        >
+          See Your Savings - Launch the Calculator
+        </button>
         {open && (
           <Modal
             classes="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
@@ -52,34 +75,6 @@ export function Top({ classes = "" }) {
             />
           </Modal>
         )}
-
-        <div className="grid @md:grid-cols-2 gap-6 mb-6">
-          <p className="max-lg:border-t-1 max-lg:pt-2 lg:border-r-4 max-lg:text-center text-right border-blue pr-4">
-            80% of donors cover fees* — keep more of every gift
-          </p>
-          <p className="max-lg:border-t-1 max-lg:pt-2 lg:border-r-4 max-lg:text-center text-right border-blue pr-4">
-            Accept crypto, stocks, DAFs & more — raise more effortlessly
-          </p>
-          <p className="max-lg:border-t-1 max-lg:pt-2 lg:border-r-4 max-lg:text-center text-right border-blue pr-4">
-            Earn 4%–20% on idle donations — no extra work
-          </p>
-          <p className="max-lg:border-t-1 max-lg:pt-2 lg:border-r-4 max-lg:text-center text-right border-blue pr-4">
-            Get your custom savings report — free with sign-up in seconds
-          </p>
-        </div>
-
-        <button
-          onClick={() => {
-            if (state !== "loaded") {
-              return navigate("/donation-calculator");
-            }
-            setOpen(true);
-          }}
-          type="button"
-          className="mt-4 btn btn-blue text-center lg:text-right lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
-        >
-          See Your Savings - Launch the Calculator
-        </button>
 
         <p className="max-lg:text-center text-right text-sm text-gray mt-2">
           "It takes less than a minute — find out how much you're leaving on the
