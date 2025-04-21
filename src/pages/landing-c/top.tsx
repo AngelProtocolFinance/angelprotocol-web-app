@@ -40,7 +40,7 @@ export function Top({ classes = "" }) {
 
         {open && (
           <Modal
-            classes="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
+            classes="fixed-center z-10 grid text-gray-d4 bg-white w-[calc(100%-2.5rem)] max-w-4xl rounded-lg"
             open={open}
             onClose={() => setOpen(false)}
           >
