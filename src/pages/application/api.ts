@@ -1,8 +1,11 @@
 import type { Application as IApplication } from "@better-giving/registration/approval";
+import { sansKeys } from "@better-giving/registration/db";
+import { regId } from "@better-giving/registration/models";
 import type { LoaderFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
 import type { UserV2 } from "types/auth";
+import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
+import { getReg } from ".server/registration/get-reg";
 
 export interface LoaderData {
   user: UserV2;
@@ -13,11 +16,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const application = await ap
-    .get<IApplication>(`${ver(1)}/registrations/${params.id}`, {
-      headers: { authorization: user.idToken },
-    })
-    .json();
+  const id = parse(regId, params.id);
+
+  const reg = await getReg(id);
+  if (!reg) throw new Response("Registration not found", { status: 404 });
+  const application = sansKeys(reg) as IApplication;
 
   return {
     application,

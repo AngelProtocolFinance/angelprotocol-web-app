@@ -10,8 +10,9 @@ import {
   sansKeys,
 } from "@better-giving/registration/db";
 import { tables } from "@better-giving/types/list";
-import { QueryCommand, type QueryCommandInput, ap } from "./aws/db";
-import { env } from "./env";
+import { QueryCommand, type QueryCommandInput, ap } from "../aws/db";
+import { env } from "../env";
+import { nextKeyBase64 } from "./helpers";
 
 export async function getRegs(params: QueryParams): Promise<Page> {
   const { startDate = minDate, endDate = maxDate, status = "02" } = params;
@@ -58,8 +59,4 @@ export async function getRegs(params: QueryParams): Promise<Page> {
     })),
     nextPageKey: nextKeyBase64(res.LastEvaluatedKey),
   };
-}
-
-export function nextKeyBase64(key: Record<string, any> | undefined) {
-  return key ? Buffer.from(JSON.stringify(key)).toString("base64") : undefined;
 }

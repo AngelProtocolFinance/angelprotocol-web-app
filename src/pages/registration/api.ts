@@ -1,17 +1,19 @@
 import type { EndowClaim } from "@better-giving/registration/models";
-import type { Step1 } from "@better-giving/registration/step";
-import type { NewReg } from "@better-giving/registration/update";
+import { type NewReg, newReg } from "@better-giving/registration/update";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { ap, ver } from "api/api";
 import { getEndowWithEin } from "api/get/endow-with-ein";
 import { appRoutes } from "constants/routes";
+import { parse } from "valibot";
 import { regCookie } from "./data/cookie.server";
 import { steps } from "./routes";
 import { cognito, toAuth } from ".server/auth";
+import { env } from ".server/env";
+import { createRegistration } from ".server/registration/create-reg";
+import { isClaimed } from ".server/registration/helpers";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
@@ -41,18 +43,25 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
 
   if (claim) payload.claim = claim;
 
-  const reg = await ap
-    .post<Pick<Step1, "id">>(`${ver(1)}/registrations`, {
-      json: payload,
-      headers: { authorization: user.idToken },
-    })
-    .json();
+  const init = parse(newReg, payload);
+
+  if (user.email !== init.registrant_id && !user.groups.includes("ap-admin")) {
+    throw new Response("Unauthorized", { status: 403 });
+  }
+
+  if (init.claim && (await isClaimed(init.claim.ein, env))) {
+    throw new Response(`to-claim:${init.claim.id} is already claimed`, {
+      status: 400,
+    });
+  }
+
+  const id = await createRegistration(init, env);
   const rc = await regCookie
     .parse(request.headers.get("Cookie"))
     .then((x) => x || {});
-  rc.reference = reg.id;
+  rc.reference = id;
 
-  return redirect(`${appRoutes.register}/${reg.id}/${steps.contact}`, {
+  return redirect(`${appRoutes.register}/${id}/${steps.contact}`, {
     headers: { "Set-Cookie": await regCookie.serialize(rc) },
   });
 };

@@ -1,7 +1,9 @@
-import type { Update } from "@better-giving/registration/update";
+import { regId } from "@better-giving/registration/models";
+import { type Update, update } from "@better-giving/registration/update";
 import { type ActionFunction, redirect } from "@vercel/remix";
-import { ap, ver } from "api/api";
+import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
+import { updateRegistration } from ".server/registration/update-reg";
 
 export const updateAction =
   (next: string): ActionFunction =>
@@ -10,11 +12,18 @@ export const updateAction =
     if (!user) return toAuth(request, headers);
 
     const data: Update = await request.json();
+    const id = parse(regId, params.regId);
+    const upd8 = parse(update, data);
 
-    await ap.patch(`${ver(1)}/registrations/${params.regId}`, {
-      headers: { authorization: user.idToken },
-      json: data,
-    });
+    const res = await updateRegistration(
+      id,
+      upd8,
+      user.email,
+      user.groups.includes("ap-admin")
+    );
+    if (Array.isArray(res)) {
+      throw new Response(res[1], { status: res[0] });
+    }
 
     return redirect(`../${next}`);
   };

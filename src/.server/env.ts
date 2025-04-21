@@ -62,3 +62,5 @@ export const stripeEnvs = {
   subsProductId: v.parse(required, process.env.STRIPE_SUBS_PRODUCT_ID),
   webhookSecret: v.parse(required, process.env.STRIPE_WEBHOOK_SECRET),
 };
+
+export const wiseApiToken = v.parse(required, process.env.WISE_API_TOKEN);

@@ -2,7 +2,7 @@ import { queryParams } from "@better-giving/registration/approval";
 import { type LoaderFunction, data } from "@vercel/remix";
 import { safeParse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
-import { getRegs } from ".server/registrations";
+import { getRegs } from ".server/registration/get-regs";
 
 export { default } from "./applications";
 export { ErrorBoundary } from "components/error";
