@@ -17,7 +17,7 @@ export function Top({ classes = "" }) {
         <Video vid={videos.donation_calculator} classes="relative" />
       </div>
       <div>
-        <h1 className="text-4.5xl leading-snug max-lg:text-center text-right lg:mt-20">
+        <h1 className="text-4.5xl leading-snug max-lg:text-center text-right">
           <div className="relative w-fit max-lg:mx-auto lg:ml-auto text-nowrap">
             You're Losing Donations{" "}
             <span className="absolute bottom-2 left-0 w-full h-4 bg-blue-l3 -z-10"></span>
