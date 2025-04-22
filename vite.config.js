@@ -118,6 +118,7 @@ const rmx = remix({
             r(":id", "./components/kyc-form/index.tsx");
           });
           r("funds", "./pages/user-dashboard/funds/funds.tsx");
+          r("referrals", "./pages/user-dashboard/referrals/index.tsx");
         });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
