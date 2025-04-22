@@ -15,7 +15,10 @@ export function Top({ classes = "" }) {
     >
       <div className="h-fit self-center relative">
         <Tooltip className="max-xl:hidden absolute -right-24 z-10" />
-        <Video vid={videos.donation_calculator} classes="relative" />
+        <Video
+          vid={videos.donation_calculator}
+          classes="relative shadow-xl shadow-black/10 rounded-lg"
+        />
       </div>
 
       <div className="grid content-start">
@@ -76,7 +79,7 @@ export function Top({ classes = "" }) {
             setOpen(true);
           }}
           type="button"
-          className="mt-8 btn btn-blue text-center lg:text-right lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
+          className="mt-8 shadow-xl shadow-black/10 btn btn-blue text-center lg:text-right lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
         >
           See Your Savings - Launch the Calculator
         </button>
