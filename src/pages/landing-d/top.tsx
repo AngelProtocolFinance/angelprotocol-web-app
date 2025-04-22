@@ -25,32 +25,17 @@ export function Top({ classes = "" }) {
             You're Losing Donations{" "}
             <span className="absolute bottom-2 left-0 w-full h-4 bg-blue-l3 -z-10"></span>
           </div>
-          And Don't Even Know It
         </h1>
         <p className="mb-4 text-gray-d4 text-lg max-lg:text-center text-right mt-4">
           Thousands of dollars are slipping through the cracks every year – lost
-          to fees, idle cash, and outdated donation methods your nonprofit may
-          still be using.
+          to fees, idle cash, and outdated donation methods.
         </p>
         <p className="mb-4 text-gray-d4 font-semibold text-lg max-lg:text-center text-right mt-4">
           The longer you wait, the more you miss.
         </p>
         <div className="mb-4 text-gray-d4 text-lg max-lg:text-center text-right">
-          Use the{" "}
-          <button
-            onClick={() => {
-              if (state !== "loaded") {
-                return navigate("/donation-calculator");
-              }
-              setOpen(true);
-            }}
-            type="button"
-            className="inline text-blue hover:text-blue-d1 font-semibold"
-          >
-            Better Giving Donation Calculator
-          </button>{" "}
-          now to see exactly how much revenue is being left on the table – and
-          how quickly you could turn that around.
+          See see exactly how much revenue is being left on the table – and how
+          quickly you could turn that around.
         </div>
         <button
           onClick={() => {
@@ -60,9 +45,9 @@ export function Top({ classes = "" }) {
             setOpen(true);
           }}
           type="button"
-          className="mt-8 shadow-xl shadow-black/10 btn btn-blue text-center lg:text-right justify-self-center lg:justify-self-end normal-case rounded-lg py-4 px-8 w-full md:w-auto"
+          className="mt-8 shadow-xl capitalize shadow-black/10 btn btn-blue text-center lg:text-right justify-self-center lg:justify-self-end rounded-lg py-4 px-8 w-full md:w-auto"
         >
-          See Your Savings - Launch the Calculator
+          See what you're losing
         </button>
         {open && (
           <Modal
