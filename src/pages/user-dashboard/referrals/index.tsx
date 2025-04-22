@@ -1,15 +1,9 @@
-import { ChevronDownIcon, ClipboardIcon } from "lucide-react";
+import Copier from "components/copier";
+import { ChevronDownIcon } from "lucide-react";
 import { useState } from "react";
 
 export default function Referrals() {
-  const [copied, setCopied] = useState({ id: false, link: false });
   const [expandedCard, setExpandedCard] = useState<number | null>(1);
-
-  const copyToClipboard = (text: string, type: "id" | "link") => {
-    navigator.clipboard.writeText(text);
-    setCopied({ ...copied, [type]: true });
-    setTimeout(() => setCopied({ ...copied, [type]: false }), 2000);
-  };
 
   const earningsCards = [
     {
@@ -53,50 +47,43 @@ export default function Referrals() {
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl">
       {/* My Referrals Section */}
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+        <h2 className="text-2xl font-semibold text-gray-d4 mb-4">
           My referrals
         </h2>
-        <div className="bg-gray-50 p-6 rounded-xl border border-gray-100">
+        <div className="bg-gray-l5 p-6 rounded-xl border border-gray-l4">
           <div className="mb-4">
-            <div className="text-sm font-medium text-gray-700 mb-1">
+            <div className="text-sm font-medium text-gray-l1 mb-1">
               REFERRAL ID
             </div>
             <div className="flex items-center">
               <div className="text-xl font-semibold mr-2">XYZ-1234</div>
-              <button
-                onClick={() => copyToClipboard("XYZ-1234", "id")}
-                className="text-gray-400 hover:text-gray-600"
-              >
-                <ClipboardIcon className="h-5 w-5" />
-              </button>
-              {copied.id && (
-                <span className="ml-2 text-xs text-green-600">Copied!</span>
-              )}
+              <Copier
+                text="XYZ-1234"
+                classes={{
+                  container: "text-gray hover:text-gray-d1",
+                  icon: "size-5",
+                }}
+                size={20}
+              />
             </div>
           </div>
 
           <div>
-            <div className="text-sm font-medium text-gray-700 mb-1">
+            <div className="text-sm font-medium text-gray-l1 mb-1">
               REFERRAL LINK
             </div>
             <div className="flex items-center">
-              <div className="text-gray-900 truncate max-w-xs">
+              <div className="text-gray-d4 truncate max-w-xs">
                 https://better.giving...
               </div>
-              <button
-                onClick={() =>
-                  copyToClipboard(
-                    "https://better.giving.com/ref/XYZ-1234",
-                    "link"
-                  )
-                }
-                className="text-gray-400 hover:text-gray-600 ml-2"
-              >
-                <ClipboardIcon className="h-5 w-5" />
-              </button>
-              {copied.link && (
-                <span className="ml-2 text-xs text-green-600">Copied!</span>
-              )}
+              <Copier
+                text="https://better.giving.com/ref/XYZ-1234"
+                classes={{
+                  container: "text-gray hover:text-gray-d1 ml-2",
+                  icon: "size-5",
+                }}
+                size={20}
+              />
             </div>
           </div>
         </div>
@@ -104,7 +91,7 @@ export default function Referrals() {
 
       {/* My Earnings Section */}
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+        <h2 className="text-2xl font-semibold text-gray-d4 mb-4">
           My earnings
         </h2>
 
@@ -112,15 +99,15 @@ export default function Referrals() {
           {earningsCards.map((card, index) => (
             <div
               key={card.id}
-              className={`bg-gray-50 rounded-xl border border-gray-100 overflow-hidden ${index === 0 ? "md:col-span-3 lg:col-span-1" : ""}`}
+              className={`bg-gray-l5 rounded-xl border border-gray-l4 overflow-hidden ${index === 0 ? "md:col-span-3 lg:col-span-1" : ""}`}
             >
               <div className="p-6">
                 <div className="flex justify-between items-start">
                   <div>
-                    <div className="text-2xl font-bold text-gray-900">
+                    <div className="text-2xl font-bold text-gray-d4">
                       {card.amount}
                     </div>
-                    <div className="text-sm text-gray-600 mt-1">
+                    <div className="text-sm text-gray mt-1">
                       pays out {card.payoutDate}
                       <br />- in {card.daysLeft} days
                     </div>
@@ -129,28 +116,28 @@ export default function Referrals() {
                     onClick={() =>
                       setExpandedCard(expandedCard === card.id ? null : card.id)
                     }
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray hover:text-gray-d1"
                   >
                     <ChevronDownIcon
-                      className={`h-6 w-6 transform ${expandedCard === card.id ? "rotate-180" : ""} transition-transform duration-200`}
+                      className={`size-6 transform ${expandedCard === card.id ? "rotate-180" : ""} transition-transform duration-200`}
                     />
                   </button>
                 </div>
 
                 {card.hasPayoutMethod ? (
                   <div className="mt-4">
-                    <div className="text-sm text-gray-700">Payout method:</div>
+                    <div className="text-sm text-gray-l1">Payout method:</div>
                     <div className="flex justify-between items-center">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-sm text-gray-d4">
                         {card.payoutMethod}
                       </div>
-                      <button className="text-sm bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">
+                      <button className="text-sm bg-blue text-white px-3 py-1 rounded-md hover:bg-blue-d1">
                         change
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <button className="mt-4 text-sm border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100 transition-colors">
+                  <button className="mt-4 text-sm border border-gray-l3 rounded-md px-4 py-2 hover:bg-gray-l5 transition-colors">
                     setup payout method
                   </button>
                 )}
@@ -158,25 +145,25 @@ export default function Referrals() {
 
               {/* Expanded Payout History */}
               {expandedCard === card.id && (
-                <div className="border-t border-gray-200 px-6 py-4">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">
+                <div className="border-t border-gray-l4 px-6 py-4">
+                  <h3 className="text-lg font-medium text-gray-d4 mb-4">
                     Payout history
                   </h3>
 
                   <div className="space-y-2">
-                    <div className="grid grid-cols-3 text-sm font-medium text-gray-500">
+                    <div className="grid grid-cols-3 text-sm font-medium text-gray">
                       <div>status</div>
                       <div>date</div>
                       <div>amount</div>
                     </div>
 
-                    <div className="h-px bg-gray-200 w-full"></div>
+                    <div className="h-px bg-gray-l4 w-full"></div>
 
                     {payoutHistory.length > 0 ? (
                       payoutHistory.map((payout, idx) => (
                         <div
                           key={idx}
-                          className="grid grid-cols-3 text-sm text-gray-900"
+                          className="grid grid-cols-3 text-sm text-gray-d4"
                         >
                           <div>{payout.status}</div>
                           <div>{payout.date}</div>
@@ -184,15 +171,15 @@ export default function Referrals() {
                         </div>
                       ))
                     ) : (
-                      <div className="text-sm text-gray-500 py-4">
+                      <div className="text-sm text-gray py-4">
                         No payout history yet
                       </div>
                     )}
 
-                    <div className="h-px bg-gray-200 w-full"></div>
+                    <div className="h-px bg-gray-l4 w-full"></div>
 
                     <div className="text-center">
-                      <button className="text-sm text-gray-600 hover:text-gray-900">
+                      <button className="text-sm text-gray hover:text-gray-d4">
                         view more
                       </button>
                     </div>
@@ -206,30 +193,30 @@ export default function Referrals() {
 
       {/* Onboarded Nonprofits Section */}
       <div>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+        <h2 className="text-2xl font-semibold text-gray-d4 mb-4">
           Onboarded Nonprofits
         </h2>
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="py-3 text-left text-sm font-medium text-gray-500">
+              <tr className="border-b border-gray-l4">
+                <th className="py-3 text-left text-sm font-medium text-gray">
                   name
                 </th>
-                <th className="py-3 text-left text-sm font-medium text-gray-500">
+                <th className="py-3 text-left text-sm font-medium text-gray">
                   earnings
                 </th>
-                <th className="py-3 text-left text-sm font-medium text-gray-500">
+                <th className="py-3 text-left text-sm font-medium text-gray">
                   status
                 </th>
               </tr>
             </thead>
             <tbody>
               {nonprofits.map((npo) => (
-                <tr key={npo.id} className="border-b border-gray-200">
-                  <td className="py-4 text-sm text-gray-900">{npo.name}</td>
-                  <td className="py-4 text-sm text-gray-900">{npo.earnings}</td>
-                  <td className="py-4 text-sm text-gray-900">{npo.status}</td>
+                <tr key={npo.id} className="border-b border-gray-l4">
+                  <td className="py-4 text-sm text-gray-d4">{npo.name}</td>
+                  <td className="py-4 text-sm text-gray-d4">{npo.earnings}</td>
+                  <td className="py-4 text-sm text-gray-d4">{npo.status}</td>
                 </tr>
               ))}
             </tbody>
