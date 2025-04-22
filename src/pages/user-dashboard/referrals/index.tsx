@@ -38,7 +38,7 @@ export default function Referrals() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl">
+    <div className="">
       {/* My Referrals Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-semibold text-gray-d4 mb-4">
@@ -205,7 +205,14 @@ export default function Referrals() {
                 <tr key={npo.id} className="border-b border-gray-l4">
                   <td className="py-4 text-sm text-gray-d4">{npo.name}</td>
                   <td className="py-4 text-sm text-gray-d4">{npo.earnings}</td>
-                  <td className="py-4 text-sm text-gray-d4">{npo.status}</td>
+                  {/* Apply conditional class based on status */}
+                  <td
+                    className={`py-4 text-sm ${
+                      npo.status === "ended" ? "text-red" : "text-green"
+                    }`}
+                  >
+                    {npo.status}
+                  </td>
                 </tr>
               ))}
             </tbody>
