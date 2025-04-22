@@ -113,6 +113,9 @@ export async function createPayment(
     donationFinalized: false,
     endowmentId: recipient.npo.id,
 
+    donor_message: intent.donor_message,
+    donor_public: intent.donor_public,
+
     fund_id: recipient.fund.id,
     fund_name: recipient.name,
     fund_members: recipient.fund.members,

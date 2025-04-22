@@ -4,6 +4,7 @@ import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
+import { DonorMsgs } from "components/donor-msgs";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, statusFn } from "components/fundraiser";
 import Image from "components/image";
@@ -130,6 +131,8 @@ export default function Fund() {
               <Video url={v} />
             </div>
           ))}
+
+          <DonorMsgs id={fund.id} classes="mt-4" />
         </div>
         <div
           id="info-card"
