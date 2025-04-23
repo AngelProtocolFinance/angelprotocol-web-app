@@ -23,6 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
     {
       firstName: p.value.firstName,
       lastName: p.value.lastName,
+      "custom:referral_id": p.value.referral_id,
       "custom:user-type": isNpo ? "npo" : "donor",
     }
   );

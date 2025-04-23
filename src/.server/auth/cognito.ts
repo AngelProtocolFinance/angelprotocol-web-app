@@ -174,20 +174,27 @@ class Cognito extends Storage {
     attributes: {
       firstName: string;
       lastName: string;
+      "custom:referral_id"?: string;
       "custom:user-type": string;
     }
   ) {
+    const userAttributes = [
+      { Name: "family_name", Value: attributes.lastName },
+      { Name: "given_name", Value: attributes.firstName },
+      { Name: "email", Value: username },
+      attributes["custom:referral_id"] && {
+        Name: "custom:referral_id",
+        Value: attributes["custom:referral_id"],
+      },
+    ];
+
     return fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("SignUp"),
       body: this.body({
         Username: username,
         Password: password,
-        UserAttributes: [
-          { Name: "family_name", Value: attributes.lastName },
-          { Name: "given_name", Value: attributes.firstName },
-          { Name: "email", Value: username },
-        ],
+        UserAttributes: userAttributes.filter(Boolean),
       }),
     }).then(this.deliveryDetails);
   }
