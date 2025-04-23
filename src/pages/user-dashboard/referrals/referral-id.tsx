@@ -1,4 +1,6 @@
 import Copier from "components/copier";
+import { BASE_URL } from "constants/env";
+import { appRoutes, regRoutes } from "constants/routes";
 
 interface ReferralIdProps {
   classes?: string;
@@ -31,11 +33,11 @@ export function ReferralId({ classes = "" }: ReferralIdProps) {
             REFERRAL LINK
           </div>
           <div className="flex items-center">
-            <div className="text-gray-d4 truncate max-w-xs">
-              https://better.giving...
-            </div>
+            <p className="text-blue-l1 truncate max-w-xs font-mono">
+              {BASE_URL}/{appRoutes.register}/{regRoutes.welcome}?ref=XYZ-1234
+            </p>
             <Copier
-              text="https://better.giving.com/ref/XYZ-1234"
+              text={`${BASE_URL}${appRoutes.register}/${regRoutes.welcome}?ref=XYZ-1234`}
               classes={{
                 container: "text-gray hover:text-gray-d1 ml-2",
                 icon: "size-5",
