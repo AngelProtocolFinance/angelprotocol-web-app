@@ -11,7 +11,11 @@ interface EarningData {
   payoutMethod: string | null;
 }
 
-export function Earnings() {
+interface EarningsProps {
+  classes?: string;
+}
+
+export function Earnings({ classes = "" }: EarningsProps) {
   // Simplified state for expansion, managing only one card's history
   const [isHistoryExpanded, setIsHistoryExpanded] = useState<boolean>(false);
 
@@ -31,7 +35,7 @@ export function Earnings() {
   ];
 
   return (
-    <div className="mb-8">
+    <div className={classes}>
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">My earnings</h2>
 
       <div

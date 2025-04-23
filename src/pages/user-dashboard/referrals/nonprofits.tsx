@@ -7,7 +7,11 @@ interface Nonprofit {
   status: string;
 }
 
-export function Nonprofits() {
+interface NonprofitsProps {
+  classes?: string;
+}
+
+export function Nonprofits({ classes = "" }: NonprofitsProps) {
   const [nonprofits] = useState<Nonprofit[]>([
     { id: 1, name: "NPO1", earnings: "$10.00", status: "ends in 2 years" },
     { id: 2, name: "NPO2", earnings: "$10.00", status: "ended" },
@@ -15,7 +19,7 @@ export function Nonprofits() {
   ]);
 
   return (
-    <div>
+    <div className={classes}>
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">
         Onboarded Nonprofits
       </h2>

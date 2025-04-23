@@ -1,8 +1,12 @@
 import Copier from "components/copier";
 
-export function ReferralId() {
+interface ReferralIdProps {
+  classes?: string;
+}
+
+export function ReferralId({ classes = "" }: ReferralIdProps) {
   return (
-    <div className="mb-8">
+    <div className={classes}>
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">My referrals</h2>
       <div className="bg-gray-l5 p-6 rounded-xl border border-gray-l4">
         <div className="mb-4">
