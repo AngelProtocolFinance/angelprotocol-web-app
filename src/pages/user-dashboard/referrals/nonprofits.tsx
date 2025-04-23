@@ -23,28 +23,22 @@ export function Nonprofits({ classes = "" }: NonprofitsProps) {
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">
         Onboarded Nonprofits
       </h2>
-      <div className="overflow-x-auto">
-        <table className="min-w-full">
+      <div className="overflow-x-auto bg-white rounded-lg p-4">
+        <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l3 divide-y divide-gray-l3">
           <thead>
-            <tr className="border-b border-gray-l4">
-              <th className="py-3 text-left text-sm font-medium text-gray">
-                name
-              </th>
-              <th className="py-3 text-left text-sm font-medium text-gray">
-                earnings
-              </th>
-              <th className="py-3 text-left text-sm font-medium text-gray">
-                status
-              </th>
+            <tr>
+              <th className="font-medium text-sm text-gray">name</th>
+              <th className="font-medium text-sm text-gray">earnings</th>
+              <th className="font-medium text-sm text-gray">status</th>
             </tr>
           </thead>
           <tbody>
             {nonprofits.map((npo) => (
-              <tr key={npo.id} className="border-b border-gray-l4">
-                <td className="py-4 text-sm text-gray-d4">{npo.name}</td>
-                <td className="py-4 text-sm text-gray-d4">{npo.earnings}</td>
+              <tr key={npo.id}>
+                <td className="text-sm text-gray-d4">{npo.name}</td>
+                <td className="text-sm text-gray-d4">{npo.earnings}</td>
                 <td
-                  className={`py-4 text-sm ${
+                  className={`text-sm ${
                     npo.status === "ended" ? "text-red" : "text-green"
                   }`}
                 >

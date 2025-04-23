@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from "lucide-react";
+import { DrawerIcon } from "components/icon";
 import { useState } from "react";
 
 // Define an interface for the earning data structure
@@ -43,26 +43,24 @@ export function Earnings({ classes = "" }: EarningsProps) {
         className="bg-gray-l5 rounded-xl border border-gray-l4 overflow-hidden"
       >
         <div className="p-6">
-          <div className="flex justify-between items-start">
-            <div>
-              <div className="text-2xl font-bold text-gray-d4">
-                {currentEarning.amount}
-              </div>
-              <div className="text-sm text-gray mt-1">
-                pays out {currentEarning.payoutDate}
-                <br />- in {currentEarning.daysLeft} days
-              </div>
+          <div className="flex items-center gap-x-2">
+            <div className="text-2xl font-bold text-gray-d4">
+              {currentEarning.amount}
             </div>
+            <p className="text-sm text-gray mt-1">
+              pays out {currentEarning.payoutDate}- in {currentEarning.daysLeft}{" "}
+              days
+            </p>
           </div>
 
           {currentEarning.hasPayoutMethod ? (
             <div className="mt-4">
-              <div className="text-sm text-gray-l1">Payout method:</div>
+              <p className="text-sm text-gray-l1">Payout method:</p>
               <div className="flex gap-x-2 items-center">
-                <div className="text-sm text-gray-d4">
+                <p className="text-sm text-gray-d4">
                   {currentEarning.payoutMethod}
-                </div>
-                <button className="text-xs btn-blue bg-blue px-3 py-1 rounded-md ">
+                </p>
+                <button className="text-xs btn-blue bg-blue px-3 py-1 rounded-md">
                   Change
                 </button>
               </div>
@@ -74,54 +72,55 @@ export function Earnings({ classes = "" }: EarningsProps) {
           )}
           <button
             onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
-            className="text-gray hover:text-gray-d1 justify-self-end"
+            className="text-gray hover:text-gray-d1 justify-self-end mt-8"
           >
-            <ChevronDownIcon
-              className={`size-6 transform ${isHistoryExpanded ? "rotate-180" : ""} transition-transform duration-200`}
-            />
+            <DrawerIcon isOpen={isHistoryExpanded} />
           </button>
         </div>
 
         {/* Expanded Payout History - Conditional rendering based on isHistoryExpanded */}
         {isHistoryExpanded && (
-          <div className="border-t border-gray-l4 px-6 py-4">
+          <div className="border-t-2 border-gray-l3 px-6 py-4">
             <h3 className="text-lg font-medium text-gray-d4 mb-4">
               Payout history
             </h3>
 
-            <div className="space-y-2">
-              <div className="grid grid-cols-3 text-sm font-medium text-gray">
-                <div>status</div>
-                <div>date</div>
-                <div>amount</div>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
+                <thead>
+                  <tr>
+                    <th className="font-medium text-sm text-gray">status</th>
+                    <th className="font-medium text-sm text-gray">date</th>
+                    <th className="font-medium text-sm text-gray">amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {payoutHistory.length > 0 ? (
+                    payoutHistory.map((payout, idx) => (
+                      <tr key={idx} className="text-sm text-gray-d4">
+                        <td>{payout.status}</td>
+                        <td>{payout.date}</td>
+                        <td>{payout.amount}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="text-sm text-gray py-4 text-center"
+                      >
+                        No payout history yet
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-              <div className="h-px bg-gray-l4 w-full"></div>
-
-              {payoutHistory.length > 0 ? (
-                payoutHistory.map((payout, idx) => (
-                  <div
-                    key={idx}
-                    className="grid grid-cols-3 text-sm text-gray-d4"
-                  >
-                    <div>{payout.status}</div>
-                    <div>{payout.date}</div>
-                    <div>{payout.amount}</div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-sm text-gray py-4">
-                  No payout history yet
-                </div>
-              )}
-
-              <div className="h-px bg-gray-l4 w-full"></div>
-
-              <div className="text-center">
-                <button className="text-sm text-gray hover:text-gray-d4">
-                  view more
-                </button>
-              </div>
+            <div className="text-center mt-4">
+              <button className="text-sm text-gray hover:text-gray-d4">
+                view more
+              </button>
             </div>
           </div>
         )}

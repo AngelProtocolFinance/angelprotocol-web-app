@@ -4,7 +4,7 @@ import { ReferralId } from "./referral-id";
 
 export function ReferralsPage() {
   return (
-    <div>
+    <div className="">
       <ReferralId classes="mb-8" />
       <Earnings classes="mb-8" />
       <Nonprofits classes="mb-8" />
