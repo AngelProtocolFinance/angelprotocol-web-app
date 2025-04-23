@@ -78,6 +78,7 @@ export const signUp = v.pipe(
     firstName: str,
     lastName: str,
     password: newPassword,
+    referral_id: v.optional(v.pipe(v.string(), v.trim())),
   }),
   v.forward(
     v.partialCheck(
