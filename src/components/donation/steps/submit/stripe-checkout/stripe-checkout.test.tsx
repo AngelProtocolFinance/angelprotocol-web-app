@@ -69,6 +69,8 @@ const state: StripeCheckoutStep = {
     streetAddress: "street",
     zipCode: "123",
     ukTaxResident: false,
+    publicMsg: "",
+    isPublic: true,
   },
   feeAllowance: 10,
   honorary: {

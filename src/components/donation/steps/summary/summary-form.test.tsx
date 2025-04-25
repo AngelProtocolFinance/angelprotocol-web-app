@@ -14,6 +14,8 @@ const donor: FormDonor = {
   title: { label: "Select", value: "" },
   zipCode: "",
   streetAddress: "",
+  publicMsg: "",
+  isPublic: true,
 };
 
 const honorary: Honorary = {
