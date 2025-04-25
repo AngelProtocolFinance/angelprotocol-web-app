@@ -8,7 +8,8 @@ import { getRegs } from ".server/registration/get-regs";
 export { default } from "./applications";
 export { ErrorBoundary } from "components/error";
 
-export const meta: MetaFunction = () => metas({ title: "Applications Review" });
+export const meta: MetaFunction = () =>
+  metas({ title: "Applications Review - Dashboard" });
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
