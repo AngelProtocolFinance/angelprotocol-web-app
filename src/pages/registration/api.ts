@@ -28,6 +28,7 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
   const url = new URL(request.url);
 
   const ein = url.searchParams.get("claim");
+  const referrer = url.searchParams.get("referrer");
   const endow = ein ? await getEndowWithEin(ein) : null;
   const claim = endow
     ? ({
@@ -42,6 +43,7 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
   };
 
   if (claim) payload.claim = claim;
+  if (referrer) payload.referrer = referrer;
 
   const init = parse(newReg, payload);
 

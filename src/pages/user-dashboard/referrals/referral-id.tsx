@@ -34,10 +34,11 @@ export function ReferralId({ classes = "" }: ReferralIdProps) {
           </div>
           <div className="flex items-center">
             <p className="text-blue-l1 truncate max-w-xs font-mono">
-              {BASE_URL}/{appRoutes.register}/{regRoutes.welcome}?ref=XYZ-1234
+              {BASE_URL}
+              {appRoutes.register}/{regRoutes.welcome}?referrer=XYZ-1234
             </p>
             <Copier
-              text={`${BASE_URL}${appRoutes.register}/${regRoutes.welcome}?ref=XYZ-1234`}
+              text={`${BASE_URL}${appRoutes.register}/${regRoutes.welcome}?referrer=XYZ-1234`}
               classes={{
                 container: "text-gray hover:text-gray-d1 ml-2",
                 icon: "size-5",
