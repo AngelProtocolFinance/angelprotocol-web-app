@@ -1,10 +1,18 @@
 import { useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
+import { APP_NAME } from "constants/env";
+import { metas } from "helpers/seo";
 import InitForm from "./init-form";
 import SetPasswordForm from "./set-password-form";
 import Success from "./success";
 import type { LoaderData } from "./types";
+
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
+
+export const meta: MetaFunction = () =>
+  metas({ title: `Reset Password - ${APP_NAME}` });
+
 export default function ResetPassword() {
   const { redirect, step } = useLoaderData<LoaderData>();
 
