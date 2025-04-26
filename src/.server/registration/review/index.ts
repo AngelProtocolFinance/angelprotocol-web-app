@@ -48,6 +48,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     sdgs: reg.org.un_sdg as UNSDG_NUM[],
     url: reg.org.website,
     claimed: true,
+    referrer: reg.referrer,
   };
 
   ///////////// APPROVAL OF CLAIM /////////////
