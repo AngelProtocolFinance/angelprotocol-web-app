@@ -48,8 +48,15 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     sdgs: reg.org.un_sdg as UNSDG_NUM[],
     url: reg.org.website,
     claimed: true,
-    referrer: reg.referrer,
   };
+
+  if (reg.referrer) {
+    const duration = 15 * 24 * 60 * 60; // 15 days
+    endowContentFromReg.referrer = {
+      id: reg.referrer,
+      expiry: new Date(Date.now() + duration * 1000).toISOString(),
+    };
+  }
 
   ///////////// APPROVAL OF CLAIM /////////////
   if (isIrs501c3(reg.docs) && reg.docs.claim) {
