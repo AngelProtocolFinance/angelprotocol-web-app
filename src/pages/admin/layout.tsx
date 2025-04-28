@@ -1,9 +1,10 @@
 import type { Endow } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import { Footer } from "components/footer";
 import { appRoutes } from "constants/routes";
+import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
 import type { UserV2 } from "types/auth";
@@ -19,6 +20,13 @@ interface LoaderData {
   user: UserV2;
   endow: Pick<Endow, "logo" | "name">;
 }
+
+export const meta: MetaFunction = ({ data }) => {
+  const d = data as LoaderData;
+  return metas({
+    title: `Dashboard - ${d.endow.name}`,
+  });
+};
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);

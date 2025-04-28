@@ -19,7 +19,7 @@ const members: IMember[] = [
     title: "Content and Partnership Manager",
     socials: {
       linkedin: "https://www.linkedin.com/in/brylle-gutierrez-b03188340/",
-      email: "mailto:brylle@better.givingg",
+      email: "mailto:brylle@better.giving",
     },
     image: brylle,
     bio: [
