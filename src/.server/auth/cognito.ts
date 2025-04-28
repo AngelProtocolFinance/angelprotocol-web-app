@@ -175,7 +175,6 @@ class Cognito extends Storage {
     attributes: {
       firstName: string;
       lastName: string;
-      "custom:referral_id"?: string;
       "custom:user-type": string;
     }
   ) {
