@@ -23,6 +23,7 @@ export class Util {
       lastName: p.family_name,
       avatar: p["custom:avatar"],
       currency: p["custom:currency"],
+      referral_id: p["custom:referral_id"],
     };
   }
   protected unset(session: Stored) {

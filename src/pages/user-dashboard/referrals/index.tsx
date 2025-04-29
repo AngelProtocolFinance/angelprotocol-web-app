@@ -1,11 +1,16 @@
+import { useLoaderData } from "@remix-run/react";
+import type { UserV2 } from "types/auth";
 import { Earnings } from "./earnings";
 import { Nonprofits } from "./nonprofits";
 import { ReferralId } from "./referral-id";
+export { loader } from "./api";
 
 export function ReferralsPage() {
+  const user = useLoaderData() as UserV2;
   return (
     <div className="">
-      <ReferralId classes="mb-8" />
+      <h2 className="text-2xl font-semibold text-gray-d4 mb-4">My referrals</h2>
+      <ReferralId classes="mb-8" referral_id={user.referral_id} />
       <Earnings classes="mb-8" />
       <Nonprofits classes="mb-8" />
     </div>
