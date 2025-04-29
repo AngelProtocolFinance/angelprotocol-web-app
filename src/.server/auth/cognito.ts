@@ -1,4 +1,5 @@
 import { Buffer } from "node:buffer";
+import { generateReferralId } from "helpers/nanoid";
 import type { AuthError, UserV2 } from "types/auth";
 import { env } from "../env";
 import { type Stored, commitSession, getSession } from "./session";
@@ -187,6 +188,7 @@ class Cognito extends Storage {
           { Name: "family_name", Value: attributes.lastName },
           { Name: "given_name", Value: attributes.firstName },
           { Name: "email", Value: username },
+          { Name: "custom:referral_id", Value: generateReferralId() },
         ],
       }),
     }).then(this.deliveryDetails);
