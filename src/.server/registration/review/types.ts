@@ -13,4 +13,5 @@ export type EndowContentFromReg = Pick<
   | "url"
   | "claimed"
   | "referrer"
+  | "referrer_expiry"
 >;

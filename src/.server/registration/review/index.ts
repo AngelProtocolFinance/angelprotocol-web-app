@@ -52,10 +52,10 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
 
   if (reg.referrer) {
     const duration = 15 * 24 * 60 * 60; // 15 days
-    endowContentFromReg.referrer = {
-      id: reg.referrer,
-      expiry: new Date(Date.now() + duration * 1000).toISOString(),
-    };
+    endowContentFromReg.referrer = reg.referrer;
+    endowContentFromReg.referrer_expiry = new Date(
+      Date.now() + duration * 1000
+    ).toISOString();
   }
 
   ///////////// APPROVAL OF CLAIM /////////////
