@@ -21,7 +21,6 @@ const rmx = remix({
       r("donate-fund/:fundId", "./pages/donate-fund/redirect.ts");
       r("fundraisers/:fundId/donate", "./pages/donate-fund/index.tsx");
       r("donate-thanks", "./pages/donate-thanks.tsx");
-      r("access-donation-calculator", "./pages/landing-c/index.tsx");
       r("see-what-youre-losing", "./pages/landing-d/index.tsx");
       r("simplify-fundraising-maximize-impact", "./pages/landing-a/index.tsx", {
         id: "page-a",
