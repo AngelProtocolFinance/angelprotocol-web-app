@@ -96,6 +96,8 @@ const profileFields: { [K in keyof Required<Endow>]: "" } = {
   fund_opt_in: "",
   env: "",
   target: "",
+  referrer: "",
+  referrer_expiry: "",
 };
 
 export const editNpo = async (

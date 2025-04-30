@@ -16,6 +16,7 @@ export async function createRegistration(
     id,
     registrant_id: init.registrant_id,
     claim: init.claim,
+    referrer: init.referrer,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     update_type: "init",
