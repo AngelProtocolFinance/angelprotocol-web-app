@@ -16,7 +16,7 @@ export type EndowmentBalances = {
   payoutsPending: number;
   sustainabilityFundBal: number;
   totalContributions: number;
-  totalEarnings: number;
+  totalEarnings?: number;
   movementDetails?: BalanceMovement;
   /** savings balance */
   liq?: number;
