@@ -10,5 +10,5 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  return user;
+  return { ...user, origin: new URL(request.url).origin };
 };

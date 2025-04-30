@@ -1,10 +1,10 @@
 import Copier from "components/copier";
-import { BASE_URL } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 
 interface Props {
   classes?: string;
   referral_id: string;
+  origin: string;
 }
 
 export function ReferralId({ classes = "", ...p }: Props) {
@@ -33,11 +33,11 @@ export function ReferralId({ classes = "", ...p }: Props) {
         </div>
         <div className="flex items-center">
           <p className="text-blue-l1 truncate max-w-xs font-mono">
-            {BASE_URL}
+            {p.origin}
             {appRoutes.register}/{regRoutes.welcome}?referrer={p.referral_id}
           </p>
           <Copier
-            text={`${BASE_URL}${appRoutes.register}/${regRoutes.welcome}?referrer=${p.referral_id}`}
+            text={`${p.origin}${appRoutes.register}/${regRoutes.welcome}?referrer=${p.referral_id}`}
             classes={{
               container: "text-gray hover:text-gray-d1 ml-2",
               icon: "size-5",
