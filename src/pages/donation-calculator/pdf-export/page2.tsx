@@ -29,7 +29,7 @@ export function Page2({ v }: { v: View }) {
     <Pg size="A4">
       <V
         style={{
-          padding: w["10"],
+          padding: w["10"] + 10,
           paddingBottom: 0,
           display: "flex",
           flexDirection: "row",
@@ -47,11 +47,11 @@ export function Page2({ v }: { v: View }) {
         >
           Total 5 - 10 - 15 - 20 years financial advantage
         </T>
-        <V style={{ height: w["2"], backgroundColor: blue.d, width: 175 }} />
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 165 }} />
       </V>
       <T
         style={{
-          paddingHorizontal: w["10"],
+          paddingHorizontal: w["10"] + 10,
           color: blue.d,
           fontWeight: fw.sb,
           fontSize: fs.xl - 4,
@@ -63,9 +63,9 @@ export function Page2({ v }: { v: View }) {
       <T
         style={{
           fontWeight: fw.b,
-          paddingHorizontal: w["10"],
+          paddingHorizontal: w["10"] + 10,
           fontSize: fs.lg,
-          marginVertical: w["14"],
+          marginVertical: w["6"],
         }}
       >
         Compound Growth = Exponential Impact
@@ -74,7 +74,7 @@ export function Page2({ v }: { v: View }) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["10"],
+          paddingHorizontal: w["10"] + 4,
           gap: w["10"],
         }}
       >
@@ -113,7 +113,7 @@ export function Page2({ v }: { v: View }) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["10"],
+          paddingHorizontal: w["10"] + 4,
           gap: w["10"],
         }}
       >
@@ -242,8 +242,8 @@ export function Page2({ v }: { v: View }) {
       <V
         style={{
           backgroundColor: amber.l4,
-          marginHorizontal: w["14"],
-          padding: w["6"],
+          marginHorizontal: w["14"] + 8,
+          padding: w["10"],
           borderRadius: 6,
           marginTop: w["10"],
         }}
@@ -260,8 +260,8 @@ export function Page2({ v }: { v: View }) {
       </V>
       <V
         style={{
-          marginHorizontal: w["14"],
-          padding: w["6"],
+          marginHorizontal: w["14"] + 8,
+          padding: w["10"],
           backgroundColor: blue.l4,
           borderRadius: 6,
           marginTop: w["6"],

@@ -20,7 +20,7 @@ export function Page4() {
       <V
         style={{
           backgroundColor: blue.d,
-          paddingHorizontal: w["10"],
+          paddingHorizontal: w["10"] + 10,
           paddingVertical: w["20"],
         }}
       >
@@ -63,7 +63,7 @@ export function Page4() {
           flexDirection: "row",
           gap: w["4"],
           alignItems: "center",
-          paddingHorizontal: w["10"],
+          paddingHorizontal: w["10"] + 10,
           marginTop: w["14"],
         }}
       >
@@ -87,7 +87,7 @@ export function Page4() {
       <V
         style={{
           marginTop: w["14"],
-          paddingHorizontal: w["20"],
+          paddingHorizontal: w["20"] + 10,
         }}
       >
         <V style={{ marginBottom: w["14"] }}>

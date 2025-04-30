@@ -26,7 +26,7 @@ export function Benefits() {
   ];
 
   return (
-    <V style={{ paddingHorizontal: w["14"], paddingTop: w["10"] }}>
+    <V style={{ paddingHorizontal: w["14"] + 10, paddingTop: w["10"] + 10 }}>
       <T
         style={{
           fontSize: fs.xl,

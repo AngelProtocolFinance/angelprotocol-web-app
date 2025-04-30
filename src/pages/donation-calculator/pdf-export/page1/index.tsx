@@ -27,7 +27,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           ...styles.header,
-          padding: w["10"],
+          padding: w["10"] + 10,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -67,7 +67,8 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          padding: w["10"],
+          paddingHorizontal: w["10"] + 10,
+          paddingTop: w["10"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -84,15 +85,15 @@ export function Page1({ v }: Props) {
         >
           Your current online donations
         </T>
-        <V style={{ height: w["2"], backgroundColor: blue.d, width: 322 }} />
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 305 }} />
       </V>
       <V
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: w["14"],
+          paddingHorizontal: w["14"] + 10,
           gap: w["20"],
-          marginTop: -w["20"] - 2,
+          marginTop: w["6"],
         }}
       >
         <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
@@ -128,9 +129,9 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: w["14"],
+          paddingHorizontal: w["14"] + 10,
           gap: w["10"],
-          marginTop: -w["20"] - 2,
+          marginTop: w["4"],
         }}
       >
         <T style={{ fontSize: fs.base }}>Accepted Donation Types</T>
@@ -138,9 +139,9 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          marginTop: -w["4"],
           padding: w["10"],
-          marginHorizontal: w["14"],
+          marginTop: w["6"],
+          marginHorizontal: w["14"] + 9,
           backgroundColor: gray.l4,
           display: "flex",
           flexDirection: "row",
@@ -166,11 +167,12 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          padding: w["10"],
+          paddingHorizontal: w["10"] + 10,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          marginTop: w["14"],
         }}
       >
         <T
@@ -183,15 +185,15 @@ export function Page1({ v }: Props) {
         >
           Annual Donation Processing Impact With Better Giving
         </T>
-        <V style={{ height: 2, backgroundColor: blue.d, width: 145 }} />
+        <V style={{ height: 2, backgroundColor: blue.d, width: 128 }} />
       </V>
       <V
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: w["14"],
+          paddingHorizontal: w["14"] + 10,
           gap: w["20"],
-          marginTop: -w["20"],
+          marginTop: w["6"],
         }}
       >
         <V style={{ width: "50%", display: "flex", gap: w["4"] }}>
@@ -223,9 +225,9 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: w["14"],
+          paddingHorizontal: w["14"] + 10,
           gap: w["10"],
-          marginTop: -w["20"] - 2,
+          marginTop: w["6"],
         }}
       >
         <T style={{ fontSize: fs.base }}>Accepted Donation Types</T>
@@ -233,9 +235,9 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          marginTop: -w["4"],
+          marginTop: w["6"],
           padding: w["10"],
-          marginHorizontal: w["14"],
+          marginHorizontal: w["14"] + 8,
           backgroundColor: gray.l4,
           display: "flex",
           flexDirection: "row",
@@ -266,7 +268,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           padding: w["10"],
-          marginHorizontal: w["14"],
+          marginHorizontal: w["14"] + 8,
           backgroundColor: green.l5,
           display: "flex",
           alignItems: "center",
@@ -281,7 +283,8 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          padding: w["10"],
+          marginTop: w["10"],
+          paddingHorizontal: w["10"] + 10,
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -298,13 +301,13 @@ export function Page1({ v }: Props) {
         >
           LONG-TERM FINANCIAL GROWTH (ESTIMATED PREDICTIONS)
         </T>
-        <V style={{ height: w["2"], backgroundColor: blue.d, width: 165 }} />
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 145 }} />
       </V>
       <T
         style={{
-          paddingHorizontal: w["10"],
+          marginTop: w["6"],
+          paddingHorizontal: w["10"] + 10,
           fontSize: fs.base,
-          marginTop: -w["6"],
           fontWeight: fw.sb,
         }}
       >
@@ -315,7 +318,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           fontSize: fs.base,
-          paddingHorizontal: w["20"],
+          paddingHorizontal: w["20"] + 10,
           marginTop: w["4"],
         }}
       >
@@ -354,7 +357,8 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: w["14"],
+          paddingTop: w["14"],
+          paddingHorizontal: w["14"] + 6,
         }}
       >
         <ImpactCard yr={1} {...v.projection[0]} />

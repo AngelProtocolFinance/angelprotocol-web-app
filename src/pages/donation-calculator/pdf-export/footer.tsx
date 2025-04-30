@@ -11,8 +11,8 @@ import { fs, blue, fw, gray, w } from "./styles";
 function Socials({ style = {} }: { style?: object }) {
   const iconContainerStyle: Style = {
     backgroundColor: gray.l6,
-    width: 28,
-    height: 28,
+    width: 22,
+    height: 22,
     borderRadius: 6,
     display: "flex",
     justifyContent: "center",
@@ -35,7 +35,7 @@ function Socials({ style = {} }: { style?: object }) {
         <Img
           style={{
             ...iconStyle,
-            width: 27 * 0.8,
+            width: 27 * 0.5,
             left: 2,
             position: "relative",
           }}
@@ -43,19 +43,19 @@ function Socials({ style = {} }: { style?: object }) {
         />
       </A>
       <A href={socials.facebook} style={iconContainerStyle}>
-        <Img style={{ ...iconStyle, width: 25.2 * 0.7 }} src={facebook} />
+        <Img style={{ ...iconStyle, width: 25.2 * 0.55 }} src={facebook} />
       </A>
       <A href={socials.x} style={iconContainerStyle}>
-        <Img style={{ ...iconStyle, width: 20 * 0.7 }} src={x} />
+        <Img style={{ ...iconStyle, width: 20 * 0.55 }} src={x} />
       </A>
       <A href={socials.youtube} style={iconContainerStyle}>
-        <Img style={{ ...iconStyle, width: 28.8 * 0.7 }} src={youtube} />
+        <Img style={{ ...iconStyle, width: 28.8 * 0.55 }} src={youtube} />
       </A>
       <A href={socials.instagram} style={iconContainerStyle}>
-        <Img style={{ ...iconStyle, width: 25.2 * 0.7 }} src={instagram} />
+        <Img style={{ ...iconStyle, width: 25.2 * 0.55 }} src={instagram} />
       </A>
       <A href={socials.intercom} style={iconContainerStyle}>
-        <Img style={{ ...iconStyle, width: 25.2 * 0.7 }} src={intercom} />
+        <Img style={{ ...iconStyle, width: 25.2 * 0.55 }} src={intercom} />
       </A>
     </V>
   );
@@ -73,7 +73,7 @@ export function Footer({ style = {} }: { style?: object }) {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: w["14"],
+        padding: w["14"] + 10,
         color: gray.l6,
         ...style,
       }}
