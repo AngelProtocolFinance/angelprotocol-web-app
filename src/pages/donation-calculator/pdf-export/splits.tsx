@@ -16,7 +16,7 @@ export function Splits(v: Props) {
         display: "flex",
         flexDirection: "row",
         gap: 4,
-        fontSize: fs.sm - 2,
+        fontSize: fs.xxs,
         marginTop: w["6"],
       }}
     >

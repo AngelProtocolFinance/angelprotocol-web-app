@@ -11,7 +11,7 @@ export function Page4() {
     marginBottom: w["4"],
     display: "flex",
     flexDirection: "row",
-    fontSize: fs.lg * 0.9,
+    fontSize: fs.md,
   };
   const bulletStyle = { marginRight: w["4"] };
 
@@ -20,7 +20,7 @@ export function Page4() {
       <V
         style={{
           backgroundColor: blue.d,
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["30"],
           paddingVertical: w["20"],
         }}
       >
@@ -63,13 +63,13 @@ export function Page4() {
           flexDirection: "row",
           gap: w["4"],
           alignItems: "center",
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["30"],
           marginTop: w["14"],
         }}
       >
         <T
           style={{
-            fontSize: fs.lg + 2,
+            fontSize: fs.lg2,
             fontWeight: fw.sb,
             textTransform: "uppercase",
           }}
@@ -87,7 +87,7 @@ export function Page4() {
       <V
         style={{
           marginTop: w["14"],
-          paddingHorizontal: w["20"] + 10,
+          paddingHorizontal: w["30"],
         }}
       >
         <V style={{ marginBottom: w["14"] }}>
@@ -139,7 +139,7 @@ export function Page4() {
             style={{
               color: gray.d1,
               marginBottom: w["4"],
-              fontSize: fs.lg * 0.9,
+              fontSize: fs.md,
             }}
           >
             These are approximate percentages for U.S.-based nonprofits,

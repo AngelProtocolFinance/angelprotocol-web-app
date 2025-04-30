@@ -29,7 +29,7 @@ export function Page2({ v }: { v: View }) {
     <Pg size="A4">
       <V
         style={{
-          padding: w["10"] + 10,
+          padding: w["20"],
           paddingBottom: 0,
           display: "flex",
           flexDirection: "row",
@@ -41,7 +41,7 @@ export function Page2({ v }: { v: View }) {
           style={{
             color: blue.d,
             fontWeight: fw.sb,
-            fontSize: fs.xl - 4,
+            fontSize: fs.lg2,
             textTransform: "uppercase",
           }}
         >
@@ -51,10 +51,10 @@ export function Page2({ v }: { v: View }) {
       </V>
       <T
         style={{
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["20"],
           color: blue.d,
           fontWeight: fw.sb,
-          fontSize: fs.xl - 4,
+          fontSize: fs.lg2,
           textTransform: "uppercase",
         }}
       >
@@ -63,7 +63,7 @@ export function Page2({ v }: { v: View }) {
       <T
         style={{
           fontWeight: fw.b,
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["20"],
           fontSize: fs.lg,
           marginVertical: w["6"],
         }}
@@ -74,7 +74,7 @@ export function Page2({ v }: { v: View }) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["10"] + 4,
+          paddingHorizontal: w["14"],
           gap: w["10"],
         }}
       >
@@ -93,7 +93,7 @@ export function Page2({ v }: { v: View }) {
 
           return (
             <V key={row.key} style={{ width: "50%", display: "flex" }}>
-              <T style={{ fontSize: fs.base, marginLeft: w["6"] + 2 }}>
+              <T style={{ fontSize: fs.base, marginLeft: w["8"] }}>
                 {row.label}
               </T>
               <Splits
@@ -113,7 +113,7 @@ export function Page2({ v }: { v: View }) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["10"] + 4,
+          paddingHorizontal: w["14"],
           gap: w["10"],
         }}
       >
@@ -132,7 +132,7 @@ export function Page2({ v }: { v: View }) {
 
           return (
             <V key={row.key} style={{ width: "50%" }}>
-              <T style={{ fontSize: fs.base, marginLeft: w["6"] + 2 }}>
+              <T style={{ fontSize: fs.base, marginLeft: w["8"] }}>
                 {row.label}
               </T>
               <Splits
@@ -242,7 +242,7 @@ export function Page2({ v }: { v: View }) {
       <V
         style={{
           backgroundColor: amber.l4,
-          marginHorizontal: w["14"] + 8,
+          marginHorizontal: w["22"],
           padding: w["10"],
           borderRadius: 6,
           marginTop: w["10"],
@@ -250,7 +250,7 @@ export function Page2({ v }: { v: View }) {
       >
         <T
           style={{
-            fontSize: fs.base + 1,
+            fontSize: fs.sm2,
             color: amber.d3,
           }}
         >
@@ -260,7 +260,7 @@ export function Page2({ v }: { v: View }) {
       </V>
       <V
         style={{
-          marginHorizontal: w["14"] + 8,
+          marginHorizontal: w["22"],
           padding: w["10"],
           backgroundColor: blue.l4,
           borderRadius: 6,
@@ -277,7 +277,7 @@ export function Page2({ v }: { v: View }) {
         >
           The Power of Compound Growth
         </T>
-        <T style={{ color: blue.d2, fontSize: fs.base + 1 }}>
+        <T style={{ color: blue.d2, fontSize: fs.sm2 }}>
           These projections demonstrate how Better Giving's integrated approach
           compounds over time. Our organization could accumulate significant
           additional funds through the combination of reduced processing fees,

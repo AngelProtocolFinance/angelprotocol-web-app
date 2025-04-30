@@ -1,5 +1,6 @@
 import { toUsd } from "helpers/to-usd";
 import { T } from "./components";
+import { fs } from "./styles";
 
 interface Props {
   children: number;
@@ -16,7 +17,7 @@ export function Usd({ parens, relative = 0, sign, children: num }: Props) {
   return (
     <T
       style={{
-        fontSize: 10,
+        fontSize: fs.base,
         color: is_minus ? "#ef4444" : is_plus ? "#10b981" : undefined,
       }}
     >

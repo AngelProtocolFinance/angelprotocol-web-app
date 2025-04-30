@@ -73,14 +73,14 @@ export function Footer({ style = {} }: { style?: object }) {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        padding: w["14"] + 10,
+        padding: w["24"],
         color: gray.l6,
         ...style,
       }}
     >
       <T
         style={{
-          fontSize: fs.xl - 2,
+          fontSize: fs.xlm,
           fontWeight: fw.b,
         }}
       >

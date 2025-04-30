@@ -27,7 +27,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           ...styles.header,
-          padding: w["10"] + 10,
+          padding: w["20"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -67,7 +67,7 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["20"],
           paddingTop: w["10"],
           display: "flex",
           flexDirection: "row",
@@ -91,7 +91,7 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["14"] + 10,
+          paddingHorizontal: w["24"],
           gap: w["20"],
           marginTop: w["6"],
         }}
@@ -129,7 +129,7 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["14"] + 10,
+          paddingHorizontal: w["24"],
           gap: w["10"],
           marginTop: w["4"],
         }}
@@ -141,7 +141,7 @@ export function Page1({ v }: Props) {
         style={{
           padding: w["10"],
           marginTop: w["6"],
-          marginHorizontal: w["14"] + 9,
+          marginHorizontal: w["23"],
           backgroundColor: gray.l4,
           display: "flex",
           flexDirection: "row",
@@ -167,7 +167,7 @@ export function Page1({ v }: Props) {
       </V>
       <V
         style={{
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["20"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -191,7 +191,7 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["14"] + 10,
+          paddingHorizontal: w["24"],
           gap: w["20"],
           marginTop: w["6"],
         }}
@@ -225,7 +225,7 @@ export function Page1({ v }: Props) {
         style={{
           display: "flex",
           flexDirection: "row",
-          paddingHorizontal: w["14"] + 10,
+          paddingHorizontal: w["24"],
           gap: w["10"],
           marginTop: w["6"],
         }}
@@ -237,7 +237,7 @@ export function Page1({ v }: Props) {
         style={{
           marginTop: w["6"],
           padding: w["10"],
-          marginHorizontal: w["14"] + 8,
+          marginHorizontal: w["22"],
           backgroundColor: gray.l4,
           display: "flex",
           flexDirection: "row",
@@ -268,7 +268,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           padding: w["10"],
-          marginHorizontal: w["14"] + 8,
+          marginHorizontal: w["22"],
           backgroundColor: green.l5,
           display: "flex",
           alignItems: "center",
@@ -284,7 +284,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           marginTop: w["10"],
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["20"],
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -306,7 +306,7 @@ export function Page1({ v }: Props) {
       <T
         style={{
           marginTop: w["6"],
-          paddingHorizontal: w["10"] + 10,
+          paddingHorizontal: w["20"],
           fontSize: fs.base,
           fontWeight: fw.sb,
         }}
@@ -318,7 +318,7 @@ export function Page1({ v }: Props) {
       <V
         style={{
           fontSize: fs.base,
-          paddingHorizontal: w["20"] + 10,
+          paddingHorizontal: w["30"],
           marginTop: w["4"],
         }}
       >
@@ -327,7 +327,7 @@ export function Page1({ v }: Props) {
           <T style={{ fontWeight: fw.sb }}> 10%</T> of Annual Donations
           Allocated to Savings/Investments
         </T>
-        <T style={{ fontSize: fs.sm - 1 }}>
+        <T style={{ fontSize: fs.xxs2 }}>
           ({toUsd(v.amount)}{" "}
           <T style={{ fontWeight: fw.sb }}>with Better Giving</T> ×{" "}
           {(v.notGrantedRate * 100).toFixed(2)}% = {toUsd(v.notGranted)})
@@ -358,7 +358,7 @@ export function Page1({ v }: Props) {
           display: "flex",
           flexDirection: "row",
           paddingTop: w["14"],
-          paddingHorizontal: w["14"] + 6,
+          paddingHorizontal: w["20"],
         }}
       >
         <ImpactCard yr={1} {...v.projection[0]} />

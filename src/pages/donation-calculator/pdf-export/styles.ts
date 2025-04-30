@@ -60,9 +60,15 @@ export const gray = {
 };
 
 export const fs = {
+  xxs: 7,
+  xxs2: 8,
   sm: 9,
   base: 10,
+  sm2: 11,
+  md: 13,
   lg: 14,
+  lg2: 16,
+  xlm: 18,
   xl: 20,
 } as const;
 
@@ -70,9 +76,14 @@ export const w = {
   "2": 2,
   "4": 4,
   "6": 6,
+  "8": 8,
   "10": 10,
   "14": 14,
   "20": 20,
+  "22": 22,
+  "23": 23,
+  "24": 24,
+  "30": 30,
 } as const;
 
 export const fw = {
