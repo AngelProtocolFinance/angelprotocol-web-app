@@ -1,5 +1,4 @@
 import type { EndowCount } from "@better-giving/endowment/db";
-import { getEnv } from "@better-giving/helpers";
 import type {
   ApplicationDbRecord,
   Key,
@@ -21,7 +20,7 @@ import {
   type UpdateCommandInput,
   ap,
 } from "../../aws/db";
-import { env } from "../../env";
+import { env, wiseApiToken } from "../../env";
 
 export function endowAdmin(email: string, endowId: number) {
   const _mail = email.toLowerCase();
@@ -40,7 +39,7 @@ export function endowAdmin(email: string, endowId: number) {
 }
 export async function bankingRecord(reg: ApplicationDbRecord, endowId: number) {
   const wise = new Wise({
-    apiToken: getEnv(`wise_api_token_${reg.env}`),
+    apiToken: wiseApiToken,
     sandbox: reg.env === "staging",
   });
   const account = await wise.v2Account(reg.banking.wise_recipient_id);
