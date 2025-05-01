@@ -1,6 +1,5 @@
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
-import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/bookmark-btn";
 import Breadcrumbs from "components/breadcrumbs";
 import ExtLink from "components/ext-link";
@@ -12,11 +11,12 @@ import { Globe, MapPin } from "lucide-react";
 import type { EndowmentBalances } from "types/npo-balance";
 import { useProfileContext } from "../profile-context";
 import { npoId } from "./common/npo-id";
+import { npoBalances } from ".server/npo-balances";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = await npoId(params.id);
   if (typeof id !== "number") return id;
-  return getEndowBalance(id.toString());
+  return npoBalances(id);
 };
 
 export default function Body() {
