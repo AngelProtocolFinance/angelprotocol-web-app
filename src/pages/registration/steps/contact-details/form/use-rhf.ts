@@ -31,18 +31,22 @@ export function useRhf(data: Step1Data, user: UserV2) {
               ? "better-giving-alliance"
               : contact.referral_method
           ),
+          referral_code: contact.referral_code,
         }
       : {
           registrant_id: init.registrant_id,
           org_role: { value: "", label: roles[""] },
-          referral_method: {
-            value: "",
-            label: referralMethods[""],
-          },
+          referral_method: init.referrer
+            ? { value: "referral", label: referralMethods.referral }
+            : {
+                value: "",
+                label: referralMethods[""],
+              },
           first_name: user.firstName ?? "",
           last_name: user.lastName ?? "",
           org_name: init.claim?.name ?? "",
           goals: "",
+          ...(init.referrer && { referral_code: init.referrer }),
         },
   });
 

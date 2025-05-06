@@ -3,6 +3,7 @@ import {
   CircleDollarSign,
   CircleUserRound,
   Heart,
+  MegaphoneIcon,
   Settings,
 } from "lucide-react";
 
@@ -12,6 +13,7 @@ export const routes = {
   donations: "donations",
   funds: "funds",
   settings: "settings",
+  referrals: "referrals",
 };
 
 export const linkGroups: LinkGroup[] = [
@@ -47,6 +49,14 @@ export const linkGroups: LinkGroup[] = [
         icon: {
           fn: Heart,
           size: 21,
+        },
+      },
+      {
+        title: "My referrals",
+        to: routes.referrals,
+        icon: {
+          fn: MegaphoneIcon,
+          size: 22,
         },
       },
     ],

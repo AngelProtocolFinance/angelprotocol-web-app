@@ -28,6 +28,7 @@ export type UserV2 = {
   funds: string[];
   firstName: string;
   lastName: string;
+  referral_id: string;
   email: string;
   /** image url */
   avatar?: string;
