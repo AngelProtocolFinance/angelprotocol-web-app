@@ -1,23 +1,15 @@
-import { useState } from "react";
+import { Link } from "@remix-run/react";
+import { appRoutes } from "constants/routes";
+import { format } from "date-fns";
+import { humanize } from "helpers/decimal";
+import type { Referred } from "types/referrals";
 
-interface Nonprofit {
-  id: number;
-  name: string;
-  earnings: string;
-  status: string;
-}
-
-interface NonprofitsProps {
+interface Props {
   classes?: string;
+  npos: Referred[];
 }
 
-export function Nonprofits({ classes = "" }: NonprofitsProps) {
-  const [nonprofits] = useState<Nonprofit[]>([
-    { id: 1, name: "NPO1", earnings: "$10.00", status: "ends in 2 years" },
-    { id: 2, name: "NPO2", earnings: "$10.00", status: "ended" },
-    { id: 3, name: "NPO3", earnings: "$9.00", status: "ended" },
-  ]);
-
+export function Nonprofits({ classes = "", npos }: Props) {
   return (
     <div className={classes}>
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">
@@ -33,19 +25,31 @@ export function Nonprofits({ classes = "" }: NonprofitsProps) {
             </tr>
           </thead>
           <tbody>
-            {nonprofits.map((npo) => (
-              <tr key={npo.id}>
-                <td className="text-sm text-gray-d4">{npo.name}</td>
-                <td className="text-sm text-gray-d4">{npo.earnings}</td>
-                <td
-                  className={`text-sm ${
-                    npo.status === "ended" ? "text-red" : "text-green"
-                  }`}
-                >
-                  {npo.status}
-                </td>
-              </tr>
-            ))}
+            {npos.map((npo) => {
+              const now = new Date();
+              const expiry = new Date(npo.up_until);
+
+              return (
+                <tr key={npo.id}>
+                  <td className="text-sm text-gray-d4">
+                    <Link
+                      to={`${appRoutes.marketplace}/${npo.id}`}
+                      className="text-blue hover:text-blue-d1"
+                    >
+                      {npo.name}
+                    </Link>
+                  </td>
+                  <td className="text-sm text-gray-d4">${humanize(npo.ltd)}</td>
+                  <td
+                    className={`text-sm ${
+                      now > expiry ? "text-red" : "text-green"
+                    }`}
+                  >
+                    {now > expiry ? "Ended" : `ends in ${format(expiry, "PP")}`}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
