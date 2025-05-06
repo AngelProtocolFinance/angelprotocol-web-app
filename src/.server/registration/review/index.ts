@@ -4,6 +4,7 @@ import type { Verdict } from "@better-giving/registration/approval";
 import type { ApplicationDbRecord } from "@better-giving/registration/db";
 import { type UNSDG_NUM, isIrs501c3 } from "@better-giving/registration/models";
 import { tables } from "@better-giving/types/list";
+import { addYears } from "date-fns";
 import {
   PutCommand,
   TransactWriteCommand,
@@ -51,11 +52,12 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   };
 
   if (reg.referrer) {
-    const duration = 15 * 24 * 60 * 60; // 15 days
+    const onboarded = new Date();
+    const expiry = addYears(onboarded, 3).toISOString();
     endowContentFromReg.referrer = reg.referrer;
-    endowContentFromReg.referrer_expiry = new Date(
-      Date.now() + duration * 1000
-    ).toISOString();
+    endowContentFromReg.gsi1PK = `ReferredBy#${reg.referrer}`;
+    endowContentFromReg.referrer_expiry = expiry;
+    endowContentFromReg.gsi1SK = expiry;
   }
 
   ///////////// APPROVAL OF CLAIM /////////////
