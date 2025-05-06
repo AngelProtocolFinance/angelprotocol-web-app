@@ -8,6 +8,7 @@ import {
 } from "@vercel/remix";
 import { getEndowWithEin } from "api/get/endow-with-ein";
 import { appRoutes } from "constants/routes";
+import { addDays } from "date-fns";
 import { parse } from "valibot";
 import { regCookie } from "./data/cookie.server";
 import { steps } from "./routes";
@@ -36,10 +37,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   // user clicked a referral link for the first time
   if (referrer && !prev_referrer) {
     cookie.referrer = referrer;
-    const duration = 15 * 24 * 60 * 60; // 15 days
-    cookie.referrer_expiry = new Date(
-      Date.now() + duration * 1000
-    ).toISOString();
+    const clicked = new Date();
+    cookie.referrer_expiry = addDays(clicked, 90).toISOString();
   }
 
   const { user, headers } = await cognito.retrieve(request);
