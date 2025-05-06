@@ -47,7 +47,7 @@ export function Page2({ v }: { v: View }) {
         >
           Total 5 - 10 - 15 - 20 years financial advantage
         </T>
-        <V style={{ height: w["2"], backgroundColor: blue.d, width: 165 }} />
+        <V style={{ height: w["2"], backgroundColor: blue.d, width: 155 }} />
       </V>
       <T
         style={{
