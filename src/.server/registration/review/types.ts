@@ -12,4 +12,5 @@ export type EndowContentFromReg = Pick<
   | "sdgs"
   | "url"
   | "claimed"
+  | "referral_id"
 >;
