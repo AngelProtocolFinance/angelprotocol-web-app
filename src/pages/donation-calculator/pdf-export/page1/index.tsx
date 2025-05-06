@@ -358,7 +358,7 @@ export function Page1({ v }: Props) {
           display: "flex",
           flexDirection: "row",
           paddingTop: w["14"],
-          paddingHorizontal: w["20"],
+          paddingHorizontal: w["20"] - 2,
         }}
       >
         <ImpactCard yr={1} {...v.projection[0]} />
