@@ -15,11 +15,11 @@ export function ImpactCard(p: Props) {
           style={{
             textAlign: "right",
             fontWeight: fw.sb,
-            fontSize: fs.base,
+            fontSize: fs.sm2,
             marginBottom: w["2"],
           }}
         >
-          {p.yr} {p.yr > 1 ? "Years" : "Year"} Savings & Investment Impact
+          {p.yr} {p.yr > 1 ? "Years" : "Year"} Impact
         </T>
         <T
           style={{
@@ -162,7 +162,7 @@ export function ImpactCard(p: Props) {
           style={{
             textAlign: "right",
             fontWeight: fw.sb,
-            fontSize: fs.base,
+            fontSize: fs.sm2,
             marginBottom: w["2"],
           }}
         >
