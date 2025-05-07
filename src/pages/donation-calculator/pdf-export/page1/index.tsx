@@ -327,11 +327,6 @@ export function Page1({ v }: Props) {
           <T style={{ fontWeight: fw.sb }}> 10%</T> of Annual Donations
           Allocated to Savings/Investments
         </T>
-        <T style={{ fontSize: fs.xxs2 }}>
-          ({toUsd(v.amount)}{" "}
-          <T style={{ fontWeight: fw.sb }}>with Better Giving</T> ×{" "}
-          {(v.notGrantedRate * 100).toFixed(2)}% = {toUsd(v.notGranted)})
-        </T>
 
         <T style={{ marginTop: w["6"], marginBottom: w["2"] }}>
           Allocation Between Accounts:
