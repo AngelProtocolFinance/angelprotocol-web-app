@@ -17,7 +17,7 @@ export function ReferralId({ classes = "", ...p }: Props) {
         <div className="flex items-center">
           <div className="text-xl font-semibold mr-2">{p.referral_id}</div>
           <Copier
-            text="XYZ-1234"
+            text={p.referral_id}
             classes={{
               container: "text-gray hover:text-gray-d1",
               icon: "size-5",
