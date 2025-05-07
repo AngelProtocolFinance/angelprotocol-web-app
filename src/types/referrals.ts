@@ -5,7 +5,7 @@ export interface Referred {
   ltd: number;
 }
 
-export interface Commissioned {
+export interface Earning {
   amount: number;
   date: string;
   donation: {

@@ -5,7 +5,7 @@ import type {
 } from "types/donations";
 
 import { tables } from "@better-giving/types/list";
-import type { Commissioned } from "types/referrals";
+import type { Earning } from "types/referrals";
 import { QueryCommand, apes } from "../aws/db";
 import { env as nv } from "../env";
 import { askerIsDonor, toItems, toSorted } from "./helpers";
@@ -99,9 +99,7 @@ export const getDonations = async (
   };
 };
 
-export const getCommissioned = async (
-  referrer: string
-): Promise<Commissioned[]> => {
+export const getEarnings = async (referrer: string): Promise<Earning[]> => {
   const command = new QueryCommand({
     TableName: tables.donations,
     IndexName: "Referrer-FinalizedDate_Index",
@@ -116,7 +114,7 @@ export const getCommissioned = async (
 
   const result = await apes.send(command);
   const items = (result.Items || []) as DBRecord[];
-  return items.map<Commissioned>((x) => ({
+  return items.map<Earning>((x) => ({
     amount: x.donationFinalAmount ?? 0,
     date: x.transactionDate,
     donation: {
