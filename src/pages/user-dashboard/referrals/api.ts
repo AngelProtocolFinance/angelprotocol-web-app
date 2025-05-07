@@ -16,9 +16,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const referreds = await referredBy("6ACW-K6WQ");
+  const referreds = await referredBy(user.referral_id);
   const earnings = await getEarnings(user.referral_id, null);
-  console.log(earnings);
 
   return {
     user,
