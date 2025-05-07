@@ -1,4 +1,5 @@
 import { DrawerIcon } from "components/icon";
+import { endOfMonth, format, formatDistance } from "date-fns";
 import { useState } from "react";
 
 // Define an interface for the earning data structure
@@ -16,6 +17,9 @@ interface EarningsProps {
 }
 
 export function Earnings({ classes = "" }: EarningsProps) {
+  const now = new Date();
+  const end = endOfMonth(now);
+
   // Simplified state for expansion, managing only one card's history
   const [isHistoryExpanded, setIsHistoryExpanded] = useState<boolean>(false);
 
@@ -48,8 +52,7 @@ export function Earnings({ classes = "" }: EarningsProps) {
               {currentEarning.amount}
             </div>
             <p className="text-sm text-gray mt-1">
-              pays out {currentEarning.payoutDate}- in {currentEarning.daysLeft}{" "}
-              days
+              pays out {format(end, "PP")}- in {formatDistance(end, now)}.
             </p>
           </div>
 
