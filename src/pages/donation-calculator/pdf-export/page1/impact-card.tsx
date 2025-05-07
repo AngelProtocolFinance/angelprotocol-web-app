@@ -68,7 +68,9 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Growth:</T>
-        <T>{toUsd(p.end.liq - p.liq)}</T>
+        <T style={{ color: green.d, fontWeight: fw.sb }}>
+          {toUsd(p.end.liq - p.liq)}
+        </T>
       </V>
       <V
         style={{
