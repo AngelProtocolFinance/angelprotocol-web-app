@@ -5,6 +5,7 @@ import type {
 } from "types/donations";
 
 import { tables } from "@better-giving/types/list";
+import type { Commissioned } from "types/referrals";
 import { QueryCommand, apes } from "../aws/db";
 import { env as nv } from "../env";
 import { askerIsDonor, toItems, toSorted } from "./helpers";
@@ -96,4 +97,32 @@ export const getDonations = async (
     Items: toSorted(items, "desc", "date").slice(start, end),
     nextPage: end === numItems ? undefined : page + 1,
   };
+};
+
+export const getCommissioned = async (
+  referrer: string
+): Promise<Commissioned[]> => {
+  const command = new QueryCommand({
+    TableName: tables.donations,
+    IndexName: "Referrer-FinalizedDate_Index",
+    KeyConditionExpression: "#referrer = :referrer",
+    ExpressionAttributeNames: {
+      "#referrer": "referrer",
+    },
+    ExpressionAttributeValues: {
+      ":asker": referrer,
+    },
+  });
+
+  const result = await apes.send(command);
+  const items = (result.Items || []) as DBRecord[];
+  return items.map<Commissioned>((x) => ({
+    amount: x.donationFinalAmount ?? 0,
+    date: x.transactionDate,
+    donation: {
+      id: x.transactionId,
+      to_id: x.endowmentId.toString(),
+      to_name: x.charityName,
+    },
+  }));
 };
