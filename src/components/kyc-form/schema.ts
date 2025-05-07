@@ -16,7 +16,7 @@ export const schema = v.object({
   state: str,
 });
 
-export const schemaDbUpdate = v.object({
+export const kycSchema = v.object({
   fullName: rqrd,
   kycEmail: email,
   streetAddress: rqrd,
