@@ -99,7 +99,15 @@ export const getDonations = async (
   };
 };
 
-export const getEarnings = async (referrer: string): Promise<Earning[]> => {
+interface Page {
+  items: Earning[];
+  nextPageKey?: string;
+}
+
+export const getEarnings = async (
+  referrer: string,
+  nextKey: string | null
+): Promise<Page> => {
   const command = new QueryCommand({
     TableName: tables.donations,
     IndexName: "Referrer-FinalizedDate_Index",
@@ -108,19 +116,28 @@ export const getEarnings = async (referrer: string): Promise<Earning[]> => {
       "#referrer": "referrer",
     },
     ExpressionAttributeValues: {
-      ":asker": referrer,
+      ":referrer": referrer,
     },
+    Limit: 10,
+    ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
   });
 
   const result = await apes.send(command);
   const items = (result.Items || []) as DBRecord[];
-  return items.map<Earning>((x) => ({
-    amount: x.donationFinalAmount ?? 0,
-    date: x.transactionDate,
-    donation: {
-      id: x.transactionId,
-      to_id: x.endowmentId.toString(),
-      to_name: x.charityName,
-    },
-  }));
+  const nextPageKey = result.LastEvaluatedKey
+    ? JSON.stringify(result.LastEvaluatedKey)
+    : undefined;
+
+  return {
+    items: items.map<Earning>((x) => ({
+      amount: x.donationFinalAmount ?? 0,
+      date: x.transactionDate,
+      donation: {
+        id: x.transactionId,
+        to_id: x.endowmentId.toString(),
+        to_name: x.charityName,
+      },
+    })),
+    nextPageKey,
+  };
 };
