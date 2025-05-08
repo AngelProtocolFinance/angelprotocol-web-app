@@ -4,7 +4,7 @@ import Image from "components/image";
 import { toUsd } from "helpers/to-usd";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { useState } from "react";
-import type { View } from "./bg-view";
+import type { View } from "./types";
 import { Usd } from "./usd";
 
 interface Props extends View {
