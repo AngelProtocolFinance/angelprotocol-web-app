@@ -2,14 +2,14 @@ import { Description, Field, Input, Label } from "@headlessui/react";
 import { useMaskito } from "@maskito/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelpIcon } from "lucide-react";
-import { dollarMaskOpts } from "./dollar-mask";
+import { type OgInput, methods, methodsArr } from "types/donation-calculator";
+import { dollarMaskOpts, mask, unmask } from "./dollar-mask";
 import { PctSlider } from "./pct-slider";
-import { type State, methods, methodsArr } from "./types";
 
 interface Props {
   classes?: string;
-  state: State;
-  setState: (x: State) => void;
+  state: OgInput;
+  setState: (x: OgInput) => void;
 }
 
 export function Form1({ classes = "", state, setState }: Props) {
@@ -32,9 +32,9 @@ export function Form1({ classes = "", state, setState }: Props) {
           placeholder="$"
           className="field-input text-base"
           ref={dollarMaskRef1}
-          value={state.annualAmount}
+          value={mask(state.amnt)}
           onInput={(e) =>
-            setState({ ...state, annualAmount: e.currentTarget.value })
+            setState({ ...state, amnt: unmask(e.currentTarget.value) })
           }
         />
       </div>
@@ -64,11 +64,11 @@ export function Form1({ classes = "", state, setState }: Props) {
           placeholder="$"
           className="field-input text-base"
           ref={dollarMaskRef2}
-          value={state.annualSubscriptionCost}
+          value={mask(state.subsCost)}
           onInput={(e) =>
             setState({
               ...state,
-              annualSubscriptionCost: e.currentTarget.value,
+              subsCost: unmask(e.currentTarget.value),
             })
           }
         />
@@ -77,11 +77,11 @@ export function Form1({ classes = "", state, setState }: Props) {
       <Field className="mt-6">
         <div className="">
           <Input
-            checked={state.donorCanCoverProcessingFees}
+            checked={state.processingFeeCovered}
             onChange={(e) => {
               setState({
                 ...state,
-                donorCanCoverProcessingFees: e.target.checked,
+                processingFeeCovered: e.target.checked,
               });
             }}
             type="checkbox"
@@ -123,19 +123,19 @@ export function Form1({ classes = "", state, setState }: Props) {
               <Input
                 type="checkbox"
                 className="accent-blue-d1 relative inline mr-2 top-px size-3.5"
-                checked={state.donationTypes.includes(m)}
+                checked={state.donMethods.includes(m)}
                 onChange={(x) => {
                   if (x.target.checked) {
                     setState({
                       ...state,
-                      donationTypes: [...state.donationTypes, m],
+                      donMethods: [...state.donMethods, m],
                     });
-                  } else if (state.donationTypes.length === 1) {
+                  } else if (state.donMethods.length === 1) {
                     // do nothing, at least 1 method must be selected
                   } else {
                     setState({
                       ...state,
-                      donationTypes: state.donationTypes.filter((d) => d !== m),
+                      donMethods: state.donMethods.filter((d) => d !== m),
                     });
                   }
                 }}

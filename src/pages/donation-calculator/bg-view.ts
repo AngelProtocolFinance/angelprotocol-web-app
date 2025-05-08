@@ -1,5 +1,5 @@
-import { unmask } from "./dollar-mask";
-import { type State, methodsArr } from "./types";
+import { type OgInput, methodsArr } from "types/donation-calculator";
+import type { Growth, View } from "./types";
 
 const typeWeights: { [key: string]: number } = {
   "credit-card": 0.63,
@@ -9,13 +9,6 @@ const typeWeights: { [key: string]: number } = {
   stocks: 0.06,
   crypto: 0.02,
 };
-
-interface Growth {
-  liq: number;
-  lock: number;
-  total: number;
-  end: Omit<Growth, "end">;
-}
 
 const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
   const savDailyRate = 0.04 / 365; // 4% annual rate
@@ -55,75 +48,49 @@ const project = (savAmt: number, susAmt: number, yrs: number): Growth[] => {
   return items;
 };
 
-export interface View {
-  amount: number;
-
-  ogMissedFromDonTypes: number;
-  ogSubsCost: number;
-  ogFees: number;
-  ogDeductions: number;
-  ogNet: number;
-
-  bgFees: number;
-  bgNet: number;
-
-  feeSavings: number;
-  advantage: number;
-
-  notGranted: number;
-  notGrantedRate: number;
-  savingsRate: number;
-  savings: number;
-  investedRate: number;
-  invested: number;
-
-  projection: Growth[];
-}
-
 const donorCoverageFactor = (enabled = true) =>
   enabled ? 1 - 0.8 /** 80% of donors choose to cover when able to */ : 1;
 
-export function bgView(og: State): View {
-  const amnt = unmask(og.annualAmount);
-  const subscriptionCost = unmask(og.annualSubscriptionCost);
-
+export function bgView(og: OgInput): View {
   //processing fee comparison
   const ogProcessingFee =
-    amnt *
+    og.amnt *
     og.processingFeeRate *
-    donorCoverageFactor(og.donorCanCoverProcessingFees);
-  const ogPlatformFee = amnt * og.platformFeeRate;
+    donorCoverageFactor(og.processingFeeCovered);
+  const ogPlatformFee = og.amnt * og.platformFeeRate;
   const ogFees = ogProcessingFee + ogPlatformFee;
 
   /** bg processing rate is 2% and no platform fee  */
-  const bgFees = amnt * 0.02 * donorCoverageFactor();
+  const bgFees = og.amnt * 0.02 * donorCoverageFactor();
 
-  const ogDonTypes = new Set(og.donationTypes);
+  const ogDonTypes = new Set(og.donMethods);
   const ogMissedDonTypes = methodsArr.filter((type) => !ogDonTypes.has(type));
   const ogMissedRate = ogMissedDonTypes.reduce(
     (sum, type) => sum + (typeWeights[type] || 0),
     0
   );
-  const ogMissedFromDonTypes = amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
-  const ogDeductions = ogFees + subscriptionCost;
-  const ogNet = amnt - ogDeductions;
+  const ogMissedFromDonTypes = og.amnt * (ogMissedRate * 0.5); //drop-off factor of 0.5
+  const ogDeductions = ogFees + og.subsCost;
+  const ogNet = og.amnt - ogDeductions;
 
   const feeSavings = ogFees - bgFees;
 
-  const advantage = feeSavings + ogMissedFromDonTypes + subscriptionCost;
-  const bgNet = amnt - bgFees + ogMissedFromDonTypes + subscriptionCost;
+  const advantage = feeSavings + ogMissedFromDonTypes + og.subsCost;
+  const bgNet = og.amnt - bgFees + ogMissedFromDonTypes + og.subsCost;
 
-  const notGranted = bgNet * og.donationsToSavings;
-  const investedRate = og.savingsInvested;
-  const savingsRate = 1 - investedRate;
+  const notGranted = bgNet * og.notGrantedRate;
+  const savingsRate = 1 - og.investRate;
   const savings = notGranted * savingsRate;
-  const invested = notGranted * og.savingsInvested;
+  const invested = notGranted * og.investRate;
 
   return {
-    amount: amnt,
+    amount: og.amnt,
+    ogDonMethods: og.donMethods,
+    ogPlatformFeeRate: og.platformFeeRate,
+    ogProcessingFeeRate: og.processingFeeRate,
     ogMissedFromDonTypes,
     ogFees,
-    ogSubsCost: subscriptionCost,
+    ogSubsCost: og.subsCost,
     ogDeductions,
     ogNet,
     bgFees,
@@ -131,11 +98,11 @@ export function bgView(og: State): View {
     feeSavings,
     advantage,
     notGranted,
-    notGrantedRate: og.donationsToSavings,
+    notGrantedRate: og.notGrantedRate,
     savings,
     savingsRate,
     invested,
-    investedRate,
+    investedRate: og.investRate,
     projection: project(savings, invested, 20),
   };
 }

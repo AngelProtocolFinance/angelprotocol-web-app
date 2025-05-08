@@ -222,6 +222,10 @@ const rmx = remix({
           id: "widget-donate-thanks",
         });
       });
+      r(
+        "donation-calculator-export",
+        "./pages/donation-calculator/pdf-export/index.tsx"
+      );
     });
   },
 });
