@@ -1,12 +1,12 @@
 import type { Allocation } from "@better-giving/endowment";
 import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
-import { getEndowBalance } from "api/get/endow-balance";
 import { plusInt } from "api/schema/endow-id";
 import type { EndowmentBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
 import { cognito, toAuth } from ".server/auth";
+import { npoBalances } from ".server/npo-balances";
 
 const getAllocation = (id: number) =>
   getEndow(id, ["allocation"]).then<Allocation>(
@@ -28,6 +28,6 @@ export const dashboardData: LoaderFunction = async ({ params, request }) => {
   return {
     id,
     alloc: await getAllocation(id),
-    bal: await getEndowBalance(id.toString()),
+    bal: await npoBalances(id),
   } satisfies DashboardData;
 };
