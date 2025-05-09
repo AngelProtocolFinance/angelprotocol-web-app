@@ -1,7 +1,6 @@
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderData } from "./api";
 import { Earnings } from "./earnings";
-import { EarningsHistory } from "./earnings-history/table";
 import { Nonprofits } from "./nonprofits";
 import { ReferralId } from "./referral-id";
 export { loader } from "./api";
@@ -16,8 +15,7 @@ export function ReferralsPage() {
         referral_id={user.referral_id}
         origin={origin}
       />
-      <Earnings classes="mb-8" />
-      <EarningsHistory items={earnings} />
+      <Earnings classes="mb-8" earnings={earnings} />
       <Nonprofits npos={referreds} classes="mb-8" />
     </div>
   );

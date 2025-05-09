@@ -1,5 +1,7 @@
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { useState } from "react";
+import type { Earning } from "types/referrals";
+import { EarningsHistory } from "./earnings-history/table";
 
 // Define an interface for the earning data structure
 interface EarningData {
@@ -11,11 +13,12 @@ interface EarningData {
   payoutMethod: string | null;
 }
 
-interface EarningsProps {
+interface Props {
   classes?: string;
+  earnings: Earning[];
 }
 
-export function Earnings({ classes = "" }: EarningsProps) {
+export function Earnings({ classes = "", earnings }: Props) {
   const now = new Date();
   const end = endOfMonth(now);
 
@@ -63,6 +66,7 @@ export function Earnings({ classes = "" }: EarningsProps) {
               setup payout method
             </button>
           )}
+          <EarningsHistory items={earnings} classes="mt-6" />
         </div>
       </div>
     </div>

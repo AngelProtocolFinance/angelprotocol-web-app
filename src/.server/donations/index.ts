@@ -119,6 +119,7 @@ export const getEarnings = async (
       ":referrer": referrer,
     },
     Limit: 10,
+    ScanIndexForward: false,
     ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
   });
 
