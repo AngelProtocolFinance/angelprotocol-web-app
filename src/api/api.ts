@@ -1,4 +1,5 @@
 import { env } from "constants/env";
+import { APIs } from "constants/urls";
 import ky from "ky";
 import { version as v } from "./helpers";
 export { version as ver, toSearch } from "./helpers";
@@ -15,6 +16,8 @@ export const apes = ky.create({
   prefixUrl: apesUrl,
   timeout: false,
 });
+
+export const hsNewsletterSubs = ky.create({ prefixUrl: APIs.hubspotForms });
 
 export const wpUrl = "https://angelgiving.10web.site/wp-json/wp/v2";
 export const wp = ky.create({
