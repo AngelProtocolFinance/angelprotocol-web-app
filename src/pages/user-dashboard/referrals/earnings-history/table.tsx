@@ -13,7 +13,7 @@ export function EarningsHistory({ items, classes = "", onNextPage }: Props) {
   if (items.length === 0) null;
   return (
     <div className={`${classes} overflow-x-auto`}>
-      <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
+      <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
         <thead>
           <tr>
             <th className="font-medium text-sm text-gray">Date</th>

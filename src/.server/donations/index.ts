@@ -131,7 +131,9 @@ export const getEarnings = async (
 
   return {
     items: items.map<Earning>((x) => ({
-      amount: x.donationFinalAmount ?? 0,
+      amount:
+        (x.referrer_commission?.from_fee ?? 0) +
+        (x.referrer_commission?.from_tip ?? 0),
       date: x.transactionDate,
       donation: {
         id: x.transactionId,
