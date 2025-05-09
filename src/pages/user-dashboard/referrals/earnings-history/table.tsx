@@ -36,19 +36,18 @@ export function EarningsHistory({ items, classes = "", onNextPage }: Props) {
           ))}
         </tbody>
         <tfoot>
-          {onNextPage ||
-            (true && (
-              <tr>
-                <td colSpan={3}>
-                  <button
-                    type="button"
-                    className="text-sm text-blue hover:text-blue-d1"
-                  >
-                    view more
-                  </button>
-                </td>
-              </tr>
-            ))}
+          {onNextPage && (
+            <tr>
+              <td colSpan={3}>
+                <button
+                  type="button"
+                  className="text-sm text-blue hover:text-blue-d1"
+                >
+                  view more
+                </button>
+              </td>
+            </tr>
+          )}
         </tfoot>
       </table>
     </div>
