@@ -1,11 +1,13 @@
 import { BASE_URL, env } from "./env";
 
 export const APIs = {
-  aws: "https://ap-api.better.giving",
   apes: `https://apes-api.better.giving/${env}`,
-  wordpress: "https://angelgiving.10web.site/wp-json/wp/v2",
-  nodeProxy: "https://59vigz9r91.execute-api.us-east-1.amazonaws.com",
+  aws: "https://ap-api.better.giving",
   coingecko: "https://api.coingecko.com",
+  hubspotForms:
+    "https://api.hsforms.com/submissions/v3/integration/secure/submit",
+  nodeProxy: "https://59vigz9r91.execute-api.us-east-1.amazonaws.com",
+  wordpress: "https://angelgiving.10web.site/wp-json/wp/v2",
 };
 
 export const PRIVACY_POLICY = `${BASE_URL}/privacy-policy/`;
