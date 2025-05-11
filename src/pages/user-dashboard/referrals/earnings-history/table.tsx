@@ -4,9 +4,12 @@ import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import type { Earning } from "types/referrals";
 
-interface Props {
+export interface EarningsPage {
   items: Earning[];
   onNextPage?: () => void;
+}
+
+interface Props extends EarningsPage {
   classes?: string;
 }
 export function EarningsHistory({ items, classes = "", onNextPage }: Props) {
@@ -40,6 +43,7 @@ export function EarningsHistory({ items, classes = "", onNextPage }: Props) {
             <tr>
               <td colSpan={3}>
                 <button
+                  onClick={onNextPage}
                   type="button"
                   className="text-sm text-blue hover:text-blue-d1"
                 >

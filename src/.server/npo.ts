@@ -126,7 +126,6 @@ export const editNpo = async (
     updates.set(k, v);
   }
 
-  console.log(updates.collect());
   const command = new UpdateCommand({
     TableName: tables.endowments_v3,
     Key: { PK: `Endow#${id}`, SK: env } satisfies db.Endow.Keys,

@@ -106,7 +106,8 @@ interface Page {
 
 export const getEarnings = async (
   referrer: string,
-  nextKey: string | null
+  nextKey: string | null,
+  limit = 10
 ): Promise<Page> => {
   const command = new QueryCommand({
     TableName: tables.donations,
@@ -118,7 +119,7 @@ export const getEarnings = async (
     ExpressionAttributeValues: {
       ":referrer": referrer,
     },
-    Limit: 10,
+    Limit: limit,
     ScanIndexForward: false,
     ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
   });

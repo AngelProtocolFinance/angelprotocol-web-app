@@ -1,8 +1,8 @@
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { useState } from "react";
-import type { Earning, PendingEarnings } from "types/referrals";
-import { EarningsHistory } from "./earnings-history/table";
+import type { PendingEarnings } from "types/referrals";
+import { EarningsHistory, type EarningsPage } from "./earnings-history/table";
 
 // Define an interface for the earning data structure
 interface EarningData {
@@ -16,7 +16,7 @@ interface EarningData {
 
 interface Props {
   classes?: string;
-  earnings: Earning[];
+  earnings: EarningsPage;
   pendings: PendingEarnings;
 }
 
@@ -68,7 +68,7 @@ export function Earnings({ classes = "", earnings, pendings }: Props) {
               setup payout method
             </button>
           )}
-          <EarningsHistory items={earnings} classes="mt-6" />
+          <EarningsHistory {...earnings} classes="mt-6" />
         </div>
       </div>
     </div>

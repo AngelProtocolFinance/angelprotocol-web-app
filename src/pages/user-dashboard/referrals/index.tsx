@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import type { LoaderData } from "./api";
 import { Earnings } from "./earnings";
 import { Nonprofits } from "./nonprofits";
@@ -6,6 +6,7 @@ import { ReferralId } from "./referral-id";
 export { loader } from "./api";
 
 export function ReferralsPage() {
+  const navigate = useNavigate();
   const { origin, user, referreds, earnings, pendings } =
     useLoaderData() as LoaderData;
   return (
@@ -16,7 +17,16 @@ export function ReferralsPage() {
         referral_id={user.referral_id}
         origin={origin}
       />
-      <Earnings classes="mb-8" earnings={earnings} pendings={pendings} />
+      <Earnings
+        classes="mb-8"
+        earnings={{
+          items: earnings.items,
+          ...(earnings.nextPageKey && {
+            onNextPage: () => navigate("earnings"),
+          }),
+        }}
+        pendings={pendings}
+      />
       <Nonprofits npos={referreds} classes="mb-8" />
     </div>
   );
