@@ -1,6 +1,7 @@
 import { endOfMonth, format, formatDistance } from "date-fns";
+import { humanize } from "helpers/decimal";
 import { useState } from "react";
-import type { Earning } from "types/referrals";
+import type { Earning, PendingEarnings } from "types/referrals";
 import { EarningsHistory } from "./earnings-history/table";
 
 // Define an interface for the earning data structure
@@ -16,9 +17,10 @@ interface EarningData {
 interface Props {
   classes?: string;
   earnings: Earning[];
+  pendings: PendingEarnings;
 }
 
-export function Earnings({ classes = "", earnings }: Props) {
+export function Earnings({ classes = "", earnings, pendings }: Props) {
   const now = new Date();
   const end = endOfMonth(now);
 
@@ -42,7 +44,7 @@ export function Earnings({ classes = "", earnings }: Props) {
         <div className="p-6">
           <div className="flex items-center gap-x-2">
             <div className="text-2xl font-bold text-gray-d4">
-              {currentEarning.amount}
+              ${humanize(pendings.total, 3)}
             </div>
             <p className="text-sm text-gray mt-1">
               pays out {format(end, "PP")}- in {formatDistance(end, now)}.

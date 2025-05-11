@@ -1,6 +1,6 @@
 import type { Gsi1 } from "@better-giving/endowment/db";
 import { tables } from "@better-giving/types/list";
-import type { Referred } from "types/referrals";
+import type { PendingEarnings, Referred } from "types/referrals";
 import { GetCommand, QueryCommand, ap, apes } from "./aws/db";
 
 export const referredBy = async (id: string): Promise<Referred[]> => {
@@ -31,4 +31,29 @@ export const referredBy = async (id: string): Promise<Referred[]> => {
         ltd: ltds?.[`#${i.id}`] || 0,
       }))
     );
+};
+
+export const pendingEarnings = async (id: string): Promise<PendingEarnings> => {
+  const cmd = new QueryCommand({
+    TableName: "commissions",
+    KeyConditionExpression: "PK = :pk",
+    ExpressionAttributeValues: { ":pk": `Cm#${id}`, ":status": "pending" },
+    FilterExpression: "#status = :status",
+    ExpressionAttributeNames: { "#status": "status" },
+  });
+
+  const res = await apes.send(cmd);
+  const pendings = (res.Items || []).map(({ amount, status, date }) => ({
+    amount,
+    status,
+    date,
+  }));
+  console.log(res);
+  const total = pendings.reduce((acc, { amount }) => acc + amount, 0);
+  const dates = pendings.reduce((acc, { date, status }) => {
+    acc[date] = status;
+    return acc;
+  }, {} as any);
+
+  return { total, dates };
 };

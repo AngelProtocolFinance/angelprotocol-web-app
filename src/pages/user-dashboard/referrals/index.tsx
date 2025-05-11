@@ -6,7 +6,8 @@ import { ReferralId } from "./referral-id";
 export { loader } from "./api";
 
 export function ReferralsPage() {
-  const { origin, user, referreds, earnings } = useLoaderData() as LoaderData;
+  const { origin, user, referreds, earnings, pendings } =
+    useLoaderData() as LoaderData;
   return (
     <div className="">
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">My referrals</h2>
@@ -15,7 +16,7 @@ export function ReferralsPage() {
         referral_id={user.referral_id}
         origin={origin}
       />
-      <Earnings classes="mb-8" earnings={earnings} />
+      <Earnings classes="mb-8" earnings={earnings} pendings={pendings} />
       <Nonprofits npos={referreds} classes="mb-8" />
     </div>
   );

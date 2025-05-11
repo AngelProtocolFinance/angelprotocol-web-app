@@ -14,3 +14,8 @@ export interface Earning {
     to_name: string;
   };
 }
+
+export interface PendingEarnings {
+  total: number;
+  dates: { [date: string]: any };
+}

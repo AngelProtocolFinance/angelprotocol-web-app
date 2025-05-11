@@ -31,7 +31,7 @@ export function EarningsHistory({ items, classes = "", onNextPage }: Props) {
                 </Link>
               </td>
 
-              <td>${humanize(payout.amount, 4)}</td>
+              <td>${humanize(payout.amount, 3)}</td>
             </tr>
           ))}
         </tbody>
