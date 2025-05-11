@@ -1,12 +1,9 @@
 import type { LoaderFunction } from "@vercel/remix";
-import type { Earning } from "types/referrals";
+import type { EarningsPage } from "types/referrals";
 import { cognito, toAuth } from ".server/auth";
 import { getEarnings } from ".server/donations";
 
-export interface LoaderData {
-  items: Earning[];
-  nextPageKey?: string;
-}
+export interface LoaderData extends EarningsPage {}
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
@@ -14,8 +11,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const nextKey = url.searchParams.get("nextKey");
 
-  const page = await getEarnings(user.referral_id, nextKey);
-  console.log(page);
+  const page = await getEarnings(user.referral_id, nextKey, 4);
 
   return page;
 };

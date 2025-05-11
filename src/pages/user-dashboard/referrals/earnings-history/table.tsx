@@ -4,15 +4,12 @@ import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import type { Earning } from "types/referrals";
 
-export interface EarningsPage {
+export interface Props {
   items: Earning[];
-  onNextPage?: () => void;
-}
-
-interface Props extends EarningsPage {
+  onViewMore?: () => void;
   classes?: string;
 }
-export function EarningsHistory({ items, classes = "", onNextPage }: Props) {
+export function EarningsHistory({ items, classes = "", onViewMore }: Props) {
   if (items.length === 0) null;
   return (
     <div className={`${classes} overflow-x-auto`}>
@@ -39,11 +36,11 @@ export function EarningsHistory({ items, classes = "", onNextPage }: Props) {
           ))}
         </tbody>
         <tfoot>
-          {onNextPage && (
+          {onViewMore && (
             <tr>
               <td colSpan={3}>
                 <button
-                  onClick={onNextPage}
+                  onClick={onViewMore}
                   type="button"
                   className="text-sm text-blue hover:text-blue-d1"
                 >

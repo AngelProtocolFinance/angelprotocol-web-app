@@ -2,7 +2,10 @@ import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { useState } from "react";
 import type { PendingEarnings } from "types/referrals";
-import { EarningsHistory, type EarningsPage } from "./earnings-history/table";
+import {
+  EarningsHistory,
+  type Props as IEarningsHistory,
+} from "./earnings-history/table";
 
 // Define an interface for the earning data structure
 interface EarningData {
@@ -16,7 +19,7 @@ interface EarningData {
 
 interface Props {
   classes?: string;
-  earnings: EarningsPage;
+  earnings: IEarningsHistory;
   pendings: PendingEarnings;
 }
 

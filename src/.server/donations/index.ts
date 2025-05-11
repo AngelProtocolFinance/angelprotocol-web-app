@@ -5,7 +5,7 @@ import type {
 } from "types/donations";
 
 import { tables } from "@better-giving/types/list";
-import type { Earning } from "types/referrals";
+import type { Earning, EarningsPage } from "types/referrals";
 import { QueryCommand, apes } from "../aws/db";
 import { env as nv } from "../env";
 import { askerIsDonor, toItems, toSorted } from "./helpers";
@@ -99,16 +99,11 @@ export const getDonations = async (
   };
 };
 
-interface Page {
-  items: Earning[];
-  nextPageKey?: string;
-}
-
 export const getEarnings = async (
   referrer: string,
   nextKey: string | null,
   limit = 10
-): Promise<Page> => {
+): Promise<EarningsPage> => {
   const command = new QueryCommand({
     TableName: tables.donations,
     IndexName: "Referrer-FinalizedDate_Index",
@@ -142,6 +137,6 @@ export const getEarnings = async (
         to_name: x.charityName,
       },
     })),
-    nextPageKey,
+    nextKey: nextPageKey,
   };
 };

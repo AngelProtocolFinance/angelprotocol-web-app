@@ -119,6 +119,10 @@ const rmx = remix({
           });
           r("funds", "./pages/user-dashboard/funds/funds.tsx");
           r("referrals", "./pages/user-dashboard/referrals/index.tsx");
+          r(
+            "referrals/earnings",
+            "./pages/user-dashboard/referrals/earnings-history/index.tsx"
+          );
         });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");

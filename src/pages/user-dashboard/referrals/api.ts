@@ -1,14 +1,9 @@
 import type { LoaderFunction } from "@vercel/remix";
 import type { UserV2 } from "types/auth";
-import type { Earning, PendingEarnings, Referred } from "types/referrals";
+import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { cognito, toAuth } from ".server/auth";
 import { getEarnings } from ".server/donations";
 import { pendingEarnings, referredBy } from ".server/referrals";
-
-interface EarningsPage {
-  items: Earning[];
-  nextPageKey?: string;
-}
 
 export interface LoaderData {
   user: UserV2;

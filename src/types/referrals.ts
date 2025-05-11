@@ -15,6 +15,11 @@ export interface Earning {
   };
 }
 
+export interface EarningsPage {
+  items: Earning[];
+  nextKey?: string;
+}
+
 export interface PendingEarnings {
   total: number;
   dates: { [date: string]: any };
