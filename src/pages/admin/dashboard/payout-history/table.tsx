@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import type { BalanceTx } from "types/balance-tx";
-import { MIN_GRANT_PROCESSING } from "../common";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";
 
@@ -18,7 +17,6 @@ const transferIcon = <ArrowLeftRight className="size-4 text-amber" />;
 const unprocessedIcon = <CircleAlert className="size-4 text-gray" />;
 const receivedIcon = <ArrowRight className="size-4 text-green" />;
 const withdrawIcon = <ArrowLeft className="size-4 text-gray" />;
-
 const txs: {
   [K in `${BalanceTx["from"]}-${BalanceTx["to"]}`]: (amount: number) => {
     description: string;
@@ -43,8 +41,9 @@ const txs: {
       <Tooltip
         tip={
           <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
-            <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
-            Grant processing threshold and would be processed in the next cycle
+            <Arrow />
+            Grant of ${humanize(amnt)} from donations has failed and will be
+            processed in the next cycle
           </Content>
         }
       >
@@ -76,8 +75,8 @@ const txs: {
       <Tooltip
         tip={
           <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
-            <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
-            Grant processing threshold and is credited back to Savings
+            <Arrow /> Grant of ${humanize(amnt)} has failed and was credited
+            back to your Savings account.
           </Content>
         }
       >
@@ -91,8 +90,9 @@ const txs: {
       <Tooltip
         tip={
           <Content className="max-w-xs text-center bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
-            <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
-            Grant processing threshold and is credited back to Investments
+            <Arrow />
+            Grant of ${humanize(amnt)} has failed and was credited back to your
+            Investments account.
           </Content>
         }
       >

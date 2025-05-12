@@ -1,4 +1,4 @@
-import { BASE_URL, env } from "./env";
+import { BASE_URL, INTERCOM_HELP, env } from "./env";
 
 export const APIs = {
   apes: `https://apes-api.better.giving/${env}`,
@@ -17,4 +17,13 @@ export const guidestar = {
   seal: "https://widgets.guidestar.org/TransparencySeal/87-3758939",
   profile:
     "https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5",
+};
+
+export const socials = {
+  facebook: "https://www.facebook.com/BetterGivingFB/",
+  instagram: "https://www.instagram.com/better.giving",
+  linkedin: "https://www.linkedin.com/company/better-giving/",
+  x: "https://x.com/BetterDotGiving",
+  youtube: "https://www.youtube.com/@BetterDotGiving",
+  intercom: INTERCOM_HELP,
 };
