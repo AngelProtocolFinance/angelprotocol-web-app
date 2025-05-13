@@ -123,6 +123,10 @@ const rmx = remix({
             "referrals/earnings",
             "./pages/user-dashboard/referrals/earnings-history/index.tsx"
           );
+          r(
+            "referrals/payout",
+            "./pages/user-dashboard/referrals/payout/index.tsx"
+          );
         });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
