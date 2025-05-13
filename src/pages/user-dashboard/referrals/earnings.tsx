@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { useState } from "react";
@@ -61,9 +62,12 @@ export function Earnings({ classes = "", earnings, pendings }: Props) {
                 <p className="text-sm text-gray-d4">
                   {currentEarning.payoutMethod}
                 </p>
-                <button className="text-xs btn-blue bg-blue px-3 py-1 rounded-md">
+                <Link
+                  to="payout"
+                  className="text-xs btn-blue px-3 py-1 rounded-md"
+                >
                   Change
-                </button>
+                </Link>
               </div>
             </div>
           ) : (
