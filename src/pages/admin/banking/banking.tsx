@@ -1,5 +1,5 @@
 import { Link, useFetcher, useParams } from "@remix-run/react";
-import BankDetails, { type OnSubmit } from "components/bank-details";
+import { BankDetails, type OnSubmit } from "components/bank-details";
 import Group from "components/group";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { errorPrompt } from "helpers/error-prompt";
@@ -57,6 +57,7 @@ export default function Banking() {
         description="The following information will be used to register your bank account that will be used to withdraw your funds."
       >
         <BankDetails
+          verified
           FormButtons={FormButtons}
           onSubmit={submit}
           isLoading={fetcher.state !== "idle"}

@@ -31,6 +31,7 @@ type Props = {
   disabled?: boolean;
   FormButtons: IFormButtons;
   onSubmit: OnSubmit;
+  verified?: boolean;
 };
 
 interface FV extends Record<string, any> {
@@ -46,6 +47,7 @@ export default function RecipientDetailsForm({
   disabled,
   onSubmit,
   FormButtons,
+  verified,
 }: Props) {
   const {
     control,
@@ -69,7 +71,7 @@ export default function RecipientDetailsForm({
     rules: {
       validate(value?: string) {
         const val = safeParse(fileOutput({ required: true }), value);
-        return val.issues?.[0].message ?? true;
+        return verified ? (val.issues?.[0].message ?? true) : true;
       },
     },
   });
@@ -341,19 +343,21 @@ export default function RecipientDetailsForm({
         );
       })}
 
-      <FileDropzone
-        label={
-          <Label htmlFor="bank__statement" required className="mb-2">
-            Bank statement
-          </Label>
-        }
-        specs={{ mbLimit: 6, mimeTypes: ["application/pdf"] }}
-        disabled={disabled}
-        ref={bankStatement.ref}
-        value={bankStatement.value}
-        onChange={bankStatement.onChange}
-        error={errors.bankStatement?.message?.toString()}
-      />
+      {verified && (
+        <FileDropzone
+          label={
+            <Label htmlFor="bank__statement" required className="mb-2">
+              Bank statement
+            </Label>
+          }
+          specs={{ mbLimit: 6, mimeTypes: ["application/pdf"] }}
+          disabled={disabled}
+          ref={bankStatement.ref}
+          value={bankStatement.value}
+          onChange={bankStatement.onChange}
+          error={errors.bankStatement?.message?.toString()}
+        />
+      )}
 
       <FormButtons
         disabled={disabled || bankStatement.value === "loading"}

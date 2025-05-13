@@ -1,2 +1,2 @@
-export { default } from "./bank-details";
+export { BankDetails } from "./bank-details";
 export type { OnSubmit } from "./types";
