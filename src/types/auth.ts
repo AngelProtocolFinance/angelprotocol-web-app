@@ -34,6 +34,7 @@ export type UserV2 = {
   avatar?: string;
   /** 3 digit currency code */
   currency?: string;
+  pay_id?: string;
 };
 
 /**@template T - type of error to be handled */

@@ -1,16 +1,27 @@
 import { type ActionFunction, redirect } from "@vercel/remix";
-import { ap, ver } from "api/api";
+import { isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
 
-export const newBanking: ActionFunction = async ({ request }) => {
-  const { user, headers } = await cognito.retrieve(request);
+export const action: ActionFunction = async ({ request }) => {
+  const { user, headers, session } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const payload = await request.json();
+  const recipient_id = await request.text();
+  const result = await cognito.updateUserAttributes(
+    [{ Name: "custom:pay_id", Value: recipient_id }],
+    user.accessToken
+  );
+  if (result !== "success") throw result.message;
 
-  await ap.post(`${ver(1)}/banking-applications`, {
-    headers: { authorization: user.idToken },
-    json: payload,
+  const res = await cognito.refresh(session);
+
+  if (isError(res)) throw res.message;
+
+  return redirect("../referrals", {
+    headers: {
+      "Set-Cookie": res,
+      "X-Remix-Revalidate": "1",
+      "Cache-Control": "no-cache",
+    },
   });
-  return redirect("..");
 };

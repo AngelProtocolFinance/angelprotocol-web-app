@@ -24,6 +24,7 @@ export class Util {
       avatar: p["custom:avatar"],
       currency: p["custom:currency"],
       referral_id: p["custom:referral_id"],
+      pay_id: p["custom:pay_id"],
     };
   }
   protected unset(session: Stored) {

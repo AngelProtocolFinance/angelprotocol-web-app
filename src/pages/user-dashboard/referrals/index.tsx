@@ -9,7 +9,7 @@ import { useCachedLoaderData } from "api/cache";
 
 export function ReferralsPage() {
   const navigate = useNavigate();
-  const { origin, user, referreds, earnings, pendings } =
+  const { origin, user, referreds, earnings, pendings, payout } =
     useCachedLoaderData() as LoaderData;
   return (
     <div className="">
@@ -27,6 +27,7 @@ export function ReferralsPage() {
             onViewMore: () => navigate("earnings"),
           }),
         }}
+        payout={payout}
         pendings={pendings}
       />
       <Nonprofits npos={referreds} classes="mb-8" />

@@ -1,45 +1,16 @@
-import { Link, useFetcher, useParams } from "@remix-run/react";
-import { BankDetails, type OnSubmit } from "components/bank-details";
+import { Link, useFetcher } from "@remix-run/react";
+import { BankDetails } from "components/bank-details";
 import { type IPromptV2, PromptV2 } from "components/prompt";
-import { errorPrompt } from "helpers/error-prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import FormButtons from "./form-buttons";
 
-export { newBanking as action } from "./api";
+export { action } from "./api";
 export { ErrorBoundary } from "components/error";
 
-export default function Banking() {
-  const { id: endowIdParam = "" } = useParams();
+export default function Payout() {
   const fetcher = useFetcher();
   const [prompt, setPrompt] = useState<IPromptV2>();
-
-  const submit: OnSubmit = async (recipient, bankStatementUrl) => {
-    try {
-      const { id, details, currency } = recipient;
-      //creating account return V1Recipient and doesn't have longAccount summary field
-      const bankSummary = `${currency.toUpperCase()} account ending in ${
-        details.accountNumber?.slice(-4) || "0000"
-      } `;
-
-      fetcher.submit(
-        {
-          wiseRecipientID: id.toString(),
-          bankSummary,
-          endowmentID: +endowIdParam,
-          bankStatementFile: {
-            name: bankStatementUrl,
-            publicUrl: bankStatementUrl,
-          },
-        },
-        { action: ".", method: "POST", encType: "application/json" }
-      );
-    } catch (error) {
-      setPrompt(
-        errorPrompt(error, { context: "submitting banking application" })
-      );
-    }
-  };
 
   return (
     <>
@@ -52,7 +23,12 @@ export default function Banking() {
       </Link>
       <BankDetails
         FormButtons={FormButtons}
-        onSubmit={submit}
+        onSubmit={async ({ id }) =>
+          fetcher.submit(id.toString(), {
+            method: "POST",
+            encType: "text/plain",
+          })
+        }
         isLoading={fetcher.state !== "idle"}
       />
       {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}

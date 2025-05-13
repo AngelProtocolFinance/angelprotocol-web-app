@@ -1,3 +1,4 @@
+import type { V2RecipientAccount } from "@better-giving/wise";
 import { Link } from "@remix-run/react";
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
@@ -22,9 +23,10 @@ interface Props {
   classes?: string;
   earnings: IEarningsHistory;
   pendings: PendingEarnings;
+  payout?: V2RecipientAccount;
 }
 
-export function Earnings({ classes = "", earnings, pendings }: Props) {
+export function Earnings({ classes = "", earnings, pendings, payout }: Props) {
   const now = new Date();
   const end = endOfMonth(now);
 
@@ -55,12 +57,12 @@ export function Earnings({ classes = "", earnings, pendings }: Props) {
             </p>
           </div>
 
-          {currentEarning.hasPayoutMethod ? (
+          {payout ? (
             <div className="mt-4">
               <p className="text-sm text-gray-l1">Payout method:</p>
               <div className="flex gap-x-2 items-center">
                 <p className="text-sm text-gray-d4">
-                  {currentEarning.payoutMethod}
+                  {payout.longAccountSummary}
                 </p>
                 <Link
                   to="payout"
@@ -71,9 +73,12 @@ export function Earnings({ classes = "", earnings, pendings }: Props) {
               </div>
             </div>
           ) : (
-            <button className="mt-4 text-sm border border-gray-l3 rounded-md px-4 py-2 hover:bg-gray-l5 transition-colors">
+            <Link
+              to="payout"
+              className="mt-2 inline-block text-sm rounded-md px-4 py-2 btn-blue"
+            >
               setup payout method
-            </button>
+            </Link>
           )}
           <EarningsHistory {...earnings} classes="mt-6" />
         </div>
