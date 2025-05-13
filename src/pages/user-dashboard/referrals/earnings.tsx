@@ -1,7 +1,8 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
-import { Link } from "@remix-run/react";
+import { Link, Outlet } from "@remix-run/react";
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
+import { PencilIcon } from "lucide-react";
 import { useState } from "react";
 import type { PendingEarnings } from "types/referrals";
 import {
@@ -24,9 +25,16 @@ interface Props {
   earnings: IEarningsHistory;
   pendings: PendingEarnings;
   payout?: V2RecipientAccount;
+  payout_min?: number;
 }
 
-export function Earnings({ classes = "", earnings, pendings, payout }: Props) {
+export function Earnings({
+  classes = "",
+  earnings,
+  pendings,
+  payout,
+  payout_min = 50,
+}: Props) {
   const now = new Date();
   const end = endOfMonth(now);
 
@@ -59,7 +67,7 @@ export function Earnings({ classes = "", earnings, pendings, payout }: Props) {
 
           {payout ? (
             <div className="mt-4">
-              <p className="text-sm text-gray-l1">Payout method:</p>
+              <p className="text-sm text-gray">Payout method</p>
               <div className="flex gap-x-2 items-center">
                 <p className="text-sm text-gray-d4">
                   {payout.longAccountSummary}
@@ -80,9 +88,29 @@ export function Earnings({ classes = "", earnings, pendings, payout }: Props) {
               setup payout method
             </Link>
           )}
+          {payout && (
+            <div className="mt-4">
+              <p className="text-sm text-gray">Payout threshold</p>
+              <div className="flex gap-x-1 items-center">
+                <p className="text-sm text-gray-d4">
+                  ${humanize(payout_min, 3)}
+                </p>
+                <Link
+                  to={{ pathname: "payout-min", search: `?min=${payout_min}` }}
+                  replace
+                  preventScrollReset
+                  className="text-xs"
+                >
+                  <PencilIcon size={12} />
+                </Link>
+              </div>
+            </div>
+          )}
           <EarningsHistory {...earnings} classes="mt-6" />
         </div>
       </div>
+      {/** payout min form */}
+      <Outlet />
     </div>
   );
 }

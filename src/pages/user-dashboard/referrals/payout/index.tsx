@@ -16,7 +16,7 @@ export default function Payout() {
     <>
       <Link
         to={"../referrals"}
-        className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
+        className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm"
       >
         <ChevronLeft size={18} />
         <span>Back</span>

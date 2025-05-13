@@ -13,6 +13,7 @@ export interface LoaderData {
   earnings: EarningsPage;
   pendings: PendingEarnings;
   payout?: V2RecipientAccount;
+  payout_min?: number;
   origin: string;
 }
 
@@ -39,5 +40,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     earnings,
     pendings,
     payout: p,
+    payout_min: user.pay_min ? +user.pay_min : undefined,
   } satisfies LoaderData;
 };

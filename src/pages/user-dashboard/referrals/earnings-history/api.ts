@@ -11,7 +11,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const nextKey = url.searchParams.get("nextKey");
 
-  const page = await getEarnings(user.referral_id, nextKey, 4);
+  const page = await getEarnings(user.referral_id, nextKey, 8);
 
   return page;
 };
