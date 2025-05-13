@@ -5,7 +5,7 @@ import ActivityCountries from "components/activity-countries";
 import CountrySelector from "components/country-selector";
 import ExtLink from "components/ext-link";
 import { Field, Label, Radio } from "components/form";
-import LoadText from "components/load-text";
+import { LoadText } from "components/load-text";
 import { MultiSelector, Selector } from "components/selector";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";

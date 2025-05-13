@@ -4,7 +4,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { ErrorTrigger } from "components/error";
-import LoadText from "components/load-text";
+import { LoadText } from "components/load-text";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "helpers/error-prompt";
