@@ -22,10 +22,3 @@ export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 export const PUBLIC_STRIPE_KEY = import.meta.env.VITE_STRIPE_PK || "";
 export const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID || "";
 export const CHARIOT_CONNECT_ID = import.meta.env.VITE_CHARIOT_CONNECT_ID || "";
-
-export const HUBSPOT_ACCESS_TOKEN =
-  import.meta.env.VITE_HUBSPOT_ACCESS_TOKEN || "";
-export const HUBSPOT_NEWSLETTER_FORM_ID =
-  import.meta.env.VITE_HUBSPOT_NEWSLETTER_FORM_ID || "";
-export const HUBSPOT_NEWSLETTER_PORTAL_ID =
-  import.meta.env.VITE_HUBSPOT_NEWSLETTER_PORTAL_ID || "";
