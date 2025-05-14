@@ -58,7 +58,7 @@ export const discordEnvs = {
 };
 
 export const hubspotEnvs = {
-  hubspotAccessToken: v.parse(required, process.env.HUBSPOT_ACCESS_TOKEN),
+  accessToken: v.parse(required, process.env.HUBSPOT_ACCESS_TOKEN),
 };
 
 export const stripeEnvs = {

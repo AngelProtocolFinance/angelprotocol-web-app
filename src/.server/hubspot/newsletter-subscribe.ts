@@ -7,7 +7,7 @@ const PORTAL_ID = "24900163";
 export async function newsletterSubscribe(email: string) {
   return hsNewsletterSubs.post(`${PORTAL_ID}/${FORM_ID}`, {
     headers: {
-      Authorization: `Bearer ${hubspotEnvs.hubspotAccessToken}`,
+      Authorization: `Bearer ${hubspotEnvs.accessToken}`,
       "Content-Type": "application/json",
     },
     json: { fields: [{ name: "email", value: email }] },
