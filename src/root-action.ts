@@ -1,8 +1,8 @@
 import type { ActionFunction } from "@vercel/remix";
-import { newsletterSubscribe } from "api/action/newsletter-subscribe";
 import { parseWithValibot } from "conform-to-valibot";
 import { emailSubs } from "types/hubspot-subscription";
 import { cognito, toAuth } from ".server/auth";
+import { newsletterSubscribe } from ".server/hubspot/newsletter-subscribe";
 import { createBookmark, deleteBookmark } from ".server/user-bookmarks";
 
 export const action: ActionFunction = async ({ request }) => {
