@@ -178,6 +178,7 @@ class Cognito extends Storage {
       "custom:user-type": string;
     }
   ) {
+    const referral_id = generateReferralId();
     return fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("SignUp"),
@@ -188,7 +189,9 @@ class Cognito extends Storage {
           { Name: "family_name", Value: attributes.lastName },
           { Name: "given_name", Value: attributes.firstName },
           { Name: "email", Value: username },
-          { Name: "custom:referral_id", Value: generateReferralId() },
+          { Name: "custom:referral_id", Value: referral_id },
+          // filterable attribute ( standard and not used )
+          { Name: "profile", Value: referral_id },
         ],
       }),
     }).then(this.deliveryDetails);
