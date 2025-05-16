@@ -191,7 +191,7 @@ class Cognito extends Storage {
           { Name: "email", Value: username },
           { Name: "custom:referral_id", Value: referral_id },
           // filterable attribute ( standard and not used )
-          { Name: "profile", Value: referral_id },
+          { Name: "preferred_username", Value: referral_id },
         ],
       }),
     }).then(this.deliveryDetails);
