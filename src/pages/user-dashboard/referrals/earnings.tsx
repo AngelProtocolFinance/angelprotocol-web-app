@@ -1,24 +1,14 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
 import { Link, Outlet } from "@remix-run/react";
-import { endOfMonth, format, formatDistance } from "date-fns";
+import { endOfHour, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ArrowRightIcon, HistoryIcon, PencilIcon } from "lucide-react";
-import { useState } from "react";
 import type { PendingEarnings } from "types/referrals";
+import { config } from "./config";
 import {
   EarningsHistory,
   type Props as IEarningsHistory,
 } from "./earnings-history/table";
-
-// Define an interface for the earning data structure
-interface EarningData {
-  id: number;
-  amount: string;
-  payoutDate: string;
-  daysLeft: number;
-  hasPayoutMethod: boolean;
-  payoutMethod: string | null;
-}
 
 interface Props {
   classes?: string;
@@ -33,28 +23,16 @@ export function Earnings({
   earnings,
   pendings,
   payout,
-  payout_min = 50,
+  payout_min = config.min,
 }: Props) {
   const now = new Date();
-  const end = endOfMonth(now);
-
-  const [currentEarning] = useState<EarningData>({
-    id: 1, // Example ID
-    amount: "$100.00",
-    payoutDate: "May 24, 2024",
-    daysLeft: 2,
-    hasPayoutMethod: true, // Example: Assume payout method is set up
-    payoutMethod: "Account ending in 12341",
-  });
+  const end = endOfHour(now);
 
   return (
     <div className={classes}>
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">My earnings</h2>
 
-      <div
-        key={currentEarning.id}
-        className="bg-gray-l5 rounded-xl border border-gray-l4 overflow-hidden"
-      >
+      <div className="bg-gray-l5 rounded-xl border border-gray-l4 overflow-hidden">
         <div className="p-6 @container">
           <div className="flex flex-wrap items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-2 flex-wrap">

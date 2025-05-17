@@ -15,6 +15,7 @@ import {
 } from "@remix-run/react";
 import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
+import { config } from "../config";
 import type { LoaderData } from "./api";
 
 interface IContent {
@@ -59,7 +60,7 @@ function Content(props: IContent) {
       schema<FV>({
         amount: stringNumber(
           (s) => s.required("required"),
-          (n) => n.min(50, `minimum of $${50}`)
+          (n) => n.min(config.min, `minimum of $${config.min}`)
         ),
       })
     ),
