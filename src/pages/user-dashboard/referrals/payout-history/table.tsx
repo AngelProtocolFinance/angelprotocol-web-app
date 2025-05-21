@@ -1,6 +1,8 @@
 import type { Payout } from "@better-giving/referrals/interface";
+import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import { Info } from "lucide-react";
 import type { ReactNode } from "react";
 
 export interface Props {
@@ -23,7 +25,6 @@ export function Table({
           <tr>
             <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">Amount</th>
-            <th className="font-medium text-sm text-gray">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -33,9 +34,23 @@ export function Table({
               className={`text-sm ${payout.error ? "text-red" : "text-gray-d4"}`}
             >
               <td>{format(payout.date, "PP")}</td>
-              <td>${humanize(payout.amount, 3)}</td>
               <td>
-                {payout.error ? <p className="">{payout.error}</p> : null}
+                <div className="relative">
+                  {payout.error && (
+                    <Tooltip
+                      tip={
+                        <Content className="max-w-xs bg-gray-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+                          <Arrow />
+                          Commission amount not paid out and will be retried in
+                          the next cycle.
+                        </Content>
+                      }
+                    >
+                      <Info size={16} className="absolute -left-5 top-0.5" />
+                    </Tooltip>
+                  )}
+                  ${humanize(payout.amount, 3)}{" "}
+                </div>
               </td>
             </tr>
           ))}
