@@ -1,6 +1,6 @@
 import { laira } from "assets/laira/laira";
-import { AboutVideo } from "components/about-video";
 import Image from "components/image";
+import { Video, videos } from "components/video/video";
 
 type TListItem = {
   title1: string;
@@ -50,7 +50,7 @@ export function Feature({ className = "" }) {
         </p>
       </div>
 
-      <AboutVideo classes="max-w-2xl justify-self-center p-4" />
+      <Video vid={videos.about} classes="max-w-2xl justify-self-center p-4" />
 
       <ul className="col-span-full mt-10 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (

@@ -16,4 +16,5 @@ export type EndowContentFromReg = Pick<
   | "referrer_expiry"
   | "gsi1PK"
   | "gsi1SK"
+  | "referral_id"
 >;

@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import dappLogo from "assets/images/bg-logo-503c.webp";
 import ExtLink from "components/ext-link";
-import { APP_NAME, INTERCOM_HELP } from "constants/env";
+import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { guidestar } from "constants/urls";
 import Newsletter from "./newsletter";
@@ -77,12 +77,11 @@ export function Footer({ classes = "" }: Props) {
 
 function Copyright({ classes = "" }) {
   return (
-    <p className={`text-[0.93rem] flex max-xl:flex-col text-gray ${classes}`}>
-      <span>
-        © Copyright {new Date().getFullYear()} {APP_NAME}
-      </span>
-      <span className="hidden 2xl:inline">,</span>{" "}
-      <span>A Registered Charitable 501(c)(3) (EIN 87-3758939)</span>
+    <p className={`text-[0.93rem] text-gray ${classes}`}>
+      <span>© Copyright {new Date().getFullYear()} Better&nbsp;Giving</span>
+      <br className="xl:hidden" />
+      <span className="hidden xl:inline">,</span>
+      <span> a Registered Charitable 501(c)(3) (EIN 87-3758939)</span>
     </p>
   );
 }

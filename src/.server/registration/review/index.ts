@@ -5,6 +5,7 @@ import type { ApplicationDbRecord } from "@better-giving/registration/db";
 import { type UNSDG_NUM, isIrs501c3 } from "@better-giving/registration/models";
 import { tables } from "@better-giving/types/list";
 import { addYears } from "date-fns";
+import { referral_id } from "helpers/referral";
 import {
   PutCommand,
   TransactWriteCommand,
@@ -49,6 +50,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     sdgs: reg.org.un_sdg as UNSDG_NUM[],
     url: reg.org.website,
     claimed: true,
+    referral_id: referral_id("NPO"),
   };
 
   if (reg.referrer) {

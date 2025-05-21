@@ -1,10 +1,9 @@
+import type { OgInput } from "types/donation-calculator";
 import { PctSlider } from "./pct-slider";
-import type { State } from "./types";
-
 interface Props {
   classes?: string;
-  state: State;
-  setState: (x: State) => void;
+  state: OgInput;
+  setState: (x: OgInput) => void;
 }
 
 export function Form2({ classes = "", state, setState }: Props) {
@@ -15,8 +14,8 @@ export function Form2({ classes = "", state, setState }: Props) {
       <PctSlider
         range={[0, 1]}
         label="Percentage to allocate towards savings/investments"
-        value={+state.donationsToSavings}
-        onChange={(x) => setState({ ...state, donationsToSavings: x })}
+        value={+state.notGrantedRate}
+        onChange={(x) => setState({ ...state, notGrantedRate: x })}
         tooltip="Select the percentage of donations you would consider allocating towards savings and investments if it were handled effortlessly on your behalf."
       />
       <p className="text-sm text-gray mt-1">
@@ -31,16 +30,16 @@ export function Form2({ classes = "", state, setState }: Props) {
         range={[0, 1]}
         label="Savings Account (4% yield)"
         classes="mt-2"
-        value={1 - +state.savingsInvested}
-        onChange={(x) => setState({ ...state, savingsInvested: 1 - x })}
+        value={1 - +state.investRate}
+        onChange={(x) => setState({ ...state, investRate: 1 - x })}
         tooltip="Projected yield based on average annual returns over the past 5 years."
       />
       <PctSlider
         range={[0, 1]}
         label="Sustainability Fund (20% avg. return)"
         classes="mt-2"
-        value={+state.savingsInvested}
-        onChange={(x) => setState({ ...state, savingsInvested: x })}
+        value={+state.investRate}
+        onChange={(x) => setState({ ...state, investRate: x })}
         tooltip="Projected yield based on average annual returns over the past 5 years."
       />
     </div>
