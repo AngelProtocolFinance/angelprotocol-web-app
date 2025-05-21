@@ -28,10 +28,15 @@ export function Table({
         </thead>
         <tbody>
           {items.map((payout, idx) => (
-            <tr key={idx} className="text-sm text-gray-d4">
+            <tr
+              key={idx}
+              className={`text-sm ${payout.error ? "text-red" : "text-gray-d4"}`}
+            >
               <td>{format(payout.date, "PP")}</td>
               <td>${humanize(payout.amount, 3)}</td>
-              <td>{payout.error ? <p>{payout.error}</p> : null}</td>
+              <td>
+                {payout.error ? <p className="">{payout.error}</p> : null}
+              </td>
             </tr>
           ))}
         </tbody>
