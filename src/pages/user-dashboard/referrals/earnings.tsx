@@ -15,6 +15,7 @@ interface Props {
   earnings: IEarningsHistory;
   pendings: PendingEarnings;
   payout?: V2RecipientAccount;
+  payout_ltd: number;
   payout_min?: number;
 }
 
@@ -24,6 +25,7 @@ export function Earnings({
   pendings,
   payout,
   payout_min = config.pay_min,
+  payout_ltd,
 }: Props) {
   const now = new Date();
   const end = endOfHour(now);
@@ -44,6 +46,7 @@ export function Earnings({
               </p>
             </div>
             <Link
+              aria-disabled={payout_ltd === 0}
               to="payouts"
               className="group flex items-center @max-lg:mt-2 gap-x-1 text-blue hover:text-blue-d1"
             >
@@ -56,7 +59,7 @@ export function Earnings({
                 className=" @max-lg:hidden hidden @lg:group-hover:block group-active:translate-x-0.5"
               />
               <div className="text-xl font-bold text-gray-d">
-                ${humanize(0, 3)}
+                ${humanize(payout_ltd, 3)}
               </div>
               <span className="text-sm mt-1">paid out</span>
             </Link>

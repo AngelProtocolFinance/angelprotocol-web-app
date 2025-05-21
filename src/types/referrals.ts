@@ -1,3 +1,5 @@
+import type { Payout } from "@better-giving/referrals/interface";
+
 export interface Referred {
   id: number;
   name: string;
@@ -18,6 +20,11 @@ export interface Earning {
 
 export interface EarningsPage {
   items: Earning[];
+  nextKey?: string;
+}
+
+export interface PayoutsPage {
+  items: Payout[];
   nextKey?: string;
 }
 

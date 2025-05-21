@@ -9,8 +9,16 @@ import { useCachedLoaderData } from "api/cache";
 
 export function ReferralsPage() {
   const navigate = useNavigate();
-  const { origin, user, referreds, earnings, pendings, payout, payout_min } =
-    useCachedLoaderData() as LoaderData;
+  const {
+    origin,
+    user,
+    referreds,
+    earnings,
+    pendings,
+    payout,
+    payout_min,
+    payout_ltd,
+  } = useCachedLoaderData() as LoaderData;
   return (
     <div className="">
       <h2 className="text-2xl font-semibold text-gray-d4 mb-4">My referrals</h2>
@@ -30,6 +38,7 @@ export function ReferralsPage() {
         payout={payout}
         payout_min={payout_min}
         pendings={pendings}
+        payout_ltd={payout_ltd}
       />
       <Nonprofits npos={referreds} classes="mb-8" />
     </div>

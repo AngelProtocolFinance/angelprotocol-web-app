@@ -5,7 +5,7 @@ import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { cognito, toAuth } from ".server/auth";
 import { getEarnings } from ".server/donations";
 import { env, wiseApiToken } from ".server/env";
-import { pendingEarnings, referredBy } from ".server/referrals";
+import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
 
 export interface LoaderData {
   user: UserV2;
@@ -13,6 +13,7 @@ export interface LoaderData {
   earnings: EarningsPage;
   pendings: PendingEarnings;
   payout?: V2RecipientAccount;
+  payout_ltd: number;
   payout_min?: number;
   origin: string;
 }
@@ -26,11 +27,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const [pendings, referreds, earnings, p] = await Promise.all([
+  const [pendings, referreds, earnings, p, pltd] = await Promise.all([
     pendingEarnings(user.referral_id),
     referredBy(user.referral_id),
     getEarnings(user.referral_id, null, 4),
     user.pay_id ? payout(+user.pay_id) : undefined,
+    paidOutLtd(user.referral_id),
   ]);
 
   return {
@@ -41,5 +43,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     pendings,
     payout: p,
     payout_min: user.pay_min ? +user.pay_min : undefined,
+    payout_ltd: pltd,
   } satisfies LoaderData;
 };

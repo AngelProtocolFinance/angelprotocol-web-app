@@ -1,7 +1,7 @@
 import type { Gsi1 } from "@better-giving/endowment/db";
 import * as db from "@better-giving/referrals/db";
 import { tables } from "@better-giving/types/list";
-import type { PendingEarnings, Referred } from "types/referrals";
+import type { PayoutsPage, PendingEarnings, Referred } from "types/referrals";
 import { GetCommand, QueryCommand, ap, apes } from "./aws/db";
 
 export const referredBy = async (id: string): Promise<Referred[]> => {
@@ -60,3 +60,41 @@ export const pendingEarnings = async (id: string): Promise<PendingEarnings> => {
 
   return { total };
 };
+
+export async function paidOut(
+  id: string,
+  nextKey: string | null,
+  limit = 10
+): Promise<PayoutsPage> {
+  const cmd = new QueryCommand({
+    TableName: db.name,
+    KeyConditionExpression: "PK = :pk",
+    ExpressionAttributeValues: { ":pk": `Po#${id}` satisfies db.Payout["PK"] },
+    ScanIndexForward: false,
+    Limit: limit,
+    ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
+  });
+
+  const res = await apes.send(cmd);
+  const items = (res.Items || []) as db.Payout[];
+  return {
+    items,
+    nextKey: res.LastEvaluatedKey
+      ? JSON.stringify(res.LastEvaluatedKey)
+      : undefined,
+  };
+}
+
+export async function paidOutLtd(id: string): Promise<number> {
+  const cmd = new GetCommand({
+    TableName: db.name,
+    Key: {
+      PK: `PoLtd#${id}`,
+      SK: `PoLtd#${id}`,
+    } satisfies Pick<db.PayoutLtd, "PK" | "SK">,
+  });
+
+  const res = await apes.send(cmd);
+  const item = res.Item as db.PayoutLtd | undefined;
+  return item?.amount ?? 0;
+}
