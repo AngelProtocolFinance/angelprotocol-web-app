@@ -32,21 +32,19 @@ export function Explainer() {
       <Disclosure defaultOpen={!isMobile}>
         {({ open }) => (
           <>
-            <div className="flex items-center gap-x-1 mb-2 relative">
+            <div className="flex items-center gap-x-1 mb-1 relative">
               <LightBulbIcon
                 className="max-md:hidden text-blue-d1 shrink-0 absolute -left-6"
                 size={19}
               />
               <h3 className="text-lg">About the {APP_NAME} Referral Program</h3>
             </div>
-            <div className="space-y-3 max-w-4xl">
-              <p>
-                You can earn rewards by helping nonprofits discover {APP_NAME}.
-                When a nonprofit signs up using your referral link or code,
-                you'll earn 30% of the contributions made by donors to support{" "}
-                {APP_NAME} — for the next 3 years.
-              </p>
-            </div>
+            <p>
+              You can earn rewards by helping nonprofits discover {APP_NAME}.
+              When a nonprofit signs up using your referral link or code, you'll
+              earn 30% of the contributions made by donors to support {APP_NAME}{" "}
+              — for the next 3 years.
+            </p>
             {open && (
               <>
                 <div className="flex items-start gap-3 mt-4 max-w-4xl relative">
@@ -96,7 +94,7 @@ export function Explainer() {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-4 mt-4 ">
+                <div className="flex flex-wrap gap-4 mt-4">
                   <ExtLink
                     href="#"
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
@@ -115,7 +113,9 @@ export function Explainer() {
               </>
             )}
 
-            <DisclosureButton className="flex items-center justify-center mt-4 text-blue-d1 transition-colors">
+            <DisclosureButton
+              className={`flex items-center justify-center text-blue-d1  ${open ? "mt-4" : "mt-2"}`}
+            >
               <span className="text-sm font-medium mr-1">
                 {open ? "Show less" : "Read more"}
               </span>
