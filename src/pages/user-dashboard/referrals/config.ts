@@ -1,3 +1,3 @@
 export const config = {
-  min: 0.1,
+  pay_min: 50,
 };

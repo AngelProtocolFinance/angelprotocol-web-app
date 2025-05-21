@@ -23,7 +23,7 @@ export function Earnings({
   earnings,
   pendings,
   payout,
-  payout_min = config.min,
+  payout_min = config.pay_min,
 }: Props) {
   const now = new Date();
   const end = endOfHour(now);

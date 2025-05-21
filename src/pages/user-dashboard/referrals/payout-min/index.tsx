@@ -60,7 +60,7 @@ function Content(props: IContent) {
       schema<FV>({
         amount: stringNumber(
           (s) => s.required("required"),
-          (n) => n.min(config.min, `minimum of $${config.min}`)
+          (n) => n.min(config.pay_min, `pay_minimum of $${config.pay_min}`)
         ),
       })
     ),
