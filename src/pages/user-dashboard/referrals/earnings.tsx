@@ -1,6 +1,6 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
 import { Link, Outlet } from "@remix-run/react";
-import { endOfHour, format, formatDistance } from "date-fns";
+import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ArrowRightIcon, HistoryIcon, PencilIcon } from "lucide-react";
 import type { PendingEarnings } from "types/referrals";
@@ -28,7 +28,7 @@ export function Earnings({
   payout_ltd,
 }: Props) {
   const now = new Date();
-  const end = endOfHour(now);
+  const end = endOfMonth(now);
 
   return (
     <div className={classes}>
