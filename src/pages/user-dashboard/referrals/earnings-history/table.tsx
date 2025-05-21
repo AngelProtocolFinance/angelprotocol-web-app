@@ -18,7 +18,8 @@ export function EarningsHistory({ items, classes = "", onViewMore }: Props) {
           <tr>
             <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">NPO</th>
-            <th className="font-medium text-sm text-gray">amount</th>
+            <th className="font-medium text-sm text-gray">Amount</th>
+            <th className="font-medium text-sm text-gray">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +33,13 @@ export function EarningsHistory({ items, classes = "", onViewMore }: Props) {
               </td>
 
               <td>${humanize(payout.amount, 3)}</td>
+              <td>
+                <div
+                  className={`${payout.status === "pending" ? "bg-gray" : "bg-green"} text-white text-xs font-semibold px-2 py-0.5  rounded-sm inline-block`}
+                >
+                  {payout.status}
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

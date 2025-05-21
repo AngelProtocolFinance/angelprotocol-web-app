@@ -13,6 +13,7 @@ export interface Earning {
     to_id: string;
     to_name: string;
   };
+  status: "paid" | "pending";
 }
 
 export interface EarningsPage {
@@ -22,5 +23,4 @@ export interface EarningsPage {
 
 export interface PendingEarnings {
   total: number;
-  dates: { [date: string]: any };
 }

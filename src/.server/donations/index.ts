@@ -136,6 +136,7 @@ export const getEarnings = async (
         to_id: x.endowmentId.toString(),
         to_name: x.charityName,
       },
+      status: x.referrer_commission?.transfer_id ? "paid" : "pending",
     })),
     nextKey: nextPageKey,
   };

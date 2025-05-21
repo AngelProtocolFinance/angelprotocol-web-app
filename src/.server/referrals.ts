@@ -57,13 +57,6 @@ export const pendingEarnings = async (id: string): Promise<PendingEarnings> => {
     date,
   }));
   const total = pendings.reduce((acc, { amount }) => acc + amount, 0);
-  const dates = pendings.reduce(
-    (acc, { date, status }) => {
-      acc[date] = status;
-      return acc;
-    },
-    {} as { [date: string]: any }
-  );
 
-  return { total, dates };
+  return { total };
 };
