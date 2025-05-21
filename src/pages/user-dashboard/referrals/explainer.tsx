@@ -104,7 +104,7 @@ export function Explainer() {
                     View Full Program Terms
                   </Link>
                   <ExtLink
-                    href="#"
+                    href="https://intercom.help/better-giving/en/articles/11377507-about-the-better-giving-referral-program"
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
                   >
                     <QuestionMarkCircleIcon className="h-4 w-4 mr-1" />
