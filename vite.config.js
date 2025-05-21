@@ -169,6 +169,7 @@ const rmx = remix({
         r("privacy-policy", "./pages/legal/privacy-policy.tsx");
         r("terms-of-use-npo", "./pages/legal/terms-nonprofits.tsx");
         r("terms-of-use", "./pages/legal/terms-donors.tsx");
+        r("terms-of-use-referrals","./pages/legal/terms-referrals.tsx")
         // no robots
         r("banking-applications", "./pages/banking-applications/index.ts");
         r(

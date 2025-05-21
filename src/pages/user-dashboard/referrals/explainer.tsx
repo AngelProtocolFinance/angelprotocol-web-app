@@ -1,4 +1,5 @@
 import { Disclosure, DisclosureButton } from "@headlessui/react";
+import { Link } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { APP_NAME } from "constants/env";
@@ -95,13 +96,13 @@ export function Explainer() {
                 </div>
 
                 <div className="flex flex-wrap gap-4 mt-4">
-                  <ExtLink
-                    href="#"
+                  <Link
+                    to="/terms-of-use-referrals"
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
                   >
                     <LinkIcon className="h-4 w-4 mr-1" />
                     View Full Program Terms
-                  </ExtLink>
+                  </Link>
                   <ExtLink
                     href="#"
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
