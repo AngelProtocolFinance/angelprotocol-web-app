@@ -1,4 +1,3 @@
-export { loader } from "./api";
 import {
   Link,
   useFetcher,
@@ -10,21 +9,22 @@ import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { LoaderData } from "./api";
 import { EarningsHistory } from "./table";
+export { loader } from "./api";
 
 export default function Page() {
   const page1 = useLoaderData<LoaderData>();
   const { data, state, load } = useFetcher<LoaderData>(); //initially undefined
   const [params] = useSearchParams();
-  const [items, setItems] = useState(page1.items);
+  const [items, setItems] = useState(() => page1.items);
+
+  useEffect(() => {
+    setItems(page1.items);
+  }, [page1.items]);
 
   useEffect(() => {
     if (!data || state === "loading") return;
     setItems((prev) => [...prev, ...(data.items || [])]);
   }, [data, state]);
-
-  if (items.length === 0) {
-    return <Info>No donations found</Info>;
-  }
 
   const nextKey = data ? data.nextKey : page1.nextKey;
 
@@ -44,6 +44,7 @@ export default function Page() {
         <span>Back</span>
       </Link>
       <EarningsHistory
+        emptyEl={<Info classes="mt-2">No donations found</Info>}
         items={items}
         onViewMore={nextKey ? () => loadNext(nextKey) : undefined}
       />

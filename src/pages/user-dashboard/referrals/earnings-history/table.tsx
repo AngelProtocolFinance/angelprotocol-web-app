@@ -2,15 +2,22 @@ import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import type { ReactNode } from "react";
 import type { Earning } from "types/referrals";
 
 export interface Props {
   items: Earning[];
   onViewMore?: () => void;
+  emptyEl?: ReactNode;
   classes?: string;
 }
-export function EarningsHistory({ items, classes = "", onViewMore }: Props) {
-  if (items.length === 0) null;
+export function EarningsHistory({
+  items,
+  classes = "",
+  onViewMore,
+  emptyEl = null,
+}: Props) {
+  if (items.length === 0) return emptyEl;
   return (
     <div className={`${classes} overflow-x-auto`}>
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
