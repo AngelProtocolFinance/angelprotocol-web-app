@@ -6,6 +6,7 @@ import { ReferralId } from "./referral-id";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
+import { Explainer } from "./explainer";
 
 export function ReferralsPage() {
   const navigate = useNavigate();
@@ -21,7 +22,8 @@ export function ReferralsPage() {
   } = useCachedLoaderData() as LoaderData;
   return (
     <div className="">
-      <h2 className="text-2xl mb-4 capitalize ">My referrals</h2>
+      <Explainer />
+      <h2 className="text-2xl mb-4 capitalize">My referrals</h2>
       <ReferralId
         classes="mb-8"
         referral_id={user.referral_id}
