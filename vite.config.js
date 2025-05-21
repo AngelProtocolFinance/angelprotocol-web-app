@@ -124,10 +124,17 @@ const rmx = remix({
               "./pages/user-dashboard/referrals/payout-min/index.tsx"
             );
           });
-          r("referrals/payout", "./pages/user-dashboard/referrals/payout/index.tsx");
+          r(
+            "referrals/payout",
+            "./pages/user-dashboard/referrals/payout/index.tsx"
+          );
           r(
             "referrals/earnings",
             "./pages/user-dashboard/referrals/earnings-history/index.tsx"
+          );
+          r(
+            "referrals/payouts",
+            "./pages/user-dashboard/referrals/payout-history/index.tsx"
           );
         });
 

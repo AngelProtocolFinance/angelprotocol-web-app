@@ -8,7 +8,7 @@ import { Info } from "components/status";
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { LoaderData } from "./api";
-import { EarningsHistory } from "./table";
+import { Table } from "./table";
 export { loader } from "./api";
 
 export default function Page() {
@@ -43,8 +43,8 @@ export default function Page() {
         <ChevronLeft size={18} />
         <span>Back</span>
       </Link>
-      <EarningsHistory
-        emptyEl={<Info classes="mt-2">No items found</Info>}
+      <Table
+        emptyEl={<Info classes="mt-2">No payouts found</Info>}
         items={items}
         onViewMore={nextKey ? () => loadNext(nextKey) : undefined}
       />
