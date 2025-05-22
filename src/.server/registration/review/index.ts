@@ -37,7 +37,8 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     return;
   }
 
-  const endowContentFromReg: EndowContentFromReg = {
+  const rid = referral_id("NPO");
+  const ecfr: EndowContentFromReg = {
     active_in_countries: reg.org.active_in_countries ?? [],
     endow_designation: reg.org.designation,
     fiscal_sponsored: !reg.irs501c3,
@@ -50,16 +51,18 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     sdgs: reg.org.un_sdg as UNSDG_NUM[],
     url: reg.org.website,
     claimed: true,
-    referral_id: referral_id("NPO"),
+    referral_id: rid,
+    gsi2PK: `Rid#${rid}`,
+    gsi2SK: `Rid#${rid}`,
   };
 
   if (reg.referrer) {
     const onboarded = new Date();
     const expiry = addYears(onboarded, 3).toISOString();
-    endowContentFromReg.referrer = reg.referrer;
-    endowContentFromReg.gsi1PK = `ReferredBy#${reg.referrer}`;
-    endowContentFromReg.referrer_expiry = expiry;
-    endowContentFromReg.gsi1SK = expiry;
+    ecfr.referrer = reg.referrer;
+    ecfr.gsi1PK = `ReferredBy#${reg.referrer}`;
+    ecfr.referrer_expiry = expiry;
+    ecfr.gsi1SK = expiry;
   }
 
   ///////////// APPROVAL OF CLAIM /////////////
@@ -80,7 +83,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
               SK: env,
               PK: `Endow#${id}`,
             } satisfies Endow.Keys,
-            ...dbUpdate(endowContentFromReg),
+            ...dbUpdate(ecfr),
           },
         },
       ],
@@ -98,7 +101,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   await initBalance(newEndowID);
 
   const newEndow: Endow.DbRecord = {
-    ...endowContentFromReg,
+    ...ecfr,
     env,
     PK: `Endow#${newEndowID}`,
     SK: env,

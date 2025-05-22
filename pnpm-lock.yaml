@@ -24,59 +24,59 @@ importers:
         specifier: 1.0.33
         version: 1.0.33
       '@better-giving/balance':
-        specifier: 1.1.3
-        version: 1.1.3(@better-giving/types@1.1.3)
+        specifier: 1.1.6
+        version: 1.1.6(@better-giving/types@1.1.6)
       '@better-giving/balance-tx':
-        specifier: 1.1.3
-        version: 1.1.3(@better-giving/types@1.1.3)
+        specifier: 1.1.6
+        version: 1.1.6(@better-giving/types@1.1.6)
       '@better-giving/constants':
         specifier: 1.1.2
         version: 1.1.2
       '@better-giving/donation':
-        specifier: 1.1.11
-        version: 1.1.11(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.1.14
+        version: 1.1.14(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/endowment':
-        specifier: 1.1.9
-        version: 1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.1.13
+        version: 1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/fundraiser':
-        specifier: 1.1.11
-        version: 1.1.11(@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.1.15
+        version: 1.1.15(@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/helpers':
-        specifier: 1.1.3
-        version: 1.1.3(@better-giving/types@1.1.3)(@types/aws-lambda@8.10.130)
+        specifier: 1.1.6
+        version: 1.1.6(@better-giving/types@1.1.6)(@types/aws-lambda@8.10.130)
       '@better-giving/helpers-db':
         specifier: 1.1.2
         version: 1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))
       '@better-giving/helpers-donation':
-        specifier: 1.1.19
-        version: 1.1.19(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/donation@1.1.11(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/fundraiser@1.1.11(@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)
+        specifier: 1.1.23
+        version: 1.1.23(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/donation@1.1.14(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/fundraiser@1.1.15(@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)
       '@better-giving/helpers-donation-settlement':
-        specifier: 1.1.11
-        version: 1.1.11(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.3)
+        specifier: 1.1.13
+        version: 1.1.13(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.6)
       '@better-giving/nowpayments':
         specifier: 1.1.2
         version: 1.1.2
       '@better-giving/payout':
-        specifier: 1.1.3
-        version: 1.1.3(@better-giving/types@1.1.3)
+        specifier: 1.1.4
+        version: 1.1.4
       '@better-giving/referrals':
-        specifier: 1.0.2
-        version: 1.0.2(@better-giving/types@1.1.3)
+        specifier: 1.0.5
+        version: 1.0.5(@better-giving/types@1.1.6)
       '@better-giving/registration':
-        specifier: 1.1.5
-        version: 1.1.5(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.1.8
+        version: 1.1.8(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/schemas':
         specifier: 1.1.2
         version: 1.1.2(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/types':
-        specifier: 1.1.3
-        version: 1.1.3
+        specifier: 1.1.6
+        version: 1.1.6
       '@better-giving/user':
-        specifier: 1.1.4
-        version: 1.1.4(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.1.7
+        version: 1.1.7(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/wise':
-        specifier: 1.1.2
-        version: 1.1.2
+        specifier: 1.1.5
+        version: 1.1.5
       '@conform-to/dom':
         specifier: 1.2.2
         version: 1.2.2
@@ -630,39 +630,39 @@ packages:
   '@better-giving/assets@1.0.33':
     resolution: {integrity: sha512-Ck0YlJERMG1D16IS6i/p6vd/sZDONU5YL+H7W5c3PlS3ay74yXEeeeZjvlgORyuyWbtHm8vAZJYtBBX9B1wcmg==}
 
-  '@better-giving/balance-tx@1.1.3':
-    resolution: {integrity: sha512-MqLaA/rVYnRg7ZnN1bg0vD9KPSrux+QR+ptiQFEVRkx9Kcvm3RvmzguYAay4+ExOreTWKG+hh2kkmt98yNBM6Q==}
+  '@better-giving/balance-tx@1.1.6':
+    resolution: {integrity: sha512-/spXqjLmdGYIlgQ1qArXdwJWy9FjYaCPgCd8euwgR60uiaX0Z50ywpFlJnsWeu8LE4TlTkoVSSVI4L/vnOcFwg==}
     peerDependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/balance@1.1.3':
-    resolution: {integrity: sha512-DR8QKYsrZ9fuUMOHreXc+mEp+U8tIHB6Cvzv5S42x0wo4zkBdzx0luDZn5SedxHvU9c9IQf/CQgfcDIlgmrPzQ==}
+  '@better-giving/balance@1.1.6':
+    resolution: {integrity: sha512-HKTjbAIsAsCsabYYqh2MM/Eh4mB72rYhc7fzl1unlxnRHY5AdY9WPuZ6kexzfFwB15A4/TDGIY0r/dRMr/MHcw==}
     peerDependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
 
-  '@better-giving/donation@1.1.11':
-    resolution: {integrity: sha512-lDLHlcHGzLJTgpQASzFYhk4AOSsqieXAMUQKtSD2XbkpL7PAIGcAgge/SqsmshO4XmZL3IwxS+7WMwDr+1yQyQ==}
+  '@better-giving/donation@1.1.14':
+    resolution: {integrity: sha512-bTzBVVd0+4OFndaLKhPupyFCAM2fynzQoeelVen3ZVzKL4RW9v58HPttHesbfYD79jZ7/DJ5GhVMs/4QagkpUg==}
     peerDependencies:
       '@better-giving/schemas': 1.1.2
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0
 
-  '@better-giving/endowment@1.1.9':
-    resolution: {integrity: sha512-8F/gniBSozQTCAN1TcC1ubsCmUbgPN2UFgxuM+Fc566dJ2vfmPp6y6x+WYNXIoFCsSl5XFnMk2TBnn2JXiDFPQ==}
+  '@better-giving/endowment@1.1.13':
+    resolution: {integrity: sha512-zIfjSGUnZ91jcVVRLIzZmZfwhzQViaY0VXcVpGnfLzY6RMQ1vV04FA6HekEkEnNyblmw/2A3x3yj1WH21Yh06g==}
     peerDependencies:
       '@better-giving/schemas': 1.1.2
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0
 
-  '@better-giving/fundraiser@1.1.11':
-    resolution: {integrity: sha512-zlm+KVOi9uyheriIDIsJNnKYsgVhQCCmNty+K2kfp8cuDXUyF9gsGbQiFGC82zPxDVFrBIY10GoWOCzkSFJggA==}
+  '@better-giving/fundraiser@1.1.15':
+    resolution: {integrity: sha512-7tkVnnDHAkrYmhGeC0cV7Hcn5Lno5/OE+spXSwyadvI9sdLl6kiiI9WOHeAXobhKgDirHwRoQOEl04l3ZzRPcg==}
     peerDependencies:
-      '@better-giving/endowment': 1.1.9
+      '@better-giving/endowment': 1.1.13
       '@better-giving/schemas': 1.1.2
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0
 
   '@better-giving/helpers-db@1.1.2':
@@ -671,48 +671,46 @@ packages:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0
 
-  '@better-giving/helpers-donation-settlement@1.1.11':
-    resolution: {integrity: sha512-Rtsr1Sn9ENpDOxSDEDhTUHZJdS8BT9VA8HFgARhrjBbcUUpIqW4pN3h594lG/PCqMOZlxGPTyYNLHVzVZvBCPw==}
+  '@better-giving/helpers-donation-settlement@1.1.13':
+    resolution: {integrity: sha512-cADwUJ/x3adaQ8zBqx9eJr4brzF7q8JL0OwZHVTVp/arourrtDHthnYpXbkdvPaS2RUZe1QijOvjj9HhCYTh9A==}
     peerDependencies:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0
       '@better-giving/helpers-db': 1.1.2
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/helpers-donation@1.1.19':
-    resolution: {integrity: sha512-Fuefa6XynzjDv/lFokhy6+vJDLlvefCwXmkkQ8CsHM0FZR5byxRyMMMA7EkpB0S7tRvpY8sYVPTqP+23ZXz43g==}
+  '@better-giving/helpers-donation@1.1.23':
+    resolution: {integrity: sha512-Xs4fs6XhKC8JqD8zglVJPPGt8rwXmv4oGsYGlGlol5OsfCmkWbBffbpDVR7ShMaNvvei3TJyR8GzI7hQv02A5Q==}
     peerDependencies:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0
-      '@better-giving/donation': 1.1.11
-      '@better-giving/endowment': 1.1.9
-      '@better-giving/fundraiser': 1.1.11
-      '@better-giving/types': 1.1.3
+      '@better-giving/donation': 1.1.14
+      '@better-giving/endowment': 1.1.13
+      '@better-giving/fundraiser': 1.1.15
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/helpers@1.1.3':
-    resolution: {integrity: sha512-gfOaZ84mLgpCtNpoN3b7UytfcW2rzL2f++hK8c2KUVyapHUoX74ApvaaWIBB01M6QdLLKy5UNVITccqdiZyxwQ==}
+  '@better-giving/helpers@1.1.6':
+    resolution: {integrity: sha512-dxooXrFmNmMPWHNAct3oLkKPN1cknRWK21JipgUoXeThduguX1OnR6DUV6j4tGno5eBS2XhEmi70/JZNodYDwQ==}
     peerDependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       '@types/aws-lambda': 8.10.130
 
   '@better-giving/nowpayments@1.1.2':
     resolution: {integrity: sha512-sBx7YxseKKwG4DqHOx67tL9tXhw3rrQduzvQmJmzW17n5onLW/+OtHkSUktTPurL7+GqbJ4NWeqaKJSLuCNueA==}
 
-  '@better-giving/payout@1.1.3':
-    resolution: {integrity: sha512-9ZNFGtmRWuzlALukTRpHOhMF9g3NujUWOK2JULwJCBa7VWHGZsNVbtUe3cxzPLvabVzoJ6SrjPGLZyumRuj3vQ==}
-    peerDependencies:
-      '@better-giving/types': 1.1.3
+  '@better-giving/payout@1.1.4':
+    resolution: {integrity: sha512-CHYK6rioqPU9kQu3Wd/hQ0bMTCZg0Qep6EGqp7uUZorBY8LJO3x4rni8UDDVqUxOmQ/OjWsyk/UATrGCgDifWw==}
 
-  '@better-giving/referrals@1.0.2':
-    resolution: {integrity: sha512-ktq7wv8WpN9WKrBXlkjiyGY5qfKyuAVt1FGKHfEbFeAq7obqEj+weB9e3F6xUqr3rr89xsbujuso2c4kVZw+jA==}
+  '@better-giving/referrals@1.0.5':
+    resolution: {integrity: sha512-TnmyLtpbmP4a+KIPiPtX2pywYz1zQva3iVX+x3hfsVckIFJHJfioV3w368FbZG8x6D9SVmMHexw19eB7HMeVOQ==}
     peerDependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/registration@1.1.5':
-    resolution: {integrity: sha512-MGW2GM2TwQBKsARV6gbPV7W0cCKQWWhq9V4BnG7p/vdr4ZvSuqvb8+fPyUfE8EHVIMroo9VRvWSblp37R6huOg==}
+  '@better-giving/registration@1.1.8':
+    resolution: {integrity: sha512-//3nshqLPuuN9Rs3iYHrs0+naGY3SN4Ie2Y+AGTVwotq8/m5n9vLhfMH23mt2QXFeJbWqn0/oUQza3BAyhxqxg==}
     peerDependencies:
       '@better-giving/schemas': 1.1.2
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0
 
   '@better-giving/schemas@1.1.2':
@@ -720,17 +718,17 @@ packages:
     peerDependencies:
       valibot: 0.42.0
 
-  '@better-giving/types@1.1.3':
-    resolution: {integrity: sha512-1HJ8LjQoDGiF1OVuecNz9bdmELknLxPXoN/7fjNqCOrpX0a74drdEaN3/HwxMtB23lEGhVhNMDcfSqeFKdYqQQ==}
+  '@better-giving/types@1.1.6':
+    resolution: {integrity: sha512-KTGJboerES2KDScpuv6I67YW4+q7b0ngw6+JudmerYZFCNrnkamCJyWmoiE9BuCbVOmusufFDCZR8+tmeWZvCQ==}
 
-  '@better-giving/user@1.1.4':
-    resolution: {integrity: sha512-vvow3aQgrYIPiUGWH/h/BmvRP6/LmI54H58eGhBV62OaUEbnnzh4i72sMNqvUKyIxm4v239jMCnlFi8W4nYANw==}
+  '@better-giving/user@1.1.7':
+    resolution: {integrity: sha512-svXlmyaNt3VJ1CndYJxFudcT9m1KoOgkcHAL3UDAadj6XXtsfRN6OfLMI3O9KWt6JYFm7TGwX+B3SM80knBwXQ==}
     peerDependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0
 
-  '@better-giving/wise@1.1.2':
-    resolution: {integrity: sha512-KmsV7600wpaGeNkDOR44B0F8uQtOUVkPGf7FxLIr0gWkITIcsAI13d3sPClvQGTA8Ki7xB0+h0QZ9Wb5Z+vUuw==}
+  '@better-giving/wise@1.1.5':
+    resolution: {integrity: sha512-CZp3MWxbV1y/ws6yzqpkMTeIHk7QAyRJhSDJboJgBOSfkPEN++y66EV+ka/LBp+Cm6iGtbfMwHkyWo3ccPQrzA==}
 
   '@biomejs/biome@1.9.4':
     resolution: {integrity: sha512-1rkd7G70+o9KkTn5KLmDYXihGoTaIGO9PIIN2ZB7UJxFrWw04CZHPYiMRjYsaDvVV7hP1dYNRLxSANLaBFGpog==}
@@ -5934,33 +5932,33 @@ snapshots:
 
   '@better-giving/assets@1.0.33': {}
 
-  '@better-giving/balance-tx@1.1.3(@better-giving/types@1.1.3)':
+  '@better-giving/balance-tx@1.1.6(@better-giving/types@1.1.6)':
     dependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/balance@1.1.3(@better-giving/types@1.1.3)':
+  '@better-giving/balance@1.1.6(@better-giving/types@1.1.6)':
     dependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
   '@better-giving/constants@1.1.2': {}
 
-  '@better-giving/donation@1.1.11(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/donation@1.1.14(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       '@better-giving/schemas': 1.1.2(valibot@0.42.0(typescript@5.7.3))
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
 
-  '@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       '@better-giving/schemas': 1.1.2(valibot@0.42.0(typescript@5.7.3))
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
 
-  '@better-giving/fundraiser@1.1.11(@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/fundraiser@1.1.15(@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
-      '@better-giving/endowment': 1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
+      '@better-giving/endowment': 1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/schemas': 1.1.2(valibot@0.42.0(typescript@5.7.3))
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
 
   '@better-giving/helpers-db@1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))':
@@ -5968,55 +5966,53 @@ snapshots:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
 
-  '@better-giving/helpers-donation-settlement@1.1.11(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.3)':
+  '@better-giving/helpers-donation-settlement@1.1.13(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.6)':
     dependencies:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
       '@better-giving/helpers-db': 1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/helpers-donation@1.1.19(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/donation@1.1.11(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/fundraiser@1.1.11(@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)':
+  '@better-giving/helpers-donation@1.1.23(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/donation@1.1.14(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/fundraiser@1.1.15(@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)':
     dependencies:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
-      '@better-giving/donation': 1.1.11(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
-      '@better-giving/endowment': 1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
-      '@better-giving/fundraiser': 1.1.11(@better-giving/endowment@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))
-      '@better-giving/types': 1.1.3
+      '@better-giving/donation': 1.1.14(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
+      '@better-giving/endowment': 1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
+      '@better-giving/fundraiser': 1.1.15(@better-giving/endowment@1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/helpers@1.1.3(@better-giving/types@1.1.3)(@types/aws-lambda@8.10.130)':
+  '@better-giving/helpers@1.1.6(@better-giving/types@1.1.6)(@types/aws-lambda@8.10.130)':
     dependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       '@types/aws-lambda': 8.10.130
 
   '@better-giving/nowpayments@1.1.2': {}
 
-  '@better-giving/payout@1.1.3(@better-giving/types@1.1.3)':
-    dependencies:
-      '@better-giving/types': 1.1.3
+  '@better-giving/payout@1.1.4': {}
 
-  '@better-giving/referrals@1.0.2(@better-giving/types@1.1.3)':
+  '@better-giving/referrals@1.0.5(@better-giving/types@1.1.6)':
     dependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
 
-  '@better-giving/registration@1.1.5(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/registration@1.1.8(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       '@better-giving/schemas': 1.1.2(valibot@0.42.0(typescript@5.7.3))
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
 
   '@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       valibot: 0.42.0(typescript@5.7.3)
 
-  '@better-giving/types@1.1.3': {}
+  '@better-giving/types@1.1.6': {}
 
-  '@better-giving/user@1.1.4(@better-giving/types@1.1.3)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/user@1.1.7(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
-      '@better-giving/types': 1.1.3
+      '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
 
-  '@better-giving/wise@1.1.2': {}
+  '@better-giving/wise@1.1.5': {}
 
   '@biomejs/biome@1.9.4':
     optionalDependencies:
