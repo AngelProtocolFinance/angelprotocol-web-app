@@ -23,6 +23,7 @@ export function ReferralsPage() {
   return (
     <div className="">
       <Explainer />
+      <h2 className="text-2xl mb-4 capitalize">Referrals</h2>
       <ReferralId
         classes="mb-8"
         referral_id={user.referral_id}

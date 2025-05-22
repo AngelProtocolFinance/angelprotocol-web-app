@@ -8,6 +8,7 @@ import {
   Image,
   LayoutDashboard,
   ListCheck,
+  MegaphoneIcon,
   PlugZap,
   Settings,
   UsersRound,
@@ -117,6 +118,14 @@ const linkGroup3: LinkGroup = {
       icon: {
         fn: PlugZap,
         size: 21,
+      },
+    },
+    {
+      title: "Referrals",
+      to: sidebarRoutes.integrations,
+      icon: {
+        fn: MegaphoneIcon,
+        size: 22,
       },
     },
   ],
