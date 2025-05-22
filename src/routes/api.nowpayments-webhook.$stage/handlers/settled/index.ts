@@ -10,12 +10,14 @@ import {
 } from "@better-giving/helpers-donation-settlement";
 import {
   type Base,
+  type Overrides,
   settleTxs,
 } from "@better-giving/helpers-donation-settlement/txs";
 import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
 import { buildDonationMsg } from "routes/helpers/db";
-import { getEndow, getOrder } from "../helpers";
+import { getEndow, getOrder } from "../../helpers";
+import { commissionFn, referral_commission_rate } from "./helpers";
 import { TransactWriteCommand, ap, apes } from ".server/aws/db";
 import { np } from ".server/sdks";
 
@@ -111,22 +113,13 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
     feeAllowance.tip
   );
 
-  const BG_ENDOW_ID = 1293762;
-  const tipTxs = settleTxs(base, {
-    endowId: BG_ENDOW_ID,
-    input: paidAmount.tip,
-    inputUsd: paidAmountUsd.tip,
-    settled: settledUsd.tip,
-    net: settledUsd.tip - processingFee.tip,
-    feeAllowance: feeAllowance.tip,
-    excessFeeAllowance: processed_tip.excess,
-    fees: processed_tip.fees,
-    txId: crypto.randomUUID(),
-    parentTx: order.transactionId,
-    endowName: "Better Giving",
-  });
+  // Commission logic for tip
+  const net_tip = settledUsd.tip - processingFee.tip;
+  const tip_commission = net_tip * referral_commission_rate;
+  const tip_fee_commission = processed_tip.excess * referral_commission_rate;
+  const tip_tos: string[] = [];
 
-  builder.append(tipTxs);
+  const BG_ENDOW_ID = 1293762;
 
   /** donation to a fund */
   if (order.fund_id && order.fund_name && order.fund_members) {
@@ -151,22 +144,44 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
       base.claimed = endow.claimed;
       base.fiscalSponsored = endow.fiscal_sponsored;
 
-      const _txs = settleTxs(base, {
+      // Commission for endow
+      const endow_commission_fee =
+        (processed.excess + processed.fees.base + processed.fees.fsa) *
+        referral_commission_rate;
+
+      const overrides: Overrides = {
         endowId: endow.id,
         input: paidAmount.endow / num,
         inputUsd: paidAmountUsd.endow / num,
         settled: settledUsd.endow / num,
         net: processed.net,
         feeAllowance: feeAllowance.endow / num,
-        excessFeeAllowance: processed.excess,
+        excessFeeAllowance: processed.excess * (1 - referral_commission_rate),
         fees: processed.fees,
         txId: crypto.randomUUID(),
         fundTx: order.transactionId,
         fundId: order.fund_id,
         fundName: order.fund_name,
         endowName: endow.name,
-      });
+      };
 
+      // Commission transaction for fund member
+      const c = commissionFn(
+        {
+          tip: tip_commission / num,
+          fee: endow_commission_fee + tip_fee_commission / num,
+          id: order.transactionId,
+        },
+        endow,
+        order.network
+      );
+      if (c) {
+        overrides.referrer = { id: c.to, commission: c.breakdown };
+        builder.append(c.txs);
+        tip_tos.push(c.to);
+      }
+
+      const _txs = settleTxs(base, overrides);
       builder.append(_txs);
       // net amount reflects fee-allowance add-back
       fund_net += processed.net;
@@ -199,18 +214,43 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
       processingFee.endow,
       feeAllowance.endow
     );
-    const _txs = settleTxs(base, {
+    const endow = await getEndow(order.endowmentId, order.network);
+    if (!endow) {
+      console.error(`Endowment ${order.endowmentId} not found!`);
+      return;
+    }
+    // Commission for endow
+    const endow_commission_fee =
+      (processed.excess + processed.fees.base + processed.fees.fsa) *
+      referral_commission_rate;
+
+    const overrides: Overrides = {
       endowId: order.endowmentId,
       input: paidAmount.endow,
       inputUsd: paidAmountUsd.endow,
       settled: settledUsd.endow,
       net: processed.net,
       feeAllowance: feeAllowance.endow,
-      excessFeeAllowance: processed.excess,
+      excessFeeAllowance: processed.excess * (1 - referral_commission_rate),
       fees: processed.fees,
       txId: order.transactionId,
       endowName: order.charityName,
-    });
+    };
+    const c = commissionFn(
+      {
+        tip: tip_commission,
+        fee: endow_commission_fee + tip_fee_commission,
+        id: order.transactionId,
+      },
+      endow,
+      order.network
+    );
+    if (c) {
+      overrides.referrer = { id: c.to, commission: c.breakdown };
+      builder.append(c.txs);
+      tip_tos.push(c.to);
+    }
+    const _txs = settleTxs(base, overrides);
     builder.append(_txs);
   }
 
@@ -238,6 +278,34 @@ export const handleSettled = async (payment: NP.PaymentPayload) => {
       }),
     });
   }
+
+  const overrides: Overrides = {
+    endowId: BG_ENDOW_ID,
+    input: paidAmount.tip,
+    inputUsd: paidAmountUsd.tip,
+    settled: settledUsd.tip,
+    net: net_tip,
+    feeAllowance: feeAllowance.tip,
+    excessFeeAllowance: processed_tip.excess,
+    fees: processed_tip.fees,
+    txId: crypto.randomUUID(),
+    parentTx: order.transactionId,
+    endowName: "Better Giving",
+  };
+
+  if (tip_tos.length > 0) {
+    overrides.referrer = {
+      id: `internal:${tip_tos.join(",")}`,
+      commission: {
+        from_tip: tip_commission,
+        from_fee: tip_fee_commission,
+      },
+    };
+    overrides.net -= tip_commission;
+    overrides.excessFeeAllowance -= tip_fee_commission;
+  }
+  const tipTxs = settleTxs(base, overrides);
+  builder.append(tipTxs);
 
   return apes.send(new TransactWriteCommand({ TransactItems: builder.txs }));
 };

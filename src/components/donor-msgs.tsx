@@ -35,8 +35,6 @@ export function DonorMsgs({ classes = "", id }: Props) {
     );
   }
 
-  console.log(data);
-
   return (
     <div className={`${classes} w-full rounded-sm @container`}>
       <h2 className="text-xl font-bold mb-2">Donors</h2>

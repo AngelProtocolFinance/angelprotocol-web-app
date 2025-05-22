@@ -12,6 +12,7 @@ type Props = {
   amount: number;
   FormButtons: IFormButtons;
   onSubmit: OnSubmit;
+  verified?: boolean;
 };
 
 function RecipientDetails({
@@ -20,6 +21,7 @@ function RecipientDetails({
   disabled,
   FormButtons,
   onSubmit,
+  verified,
 }: Props) {
   const { req } = useRequirements(!amount ? null : { amount, currency });
   const { data, isLoading, isValidating, error } = req;
@@ -67,6 +69,7 @@ function RecipientDetails({
       </div>
 
       <RecipientDetailsForm
+        verified={verified}
         disabled={disabled}
         quoteId={req.data?.quoteId ?? ""}
         type={requirements[reqIdx].type}

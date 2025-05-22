@@ -1,5 +1,5 @@
 import { NavLink, useLoaderData } from "@remix-run/react";
-import BankDetails from "components/bank-details";
+import { BankDetails } from "components/bank-details";
 import ExtLink from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
@@ -72,6 +72,7 @@ export default function Banking() {
         {isChanging ? "Update" : "Setup"} your banking details
       </h2>
       <BankDetails
+        verified
         FormButtons={FormButtons}
         onSubmit={submit}
         isLoading={isLoading}

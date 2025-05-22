@@ -2,7 +2,7 @@ import type { Update } from "@better-giving/registration/update";
 // import { Field, Input, Label } from "@headlessui/react";
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { NativeField as Field } from "components/form";
-import LoadText from "components/load-text";
+import { LoadText } from "components/load-text";
 import { List } from "components/selector";
 import { APP_NAME } from "constants/env";
 import type { SubmitHandler } from "react-hook-form";

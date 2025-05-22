@@ -119,7 +119,26 @@ const rmx = remix({
             r(":id", "./components/kyc-form/index.tsx");
           });
           r("funds", "./pages/user-dashboard/funds/funds.tsx");
+          r("referrals", "./pages/user-dashboard/referrals/index.tsx", () => {
+            r(
+              "payout-min",
+              "./pages/user-dashboard/referrals/payout-min/index.tsx"
+            );
+          });
+          r(
+            "referrals/payout",
+            "./pages/user-dashboard/referrals/payout/index.tsx"
+          );
+          r(
+            "referrals/earnings",
+            "./pages/user-dashboard/referrals/earnings-history/index.tsx"
+          );
+          r(
+            "referrals/payouts",
+            "./pages/user-dashboard/referrals/payout-history/index.tsx"
+          );
         });
+
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
         r("donor", "./pages/informational/donor-info/index.ts");
@@ -151,6 +170,7 @@ const rmx = remix({
         r("privacy-policy", "./pages/legal/privacy-policy.tsx");
         r("terms-of-use-npo", "./pages/legal/terms-nonprofits.tsx");
         r("terms-of-use", "./pages/legal/terms-donors.tsx");
+        r("terms-of-use-referrals","./pages/legal/terms-referrals.tsx")
         // no robots
         r("banking-applications", "./pages/banking-applications/index.ts");
         r(

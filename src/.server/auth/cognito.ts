@@ -1,5 +1,5 @@
 import { Buffer } from "node:buffer";
-import { generateReferralId } from "helpers/nanoid";
+import { referral_id } from "helpers/referral";
 import type { AuthError, UserV2 } from "types/auth";
 import { env } from "../env";
 import { type Stored, commitSession, getSession } from "./session";
@@ -178,7 +178,7 @@ class Cognito extends Storage {
       "custom:user-type": string;
     }
   ) {
-    const referral_id = generateReferralId();
+    const ref_id = referral_id();
     return fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("SignUp"),
@@ -189,9 +189,9 @@ class Cognito extends Storage {
           { Name: "family_name", Value: attributes.lastName },
           { Name: "given_name", Value: attributes.firstName },
           { Name: "email", Value: username },
-          { Name: "custom:referral_id", Value: referral_id },
+          { Name: "custom:referral_id", Value: ref_id },
           // filterable attribute ( standard and not used )
-          { Name: "preferred_username", Value: referral_id },
+          { Name: "preferred_username", Value: ref_id },
         ],
       }),
     }).then(this.deliveryDetails);

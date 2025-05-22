@@ -18,12 +18,14 @@ type Props = {
   /** All errors should be handled inside `onSubmit` */
   onSubmit: OnSubmit;
   isLoading: boolean;
+  verified?: boolean;
 };
 
-export default function BankDetails({
+export function BankDetails({
   FormButtons,
   onSubmit,
   isLoading,
+  verified,
 }: Props) {
   const currencies = useCurrencies();
   const [isSubmitting, setSubmitting] = useState(false);
@@ -74,6 +76,7 @@ export default function BankDetails({
       <Separator classes="before:bg-gray-l3 after:bg-gray-l3 dark:before:bg-gray-d1 dark:after:bg-gray-d1" />
 
       <RecipientDetails
+        verified={verified}
         amount={amnt}
         currency={currency.code}
         disabled={isSubmitting || isLoading}

@@ -5,6 +5,7 @@ import type {
 } from "types/donations";
 
 import { tables } from "@better-giving/types/list";
+import type { Earning, EarningsPage } from "types/referrals";
 import { QueryCommand, apes } from "../aws/db";
 import { env as nv } from "../env";
 import { askerIsDonor, toItems, toSorted } from "./helpers";
@@ -95,5 +96,48 @@ export const getDonations = async (
   return {
     Items: toSorted(items, "desc", "date").slice(start, end),
     nextPage: end === numItems ? undefined : page + 1,
+  };
+};
+
+export const getEarnings = async (
+  referrer: string,
+  nextKey: string | null,
+  limit = 10
+): Promise<EarningsPage> => {
+  const command = new QueryCommand({
+    TableName: tables.donations,
+    IndexName: "Referrer-FinalizedDate_Index",
+    KeyConditionExpression: "#referrer = :referrer",
+    ExpressionAttributeNames: {
+      "#referrer": "referrer",
+    },
+    ExpressionAttributeValues: {
+      ":referrer": referrer,
+    },
+    Limit: limit,
+    ScanIndexForward: false,
+    ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
+  });
+
+  const result = await apes.send(command);
+  const items = (result.Items || []) as DBRecord[];
+  const nextPageKey = result.LastEvaluatedKey
+    ? JSON.stringify(result.LastEvaluatedKey)
+    : undefined;
+
+  return {
+    items: items.map<Earning>((x) => ({
+      amount:
+        (x.referrer_commission?.from_fee ?? 0) +
+        (x.referrer_commission?.from_tip ?? 0),
+      date: x.transactionDate,
+      donation: {
+        id: x.transactionId,
+        to_id: x.endowmentId.toString(),
+        to_name: x.charityName,
+      },
+      status: x.referrer_commission?.transfer_id ? "paid" : "pending",
+    })),
+    nextKey: nextPageKey,
   };
 };

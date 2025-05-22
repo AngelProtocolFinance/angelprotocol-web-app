@@ -12,8 +12,8 @@ export default function ExpectedFunds(props: Props) {
   return (
     <div className="">
       <Label htmlFor="wise__amount" required className="mb-2">
-        What is the amount of donations (in USD) you expect to receive monthly
-        on our platform?
+        What is the amount (in USD) you expect to receive monthly on our
+        platform?
       </Label>
       <input
         id="wise__amount"

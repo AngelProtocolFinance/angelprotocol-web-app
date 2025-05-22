@@ -1,7 +1,7 @@
 import { LoaderCircle } from "lucide-react";
 import type { PropsWithChildren } from "react";
 
-export default function LoadText({
+export function LoadText({
   text = "Submitting...",
   isLoading,
   children,

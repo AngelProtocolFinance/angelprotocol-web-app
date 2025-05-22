@@ -42,6 +42,7 @@ function toData<T extends Reg>({
   env,
   claim,
   status,
+  referrer,
   ...rest
 }: T): { init: InitStep } & Omit<T, keyof InitStep> {
   return {
@@ -54,6 +55,7 @@ function toData<T extends Reg>({
       env,
       claim,
       status,
+      referrer,
     },
     ...rest,
   };
