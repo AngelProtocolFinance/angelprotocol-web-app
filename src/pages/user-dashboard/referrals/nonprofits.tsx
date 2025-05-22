@@ -10,6 +10,27 @@ interface Props {
 }
 
 export function Nonprofits({ classes = "", npos }: Props) {
+  const rows = npos.map((npo) => {
+    const now = new Date();
+    const expiry = new Date(npo.up_until);
+
+    return (
+      <tr key={npo.id}>
+        <td className="text-sm text-gray-d4">
+          <Link
+            to={`${appRoutes.marketplace}/${npo.id}`}
+            className="text-blue hover:text-blue-d1"
+          >
+            {npo.name}
+          </Link>
+        </td>
+        <td className="text-sm text-gray-d4">${humanize(npo.ltd, 3)}</td>
+        <td className={`text-sm ${now > expiry ? "text-red" : "text-green"}`}>
+          {now > expiry ? "Ended" : `ends in ${format(expiry, "PP")}`}
+        </td>
+      </tr>
+    );
+  });
   return (
     <div className={classes}>
       <h2 className="text-2xl mb-4">Onboarded Nonprofits</h2>
@@ -23,33 +44,15 @@ export function Nonprofits({ classes = "", npos }: Props) {
             </tr>
           </thead>
           <tbody>
-            {npos.map((npo) => {
-              const now = new Date();
-              const expiry = new Date(npo.up_until);
-
-              return (
-                <tr key={npo.id}>
-                  <td className="text-sm text-gray-d4">
-                    <Link
-                      to={`${appRoutes.marketplace}/${npo.id}`}
-                      className="text-blue hover:text-blue-d1"
-                    >
-                      {npo.name}
-                    </Link>
-                  </td>
-                  <td className="text-sm text-gray-d4">
-                    ${humanize(npo.ltd, 3)}
-                  </td>
-                  <td
-                    className={`text-sm ${
-                      now > expiry ? "text-red" : "text-green"
-                    }`}
-                  >
-                    {now > expiry ? "Ended" : `ends in ${format(expiry, "PP")}`}
-                  </td>
-                </tr>
-              );
-            })}
+            {rows.length > 0 ? (
+              rows
+            ) : (
+              <tr>
+                <td colSpan={3} className="text-center text-gray-d4">
+                  No nonprofits onboarded yet.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
