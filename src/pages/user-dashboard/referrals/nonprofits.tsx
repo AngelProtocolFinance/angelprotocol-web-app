@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
@@ -34,28 +35,22 @@ export function Nonprofits({ classes = "", npos }: Props) {
   return (
     <div className={classes}>
       <h2 className="text-2xl mb-4">Onboarded Nonprofits</h2>
-      <div className="overflow-x-auto bg-white rounded-lg">
-        <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l3 divide-y divide-gray-l3">
-          <thead>
-            <tr>
-              <th className="font-medium text-sm text-gray">Name</th>
-              <th className="font-medium text-sm text-gray">Earnings</th>
-              <th className="font-medium text-sm text-gray">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length > 0 ? (
-              rows
-            ) : (
+      {rows.length > 0 ? (
+        <div className="overflow-x-auto bg-white rounded-lg">
+          <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l3 divide-y divide-gray-l3">
+            <thead>
               <tr>
-                <td colSpan={3} className="text-center text-gray-d4">
-                  No nonprofits onboarded yet.
-                </td>
+                <th className="font-medium text-sm text-gray">Name</th>
+                <th className="font-medium text-sm text-gray">Earnings</th>
+                <th className="font-medium text-sm text-gray">Status</th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>{rows}</tbody>
+          </table>
+        </div>
+      ) : (
+        <Info>No nonprofits onboarded yet</Info>
+      )}
     </div>
   );
 }
