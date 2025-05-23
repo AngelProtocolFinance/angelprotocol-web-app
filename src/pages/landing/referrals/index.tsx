@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
+import { Feature } from "./feature";
 import { Top } from "./top";
 
 export default function Referrals() {
@@ -38,16 +39,9 @@ export default function Referrals() {
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
         <Top classes="-mt-24" />
       </div>
-
-      <header>
-        <p>Earn while supporting nonprofits</p>
-        <h1>Join the Better Giving Referral Program</h1>
-        <p>
-          Empower nonprofits and earn simply by sharing Better Giving. Make an
-          impact while building a community of changemakers.
-        </p>
-        <a href="#signup">Become an Affiliate</a>
-      </header>
+      <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
+        <Feature className="xl:container xl:mx-auto px-10" />
+      </div>
 
       <section>
         <h2>Why Share Better Giving?</h2>
