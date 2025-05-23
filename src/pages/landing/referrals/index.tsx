@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { Feature } from "./feature";
+import { Feature2 } from "./feature-2";
 import { Top } from "./top";
 
 export default function Referrals() {
@@ -42,36 +43,9 @@ export default function Referrals() {
       <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
         <Feature className="xl:container xl:mx-auto px-10" />
       </div>
-
-      <section>
-        <h2>Why Share Better Giving?</h2>
-
-        <article>
-          <h3>Make an Impact</h3>
-          <p>
-            Every nonprofit you refer can access free, powerful fundraising
-            tools.
-          </p>
-        </article>
-
-        <article>
-          <h3>Earn Effortlessly</h3>
-          <p>
-            Share your unique link and earn whenever your nonprofits receive
-            donations.
-          </p>
-        </article>
-
-        <article>
-          <h3>Be Part of a Movement</h3>
-          <p>
-            Join a growing community of supporters, fundraisers, and
-            changemakers.
-          </p>
-        </article>
-
-        <a href="#start">Start Sharing Today</a>
-      </section>
+      <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
+        <Feature2 className="xl:container xl:mx-auto px-10" />
+      </div>
 
       <section>
         <h2>How It Works - Simple Steps</h2>
