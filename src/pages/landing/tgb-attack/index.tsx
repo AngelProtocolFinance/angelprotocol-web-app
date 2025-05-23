@@ -6,14 +6,9 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
-// import { DonationFormInfo } from "./donation-form-info";
 import { Feature } from "./feature";
 import { ProbSol } from "./prob-sol";
 import { Top } from "./top";
-// import { Footer } from "./footer";
-// import Testimonials from "./testimonials";
-// import { Top } from "./top";
-
 export const meta: MetaFunction = () =>
   metas({
     title: "The Smart Move to Make for Accepting Crypto Donations",
