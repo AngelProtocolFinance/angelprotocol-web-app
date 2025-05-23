@@ -34,7 +34,7 @@ export const items: TListItem[] = [
 
 export function Feature2({ className = "" }) {
   return (
-    <section className={`${className} py-10 grid content-start`}>
+    <section className={`${className} py-10 xl:py-30 grid content-start`}>
       <h2 className="text-3xl md:text-4xl text-balance mb-6 text-center col-span-full">
         How It Works - Simple Steps
       </h2>

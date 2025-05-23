@@ -2,11 +2,18 @@ import { Link } from "@remix-run/react";
 import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
+import { metas } from "helpers/seo";
 import { Bottom } from "./bottom";
 import { Faq } from "./faq";
 import { Feature } from "./feature";
 import { Feature2 } from "./feature-2";
 import { Top } from "./top";
+
+export const meta = metas({
+  title: "Referral Program | Better Giving",
+  description:
+    "Support nonprofits and earn rewards by sharing Better Giving. Join our referral program to make an impact, earn effortlessly, and grow a community of changemakers. Sign up for your unique link and start sharing today!",
+});
 
 export default function Referrals() {
   return (
@@ -43,18 +50,15 @@ export default function Referrals() {
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
         <Top classes="-mt-24" />
       </div>
-      <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
+      <div className="bg-gradient-to-bl from-peach/50 via-transparent via-50% to-lilac/50">
         <Feature className="xl:container xl:mx-auto px-10" />
       </div>
       <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-transparent">
         <Feature2 className="xl:container xl:mx-auto px-10" />
       </div>
+      <Faq classes="xl:container xl:mx-auto px-10 mt-10" />
 
-      <Faq classes="xl:container xl:mx-auto px-10" />
-
-      <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
-        <Bottom />
-      </div>
+      <Bottom classes="xl:container xl:mx-auto px-10 my-10 xl:my-30" />
       <Footer classes="xl:container xl:mx-auto px-10" />
     </div>
   );
