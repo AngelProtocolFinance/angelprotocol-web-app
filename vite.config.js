@@ -224,6 +224,7 @@ const rmx = remix({
           r(":verdict", "./pages/application/review-route.tsx");
           r("success", "./pages/application/success-prompt.tsx");
         });
+        r("donation-calculator", "./pages/donation-calculator/index.tsx");
       });
       r("donate-widget", "./pages/donate-widget/widget-context.tsx", () => {
         r(":id", "./pages/donate-widget/index.ts");
