@@ -84,7 +84,7 @@ export default function PayoutMethod() {
       >
         <NavLink
           to={"../banking"}
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back
         </NavLink>
