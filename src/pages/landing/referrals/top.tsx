@@ -15,15 +15,17 @@ export function Top({ classes = "" }) {
         Join the {APP_NAME}
         <br /> Referral Program
       </h1>
-      <div className="relative">
-        <p className="px-6 max-w-5xl mx-auto text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
-          Empower nonprofits and earn simply by sharing {APP_NAME}. Make an
-          impact while building a community of changemakers.
-        </p>
-      </div>
-      <div className="flex items-baseline justify-self-center">
-        <div className="relative bottom-5">
-          <Image src={laira.yellow} width={80} className="z-10  rotate-z-360" />
+      <p className="px-6 max-w-5xl mx-auto text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
+        Empower nonprofits and earn, simply by sharing {APP_NAME}. Make an
+        impact while building a community of changemakers.
+      </p>
+      <div className="flex items-baseline justify-self-center mt-4">
+        <div className="relative bottom-6">
+          <Image
+            src={laira.yellow}
+            width={100}
+            className="z-10  rotate-z-360"
+          />
           {/** shadow */}
           <svg className="absolute -bottom-3 z-0" width="100%" height="20">
             <defs>
@@ -45,12 +47,12 @@ export function Top({ classes = "" }) {
         <div className="relative">
           <Image
             src={laira.shakeHandsX2}
-            width={190}
+            width={250}
             className="z-10 rotate-z-360"
           />
           {/** shadow */}
           <svg
-            className="absolute bottom-2 left-0 -z-10"
+            className="absolute bottom-3 left-0 -z-10"
             width="100%"
             height="20"
           >
@@ -62,10 +64,10 @@ export function Top({ classes = "" }) {
             <ellipse
               cx="50%"
               cy="50%"
-              rx="80"
+              rx="110"
               ry="12"
               filter="url(#blur)"
-              className="fill-gray-l3/80"
+              className="fill-gray-l3/70"
             />
           </svg>
         </div>
