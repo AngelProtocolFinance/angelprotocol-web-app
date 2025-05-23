@@ -12,7 +12,8 @@ export function Top({ classes = "" }) {
         Earn while supporting nonprofits
       </p>
       <h1 className="mx-auto text-3xl/tight md:text-4xl/tight lg:text-5xl/tight text-center text-pretty mb-6 px-6 ">
-        Join the {APP_NAME} Referral Program
+        Join the {APP_NAME}
+        <br /> Referral Program
       </h1>
       <div className="relative">
         <p className="px-6 max-w-5xl mx-auto text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
@@ -22,11 +23,7 @@ export function Top({ classes = "" }) {
       </div>
       <div className="flex items-baseline justify-self-center">
         <div className="relative bottom-5">
-          <Image
-            src={laira.yellow}
-            width={80}
-            className="z-10 max-sm:w-24 rotate-z-360"
-          />
+          <Image src={laira.yellow} width={80} className="z-10  rotate-z-360" />
           {/** shadow */}
           <svg className="absolute -bottom-3 z-0" width="100%" height="20">
             <defs>
@@ -49,7 +46,7 @@ export function Top({ classes = "" }) {
           <Image
             src={laira.shakeHandsX2}
             width={190}
-            className="z-10 max-sm:w-24 rotate-z-360"
+            className="z-10 rotate-z-360"
           />
           {/** shadow */}
           <svg
