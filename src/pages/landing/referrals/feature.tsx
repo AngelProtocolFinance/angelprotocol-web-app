@@ -37,10 +37,8 @@ const items: IListItem[] = [
 
 export function Feature({ className = "" }) {
   return (
-    <section
-      className={`${className} pt-10 pb-20 lg:pb-0 lg:grid-cols-2 grid content-start`}
-    >
-      <h2 className="text-3xl md:text-3.5xl text-balance mb-6 text-center col-span-full">
+    <section className={`${className} py-10 grid content-start`}>
+      <h2 className="text-3xl md:text-4xl text-balance mb-6 text-center col-span-full">
         Why Share Better Giving?
       </h2>
 
