@@ -21,18 +21,22 @@ const rmx = remix({
       r("donate-fund/:fundId", "./pages/donate-fund/redirect.ts");
       r("fundraisers/:fundId/donate", "./pages/donate-fund/index.tsx");
       r("donate-thanks", "./pages/donate-thanks.tsx");
-      r("see-what-youre-losing", "./pages/landing-d/index.tsx");
-      r("simplify-fundraising-maximize-impact", "./pages/landing-a/index.tsx", {
-        id: "page-a",
-      });
+      r("see-what-youre-losing", "./pages/landing/don-calculator/index.tsx");
+      r(
+        "simplify-fundraising-maximize-impact",
+        "./pages/landing/us-nonprofits/index.tsx",
+        {
+          id: "page-a",
+        }
+      );
       r(
         "simplify-fundraising-maximize-impacts",
-        "./pages/landing-a/index.tsx",
+        "./pages/landing/us-nonprofits/index.tsx",
         { id: "page-a2" }
       );
       r(
         "the-smart-move-to-make-for-accepting-crypto-donations",
-        "./pages/landing-b/index.tsx"
+        "./pages/landing/tgb-attack/index.tsx"
       );
       r("form-builder", "./pages/widget/form-builder-layout.tsx", () => {
         r("", "./pages/widget/index.ts", {
@@ -170,7 +174,7 @@ const rmx = remix({
         r("privacy-policy", "./pages/legal/privacy-policy.tsx");
         r("terms-of-use-npo", "./pages/legal/terms-nonprofits.tsx");
         r("terms-of-use", "./pages/legal/terms-donors.tsx");
-        r("terms-of-use-referrals","./pages/legal/terms-referrals.tsx")
+        r("terms-of-use-referrals", "./pages/legal/terms-referrals.tsx");
         // no robots
         r("banking-applications", "./pages/banking-applications/index.ts");
         r(
@@ -220,7 +224,6 @@ const rmx = remix({
           r(":verdict", "./pages/application/review-route.tsx");
           r("success", "./pages/application/success-prompt.tsx");
         });
-        r("donation-calculator", "./pages/donation-calculator/index.tsx");
       });
       r("donate-widget", "./pages/donate-widget/widget-context.tsx", () => {
         r(":id", "./pages/donate-widget/index.ts");
