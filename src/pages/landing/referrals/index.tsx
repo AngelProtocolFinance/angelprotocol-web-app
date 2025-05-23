@@ -58,7 +58,7 @@ export default function Referrals() {
       </div>
       <Faq classes="xl:container xl:mx-auto px-10 mt-10" />
 
-      <Bottom classes="xl:container xl:mx-auto px-10 my-10 xl:my-30" />
+      <Bottom classes="xl:container xl:mx-auto px-10 mx-4 my-10 xl:my-30" />
       <Footer classes="xl:container xl:mx-auto px-10" />
     </div>
   );
