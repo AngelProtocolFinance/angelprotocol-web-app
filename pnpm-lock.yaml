@@ -29,6 +29,9 @@ importers:
       '@better-giving/balance-tx':
         specifier: 1.1.6
         version: 1.1.6(@better-giving/types@1.1.6)
+      '@better-giving/banking-applications':
+        specifier: 1.0.1
+        version: 1.0.1
       '@better-giving/constants':
         specifier: 1.1.2
         version: 1.1.2
@@ -639,6 +642,9 @@ packages:
     resolution: {integrity: sha512-HKTjbAIsAsCsabYYqh2MM/Eh4mB72rYhc7fzl1unlxnRHY5AdY9WPuZ6kexzfFwB15A4/TDGIY0r/dRMr/MHcw==}
     peerDependencies:
       '@better-giving/types': 1.1.6
+
+  '@better-giving/banking-applications@1.0.1':
+    resolution: {integrity: sha512-4QCFr6XCqp5wze7BZQ104mjDjnQauy6ZdD4NDsWl+NfmbriZZ0Pex2vMHPq6379L/U0BLfHYUOkH9c/y1VQGWg==}
 
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
@@ -5939,6 +5945,8 @@ snapshots:
   '@better-giving/balance@1.1.6(@better-giving/types@1.1.6)':
     dependencies:
       '@better-giving/types': 1.1.6
+
+  '@better-giving/banking-applications@1.0.1': {}
 
   '@better-giving/constants@1.1.2': {}
 

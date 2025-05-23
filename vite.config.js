@@ -105,23 +105,23 @@ const rmx = remix({
             r("move-funds", "./pages/admin/dashboard/move-fund-form.tsx");
           }
         );
-        r("referrals", "./pages/admin/referrals/referrals/index.tsx", () => {
+        r("referrals", "./pages/admin/referrals/index.tsx", () => {
           r(
             "payout-min",
-            "./pages/admin/referrals/referrals/payout-min/index.tsx"
+            "./pages/admin/referrals/payout-min/index.tsx"
           );
         });
         r(
           "referrals/payout",
-          "./pages/admin/referrals/referrals/payout/index.tsx"
+          "./pages/admin/referrals/payout/index.tsx"
         );
         r(
           "referrals/earnings",
-          "./pages/admin/referrals/referrals/earnings-history/index.tsx"
+          "./pages/admin/referrals/earnings-history/index.tsx"
         );
         r(
           "referrals/payouts",
-          "./pages/admin/referrals/referrals/payout-history/index.tsx"
+          "./pages/admin/referrals/payout-history/index.tsx"
         );
       });
       r("", "./layout/app/layout.tsx", () => {

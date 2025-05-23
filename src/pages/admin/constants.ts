@@ -122,7 +122,7 @@ const linkGroup3: LinkGroup = {
     },
     {
       title: "Referrals",
-      to: sidebarRoutes.integrations,
+      to: sidebarRoutes.referrals,
       icon: {
         fn: MegaphoneIcon,
         size: 22,
