@@ -4,11 +4,13 @@ import { ArrowRight } from "lucide-react";
 
 export function Bottom({ classes = "" }) {
   return (
-    <section className={`${classes} grid`}>
-      <h2 className="text-2xl/tight md:text-3xl/tight font-bold text-center mb-4">
+    <section
+      className={`${classes} grid bg-gradient-to-tl from-white to-blue-d1 rounded-xl md:py-20 md:px-6 p-6`}
+    >
+      <h2 className="text-2xl/tight md:text-3xl/tight font-bold text-center mb-4 text-white">
         Join Us - Start Making an Impact Today!
       </h2>
-      <p className="px-6 max-w-5xl mx-auto text-gray-d1 md:text-xl text-center text-pretty mb-6">
+      <p className="px-6 max-w-5xl mx-auto text-white md:text-xl text-center text-pretty mb-6">
         Whether you're a consultant, a fundraiser, or simply someone who loves
         making a difference, Better Giving lets you turn your connections into a
         force for good.
