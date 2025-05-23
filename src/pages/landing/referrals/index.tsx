@@ -1,6 +1,9 @@
 import { Link } from "@remix-run/react";
+import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
+import { Bottom } from "./bottom";
+import { Faq } from "./faq";
 import { Feature } from "./feature";
 import { Feature2 } from "./feature-2";
 import { Top } from "./top";
@@ -47,68 +50,12 @@ export default function Referrals() {
         <Feature2 className="xl:container xl:mx-auto px-10" />
       </div>
 
-      <section>
-        <h2>How It Works - Simple Steps</h2>
+      <Faq classes="xl:container xl:mx-auto px-10" />
 
-        <ol>
-          <li>
-            <h3>Get Your Unique Link</h3>
-            <p>
-              Sign up for a free Better Giving account and access your referral
-              link.
-            </p>
-          </li>
-          <li>
-            <h3>Share with Your Network</h3>
-            <p>
-              Send your link to nonprofits, consultants, or anyone who could
-              benefit.
-            </p>
-          </li>
-          <li>
-            <h3>Earn Rewards</h3>
-            <p>
-              Whenever your referred nonprofits receive donations, you earn.
-            </p>
-          </li>
-        </ol>
-
-        <a href="#getlink">Get Your Link Now</a>
-      </section>
-
-      <section>
-        <h2>Frequently Asked Questions:</h2>
-
-        <dl>
-          <dt>Who can join?</dt>
-          <dd>
-            Anyone with a Better Giving account - donors, consultants,
-            influencers, nonprofits.
-          </dd>
-
-          <dt>How do I earn rewards?</dt>
-          <dd>
-            Share your link, and you earn whenever a referred nonprofit receives
-            donations.
-          </dd>
-
-          <dt>When will I get paid?</dt>
-          <dd>We process payouts monthly, directly to your account.</dd>
-
-          <dt>What if a nonprofit forgets to use my link?</dt>
-          <dd>They can manually enter your referral code during signup.</dd>
-        </dl>
-      </section>
-
-      <section>
-        <h2>Join Us - Start Making an Impact Today!</h2>
-        <p>
-          Whether you're a consultant, a fundraiser, or simply someone who loves
-          making a difference, Better Giving lets you turn your connections into
-          a force for good.
-        </p>
-        <a href="#referral">Get Your Referral Link Now</a>
-      </section>
+      <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
+        <Bottom />
+      </div>
+      <Footer classes="xl:container xl:mx-auto px-10" />
     </div>
   );
 }
