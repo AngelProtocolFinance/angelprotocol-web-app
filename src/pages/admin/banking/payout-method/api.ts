@@ -1,3 +1,5 @@
+import type { IItem } from "@better-giving/banking-applications";
+import type { V2RecipientAccount } from "@better-giving/wise";
 import {
   type ActionFunction,
   type LoaderFunction,
@@ -5,22 +7,26 @@ import {
 } from "@vercel/remix";
 import { bankUpdate } from "api/action/bank-update";
 import { ap, ver } from "api/api";
-import { getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
+import { npo_bank } from ".server/banking-applications";
+import { wise } from ".server/sdks";
 
-export const payoutMethodLoader: LoaderFunction = async ({
-  params,
-  request,
-}) => {
+export interface LoaderData extends V2RecipientAccount, IItem {}
+
+export const loader: LoaderFunction = async ({ params, request }) => {
   const id = v.parse(plusInt, params.id);
   const bankId = v.parse(plusInt, params.bankId);
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  return getPayoutMethod(bankId, id, user.idToken);
+  const x = await npo_bank(id, bankId.toString());
+  if (!x) return { status: 404 };
+
+  const y = await wise.v2Account(bankId);
+  return { ...x, ...y } satisfies LoaderData;
 };
 
 export const deleteAction: ActionFunction = async ({ params, request }) => {

@@ -1,10 +1,10 @@
 import {
   type IItem,
-  type ItemUpdate,
   type Record as R,
   priority_nums,
   to_item,
 } from "@better-giving/banking-applications";
+import type { Update } from "@better-giving/banking-applications/schema";
 import { tables } from "@better-giving/types/list";
 import { env } from "../env";
 import { lex_increase } from "./helpers";
@@ -45,12 +45,8 @@ export const npo_banks = async (npo_id: number, limit = 10) => {
   });
 };
 
-export const review_bank = async (
-  prev: IItem,
-  owner: number,
-  update: ItemUpdate
-) => {
-  const [top] = await npo_banks(owner, 1);
+export const review_bank = async (prev: IItem, update: Update) => {
+  const [top] = await npo_banks(prev.endowmentID, 1);
   const { topPriorityNum: tpn = 0 } = top || {};
 
   const { wiseRecipientID: id, dateCreated: dc } = prev;
@@ -91,4 +87,14 @@ export const review_bank = async (
   return ap.send(command);
 };
 
-const npo_bank = async (npo_id: number, id: string) => {};
+export const npo_bank = async (
+  npo_id: number,
+  id: string
+): Promise<IItem | undefined> => {
+  const [top] = await npo_banks(npo_id, 2);
+  const { topPriorityNum: tpn, heirPriorityNum: hpn } = top || {};
+  const x = await bank(id);
+  if (!x) return;
+
+  return to_item(x, { heir: hpn, top: tpn });
+};
