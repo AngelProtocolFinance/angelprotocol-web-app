@@ -1,30 +1,22 @@
 import type { LoaderFunction } from "@vercel/remix";
-import { ap, toSearch, ver } from "api/api";
 import { metas } from "helpers/seo";
-import type { UserV2 } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
+import { bank_applications } from ".server/banking-applications";
 
 export { default } from "./banking-applications";
 export { ErrorBoundary } from "components/error";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (user) return getApplications(new URL(request.url), user);
-  return toAuth(request, headers);
-};
-export const meta = () => metas({ title: "Banking Applications" });
-async function getApplications(source: URL, user: UserV2) {
+  if (!user) return toAuth(request, headers);
+  if (!user.groups.includes("ap-admin")) return { status: 403 };
+
+  const source = new URL(request.url);
+
   const { status, nextPageKey } = Object.fromEntries(
     source.searchParams.entries()
   );
-  return ap
-    .get(`${ver(1)}/banking-applications`, {
-      headers: { authorization: user.idToken },
-      searchParams: toSearch({
-        requestor: "bg-admin",
-        status: status,
-        nextPageKey,
-      }),
-    })
-    .json();
-}
+  const page = await bank_applications(status as any, nextPageKey as any);
+  return page;
+};
+export const meta = () => metas({ title: "Banking Applications" });
