@@ -2,10 +2,9 @@ import type { DbRecord } from "@better-giving/registration/db";
 import { isIrs501c3 } from "@better-giving/registration/models";
 import { type BankWithDetails, isDone } from "@better-giving/registration/step";
 import type { Update } from "@better-giving/registration/update";
-import { Wise } from "@better-giving/wise";
+import { wise } from "../sdks";
 import { getReg } from "./get-reg.js";
 import { getUsEndow, putItem } from "./helpers";
-import { wiseApiToken } from ".server/env";
 
 export async function updateRegistration(
   regId: string,
@@ -161,10 +160,6 @@ export async function updateRegistration(
       : !!prev.docs.fsa_signed_doc_url && !!prev.docs.fsa_signing_url)
   ) {
     const { type, ...val } = update;
-    const wise = new Wise({
-      apiToken: wiseApiToken,
-      sandbox: prev.env === "staging",
-    });
     const account = await wise.v2Account(val.wise_recipient_id);
 
     const banking: BankWithDetails = {

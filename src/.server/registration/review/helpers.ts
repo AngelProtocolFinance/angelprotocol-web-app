@@ -13,14 +13,14 @@ import {
 import type { Step6 } from "@better-giving/registration/step";
 import { type Environment, tables } from "@better-giving/types/list";
 import type { EndowAdmin } from "@better-giving/user/db";
-import { Wise } from "@better-giving/wise";
 import {
   type TransactWriteCommandInput,
   UpdateCommand,
   type UpdateCommandInput,
   ap,
 } from "../../aws/db";
-import { env, wiseApiToken } from "../../env";
+import { env } from "../../env";
+import { wise } from "../../sdks";
 
 export function endowAdmin(email: string, endowId: number) {
   const _mail = email.toLowerCase();
@@ -38,10 +38,6 @@ export function endowAdmin(email: string, endowId: number) {
   };
 }
 export async function bankingRecord(reg: ApplicationDbRecord, endowId: number) {
-  const wise = new Wise({
-    apiToken: wiseApiToken,
-    sandbox: reg.env === "staging",
-  });
   const account = await wise.v2Account(reg.banking.wise_recipient_id);
 
   const DEFAULT_PRIORITY_NUM = 3;

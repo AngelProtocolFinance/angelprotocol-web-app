@@ -1,4 +1,4 @@
-import { type V2RecipientAccount, Wise } from "@better-giving/wise";
+import type { V2RecipientAccount } from "@better-giving/wise";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import type { UserV2 } from "types/auth";
@@ -6,9 +6,9 @@ import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { getEarnings } from ".server/donations";
-import { env, wiseApiToken } from ".server/env";
 import { getNpo } from ".server/npo";
 import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
+import { wise } from ".server/sdks";
 
 export interface LoaderData {
   user: UserV2;
@@ -22,7 +22,6 @@ export interface LoaderData {
 }
 
 function payout(id: number) {
-  const wise = new Wise({ apiToken: wiseApiToken, sandbox: env === "staging" });
   return wise.v2Account(id);
 }
 
