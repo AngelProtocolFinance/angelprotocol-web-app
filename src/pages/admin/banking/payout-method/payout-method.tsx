@@ -54,7 +54,10 @@ export default function PayoutMethod() {
 
       <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l3 rounded-sm mt-2">
         <Row label="Currency">{bank.currency}</Row>
+        <Row label="Country">{bank.country}</Row>
         <Row label="Recipient name">{bank.name.fullName}</Row>
+        <Row label="Account type">{bank.type}</Row>
+        <Row label="Legal entity type">{bank.legalEntityType}</Row>
         {bank.displayFields.map(({ label, value, key }) => (
           <Row key={key} label={label}>
             {value}

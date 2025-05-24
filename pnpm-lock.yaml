@@ -78,8 +78,8 @@ importers:
         specifier: 1.1.7
         version: 1.1.7(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/wise':
-        specifier: 1.1.5
-        version: 1.1.5
+        specifier: 1.1.6
+        version: 1.1.6
       '@conform-to/dom':
         specifier: 1.2.2
         version: 1.2.2
@@ -735,8 +735,8 @@ packages:
       '@better-giving/types': 1.1.6
       valibot: 0.42.0
 
-  '@better-giving/wise@1.1.5':
-    resolution: {integrity: sha512-CZp3MWxbV1y/ws6yzqpkMTeIHk7QAyRJhSDJboJgBOSfkPEN++y66EV+ka/LBp+Cm6iGtbfMwHkyWo3ccPQrzA==}
+  '@better-giving/wise@1.1.6':
+    resolution: {integrity: sha512-PiCUpOo6nfeEMIxaMOjhiw2UpIGikfP8tOrIXI5uqy2ROTndrH8bmdZZTOwCZDrLHD1PS6ZOolTf1XqshEk/2Q==}
 
   '@biomejs/biome@1.9.4':
     resolution: {integrity: sha512-1rkd7G70+o9KkTn5KLmDYXihGoTaIGO9PIIN2ZB7UJxFrWw04CZHPYiMRjYsaDvVV7hP1dYNRLxSANLaBFGpog==}
@@ -6024,7 +6024,7 @@ snapshots:
       '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
 
-  '@better-giving/wise@1.1.5': {}
+  '@better-giving/wise@1.1.6': {}
 
   '@biomejs/biome@1.9.4':
     optionalDependencies:

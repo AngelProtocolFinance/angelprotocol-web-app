@@ -3,9 +3,9 @@ import ExtLink from "components/ext-link";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import type { BankingApplicationDetails } from "services/types";
+import type { LoaderData } from "./api";
 
-export function Loaded(props: BankingApplicationDetails) {
+export function Loaded(props: LoaderData) {
   const isApproved = props.status === "approved";
   const isRejected = props.status === "rejected";
   const prevVerdict = isApproved || isRejected;
