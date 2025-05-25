@@ -1,8 +1,9 @@
-import type { V2RecipientAccount } from "@better-giving/wise";
+import type { IItem } from "@better-giving/banking-applications";
 import { Link, Outlet } from "@remix-run/react";
+import { Info } from "components/status";
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { ArrowRightIcon, HistoryIcon, PencilIcon } from "lucide-react";
+import { ArrowRightIcon, HistoryIcon } from "lucide-react";
 import type { PendingEarnings } from "types/referrals";
 import { config } from "./config";
 import {
@@ -14,7 +15,7 @@ interface Props {
   classes?: string;
   earnings: IEarningsHistory;
   pendings: PendingEarnings;
-  payout?: V2RecipientAccount;
+  payout?: IItem;
   payout_ltd: number;
   payout_min?: number;
 }
@@ -71,39 +72,27 @@ export function Earnings({
                 <p className="font-semibold text-amber-d1">
                   ${humanize(payout_min, 3)}
                 </p>
-                <Link
-                  to={{ pathname: "payout-min", search: `?min=${payout_min}` }}
-                  replace
-                  preventScrollReset
-                  className="text-xs"
-                >
-                  <PencilIcon size={12} />
-                </Link>
               </div>
             </div>
           )}
           {payout ? (
             <div className="mt-4">
-              <p className="text-sm text-gray">Payout method</p>
-              <div className="flex gap-x-2 items-center">
-                <p className="text-sm text-gray-d4">
-                  {payout.longAccountSummary}
-                </p>
-                <Link
-                  to="payout"
-                  className="text-xs btn-blue px-3 py-1 rounded-md"
-                >
-                  Change
-                </Link>
-              </div>
+              <p className="text-sm text-gray">Default Payout Method</p>
+
+              <Link to="../banking" className="text-blue hover:text-blue-d1">
+                {payout.bankSummary}
+              </Link>
             </div>
           ) : (
-            <Link
-              to="payout"
-              className="mt-2 inline-block text-sm rounded-md px-4 py-2 btn-blue"
-            >
-              setup payout method
-            </Link>
+            <div className="flex items-center mt-4">
+              <Info>No default payout method</Info>
+              <Link
+                to="../banking"
+                className="text-sm text-blue hover:text-blue-d1"
+              >
+                Setup
+              </Link>
+            </div>
           )}
 
           <EarningsHistory {...earnings} classes="mt-6" />

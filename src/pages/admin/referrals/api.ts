@@ -1,28 +1,24 @@
-import type { V2RecipientAccount } from "@better-giving/wise";
+import { type IItem, priority_nums } from "@better-giving/banking-applications";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
-import type { UserV2 } from "types/auth";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { parse } from "valibot";
+import { config } from "./config";
 import { cognito, toAuth } from ".server/auth";
+import { npo_banks } from ".server/banking-applications";
 import { getEarnings } from ".server/donations";
 import { getNpo } from ".server/npo";
 import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
-import { wise } from ".server/sdks";
 
 export interface LoaderData {
-  user: UserV2;
+  id: string;
   referreds: Referred[];
   earnings: EarningsPage;
   pendings: PendingEarnings;
-  payout?: V2RecipientAccount;
+  payout?: IItem;
   payout_ltd: number;
   payout_min?: number;
   origin: string;
-}
-
-function payout(id: number) {
-  return wise.v2Account(id);
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -41,18 +37,23 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     pendingEarnings(endow.referral_id),
     referredBy(endow.referral_id),
     getEarnings(endow.referral_id, null, 4),
-    user.pay_id ? payout(+user.pay_id) : undefined,
+    npo_banks(endow.id, 1).then(([x]) => {
+      if (!x) return;
+      // no default payout method
+      if (x.thisPriorityNum < priority_nums.approved) return;
+      return x;
+    }),
     paidOutLtd(endow.referral_id),
   ]);
 
   return {
-    user,
+    id: endow.referral_id,
     origin: new URL(request.url).origin,
     referreds,
     earnings,
     pendings,
     payout: p,
-    payout_min: user.pay_min ? +user.pay_min : undefined,
+    payout_min: config.pay_min,
     payout_ltd: pltd,
   } satisfies LoaderData;
 };
