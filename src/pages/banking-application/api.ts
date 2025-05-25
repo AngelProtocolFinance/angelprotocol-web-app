@@ -5,7 +5,7 @@ import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
-import { bank, review_bank } from ".server/banking-applications";
+import { bank, update_bank } from ".server/banking-applications";
 
 import type { V2RecipientAccount } from "@better-giving/wise";
 import type { LoaderFunction } from "@vercel/remix";
@@ -42,6 +42,6 @@ export const action: ActionFunction = async ({ params, request }) => {
   const x = await bank(bank_id.toString()).then((x) => x && to_item(x));
   if (!x) return { status: 404, statusText: `Bank:${bank_id} not found` };
 
-  await review_bank(x, payload.value);
+  await update_bank(x, payload.value);
   return redirect("../success");
 };

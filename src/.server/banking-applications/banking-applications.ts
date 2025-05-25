@@ -14,6 +14,7 @@ import { tables } from "@better-giving/types/list";
 import { env } from "../env";
 import { lex_increase } from "./helpers";
 import {
+  DeleteCommand,
   GetCommand,
   PutCommand,
   QueryCommand,
@@ -117,7 +118,7 @@ export const bank_applications = async (
   };
 };
 
-export const review_bank = async (prev: IItem, update: Update) => {
+export const update_bank = async (prev: IItem, update: Update) => {
   const [top] = await npo_banks(prev.endowmentID, 1);
   const { topPriorityNum: tpn = 0 } = top || {};
 
@@ -146,6 +147,7 @@ export const review_bank = async (prev: IItem, update: Update) => {
     return ap.send(command);
   }
 
+  /// PRIORITIZE ///
   const new_sk4: R["gsi4SK"] = `${lex_increase(tpn || priority_nums.approved)}#${dc}`;
   const command = new UpdateCommand({
     TableName: tables["banking-applications"],
@@ -169,4 +171,12 @@ export const npo_bank = async (
   if (!x) return;
 
   return to_item(x, { heir: hpn, top: tpn });
+};
+
+export const delete_bank = async (id: string) => {
+  const cmd = new DeleteCommand({
+    TableName: tables["banking-applications"],
+    Key: { PK: id },
+  });
+  return ap.send(cmd);
 };
