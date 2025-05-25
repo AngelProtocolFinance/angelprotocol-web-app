@@ -6,13 +6,20 @@ import {
   to_item,
 } from "@better-giving/banking-applications";
 import type {
+  INewBank,
   Status,
   Update,
 } from "@better-giving/banking-applications/schema";
 import { tables } from "@better-giving/types/list";
 import { env } from "../env";
 import { lex_increase } from "./helpers";
-import { GetCommand, QueryCommand, UpdateCommand, ap } from ".server/aws/db";
+import {
+  GetCommand,
+  PutCommand,
+  QueryCommand,
+  UpdateCommand,
+  ap,
+} from ".server/aws/db";
 
 export const bank = async (id: string): Promise<R | undefined> => {
   const cmd = new GetCommand({
@@ -47,6 +54,38 @@ export const npo_banks = async (npo_id: number, limit = 10) => {
     const hpn = heir ? to_item(heir).thisPriorityNum : undefined;
     return to_item(item, { top: tpn, heir: hpn });
   });
+};
+
+export const new_bank = async (b: INewBank) => {
+  const dateCreated = new Date().toISOString();
+  const record: R = {
+    PK: b.wiseRecipientID,
+
+    gsi1PK: b.endowmentID,
+    gsi1SK: `${env}#under-review#${dateCreated}`,
+
+    gsi2PK: env,
+    gsi2SK: `under-review#${dateCreated}`,
+
+    gsi3PK: b.endowmentID,
+    gsi3SK: `${priority_nums.pending}#${dateCreated}`,
+
+    gsi4PK: `${b.endowmentID}#${env}`,
+    gsi4SK: `${priority_nums.pending}#${dateCreated}`,
+
+    bankSummary: b.bankSummary,
+    bankStatementFile: b.bankStatementFile,
+    wiseRecipientID: b.wiseRecipientID,
+    endowmentID: b.endowmentID,
+    rejectionReason: "",
+  };
+
+  const command = new PutCommand({
+    TableName: tables["banking-applications"],
+    Item: record,
+  });
+  const result = await ap.send(command);
+  return result;
 };
 
 export const bank_applications = async (

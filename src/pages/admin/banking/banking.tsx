@@ -7,7 +7,7 @@ import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import FormButtons from "./form-buttons";
 
-export { newBanking as action } from "./api";
+export { action } from "./api";
 export { ErrorBoundary } from "components/error";
 
 export default function Banking() {
