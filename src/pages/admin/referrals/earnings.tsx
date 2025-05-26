@@ -33,7 +33,7 @@ export function Earnings({
 
   return (
     <div className={classes}>
-      <h2 className="text-2xl mb-4 capitalize">My earnings</h2>
+      <h2 className="text-2xl mb-4 capitalize">Earnings</h2>
 
       <div className="bg-gray-l5 rounded-xl border border-gray-l4 overflow-hidden">
         <div className="p-6 @container">
