@@ -11,8 +11,8 @@ import { Explainer } from "components/referrals";
 export function ReferralsPage() {
   const navigate = useNavigate();
   const {
+    id,
     origin,
-    user,
     referreds,
     earnings,
     pendings,
@@ -22,12 +22,8 @@ export function ReferralsPage() {
   } = useCachedLoaderData() as LoaderData;
   return (
     <div className="">
-      <Explainer />
-      <ReferralId
-        classes="mb-8"
-        referral_id={user.referral_id}
-        origin={origin}
-      />
+      <Explainer classes="mb-4" />
+      <ReferralId classes="mb-8" referral_id={id} origin={origin} />
       <Earnings
         classes="mb-8"
         earnings={{

@@ -1,28 +1,28 @@
+import type { IPage } from "@better-giving/banking-applications";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Info } from "components/status";
 import { useEffect, useState } from "react";
-import type { BankingApplicationsPage } from "types/applications";
 import Filter from "./filter";
 import Table from "./table";
 
 export default function BankingApplications() {
   const [params, setParams] = useSearchParams();
-  const firstPage = useLoaderData() as BankingApplicationsPage;
-  const { load, data, state } = useFetcher<BankingApplicationsPage>({
+  const page1 = useLoaderData() as IPage;
+  const { load, data, state } = useFetcher<IPage>({
     key: params.toString(),
   });
-  const [items, setItems] = useState(firstPage.items);
+  const [items, setItems] = useState(page1.items);
 
   useEffect(() => {
-    setItems(firstPage.items);
-  }, [firstPage.items]);
+    setItems(page1.items);
+  }, [page1.items]);
 
   useEffect(() => {
     if (state === "loading" || !data) return;
     setItems((prev) => [...prev, ...data.items]);
   }, [data, state]);
 
-  const nextPage = data ? data.nextPageKey : firstPage.nextPageKey;
+  const nextPage = data ? data.next_key : page1.next_key;
 
   function loadNextPage(key: string) {
     const copy = new URLSearchParams(params);

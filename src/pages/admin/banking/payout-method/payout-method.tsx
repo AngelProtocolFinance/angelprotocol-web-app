@@ -1,28 +1,28 @@
+import { priority_nums } from "@better-giving/banking-applications";
 import { NavLink, Outlet, useFetcher } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ext-link";
 import { useActionResult } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
+import type { LoaderData } from "./api";
 
-const APPROVED_PRIORITY_NUM = 2;
 export { clientLoader } from "api/cache";
 export {
-  payoutMethodLoader as loader,
+  loader,
   prioritizeAction as action,
 } from "./api";
 export { ErrorBoundary } from "components/error";
 export default function PayoutMethod() {
-  const bank = useCachedLoaderData() as BankDetails;
+  const bank = useCachedLoaderData() as LoaderData;
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
 
-  const isRejected = bank.status === "rejected";
-  const isApproved = bank.status === "approved";
-  const prevVerdict = isRejected || isApproved;
-  const isDefault = bank.thisPriorityNum === bank.topPriorityNum;
-  const isWithHeir = (bank.heirPriorityNum || 0) >= APPROVED_PRIORITY_NUM;
+  const is_rejected = bank.status === "rejected";
+  const is_approved = bank.status === "approved";
+  const prevVerdict = is_rejected || is_approved;
+  const is_default = bank.thisPriorityNum === bank.topPriorityNum;
+  const is_with_heir = (bank.heirPriorityNum || 0) >= priority_nums.approved;
 
   return (
     <div className="grid">
@@ -32,20 +32,20 @@ export default function PayoutMethod() {
         {prevVerdict && (
           <div
             className={`${
-              isApproved ? "bg-green" : "bg-red"
+              is_approved ? "bg-green" : "bg-red"
             } text-white px-2 py-1 text-xs uppercase rounded inline-block`}
           >
-            {isApproved ? "Approved" : "Rejected"}
+            {is_approved ? "Approved" : "Rejected"}
           </div>
         )}
-        {isDefault && (
+        {is_default && (
           <div className="bg-blue text-white px-2 py-1 text-xs uppercase rounded-sm inline-block">
             Default
           </div>
         )}
       </div>
 
-      {isRejected && (
+      {is_rejected && (
         <p className="text-sm text-red my-2">
           <CircleAlert className="relative inline bottom-px mr-1" />
           <span>{bank.rejectionReason}</span>
@@ -84,7 +84,7 @@ export default function PayoutMethod() {
       >
         <NavLink
           to={"../banking"}
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back
         </NavLink>
@@ -94,8 +94,8 @@ export default function PayoutMethod() {
           to={{
             pathname: "delete",
             search: new URLSearchParams({
-              default: isDefault.toString(),
-              with_heir: isWithHeir.toString(),
+              default: is_default.toString(),
+              with_heir: is_with_heir.toString(),
             }).toString(),
           }}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-red"
@@ -103,7 +103,9 @@ export default function PayoutMethod() {
           delete
         </NavLink>
         <button
-          disabled={fetcher.state === "submitting" || isDefault || !isApproved}
+          disabled={
+            fetcher.state === "submitting" || is_default || !is_approved
+          }
           type="submit"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-blue"
         >

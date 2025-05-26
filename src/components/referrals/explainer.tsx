@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export function Explainer() {
+export function Explainer({ classes = "" }) {
   const [isMobile, setIsMobile] = useState(true);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export function Explainer() {
   }, []);
 
   return (
-    <div className="w-full mb-6">
+    <div className={`w-full ${classes}`}>
       <Disclosure defaultOpen={!isMobile}>
         {({ open }) => (
           <>

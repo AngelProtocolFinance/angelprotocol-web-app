@@ -27,7 +27,8 @@ export const ap = DynamoDBDocumentClient.from(
       accessKeyId: aws_access_key_id,
       secretAccessKey: aws_secret_access_key,
     },
-  })
+  }),
+  { marshallOptions: { removeUndefinedValues: true } }
 );
 
 export const apes = DynamoDBDocumentClient.from(
@@ -37,5 +38,6 @@ export const apes = DynamoDBDocumentClient.from(
       accessKeyId: apes_aws_access_key_id,
       secretAccessKey: apes_aws_secret_access_key,
     },
-  })
+  }),
+  { marshallOptions: { removeUndefinedValues: true } }
 );

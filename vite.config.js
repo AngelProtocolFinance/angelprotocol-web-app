@@ -105,6 +105,15 @@ const rmx = remix({
             r("move-funds", "./pages/admin/dashboard/move-fund-form.tsx");
           }
         );
+        r("referrals", "./pages/admin/referrals/index.tsx");
+        r(
+          "referrals/earnings",
+          "./pages/admin/referrals/earnings-history/index.tsx"
+        );
+        r(
+          "referrals/payouts",
+          "./pages/admin/referrals/payout-history/index.tsx"
+        );
       });
       r("", "./layout/app/layout.tsx", () => {
         r("login", "./pages/signin.tsx");
