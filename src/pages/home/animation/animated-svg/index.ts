@@ -1,1 +1,1 @@
-export { AnimatedSVG } from "./animated-svg.client";
+export { AnimatedSVG } from "./animated-svg";

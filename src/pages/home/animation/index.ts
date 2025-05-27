@@ -1,1 +1,1 @@
-export { default } from "./mobile-animation";
+export { default } from "./animation";

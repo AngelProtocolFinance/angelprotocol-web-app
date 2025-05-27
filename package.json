@@ -12,7 +12,7 @@
     "format": "biome check --write src",
     "format-unsafe": "biome check --write-unsafe src",
     "prepare": "lefthook install",
-    "up-bg": "pnpm update -i \"@better-giving/*\" --latest" 
+    "up-bg": "pnpm update -i \"@better-giving/*\" --latest"
   },
   "browserslist": {
     "production": [
@@ -37,6 +37,7 @@
     "@better-giving/assets": "1.0.33",
     "@better-giving/balance": "1.1.6",
     "@better-giving/balance-tx": "1.1.6",
+    "@better-giving/banking-applications": "1.0.5",
     "@better-giving/constants": "1.1.2",
     "@better-giving/donation": "1.1.14",
     "@better-giving/endowment": "1.1.13",
@@ -45,7 +46,6 @@
     "@better-giving/helpers-db": "1.1.2",
     "@better-giving/helpers-donation": "1.1.23",
     "@better-giving/helpers-donation-settlement": "1.1.13",
-     "@better-giving/banking-applications": "1.0.5",
     "@better-giving/nowpayments": "1.1.2",
     "@better-giving/payout": "1.1.4",
     "@better-giving/referrals": "1.0.5",

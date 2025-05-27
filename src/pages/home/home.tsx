@@ -25,7 +25,7 @@ export default function Home() {
       <Feature1 />
       <Benefits />
       <Brands />
-      <Animation classes="pt-40" />
+      <Animation />
 
       {/* <Video /> */}
       <Testimonials />

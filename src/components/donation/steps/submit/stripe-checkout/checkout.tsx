@@ -40,7 +40,8 @@ export default function Checkout(props: StripeCheckoutStep) {
 
     setStatus("submitting");
 
-    const search = `?name=${props.init.recipient.name}&id=${props.init.recipient.id}`;
+    const encoded_name = encodeURIComponent(props.init.recipient.name);
+    const search = `?name=${encoded_name}&id=${props.init.recipient.id}`;
     const return_url =
       props.init.source === "bg-widget"
         ? `${window.location.origin}${appRoutes.donate_widget}/donate-thanks/${search}`
