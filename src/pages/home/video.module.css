@@ -14,3 +14,11 @@
   transform: translate(-50%, -50%);
   z-index: -1;
 }
+
+/* Animate the text circle rotation based on scroll */
+@media (min-width: 1024px) {
+  #__text_circle {
+    transition: transform 0.1s linear;
+    will-change: transform;
+  }
+}

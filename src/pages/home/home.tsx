@@ -9,7 +9,7 @@ import { Feature1 } from "./feature1";
 import Header from "./header";
 import Hero from "./hero";
 import Testimonials from "./testimonials";
-// import Video from "./Video";
+// import { Video } from "./video";
 // import { useLoaderData } from "@remix-run/react";
 // import type { EndowsPage } from "@better-giving/endowment";
 export { loader } from "./api";
