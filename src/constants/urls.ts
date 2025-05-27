@@ -25,3 +25,6 @@ export const socials = {
   youtube: "https://www.youtube.com/@BetterDotGiving",
   intercom: INTERCOM_HELP,
 };
+
+export const referrals_faq =
+  "https://intercom.help/better-giving/en/articles/11377507-about-the-better-giving-referral-program";

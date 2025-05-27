@@ -3,6 +3,7 @@ import { Link } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { APP_NAME } from "constants/env";
+import { referrals_faq } from "constants/urls";
 import {
   BrainIcon,
   CheckIcon,
@@ -104,7 +105,7 @@ export function Explainer({ classes = "" }) {
                     View Full Program Terms
                   </Link>
                   <ExtLink
-                    href="https://intercom.help/better-giving/en/articles/11377507-about-the-better-giving-referral-program"
+                    href={referrals_faq}
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
                   >
                     <QuestionMarkCircleIcon className="h-4 w-4 mr-1" />

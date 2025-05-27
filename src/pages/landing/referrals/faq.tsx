@@ -1,7 +1,13 @@
+import ExtLink from "components/ext-link";
+import { referrals_faq } from "constants/urls";
+import { ArrowRight } from "lucide-react";
+
 export function Faq({ classes = "" }) {
   return (
     <section className={`${classes} grid`}>
-      <h4 className="text-2xl mb-4">Frequently Asked Questions:</h4>
+      <h4 className="text-2xl/tight md:text-3xl/tight text-center mb-6">
+        Frequently Asked Questions:
+      </h4>
 
       <ul className="list-disc pl-5 space-y-4 text-lg">
         <li className="">
@@ -36,6 +42,13 @@ export function Faq({ classes = "" }) {
           </p>
         </li>
       </ul>
+      <ExtLink
+        href={referrals_faq}
+        className="justify-self-center flex mt-8 items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+      >
+        <span>Complete FAQs</span>
+        <ArrowRight size={15} />
+      </ExtLink>
     </section>
   );
 }

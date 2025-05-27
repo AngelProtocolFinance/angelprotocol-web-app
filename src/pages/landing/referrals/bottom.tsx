@@ -7,7 +7,7 @@ export function Bottom({ classes = "" }) {
     <section
       className={`${classes} grid bg-gradient-to-tl from-white to-blue-d1 rounded-xl md:py-20 md:px-6 p-6`}
     >
-      <h2 className="text-2xl/tight md:text-3xl/tight font-bold text-center mb-4 text-white">
+      <h2 className="text-2xl/tight md:text-3xl/tight text-center mb-4 text-white">
         Join Us - Start Making an Impact Today!
       </h2>
       <p className="px-6 max-w-5xl mx-auto text-white md:text-xl text-center text-pretty mb-6">
