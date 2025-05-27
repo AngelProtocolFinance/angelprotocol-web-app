@@ -187,12 +187,10 @@ export function createScrollAnimation({
             current_scroll_progress >= 0.95;
 
           if (is_active) {
-            // Bubble is active - instant activation, no transitions
-            bubble_el.style.filter = "grayscale(0%) brightness(1.2)";
+            bubble_el.style.filter = "grayscale(0%) brightness(1.05)";
             bubble_el.style.opacity = "1";
             bubble_el.style.transition = "none";
           } else {
-            // Bubble is inactive - keep fully opaque but grayscale
             bubble_el.style.filter = "grayscale(100%) brightness(0.9)";
             bubble_el.style.opacity = "1";
             bubble_el.style.transition = "none";
@@ -223,7 +221,7 @@ export function createScrollAnimation({
 
         if (is_active) {
           // Bubble is active - instant activation
-          bubble_el.style.filter = "brightness(1.5) saturate(1.3)";
+          bubble_el.style.filter = "brightness(1.1) saturate(1.2)";
           bubble_el.style.transition = "none";
 
           if (filter_element) {
@@ -232,7 +230,7 @@ export function createScrollAnimation({
 
           // Light up the corresponding picture instantly
           if (picture_group) {
-            picture_group.style.filter = "grayscale(0%) brightness(1.2)";
+            picture_group.style.filter = "grayscale(0%) brightness(1.05)";
             picture_group.style.transition = "none";
           }
         } else {
@@ -253,13 +251,6 @@ export function createScrollAnimation({
       }
     }
   }
-
-  // Manual scroll handling instead of Anime.js scroll primitives because:
-  // 1. Complex viewBox interpolation with 4 stages tied to specific progress points
-  // 2. Multi-element coordination (ball, viewBox, bubbles) with different timing
-  // 3. Complex bubble logic (stay lit once activated, all lit in final state)
-  // 4. Custom path point interpolation for smooth ball movement
-  // 5. Better performance control with throttled requestAnimationFrame
 
   // Add throttled scroll listener for better performance
   let ticking = false;
