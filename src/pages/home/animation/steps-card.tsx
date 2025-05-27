@@ -1,6 +1,6 @@
 import type { Card } from "./types";
 
-const StepsCard = (props: Card) => {
+export function StepsCard(props: Card) {
   return (
     <div className="grid max-md:justify-items-center md:grid-cols-[auto_1fr] md:grid-rows-[2fr_3fr] md:gap-x-12 md:gap-y-2">
       <img
@@ -18,6 +18,6 @@ const StepsCard = (props: Card) => {
       </p>
     </div>
   );
-};
+}
 
 export default StepsCard;

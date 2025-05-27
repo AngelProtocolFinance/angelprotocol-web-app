@@ -1,7 +1,7 @@
 import { AnimatedSVG } from "./animated-svg";
 import MobileAnimation from "./mobile-animation";
 
-const Animation = () => {
+export const Animation = () => {
   return (
     <>
       <AnimatedSVG classes="max-lg:hidden pt-56" />
@@ -9,5 +9,3 @@ const Animation = () => {
     </>
   );
 };
-
-export default Animation;

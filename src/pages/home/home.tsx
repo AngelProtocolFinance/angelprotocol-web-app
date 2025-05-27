@@ -1,6 +1,6 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
-import Animation from "./animation";
+import { Animation } from "./animation";
 import Benefits from "./benefits";
 import Blogs from "./blogs";
 import { BottomCta } from "./bottom-cta";
