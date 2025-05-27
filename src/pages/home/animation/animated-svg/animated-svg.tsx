@@ -35,7 +35,9 @@ export function AnimatedSVG({ classes = "" }: AnimatedSVGProps) {
   }, []);
 
   return (
-    <div className={`${classes} relative min-h-[400vh]`}>
+    <div
+      className={`${classes} relative min-h-[400vh] bg-gradient-to-b from-peach/20 via-white to-peach/20`}
+    >
       <div className="sticky top-0 h-screen flex items-center justify-center">
         <svg
           width={2715}
