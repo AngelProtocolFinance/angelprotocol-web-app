@@ -1,6 +1,6 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
-import Animation from "./animation";
+import { Animation } from "./animation";
 import Benefits from "./benefits";
 import Blogs from "./blogs";
 import { BottomCta } from "./bottom-cta";
@@ -9,7 +9,7 @@ import { Feature1 } from "./feature1";
 import Header from "./header";
 import Hero from "./hero";
 import Testimonials from "./testimonials";
-// import Video from "./Video";
+// import { Video } from "./video";
 // import { useLoaderData } from "@remix-run/react";
 // import type { EndowsPage } from "@better-giving/endowment";
 export { loader } from "./api";
@@ -25,7 +25,7 @@ export default function Home() {
       <Feature1 />
       <Benefits />
       <Brands />
-      <Animation classes="pt-40" />
+      <Animation />
 
       {/* <Video /> */}
       <Testimonials />

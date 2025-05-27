@@ -1,6 +1,4 @@
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import s from "../../assets/landing/Inifnite Half-right.webp";
 import s2 from "../../assets/landing/half1.webp";
 import heart from "../../assets/landing/heartOfText.webp";
@@ -8,43 +6,56 @@ import heartText from "../../assets/landing/heartText.svg";
 import videobanner from "../../assets/landing/video_bannerUpdate.webp";
 import styles from "./video.module.css";
 
-const triggerId = "__video";
-const textCircleId = "__text_circle";
+const trigger_id = "__video";
+const text_circle_id = "__text_circle";
 
-const Video = () => {
+function handle_scroll_animation() {
+  const circle = document.getElementById(text_circle_id);
+  const section = document.getElementById(trigger_id);
+  if (!circle || !section) return;
+  const rect = section.getBoundingClientRect();
+  const window_height = window.innerHeight;
+  // Only animate if section is in viewport
+  if (rect.bottom < 0 || rect.top > window_height) return;
+  // Calculate scroll progress (0 at section top, 1 at section bottom)
+  const section_height = rect.height;
+  const scroll_y = window.scrollY || window.pageYOffset;
+  const section_top = rect.top + scroll_y;
+  const progress = Math.min(
+    Math.max(
+      (scroll_y + window_height - section_top) /
+        (section_height + window_height),
+      0
+    ),
+    1
+  );
+  circle.style.transform = `rotate(${progress * 360}deg)`;
+}
+
+export function Video() {
+  const ticking = useRef(false);
+
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: `#${triggerId}`,
-        start: "top top",
-        scrub: 1,
-      },
-      ease: "none",
-      duration: 5,
-    });
-
-    tl.to(`#${textCircleId}`, {
-      scrollTrigger: {
-        trigger: `#${triggerId}`,
-        start: "top top",
-        scrub: 1,
-      },
-      ease: "none",
-      rotation: 360,
-      duration: 2,
-    });
-
-    return () => {
-      for (const trigger of ScrollTrigger.getAll()) {
-        trigger.kill();
+    function on_scroll() {
+      if (!ticking.current) {
+        window.requestAnimationFrame(() => {
+          handle_scroll_animation();
+          ticking.current = false;
+        });
+        ticking.current = true;
       }
+    }
+    window.addEventListener("scroll", on_scroll, { passive: true });
+    // Initial call in case already scrolled
+    handle_scroll_animation();
+    return () => {
+      window.removeEventListener("scroll", on_scroll);
     };
   }, []);
 
   return (
     <section
-      id={triggerId}
+      id={trigger_id}
       className="grid relative px-6 pt-40 lg:pt-80 bg-linear-to-b from-peach/20 to-transparent overflow-x-clip"
     >
       <div className="flex justify-self-center relative">
@@ -83,13 +94,13 @@ const Video = () => {
       </div>
     </section>
   );
-};
+}
 
-function TextSurroundedHeart({ classes = "" }) {
+export function TextSurroundedHeart({ classes = "" }) {
   return (
     <>
       <img
-        id={textCircleId}
+        id={text_circle_id}
         src={heartText}
         className={`size-40 ${classes}`}
         alt="words in circle"
@@ -98,5 +109,3 @@ function TextSurroundedHeart({ classes = "" }) {
     </>
   );
 }
-
-export default Video;
