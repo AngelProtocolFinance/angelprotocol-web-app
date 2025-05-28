@@ -27,7 +27,7 @@ export const items: TListItem[] = [
     title1: "Step 3",
     title2: "Earn Rewards",
     description:
-      "Whenever your referred nonprofits receive donations, you earn.",
+      "Earn through Better Giving whenever your referred nonprofits succeed their donations stay 100% theirs.",
     image: { src: laira.shakeHands, width: 90, alt: "Laira presenting" },
   },
 ];
@@ -42,7 +42,11 @@ export function Feature2({ className = "" }) {
       <p className="text-gray text-center max-lg:px-10 max-lg:text-center mb-2 text-xl col-span-full">
         Our referral program makes it easy to share Better Giving while earning
         rewards.
+        <br />
+        Understand how you can earn while making a difference, here’s how it
+        works.
       </p>
+
       <ul className="col-span-full mt-4 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
