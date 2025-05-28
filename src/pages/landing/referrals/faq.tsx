@@ -41,6 +41,17 @@ export function Faq({ classes = "" }) {
             They can manually enter your referral code during signup.
           </p>
         </li>
+        <li>
+          <strong className="font-heading">
+            Why would a nonprofit want to use Better Giving?
+          </strong>
+          <p className="text-gray-d1">
+            Better Giving helps nonprofits increase donations with modern tools
+            for donor engagement, easy online giving, and access to a growing
+            network of supporters. It's free to join, and they keep 100% of
+            their donations no hidden fees or cuts.
+          </p>
+        </li>
       </ul>
       <ExtLink
         href={referrals_faq}
