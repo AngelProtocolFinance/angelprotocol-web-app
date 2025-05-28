@@ -64,3 +64,11 @@ export const stripeEnvs = {
 };
 
 export const wiseApiToken = v.parse(required, process.env.WISE_API_TOKEN);
+
+export const anvil_envs = {
+  api_key: v.parse(required, process.env.ANVIL_API_KEY),
+  webhook_token: v.parse(required, process.env.ANVIL_WEBHOOK_TOKEN),
+  fsa_template_id: v.parse(required, process.env.ANVIL_FSA_TEMPLATE_ID),
+  w9_template_id: v.parse(required, process.env.ANVIL_W9_TEMPLATE_ID),
+  w8ben_template_id: v.parse(required, process.env.ANVIL_W8BEN_TEMPLATE_ID),
+};
