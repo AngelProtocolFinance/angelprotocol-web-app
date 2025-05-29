@@ -1,12 +1,9 @@
 import type { OnHoldDonation, StripeDonation } from "@better-giving/donation";
 import { round_number } from "helpers/round-number";
 import { build_metadata } from "routes/api.donation-intents.$type/stripe/build-metadata";
-import {
-  PaymentMethods,
-  nonSubsPM,
-} from "../../../.server/stripe/payment-methods";
 import { stripeEnvs } from ".server/env";
 import { stripe } from ".server/sdks";
+import { PaymentMethods, nonSubsPM } from ".server/stripe/payment-methods";
 
 export async function setup_intent(
   order: OnHoldDonation.FiatDBRecord,

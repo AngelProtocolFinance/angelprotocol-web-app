@@ -53,7 +53,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const item = res.Item as OnHoldDonation.DBRecord;
   if (item.status !== "intent") {
-    new Response(null, { status: 410 });
+    return new Response(null, { status: 410 });
   }
 
   const token = tokenMap[item.denomination];
