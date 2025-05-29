@@ -1,3 +1,4 @@
+import { resp } from "./resp";
 import {
   type ApiKeyPayload,
   decodeApiKey,
@@ -9,7 +10,7 @@ export async function validateApiKey(
   apiKey: string | null
 ): Promise<ApiKeyPayload | Response> {
   //no api key in header
-  if (!apiKey) return new Response(null, { status: 400 });
+  if (!apiKey) return resp.status(400);
   const payload = decodeApiKey(apiKey);
 
   //npoId indeed has api key saved/active
@@ -17,10 +18,10 @@ export async function validateApiKey(
     payload.npoId,
     payload.env
   );
-  if (!retrieved) return new Response(null, { status: 404 });
+  if (!retrieved) return resp.status(404);
 
   // api key used in this request is the same as the one saved/active
-  if (retrieved !== apiKey) return new Response(null, { status: 401 });
+  if (retrieved !== apiKey) return resp.status(401);
   return payload;
 }
 

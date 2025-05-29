@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import type { NP } from "@better-giving/nowpayments/types";
 import type { ActionFunction } from "@vercel/remix";
+import { resp } from "routes/helpers/resp";
 import { parse, stage as schema } from "routes/types";
 import { handleConfirming } from "./handlers/confirming";
 import { handleExpired } from "./handlers/expired";
@@ -16,7 +17,7 @@ export const action: ActionFunction = async ({
 }): Promise<Response> => {
   const stage = parse(schema, params.stage);
   const sig = request.headers.get("x-nowpayments-sig");
-  if (!sig) return new Response("invalid request", { status: 400 });
+  if (!sig) return resp.err(400, "invalid request");
 
   /// hash payload ///
   const payment: NP.PaymentPayload = await request.json();
@@ -33,7 +34,7 @@ export const action: ActionFunction = async ({
   const payloadSig = hmac.digest("hex");
 
   if (payloadSig !== sig) {
-    return new Response("invalid request", { status: 400 });
+    return resp.err(400, "invalid request");
   }
 
   const status = payment.payment_status;
@@ -48,43 +49,31 @@ export const action: ActionFunction = async ({
       status === "confirmed"
     ) {
       console.log(status, payment);
-      return new Response("unhandled", { status: 200 });
+      return resp.txt("unhandled");
     }
 
     if (status === "waiting") {
       const res = await handleWaiting(payment.payment_id, payment.order_id);
       console.log("waiting", res.Attributes);
-      // return v2Res(200, res.Attributes ?? {});
-      return new Response(JSON.stringify(res.Attributes ?? {}), {
-        status: 200,
-      });
+      return resp.json(res.Attributes ?? {});
     }
 
     if (status === "confirming") {
       const res = await handleConfirming(payment, stage);
       console.log("confirming", res.Attributes);
-      // return v2Res(200, res.Attributes ?? {});
-      return new Response(JSON.stringify(res.Attributes ?? {}), {
-        status: 200,
-      });
+      return resp.json(res.Attributes ?? {});
     }
 
     if (status === "expired") {
       const res = await handleExpired(payment.order_id);
       console.log("expired", res.Attributes);
-      // return v2Res(200, res.Attributes ?? {});
-      return new Response(JSON.stringify(res.Attributes ?? {}), {
-        status: 200,
-      });
+      return resp.json(res.Attributes ?? {});
     }
 
     if (status === "failed") {
       const res = await handleFailed(payment);
       console.log(`deleted failed payment:${payment.payment_id}`);
-      // return v2Res(200, res.Attributes ?? {});
-      return new Response(JSON.stringify(res.Attributes ?? {}), {
-        status: 200,
-      });
+      return resp.json(res.Attributes ?? {});
     }
 
     await handleSettled(payment);
@@ -95,7 +84,7 @@ export const action: ActionFunction = async ({
       body: JSON.stringify(payment),
     });
 
-    return new Response("Donation settled", { status: 200 });
+    return resp.txt("Donation settled");
   } catch (err) {
     await discordAwsMonitor.sendAlert({
       from: `nowpayments-webhook-${stage}`,
@@ -103,6 +92,6 @@ export const action: ActionFunction = async ({
       body: JSON.stringify(err, Object.getOwnPropertyNames(err)),
     });
 
-    return new Response("Unknown error occured", { status: 500 });
+    return resp.err(500, "Unknown error occured");
   }
 };
