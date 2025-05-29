@@ -1,12 +1,17 @@
 import * as v from "valibot";
-const required = v.pipe(v.string(), v.nonEmpty("required"));
 const urlSchema = v.pipe(v.string(), v.url());
 export const envSchema = v.fallback(
   v.union([v.literal("staging"), v.literal("production")]),
   "staging"
 );
 
-export const _var = (name: string) => v.parse(required, process.env[name]);
+export const _var = (name: string): string => {
+  const v = process.env[name];
+  if (!v) {
+    console.error(`Environment variable ${name} is not set.`);
+  }
+  return v || "";
+};
 export type Env = v.InferOutput<typeof envSchema>;
 export const env = v.parse(envSchema, process.env.ENVIRONMENT);
 export const cloudsearchNpoSearchEndpoint = v.parse(
@@ -45,3 +50,8 @@ export const stripeEnvs = {
 };
 
 export const wiseApiToken = _var("WISE_API_TOKEN");
+
+export const chariot_envs = {
+  client_id: _var("CHARIOT_CLIENT_ID"),
+  client_secret: _var("CHARIOT_CLIENT_SECRET"),
+};

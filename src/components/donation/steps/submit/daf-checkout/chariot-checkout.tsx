@@ -1,7 +1,6 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "@remix-run/react";
-import { apes } from "api/api";
 import ContentLoader from "components/content-loader";
 import { ErrorBoundaryClass } from "components/error";
 import {
@@ -384,7 +383,11 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               }
 
               setGrantState("pending");
-              await apes.post("fiat-donation/chariot", { json: intent });
+              const res = await fetch("/api/donation-intents/chariot", {
+                method: "POST",
+                body: JSON.stringify(intent),
+              });
+              if (!res.ok) throw await res.text();
 
               setPrompt(undefined);
 

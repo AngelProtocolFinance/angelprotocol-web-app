@@ -47,6 +47,7 @@
     "@better-giving/helpers-donation": "1.1.23",
     "@better-giving/helpers-donation-settlement": "1.1.13",
     "@better-giving/nowpayments": "1.1.2",
+    "@better-giving/chariot": "1.1.6",
     "@better-giving/payout": "1.1.4",
     "@better-giving/referrals": "1.0.5",
     "@better-giving/registration": "1.1.8",

@@ -10,7 +10,7 @@ export interface Order {
   rate: number;
   currency: string;
 }
-export async function create_payment(
+export async function crypto_payment(
   token: Token,
   order: Order,
 

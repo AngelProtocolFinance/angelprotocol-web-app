@@ -4,18 +4,20 @@ import type { OnHoldDonation } from "@better-giving/donation";
 import { intent as schema } from "@better-giving/donation/intent";
 import { tables } from "@better-giving/types/list";
 import type { ActionFunction } from "@vercel/remix";
+import { round_number } from "helpers/round-number";
 import { nanoid } from "nanoid";
 import { create_payment_intent } from "routes/api.donation-intents.$type/stripe/create-payment-intent";
 import { setup_intent } from "routes/api.donation-intents.$type/stripe/setup-intent";
 import { parse } from "valibot";
-import { type Order, create_payment } from "./crypto/create-payment";
+import { resp } from "../helpers/resp";
+import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
 import { get_customer_id } from "./stripe/customer-id";
 import { donation_type } from "./types";
 import { PutCommand, apes } from ".server/aws/db";
 import { get_recipient } from ".server/donation-recipient";
 import { env } from ".server/env";
-import { np } from ".server/sdks";
+import { chariot, np } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -24,9 +26,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const recipient = await get_recipient(intent.recipient);
   if (!recipient) {
-    return new Response(`Recipient:${intent.recipient} not found`, {
-      status: 404,
-    });
+    return resp.txt(`Recipient:${intent.recipient} not found`, 404);
   }
 
   const now = new Date();
@@ -57,12 +57,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       intent.amount.amount + intent.amount.tip + intent.amount.feeAllowance;
 
     if (to_pay < min) {
-      return new Response(
-        `Min amount for ${intent.amount.currency} is: ${min}`,
-        { status: 400 }
-      );
+      return resp.txt(`Min amount for ${token.code} is: ${min}`, 400);
     }
-
     const onhold: OnHoldDonation.CryptoDBRecord = {
       ...base,
       transactionId: intent_id,
@@ -96,17 +92,39 @@ export const action: ActionFunction = async ({ request, params }) => {
     };
 
     const url = new URL(request.url);
-    const payment = await create_payment(
+    const payment = await crypto_payment(
       token,
       np_order,
       `${url.origin}/api/nowpayments-webhook/${env}`
     );
-    return new Response(JSON.stringify(payment), {
-      headers: { "content-type": "application/json" },
-    });
+    return resp.json(payment);
   }
 
   if (d_type === "chariot") {
+    const to_pay =
+      intent.amount.amount + intent.amount.tip + intent.amount.feeAllowance;
+    const grant = await chariot.createGrant(
+      intent.viaId,
+      round_number(to_pay * 100, 0)
+    );
+
+    const onhold: OnHoldDonation.FiatDBRecord = {
+      ...base,
+      transactionId: grant.id,
+      transactionDate: now.toISOString(),
+      amount: to_pay,
+      usdValue: to_pay, // chariot returns USD value
+      fiatRamp: "CHARIOT",
+      chainId: "fiat",
+      destinationChainId: "fiat",
+      email: intent.donor.email,
+    };
+    const cmd = new PutCommand({
+      TableName: tables.on_hold_donations,
+      Item: onhold,
+    });
+    await apes.send(cmd);
+    return resp.json({ grantId: grant.id });
   }
 
   if (d_type === "stripe") {
@@ -140,8 +158,6 @@ export const action: ActionFunction = async ({ request, params }) => {
         ? await create_payment_intent(onhold, customerId)
         : await setup_intent(onhold, customerId);
 
-    return new Response(JSON.stringify({ clientSecret }), {
-      headers: { "content-type": "application/json" },
-    });
+    return resp.json({ clientSecret });
   }
 };

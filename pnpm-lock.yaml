@@ -32,6 +32,9 @@ importers:
       '@better-giving/banking-applications':
         specifier: 1.0.5
         version: 1.0.5(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
+      '@better-giving/chariot':
+        specifier: 1.1.6
+        version: 1.1.6(@better-giving/types@1.1.6)
       '@better-giving/constants':
         specifier: 1.1.2
         version: 1.1.2
@@ -643,6 +646,11 @@ packages:
       '@better-giving/schemas': 1.1.2
       '@better-giving/types': 1.1.6
       valibot: 0.42.0
+
+  '@better-giving/chariot@1.1.6':
+    resolution: {integrity: sha512-GqWkykHXMawf98rjC6ia7z1onn8wOZUF571dPsG7xMC+sICXHf1RrX08mq3gfIz6kz8QtZSrqmBKma6oPJHrqA==}
+    peerDependencies:
+      '@better-giving/types': 1.1.6
 
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
@@ -5943,6 +5951,10 @@ snapshots:
       '@better-giving/schemas': 1.1.2(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
+
+  '@better-giving/chariot@1.1.6(@better-giving/types@1.1.6)':
+    dependencies:
+      '@better-giving/types': 1.1.6
 
   '@better-giving/constants@1.1.2': {}
 

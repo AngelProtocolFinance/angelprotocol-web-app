@@ -1,8 +1,16 @@
+import { Chariot } from "@better-giving/chariot";
 import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
 import Stripe from "stripe";
-import { discordEnvs, env, npEnvs, stripeEnvs, wiseApiToken } from "./env";
+import {
+  chariot_envs,
+  discordEnvs,
+  env,
+  npEnvs,
+  stripeEnvs,
+  wiseApiToken,
+} from "./env";
 
 export const discordAwsMonitor = new Discord(discordEnvs.awsMonitorUrl);
 export const discordFiatMonitor = new Discord(discordEnvs.fiatMonitorUrl);
@@ -13,3 +21,5 @@ export const wise = new Wise({
   apiToken: wiseApiToken,
   sandbox: env === "staging",
 });
+
+export const chariot = new Chariot(env, chariot_envs);
