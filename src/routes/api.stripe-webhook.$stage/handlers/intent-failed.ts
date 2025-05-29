@@ -1,7 +1,7 @@
 import type { StripeDonation } from "@better-giving/donation";
 import type Stripe from "stripe";
 import { sendEmail } from "../helpers";
-import { getSubsInvoice } from ".server/stripe/get";
+import { getSubsInvoice } from "../helpers/subs-invoice";
 
 type Ev =
   | Stripe.PaymentIntentPaymentFailedEvent
