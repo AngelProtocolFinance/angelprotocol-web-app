@@ -42,9 +42,6 @@ export function Feature2({ className = "" }) {
       <p className="text-gray text-center max-lg:px-10 max-lg:text-center mb-2 text-xl col-span-full">
         Our referral program makes it easy to share Better Giving while earning
         rewards.
-        <br />
-        Understand how you can earn while making a difference, here’s how it
-        works.
       </p>
 
       <ul className="col-span-full mt-4 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">

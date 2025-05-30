@@ -48,7 +48,7 @@ export default function Referrals() {
       </div>
 
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
-        <Top classes="-mt-24" />
+        <Top />
       </div>
       <div className="bg-gradient-to-bl from-peach/50 via-transparent via-50% to-lilac/50">
         <Feature className="xl:container xl:mx-auto px-10" />

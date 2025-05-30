@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 
 export function Top({ classes = "" }) {
   return (
-    <section className={`${classes} relative grid pt-36 pb-20`}>
+    <section className={`${classes} relative grid py-20`}>
       <p className="text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider text-blue-d1">
         Earn while supporting nonprofits
       </p>

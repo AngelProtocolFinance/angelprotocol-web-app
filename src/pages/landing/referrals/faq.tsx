@@ -5,9 +5,13 @@ import { ArrowRight } from "lucide-react";
 export function Faq({ classes = "" }) {
   return (
     <section className={`${classes} grid`}>
-      <h4 className="text-2xl/tight md:text-3xl/tight text-center mb-6">
+      <h4 className="text-2xl/tight md:text-3xl/tight text-center mb-2">
         Frequently Asked Questions:
       </h4>
+      <p className="px-6 max-w-5xl mx-auto md:text-xl text-gray-d1 text-pretty mb-10">
+        Understand how you can earn while making a difference, here’s how it
+        works.
+      </p>
 
       <ul className="list-disc pl-5 space-y-4 text-lg">
         <li className="">
