@@ -5,8 +5,8 @@ import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
 import { to_onhold } from "../../helpers/donation-metadata";
-import { getBalanceTx } from "../helpers/balance-tx";
 import { payment_method } from "../helpers/payment-method";
+import { settled_fn } from "../helpers/settled";
 import { getSubsInvoice } from "../helpers/subs-invoice";
 import { TransactWriteCommand, apes } from ".server/aws/db";
 import { qstash } from ".server/sdks";
@@ -52,7 +52,7 @@ export async function handleUpdateSubscription(
     throw new Error("Invalid payment method ID for subscription");
 
   // Fetch settled amount and fee
-  const { fee, net } = await getBalanceTx(pi.id);
+  const { fee, net } = await settled_fn(pi.id);
 
   const onhold = to_onhold(meta, {
     //PaymentIntent Event does not have expandable field so we query for PaymentMethod

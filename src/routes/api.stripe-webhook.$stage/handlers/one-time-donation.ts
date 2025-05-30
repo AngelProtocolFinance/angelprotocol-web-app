@@ -2,8 +2,8 @@ import type { StripeDonation } from "@better-giving/donation";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
 import { to_onhold } from "../../helpers/donation-metadata";
-import { getBalanceTx } from "../helpers/balance-tx";
 import { payment_method } from "../helpers/payment-method";
+import { settled_fn } from "../helpers/settled";
 import { qstash } from ".server/sdks";
 
 /**
@@ -18,14 +18,14 @@ export async function handleOneTimeDonation(
     throw new Error("Invalid payment method ID for subscription");
 
   // Fetch settled amount and fee
-  const { fee, net, currency } = await getBalanceTx(intent.id);
+  const { fee, net } = await settled_fn(intent.id);
 
   const meta = intent.metadata as StripeDonation.Metadata;
 
   const settled: Settled = {
     fee,
     net,
-    in: { id: "fiat", currency, hash: intent.id },
+    in: { id: "fiat", currency: "USD", hash: intent.id },
   };
   const order = to_onhold(meta, {
     payment_method: await payment_method(intent.payment_method),
