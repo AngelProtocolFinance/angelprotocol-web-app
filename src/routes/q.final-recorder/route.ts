@@ -315,5 +315,6 @@ export const action: ActionFunction = async ({ request }) => {
         },
       ],
     });
+    return resp.err(500, "something went wrong :((");
   }
 };
