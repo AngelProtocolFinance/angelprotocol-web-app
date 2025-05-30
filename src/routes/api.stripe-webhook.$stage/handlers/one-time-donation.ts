@@ -18,14 +18,14 @@ export async function handleOneTimeDonation(
     throw new Error("Invalid payment method ID for subscription");
 
   // Fetch settled amount and fee
-  const { fee, net } = await getBalanceTx(intent.id);
+  const { fee, net, currency } = await getBalanceTx(intent.id);
 
   const meta = intent.metadata as StripeDonation.Metadata;
 
   const settled: Settled = {
     fee,
     net,
-    in: { id: "fiat", currency: "USD", hash: intent.id },
+    in: { id: "fiat", currency, hash: intent.id },
   };
   const order = to_onhold(meta, {
     payment_method: await payment_method(intent.payment_method),

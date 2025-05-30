@@ -15,6 +15,7 @@ export async function getBalanceTx(
     latest_charge.balance_transaction &&
     typeof latest_charge.balance_transaction !== "string"
   ) {
+    console.log(latest_charge.balance_transaction);
     return latest_charge.balance_transaction;
   }
 
