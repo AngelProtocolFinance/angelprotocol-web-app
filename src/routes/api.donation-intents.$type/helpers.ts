@@ -1,0 +1,52 @@
+import type { OnHoldDonation } from "@better-giving/donation";
+import type { DonationIntent } from "@better-giving/donation/intent";
+import type { Except } from "type-fest";
+import type { Recipient } from ".server/donation-recipient";
+import { env } from ".server/env";
+type TBase = Except<
+  OnHoldDonation.NonKeyAttributes,
+  "amount" | "usdValue" | "transactionDate"
+>;
+export const onhold_base = (
+  recipient: Recipient,
+  intent: DonationIntent
+): TBase => {
+  const obj: TBase = {
+    tipAmount: intent.amount.tip,
+    feeAllowance: intent.amount.feeAllowance,
+    appUsed: intent.source,
+    chainName: intent.viaName,
+    charityName: recipient.name,
+    nonProfitMsg: recipient.receiptMsg,
+    denomination: intent.amount.currency.toUpperCase(),
+    donationFinalized: false,
+    endowmentId: recipient.npo.id,
+
+    donor_message: intent.donor_message,
+    donor_public: intent.donor_public,
+
+    fund_id: recipient.fund.id,
+    fund_name: recipient.name,
+    fund_members: recipient.fund.members,
+
+    programId: intent.program?.id,
+    programName: intent.program?.name,
+    inHonorOf: intent.tribute?.fullName,
+    tributeNotif: intent.tribute?.notif,
+    claimed: recipient.claimed,
+    fiscalSponsored: recipient.fiscal_sponsored,
+    hideBgTip: recipient.hide_bg_tip,
+
+    network: env,
+    splitLiq: "100",
+    status: "intent",
+
+    //KYC ATTRIBUTES
+    kycEmail: intent.donor.email,
+    fullName: `${intent.donor.firstName} ${intent.donor.lastName}`,
+    title: intent.donor?.title || undefined,
+    ...intent.donor.address,
+    ukGiftAid: intent.donor.address?.ukGiftAid ?? false,
+  };
+  return obj;
+};

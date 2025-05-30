@@ -1,7 +1,7 @@
 import type { StripeDonation } from "@better-giving/donation";
 import { stripe } from ".server/sdks";
 
-export async function createSubscription(
+export async function create_subscription(
   customerId: string,
   paymentMethodId: string,
   donationIntent: StripeDonation.SetupIntentMetadata

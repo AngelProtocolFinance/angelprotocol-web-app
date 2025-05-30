@@ -2,8 +2,8 @@ import type { StripeDonation } from "@better-giving/donation";
 import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
 import { buildOnHoldRecord, sendEmail } from "../helpers";
+import { getPaymentMethod } from "../helpers/payment-method";
 import { PutCommand, apes } from ".server/aws/db";
-import { getPaymentMethod } from ".server/stripe/get";
 
 type Ev =
   | Stripe.PaymentIntentRequiresActionEvent

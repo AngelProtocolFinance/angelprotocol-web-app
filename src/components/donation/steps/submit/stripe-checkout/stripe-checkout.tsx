@@ -14,7 +14,7 @@ import Loader from "../loader";
 import Checkout from "./checkout";
 
 const fetcher = async (intent: DonationIntent) =>
-  fetch("/api/stripe-intents", {
+  fetch("/api/donation-intents/stripe", {
     method: "POST",
     body: JSON.stringify(intent),
   })

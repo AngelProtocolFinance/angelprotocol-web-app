@@ -1,7 +1,7 @@
 import type Stripe from "stripe";
 import { stripe } from ".server/sdks";
 
-export async function getCustomerId(
+export async function get_customer_id(
   currency: string,
   email: string
 ): Promise<Stripe.Customer["id"]> {
