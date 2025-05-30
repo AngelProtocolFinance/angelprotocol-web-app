@@ -68,6 +68,8 @@ export async function handleUpdateSubscription(
   const res = await qstash.publishJSON({
     body: final,
     url: `${origin}/q/final-recorder`,
+    retries: 0,
+    deduplicationId: pi.id,
   });
 
   console.log(`Final donation record sent:${res.messageId}`);

@@ -34,5 +34,7 @@ export async function handleOneTimeDonation(
   return qstash.publishJSON({
     body: final,
     url: `${origin}/q/final-recorder`,
+    retries: 0,
+    deduplicationId: intent.id,
   });
 }

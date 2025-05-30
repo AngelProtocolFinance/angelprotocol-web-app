@@ -38,5 +38,7 @@ export const handleSettled = async (
   return qstash.publishJSON({
     url: `${origin}/q/final-recorder`,
     body: final,
+    retries: 0,
+    deduplicationId: payment.order_id,
   });
 };
