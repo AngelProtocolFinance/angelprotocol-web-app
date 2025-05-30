@@ -294,7 +294,10 @@ export const action: ActionFunction = async ({ request }) => {
     const tipTxs = settle_txs(base, overrides);
     builder.append(tipTxs);
 
-    await ap.send(new TransactWriteCommand({ TransactItems: builder.txs }));
+    const res = await ap.send(
+      new TransactWriteCommand({ TransactItems: builder.txs })
+    );
+    return resp.json(res.$metadata);
   } catch (err) {
     console.error(err);
     await discordFiatMonitor.sendAlert({
