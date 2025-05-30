@@ -3,7 +3,7 @@ import { round_number } from "helpers/round-number";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripeEnvs } from ".server/env";
 import { stripe } from ".server/sdks";
-import { PaymentMethods, nonSubsPM } from ".server/stripe/payment-methods";
+import { nonSubsPM, payment_methods } from ".server/stripe/payment-methods";
 
 export async function setup_intent(
   order: OnHoldDonation.FiatDBRecord,
@@ -23,7 +23,7 @@ export async function setup_intent(
       },
     },
     payment_method_types: (
-      PaymentMethods[order.denomination] ?? ["card"]
+      payment_methods[order.denomination] ?? ["card"]
     ).filter(nonSubsPM),
     metadata: {
       // Subscription required fields

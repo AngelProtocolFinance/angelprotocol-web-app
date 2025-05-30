@@ -2,7 +2,7 @@ import type { OnHoldDonation, StripeDonation } from "@better-giving/donation";
 import { round_number } from "helpers/round-number";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe } from ".server/sdks";
-import { PaymentMethods } from ".server/stripe/payment-methods";
+import { payment_methods } from ".server/stripe/payment-methods";
 
 export async function create_payment_intent(
   order: OnHoldDonation.FiatDBRecord,
@@ -27,7 +27,7 @@ export async function create_payment_intent(
         verification_method: "automatic",
       },
     },
-    payment_method_types: PaymentMethods[order.denomination] ?? ["card"],
+    payment_method_types: payment_methods[order.denomination] ?? ["card"],
   });
 
   if (!paymentIntent.client_secret)

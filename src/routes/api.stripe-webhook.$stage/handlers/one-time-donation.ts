@@ -28,7 +28,7 @@ export async function handleOneTimeDonation(
     in: { id: "fiat", currency: "USD" },
   };
   const order = to_onhold(meta, {
-    payment_method: await payment_method(intent.id),
+    payment_method: await payment_method(intent.payment_method),
   });
   const final = to_final(order, settled);
   return qstash.publishJSON({
