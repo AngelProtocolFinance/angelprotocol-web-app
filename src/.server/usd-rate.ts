@@ -2,6 +2,7 @@ import { GetCommand, apes } from "./aws/db";
 
 /**
  * @param currency - lowercase iso4217 code
+ * @returns number - amount/usd
  */
 export const get_usd_rate = async (currency: string): Promise<number> => {
   const cmd = new GetCommand({

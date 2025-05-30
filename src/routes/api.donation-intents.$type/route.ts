@@ -146,7 +146,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       transactionId: intent_id,
       transactionDate: now.toISOString(),
       amount: to_pay,
-      usdValue: to_pay * usd_rate,
+      usdValue: to_pay / usd_rate,
       fiatRamp: "STRIPE",
       chainId: "fiat",
       destinationChainId: "fiat",
