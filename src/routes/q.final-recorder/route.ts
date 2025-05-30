@@ -11,7 +11,7 @@ import { referral_commission_rate } from "./config.js";
 import { build_donation_msg, commission_fn } from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
 import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
-import { TransactWriteCommand, ap } from ".server/aws/db";
+import { TransactWriteCommand, ap, apes } from ".server/aws/db";
 import { env } from ".server/env";
 import { getNpo } from ".server/npo";
 import { discordFiatMonitor, qstash_receiver } from ".server/sdks";
@@ -294,7 +294,7 @@ export const action: ActionFunction = async ({ request }) => {
     const tipTxs = settle_txs(base, overrides);
     builder.append(tipTxs);
 
-    const res = await ap.send(
+    const res = await apes.send(
       new TransactWriteCommand({ TransactItems: builder.txs })
     );
     return resp.json(res.$metadata);
