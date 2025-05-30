@@ -55,3 +55,10 @@ export const chariot_envs = {
   client_id: _var("CHARIOT_CLIENT_ID"),
   client_secret: _var("CHARIOT_CLIENT_SECRET"),
 };
+
+export const qtash_envs = {
+  token: _var("QSTASH_TOKEN"),
+  url: v.parse(urlSchema, _var("QSTASH_URL")),
+  currentSigningKey: _var("QSTASH_CURRENT_SIGNING_KEY"),
+  nextSigningKey: _var("QSTASH_NEXT_SIGNING_KEY"),
+};

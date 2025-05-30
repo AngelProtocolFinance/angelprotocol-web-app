@@ -3,7 +3,7 @@ import { partition } from "@better-giving/helpers";
 import type { NP } from "@better-giving/nowpayments/types";
 import { tables } from "@better-giving/types/list";
 import type { AttrNames } from "@better-giving/types/utils";
-import type { Stage } from "routes/types";
+import type { Stage } from "routes/types/donation-message";
 import { getOrder } from "../helpers";
 import { UpdateCommand, apes } from ".server/aws/db";
 import { np } from ".server/sdks";

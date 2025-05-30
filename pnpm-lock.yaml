@@ -149,6 +149,9 @@ importers:
       '@tailwindcss/vite':
         specifier: 4.0.0
         version: 4.0.0(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1))
+      '@upstash/qstash':
+        specifier: 2.8.1
+        version: 2.8.1
       '@vercel/blob':
         specifier: 0.27.1
         version: 0.27.1
@@ -2316,6 +2319,9 @@ packages:
   '@types/wrap-ansi@3.0.0':
     resolution: {integrity: sha512-ltIpx+kM7g/MLRZfkbL7EsCEjfzCcScLpkg37eXEtx5kmrAKBkTJwd1GIAjDSL8wTpM6Hzn5YO4pSb91BEwu1g==}
 
+  '@upstash/qstash@2.8.1':
+    resolution: {integrity: sha512-E+JoLHMqygQksWATjS/9AAo7Mhi/k21Tu0zDwMm9GyNyNVjEJntQvmrH5NC7x6kXwjCDTEWFtIWz0JXu9/9pMQ==}
+
   '@upstash/redis@1.34.3':
     resolution: {integrity: sha512-VT25TyODGy/8ljl7GADnJoMmtmJ1F8d84UXfGonRRF8fWYJz7+2J6GzW+a6ETGtk4OyuRTt7FRSvFG5GvrfSdQ==}
 
@@ -3964,6 +3970,10 @@ packages:
   negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
+
+  neverthrow@7.2.0:
+    resolution: {integrity: sha512-iGBUfFB7yPczHHtA8dksKTJ9E8TESNTAx1UQWW6TzMF280vo9jdPYpLUXrMN1BCkPdHFdNG3fxOt2CUad8KhAw==}
+    engines: {node: '>=18'}
 
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
@@ -7643,6 +7653,12 @@ snapshots:
 
   '@types/wrap-ansi@3.0.0': {}
 
+  '@upstash/qstash@2.8.1':
+    dependencies:
+      crypto-js: 4.2.0
+      jose: 5.9.2
+      neverthrow: 7.2.0
+
   '@upstash/redis@1.34.3':
     dependencies:
       crypto-js: 4.2.0
@@ -9484,6 +9500,8 @@ snapshots:
   nanoid@5.1.5: {}
 
   negotiator@0.6.3: {}
+
+  neverthrow@7.2.0: {}
 
   node-releases@2.0.19: {}
 

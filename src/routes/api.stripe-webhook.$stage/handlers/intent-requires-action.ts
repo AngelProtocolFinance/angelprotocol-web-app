@@ -1,8 +1,9 @@
 import type { StripeDonation } from "@better-giving/donation";
 import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
-import { buildOnHoldRecord, sendEmail } from "../helpers";
-import { getPaymentMethod } from "../helpers/payment-method";
+import { to_onhold } from "../../helpers/donation-metadata";
+import { sendEmail } from "../helpers";
+import { payment_method } from "../helpers/payment-method";
 import { PutCommand, apes } from ".server/aws/db";
 
 type Ev =
@@ -23,31 +24,21 @@ export async function handleIntentRequiresAction(ev: Ev) {
   if (typeof intent.payment_method !== "string")
     throw new Error("Invalid payment method ID");
 
-  // Intent Event does not have expandable field so we query for PaymentMethod
-  const paymentMethod = await getPaymentMethod(intent.payment_method);
-
   if (!intent.metadata || Object.keys(intent.metadata).length === 0)
     throw new Error("Invalid intent metadata");
 
   const meta = intent.metadata as StripeDonation.Metadata;
-
-  const donationRecord = buildOnHoldRecord({
-    amount: +meta.amount,
-    isRecurring: ev.type === "setup_intent.requires_action",
-    metadata: meta,
-    paymentMethod,
-    transactionId: meta.transactionId,
-    usdValue: +meta.usdValue,
-    verificationLink,
+  const onhold = to_onhold(meta, {
+    payment_method: await payment_method(intent.id),
+    verify_url: verificationLink,
+  });
+  const cmd = new PutCommand({
+    TableName: tables.on_hold_donations,
+    Item: onhold,
   });
 
   /** CREATE INTENT RECORD IN DB */
-  await apes.send(
-    new PutCommand({
-      TableName: tables.on_hold_donations,
-      Item: donationRecord,
-    })
-  );
+  await apes.send(cmd);
 
   /** SEND EMAIL */
   await sendEmail({

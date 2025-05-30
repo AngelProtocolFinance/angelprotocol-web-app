@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import type { NP } from "@better-giving/nowpayments/types";
 import type { ActionFunction } from "@vercel/remix";
 import { resp } from "routes/helpers/resp";
-import { parse, stage as schema } from "routes/types";
+import { parse, stage as schema } from "routes/types/donation-message";
 import { handleConfirming } from "./handlers/confirming";
 import { handleExpired } from "./handlers/expired";
 import { handleFailed } from "./handlers/failed";
@@ -76,12 +76,13 @@ export const action: ActionFunction = async ({
       return resp.json(res.Attributes ?? {});
     }
 
-    await handleSettled(payment);
+    const res = await handleSettled(payment, new URL(request.url).origin);
 
     await discordAwsMonitor.sendAlert({
       from: `nowpayments-webhook-${stage}`,
       title: "Donation settled",
       body: JSON.stringify(payment),
+      fields: [{ name: "message id", value: res.messageId }],
     });
 
     return resp.txt("Donation settled");

@@ -12,7 +12,8 @@
     "format": "biome check --write src",
     "format-unsafe": "biome check --write-unsafe src",
     "prepare": "lefthook install",
-    "up-bg": "pnpm update -i \"@better-giving/*\" --latest"
+    "up-bg": "pnpm update -i \"@better-giving/*\" --latest",
+    "stripe-listen": "stripe listen --forward-to localhost:4200/api/stripe-webhook/staging"
   },
   "browserslist": {
     "production": [
@@ -38,6 +39,7 @@
     "@better-giving/balance": "1.1.6",
     "@better-giving/balance-tx": "1.1.6",
     "@better-giving/banking-applications": "1.0.5",
+    "@better-giving/chariot": "1.1.6",
     "@better-giving/constants": "1.1.2",
     "@better-giving/donation": "1.1.14",
     "@better-giving/endowment": "1.1.13",
@@ -47,7 +49,6 @@
     "@better-giving/helpers-donation": "1.1.23",
     "@better-giving/helpers-donation-settlement": "1.1.13",
     "@better-giving/nowpayments": "1.1.2",
-    "@better-giving/chariot": "1.1.6",
     "@better-giving/payout": "1.1.4",
     "@better-giving/referrals": "1.0.5",
     "@better-giving/registration": "1.1.8",
@@ -77,6 +78,7 @@
     "@stripe/react-stripe-js": "3.1.1",
     "@stripe/stripe-js": "5.3.0",
     "@tailwindcss/vite": "4.0.0",
+    "@upstash/qstash": "2.8.1",
     "@vercel/blob": "0.27.1",
     "@vercel/kv": "3.0.0",
     "@vercel/remix": "2.15.2",

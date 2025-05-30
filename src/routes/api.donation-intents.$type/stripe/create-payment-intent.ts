@@ -1,6 +1,6 @@
 import type { OnHoldDonation, StripeDonation } from "@better-giving/donation";
 import { round_number } from "helpers/round-number";
-import { build_metadata } from "./build-metadata";
+import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe } from ".server/sdks";
 import { PaymentMethods } from ".server/stripe/payment-methods";
 
@@ -15,7 +15,7 @@ export async function create_payment_intent(
     customer: customerId,
     metadata: {
       isRecurring: "false",
-      ...build_metadata(order), //will be cast to string
+      ...to_metadata(order),
     } satisfies StripeDonation.Metadata,
     payment_method_options: {
       acss_debit: {

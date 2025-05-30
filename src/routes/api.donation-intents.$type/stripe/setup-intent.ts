@@ -1,6 +1,6 @@
 import type { OnHoldDonation, StripeDonation } from "@better-giving/donation";
 import { round_number } from "helpers/round-number";
-import { build_metadata } from "routes/api.donation-intents.$type/stripe/build-metadata";
+import { to_metadata } from "../../helpers/donation-metadata";
 import { stripeEnvs } from ".server/env";
 import { stripe } from ".server/sdks";
 import { PaymentMethods, nonSubsPM } from ".server/stripe/payment-methods";
@@ -30,7 +30,7 @@ export async function setup_intent(
       productId: stripeEnvs.subsProductId,
       subsQuantity: String(round_number(order.usdValue, 0)),
       isRecurring: "true",
-      ...build_metadata(order),
+      ...to_metadata(order),
     } satisfies StripeDonation.SetupIntentMetadata,
     usage: "off_session",
   });

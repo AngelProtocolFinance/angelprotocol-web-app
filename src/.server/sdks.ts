@@ -2,12 +2,14 @@ import { Chariot } from "@better-giving/chariot";
 import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
+import { Client, Receiver } from "@upstash/qstash";
 import Stripe from "stripe";
 import {
   chariot_envs,
   discordEnvs,
   env,
   npEnvs,
+  qtash_envs,
   stripeEnvs,
   wiseApiToken,
 } from "./env";
@@ -23,3 +25,10 @@ export const wise = new Wise({
 });
 
 export const chariot = new Chariot(env, chariot_envs);
+
+export const qstash = new Client({ token: qtash_envs.token });
+
+export const qstash_receiver = new Receiver({
+  currentSigningKey: qtash_envs.currentSigningKey,
+  nextSigningKey: qtash_envs.nextSigningKey,
+});

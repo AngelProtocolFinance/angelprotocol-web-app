@@ -3,10 +3,10 @@ import type {
   DMKey,
   DonationMessage,
 } from "@better-giving/donation/donation-message";
-import type { DonationMessageParams } from "routes/types";
+import type { IDonationMessage } from "routes/types/donation-message";
 import { env } from ".server/env";
 
-export const buildDonationMsg = ({
+export const build_donation_msg = ({
   date,
   donor_id,
   donor_message,
@@ -14,7 +14,7 @@ export const buildDonationMsg = ({
   recipient_id,
   transaction_id,
   usd_value,
-}: DonationMessageParams): DonationMessage.DBRecord => {
+}: IDonationMessage): DonationMessage.DBRecord => {
   const uuid = crypto.randomUUID();
   const message_id: DMKey = `DM#${uuid}`;
   return {
