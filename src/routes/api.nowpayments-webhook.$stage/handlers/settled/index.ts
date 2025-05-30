@@ -30,6 +30,7 @@ export const handleSettled = async (
     in: {
       id: outcomeToken.network,
       currency: outcomeToken.symbol,
+      hash: payment.payment_id.toString(),
     },
   };
 

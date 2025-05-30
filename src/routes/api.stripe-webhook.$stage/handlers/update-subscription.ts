@@ -61,7 +61,7 @@ export async function handleUpdateSubscription(
   const settled: Settled = {
     fee,
     net,
-    in: { id: "fiat", currency: "USD" },
+    in: { id: "fiat", currency: "USD", hash: pi.id },
   };
   const final = to_final(onhold, settled);
 

@@ -1,8 +1,8 @@
-import crypto from "node:crypto";
 import type {
   DMKey,
   DonationMessage,
 } from "@better-giving/donation/donation-message";
+import { nanoid } from "nanoid";
 import type { IDonationMessage } from "routes/types/donation-message";
 import { env } from ".server/env";
 
@@ -15,7 +15,7 @@ export const build_donation_msg = ({
   transaction_id,
   usd_value,
 }: IDonationMessage): DonationMessage.DBRecord => {
-  const uuid = crypto.randomUUID();
+  const uuid = nanoid();
   const message_id: DMKey = `DM#${uuid}`;
   return {
     PK: message_id,

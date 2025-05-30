@@ -47,8 +47,11 @@ export interface Via {
 }
 
 export interface Destination {
+  /** chain_id, fiat */
   id: string;
   currency: string;
+  /** stripe: payment-intent id, np: payment_id, chariot: grant-id */
+  hash: string;
 }
 
 export interface Program {

@@ -1,10 +1,10 @@
-import crypto from "node:crypto";
 import { fees } from "@better-giving/constants";
 import type { Donation, OnHoldDonation } from "@better-giving/donation";
 import { partition } from "@better-giving/helpers";
 import { TxBuilder } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
 import type { ActionFunction } from "@vercel/remix";
+import { nanoid } from "nanoid";
 import { resp } from "routes/helpers/resp";
 import type { FinalRecorderPayload } from "../types/final-recorder";
 import { referral_commission_rate } from "./config.js";
@@ -66,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
       donationFinalChainId: tx.settled_in.id,
       donationFinalDenom: tx.settled_in.currency,
       donationFinalTxDate: new Date().toISOString(),
-      donationFinalTxHash: tx.id,
+      donationFinalTxHash: tx.settled_in.hash,
       kycEmail: tx.from.id,
       fullName: tx.from.name,
       ukGiftAid: tx.from.uk_gift_aid,
@@ -143,7 +143,7 @@ export const action: ActionFunction = async ({ request }) => {
           feeAllowance: p_fee_allowance.endow / num_members,
           excessFeeAllowance: processed.excess * (1 - referral_commission_rate),
           fees: processed.fees,
-          txId: crypto.randomUUID(),
+          txId: nanoid(),
           fundTx: tx.id,
           fundId: tx.to.id,
           fundName: tx.to.name,
@@ -271,7 +271,7 @@ export const action: ActionFunction = async ({ request }) => {
       feeAllowance: p_fee_allowance.tip,
       excessFeeAllowance: processed_tip.excess,
       fees: processed_tip.fees,
-      txId: crypto.randomUUID(),
+      txId: nanoid(),
       parentTx: tx.id,
       endowName: "Better Giving",
       claimed: true,

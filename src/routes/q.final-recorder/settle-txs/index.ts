@@ -2,6 +2,7 @@ import type { Donation } from "@better-giving/donation";
 import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
 import type { Payout } from "@better-giving/payout";
 import { tables } from "@better-giving/types/list";
+import { nanoid } from "nanoid";
 import { balance_update, to_db_update } from "./helpers";
 export type Base = Pick<
   Donation.V2DBRecord,
@@ -116,7 +117,7 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
 
   const payout: Payout.UnprocessedDBRecord = {
     source: "donation",
-    uuid: crypto.randomUUID(),
+    uuid: nanoid(),
     sourceId: o.txId,
     amount: balUpdate.payoutsPending,
     dateAdded: new Date().toISOString(),

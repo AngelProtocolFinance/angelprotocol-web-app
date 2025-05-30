@@ -1,4 +1,3 @@
-import crypto from "node:crypto";
 import type { Donation } from "@better-giving/donation";
 import type {
   DMKey,
@@ -8,6 +7,7 @@ import type { Endow } from "@better-giving/endowment";
 import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
 import * as ref_db from "@better-giving/referrals/db";
 import type { Environment } from "@better-giving/types/list";
+import { nanoid } from "nanoid";
 
 interface DonationMessageParams {
   date: string;
@@ -30,7 +30,7 @@ export const build_donation_msg = ({
   transaction_id,
   usd_value,
 }: DonationMessageParams): DonationMessage.DBRecord => {
-  const uuid = crypto.randomUUID();
+  const uuid = nanoid();
   const message_id: DMKey = `DM#${uuid}`;
   return {
     PK: message_id,

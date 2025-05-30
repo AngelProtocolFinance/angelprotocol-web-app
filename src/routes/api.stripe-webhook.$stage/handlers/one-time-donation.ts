@@ -25,7 +25,7 @@ export async function handleOneTimeDonation(
   const settled: Settled = {
     fee,
     net,
-    in: { id: "fiat", currency: "USD" },
+    in: { id: "fiat", currency: "USD", hash: intent.id },
   };
   const order = to_onhold(meta, {
     payment_method: await payment_method(intent.payment_method),
