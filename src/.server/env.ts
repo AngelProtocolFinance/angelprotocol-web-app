@@ -1,13 +1,18 @@
 import * as v from "valibot";
-const required = v.pipe(v.string(), v.nonEmpty("required"));
 const urlSchema = v.pipe(v.string(), v.url());
 export const envSchema = v.fallback(
   v.union([v.literal("staging"), v.literal("production")]),
   "staging"
 );
 
-export const _var = (name: string): string =>
-  v.parse(required, process.env[name]);
+export const _var = (name: string): string => {
+  const val = process.env[name];
+  if (!val) {
+    console.error(`Environment variable ${name} is not set.`);
+    return "";
+  }
+  return val;
+};
 
 export type Env = v.InferOutput<typeof envSchema>;
 export const env = _var("ENVIRONMENT");
