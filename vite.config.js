@@ -138,6 +138,7 @@ const rmx = remix({
               "payout-min",
               "./pages/user-dashboard/referrals/payout-min/index.tsx"
             );
+            r("w-form", "./pages/user-dashboard/referrals/w-forms/index.tsx");
           });
           r(
             "referrals/payout",
