@@ -57,6 +57,4 @@ export const anvil_envs = {
   api_key: _var("ANVIL_API_KEY"),
   webhook_token: _var("ANVIL_WEBHOOK_TOKEN"),
   fsa_template_id: _var("ANVIL_FSA_TEMPLATE_ID"),
-  w9_template_id: _var("ANVIL_W9_WELD_ID"),
-  w8ben_template_id: _var("ANVIL_W8BEN_WELD_ID"),
 };

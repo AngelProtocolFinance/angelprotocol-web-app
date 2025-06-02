@@ -17,6 +17,7 @@ interface Props {
   payout?: V2RecipientAccount;
   payout_ltd: number;
   payout_min?: number;
+  w_form?: string;
 }
 
 export function Earnings({
@@ -26,6 +27,7 @@ export function Earnings({
   payout,
   payout_min = config.pay_min,
   payout_ltd,
+  w_form,
 }: Props) {
   const now = new Date();
   const end = endOfMonth(now);
@@ -99,7 +101,7 @@ export function Earnings({
             </div>
           ) : (
             <Link
-              to="payout"
+              to={w_form ? "payout" : "w-form"}
               className="mt-2 inline-block text-sm rounded-md px-4 py-2 btn-blue"
             >
               setup payout method

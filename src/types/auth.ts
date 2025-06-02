@@ -37,6 +37,8 @@ export type UserV2 = {
   pay_id?: string;
   /** usd str num */
   pay_min?: string;
+  /** weld data eid of signed w9 or w8ben */
+  w_form?: string;
 };
 
 /**@template T - type of error to be handled */

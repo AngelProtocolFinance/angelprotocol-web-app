@@ -1,5 +1,7 @@
+import AnvilEmbedFrame from "@anvilco/anvil-embed-frame";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { useNavigate } from "@remix-run/react";
+import { IS_TEST } from "constants/env";
 import { useState } from "react";
 
 type FormType = "w9" | "w8ben" | null;
@@ -27,12 +29,10 @@ export default function Form() {
 function Content() {
   const [selectedForm, setSelectedForm] = useState<FormType>(null);
 
-  if (selectedForm === "w9") {
-    return <W9Form onBack={() => setSelectedForm(null)} />;
-  }
-
-  if (selectedForm === "w8ben") {
-    return <W8BenForm onBack={() => setSelectedForm(null)} />;
+  if (selectedForm) {
+    return (
+      <TaxForm formType={selectedForm} onBack={() => setSelectedForm(null)} />
+    );
   }
 
   return (
@@ -64,12 +64,32 @@ function Content() {
     </DialogPanel>
   );
 }
+function TaxForm({
+  formType,
+  onBack,
+}: {
+  formType: "w9" | "w8ben";
+  onBack: () => void;
+}) {
+  const navigate = useNavigate();
 
-function W9Form({ onBack }: { onBack: () => void }) {
+  const formConfig = {
+    w9: {
+      title: "W-9 Form (US Residents)",
+      iframeURL: `https://app.useanvil.com/form/better-giving/irs-w9${IS_TEST ? `?test=true` : ""}`,
+    },
+    w8ben: {
+      title: "W-8BEN Form (Non-US Residents)",
+      iframeURL: `https://app.useanvil.com/weld/better-giving/fw8ben${IS_TEST ? `?test=true` : ""}`,
+    },
+  };
+
+  const config = formConfig[formType];
+
   return (
-    <DialogPanel className="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-2xl rounded-lg p-6">
+    <DialogPanel className="fixed inset-0 z-10 grid grid-rows-[auto_1fr] content-start text-gray-d4 bg-white p-6 overflow-scroll">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold">W-9 Form (US Residents)</h2>
+        <h2 className="text-xl font-bold">{config.title}</h2>
         <button
           onClick={onBack}
           className="text-gray hover:text-gray-d4 font-semibold"
@@ -78,30 +98,21 @@ function W9Form({ onBack }: { onBack: () => void }) {
         </button>
       </div>
 
-      <div className="bg-gray-l4 rounded-lg p-8 text-center">
-        {/* W-9 form placeholder */}
-        <p className="text-gray">W-9 Form will be implemented here</p>
-      </div>
-    </DialogPanel>
-  );
-}
-
-function W8BenForm({ onBack }: { onBack: () => void }) {
-  return (
-    <DialogPanel className="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-2xl rounded-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold">W-8BEN Form (Non-US Residents)</h2>
-        <button
-          onClick={onBack}
-          className="text-gray hover:text-gray-d4 font-semibold"
-        >
-          ← Back
-        </button>
-      </div>
-
-      <div className="bg-gray-l4 rounded-lg p-8 text-center">
-        {/* W-8BEN form placeholder */}
-        <p className="text-gray">W-8BEN Form will be implemented here</p>
+      <div className="relative">
+        <AnvilEmbedFrame
+          className="fixed w-full h-full"
+          scroll="auto"
+          iframeURL={config.iframeURL}
+          onEvent={(ev: any) => {
+            console.log(ev);
+            if (ev.action !== "weldComplete") return;
+            navigate(
+              { pathname: "..", search: `?weld_data=${ev.weldDataEid}` },
+              { replace: true, preventScrollReset: true }
+            );
+          }}
+          style={{ border: "none" }}
+        />
       </div>
     </DialogPanel>
   );
