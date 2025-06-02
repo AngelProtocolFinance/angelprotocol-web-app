@@ -12,6 +12,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
+  if (user.w_form) return redirect("..");
+
   return user;
 };
 

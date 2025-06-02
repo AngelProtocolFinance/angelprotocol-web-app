@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import Copier from "components/copier";
 import { appRoutes, regRoutes } from "constants/routes";
 
@@ -45,6 +46,17 @@ export function ReferralId({ classes = "", ...p }: Props) {
             size={20}
           />
         </div>
+      </div>
+
+      <div className="mt-3 text-sm text-gray-l1">
+        By sharing your referral link or code, you agree to our{" "}
+        <Link
+          to="/terms-of-use-referrals"
+          className="text-blue hover:text-blue-d1"
+        >
+          Referral Program Terms of Use
+        </Link>
+        .
       </div>
     </div>
   );

@@ -59,7 +59,7 @@ async function commit_wform(
   weld_data_eid_param: string | null
 ): Promise<string | null> {
   if (user.w_form) {
-    console.log("User already has a w_form attribute, skipping commit");
+    console.log("user already has a w_form attribute, skipping commit");
     return null;
   }
 

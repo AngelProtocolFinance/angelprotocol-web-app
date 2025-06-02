@@ -22,7 +22,7 @@ export function ReferralsPage() {
   } = useCachedLoaderData() as LoaderData;
   return (
     <div className="">
-      <Explainer />
+      <Explainer classes="mb-4" />
       <ReferralId
         classes="mb-8"
         referral_id={user.referral_id}
