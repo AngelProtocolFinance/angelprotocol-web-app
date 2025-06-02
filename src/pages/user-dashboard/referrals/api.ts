@@ -17,6 +17,7 @@ export interface LoaderData {
   payout_ltd: number;
   payout_min?: number;
   origin: string;
+  w_form?: string;
 }
 
 function payout(id: number) {
@@ -36,7 +37,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   ]);
 
   const sp = new URL(request.url).searchParams;
-  const commitment = await commit_wform(user, session, sp.get("weld_data"));
+  const wform_commit = await commit_wform(user, session, sp.get("weld_data"));
 
   return data(
     {
@@ -48,8 +49,9 @@ export const loader: LoaderFunction = async ({ request }) => {
       payout: p,
       payout_min: user.pay_min ? +user.pay_min : undefined,
       payout_ltd: pltd,
+      w_form: user.w_form,
     } satisfies LoaderData,
-    { headers: { ...(commitment ? { "Set-Cookie": commitment } : {}) } }
+    { headers: { ...(wform_commit ? { "Set-Cookie": wform_commit[0] } : {}) } }
   );
 };
 
@@ -78,6 +80,5 @@ async function commit_wform(
     console.error("Error refreshing session:", commitment.message);
     return null;
   }
-  console.log(commitment);
   return commitment;
 }

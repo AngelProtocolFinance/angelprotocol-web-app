@@ -1,8 +1,8 @@
 import AnvilEmbedFrame from "@anvilco/anvil-embed-frame";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { useNavigate } from "@remix-run/react";
-import { IS_TEST } from "constants/env";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import type { LoaderData } from "./api";
 
 type FormType = "w9" | "w8ben" | null;
 
@@ -11,6 +11,7 @@ export { ErrorModal as ErrorBoundary } from "components/error";
 
 export default function Form() {
   const navigate = useNavigate();
+  const data = useLoaderData() as LoaderData;
 
   return (
     <Dialog
@@ -21,17 +22,26 @@ export default function Form() {
       className="relative z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
-      <Content />
+      <Content {...data} />
     </Dialog>
   );
 }
 
-function Content() {
+function Content(props: LoaderData) {
   const [selectedForm, setSelectedForm] = useState<FormType>(null);
 
   if (selectedForm) {
+    const title =
+      selectedForm === "w9"
+        ? "W-9 Form ( US Residents )"
+        : "W-8BEN Form ( Non-US Residents )";
+    const form_url = selectedForm === "w9" ? props.w9_url : props.w8ben_url;
     return (
-      <TaxForm formType={selectedForm} onBack={() => setSelectedForm(null)} />
+      <TaxForm
+        title={title}
+        form_url={form_url}
+        on_back={() => setSelectedForm(null)}
+      />
     );
   }
 
@@ -64,34 +74,21 @@ function Content() {
     </DialogPanel>
   );
 }
-function TaxForm({
-  formType,
-  onBack,
-}: {
-  formType: "w9" | "w8ben";
-  onBack: () => void;
-}) {
+
+interface ITaxForm {
+  title: string;
+  form_url: string;
+  on_back: () => void;
+}
+function TaxForm({ form_url, title, on_back }: ITaxForm) {
   const navigate = useNavigate();
-
-  const formConfig = {
-    w9: {
-      title: "W-9 Form (US Residents)",
-      iframeURL: `https://app.useanvil.com/form/better-giving/irs-w9${IS_TEST ? `?test=true` : ""}`,
-    },
-    w8ben: {
-      title: "W-8BEN Form (Non-US Residents)",
-      iframeURL: `https://app.useanvil.com/weld/better-giving/fw8ben${IS_TEST ? `?test=true` : ""}`,
-    },
-  };
-
-  const config = formConfig[formType];
 
   return (
     <DialogPanel className="fixed inset-0 z-10 grid grid-rows-[auto_1fr] content-start text-gray-d4 bg-white p-6 overflow-scroll">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold">{config.title}</h2>
+        <h2 className="text-xl font-bold">{title}</h2>
         <button
-          onClick={onBack}
+          onClick={on_back}
           className="text-gray hover:text-gray-d4 font-semibold"
         >
           ← Back
@@ -102,7 +99,7 @@ function TaxForm({
         <AnvilEmbedFrame
           className="fixed w-full h-full"
           scroll="auto"
-          iframeURL={config.iframeURL}
+          iframeURL={form_url}
           onEvent={(ev: any) => {
             console.log(ev);
             if (ev.action !== "weldComplete") return;
