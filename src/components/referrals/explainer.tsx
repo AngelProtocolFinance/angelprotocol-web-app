@@ -98,6 +98,7 @@ export function Explainer({ classes = "" }) {
 
                 <div className="flex flex-wrap gap-4 mt-4">
                   <Link
+                    target="_blank"
                     to="/terms-of-use-referrals"
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
                   >
