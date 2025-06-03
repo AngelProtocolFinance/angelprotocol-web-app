@@ -3,6 +3,7 @@ import type { OptionType } from "types/components";
 
 export const roles: { [key in Role]: string } = {
   "": "",
+  "executive-director": "Executive Director",
   president: "Chairperson / President",
   "vice-president": "Vice-chairperson / Vice president",
   secretary: "Secretary",

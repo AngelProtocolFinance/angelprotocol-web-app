@@ -66,8 +66,8 @@ importers:
         specifier: 1.0.5
         version: 1.0.5(@better-giving/types@1.1.6)
       '@better-giving/registration':
-        specifier: 1.1.8
-        version: 1.1.8(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.1.9
+        version: 1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/schemas':
         specifier: 1.1.2
         version: 1.1.2(valibot@0.42.0(typescript@5.7.3))
@@ -710,8 +710,8 @@ packages:
     peerDependencies:
       '@better-giving/types': 1.1.6
 
-  '@better-giving/registration@1.1.8':
-    resolution: {integrity: sha512-//3nshqLPuuN9Rs3iYHrs0+naGY3SN4Ie2Y+AGTVwotq8/m5n9vLhfMH23mt2QXFeJbWqn0/oUQza3BAyhxqxg==}
+  '@better-giving/registration@1.1.9':
+    resolution: {integrity: sha512-u9zyJy5rHrnDmm/ll/laAC0DTUxyvA9CCJLMzUINqgKhhbefa2PDkkEz9Syx6ndR4j3jEdy9zDS+TQHN4mMOeg==}
     peerDependencies:
       '@better-giving/schemas': 1.1.2
       '@better-giving/types': 1.1.6
@@ -5999,7 +5999,7 @@ snapshots:
     dependencies:
       '@better-giving/types': 1.1.6
 
-  '@better-giving/registration@1.1.8(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/registration@1.1.9(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       '@better-giving/schemas': 1.1.2(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/types': 1.1.6
