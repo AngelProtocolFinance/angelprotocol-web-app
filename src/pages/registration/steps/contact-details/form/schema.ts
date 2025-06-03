@@ -1,7 +1,7 @@
 import {
   contact,
   init,
-  orgRole,
+  orgRoles,
   referralMethod,
 } from "@better-giving/registration/models";
 import {
@@ -13,13 +13,14 @@ import {
   omit,
   partialCheck,
   pick,
+  picklist,
   pipe,
   string,
 } from "valibot";
 
 const roleOption = object({
   label: string(),
-  value: pipe(orgRole, nonEmpty("required")),
+  value: pipe(picklist(orgRoles), nonEmpty("required")),
 });
 
 export interface RoleOption extends InferOutput<typeof roleOption> {}
@@ -32,7 +33,7 @@ export interface ReferralOption extends InferOutput<typeof referralOption> {}
 
 export const schema = pipe(
   object({
-    ...omit(contact, ["org_role", "referral_method"]).entries,
+    ...omit(contact, ["org_role", "referral_method", "goals"]).entries,
     ...pick(init, ["registrant_id"]).entries,
     org_role: roleOption,
     referral_method: referralOption,

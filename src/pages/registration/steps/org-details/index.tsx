@@ -2,7 +2,6 @@ import type { Org } from "@better-giving/registration/models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoaderData } from "@remix-run/react";
 import { country } from "components/country-selector";
-import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
 import { stepLoader } from "../../data/step-loader";
 import { nextStep } from "../../routes";
@@ -35,7 +34,6 @@ export default function OrgDetails() {
             : { name: "", flag: "", code: "" },
           designation: { value: "", label: "" },
           active_in_countries: [],
-          isAnonymousDonationsAllowed: "yes",
         },
   });
 
@@ -50,10 +48,7 @@ function formFomat(org: Org): FormValues {
   return {
     //level 1
     website: org.website,
-    un_sdg: org.un_sdg.map((sdg) => ({
-      value: sdg,
-      label: `${sdg} - ${unsdgs[sdg].title}`,
-    })),
+    un_sdg: [],
     hq_country: country(org.hq_country),
     designation: {
       value: org.designation,
@@ -64,8 +59,5 @@ function formFomat(org: Org): FormValues {
       label: c,
       value: c,
     })),
-
-    //meta
-    isAnonymousDonationsAllowed: org.kyc_donors_only ? "no" : "yes",
   };
 }

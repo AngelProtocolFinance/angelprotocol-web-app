@@ -9,7 +9,6 @@ export type EndowContentFromReg = Pick<
   | "kyc_donors_only"
   | "name"
   | "registration_number"
-  | "sdgs"
   | "url"
   | "claimed"
   | "referrer"

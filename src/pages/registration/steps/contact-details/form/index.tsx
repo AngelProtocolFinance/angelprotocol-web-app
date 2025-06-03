@@ -4,7 +4,6 @@ import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { NativeField as Field } from "components/form";
 import { LoadText } from "components/load-text";
 import { List } from "components/selector";
-import { APP_NAME } from "constants/env";
 import type { SubmitHandler } from "react-hook-form";
 import { steps } from "../../../routes";
 import type { RegStep1 } from "../../../types";
@@ -148,14 +147,6 @@ export default function Form({ classes = "" }: { classes?: string }) {
           error={errors.referral_code?.message}
         />
       )}
-      <Field
-        required
-        label="Goals"
-        {...register("goals")}
-        placeholder={`What is your goal working with ${APP_NAME}?`}
-        error={errors.goals?.message}
-        classes={{ container: "mt-4" }}
-      />
       <button
         type="submit"
         className="mt-8 py-3 px-8 w-full sm:w-auto btn btn-blue text-sm"

@@ -25,10 +25,6 @@ export default function useSubmit(org: RegStep2["data"]["org"]) {
       type: "org",
       //payload
       website: fv.website,
-      un_sdg: fv.un_sdg.map(
-        (sdg) => sdg.value
-      ) /**TODO: AWS update to accept number[] */,
-      kyc_donors_only: fv.isAnonymousDonationsAllowed === "no",
       hq_country: fv.hq_country.name,
       // required in schema
       designation: fv.designation.value as EndowDesignation,
