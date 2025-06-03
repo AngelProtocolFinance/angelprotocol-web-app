@@ -11,4 +11,4 @@ export type FormValues = OverrideProperties<
     active_in_countries: OptionType<string>[];
     un_sdg: OptionType<UNSDG_NUMS>[];
   }
-> & { isAnonymousDonationsAllowed: "yes" | "no" };
+>;

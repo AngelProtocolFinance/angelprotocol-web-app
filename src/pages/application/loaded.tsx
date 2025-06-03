@@ -78,7 +78,6 @@ export default function Loaded(props: Application) {
           <Row label="Countries active in">
             {props.org.active_in_countries?.join(", ") ?? "N/A"}
           </Row>
-          <Row label="UN SDG">{props.org.un_sdg.join(", ")}</Row>
           <Row label="Contact name">
             {props.contact.first_name + " " + props.contact.last_name}
           </Row>

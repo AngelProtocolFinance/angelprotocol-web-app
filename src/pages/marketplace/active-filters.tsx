@@ -1,4 +1,4 @@
-import type { UNSDG_NUM } from "@better-giving/registration/models";
+import type { UnSdgNum } from "@better-giving/schemas";
 import { useSearchParams } from "@remix-run/react";
 import { categories, sdgGroups } from "constants/unsdgs";
 import { CircleX } from "lucide-react";
@@ -44,7 +44,7 @@ export default function ActiveFilters() {
           toRaw({
             ...parsed,
             sdgs: parsed.sdgs?.filter(
-              (x) => !categories[groupNum].sdgs.includes(x as UNSDG_NUM)
+              (x) => !categories[groupNum].sdgs.includes(x as UnSdgNum)
             ),
           }),
           { replace: true, preventScrollReset: true }

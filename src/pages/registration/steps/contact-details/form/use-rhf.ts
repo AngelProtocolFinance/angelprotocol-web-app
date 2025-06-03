@@ -45,7 +45,6 @@ export function useRhf(data: Step1Data, user: UserV2) {
           first_name: user.firstName ?? "",
           last_name: user.lastName ?? "",
           org_name: init.claim?.name ?? "",
-          goals: "",
           ...(init.referrer && { referral_code: init.referrer }),
         },
   });
