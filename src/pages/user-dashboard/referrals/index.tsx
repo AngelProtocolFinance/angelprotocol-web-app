@@ -40,6 +40,7 @@ export function ReferralsPage() {
         payout_min={payout_min}
         pendings={pendings}
         payout_ltd={payout_ltd}
+        w_form={user.w_form}
       />
       <Nonprofits npos={referreds} classes="mb-8" />
     </div>

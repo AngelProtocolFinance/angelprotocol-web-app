@@ -37,11 +37,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   ]);
 
   const sp = new URL(request.url).searchParams;
-  const wform_commit = await commit_wform(user, session, sp.get("weld_data"));
+  const refreshed_user = await commit_wform(user, session, sp.get("weld_data"));
 
   return data(
     {
-      user,
+      user: refreshed_user || user,
       origin: new URL(request.url).origin,
       referreds,
       earnings,
@@ -51,7 +51,11 @@ export const loader: LoaderFunction = async ({ request }) => {
       payout_ltd: pltd,
       w_form: user.w_form,
     } satisfies LoaderData,
-    { headers: { ...(wform_commit ? { "Set-Cookie": wform_commit[0] } : {}) } }
+    {
+      headers: {
+        ...(refreshed_user ? { "Set-Cookie": refreshed_user.commit } : {}),
+      },
+    }
   );
 };
 
@@ -59,12 +63,7 @@ async function commit_wform(
   user: UserV2,
   sesssion: Stored,
   weld_data_eid_param: string | null
-): Promise<string | null> {
-  if (user.w_form) {
-    console.log("user already has a w_form attribute, skipping commit");
-    return null;
-  }
-
+): Promise<(UserV2 & { commit: string }) | null> {
   if (!weld_data_eid_param) return null;
 
   const res = await cognito.updateUserAttributes(
@@ -80,5 +79,6 @@ async function commit_wform(
     console.error("Error refreshing session:", commitment.message);
     return null;
   }
+
   return commitment;
 }

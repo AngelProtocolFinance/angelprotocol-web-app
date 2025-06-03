@@ -18,8 +18,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  if (user.w_form) return redirect("..");
-
   const wform: LoaderData = {
     w8ben_url: anvil_form_url("fw8ben"),
     w9_url: anvil_form_url("irs-w9"),
@@ -45,7 +43,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   return redirect("..", {
     headers: {
-      "Set-Cookie": res,
+      "Set-Cookie": res.commit,
       "X-Remix-Revalidate": "1",
       "Cache-Control": "no-cache",
     },

@@ -101,7 +101,6 @@ function TaxForm({ form_url, title, on_back }: ITaxForm) {
           scroll="auto"
           iframeURL={form_url}
           onEvent={(ev: any) => {
-            console.log(ev);
             if (ev.action !== "weldComplete") return;
             navigate(
               { pathname: "..", search: `?weld_data=${ev.weldDataEid}` },

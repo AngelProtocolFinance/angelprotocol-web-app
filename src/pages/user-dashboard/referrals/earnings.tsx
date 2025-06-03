@@ -84,7 +84,7 @@ export function Earnings({
               </div>
             </div>
           )}
-          {payout ? (
+          {payout && w_form ? (
             <div className="mt-4">
               <p className="text-sm text-gray">Payout method</p>
               <div className="flex gap-x-2 items-center">

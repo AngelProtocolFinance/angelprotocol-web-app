@@ -6,8 +6,6 @@ export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  if (!user.w_form) return redirect("../w-forms");
-
   const recipient_id = await request.text();
   const result = await cognito.updateUserAttributes(
     [{ Name: "custom:pay_id", Value: recipient_id }],
@@ -21,7 +19,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   return redirect("../referrals", {
     headers: {
-      "Set-Cookie": res,
+      "Set-Cookie": res.commit,
       "X-Remix-Revalidate": "1",
       "Cache-Control": "no-cache",
     },
