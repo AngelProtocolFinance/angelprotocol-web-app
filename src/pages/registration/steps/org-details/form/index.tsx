@@ -62,7 +62,7 @@ export default function Form({ data }: RegStep2) {
         classes={{ options: "text-sm" }}
       />
 
-      <p className="text-sm">
+      <p className="text-sm mt-4">
         By submitting this information, you declare that you have read and
         agreed to our{" "}
         <ExtLink
