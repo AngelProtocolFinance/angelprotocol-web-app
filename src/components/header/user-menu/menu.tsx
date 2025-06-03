@@ -24,7 +24,7 @@ export default function Menu({ user, classes }: Props) {
           className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
           <CircleDollarSign size={18} />
-          <span>My Donations</span>
+          <span>My Dashboard</span>
         </MenuItem>
         <Organizations user={user} classes="mt-6" />
         <Bookmarks user={user} classes="mt-6" />
