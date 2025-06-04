@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@anvilco/anvil": "3.3.2",
-    "@anvilco/anvil-embed-frame": "2.2.0",
     "@aws-sdk/client-cognito-identity-provider": "3.485.0",
     "@aws-sdk/client-dynamodb": "3.485.0",
     "@aws-sdk/client-sesv2": "3.485.0",

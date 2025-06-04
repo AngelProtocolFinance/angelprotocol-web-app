@@ -5,8 +5,17 @@ import { Nonprofits } from "./nonprofits";
 import { ReferralId } from "./referral-id";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
+import type { MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Explainer } from "components/referrals";
+import { metas } from "helpers/seo";
+
+export const meta: MetaFunction = () => {
+  return metas({
+    title: "My Referrals",
+    description: "Track your referrals and earnings on Better Giving.",
+  });
+};
 
 export function ReferralsPage() {
   const navigate = useNavigate();

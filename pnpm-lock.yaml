@@ -11,9 +11,6 @@ importers:
       '@anvilco/anvil':
         specifier: 3.3.2
         version: 3.3.2
-      '@anvilco/anvil-embed-frame':
-        specifier: 2.2.0
-        version: 2.2.0(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@aws-sdk/client-cognito-identity-provider':
         specifier: 3.485.0
         version: 3.485.0
@@ -348,13 +345,6 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
-
-  '@anvilco/anvil-embed-frame@2.2.0':
-    resolution: {integrity: sha512-4JpBHKaJd4nasViZ3Qh4E4MLIHFjqhgA7/MdE5exS7OfEfg1mrGAPDAGJ4gMLQijxljOozhP2VGwgHoGmsvdoA==}
-    peerDependencies:
-      prop-types: ^15.6.0
-      react: '>=16'
-      react-dom: '>=16'
 
   '@anvilco/anvil@3.3.2':
     resolution: {integrity: sha512-YRynwKahehEfmNtXjWZ+ZqN9NsmcsqjvyK4XmYpB18D4402/kkrtbdUjh5MrPgHPV4aRgEXdYufHqnwugT3g/Q==}
@@ -5341,12 +5331,6 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
-
-  '@anvilco/anvil-embed-frame@2.2.0(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
 
   '@anvilco/anvil@3.3.2':
     dependencies:
