@@ -37,7 +37,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   ]);
 
   const sp = new URL(request.url).searchParams;
-  const refreshed_user = await commit_wform(user, session, sp.get("weld_data"));
+  const refreshed_user = await commit_wform(user, session, sp.get("doc"));
 
   return data(
     {
@@ -62,12 +62,12 @@ export const loader: LoaderFunction = async ({ request }) => {
 async function commit_wform(
   user: UserV2,
   sesssion: Stored,
-  weld_data_eid_param: string | null
+  doc_eid_param: string | null
 ): Promise<(UserV2 & { commit: string }) | null> {
-  if (!weld_data_eid_param) return null;
+  if (!doc_eid_param) return null;
 
   const res = await cognito.updateUserAttributes(
-    [{ Name: "custom:w_form", Value: weld_data_eid_param }],
+    [{ Name: "custom:w_form", Value: doc_eid_param }],
     user.accessToken
   );
   if (isError(res)) {
