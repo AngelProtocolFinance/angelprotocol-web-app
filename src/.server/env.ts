@@ -1,3 +1,4 @@
+import type { Environment } from "@better-giving/user";
 import * as v from "valibot";
 const urlSchema = v.pipe(v.string(), v.url());
 export const envSchema = v.fallback(
@@ -12,8 +13,9 @@ export const _var = (name: string): string => {
   }
   return v || "";
 };
+
 export type Env = v.InferOutput<typeof envSchema>;
-export const env = v.parse(envSchema, process.env.ENVIRONMENT);
+export const env = _var("ENVIRONMENT") as Environment;
 export const cloudsearchNpoSearchEndpoint = v.parse(
   urlSchema,
   process.env.CLOUDSEARCH_NPO_SEARCH_ENDPOINT
@@ -62,4 +64,11 @@ export const qtash_envs = {
   url: v.parse(urlSchema, _var("QSTASH_URL")),
   currentSigningKey: _var("QSTASH_CURRENT_SIGNING_KEY"),
   nextSigningKey: _var("QSTASH_NEXT_SIGNING_KEY"),
+};
+
+export const anvil_envs = {
+  api_key: _var("ANVIL_API_KEY"),
+  webhook_token: _var("ANVIL_WEBHOOK_TOKEN"),
+  fsa_template_id: _var("ANVIL_FSA_TEMPLATE_ID"),
+  org_slug: _var("ANVIL_ORG_SLUG"),
 };

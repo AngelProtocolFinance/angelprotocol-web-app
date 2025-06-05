@@ -5,8 +5,17 @@ import { Nonprofits } from "./nonprofits";
 import { ReferralId } from "./referral-id";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
+import type { MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Explainer } from "components/referrals";
+import { metas } from "helpers/seo";
+
+export const meta: MetaFunction = () => {
+  return metas({
+    title: "My Referrals",
+    description: "Track your referrals and earnings on Better Giving.",
+  });
+};
 
 export function ReferralsPage() {
   const navigate = useNavigate();
@@ -22,7 +31,7 @@ export function ReferralsPage() {
   } = useCachedLoaderData() as LoaderData;
   return (
     <div className="">
-      <Explainer />
+      <Explainer classes="mb-4" />
       <ReferralId
         classes="mb-8"
         referral_id={user.referral_id}
@@ -40,6 +49,7 @@ export function ReferralsPage() {
         payout_min={payout_min}
         pendings={pendings}
         payout_ltd={payout_ltd}
+        w_form={user.w_form}
       />
       <Nonprofits npos={referreds} classes="mb-8" />
     </div>

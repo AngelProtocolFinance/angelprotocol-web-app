@@ -19,7 +19,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   return redirect("../referrals", {
     headers: {
-      "Set-Cookie": res,
+      "Set-Cookie": res.commit,
       "X-Remix-Revalidate": "1",
       "Cache-Control": "no-cache",
     },
