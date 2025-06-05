@@ -251,7 +251,7 @@ export const action: ActionFunction = async ({ request }) => {
       const msg = build_donation_msg({
         date: tx.date,
         donor_id: tx.from.id,
-        donor_message: tx.from.name ?? "",
+        donor_message: tx.from.message ?? "",
         donor_name: tx.from.name,
         env: env,
         recipient_id: tx.to.id,
