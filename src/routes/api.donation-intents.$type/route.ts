@@ -103,7 +103,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (d_type === "chariot") {
     const to_pay =
       intent.amount.amount + intent.amount.tip + intent.amount.feeAllowance;
-    const grant = await chariot.createGrant(
+    const grant = await chariot.create_grant(
       intent.viaId,
       round_number(to_pay * 100, 0)
     );

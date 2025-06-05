@@ -1,7 +1,7 @@
 import tokens from "@better-giving/assets/tokens/map";
 import type { NP } from "@better-giving/nowpayments/types";
 import { type Settled, to_final } from "../../../helpers/donation";
-import { getOrder } from "../../helpers";
+import { get_order } from "../../../helpers/onhold";
 import { np, qstash } from ".server/sdks";
 
 /**
@@ -14,7 +14,7 @@ export const handleSettled = async (
   payment: NP.PaymentPayload,
   origin: string
 ) => {
-  const order = await getOrder(payment.order_id);
+  const order = await get_order(payment.order_id);
 
   if (!order) throw `Record ${payment.order_id} not found!`;
 

@@ -52,8 +52,9 @@ export const stripeEnvs = {
 export const wiseApiToken = _var("WISE_API_TOKEN");
 
 export const chariot_envs = {
-  client_id: _var("CHARIOT_CLIENT_ID"),
-  client_secret: _var("CHARIOT_CLIENT_SECRET"),
+  api_key: _var("CHARIOT_API_KEY"),
+  api_url: _var("CHARIOT_API_URL"),
+  signing_key: _var("CHARIOT_SIGNING_KEY"),
 };
 
 export const qtash_envs = {

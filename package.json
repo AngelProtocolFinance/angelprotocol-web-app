@@ -39,7 +39,7 @@
     "@better-giving/balance": "1.1.6",
     "@better-giving/balance-tx": "1.1.6",
     "@better-giving/banking-applications": "1.0.5",
-    "@better-giving/chariot": "1.1.6",
+    "@better-giving/chariot": "1.1.7",
     "@better-giving/constants": "1.1.2",
     "@better-giving/donation": "1.1.14",
     "@better-giving/endowment": "1.1.13",

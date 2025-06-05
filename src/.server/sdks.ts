@@ -24,7 +24,7 @@ export const wise = new Wise({
   sandbox: env === "staging",
 });
 
-export const chariot = new Chariot(env, chariot_envs);
+export const chariot = new Chariot(chariot_envs);
 
 export const qstash = new Client({ token: qtash_envs.token });
 
