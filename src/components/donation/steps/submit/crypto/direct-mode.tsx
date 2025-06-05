@@ -18,7 +18,7 @@ type Props = {
 };
 
 const fetcher = async (intent: DonationIntent) =>
-  fetch("/api/crypto-intents", {
+  fetch("/api/donation-intents/crypto", {
     method: "POST",
     body: JSON.stringify(intent),
   }).then<Payment>((res) => res.json());

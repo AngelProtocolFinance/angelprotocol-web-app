@@ -4,7 +4,7 @@ import type { StripeDonation } from "@better-giving/donation";
  * Listed payment methods are ones that are enabled in our Stripe account
  * @see {@link https://docs.stripe.com/api/payment_methods/object#payment_method_object-type}
  */
-export const PaymentMethods: {
+export const payment_methods: {
   [key in string]: StripeDonation.PaymentMethods[];
 } = {
   cad: ["acss_debit", "card"],

@@ -1,23 +1,14 @@
-import type { StripeDonation } from "@better-giving/donation";
-import type { DonationIntent } from "@better-giving/donation/intent";
-import { roundNumber } from "@better-giving/helpers";
-import { PaymentMethods, nonSubsPM } from "../payment-methods";
+import type { OnHoldDonation, StripeDonation } from "@better-giving/donation";
+import { round_number } from "helpers/round-number";
+import { to_metadata } from "../../helpers/donation-metadata";
 import { stripeEnvs } from ".server/env";
 import { stripe } from ".server/sdks";
+import { nonSubsPM, payment_methods } from ".server/stripe/payment-methods";
 
-export async function createSetupIntent(
-  amount: DonationIntent["amount"],
-  metadata: StripeDonation.Metadata,
-  customerId: string,
-  usdRate: number
+export async function setup_intent(
+  order: OnHoldDonation.FiatDBRecord,
+  customerId: string
 ): Promise<string> {
-  const currency = amount.currency.toLowerCase();
-
-  // Compute for Subs Quantity
-  const totalAmount = amount.amount + amount.tip;
-  const totalAmountUsd = totalAmount / usdRate;
-  const subsQuantity = roundNumber(totalAmountUsd, 0);
-
   const setupIntent = await stripe.setupIntents.create({
     customer: customerId,
     payment_method_options: {
@@ -31,15 +22,15 @@ export async function createSetupIntent(
         verification_method: "automatic",
       },
     },
-    payment_method_types: (PaymentMethods[currency] ?? ["card"]).filter(
-      nonSubsPM
-    ),
+    payment_method_types: (
+      payment_methods[order.denomination] ?? ["card"]
+    ).filter(nonSubsPM),
     metadata: {
       // Subscription required fields
       productId: stripeEnvs.subsProductId,
-      subsQuantity: String(subsQuantity),
+      subsQuantity: String(round_number(order.usdValue, 0)),
       isRecurring: "true",
-      ...metadata,
+      ...to_metadata(order),
     } satisfies StripeDonation.SetupIntentMetadata,
     usage: "off_session",
   });

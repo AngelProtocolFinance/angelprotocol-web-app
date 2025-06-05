@@ -1,32 +1,9 @@
-import type { OnHoldDonation } from "@better-giving/donation";
 import type { EmailSQS } from "@better-giving/types/email-sqs";
 import { type Environment, tables } from "@better-giving/types/list";
 
 import type { Endow } from "@better-giving/endowment/db";
-import { DeleteCommand, GetCommand, ap, apes } from ".server/aws/db";
+import { GetCommand, ap } from ".server/aws/db";
 import { SendEmailCommand, ses } from ".server/aws/ses";
-
-export const getOrder = async (orderId: string) => {
-  /// RETRIEVE ORDER DETAILS ///
-  const cmd = new GetCommand({
-    TableName: tables.on_hold_donations,
-    Key: { transactionId: orderId } satisfies OnHoldDonation.PrimaryKey,
-  });
-
-  return apes
-    .send(cmd)
-    .then<OnHoldDonation.DBRecord | undefined>((res) => res.Item as any);
-};
-
-export async function deleteOrder(orderId: string) {
-  const cmd = new DeleteCommand({
-    TableName: tables.on_hold_donations,
-    Key: { transactionId: orderId } satisfies OnHoldDonation.PrimaryKey,
-    ReturnValues: "ALL_OLD",
-  });
-
-  return apes.send(cmd);
-}
 
 /**
  * Sends email to donor

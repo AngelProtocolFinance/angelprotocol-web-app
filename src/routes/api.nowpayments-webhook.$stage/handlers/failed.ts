@@ -1,5 +1,6 @@
 import type { NP } from "@better-giving/nowpayments/types";
-import { deleteOrder, getOrder, sendEmail } from "../helpers";
+import { delete_order, get_order } from "../../helpers/onhold";
+import { sendEmail } from "../helpers";
 import { np } from ".server/sdks";
 
 /**
@@ -14,7 +15,7 @@ export async function handleFailed(payment: NP.PaymentPayload) {
       ? `Paid amount: ${payment.actually_paid} ${payment.pay_currency} is less than the minimum processing amount: ${pay.min} ${payment.pay_currency}`
       : "Unknown error occured";
 
-  const order = await getOrder(payment.order_id);
+  const order = await get_order(payment.order_id);
   if (!order || !order.kycEmail) {
     throw `notif recipient not found for failed payment:${payment.payment_id}`;
   }
@@ -45,5 +46,5 @@ export async function handleFailed(payment: NP.PaymentPayload) {
     throw `payment:${payment.payment_id} failed but can be reprocessed for an net of ${reprocessingNet}`;
   }
 
-  return deleteOrder(payment.order_id);
+  return delete_order(payment.order_id);
 }

@@ -32,6 +32,9 @@ importers:
       '@better-giving/banking-applications':
         specifier: 1.0.5
         version: 1.0.5(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
+      '@better-giving/chariot':
+        specifier: 1.1.7
+        version: 1.1.7
       '@better-giving/constants':
         specifier: 1.1.2
         version: 1.1.2
@@ -146,6 +149,9 @@ importers:
       '@tailwindcss/vite':
         specifier: 4.0.0
         version: 4.0.0(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1))
+      '@upstash/qstash':
+        specifier: 2.8.1
+        version: 2.8.1
       '@vercel/blob':
         specifier: 0.27.1
         version: 0.27.1
@@ -643,6 +649,9 @@ packages:
       '@better-giving/schemas': 1.1.2
       '@better-giving/types': 1.1.6
       valibot: 0.42.0
+
+  '@better-giving/chariot@1.1.7':
+    resolution: {integrity: sha512-x+jLT6U8VafFhhuVmpTsaaZZSM76eQJCAJ2ImCRf7cmNEyCy09DeYjd+RRZbdF1O3Ycf3I3m3aF8XmFsVSuTPA==}
 
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
@@ -2308,6 +2317,9 @@ packages:
   '@types/wrap-ansi@3.0.0':
     resolution: {integrity: sha512-ltIpx+kM7g/MLRZfkbL7EsCEjfzCcScLpkg37eXEtx5kmrAKBkTJwd1GIAjDSL8wTpM6Hzn5YO4pSb91BEwu1g==}
 
+  '@upstash/qstash@2.8.1':
+    resolution: {integrity: sha512-E+JoLHMqygQksWATjS/9AAo7Mhi/k21Tu0zDwMm9GyNyNVjEJntQvmrH5NC7x6kXwjCDTEWFtIWz0JXu9/9pMQ==}
+
   '@upstash/redis@1.34.3':
     resolution: {integrity: sha512-VT25TyODGy/8ljl7GADnJoMmtmJ1F8d84UXfGonRRF8fWYJz7+2J6GzW+a6ETGtk4OyuRTt7FRSvFG5GvrfSdQ==}
 
@@ -3956,6 +3968,10 @@ packages:
   negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
+
+  neverthrow@7.2.0:
+    resolution: {integrity: sha512-iGBUfFB7yPczHHtA8dksKTJ9E8TESNTAx1UQWW6TzMF280vo9jdPYpLUXrMN1BCkPdHFdNG3fxOt2CUad8KhAw==}
+    engines: {node: '>=18'}
 
   node-releases@2.0.19:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
@@ -5944,6 +5960,8 @@ snapshots:
       '@better-giving/types': 1.1.6
       valibot: 0.42.0(typescript@5.7.3)
 
+  '@better-giving/chariot@1.1.7': {}
+
   '@better-giving/constants@1.1.2': {}
 
   '@better-giving/donation@1.1.14(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
@@ -7630,6 +7648,12 @@ snapshots:
   '@types/unist@2.0.11': {}
 
   '@types/wrap-ansi@3.0.0': {}
+
+  '@upstash/qstash@2.8.1':
+    dependencies:
+      crypto-js: 4.2.0
+      jose: 5.9.2
+      neverthrow: 7.2.0
 
   '@upstash/redis@1.34.3':
     dependencies:
@@ -9472,6 +9496,8 @@ snapshots:
   nanoid@5.1.5: {}
 
   negotiator@0.6.3: {}
+
+  neverthrow@7.2.0: {}
 
   node-releases@2.0.19: {}
 

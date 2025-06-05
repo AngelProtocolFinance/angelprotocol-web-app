@@ -3,7 +3,7 @@ import type { Subscription } from "@better-giving/donation/subscription";
 import { tables } from "@better-giving/types/list";
 import type Stripe from "stripe";
 import { PutCommand, apes } from ".server/aws/db";
-import { createSubscription } from ".server/stripe/action";
+import { create_subscription } from ".server/stripe/create-subscription";
 
 /**
  * Updates Customer's default payment method which will be used for recurring payments.
@@ -31,7 +31,7 @@ export async function handleCreateSubscription({
   }
 
   /** CREATE SUBSCRIPTION */
-  const subs = await createSubscription(
+  const subs = await create_subscription(
     intent.customer,
     intent.payment_method,
     metadata
@@ -56,10 +56,10 @@ export async function handleCreateSubscription({
     status: "incomplete",
   };
 
-  await apes.send(
-    new PutCommand({
-      TableName: tables.subscriptions,
-      Item: subsFields,
-    })
-  );
+  const cmd = new PutCommand({
+    TableName: tables.subscriptions,
+    Item: subsFields,
+  });
+
+  await apes.send(cmd);
 }

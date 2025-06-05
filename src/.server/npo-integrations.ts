@@ -2,7 +2,6 @@ import { Buffer } from "node:buffer";
 import crypto from "node:crypto";
 import { DeleteCommand, GetCommand, PutCommand, ap } from "./aws/db";
 import { type Env, api_encryption_key, env as nv } from "./env";
-
 export interface ApiKeyPayload {
   npoId: number;
   env: Env;

@@ -1,7 +1,8 @@
 import type { StripeDonation } from "@better-giving/donation";
 import type { ActionFunction } from "@vercel/remix";
-import { parse, stage as schema } from "routes/types";
+import { parse, stage as schema } from "routes/types/donation-message";
 import type Stripe from "stripe";
+import { resp } from "../helpers/resp";
 import {
   handleCreateSubscription,
   handleDeleteSubscription,
@@ -22,10 +23,10 @@ export const action: ActionFunction = async ({
   params,
 }): Promise<Response> => {
   const stage = parse(schema, params.stage);
-
+  const origin = new URL(request.url).origin;
   let event: Stripe.Event;
   const signature = request.headers.get("stripe-signature");
-  if (!signature) return new Response("Forbidden", { status: 403 });
+  if (!signature) return resp.err(403, "missing signature header");
 
   // Webhook signing
   try {
@@ -64,8 +65,8 @@ export const action: ActionFunction = async ({
         break;
       case "payment_intent.succeeded":
         if (isOneTime(event.data.object.metadata))
-          await handleOneTimeDonation(event.data);
-        else await handleUpdateSubscription(event.data);
+          await handleOneTimeDonation(event.data.object, origin);
+        else await handleUpdateSubscription(event.data.object, origin);
         break;
       case "setup_intent.succeeded":
         await handleCreateSubscription(event.data);

@@ -4,7 +4,7 @@ export { parse } from "valibot";
 export const stage = picklist(["staging", "production"]);
 export type Stage = InferOutput<typeof stage>;
 
-export interface DonationMessageParams {
+export interface IDonationMessage {
   date: string;
   donor_id: string;
   donor_message: string;

@@ -1,7 +1,7 @@
 import type { StripeDonation } from "@better-giving/donation";
 import { stripe } from ".server/sdks";
 
-export async function getPaymentMethod(id: string): Promise<string> {
+export async function payment_method(id: string): Promise<string> {
   const paymentMethod = await stripe.paymentMethods.retrieve(id);
 
   let payment;
