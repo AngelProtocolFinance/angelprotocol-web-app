@@ -2,16 +2,16 @@ import crypto from "node:crypto";
 import type { ActionFunction } from "@vercel/remix";
 import { delete_order, get_order } from "routes/helpers/onhold";
 import { type Settled, to_final } from "../helpers/donation";
+import { resp } from "../helpers/resp";
 import { chariot_envs } from ".server/env";
 import { chariot, qstash } from ".server/sdks";
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
   try {
-    console.log(request.headers.entries(), request, params);
     const sig = request.headers.get("chariot-webhook-signature");
     const body = await request.text();
 
-    if (!sig) return new Response("Missing signature header", { status: 403 });
+    if (!sig) return resp.err(403, "missig signature header");
 
     // Verify received payload
     const timestamp = sig.match(/[^t=]*\Z/g)![0];
@@ -23,23 +23,22 @@ export const action: ActionFunction = async ({ request, params }) => {
       .update(signed)
       .digest("hex");
 
-    if (hash !== sig_hash) {
-      return new Response("Invalid signature", { status: 201 });
-    }
+    if (hash !== sig_hash) return resp.status(201);
 
     const payload = JSON.parse(body);
     const grant = await chariot.getGrant(payload.associated_object_id);
+    console.info(payload, grant);
 
     if (grant.status === "Canceled") {
       await delete_order(grant.id);
       console.info(`chariot grant:${grant.id} cancelled and deleted`);
-      return new Response("Grant cancelled", { status: 202 });
+      return resp.status(202);
     }
 
     if (grant.status !== "Completed") {
-      console.log(`${grant.id} status:${grant.status}`);
+      console.info(`${grant.id} status:${grant.status}`);
       //avoid retry
-      return new Response("Grant not completed", { status: 203 });
+      return resp.status(203);
     }
 
     const gross = grant.amount / 100;
@@ -53,11 +52,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     const order = await get_order(grant.id);
 
-    if (!order) {
-      return new Response(`Order not found for grant:${grant.id}`, {
-        status: 204,
-      });
-    }
+    if (!order) return resp.status(204);
     const final = to_final(order, settlement);
 
     const origin = new URL(request.url).origin;
@@ -70,6 +65,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     return new Response(null, { status: 200 });
   } catch (err) {
     console.error(err);
-    return new Response("something went wrong :((", { status: 500 });
+    return resp.err(500, "something wen't wrong");
   }
 };
