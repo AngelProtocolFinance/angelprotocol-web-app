@@ -52,7 +52,7 @@ export const linkGroups: LinkGroup[] = [
         },
       },
       {
-        title: "My referrals",
+        title: "My Referrals",
         to: routes.referrals,
         icon: {
           fn: MegaphoneIcon,
