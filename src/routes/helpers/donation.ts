@@ -53,15 +53,15 @@ export const to_final = (
   const from: From = {
     id: "anonymous@gmail.com",
     name: "Anonymous Person",
-    is_public: false,
+    is_public: onhold.donor_public ?? false,
     uk_gift_aid: false,
+    message: onhold.donor_message,
+    company_name: onhold.company_name,
   };
 
   if (onhold.kycEmail) {
     from.id = onhold.kycEmail;
     from.name = onhold.fullName ?? "Anonymous Person";
-    from.is_public = onhold.donor_public ?? false;
-    from.message = onhold.donor_message;
     from.uk_gift_aid = onhold.ukGiftAid ?? false;
     if ("country" in onhold) {
       from.address = {
@@ -71,9 +71,6 @@ export const to_final = (
         zip: onhold.zipCode,
         country: onhold.country,
       };
-    }
-    if (onhold.donor_message) {
-      from.message = onhold.donor_message;
     }
   }
 

@@ -21,7 +21,7 @@ export async function sendEmail(
     },
   };
   const response = await ses.send(new SendEmailCommand(emailInput));
-  console.log(`Sent ${payload.template}: ${response.MessageId}`);
+  console.info(`Sent ${payload.template}: ${response.MessageId}`);
 }
 
 export async function sendMessage(body: FinalRecorderPayload) {

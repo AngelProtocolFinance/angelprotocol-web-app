@@ -63,8 +63,9 @@ const state: StripeCheckoutStep = {
   tip: { value: 17, format: "pct" },
   donor: {
     title: { value: "Mr", label: "Mr" },
-    firstName: "first",
-    lastName: "last",
+    first_name: "first",
+    last_name: "last",
+    company_name: "",
     email: "donor@gmail.com",
     streetAddress: "street",
     zipCode: "123",

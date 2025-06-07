@@ -1,3 +1,4 @@
+import type { Donor, DonorTitle } from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import type {
@@ -5,7 +6,6 @@ import type {
   OptionType,
   TokenWithDetails,
 } from "types/components";
-import type { Donor } from "types/donate";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
@@ -108,10 +108,13 @@ export type TipStep = {
   tip?: { value: number; format: TipFormat };
 } & From<FormStep>;
 
-export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
+export type FormDonor = Pick<
+  Donor,
+  "email" | "first_name" | "last_name" | "company_name"
+> & {
   ukTaxResident: boolean;
 
-  title: OptionType<Donor.Title>;
+  title: OptionType<DonorTitle>;
   /** initially empty `''` */
   zipCode: string;
   /** initially empty `''` */

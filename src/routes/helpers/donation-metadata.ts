@@ -65,6 +65,7 @@ export const to_onhold = (
     splitLiq: m.splitLiq,
     email: m.email,
     fullName: m.fullName,
+    company_name: m.company_name,
     kycEmail: m.kycEmail ?? m.email,
     title: m.title,
     ukGiftAid: m.ukGiftAid === "true",

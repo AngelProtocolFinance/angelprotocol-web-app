@@ -64,12 +64,13 @@ export default function SummaryForm({
     },
     resolver: yupResolver(
       schema<FV>({
-        firstName: string().required("Please enter your first name"),
-        lastName: string().required("Please enter your last name"),
+        first_name: string().required("Please enter your first name"),
+        last_name: string().required("Please enter your last name"),
         publicMsg: string().max(
           PUBLIC_MSG_MAX_LENGTH,
           `max ${PUBLIC_MSG_MAX_LENGTH} characters`
         ),
+        company_name: string(),
         email: string()
           .required("Please enter your email")
           .email("Please check your email for correctness"),
@@ -135,7 +136,7 @@ export default function SummaryForm({
         }}
       />
       <Field
-        {...register("firstName")}
+        {...register("first_name")}
         label="Your name"
         placeholder="First Name"
         required
@@ -143,17 +144,28 @@ export default function SummaryForm({
           label: "font-semibold text-base font-heading",
           input: "field-input-donate",
         }}
-        error={errors.firstName?.message}
+        error={errors.first_name?.message}
       />
       <Field
-        {...register("lastName")}
+        {...register("last_name")}
         label="Last name"
         placeholder="Last Name"
         classes={{
           input: "field-input-donate",
           label: "font-semibold text-base font-heading invisible",
         }}
-        error={errors.lastName?.message}
+        error={errors.last_name?.message}
+      />
+      <Field
+        {...register("company_name")}
+        label="Your company name"
+        placeholder="Company name"
+        classes={{
+          label: "font-semibold text-base font-heading",
+          container: "col-span-full mt-4",
+          input: "field-input-donate",
+        }}
+        error={errors.company_name?.message}
       />
       <Field
         {...register("email")}

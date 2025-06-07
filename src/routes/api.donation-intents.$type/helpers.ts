@@ -13,7 +13,7 @@ export const onhold_base = (
 ): TBase => {
   const obj: TBase = {
     tipAmount: intent.amount.tip,
-    feeAllowance: intent.amount.feeAllowance,
+    feeAllowance: intent.amount.fee_allowance,
     appUsed: intent.source,
     chainName: intent.viaName,
     charityName: recipient.name,
@@ -43,10 +43,11 @@ export const onhold_base = (
 
     //KYC ATTRIBUTES
     kycEmail: intent.donor.email,
-    fullName: `${intent.donor.firstName} ${intent.donor.lastName}`,
+    fullName: `${intent.donor.first_name} ${intent.donor.last_name}`,
+    company_name: intent.donor.company_name,
     title: intent.donor?.title || undefined,
     ...intent.donor.address,
-    ukGiftAid: intent.donor.address?.ukGiftAid ?? false,
+    ukGiftAid: intent.donor.address?.uk_gift_aid ?? false,
   };
   return obj;
 };

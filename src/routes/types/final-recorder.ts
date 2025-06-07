@@ -16,6 +16,7 @@ export interface From {
   uk_gift_aid: boolean;
   is_public: boolean;
   message?: string;
+  company_name?: string;
 }
 
 export interface To {

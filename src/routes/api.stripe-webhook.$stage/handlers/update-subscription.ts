@@ -72,7 +72,7 @@ export async function handleUpdateSubscription(
     deduplicationId: pi.id,
   });
 
-  console.log(`Final donation record sent:${res.messageId}`);
+  console.info(`Final donation record sent:${res.messageId}`);
 
   // DB Ops
   const builder = new TxBuilder();

@@ -7,15 +7,13 @@ import Row from "./row";
 type Props = {
   donations: Donation.Item[];
   classes?: string;
-  onLoadMore(): void;
-  hasMore: boolean;
+  onLoadMore?(): void;
   disabled: boolean;
   isLoading: boolean;
 };
 
 export default function Table({
   donations,
-  hasMore,
   onLoadMore,
   isLoading,
   disabled,
@@ -88,6 +86,7 @@ export default function Table({
           <>Transaction Hash</>
           <>Receipt Provided</>
           <>Full Name</>
+          <>Company</>
           <>Email</>
           <>Address Line 1</>
           <>Address Line 2</>
@@ -107,11 +106,11 @@ export default function Table({
             <Row
               key={record.id}
               {...record}
-              classes={hasMore ? "" : "first:rounded-bl last:rounded-br"}
+              classes={onLoadMore ? "" : "first:rounded-bl last:rounded-br"}
             />
           ))
           .concat(
-            hasMore ? (
+            onLoadMore ? (
               <td
                 colSpan={19}
                 key="load-more-btn"

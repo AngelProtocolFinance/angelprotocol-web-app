@@ -29,6 +29,7 @@ export type Base = Pick<
   | "donationFinalTxDate"
   | "donationFinalTxHash"
   | "donationFinalDenom"
+  | "company_name"
 > &
   (Donation.WithKYC | Donation.WithoutKYC);
 

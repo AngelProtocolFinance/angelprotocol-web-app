@@ -1,23 +1,3 @@
-export namespace Donor {
-  export type Title = "Mr" | "Mrs" | "Ms" | "Mx" | "";
-  export interface Address {
-    streetAddress: string;
-    /** may be empty */
-    city: string;
-    state?: String;
-    zipCode: string;
-    country: string;
-  }
-}
-export interface Donor {
-  title?: Donor.Title;
-  email: string;
-  firstName: string;
-  lastName: string;
-  address?: Donor.Address;
-  ukGiftAid?: boolean;
-}
-
 export type ReceiptPayload = {
   fullName: string; // "John Doe"
   kycEmail: string; // "john@doe.email.com"
