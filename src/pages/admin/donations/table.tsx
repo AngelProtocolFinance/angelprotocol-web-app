@@ -43,7 +43,7 @@ export default function Table({
           </HeaderButton>
           <>Program</>
           <HeaderButton
-            onClick={handleHeaderClick("appUsed")}
+            onClick={handleHeaderClick("app_used")}
             _activeSortKey={sortKey}
             _sortKey="appUsed"
             _sortDirection={sortDirection}
@@ -51,7 +51,7 @@ export default function Table({
             Donation Origin
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("paymentMethod")}
+            onClick={handleHeaderClick("payment_method")}
             _activeSortKey={sortKey}
             _sortKey="paymentMethod"
             _sortDirection={sortDirection}
@@ -59,7 +59,7 @@ export default function Table({
             Donation Type
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("isRecurring")}
+            onClick={handleHeaderClick("is_recurring")}
             _activeSortKey={sortKey}
             _sortKey="isRecurring"
             _sortDirection={sortDirection}
@@ -76,7 +76,7 @@ export default function Table({
           </HeaderButton>
           <>Donation Amount</>
           <HeaderButton
-            onClick={handleHeaderClick("finalAmountUsd")}
+            onClick={handleHeaderClick("final_amount_usd")}
             _activeSortKey={sortKey}
             _sortKey="finalAmountUsd"
             _sortDirection={sortDirection}

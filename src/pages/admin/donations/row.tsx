@@ -22,26 +22,26 @@ export default function Row(
     >
       <span className="text-sm">{dateFormat(props.date)}</span>
 
-      {props.programId ? (
+      {props.program_id ? (
         <Link
           className="text-blue hover:text-blue-d1"
-          to={`${appRoutes.marketplace}/${props.recipientId}/program/${props.programId}`}
+          to={`${appRoutes.marketplace}/${props.recipient_id}/program/${props.program_id}`}
         >
-          {props.programName}
+          {props.program_name}
         </Link>
       ) : (
         <>--</>
       )}
 
-      <>{props.appUsed === "bg-widget" ? "Donation Form" : "Marketplace"}</>
-      <>{props.paymentMethod ?? "--"}</>
-      <>{props.isRecurring ? "Yes" : "No"}</>
+      <>{props.app_used === "bg-widget" ? "Donation Form" : "Marketplace"}</>
+      <>{props.payment_method ?? "--"}</>
+      <>{props.is_recurring ? "Yes" : "No"}</>
       <>{props.symbol}</>
-      <>{humanize(props.initAmount)}</>
+      <>{humanize(props.init_amount)}</>
 
-      <Amount amount={props.finalAmountUsd} />
+      <Amount amount={props.final_amount_usd} />
 
-      {props.viaId === "staging" || props.viaId === "fiat" ? (
+      {props.via_id === "staging" || props.via_id === "fiat" ? (
         <>--</>
       ) : (
         <Copier
@@ -54,7 +54,7 @@ export default function Row(
       )}
 
       <td className="relative">
-        {!props.donorDetails ? (
+        {!props.donor_details ? (
           <X
             //prevent icon size from affecting row height
             className="left-4 absolute top-1/2 -translate-y-1/2 text-red "
@@ -68,15 +68,15 @@ export default function Row(
         )}
       </td>
 
-      <>{props.donorDetails?.fullName ?? "--"}</>
-      <>{props.donorDetails?.company ?? "--"}</>
-      <>{props.donorDetails?.kycEmail ?? "--"}</>
-      <>{props.donorDetails?.address?.line1 ?? "--"}</>
-      <>{props.donorDetails?.address?.line2 ?? "--"}</>
-      <>{props.donorDetails?.address?.city || "--"}</>
-      <>{props.donorDetails?.address?.state ?? "--"}</>
-      <>{props.donorDetails?.address?.zipCode ?? "--"}</>
-      <>{props.donorDetails?.address?.country ?? "--"}</>
+      <>{props.donor_details?.full_name ?? "--"}</>
+      <>{props.donor_details?.company ?? "--"}</>
+      <>{props.donor_details?.kyc_email ?? "--"}</>
+      <>{props.donor_details?.address?.line1 ?? "--"}</>
+      <>{props.donor_details?.address?.line2 ?? "--"}</>
+      <>{props.donor_details?.address?.city || "--"}</>
+      <>{props.donor_details?.address?.state ?? "--"}</>
+      <>{props.donor_details?.address?.zip_code ?? "--"}</>
+      <>{props.donor_details?.address?.country ?? "--"}</>
     </Cells>
   );
 }

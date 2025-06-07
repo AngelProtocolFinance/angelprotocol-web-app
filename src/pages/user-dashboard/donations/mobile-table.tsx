@@ -63,7 +63,7 @@ export default function MobileTable({
                   isOpen={open}
                 />
                 <p className="text-sm p-4 text-left h-full truncate">
-                  {row.recipientName}
+                  {row.recipient_name}
                 </p>
                 <div className="p-4 text-center text-sm w-28">
                   {new Date(row.date).toLocaleDateString()}
@@ -71,12 +71,12 @@ export default function MobileTable({
               </DisclosureButton>
               <DisclosurePanel className="w-full divide-y divide-blue-l2">
                 <Row title="Program">
-                  {row.programId ? (
+                  {row.program_id ? (
                     <Link
                       className="text-blue hover:text-blue-d1"
-                      to={`${appRoutes.profile}/${row.recipientId}/program/${row.programId}`}
+                      to={`${appRoutes.profile}/${row.recipient_id}/program/${row.program_id}`}
                     >
-                      {row.programName}
+                      {row.program_name}
                     </Link>
                   ) : (
                     <>--</>
@@ -84,15 +84,15 @@ export default function MobileTable({
                 </Row>
                 <Row title="Donation Type" className="capitalize">
                   {donationMethod(
-                    row.paymentMethod ?? { id: row.viaId, name: row.viaName }
+                    row.payment_method ?? { id: row.via_id, name: row.via_name }
                   )}
                 </Row>
-                <Row title="Recurring">{row.isRecurring ? "YES" : "NO"}</Row>
+                <Row title="Recurring">{row.is_recurring ? "YES" : "NO"}</Row>
                 <Row title="Currency">{row.symbol}</Row>
-                <Row title="Amount">{humanize(row.initAmount, 3)}</Row>
+                <Row title="Amount">{humanize(row.init_amount, 3)}</Row>
                 <Row title="USD Value">
-                  {row.initAmountUsd
-                    ? `$${humanize(row.initAmountUsd, 2)}`
+                  {row.init_amount_usd
+                    ? `$${humanize(row.init_amount_usd, 2)}`
                     : "--"}
                 </Row>
                 <Row title={lastHeaderName[status]} className="rounded-b">
@@ -140,12 +140,12 @@ function LastRowContent(props: Donation.Item & { status: Donation.Status }) {
 
   if (
     props.status === "intent" &&
-    props.viaId === "fiat" &&
-    props.bankVerificationUrl
+    props.via_id === "fiat" &&
+    props.bank_verification_url
   ) {
     return (
       <ExtLink
-        href={props.bankVerificationUrl}
+        href={props.bank_verification_url}
         className="btn btn-blue px-3 py-1 text-xs"
       >
         Verify Bank Account
@@ -153,13 +153,13 @@ function LastRowContent(props: Donation.Item & { status: Donation.Status }) {
     );
   }
 
-  if (props.status === "intent" && props.viaId === "fiat") {
+  if (props.status === "intent" && props.via_id === "fiat") {
     return <>---</>;
   }
 
-  if (props.status === "intent" && props.viaId !== "fiat") {
+  if (props.status === "intent" && props.via_id !== "fiat") {
     return props.payment_id ? (
-      <PaymentResumer paymentId={props.payment_id} amount={props.initAmount} />
+      <PaymentResumer paymentId={props.payment_id} amount={props.init_amount} />
     ) : (
       <>---</>
     );
@@ -167,7 +167,7 @@ function LastRowContent(props: Donation.Item & { status: Donation.Status }) {
 
   /// pending ///
 
-  if (props.viaId === "fiat" || props.viaId === "staging") {
+  if (props.via_id === "fiat" || props.via_id === "staging") {
     return <>---</>;
   }
 
