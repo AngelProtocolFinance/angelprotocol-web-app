@@ -73,6 +73,7 @@ export const donorAddress = v.object({
 
 export const donor = v.object({
   fullName: reqStr,
+  company: v.optional(v.string()),
   kycEmail: v.optional(email),
   address: v.fallback(v.optional(donorAddress), undefined),
 });

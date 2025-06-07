@@ -69,6 +69,7 @@ export default function Row(
       </td>
 
       <>{props.donorDetails?.fullName ?? "--"}</>
+      <>{props.donorDetails?.company ?? "--"}</>
       <>{props.donorDetails?.kycEmail ?? "--"}</>
       <>{props.donorDetails?.address?.line1 ?? "--"}</>
       <>{props.donorDetails?.address?.line2 ?? "--"}</>

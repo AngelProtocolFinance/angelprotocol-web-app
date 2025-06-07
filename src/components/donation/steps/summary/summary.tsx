@@ -63,8 +63,8 @@ export default function Summary(props: SummaryStep) {
         nonprofitName={init.recipient.name}
         donor={
           donor || {
-            lastName: user?.lastName ?? "",
-            firstName: user?.firstName ?? "",
+            last_name: user?.lastName ?? "",
+            first_name: user?.firstName ?? "",
             email: user?.email ?? "",
             ukTaxResident: false,
             title: initDonorTitleOption,
@@ -72,6 +72,7 @@ export default function Summary(props: SummaryStep) {
             streetAddress: "",
             isPublic: true,
             publicMsg: "",
+            company_name: "",
           }
         }
         honorary={

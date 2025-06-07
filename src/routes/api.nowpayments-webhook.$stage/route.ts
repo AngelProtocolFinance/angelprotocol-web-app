@@ -48,31 +48,31 @@ export const action: ActionFunction = async ({
       // `confirming` event switches the intent to `pending`
       status === "confirmed"
     ) {
-      console.log(status, payment);
+      console.info(status, payment);
       return resp.txt("unhandled");
     }
 
     if (status === "waiting") {
       const res = await handleWaiting(payment.payment_id, payment.order_id);
-      console.log("waiting", res.Attributes);
+      console.info("waiting", res.Attributes);
       return resp.json(res.Attributes ?? {});
     }
 
     if (status === "confirming") {
       const res = await handleConfirming(payment, stage);
-      console.log("confirming", res.Attributes);
+      console.info("confirming", res.Attributes);
       return resp.json(res.Attributes ?? {});
     }
 
     if (status === "expired") {
       const res = await handleExpired(payment.order_id);
-      console.log("expired", res.Attributes);
+      console.info("expired", res.Attributes);
       return resp.json(res.Attributes ?? {});
     }
 
     if (status === "failed") {
       const res = await handleFailed(payment);
-      console.log(`deleted failed payment:${payment.payment_id}`);
+      console.info(`deleted failed payment:${payment.payment_id}`);
       return resp.json(res.Attributes ?? {});
     }
 

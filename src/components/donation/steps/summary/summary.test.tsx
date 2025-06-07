@@ -25,8 +25,9 @@ const oneTimeStripeDetails: StripeDonationDetails = {
 
 const donor: FormDonor = {
   email: "john@doe.com",
-  firstName: "John",
-  lastName: "Doe",
+  first_name: "John",
+  last_name: "Doe",
+  company_name: "",
   ukTaxResident: false,
   title: { value: "Mr", label: "Mr" },
   zipCode: "12345",

@@ -7,7 +7,6 @@ import { getUserBookmarks } from ".server/user-bookmarks";
 import { getUserNpos } from ".server/user-npos";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  console.log("app loads");
   /** handle oauth if applicable */
   const url = new URL(request.url);
   const code = url.searchParams.get("code");

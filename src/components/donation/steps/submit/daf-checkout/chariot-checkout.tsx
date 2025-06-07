@@ -344,14 +344,15 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   currency: props.details.currency.code,
                   amount: adjusted.amount,
                   tip: adjusted.tip,
-                  feeAllowance: adjusted.feeAllowance,
+                  fee_allowance: adjusted.feeAllowance,
                 },
                 recipient: props.init.recipient.id,
                 donor: toDonor({
                   title: initDonorTitleOption,
                   email: grantor.email,
-                  firstName: grantor.firstName,
-                  lastName: grantor.lastName,
+                  first_name: grantor.firstName,
+                  last_name: grantor.lastName,
+                  company_name: "",
                   zipCode: postalCode,
                   streetAddress: [line1, line2, city, state]
                     .filter(Boolean)

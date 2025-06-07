@@ -54,7 +54,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     })(token);
 
     const to_pay =
-      intent.amount.amount + intent.amount.tip + intent.amount.feeAllowance;
+      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
 
     if (to_pay < min) {
       return resp.txt(`Min amount for ${token.code} is: ${min}`, 400);
@@ -102,7 +102,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (d_type === "chariot") {
     const to_pay =
-      intent.amount.amount + intent.amount.tip + intent.amount.feeAllowance;
+      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
     const grant = await chariot.create_grant(
       intent.viaId,
       round_number(to_pay * 100, 0)
@@ -139,7 +139,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       intent.amount.amount +
       intent.amount.tip +
       // don't add fee allowance fo subs
-      (intent.frequency === "one-time" ? intent.amount.feeAllowance : 0);
+      (intent.frequency === "one-time" ? intent.amount.fee_allowance : 0);
 
     const onhold: OnHoldDonation.FiatDBRecord = {
       ...base,

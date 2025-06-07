@@ -89,7 +89,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           layout: "tabs",
           defaultValues: {
             billingDetails: {
-              name: `${props.donor.firstName} ${props.donor.lastName}`,
+              name: `${props.donor.first_name} ${props.donor.last_name}`,
               email: props.donor.email,
               /** we only collect address when donor wants to opt for uk gift aid */
               ...(props.donor.ukTaxResident && {

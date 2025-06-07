@@ -7,8 +7,9 @@ import SummaryForm, { type Props } from "./summary-form";
 const mockOnSubmit = vi.fn();
 
 const donor: FormDonor = {
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
+  company_name: "",
   email: "",
   ukTaxResident: false,
   title: { label: "Select", value: "" },
@@ -176,8 +177,8 @@ describe("summary form: expandable fields", async () => {
         {...props}
         donor={{
           ...donor,
-          firstName: "first",
-          lastName: "last",
+          first_name: "first",
+          last_name: "last",
           email: "donor@mail.com",
         }}
       />

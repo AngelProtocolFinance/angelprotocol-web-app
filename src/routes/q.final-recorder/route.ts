@@ -69,6 +69,7 @@ export const action: ActionFunction = async ({ request }) => {
       donationFinalTxHash: tx.settled_in.hash,
       kycEmail: tx.from.id,
       fullName: tx.from.name,
+      company_name: tx.from.company_name,
       ukGiftAid: tx.from.uk_gift_aid,
       ...(tx.from.title && { title: tx.from.title as any }),
       ...(tx.from.address && {

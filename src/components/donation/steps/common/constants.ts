@@ -92,15 +92,16 @@ export const toDonor = (
   return {
     title: fv.title.value,
     email: fv.email,
-    firstName: fv.firstName,
-    lastName: fv.lastName,
+    first_name: fv.first_name,
+    last_name: fv.last_name,
+    company_name: fv.company_name,
     address: fv.ukTaxResident
       ? {
           street: fv.streetAddress,
           city: "",
-          zipCode: fv.zipCode,
+          zip_code: fv.zipCode,
           country: "United Kingdom",
-          ukGiftAid: fv.ukTaxResident,
+          uk_gift_aid: fv.ukTaxResident,
         }
       : undefined,
   };
@@ -127,8 +128,9 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
     feeAllowance: 0,
     donor: {
       title: initDonorTitleOption,
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
+      company_name: "",
       email: "",
       ukTaxResident: false,
       streetAddress: "",

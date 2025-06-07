@@ -32,7 +32,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     amount: {
       amount: +details.amount,
       tip: tip?.value ?? 0,
-      feeAllowance,
+      fee_allowance: feeAllowance,
       currency: details.currency.code,
     },
     recipient: init.recipient.id,

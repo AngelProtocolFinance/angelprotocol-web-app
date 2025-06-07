@@ -14,6 +14,53 @@ interface Props {
   firstPage: DonationsPage;
 }
 
+const csvHeaders: {
+  key: keyof Donation.Item | keyof Donation.KYC | "receipt";
+  label: string;
+}[] = [
+  { key: "date", label: "Datetime" },
+  { key: "programName", label: "Program" },
+  { key: "appUsed", label: "Donation Origin" },
+  { key: "paymentMethod", label: "Donation Type" },
+  { key: "isRecurring", label: "Recurring Donation" },
+  { key: "symbol", label: "Donation Asset" },
+  { key: "initAmount", label: "Donation Amount" },
+  { key: "finalAmountUsd", label: "Donation Value USD" },
+  { key: "id", label: "Transaction Hash" },
+  { key: "receipt", label: "Receipt Provided" },
+  { key: "fullName", label: "Full Name" },
+  { key: "company", label: "Company" },
+  { key: "kycEmail", label: "Email" },
+  { key: "line1", label: "Address Line 1" },
+  { key: "line2", label: "Address Line 2" },
+  { key: "city", label: "City" },
+  { key: "state", label: "State" },
+  { key: "zipCode", label: "Zip Code" },
+  { key: "country", label: "Country" },
+];
+
+export interface CsvRow {
+  date: string;
+  programName: string;
+  appUsed: string;
+  paymentMethod: string;
+  isRecurring: string;
+  symbol: string;
+  initAmount: string;
+  finalAmountUsd: string;
+  id: string;
+  receipt: string;
+  fullName: string;
+  kycEmail: string;
+  company: string;
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
+
 export default function DonationsTable({ classes = "", firstPage }: Props) {
   const { data, state, load } = useFetcher<DonationsPage>(); //initially undefined
   const [params] = useSearchParams();
@@ -30,10 +77,9 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
 
   const nextPage = data ? data.nextPage : firstPage.nextPage;
 
-  function loadNext() {
-    if (!nextPage) throw `should not call load when there's no next page`;
+  function loadNext(next_page: number) {
     const n = new URLSearchParams(params);
-    n.set("page", nextPage.toString());
+    n.set("page", next_page.toString());
     load(`?${n.toString()}`);
   }
 
@@ -48,26 +94,25 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
               (d): d is Ensure<Donation.Item, "donorDetails"> =>
                 !!d.donorDetails
             )
-            .map<Donation.Item | Donation.KYC>(
-              ({ donorDetails: donor, ...d }) => {
-                return replaceWithEmptyString({
-                  date: new Date(d.date).toLocaleDateString(),
-                  programName: d.programName,
-                  appUsed:
-                    d.appUsed === "bg-widget" ? "Donation Form" : "Marketplace",
-                  paymentMethod: d.paymentMethod,
-                  isRecurring: d.isRecurring ? "Yes" : "No",
-                  symbol: d.symbol,
-                  initAmount: humanize(d.initAmount, 2),
-                  finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
-                  id: d.id,
-                  receipt: donor.address?.country ? "Yes" : "No",
-                  fullName: donor.fullName,
-                  kycEmail: donor.kycEmail,
-                  ...donor.address,
-                });
-              }
-            )}
+            .map<CsvRow>(({ donorDetails: donor, ...d }) => {
+              return replaceWithEmptyString({
+                date: new Date(d.date).toLocaleDateString(),
+                programName: d.programName,
+                appUsed:
+                  d.appUsed === "bg-widget" ? "Donation Form" : "Marketplace",
+                paymentMethod: d.paymentMethod,
+                isRecurring: d.isRecurring ? "Yes" : "No",
+                symbol: d.symbol,
+                initAmount: humanize(d.initAmount, 2),
+                finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
+                id: d.id,
+                receipt: donor.address?.country ? "Yes" : "No",
+                fullName: donor.fullName,
+                kycEmail: donor.kycEmail,
+                company: donor.company,
+                ...donor.address,
+              });
+            })}
           filename="received_donations.csv"
         >
           <FileSpreadsheet size={17} className="text-2xl" />
@@ -78,8 +123,7 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
       <div className="overflow-x-auto">
         <Table
           donations={items}
-          hasMore={!!nextPage}
-          onLoadMore={loadNext}
+          onLoadMore={nextPage ? () => loadNext(nextPage) : undefined}
           disabled={state === "loading"}
           isLoading={state === "loading"}
         />
@@ -87,27 +131,3 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
     </div>
   );
 }
-
-const csvHeaders: {
-  key: keyof Donation.Item | keyof Donation.KYC | "receipt";
-  label: string;
-}[] = [
-  { key: "date", label: "Datetime" },
-  { key: "programName", label: "Program" },
-  { key: "appUsed", label: "Donation Origin" },
-  { key: "paymentMethod", label: "Donation Type" },
-  { key: "isRecurring", label: "Recurring Donation" },
-  { key: "symbol", label: "Donation Asset" },
-  { key: "initAmount", label: "Donation Amount" },
-  { key: "finalAmountUsd", label: "Donation Value USD" },
-  { key: "id", label: "Transaction Hash" },
-  { key: "receipt", label: "Receipt Provided" },
-  { key: "fullName", label: "Full Name" },
-  { key: "kycEmail", label: "Email" },
-  { key: "line1", label: "Address Line 1" },
-  { key: "line2", label: "Address Line 2" },
-  { key: "city", label: "City" },
-  { key: "state", label: "State" },
-  { key: "zipCode", label: "Zip Code" },
-  { key: "country", label: "Country" },
-];
