@@ -39,7 +39,7 @@ export default function Table({
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <HeaderButton
-            onClick={handleHeaderClick("recipientName")}
+            onClick={handleHeaderClick("recipient_name")}
             _activeSortKey={sortKey}
             _sortKey="recipientName"
             _sortDirection={sortDirection}
@@ -56,9 +56,9 @@ export default function Table({
             Date
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("viaName")}
+            onClick={handleHeaderClick("via_name")}
             _activeSortKey={sortKey}
-            _sortKey="viaName"
+            _sortKey="via_name"
             _sortDirection={sortDirection}
           >
             Donation Type
@@ -66,15 +66,15 @@ export default function Table({
           <>Recurring</>
           <>Currency</>
           <HeaderButton
-            onClick={handleHeaderClick("initAmount")}
+            onClick={handleHeaderClick("init_amount")}
             _activeSortKey={sortKey}
-            _sortKey="initAmount"
+            _sortKey="init_amount"
             _sortDirection={sortDirection}
           >
             Amount
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("initAmountUsd")}
+            onClick={handleHeaderClick("init_amount_usd")}
             _activeSortKey={sortKey}
             _sortKey="usdValue"
             _sortDirection={sortDirection}
@@ -99,19 +99,19 @@ export default function Table({
               }`}
             >
               <Link
-                to={`${appRoutes.marketplace}/${row.recipientId}`}
+                to={`${appRoutes.marketplace}/${row.recipient_id}`}
                 className="flex items-center justify-between gap-1 text-blue hover:text-blue-d1"
               >
                 <span className="truncate max-w-[12rem]">
-                  {row.recipientName}
+                  {row.recipient_name}
                 </span>
               </Link>
-              {row.programId ? (
+              {row.program_id ? (
                 <Link
                   className="text-blue hover:text-blue-d1"
-                  to={`${appRoutes.profile}/${row.recipientId}/program/${row.programId}`}
+                  to={`${appRoutes.profile}/${row.recipient_id}/program/${row.program_id}`}
                 >
-                  {row.programName}
+                  {row.program_name}
                 </Link>
               ) : (
                 <>--</>
@@ -119,15 +119,15 @@ export default function Table({
               <>{dateFormat(row.date)}</>
               <span className="capitalize">
                 {donationMethod(
-                  row.paymentMethod ?? { id: row.viaId, name: row.viaName }
+                  row.payment_method ?? { id: row.via_id, name: row.via_name }
                 )}
               </span>
-              <>{row.isRecurring ? "YES" : "NO"}</>
+              <>{row.is_recurring ? "YES" : "NO"}</>
               <span className="text-sm">{row.symbol}</span>
-              <>{humanize(row.initAmount, 3)}</>
+              <>{humanize(row.init_amount, 3)}</>
               <>
-                {row.initAmountUsd
-                  ? `$${humanize(row.initAmountUsd, 2)}`
+                {row.init_amount_usd
+                  ? `$${humanize(row.init_amount_usd, 2)}`
                   : "--"}
               </>
               <LastRowColContent {...row} status={status} />
@@ -166,12 +166,12 @@ function LastRowColContent(props: Donation.Item & { status: Donation.Status }) {
 
   if (
     props.status === "intent" &&
-    props.viaId === "fiat" &&
-    props.bankVerificationUrl
+    props.via_id === "fiat" &&
+    props.bank_verification_url
   ) {
     return (
       <ExtLink
-        href={props.bankVerificationUrl}
+        href={props.bank_verification_url}
         className="btn btn-blue px-3 py-1 text-xs"
       >
         Verify Bank Account
@@ -179,13 +179,13 @@ function LastRowColContent(props: Donation.Item & { status: Donation.Status }) {
     );
   }
 
-  if (props.status === "intent" && props.viaId === "fiat") {
+  if (props.status === "intent" && props.via_id === "fiat") {
     return <>---</>;
   }
 
-  if (props.status === "intent" && props.viaId !== "fiat") {
+  if (props.status === "intent" && props.via_id !== "fiat") {
     return props.payment_id ? (
-      <PaymentResumer paymentId={props.payment_id} amount={props.initAmount} />
+      <PaymentResumer paymentId={props.payment_id} amount={props.init_amount} />
     ) : (
       <>---</>
     );
@@ -193,7 +193,7 @@ function LastRowColContent(props: Donation.Item & { status: Donation.Status }) {
 
   /// pending ///
 
-  if (props.viaId === "fiat" || props.viaId === "staging") {
+  if (props.via_id === "fiat" || props.via_id === "staging") {
     return <>---</>;
   }
 

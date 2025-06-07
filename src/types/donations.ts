@@ -2,16 +2,16 @@ import { plusInt } from "api/schema/endow-id";
 import * as v from "valibot";
 // import Joi from "joi";
 
-export const donationSources = ["bg-marketplace", "bg-widget"] as const;
-export const donationStatuses = ["final", "intent", "pending"] as const;
+export const donation_sources = ["bg-marketplace", "bg-widget"] as const;
+export const donation_statuses = ["final", "intent", "pending"] as const;
 // export type Method = "Bank" | "Card" | "Crypto";
 // export type FiatRamp = "STRIPE" | "PAYPAL" | "CHARIOT";
-export const donationMethods = ["Bank", "Card", "Crypto"] as const;
-export const fiatRamps = ["STRIPE", "PAYPAL", "CHARIOT"] as const;
-export const donationSource = v.picklist(donationSources);
-export const donationStatus = v.picklist(donationStatuses);
+export const donation_methods = ["Bank", "Card", "Crypto"] as const;
+export const fiat_ramps = ["STRIPE", "PAYPAL", "CHARIOT"] as const;
+export const donation_source = v.picklist(donation_sources);
+export const donation_status = v.picklist(donation_statuses);
 
-export const viaIds = [
+export const via_ids = [
   "1",
   "137",
   "42161",
@@ -34,104 +34,104 @@ export const viaIds = [
   "fiat",
 ];
 
-export const viaId = v.picklist(viaIds);
+export const via_id = v.picklist(via_ids);
 
 const email = v.pipe(v.string(), v.email());
 const date = v.pipe(v.string(), v.isoTimestamp());
 
-export const donationsQueryParams = v.pipe(
+export const donations_query_params = v.pipe(
   v.object({
     asker: v.union([email, plusInt]),
-    status: v.optional(donationStatus),
+    status: v.optional(donation_status),
     page: v.optional(plusInt),
     limit: v.optional(plusInt),
     symbol: v.optional(v.pipe(v.string(), v.minLength(3))),
-    recipientName: v.optional(v.string()),
-    viaId: v.optional(viaId),
-    startDate: v.optional(date),
-    endDate: v.optional(date),
+    recipient_name: v.optional(v.string()),
+    via_id: v.optional(via_id),
+    start_date: v.optional(date),
+    end_date: v.optional(date),
   }),
   v.forward(
     v.partialCheck(
-      [["startDate"], ["endDate"]],
-      ({ endDate: e, startDate: s }) => (s && e ? e >= s : true),
+      [["start_date"], ["end_date"]],
+      ({ end_date: e, start_date: s }) => (s && e ? e >= s : true),
       "start date must be before end date"
     ),
-    ["startDate"]
+    ["start_date"]
   )
 );
 
-const reqStr = v.pipe(v.string(), v.nonEmpty("required"));
-export const donorAddress = v.object({
-  line1: reqStr,
+const req_str = v.pipe(v.string(), v.nonEmpty("required"));
+export const donor_address = v.object({
+  line1: req_str,
   line2: v.optional(v.string()),
   city: v.optional(v.string()),
   state: v.optional(v.string()),
-  zipCode: v.optional(v.string()),
-  country: reqStr,
+  zip_code: v.optional(v.string()),
+  country: req_str,
 });
 
 export const donor = v.object({
-  fullName: reqStr,
+  full_name: req_str,
   company: v.optional(v.string()),
-  kycEmail: v.optional(email),
-  address: v.fallback(v.optional(donorAddress), undefined),
+  kyc_email: v.optional(email),
+  address: v.fallback(v.optional(donor_address), undefined),
 });
 
 const int = v.pipe(v.number(), v.integer());
-const endowId = v.pipe(int, v.minValue(0));
+const endow_id = v.pipe(int, v.minValue(0));
 
-const amountNum = v.pipe(v.number(), v.minValue(0));
-const amountStr = v.pipe(
+const amount_num = v.pipe(v.number(), v.minValue(0));
+const amount_str = v.pipe(
   v.string(),
   v.transform((x) => +x),
-  amountNum
+  amount_num
 );
 const uuid = v.pipe(v.string(), v.uuid());
-const amount = v.union([amountNum, amountStr]);
+const amount = v.union([amount_num, amount_str]);
 export const pct = v.pipe(amount, v.maxValue(100));
-export const donationItem = v.object({
-  id: reqStr,
-  donorId: reqStr,
-  donorDetails: v.fallback(v.optional(donor), undefined),
-  recipientId: endowId,
-  recipientName: reqStr,
-  programId: v.fallback(v.optional(v.pipe(v.string(), v.uuid())), undefined),
-  programName: v.fallback(v.optional(v.string()), undefined),
+export const donation_item = v.object({
+  id: req_str,
+  donor_id: req_str,
+  donor_details: v.fallback(v.optional(donor), undefined),
+  recipient_id: endow_id,
+  recipient_name: req_str,
+  program_id: v.fallback(v.optional(v.pipe(v.string(), v.uuid())), undefined),
+  program_name: v.fallback(v.optional(v.string()), undefined),
   date: date,
-  paymentMethod: v.fallback(v.optional(v.string()), undefined),
+  payment_method: v.fallback(v.optional(v.string()), undefined),
   symbol: v.pipe(v.string(), v.minLength(3)),
-  initAmount: amount,
-  initAmountUsd: v.optional(amount),
-  finalAmountUsd: v.optional(amount),
-  directDonateAmount: v.optional(amount),
-  sfDonateAmount: v.optional(amount),
-  splitLiqPct: v.fallback(pct, 50),
-  isRecurring: v.optional(v.boolean()),
-  appUsed: v.fallback(donationSource, "bg-marketplace"),
-  bankVerificationUrl: v.optional(v.pipe(v.string(), v.url())),
-  viaId: v.fallback(viaId, "staging"),
-  viaName: v.optional(v.string(), "Unknown"),
+  init_amount: amount,
+  init_amount_usd: v.optional(amount),
+  final_amount_usd: v.optional(amount),
+  direct_donate_amount: v.optional(amount),
+  sf_donate_amount: v.optional(amount),
+  split_liq_pct: v.fallback(pct, 50),
+  is_recurring: v.optional(v.boolean()),
+  app_used: v.fallback(donation_source, "bg-marketplace"),
+  bank_verification_url: v.optional(v.pipe(v.string(), v.url())),
+  via_id: v.fallback(via_id, "staging"),
+  via_name: v.optional(v.string(), "Unknown"),
   payment_id: v.optional(v.union([int, uuid])),
 });
 
 export namespace Donation {
-  export type Status = v.InferOutput<typeof donationStatus>;
-  export type Source = v.InferOutput<typeof donationSource>;
+  export type Status = v.InferOutput<typeof donation_status>;
+  export type Source = v.InferOutput<typeof donation_source>;
   export interface Donor extends v.InferOutput<typeof donor> {}
-  export type FiatRamp = (typeof fiatRamps)[number];
-  export type Method = (typeof donationMethods)[number];
+  export type FiatRamp = (typeof fiat_ramps)[number];
+  export type Method = (typeof donation_methods)[number];
   export namespace Donor {
-    export interface Address extends v.InferOutput<typeof donorAddress> {}
+    export interface Address extends v.InferOutput<typeof donor_address> {}
   }
   export interface KYC
     extends Required<Omit<Donor, "address"> & Donor.Address> {}
-  export type Item = v.InferOutput<typeof donationItem>;
-  export type ItemInput = v.InferInput<typeof donationItem>;
+  export type Item = v.InferOutput<typeof donation_item>;
+  export type ItemInput = v.InferInput<typeof donation_item>;
 }
 
 export interface DonationsQueryParams
-  extends v.InferInput<typeof donationsQueryParams> {}
+  extends v.InferInput<typeof donations_query_params> {}
 export interface DonationsQueryParamsParsed
-  extends v.InferOutput<typeof donationsQueryParams> {}
-export type DonationsPage = { Items: Donation.Item[]; nextPage?: number };
+  extends v.InferOutput<typeof donations_query_params> {}
+export type DonationsPage = { items: Donation.Item[]; next_page?: number };

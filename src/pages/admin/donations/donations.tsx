@@ -9,7 +9,7 @@ export default function Donations() {
   return (
     <div>
       <h2 className="text-[2rem] font-bold mb-4">Donations</h2>
-      <DonationsTable firstPage={page1} />
+      <DonationsTable page1={page1} />
     </div>
   );
 }

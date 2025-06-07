@@ -20,21 +20,21 @@ export { clientLoader } from "api/cache";
 export default function Donations() {
   const [params, setParams] = useSearchParams();
   const { load, data, state } = useFetcher<DonationsData>();
-  const { user, ...firstPage } = useCachedLoaderData<DonationsData>();
-  const [items, setItems] = useState<Donation.Item[]>(firstPage.Items);
+  const { user, ...page1 } = useCachedLoaderData<DonationsData>();
+  const [items, setItems] = useState<Donation.Item[]>(page1.items);
 
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     if (!data || state !== "idle") return;
-    setItems((prev) => [...prev, ...data.Items]);
+    setItems((prev) => [...prev, ...data.items]);
   }, [data, state]);
 
   useEffect(() => {
-    setItems(firstPage.Items);
-  }, [firstPage.Items]);
+    setItems(page1.items);
+  }, [page1.items]);
 
-  const nextPage = data ? data.nextPage : firstPage.nextPage;
+  const nextPage = data ? data.next_page : page1.next_page;
   function loadNextPage() {
     if (!nextPage) return;
     const p = new URLSearchParams(params);
@@ -60,15 +60,15 @@ export default function Donations() {
         data={
           items.map((item) => {
             return fill({
-              recipientName: item.recipientName,
+              recipientName: item.recipient_name,
               date: new Date(item.date).toLocaleDateString(),
-              paymentMethod: item.paymentMethod,
-              isRecurring: item.isRecurring ? "Yes" : "No",
+              paymentMethod: item.payment_method,
+              isRecurring: item.is_recurring ? "Yes" : "No",
               symbol: item.symbol,
-              initAmount: humanize(item.initAmount, 2),
-              initAmountUsd: humanize(item.initAmountUsd ?? 0, 2),
+              initAmount: humanize(item.init_amount, 2),
+              initAmountUsd: humanize(item.init_amount_usd ?? 0, 2),
               id: item.id,
-              receipt: item.donorDetails?.address?.country ? "Yes" : "No",
+              receipt: item.donor_details?.address?.country ? "Yes" : "No",
             });
           }) ?? []
         }
@@ -139,13 +139,13 @@ export default function Donations() {
 }
 
 const csvHeaders: { key: keyof Donation.Item | "receipt"; label: string }[] = [
-  { key: "recipientName", label: "Recipient" },
+  { key: "recipient_name", label: "Recipient" },
   { key: "date", label: "Date" },
-  { key: "paymentMethod", label: "Donation Type" },
-  { key: "isRecurring", label: "Recurring" },
+  { key: "payment_method", label: "Donation Type" },
+  { key: "is_recurring", label: "Recurring" },
   { key: "symbol", label: "Currency" },
-  { key: "initAmount", label: "Amount" },
-  { key: "initAmountUsd", label: "USD Value" },
+  { key: "init_amount", label: "Amount" },
+  { key: "init_amount_usd", label: "USD Value" },
   { key: "id", label: "Transaction Hash" },
   { key: "receipt", label: "Receipt" },
 ];
