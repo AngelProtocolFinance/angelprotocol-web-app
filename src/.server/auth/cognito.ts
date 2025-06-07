@@ -42,6 +42,11 @@ type Auth = {
   headers?: Record<string, string>;
   session: Stored;
 };
+
+export interface RefreshedUser extends UserV2 {
+  commit: string;
+}
+
 class Storage extends Util {
   /** request of cookie header */
   async retrieve(request: Request | string | null): Promise<Auth> {
@@ -166,7 +171,12 @@ class Cognito extends Storage {
     session.set("token_refresh", session.get("token_refresh")!);
     session.set("token_expiry", this.expiry(r.ExpiresIn));
 
-    return commitSession(session);
+    const updated_user = this.toUser(session.data as any);
+    const refreshed: RefreshedUser = {
+      ...updated_user,
+      commit: await commitSession(session),
+    };
+    return refreshed;
   }
 
   async signup(

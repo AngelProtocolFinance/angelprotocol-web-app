@@ -26,6 +26,7 @@ export class Util {
       referral_id: p["custom:referral_id"],
       pay_id: p["custom:pay_id"],
       pay_min: p["custom:pay_min"],
+      w_form: p["custom:w_form"],
     };
   }
   protected unset(session: Stored) {
