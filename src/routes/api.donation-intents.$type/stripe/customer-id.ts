@@ -1,54 +1,38 @@
 import type Stripe from "stripe";
 import { stripe } from ".server/sdks";
 
+/**
+ * @param currency - uppercase
+ * @param email - lowercase
+ */
 export async function get_customer_id(
   currency: string,
   email: string
 ): Promise<Stripe.Customer["id"]> {
   // Search for existing Stripe Customer data
-  const customerList = [];
-  let loadMore = false;
-  let nextPage: string | undefined = undefined;
-  const currencies = ["USD", currency.toUpperCase()];
+  const subs: Stripe.Customer[] = [];
+  let next_page: string | undefined;
   do {
-    const customers = await stripe.customers.search({
+    const result = await stripe.customers.search({
       expand: ["data.subscriptions"], // needed so we can check if customer has existing subs
       query: `email:"${email}"`,
-      page: nextPage,
+      page: next_page,
     });
 
-    loadMore = customers.has_more;
-    if (!!customers.next_page) nextPage = customers.next_page;
+    subs.push(...result.data);
+    if (result.next_page) next_page = result.next_page;
+  } while (next_page);
 
-    customerList.push(
-      ...customers.data.filter(
-        (_customer) =>
-          // Subscription is always in "USD"
-          !_customer.deleted &&
-          currencies.includes(_customer.currency?.toUpperCase() ?? "USD")
-      )
-    );
-  } while (loadMore);
-
-  /**
-   * Picking the most appropriate customer profile
-   * If customer has existing subs, use that profile
-   * If no existing subs, use the first available profile
-   * Else, create new profile using their email
-   */
-  let customer: Stripe.Customer;
-  if (customerList.length > 0) {
-    customer =
-      customerList.find((_customer) => {
-        if (
-          _customer.subscriptions &&
-          // @ts-ignore (related issue with 'expand' param https://github.com/stripe/stripe-node/issues/1556)
-          _customer.subscriptions.total_count > 0
-        )
-          return _customer;
-      }) ?? customerList[0];
-  } else {
-    customer = await stripe.customers.create({ email });
+  if (subs.length === 0) {
+    // no existing customer found, create a new one
+    return stripe.customers.create({ email }).then((x) => x.id);
   }
-  return customer.id;
+
+  const match = subs.find(
+    (x) =>
+      !x.deleted &&
+      (currency === x.currency?.toUpperCase() || currency === "USD")
+  );
+
+  return (match || subs[0]).id;
 }
