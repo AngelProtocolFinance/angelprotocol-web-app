@@ -37,6 +37,7 @@ export type UserV2 = {
   pay_id?: string;
   /** usd str num */
   pay_min?: string;
+  stripe_customer_id?: string;
 };
 
 /**@template T - type of error to be handled */

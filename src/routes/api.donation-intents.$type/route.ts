@@ -14,6 +14,7 @@ import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
 import { get_customer_id } from "./stripe/customer-id";
 import { donation_type } from "./types";
+import { cognito } from ".server/auth";
 import { PutCommand, apes } from ".server/aws/db";
 import { get_recipient } from ".server/donation-recipient";
 import { env } from ".server/env";
@@ -21,6 +22,7 @@ import { chariot, np } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const { user } = await cognito.retrieve(request);
   const intent = parse(schema, await request.json());
   const d_type = parse(donation_type, params.type);
 
@@ -134,6 +136,16 @@ export const action: ActionFunction = async ({ request, params }) => {
       intent.amount.currency,
       intent.donor.email
     );
+
+    // save stripe customer id to user
+    if (user && user.email === intent.donor.email && !user.stripe_customer_id) {
+      await cognito
+        .updateUserAttributes(
+          [{ Name: "custom:stripe_customer_id", Value: customerId }],
+          user.accessToken
+        )
+        .catch(console.error);
+    }
 
     const to_pay =
       intent.amount.amount +

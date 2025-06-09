@@ -26,6 +26,7 @@ export class Util {
       referral_id: p["custom:referral_id"],
       pay_id: p["custom:pay_id"],
       pay_min: p["custom:pay_min"],
+      stripe_customer_id: p["custom:stripe_customer_id"],
     };
   }
   protected unset(session: Stored) {
