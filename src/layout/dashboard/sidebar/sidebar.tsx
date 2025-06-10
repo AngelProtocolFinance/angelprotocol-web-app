@@ -40,7 +40,10 @@ export default function Sidebar({
                 onClick={onChange}
                 aria-disabled={link.disabled}
               >
-                <link.icon.fn className="justify-self-center" />
+                <link.icon.fn
+                  className="justify-self-center"
+                  size={link.icon.size}
+                />
                 {link.title}
               </NavLink>
             ))}
