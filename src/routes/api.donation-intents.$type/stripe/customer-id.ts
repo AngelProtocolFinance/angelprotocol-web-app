@@ -19,7 +19,11 @@ export async function get_customer_id(
       page: next_page,
     });
 
-    subs.push(...result.data);
+    subs.push(
+      ...result.data.filter(
+        (x) => !x.deleted && x.currency?.toUpperCase() === currency
+      )
+    );
     if (result.next_page) next_page = result.next_page;
   } while (next_page);
 
@@ -28,11 +32,5 @@ export async function get_customer_id(
     return stripe.customers.create({ email }).then((x) => x.id);
   }
 
-  const match = subs.find(
-    (x) =>
-      !x.deleted &&
-      (currency === x.currency?.toUpperCase() || currency === "USD")
-  );
-
-  return (match || subs[0]).id;
+  return subs[0].id;
 }
