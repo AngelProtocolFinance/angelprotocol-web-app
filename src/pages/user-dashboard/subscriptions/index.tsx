@@ -83,7 +83,7 @@ export default function Page() {
           </table>
         </div>
       ) : (
-        <Info classes="mt-8">No subscriptions yet</Info>
+        <Info classes="mt-8">No recurring donations found</Info>
       )}
       {/** cancel prompt */}
       <Outlet />
