@@ -43,8 +43,10 @@ export const action: ActionFunction = async ({ request }) => {
 
   //delay to give room for credentials to be written in db
   await new Promise((r) => setTimeout(r, 500));
-  const res = await cognito.refresh(session);
-  const commit = isError(res) ? undefined : { headers: { "Set-Cookie": res } };
+  const refreshed = await cognito.refresh(session);
+  const commit = isError(refreshed)
+    ? undefined
+    : { headers: { "Set-Cookie": refreshed.commit } };
 
   if (payload.npo_owner) {
     return redirect(`${appRoutes.admin}/${adminRoutes.funds}`, commit);

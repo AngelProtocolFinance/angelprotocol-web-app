@@ -1,5 +1,5 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
-import type { LoaderFunction } from "@vercel/remix";
+import { type LoaderFunction, data } from "@vercel/remix";
 import type { UserV2 } from "types/auth";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { cognito, toAuth } from ".server/auth";
@@ -16,6 +16,7 @@ export interface LoaderData {
   payout_ltd: number;
   payout_min?: number;
   base_url: string;
+  w_form?: string;
 }
 
 function payout(id: number) {
@@ -34,7 +35,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     paidOutLtd(user.referral_id),
   ]);
 
-  return {
+  return data({
     user,
     base_url: new URL(request.url).origin,
     referreds,
@@ -43,5 +44,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     payout: p,
     payout_min: user.pay_min ? +user.pay_min : undefined,
     payout_ltd: pltd,
-  } satisfies LoaderData;
+    w_form: user.w_form,
+  } satisfies LoaderData);
 };

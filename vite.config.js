@@ -148,6 +148,11 @@ const rmx = remix({
               "payout-min",
               "./pages/user-dashboard/referrals/payout-min/index.tsx"
             );
+            r("w-form", "./pages/user-dashboard/referrals/w-forms/index.tsx");
+            r(
+              "w-form-signed",
+              "./pages/user-dashboard/referrals/w-form-signed/index.tsx"
+            );
           });
           r(
             "referrals/payout",
@@ -263,7 +268,7 @@ const rmx = remix({
 export default defineConfig({
   base: "/",
   build: { outDir: "build", target: "es2022" },
-  server: { port: 4200 },
+  server: { port: 4000 },
   plugins: [
     process.env.NODE_ENV === "test" ? undefined : rmx,
     tsconfigPaths(),

@@ -3,16 +3,27 @@ import {
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { type UserV2, isError } from "types/auth";
+import { isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
+import { anvil_envs, env } from ".server/env";
 
-export interface LoaderData extends UserV2 {}
+export interface LoaderData {
+  w9_url: string;
+  w8ben_url: string;
+}
 
+const anvil_form_url = (forge_slug: string) =>
+  `https://app.useanvil.com/weld/${anvil_envs.org_slug}/${forge_slug}${env === "staging" ? `?test=true` : ""}`;
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  return user;
+  const wform: LoaderData = {
+    w8ben_url: anvil_form_url("fw8ben"),
+    w9_url: anvil_form_url("irs-w9"),
+  };
+
+  return wform;
 };
 
 export const action: ActionFunction = async ({ request }) => {
