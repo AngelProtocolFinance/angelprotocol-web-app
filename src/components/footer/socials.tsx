@@ -8,7 +8,7 @@ import ExtLink from "../ext-link";
 
 export default function Socials({ classes = "" }) {
   return (
-    <div className={`flex items-center gap-3 md:gap-6 ${classes}`}>
+    <div className={`flex items-center gap-3 md:gap-6 ${classes} pb-4`}>
       <ExtLink
         href={socials.linkedin}
         className="hover:scale-110 active:scale-110"
