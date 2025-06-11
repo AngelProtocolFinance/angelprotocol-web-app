@@ -30,11 +30,15 @@ export default function Page() {
         </td>
         <td className="text-sm text-gray-d4">
           <div className="flex items-baseline gap-x-2">
-            <span className="text-xs font-semibold">{s.denom}</span>
-            <span>{humanize(s.amount, 2)}</span>
-            <span className="text-xs text-gray-d1">
-              ({toUsd(s.amount_usd)})
+            <span className="text-xs text-gray-d1 font-semibold">
+              {s.denom}
             </span>
+            <span>{humanize(s.amount, 2)}</span>
+            {s.denom !== "USD" && (
+              <span className="text-xs text-gray-d1">
+                ({toUsd(s.amount_usd)})
+              </span>
+            )}
           </div>
         </td>
         <td>
