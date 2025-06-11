@@ -1,6 +1,6 @@
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
-import type { ActionData } from "types/action";
+import type { StripeDonation } from "@better-giving/donation";
+import type { LoaderFunction } from "@vercel/remix";
+import type Stripe from "stripe";
 import { cognito, toAuth } from ".server/auth";
 import { stripe } from ".server/sdks";
 
@@ -8,8 +8,10 @@ export interface SubsItem {
   id: string;
   recipient: { name: string; id: string; type: "fund" | "npo" };
   amount: number;
+  amount_usd: number;
   denom: string;
   next_payment: string;
+  status: Stripe.Subscription.Status;
 }
 
 export interface LoaderData {
@@ -25,38 +27,36 @@ export const loader: LoaderFunction = async ({ request }) => {
     return { subs: [] } satisfies LoaderData;
   }
 
-  const subs = await stripe.customers.list({
-    email: user.email,
-    expand: ["data.subscriptions"],
+  const customers = await stripe.customers.search({
+    expand: ["data.subscriptions"], // needed so we can check if customer has existing subs
+    query: `email:"${user.email}"`,
   });
 
-  const items: SubsItem = subs.data.map((x) => {
-    return {
-      id: x.id,
-      recipient: x.metadata.fund_id
+  const items = customers.data
+    .flatMap((x) => x.subscriptions?.data || [])
+    .map<SubsItem>((x) => {
+      const meta = x.metadata as StripeDonation.Metadata;
+      const recipient: SubsItem["recipient"] = meta.fund_id
         ? {
-            name: x.metadata.fund_name,
-            id: x.metadata.fund_id,
             type: "fund",
+            id: meta.fund_id,
+            name: meta.fund_name || "Unknown Fund",
           }
         : {
-            name: x.metadata.charityName,
-            id: x.metadata.npo_id,
             type: "npo",
-          },
-    };
-  });
-  return { subs: subs.data } satisfies LoaderData;
-};
+            id: meta.endowmentId,
+            name: meta.charityName,
+          };
 
-export const action: ActionFunction = async ({ request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const path = `${ver(3)}/users/${user.email}/endowments`;
-  await ap.patch(path, {
-    headers: { authorization: user.idToken },
-    json: { alertPrefs: await request.json() },
-  });
-  return { __ok: "Settings updated" } satisfies ActionData;
+      return {
+        id: x.id,
+        recipient,
+        amount: +meta.amount,
+        denom: x.currency.toUpperCase(),
+        amount_usd: +meta.usdValue,
+        next_payment: new Date(x.current_period_end * 1000).toISOString(),
+        status: x.status,
+      } satisfies SubsItem;
+    });
+  return { subs: items };
 };

@@ -19,11 +19,11 @@ export async function get_customer_id(
       page: next_page,
     });
 
-    subs.push(
-      ...result.data.filter(
-        (x) => !x.deleted && x.currency?.toUpperCase() === currency
-      )
+    const filtered = result.data.filter(
+      (x) => !x.deleted && x.currency?.toUpperCase() === currency
     );
+    subs.push(...filtered);
+
     if (result.next_page) next_page = result.next_page;
   } while (next_page);
 

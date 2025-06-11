@@ -132,7 +132,16 @@ const rmx = remix({
           r("donations", "./pages/user-dashboard/donations/index.tsx", () => {
             r(":id", "./components/kyc-form/index.tsx");
           });
-          r("subscriptions", "./pages/user-dashboard/subscriptions/index.tsx");
+          r(
+            "subscriptions",
+            "./pages/user-dashboard/subscriptions/index.tsx",
+            () => {
+              r(
+                "cancel/:id",
+                "./pages/user-dashboard/subscriptions/cancel/index.tsx"
+              );
+            }
+          );
           r("funds", "./pages/user-dashboard/funds/funds.tsx");
           r("referrals", "./pages/user-dashboard/referrals/index.tsx", () => {
             r(
