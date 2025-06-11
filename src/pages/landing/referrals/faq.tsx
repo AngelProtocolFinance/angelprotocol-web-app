@@ -1,5 +1,5 @@
 import ExtLink from "components/ext-link";
-import { referrals_faq } from "constants/urls";
+import { referrals_hub } from "constants/urls";
 import { ArrowRight } from "lucide-react";
 
 export function Faq({ classes = "" }) {
@@ -58,7 +58,7 @@ export function Faq({ classes = "" }) {
         </li>
       </ul>
       <ExtLink
-        href={referrals_faq}
+        href={referrals_hub}
         className="justify-self-center flex mt-8 items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
       >
         <span>Complete FAQs</span>

@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { APP_NAME } from "constants/env";
-import { referrals_faq } from "constants/urls";
+import { referrals_hub } from "constants/urls";
 import {
   BrainIcon,
   CheckIcon,
@@ -106,7 +106,7 @@ export function Explainer({ classes = "" }) {
                     View Full Program Terms
                   </Link>
                   <ExtLink
-                    href={referrals_faq}
+                    href={referrals_hub}
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
                   >
                     <QuestionMarkCircleIcon className="h-4 w-4 mr-1" />

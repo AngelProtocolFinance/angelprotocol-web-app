@@ -26,5 +26,5 @@ export const socials = {
   intercom: INTERCOM_HELP,
 };
 
-export const referrals_faq =
-  "https://intercom.help/better-giving/en/articles/11377507-about-the-better-giving-referral-program";
+export const referrals_hub =
+  "https://intercom.help/better-giving/en/collections/13341032-referral-program-resource-hub ";
