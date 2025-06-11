@@ -1,16 +1,15 @@
-import type { StripeDonation } from "@better-giving/donation";
 import type { ActionFunction } from "@vercel/remix";
 import { parse, stage as schema } from "routes/types/donation-message";
 import type Stripe from "stripe";
 import { resp } from "../helpers/resp";
 import {
-  handleCreateSubscription,
-  handleDeleteSubscription,
-  handleIntentFailed,
-  handleIntentRequiresAction,
-  handleOneTimeDonation,
-  handleUpdateSubscription,
+  handle_intent_failed,
+  handle_intent_requires_action,
+  handle_setup_intent_failed,
+  handle_setup_intent_succeeded,
+  handle_subscription_deleted,
 } from "./handlers";
+import { handle_intent_succeeded } from "./handlers/intent-suceeded";
 import { stripeEnvs } from ".server/env";
 import { discordFiatMonitor, stripe } from ".server/sdks";
 
@@ -61,28 +60,23 @@ export const action: ActionFunction = async ({
   try {
     switch (event.type) {
       case "customer.subscription.deleted":
-        await handleDeleteSubscription(event.data);
+        await handle_subscription_deleted(event.data);
         break;
       case "payment_intent.succeeded":
-        if (isOneTime(event.data.object.metadata))
-          await handleOneTimeDonation(event.data.object, origin);
-        else await handleUpdateSubscription(event.data.object, origin);
+        await handle_intent_succeeded(event.data, origin);
         break;
       case "setup_intent.succeeded":
-        await handleCreateSubscription(event.data);
+        await handle_setup_intent_succeeded(event.data);
         break;
       case "payment_intent.payment_failed":
+        await handle_intent_failed(event.data);
+        break;
       case "setup_intent.setup_failed":
-        const reason = await handleIntentFailed(event);
-        await discordFiatMonitor.sendAlert({
-          from: `stripe-event-handler-${stage}`,
-          title: "Intent Failed",
-          body: `Intent ID: ${event.data.object.id}\nReason: ${reason}`,
-        });
-        return new Response("Received", { status: 200 });
+        await handle_setup_intent_failed(event.data);
+        break;
       case "payment_intent.requires_action":
       case "setup_intent.requires_action":
-        await handleIntentRequiresAction(event);
+        await handle_intent_requires_action(event);
         break;
       default:
         throw new Error(`Invalid event type, ${event.type}`);
@@ -103,8 +97,3 @@ export const action: ActionFunction = async ({
     return new Response(errorMessage, { status: 400 });
   }
 };
-
-// One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice
-function isOneTime(metadata: any): metadata is StripeDonation.Metadata {
-  return Object.keys(metadata).length > 0;
-}

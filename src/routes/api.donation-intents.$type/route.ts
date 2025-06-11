@@ -132,16 +132,16 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (d_type === "stripe") {
     const usd_rate = await get_usd_rate(intent.amount.currency);
 
-    const customerId = await get_customer_id(
-      intent.amount.currency,
-      intent.donor.email
+    const customer_id = await get_customer_id(
+      intent.amount.currency.toUpperCase(),
+      intent.donor.email.toLowerCase()
     );
 
     // save stripe customer id to user
     if (user && user.email === intent.donor.email && !user.stripe_customer_id) {
       await cognito
         .updateUserAttributes(
-          [{ Name: "custom:stripe_customer_id", Value: customerId }],
+          [{ Name: "custom:stripe_customer_id", Value: customer_id }],
           user.accessToken
         )
         .catch(console.error);
@@ -167,8 +167,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     const clientSecret =
       intent.frequency === "one-time"
-        ? await create_payment_intent(onhold, customerId)
-        : await setup_intent(onhold, customerId);
+        ? await create_payment_intent(onhold, customer_id)
+        : await setup_intent(onhold, customer_id);
 
     return resp.json({ clientSecret });
   }

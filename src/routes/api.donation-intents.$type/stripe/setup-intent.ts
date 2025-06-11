@@ -7,10 +7,10 @@ import { nonSubsPM, payment_methods } from ".server/stripe/payment-methods";
 
 export async function setup_intent(
   order: OnHoldDonation.FiatDBRecord,
-  customerId: string
+  customer_id: string
 ): Promise<string> {
-  const setupIntent = await stripe.setupIntents.create({
-    customer: customerId,
+  const { client_secret } = await stripe.setupIntents.create({
+    customer: customer_id,
     payment_method_options: {
       acss_debit: {
         currency: "cad",
@@ -35,8 +35,5 @@ export async function setup_intent(
     usage: "off_session",
   });
 
-  if (!setupIntent.client_secret)
-    throw { message: "Failed to create client secret" };
-
-  return setupIntent.client_secret;
+  return client_secret || "invalid client secret";
 }

@@ -4,10 +4,10 @@ import type Stripe from "stripe";
 import { DeleteCommand, apes } from ".server/aws/db";
 
 /** Removes record from subscription DB */
-export async function handleDeleteSubscription({
+export async function handle_subscription_deleted({
   object,
 }: Stripe.CustomerSubscriptionDeletedEvent.Data) {
-  await apes.send(
+  return apes.send(
     new DeleteCommand({
       TableName: tables.subscriptions,
       Key: { subscription_id: object.id } satisfies Subscription.PrimaryKey,

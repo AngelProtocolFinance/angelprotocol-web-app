@@ -2,14 +2,14 @@ import type { StripeDonation } from "@better-giving/donation";
 import { stripe } from ".server/sdks";
 
 export async function create_subscription(
-  customerId: string,
-  paymentMethodId: string,
-  donationIntent: StripeDonation.SetupIntentMetadata
+  customer_id: string,
+  payment_method_id: string,
+  intent: StripeDonation.SetupIntentMetadata
 ): Promise<string> {
   // Update a Customer's default payment method
-  await stripe.customers.update(customerId, {
+  await stripe.customers.update(customer_id, {
     invoice_settings: {
-      default_payment_method: paymentMethodId,
+      default_payment_method: payment_method_id,
     },
   });
 
@@ -18,7 +18,7 @@ export async function create_subscription(
     active: true,
     limit: 2,
     lookup_keys: ["standard_monthly"],
-    product: donationIntent.productId,
+    product: intent.productId,
     type: "recurring",
   });
 
@@ -29,15 +29,15 @@ export async function create_subscription(
 
   // Create a Subscription object
   const subs = await stripe.subscriptions.create({
-    customer: customerId,
-    currency: donationIntent.denomination.toLowerCase(),
+    customer: customer_id,
+    currency: intent.denomination.toLowerCase(),
     items: [
       {
         price,
-        quantity: +donationIntent.subsQuantity, // subs qty. is integer: 1USD/unit
+        quantity: +intent.subsQuantity, // subs qty. is integer: 1USD/unit
       },
     ],
-    metadata: donationIntent,
+    metadata: intent,
     off_session: true,
   });
 
