@@ -10,7 +10,7 @@ import Preview from "./preview";
 import Snippet from "./snippet";
 
 export default function Widget() {
-  const { endow, origin } = useLoaderData<WidgetData>();
+  const { endow, base_url } = useLoaderData<WidgetData>();
 
   const _methods = endow?.donateMethods;
   const filled = fill(
@@ -43,7 +43,12 @@ export default function Widget() {
       </p>
       <div className="w-full">
         <Configurer config={state} setConfig={setState} endow={endow} />
-        <Snippet origin={origin} config={state} classes="mt-10" endow={endow} />
+        <Snippet
+          base_url={base_url}
+          config={state}
+          classes="mt-10"
+          endow={endow}
+        />
       </div>
 
       <Preview

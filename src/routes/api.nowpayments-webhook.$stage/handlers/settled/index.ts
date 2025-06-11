@@ -12,7 +12,7 @@ import { np, qstash } from ".server/sdks";
  */
 export const handleSettled = async (
   payment: NP.PaymentPayload,
-  origin: string
+  base_url: string
 ) => {
   const order = await get_order(payment.order_id);
 
@@ -37,7 +37,7 @@ export const handleSettled = async (
   const final = to_final(order, settlement);
 
   return qstash.publishJSON({
-    url: `${origin}/q/final-recorder`,
+    url: `${base_url}/q/final-recorder`,
     body: final,
     retries: 0,
     deduplicationId: payment.order_id,

@@ -29,14 +29,14 @@ const staticUrls: SitemapUrl[] = [
 ];
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const origin = new URL(request.url).origin;
+  const base_url = new URL(request.url).origin;
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticUrls
   .map(
     (url) => `  <url>
-    <loc>${origin}${url.url}</loc>
+    <loc>${base_url}${url.url}</loc>
     <changefreq>${url.changeFrequency}</changefreq>
     <priority>${url.priority}</priority>
   </url>`

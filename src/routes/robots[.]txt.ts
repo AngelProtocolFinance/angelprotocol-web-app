@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@vercel/remix";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const origin = new URL(request.url).origin;
+  const base_url = new URL(request.url).origin;
 
   const robotText = `
 # https://www.robotstxt.org/robotstxt.html
@@ -15,7 +15,7 @@ Disallow: /banking-applications/
 Disallow: /applications/
 Disallow: /api/
 
-Sitemap: ${origin}/sitemap.xml
+Sitemap: ${base_url}/sitemap.xml
 `;
 
   return new Response(robotText.trim(), {

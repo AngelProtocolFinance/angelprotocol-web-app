@@ -12,7 +12,7 @@ import { qstash, stripe } from ".server/sdks";
 
 export async function handle_intent_succeeded(
   { object: intent }: Stripe.PaymentIntentSucceededEvent.Data,
-  origin: string
+  base_url: string
 ) {
   //PaymentIntent Event does not have expandable field so we query for PaymentMethod
   // Fetch settled amount and fee
@@ -32,7 +32,7 @@ export async function handle_intent_succeeded(
     const final = to_final(order, settled);
     return qstash.publishJSON({
       body: final,
-      url: `${origin}/q/final-recorder`,
+      url: `${base_url}/q/final-recorder`,
       retries: 0,
       deduplicationId: intent.id,
     });
@@ -51,7 +51,7 @@ export async function handle_intent_succeeded(
 
   const res = await qstash.publishJSON({
     body: final,
-    url: `${origin}/q/final-recorder`,
+    url: `${base_url}/q/final-recorder`,
     retries: 0,
     deduplicationId: intent.id,
   });

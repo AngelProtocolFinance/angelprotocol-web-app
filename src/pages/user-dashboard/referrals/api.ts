@@ -15,7 +15,7 @@ export interface LoaderData {
   payout?: V2RecipientAccount;
   payout_ltd: number;
   payout_min?: number;
-  origin: string;
+  base_url: string;
 }
 
 function payout(id: number) {
@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   return {
     user,
-    origin: new URL(request.url).origin,
+    base_url: new URL(request.url).origin,
     referreds,
     earnings,
     pendings,

@@ -18,7 +18,7 @@ export interface LoaderData {
   payout?: IItem;
   payout_ltd: number;
   payout_min?: number;
-  origin: string;
+  base_url: string;
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -48,7 +48,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   return {
     id: endow.referral_id,
-    origin: new URL(request.url).origin,
+    base_url: new URL(request.url).origin,
     referreds,
     earnings,
     pendings,

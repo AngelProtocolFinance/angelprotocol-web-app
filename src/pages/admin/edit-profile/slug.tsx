@@ -4,8 +4,8 @@ import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
 import type { LoaderData } from "./api";
 
-const genLink = (slug: string, origin: string) =>
-  `${origin}${appRoutes.marketplace}/${slug}`;
+const genLink = (slug: string, base_url: string) =>
+  `${base_url}${appRoutes.marketplace}/${slug}`;
 
 interface Props {
   initSlug?: string;
@@ -13,8 +13,8 @@ interface Props {
   slugField: ReactNode;
 }
 export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
-  const { origin } = useCachedLoaderData() as LoaderData;
-  const link = initSlug && genLink(initSlug, origin);
+  const { base_url } = useCachedLoaderData() as LoaderData;
+  const link = initSlug && genLink(initSlug, base_url);
 
   return (
     <div>

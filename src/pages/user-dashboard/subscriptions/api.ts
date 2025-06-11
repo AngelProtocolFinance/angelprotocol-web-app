@@ -25,11 +25,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     return { subs: [] } satisfies LoaderData;
   }
 
-  const subs = await stripe.subscriptions.list({
-    customer: stripe_customer_id,
+  const subs = await stripe.customers.list({
+    email: user.email,
+    expand: ["data.subscriptions"],
   });
 
-  const items = subs.data.map((x) => {
+  const items: SubsItem = subs.data.map((x) => {
     return {
       id: x.id,
       recipient: x.metadata.fund_id

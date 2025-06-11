@@ -7,16 +7,13 @@ import { payment_method } from "../helpers/payment-method";
 import { send_email } from "../helpers/send-email";
 import { PutCommand, apes } from ".server/aws/db";
 
-type Ev =
-  | Stripe.PaymentIntentRequiresActionEvent
-  | Stripe.SetupIntentRequiresActionEvent;
+type Intent = Stripe.PaymentIntent | Stripe.SetupIntent;
 
 /**
  * Payment Intent - Updates intent transaction with deposit verification URL, status is still "intent"
  * Setup Intent   - Creates an "intent" donation record with deposit verification URL
  */
-export async function handle_intent_requires_action(ev: Ev) {
-  const intent = ev.data.object;
+export async function handle_intent_requires_action(intent: Intent) {
   const verification_link =
     intent.next_action?.verify_with_microdeposits?.hosted_verification_url;
 
@@ -35,7 +32,7 @@ export async function handle_intent_requires_action(ev: Ev) {
   });
   await apes.send(cmd);
 
-  await send_email({
+  return send_email({
     recipients: [meta.email],
     template: "donation-microdeposit-action",
     data: {

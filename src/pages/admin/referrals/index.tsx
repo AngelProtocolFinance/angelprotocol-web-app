@@ -12,7 +12,7 @@ export function ReferralsPage() {
   const navigate = useNavigate();
   const {
     id,
-    origin,
+    base_url,
     referreds,
     earnings,
     pendings,
@@ -23,7 +23,7 @@ export function ReferralsPage() {
   return (
     <div className="">
       <Explainer classes="mb-4" />
-      <ReferralId classes="mb-8" referral_id={id} origin={origin} />
+      <ReferralId classes="mb-8" referral_id={id} base_url={base_url} />
       <Earnings
         classes="mb-8"
         earnings={{

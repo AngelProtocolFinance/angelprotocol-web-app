@@ -11,7 +11,7 @@ import { Explainer } from "components/referrals";
 export function ReferralsPage() {
   const navigate = useNavigate();
   const {
-    origin,
+    base_url,
     user,
     referreds,
     earnings,
@@ -26,7 +26,7 @@ export function ReferralsPage() {
       <ReferralId
         classes="mb-8"
         referral_id={user.referral_id}
-        origin={origin}
+        base_url={base_url}
       />
       <Earnings
         classes="mb-8"

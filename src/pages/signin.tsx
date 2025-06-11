@@ -29,8 +29,7 @@ export const action: ActionFunction = async ({ request }) => {
     const redirectTo =
       from.searchParams.get("redirect") || appRoutes.marketplace;
     if (fv.get("intent") === "oauth") {
-      const origin = new URL(request.url);
-      return redirect(oauth.initiateUrl(redirectTo, origin.origin));
+      return redirect(oauth.initiateUrl(redirectTo, from.origin));
     }
 
     const payload = parseWithValibot(fv, { schema: signIn });
