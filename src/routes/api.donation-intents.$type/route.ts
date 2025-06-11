@@ -141,7 +141,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (user && user.email === intent.donor.email && !user.stripe_customer_id) {
       await cognito
         .updateUserAttributes(
-          [{ Name: "custom:stripe_customer_id", Value: customerId }],
+          [{ Name: "custom:stripe_customer_id", Value: customer_id }],
           user.accessToken
         )
         .catch(console.error);

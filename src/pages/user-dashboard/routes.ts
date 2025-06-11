@@ -15,6 +15,7 @@ export const routes = {
   funds: "funds",
   settings: "settings",
   referrals: "referrals",
+  subscriptions: "subscriptions",
 };
 
 export const linkGroups: LinkGroup[] = [
@@ -30,7 +31,7 @@ export const linkGroups: LinkGroup[] = [
       },
       {
         title: "My Subscriptions",
-        to: routes.donations,
+        to: routes.subscriptions,
         icon: {
           fn: RefreshCw,
           size: 20,
