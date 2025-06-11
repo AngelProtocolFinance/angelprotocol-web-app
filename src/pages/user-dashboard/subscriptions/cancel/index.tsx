@@ -38,7 +38,7 @@ function Content() {
     >
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
-          Cancel Subscription
+          Cancel Recurring Donation
         </p>
         <Link
           aria-disabled={fetcher.state !== "idle"}
@@ -72,7 +72,7 @@ function Content() {
         />
       </div>
 
-      <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3">
+      <div className="p-4 grid grid-cols-2 gap-4 w-full  sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3">
         <Link
           to={".."}
           aria-disabled={fetcher.state === "submitting"}
@@ -81,16 +81,14 @@ function Content() {
           preventScrollReset
           replace
         >
-          Keep Subscription
+          Keep your support
         </Link>
         <button
           disabled={fetcher.state !== "idle"}
           type="submit"
           className="btn btn-red px-8 py-2 text-sm"
         >
-          {fetcher.state === "submitting"
-            ? "Canceling..."
-            : "Cancel Subscription"}
+          {fetcher.state === "submitting" ? "Canceling..." : "Cancel"}
         </button>
       </div>
     </DialogPanel>

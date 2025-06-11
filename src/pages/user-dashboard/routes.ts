@@ -30,7 +30,7 @@ export const linkGroups: LinkGroup[] = [
         },
       },
       {
-        title: "My Subscriptions",
+        title: "Recurring Donations",
         to: routes.subscriptions,
         icon: {
           fn: RefreshCw,

@@ -61,7 +61,7 @@ export default function Page() {
 
   return (
     <div className="grid">
-      <h2 className="text-3xl">My Subscriptions</h2>
+      <h2 className="text-3xl">Recurring Donations</h2>
 
       {rows.length > 0 ? (
         <div className="overflow-x-auto bg-white rounded-lg mt-8">

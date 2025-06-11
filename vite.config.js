@@ -137,7 +137,7 @@ const rmx = remix({
             "./pages/user-dashboard/subscriptions/index.tsx",
             () => {
               r(
-                "cancel/:id",
+                "cancel/:sub_id",
                 "./pages/user-dashboard/subscriptions/cancel/index.tsx"
               );
             }
