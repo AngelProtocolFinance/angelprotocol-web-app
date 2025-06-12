@@ -116,6 +116,34 @@ const rmx = remix({
           "./pages/admin/referrals/payout-history/index.tsx"
         );
       });
+      // no robots
+      r("dashboard", "./pages/user-dashboard/layout.tsx", () => {
+        r("", "./pages/user-dashboard/index-route.ts", { index: true });
+        r("edit-profile", "./pages/user-dashboard/edit-profile/index.ts");
+        r("settings", "./pages/user-dashboard/settings/settings.tsx");
+        r("donations", "./pages/user-dashboard/donations/index.tsx", () => {
+          r(":id", "./components/kyc-form/index.tsx");
+        });
+        r("funds", "./pages/user-dashboard/funds/funds.tsx");
+        r("referrals", "./pages/user-dashboard/referrals/index.tsx", () => {
+          r(
+            "payout-min",
+            "./pages/user-dashboard/referrals/payout-min/index.tsx"
+          );
+        });
+        r(
+          "referrals/payout",
+          "./pages/user-dashboard/referrals/payout/index.tsx"
+        );
+        r(
+          "referrals/earnings",
+          "./pages/user-dashboard/referrals/earnings-history/index.tsx"
+        );
+        r(
+          "referrals/payouts",
+          "./pages/user-dashboard/referrals/payout-history/index.tsx"
+        );
+      });
       r("", "./layout/app/layout.tsx", () => {
         r("login", "./pages/signin.tsx");
         r("signup", "./pages/sign-up/layout.tsx", () => {
@@ -124,35 +152,6 @@ const rmx = remix({
           r("success", "./pages/sign-up/success.tsx");
         });
         r("login/reset", "./pages/reset-password/reset-password.tsx");
-        // no robots
-        r("dashboard", "./pages/user-dashboard/layout.tsx", () => {
-          r("", "./pages/user-dashboard/index-route.ts", { index: true });
-          r("edit-profile", "./pages/user-dashboard/edit-profile/index.ts");
-          r("settings", "./pages/user-dashboard/settings/settings.tsx");
-          r("donations", "./pages/user-dashboard/donations/index.tsx", () => {
-            r(":id", "./components/kyc-form/index.tsx");
-          });
-          r("funds", "./pages/user-dashboard/funds/funds.tsx");
-          r("referrals", "./pages/user-dashboard/referrals/index.tsx", () => {
-            r(
-              "payout-min",
-              "./pages/user-dashboard/referrals/payout-min/index.tsx"
-            );
-          });
-          r(
-            "referrals/payout",
-            "./pages/user-dashboard/referrals/payout/index.tsx"
-          );
-          r(
-            "referrals/earnings",
-            "./pages/user-dashboard/referrals/earnings-history/index.tsx"
-          );
-          r(
-            "referrals/payouts",
-            "./pages/user-dashboard/referrals/payout-history/index.tsx"
-          );
-        });
-
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
         r("donor", "./pages/informational/donor-info/index.ts");

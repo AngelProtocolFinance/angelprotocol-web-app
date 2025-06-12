@@ -47,7 +47,7 @@ export default function Component() {
           method: "PATCH",
         });
       })}
-      className="w-full max-w-4xl justify-self-center content-start"
+      className="w-full max-w-4xl content-start"
     >
       <h2 className="text-3xl mb-6">User Profile</h2>
 
