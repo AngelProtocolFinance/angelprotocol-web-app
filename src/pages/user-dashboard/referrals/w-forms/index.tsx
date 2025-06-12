@@ -39,16 +39,20 @@ function Content(props: LoaderData) {
           href={props.w9_url}
           className="w-full block p-4 border border-gray-l3 rounded-lg hover:bg-gray-l4 transition-colors text-left"
         >
-          <div className="font-semibold text-gray-d4">W-9 Form</div>
-          <div className="text-sm text-gray">For US residents</div>
+          <div className="font-semibold text-gray-d4">For US Residents</div>
+          <div className="text-sm text-gray">
+            Complete this W-9 tax status form
+          </div>
         </ExtLink>
 
         <ExtLink
           href={props.w8ben_url}
           className="w-full block p-4 border border-gray-l3 rounded-lg hover:bg-gray-l4 transition-colors text-left"
         >
-          <div className="font-semibold text-gray-d4">W-8BEN Form</div>
-          <div className="text-sm text-gray">For non-US residents</div>
+          <div className="font-semibold text-gray-d4">For Non-US Residents</div>
+          <div className="text-sm text-gray">
+            Complete this W-8BEN tax status form
+          </div>
         </ExtLink>
       </div>
     </DialogPanel>
