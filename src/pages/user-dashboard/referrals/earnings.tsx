@@ -102,7 +102,7 @@ export function Earnings({
               to="payout"
               className="mt-2 inline-block text-sm rounded-md px-4 py-2 btn-blue"
             >
-              setup payout method
+              Setup Payout Method
             </Link>
           )}
 
