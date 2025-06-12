@@ -1,5 +1,7 @@
+import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
+import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 
 type TListItem = {
@@ -49,13 +51,16 @@ export function Feature2({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
-      <a
-        href="#getlink"
+      <Link
+        to={{
+          pathname: appRoutes.signup,
+          search: `?redirect=${appRoutes.user_dashboard}/referrals`,
+        }}
         className="btn-blue mt-8 justify-self-center col-span-full ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
       >
         Get Your Link Now
         <ArrowRight size={18} className="group-hover:translate-x-1" />
-      </a>
+      </Link>
     </section>
   );
 }
