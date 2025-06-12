@@ -109,7 +109,6 @@ export const action: ActionFunction = async ({ request }) => {
 
     const net_tip = p_net_settled.tip - p_processing_fee.tip;
     const tip_commission = net_tip * referral_commission_rate;
-    const tip_fee_commission = processed_tip.excess * referral_commission_rate;
     const tip_tos: string[] = [];
 
     /** donation to a fund */
@@ -132,8 +131,7 @@ export const action: ActionFunction = async ({ request }) => {
         );
 
         const endow_commission_fee =
-          (processed.excess + processed.fees.base + processed.fees.fsa) *
-          referral_commission_rate;
+          processed.fees.base * referral_commission_rate;
 
         const overrides: Overrides = {
           endowId: endow.id,
@@ -158,7 +156,7 @@ export const action: ActionFunction = async ({ request }) => {
         const c = commission_fn(
           {
             tip: tip_commission / num_members,
-            fee: endow_commission_fee + tip_fee_commission / num_members,
+            fee: endow_commission_fee / num_members,
             id: tx.id,
           },
           endow
@@ -228,7 +226,7 @@ export const action: ActionFunction = async ({ request }) => {
       const c = commission_fn(
         {
           tip: tip_commission,
-          fee: endow_commission_fee + tip_fee_commission,
+          fee: endow_commission_fee,
           id: tx.id,
         },
         endow
@@ -286,11 +284,10 @@ export const action: ActionFunction = async ({ request }) => {
         id: `internal:${tip_tos.join(",")}`,
         commission: {
           from_tip: tip_commission,
-          from_fee: tip_fee_commission,
+          from_fee: 0,
         },
       };
       overrides.net -= tip_commission;
-      overrides.excessFeeAllowance -= tip_fee_commission;
     }
     const tipTxs = settle_txs(base, overrides);
     builder.append(tipTxs);
