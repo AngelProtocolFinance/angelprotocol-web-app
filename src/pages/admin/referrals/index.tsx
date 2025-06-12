@@ -1,12 +1,10 @@
 import { useNavigate } from "@remix-run/react";
 import type { LoaderData } from "./api";
 import { Earnings } from "./earnings";
-import { Nonprofits } from "./nonprofits";
-import { ReferralId } from "./referral-id";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
-import { Explainer } from "components/referrals";
+import { Explainer, Nonprofits, ReferralId } from "components/referrals";
 
 export function ReferralsPage() {
   const navigate = useNavigate();
@@ -23,6 +21,7 @@ export function ReferralsPage() {
   return (
     <div className="">
       <Explainer classes="mb-4" />
+      <h3 className="mt-8 mb-4 text-2xl">Referral ID and Link</h3>
       <ReferralId classes="mb-8" referral_id={id} origin={origin} />
       <Earnings
         classes="mb-8"
