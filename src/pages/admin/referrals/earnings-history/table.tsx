@@ -39,7 +39,7 @@ export function EarningsHistory({
                 </Link>
               </td>
 
-              <td>${humanize(payout.amount, 3)}</td>
+              <td>${humanize(payout.amount)}</td>
               <td>
                 <div
                   className={`${payout.status === "pending" ? "bg-gray" : "bg-green"} text-white text-xs font-semibold px-2 py-0.5  rounded-sm inline-block`}

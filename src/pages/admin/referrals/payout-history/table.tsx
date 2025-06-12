@@ -49,7 +49,7 @@ export function Table({
                       <Info size={16} className="absolute -left-5 top-0.5" />
                     </Tooltip>
                   )}
-                  ${humanize(payout.amount, 3)}{" "}
+                  ${humanize(payout.amount)}{" "}
                 </div>
               </td>
             </tr>
