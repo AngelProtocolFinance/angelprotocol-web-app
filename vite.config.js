@@ -267,7 +267,7 @@ const rmx = remix({
 export default defineConfig({
   base: "/",
   build: { outDir: "build", target: "es2022" },
-  server: { port: 4000 },
+  server: { port: 4200 },
   plugins: [
     process.env.NODE_ENV === "test" ? undefined : rmx,
     tsconfigPaths(),
