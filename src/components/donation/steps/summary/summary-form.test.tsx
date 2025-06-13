@@ -24,9 +24,9 @@ const honorary: Honorary = {
   honoraryFullName: "",
   withTributeNotif: false,
   tributeNotif: {
-    fromMsg: "",
-    toEmail: "",
-    toFullName: "",
+    from_msg: "",
+    to_email: "",
+    to_fullname: "",
   },
 };
 

@@ -86,9 +86,9 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           return !withTributeNotif
             ? obj.optional()
             : schema<FV["tributeNotif"]>({
-                toFullName: string().required("required"),
-                toEmail: string().required("required").email("invalid email"),
-                fromMsg: string().max(
+                to_fullname: string().required("required"),
+                to_email: string().required("required").email("invalid email"),
+                from_msg: string().max(
                   CUSTOM_MSG_MAX_LENGTH,
                   "must be less than 250 characters"
                 ),
@@ -106,7 +106,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const withHonorary = watch("withHonorary");
   const withTributeNotif = watch("withTributeNotif");
   const fvCoverFee = watch("coverFee");
-  const customMsg = watch("tributeNotif.fromMsg");
+  const customMsg = watch("tributeNotif.from_msg");
   const isPublic = watch("isPublic");
   const publicMsg = watch("publicMsg");
 
@@ -234,7 +234,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               {withTributeNotif && (
                 <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
                   <Field
-                    {...register("tributeNotif.toFullName")}
+                    {...register("tributeNotif.to_fullname")}
                     label="Recipient name"
                     placeholder="e.g. Jane Doe"
                     classes={{
@@ -242,10 +242,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                       input: "field-input-donate",
                     }}
                     required
-                    error={errors.tributeNotif?.toFullName?.message}
+                    error={errors.tributeNotif?.to_fullname?.message}
                   />
                   <Field
-                    {...register("tributeNotif.toEmail")}
+                    {...register("tributeNotif.to_email")}
                     label="Email address"
                     placeholder="e.g. janedoe@better.giving"
                     classes={{
@@ -253,10 +253,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                       input: "field-input-donate",
                     }}
                     required
-                    error={errors.tributeNotif?.toEmail?.message}
+                    error={errors.tributeNotif?.to_email?.message}
                   />
                   <Field
-                    {...register("tributeNotif.fromMsg")}
+                    {...register("tributeNotif.from_msg")}
                     rows={2}
                     type="textarea"
                     label="Custom message"
@@ -266,10 +266,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                       input: "field-input-donate",
                     }}
                     required={false}
-                    error={errors.tributeNotif?.fromMsg?.message}
+                    error={errors.tributeNotif?.from_msg?.message}
                   />
                   <p
-                    data-exceed={errors.tributeNotif?.fromMsg?.type === "max"}
+                    data-exceed={errors.tributeNotif?.from_msg?.type === "max"}
                     className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
                   >
                     {customMsg.length}/{CUSTOM_MSG_MAX_LENGTH}
@@ -338,8 +338,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               const intent: DonationIntent = {
                 frequency: "one-time",
-                viaId: workflowSessionId,
-                viaName: "",
+                via_id: workflowSessionId,
+                via_name: "",
                 amount: {
                   currency: props.details.currency.code,
                   amount: adjusted.amount,
@@ -376,7 +376,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               if (meta.honoraryFullName) {
                 intent.tribute = {
-                  fullName: meta.honoraryFullName,
+                  full_name: meta.honoraryFullName,
                 };
                 if (meta.withTributeNotif) {
                   intent.tribute.notif = meta.tributeNotif;

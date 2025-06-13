@@ -68,7 +68,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       amount: to_pay,
       usdValue: to_pay * rate,
 
-      chainId: intent.viaId as any,
+      chainId: intent.via_id as any,
       destinationChainId: env === "production" ? "137" : "80002",
       walletAddress: "",
       // `expire` event would delete this record in production
@@ -106,7 +106,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const to_pay =
       intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
     const grant = await chariot.create_grant(
-      intent.viaId,
+      intent.via_id,
       round_number(to_pay * 100, 0)
     );
 

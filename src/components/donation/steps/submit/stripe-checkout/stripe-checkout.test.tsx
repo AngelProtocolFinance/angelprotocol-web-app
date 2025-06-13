@@ -79,9 +79,9 @@ const state: StripeCheckoutStep = {
     honoraryFullName: "first last",
     withTributeNotif: true,
     tributeNotif: {
-      fromMsg: "custom message",
-      toEmail: "to@gmail.com",
-      toFullName: "tofirst tolast",
+      from_msg: "custom message",
+      to_email: "to@gmail.com",
+      to_fullname: "tofirst tolast",
     },
   },
 };

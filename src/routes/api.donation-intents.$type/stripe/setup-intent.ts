@@ -23,7 +23,7 @@ export async function setup_intent(
       },
     },
     payment_method_types: (
-      payment_methods[order.denomination.toLowerCase()] ?? ["card"]
+      payment_methods[order.denomination] ?? ["card"]
     ).filter(nonSubsPM),
     metadata: {
       // Subscription required fields

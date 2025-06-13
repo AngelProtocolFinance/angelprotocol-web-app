@@ -42,8 +42,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2
       '@better-giving/donation':
-        specifier: 1.1.17
-        version: 1.1.17(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.1.18
+        version: 1.1.18(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/endowment':
         specifier: 1.1.13
         version: 1.1.13(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))
@@ -661,8 +661,8 @@ packages:
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
 
-  '@better-giving/donation@1.1.17':
-    resolution: {integrity: sha512-CwI7TgVTnM9Qe9JXuTlgckavG7lIWGdbq//rQzuBrE8nHxj6jWGRt6nBeNfb5M/vzLX7XJjkeTRrbK/v2MJRlA==}
+  '@better-giving/donation@1.1.18':
+    resolution: {integrity: sha512-NkiMbIDfhRl+5DWpGhYJlc55lCm/Xw7levuPgU+iIqOuPBsJsvA5F1SDjCXrqtyt5Jz38WgmaC4MzxsNOXvWqw==}
     peerDependencies:
       '@better-giving/schemas': 1.1.2
       '@better-giving/types': 1.1.6
@@ -5991,7 +5991,7 @@ snapshots:
 
   '@better-giving/constants@1.1.2': {}
 
-  '@better-giving/donation@1.1.17(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/donation@1.1.18(@better-giving/schemas@1.1.2(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.6)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       '@better-giving/schemas': 1.1.2(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/types': 1.1.6

@@ -91,9 +91,9 @@ export default function SummaryForm({
           return !withTributeNotif
             ? obj.optional()
             : schema<FV["tributeNotif"]>({
-                toFullName: string().required("required"),
-                toEmail: string().required("required").email("invalid email"),
-                fromMsg: string().max(
+                to_fullname: string().required("required"),
+                to_email: string().required("required").email("invalid email"),
+                from_msg: string().max(
                   CUSTOM_MSG_MAX_LENGTH,
                   "must be less than 250 characters"
                 ),
@@ -114,7 +114,7 @@ export default function SummaryForm({
   const ukTaxResident = watch("ukTaxResident");
   const withHonorary = watch("withHonorary");
   const withTributeNotif = watch("withTributeNotif");
-  const customMsg = watch("tributeNotif.fromMsg");
+  const customMsg = watch("tributeNotif.from_msg");
   const isPublic = watch("isPublic");
   const publicMsg = watch("publicMsg");
 
@@ -284,7 +284,7 @@ export default function SummaryForm({
           {withTributeNotif && (
             <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
               <Field
-                {...register("tributeNotif.toFullName", {
+                {...register("tributeNotif.to_fullname", {
                   shouldUnregister: true,
                 })}
                 label="Recipient name"
@@ -294,10 +294,10 @@ export default function SummaryForm({
                   input: "field-input-donate",
                 }}
                 required
-                error={errors.tributeNotif?.toFullName?.message}
+                error={errors.tributeNotif?.to_fullname?.message}
               />
               <Field
-                {...register("tributeNotif.toEmail", {
+                {...register("tributeNotif.to_email", {
                   shouldUnregister: true,
                 })}
                 label="Email address"
@@ -307,10 +307,10 @@ export default function SummaryForm({
                   input: "field-input-donate",
                 }}
                 required
-                error={errors.tributeNotif?.toEmail?.message}
+                error={errors.tributeNotif?.to_email?.message}
               />
               <Field
-                {...register("tributeNotif.fromMsg", {
+                {...register("tributeNotif.from_msg", {
                   shouldUnregister: true,
                 })}
                 rows={2}
@@ -322,10 +322,10 @@ export default function SummaryForm({
                   input: "field-input-donate",
                 }}
                 required={false}
-                error={errors.tributeNotif?.fromMsg?.message}
+                error={errors.tributeNotif?.from_msg?.message}
               />
               <p
-                data-exceed={errors.tributeNotif?.fromMsg?.type === "max"}
+                data-exceed={errors.tributeNotif?.from_msg?.type === "max"}
                 className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
               >
                 {/** customMsg becomes undefined when unmounted */}

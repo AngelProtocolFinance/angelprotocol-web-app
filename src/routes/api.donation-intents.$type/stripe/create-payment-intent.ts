@@ -27,9 +27,7 @@ export async function create_payment_intent(
         verification_method: "automatic",
       },
     },
-    payment_method_types: payment_methods[order.denomination.toLowerCase()] ?? [
-      "card",
-    ],
+    payment_method_types: payment_methods[order.denomination] ?? ["card"],
   });
   return client_secret || "invalid client secret";
 }
