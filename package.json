@@ -29,6 +29,7 @@
     "node": "22.x"
   },
   "dependencies": {
+    "@anvilco/anvil": "3.3.2",
     "@aws-sdk/client-dynamodb": "3.485.0",
     "@aws-sdk/client-sesv2": "3.485.0",
     "@aws-sdk/client-sqs": "3.485.0",
@@ -39,7 +40,7 @@
     "@better-giving/banking-applications": "1.0.5",
     "@better-giving/chariot": "1.1.7",
     "@better-giving/constants": "1.1.2",
-    "@better-giving/donation": "1.1.17",
+    "@better-giving/donation": "1.1.18",
     "@better-giving/endowment": "1.1.13",
     "@better-giving/fundraiser": "1.1.15",
     "@better-giving/helpers": "1.1.6",

@@ -1,15 +1,9 @@
 import { Link, useNavigation, useRouteLoaderData } from "@remix-run/react";
-import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
 import { nextStep } from "../routes";
 import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";
-
-const proxyFunctionURL =
-  "https://e7r5xzrogp3hpnzgrg2laiqwvq0avzkz.lambda-url.us-east-1.on.aws";
-const downloadZipURL = (eid: string) =>
-  proxyFunctionURL + (IS_TEST ? "/staging" : "") + `?eid=${eid}`;
 
 export default function Success({
   documentGroupEid,
@@ -27,7 +21,8 @@ export default function Success({
       </h1>
 
       <a
-        href={downloadZipURL(documentGroupEid)}
+        download
+        href={`/api/anvil-doc/${documentGroupEid}`}
         className="text-blue hover:text-blue-d1 active:text-blue-d2 mb-4 inline-block"
       >
         <ArrowDownToLine size={18} className="inline bottom-px relative mr-1" />

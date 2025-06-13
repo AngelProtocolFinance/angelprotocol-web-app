@@ -1,4 +1,8 @@
-import type { Donor, DonorTitle } from "@better-giving/donation/intent";
+import type {
+  Donor,
+  DonorTitle,
+  TributeNotif,
+} from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import type {
@@ -11,6 +15,7 @@ import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
 import * as v from "valibot";
 
+export type { TributeNotif, Donor } from "@better-giving/donation/intent";
 export type Frequency = "one-time" | "subscription";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
@@ -123,13 +128,6 @@ export type FormDonor = Pick<
   isPublic: boolean;
   /** initially empty `''` */
   publicMsg: string;
-};
-
-export type TributeNotif = {
-  toFullName: string;
-  toEmail: string;
-  /** may be empty */
-  fromMsg: string;
 };
 
 export type Honorary = {

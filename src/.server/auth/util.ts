@@ -27,6 +27,7 @@ export class Util {
       pay_id: p["custom:pay_id"],
       pay_min: p["custom:pay_min"],
       stripe_customer_id: p["custom:stripe_customer_id"],
+      w_form: p["custom:w_form"],
     };
   }
   protected unset(session: Stored) {

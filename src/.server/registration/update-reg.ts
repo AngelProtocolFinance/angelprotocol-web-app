@@ -3,7 +3,7 @@ import { isIrs501c3 } from "@better-giving/registration/models";
 import { type BankWithDetails, isDone } from "@better-giving/registration/step";
 import type { Update } from "@better-giving/registration/update";
 import { wise } from "../sdks";
-import { getReg } from "./get-reg.js";
+import { getReg } from "./get-reg";
 import { getUsEndow, putItem } from "./helpers";
 
 export async function updateRegistration(

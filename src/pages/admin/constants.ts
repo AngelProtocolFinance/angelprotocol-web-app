@@ -117,7 +117,7 @@ const linkGroup3: LinkGroup = {
       to: sidebarRoutes.integrations,
       icon: {
         fn: PlugZap,
-        size: 21,
+        size: 23,
       },
     },
     {

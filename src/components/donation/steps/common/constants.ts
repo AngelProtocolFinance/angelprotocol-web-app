@@ -1,4 +1,3 @@
-import type { Donor } from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import type {
   DetailedCurrency,
@@ -8,6 +7,7 @@ import type {
 import type {
   DonationDetails,
   DonationState,
+  Donor,
   FinishedSummaryData,
   FormDonor,
   TributeNotif,
@@ -108,9 +108,9 @@ export const toDonor = (
 };
 
 export const initTributeNotif: TributeNotif = {
-  toEmail: "",
-  toFullName: "",
-  fromMsg: "",
+  to_email: "",
+  to_fullname: "",
+  from_msg: "",
 };
 
 export const summaryData = (state: DonationState): FinishedSummaryData => {
@@ -143,9 +143,9 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
       withHonorary: false,
       withTributeNotif: false,
       tributeNotif: {
-        fromMsg: "",
-        toEmail: "",
-        toFullName: "",
+        from_msg: "",
+        to_email: "",
+        to_fullname: "",
       },
     },
   };

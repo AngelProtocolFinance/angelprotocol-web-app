@@ -4,6 +4,7 @@ import {
   CircleUserRound,
   Heart,
   MegaphoneIcon,
+  RefreshCw,
   Settings,
 } from "lucide-react";
 
@@ -14,6 +15,7 @@ export const routes = {
   funds: "funds",
   settings: "settings",
   referrals: "referrals",
+  subscriptions: "subscriptions",
 };
 
 export const linkGroups: LinkGroup[] = [
@@ -25,6 +27,14 @@ export const linkGroups: LinkGroup[] = [
         icon: {
           fn: CircleDollarSign,
           size: 22,
+        },
+      },
+      {
+        title: "Recurring Donations",
+        to: routes.subscriptions,
+        icon: {
+          fn: RefreshCw,
+          size: 20,
         },
       },
       {

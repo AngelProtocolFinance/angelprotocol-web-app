@@ -1,3 +1,4 @@
+import Anvil from "@anvilco/anvil";
 import { Chariot } from "@better-giving/chariot";
 import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
@@ -5,6 +6,7 @@ import { Wise } from "@better-giving/wise";
 import { Client, Receiver } from "@upstash/qstash";
 import Stripe from "stripe";
 import {
+  anvil_envs,
   chariot_envs,
   discordEnvs,
   env,
@@ -31,4 +33,8 @@ export const qstash = new Client({ token: qtash_envs.token });
 export const qstash_receiver = new Receiver({
   currentSigningKey: qtash_envs.currentSigningKey,
   nextSigningKey: qtash_envs.nextSigningKey,
+});
+
+export const anvil = new Anvil({
+  apiKey: anvil_envs.api_key,
 });

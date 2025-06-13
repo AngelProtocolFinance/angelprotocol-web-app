@@ -9,7 +9,7 @@ import { closeFund, editFund, getFund } from ".server/fund";
 
 export interface LoaderData {
   fund: SingleFund;
-  origin: string;
+  base_url: string;
   user: UserV2;
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -29,9 +29,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response(null, { status: 403 });
   }
 
-  const origin = new URL(request.url).origin;
+  const base_url = new URL(request.url).origin;
 
-  return { fund, user, origin } satisfies LoaderData;
+  return { fund, user, base_url } satisfies LoaderData;
 };
 
 export const action: ActionFunction = async ({ request, params }) => {

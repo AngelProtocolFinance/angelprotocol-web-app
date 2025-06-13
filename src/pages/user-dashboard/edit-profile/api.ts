@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   return data({ __ok: "User profile updated" } satisfies ActionData, {
     headers: {
-      "Set-Cookie": res,
+      "Set-Cookie": res.commit,
       "X-Remix-Revalidate": "1",
       "Cache-Control": "no-cache",
     },

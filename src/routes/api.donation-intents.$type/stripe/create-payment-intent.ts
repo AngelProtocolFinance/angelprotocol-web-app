@@ -6,13 +6,13 @@ import { payment_methods } from ".server/stripe/payment-methods";
 
 export async function create_payment_intent(
   order: OnHoldDonation.FiatDBRecord,
-  customerId: string
+  customer_id: string
 ): Promise<string> {
   // Create a Payment Intent
-  const paymentIntent = await stripe.paymentIntents.create({
+  const { client_secret } = await stripe.paymentIntents.create({
     amount: to_atomic(order.amount, order.denomination),
     currency: order.denomination,
-    customer: customerId,
+    customer: customer_id,
     metadata: {
       isRecurring: "false",
       ...to_metadata(order),
@@ -27,44 +27,19 @@ export async function create_payment_intent(
         verification_method: "automatic",
       },
     },
-    payment_method_types: payment_methods[order.denomination.toLowerCase()] ?? [
-      "card",
-    ],
+    payment_method_types: payment_methods[order.denomination] ?? ["card"],
   });
-
-  if (!paymentIntent.client_secret)
-    throw { message: "Failed to create client secret" };
-
-  return paymentIntent.client_secret;
+  return client_secret || "invalid client secret";
 }
 
 /** @see {@link https://stripe.com/docs/currencies#zero-decimal} */
 export const to_atomic = (amount: number, currency: string): number => {
-  const zeroDecimals = [
-    "BIF",
-    "CLP",
-    "DJF",
-    "GNF",
-    "JPY",
-    "KMF",
-    "KRW",
-    "MGA",
-    "PYG",
-    "RWF",
-    "UGX",
-    "VND",
-    "VUV",
-    "XAF",
-    "XOF",
-    "XPF",
-  ];
-  const threeDecimals = ["BHD", "JOD", "KWD", "OMR", "TND"];
+  //biome-ignore format:
+  const places: { [currency: string]: number } = {
+    BIF: 0, CLP: 0, DJF: 0, GNF: 0, JPY: 0,  KMF: 0,  KRW: 0,  MGA: 0, PYG: 0, RWF: 0,UGX: 0,VND: 0, VUV: 0, XAF: 0,  XOF: 0,  XPF: 0, BHD: 3,
+    JOD: 3,KWD: 3,OMR: 3, TND: 3,
+  } as const;
 
-  const _currency = currency.toUpperCase();
-
-  // Uses `roundNumber()` to ensure that we don't have decimal overflow
-  if (zeroDecimals.includes(_currency)) return round_number(amount, 0);
-  if (threeDecimals.includes(_currency))
-    return Math.trunc(round_number(amount, 3) * 1000);
-  return Math.trunc(round_number(amount, 2) * 100); // two decimals
+  const p = places[currency.toUpperCase()] ?? 2;
+  return Math.trunc(round_number(amount, p) * Math.pow(10, p));
 };

@@ -43,8 +43,8 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       tip: tip?.value ?? 0,
       fee_allowance: feeAllowance,
     },
-    viaId: details.token.network,
-    viaName: chains[details.token.network].name,
+    via_id: details.token.network,
+    via_name: chains[details.token.network].name,
     recipient: init.recipient.id,
     source: init.source,
     donor: toDonor(fvDonor),
@@ -57,7 +57,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
 
   if (honorary.honoraryFullName) {
     intent.tribute = {
-      fullName: honorary.honoraryFullName,
+      full_name: honorary.honoraryFullName,
     };
     if (honorary.withTributeNotif) {
       intent.tribute.notif = honorary.tributeNotif;

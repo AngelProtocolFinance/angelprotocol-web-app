@@ -15,10 +15,10 @@ export const onhold_base = (
     tipAmount: intent.amount.tip,
     feeAllowance: intent.amount.fee_allowance,
     appUsed: intent.source,
-    chainName: intent.viaName,
+    chainName: intent.via_name,
     charityName: recipient.name,
     nonProfitMsg: recipient.receiptMsg,
-    denomination: intent.amount.currency.toUpperCase(),
+    denomination: intent.amount.currency,
     donationFinalized: false,
     endowmentId: recipient.npo.id,
 
@@ -31,8 +31,12 @@ export const onhold_base = (
 
     programId: intent.program?.id,
     programName: intent.program?.name,
-    inHonorOf: intent.tribute?.fullName,
-    tributeNotif: intent.tribute?.notif,
+    inHonorOf: intent.tribute?.full_name,
+    tributeNotif: intent.tribute?.notif && {
+      fromMsg: intent.tribute.notif.from_msg,
+      toEmail: intent.tribute.notif.to_email,
+      toFullName: intent.tribute.notif.to_fullname,
+    },
     claimed: recipient.claimed,
     fiscalSponsored: recipient.fiscal_sponsored,
     hideBgTip: recipient.hide_bg_tip,

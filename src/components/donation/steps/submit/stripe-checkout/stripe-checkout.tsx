@@ -38,8 +38,8 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     recipient: init.recipient.id,
     donor: toDonor(fvDonor),
     source: init.source,
-    viaId: "fiat",
-    viaName: "Stripe",
+    via_id: "fiat",
+    via_name: "Stripe",
     donor_public: fvDonor.isPublic,
   };
 
@@ -49,7 +49,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   if (honorary.honoraryFullName) {
     intent.tribute = {
-      fullName: honorary.honoraryFullName,
+      full_name: honorary.honoraryFullName,
     };
     if (honorary.withTributeNotif) {
       intent.tribute.notif = honorary.tributeNotif;

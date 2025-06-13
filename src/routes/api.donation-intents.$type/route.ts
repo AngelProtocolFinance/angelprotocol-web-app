@@ -68,7 +68,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       amount: to_pay,
       usdValue: to_pay * rate,
 
-      chainId: intent.viaId as any,
+      chainId: intent.via_id as any,
       destinationChainId: env === "production" ? "137" : "80002",
       walletAddress: "",
       // `expire` event would delete this record in production
@@ -106,7 +106,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const to_pay =
       intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
     const grant = await chariot.create_grant(
-      intent.viaId,
+      intent.via_id,
       round_number(to_pay * 100, 0)
     );
 
@@ -132,16 +132,16 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (d_type === "stripe") {
     const usd_rate = await get_usd_rate(intent.amount.currency);
 
-    const customerId = await get_customer_id(
-      intent.amount.currency,
-      intent.donor.email
+    const customer_id = await get_customer_id(
+      intent.amount.currency.toUpperCase(),
+      intent.donor.email.toLowerCase()
     );
 
     // save stripe customer id to user
     if (user && user.email === intent.donor.email && !user.stripe_customer_id) {
       await cognito
         .updateUserAttributes(
-          [{ Name: "custom:stripe_customer_id", Value: customerId }],
+          [{ Name: "custom:stripe_customer_id", Value: customer_id }],
           user.accessToken
         )
         .catch(console.error);
@@ -167,8 +167,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     const clientSecret =
       intent.frequency === "one-time"
-        ? await create_payment_intent(onhold, customerId)
-        : await setup_intent(onhold, customerId);
+        ? await create_payment_intent(onhold, customer_id)
+        : await setup_intent(onhold, customer_id);
 
     return resp.json({ clientSecret });
   }

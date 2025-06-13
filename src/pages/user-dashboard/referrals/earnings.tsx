@@ -1,5 +1,6 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
 import { Link, Outlet } from "@remix-run/react";
+import ExtLink from "components/ext-link";
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ArrowRightIcon, HistoryIcon, PencilIcon } from "lucide-react";
@@ -17,6 +18,7 @@ interface Props {
   payout?: V2RecipientAccount;
   payout_ltd: number;
   payout_min?: number;
+  w_form?: string;
 }
 
 export function Earnings({
@@ -26,6 +28,7 @@ export function Earnings({
   payout,
   payout_min = config.pay_min,
   payout_ltd,
+  w_form,
 }: Props) {
   const now = new Date();
   const end = endOfMonth(now);
@@ -82,7 +85,7 @@ export function Earnings({
               </div>
             </div>
           )}
-          {payout ? (
+          {payout && w_form ? (
             <div className="mt-4">
               <p className="text-sm text-gray">Payout method</p>
               <div className="flex gap-x-2 items-center">
@@ -98,12 +101,17 @@ export function Earnings({
               </div>
             </div>
           ) : (
-            <Link
-              to="payout"
-              className="mt-2 inline-block text-sm rounded-md px-4 py-2 btn-blue"
-            >
-              Setup Payout Method
-            </Link>
+            <div className="flex items-center gap-x-2">
+              <Link
+                to={w_form ? "payout" : "w-form"}
+                className="mt-2 inline-block text-sm rounded-md px-4 py-2 btn-blue"
+              >
+                Setup Payout Method
+              </Link>
+              {w_form && (
+                <ExtLink download href={`/api/anvil-doc/${w_form}`}></ExtLink>
+              )}
+            </div>
           )}
 
           <EarningsHistory {...earnings} classes="mt-6" />
