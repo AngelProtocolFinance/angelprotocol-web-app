@@ -8,15 +8,15 @@ type Props = {
   classes?: string;
   config: WidgetConfig;
   endow?: Endow;
-  origin: string;
+  base_url: string;
 };
 export default function Snippet({
   classes = "",
   config,
   endow,
-  origin,
+  base_url,
 }: Props) {
-  const widgetURL = widgetURLfn(config, origin, endow?.id);
+  const widgetURL = widgetURLfn(config, base_url, endow?.id);
   const iframeURL = endow?.id
     ? /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
       `<iframe src="${widgetURL}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`
@@ -41,7 +41,7 @@ export default function Snippet({
 }
 
 //create URLSearchParams from config
-const widgetURLfn = (config: WidgetConfig, origin: string, endowId = 0) => {
+const widgetURLfn = (config: WidgetConfig, base_url: string, endowId = 0) => {
   const params: Required<WidgetURLSearchParams> = {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     methods: config.methods
@@ -60,7 +60,7 @@ const widgetURLfn = (config: WidgetConfig, origin: string, endowId = 0) => {
       .join(","),
   };
   return (
-    origin +
+    base_url +
     appRoutes.donate_widget +
     "/" +
     endowId +

@@ -38,6 +38,8 @@ export type UserV2 = {
   /** usd str num */
   pay_min?: string;
   stripe_customer_id?: string;
+  /** weld data eid of signed w9 or w8ben */
+  w_form?: string;
 };
 
 /**@template T - type of error to be handled */

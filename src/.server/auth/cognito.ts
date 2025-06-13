@@ -42,6 +42,11 @@ type Auth = {
   headers?: Record<string, string>;
   session: Stored;
 };
+
+export interface RefreshedUser extends UserV2 {
+  commit: string;
+}
+
 class Storage extends Util {
   /** request of cookie header */
   async retrieve(request: Request | string | null): Promise<Auth> {
@@ -166,7 +171,12 @@ class Cognito extends Storage {
     session.set("token_refresh", session.get("token_refresh")!);
     session.set("token_expiry", this.expiry(r.ExpiresIn));
 
-    return commitSession(session);
+    const updated_user = this.toUser(session.data as any);
+    const refreshed: RefreshedUser = {
+      ...updated_user,
+      commit: await commitSession(session),
+    };
+    return refreshed;
   }
 
   async signup(
@@ -298,7 +308,7 @@ class OAuth extends Storage {
         : "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com";
   }
 
-  initiateUrl(state: string, origin: string) {
+  initiateUrl(state: string, base_url: string) {
     const scopes = [
       "email",
       "openid",
@@ -309,7 +319,7 @@ class OAuth extends Storage {
     const params = new URLSearchParams({
       response_type: "code",
       client_id: this.clientId,
-      redirect_uri: origin + "/",
+      redirect_uri: base_url + "/",
       identity_provider: "Google",
       state: Buffer.from(state).toString("base64"),
       scope: scopes.join(" "),
@@ -318,7 +328,7 @@ class OAuth extends Storage {
     return `${this.domain}/oauth2/authorize?${params.toString()}`;
   }
 
-  async exchange(code: string, origin: string, cookieHeader: string | null) {
+  async exchange(code: string, base_url: string, cookieHeader: string | null) {
     const res = await fetch(this.domain + "/oauth2/token", {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
@@ -326,7 +336,7 @@ class OAuth extends Storage {
         grant_type: "authorization_code",
         client_id: this.clientId,
         code,
-        redirect_uri: origin + "/",
+        redirect_uri: base_url + "/",
       }),
     });
 

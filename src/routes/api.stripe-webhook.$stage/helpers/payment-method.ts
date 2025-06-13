@@ -2,15 +2,15 @@ import type { StripeDonation } from "@better-giving/donation";
 import { stripe } from ".server/sdks";
 
 export async function payment_method(id: string): Promise<string> {
-  const paymentMethod = await stripe.paymentMethods.retrieve(id);
+  const pms = await stripe.paymentMethods.retrieve(id);
 
   let payment;
-  switch (paymentMethod.type as StripeDonation.PaymentMethods) {
+  switch (pms.type as StripeDonation.PaymentMethods) {
     case "amazon_pay":
       payment = "Amazon Pay";
       break;
     case "card":
-      const funding = paymentMethod.card?.funding;
+      const funding = pms.card?.funding;
       if (funding === "credit") payment = "Credit Card";
       else if (funding === "debit") payment = "Debit Card";
       else payment = "Card";
@@ -35,7 +35,7 @@ export async function payment_method(id: string): Promise<string> {
       break;
     /** Others */
     default:
-      payment = paymentMethod.type;
+      payment = pms.type;
   }
   return payment;
 }

@@ -1,16 +1,14 @@
-import type { StripeDonation } from "@better-giving/donation";
 import type { ActionFunction } from "@vercel/remix";
 import { parse, stage as schema } from "routes/types/donation-message";
-import type Stripe from "stripe";
 import { resp } from "../helpers/resp";
 import {
-  handleCreateSubscription,
-  handleDeleteSubscription,
-  handleIntentFailed,
-  handleIntentRequiresAction,
-  handleOneTimeDonation,
-  handleUpdateSubscription,
+  handle_intent_failed,
+  handle_intent_requires_action,
+  handle_setup_intent_failed,
+  handle_setup_intent_succeeded,
+  handle_subscription_deleted,
 } from "./handlers";
+import { handle_intent_succeeded } from "./handlers/intent-suceeded";
 import { stripeEnvs } from ".server/env";
 import { discordFiatMonitor, stripe } from ".server/sdks";
 
@@ -23,69 +21,50 @@ export const action: ActionFunction = async ({
   params,
 }): Promise<Response> => {
   const stage = parse(schema, params.stage);
-  const origin = new URL(request.url).origin;
-  let event: Stripe.Event;
+  const base_url = new URL(request.url).origin;
   const signature = request.headers.get("stripe-signature");
   if (!signature) return resp.err(403, "missing signature header");
 
-  // Webhook signing
-  try {
-    event = stripe.webhooks.constructEvent(
-      await request.text(),
-      signature,
-      stripeEnvs.webhookSecret
-    );
-  } catch (err) {
-    const errorMessage =
-      err instanceof Error
-        ? err.message
-        : JSON.stringify(err, Object.getOwnPropertyNames(err));
-    await discordFiatMonitor.sendAlert({
-      type: "ERROR",
-      from: `stripe-webhook-${stage}`,
-      title: "Webhook Signing",
-      body: errorMessage,
-    });
-    return new Response(errorMessage, { status: 400 });
-  }
-
-  // Filter for event `requires_action`, exclude if type is not `verify_with_microdeposits`
-  if (
-    (event.type === "payment_intent.requires_action" ||
-      event.type === "setup_intent.requires_action") &&
-    event.data.object.next_action?.type !== "verify_with_microdeposits"
-  )
-    return new Response(`Invalid event type, ${event.type}`, { status: 400 });
+  const event = stripe.webhooks.constructEvent(
+    await request.text(),
+    signature,
+    stripeEnvs.webhookSecret
+  );
 
   // Event handlers
   try {
     switch (event.type) {
       case "customer.subscription.deleted":
-        await handleDeleteSubscription(event.data);
-        break;
+        const res = await handle_subscription_deleted(event.data);
+        return resp.json(res.$metadata);
       case "payment_intent.succeeded":
-        if (isOneTime(event.data.object.metadata))
-          await handleOneTimeDonation(event.data.object, origin);
-        else await handleUpdateSubscription(event.data.object, origin);
+        await handle_intent_succeeded(event.data, base_url);
         break;
       case "setup_intent.succeeded":
-        await handleCreateSubscription(event.data);
+        await handle_setup_intent_succeeded(event.data);
         break;
       case "payment_intent.payment_failed":
+        await handle_intent_failed(event.data);
+        break;
       case "setup_intent.setup_failed":
-        const reason = await handleIntentFailed(event);
-        await discordFiatMonitor.sendAlert({
-          from: `stripe-event-handler-${stage}`,
-          title: "Intent Failed",
-          body: `Intent ID: ${event.data.object.id}\nReason: ${reason}`,
-        });
-        return new Response("Received", { status: 200 });
+        await handle_setup_intent_failed(event.data);
+        break;
       case "payment_intent.requires_action":
       case "setup_intent.requires_action":
-        await handleIntentRequiresAction(event);
+        if (
+          event.data.object.next_action?.type !== "verify_with_microdeposits"
+        ) {
+          return resp.txt(
+            `requires_action next action type not supported: ${event.type}`,
+            201
+          );
+        }
+        await handle_intent_requires_action(event.data.object);
         break;
       default:
-        throw new Error(`Invalid event type, ${event.type}`);
+        return new Response(`Unhandled event type: ${event.type}`, {
+          status: 201,
+        });
     }
 
     return new Response("Received", { status: 200 });
@@ -103,8 +82,3 @@ export const action: ActionFunction = async ({
     return new Response(errorMessage, { status: 400 });
   }
 };
-
-// One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice
-function isOneTime(metadata: any): metadata is StripeDonation.Metadata {
-  return Object.keys(metadata).length > 0;
-}

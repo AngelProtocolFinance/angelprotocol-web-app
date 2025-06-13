@@ -55,9 +55,9 @@ export const action: ActionFunction = async ({ request }) => {
     if (!order) return resp.status(204);
     const final = to_final(order, settlement);
 
-    const origin = new URL(request.url).origin;
+    const base_url = new URL(request.url).origin;
     await qstash.publishJSON({
-      url: `${origin}/q/final-recorder`,
+      url: `${base_url}/q/final-recorder`,
       body: final,
       retries: 0,
       deduplicationId: order.transactionId,

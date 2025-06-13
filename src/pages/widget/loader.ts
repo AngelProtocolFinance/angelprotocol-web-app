@@ -7,7 +7,7 @@ import * as v from "valibot";
 import { getNpos } from ".server/npos";
 
 export interface WidgetData {
-  origin: string;
+  base_url: string;
   // user: UserV2 | null; user currency not needed in preview
   endow?: Endow;
   /** need to await */
@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   });
 
   return {
-    origin: url.origin,
+    base_url: url.origin,
     endow: id ? await getEndow(id) : undefined,
     endows: await endowsPage.then((page) => page.items),
   } satisfies WidgetData;

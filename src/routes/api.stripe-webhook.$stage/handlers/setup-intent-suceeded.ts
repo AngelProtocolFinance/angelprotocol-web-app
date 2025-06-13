@@ -1,6 +1,7 @@
 import type { Donation, StripeDonation } from "@better-giving/donation";
 import type { Subscription } from "@better-giving/donation/subscription";
 import { tables } from "@better-giving/types/list";
+import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
 import { PutCommand, apes } from ".server/aws/db";
 import { create_subscription } from ".server/stripe/create-subscription";
@@ -10,30 +11,15 @@ import { create_subscription } from ".server/stripe/create-subscription";
  * Creates Subscription object in Stripe.
  * Creates an item in subscriptions DB table.
  */
-export async function handleCreateSubscription({
+export async function handle_setup_intent_succeeded({
   object: intent,
 }: Stripe.SetupIntentSucceededEvent.Data) {
-  if (!intent.metadata || Object.keys(intent.metadata).length === 0)
-    throw new Error("Invalid intent metadata");
-
   const metadata = intent.metadata as StripeDonation.SetupIntentMetadata;
-
-  if ((!metadata.endowmentId || +metadata.endowmentId < 0) && !metadata.fund_id)
-    throw new Error(
-      `Endowment ID must be a positive number, provided value was: ${+metadata.endowmentId}`
-    );
-
-  if (
-    typeof intent.customer !== "string" ||
-    typeof intent.payment_method !== "string"
-  ) {
-    throw new Error("Invalid Customer or Payment Method ID");
-  }
 
   /** CREATE SUBSCRIPTION */
   const subs = await create_subscription(
-    intent.customer,
-    intent.payment_method,
+    str_id(intent.customer),
+    str_id(intent.payment_method),
     metadata
   );
 
@@ -42,7 +28,7 @@ export async function handleCreateSubscription({
     subscription_id: subs,
     app_used: metadata.appUsed as Donation.App,
     charity_name: metadata.charityName,
-    customer_id: intent.customer,
+    customer_id: str_id(intent.customer),
     email: metadata.email,
     endowment_id: +metadata.endowmentId,
     fiat_ramp: "STRIPE",

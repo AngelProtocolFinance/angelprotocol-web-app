@@ -124,11 +124,26 @@ const rmx = remix({
         r("donations", "./pages/user-dashboard/donations/index.tsx", () => {
           r(":id", "./components/kyc-form/index.tsx");
         });
+        r(
+          "subscriptions",
+          "./pages/user-dashboard/subscriptions/index.tsx",
+          () => {
+            r(
+              "cancel/:sub_id",
+              "./pages/user-dashboard/subscriptions/cancel/index.tsx"
+            );
+          }
+        );
         r("funds", "./pages/user-dashboard/funds/funds.tsx");
         r("referrals", "./pages/user-dashboard/referrals/index.tsx", () => {
           r(
             "payout-min",
             "./pages/user-dashboard/referrals/payout-min/index.tsx"
+          );
+          r("w-form", "./pages/user-dashboard/referrals/w-forms/index.tsx");
+          r(
+            "w-form-signed",
+            "./pages/user-dashboard/referrals/w-form-signed/index.tsx"
           );
         });
         r(
@@ -252,7 +267,7 @@ const rmx = remix({
 export default defineConfig({
   base: "/",
   build: { outDir: "build", target: "es2022" },
-  server: { port: 4200 },
+  server: { port: 4000 },
   plugins: [
     process.env.NODE_ENV === "test" ? undefined : rmx,
     tsconfigPaths(),

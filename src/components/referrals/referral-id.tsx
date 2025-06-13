@@ -4,7 +4,7 @@ import { appRoutes, regRoutes } from "constants/routes";
 interface Props {
   classes?: string;
   referral_id: string;
-  origin: string;
+  base_url: string;
 }
 
 export function ReferralId({ classes = "", ...p }: Props) {
@@ -33,11 +33,11 @@ export function ReferralId({ classes = "", ...p }: Props) {
         </div>
         <div className="flex items-center">
           <p className="text-blue-l1 truncate max-w-xs font-mono">
-            {p.origin}
+            {p.base_url}
             {appRoutes.register}/{regRoutes.welcome}?referrer={p.referral_id}
           </p>
           <Copier
-            text={`${p.origin}${appRoutes.register}/${regRoutes.welcome}?referrer=${p.referral_id}`}
+            text={`${p.base_url}${appRoutes.register}/${regRoutes.welcome}?referrer=${p.referral_id}`}
             classes={{
               container: "text-gray hover:text-gray-d1 ml-2",
               icon: "size-5",
