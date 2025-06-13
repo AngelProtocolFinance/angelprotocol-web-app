@@ -23,9 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     const body = await request.text();
 
-    const url = new URL(
-      "https://skink-driving-imp.ngrok-free.app/q/final-recorder"
-    ).toString();
+    const url = new URL(request.url).toString();
     await qstash_receiver.verify({
       signature: sig,
       body,
