@@ -2,7 +2,7 @@ import type { FsaPayload } from "@better-giving/registration/fsa";
 import { anvil } from "../../sdks";
 import { etch_eids } from "./etch-eids";
 import { fsa_signer } from "./fsa-signer";
-import { save_docs } from "./save-docs.js";
+import { save_docs } from "./save-docs";
 
 export const gen_fsa_signing_url = async (
   payload: FsaPayload

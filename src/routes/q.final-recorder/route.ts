@@ -7,7 +7,7 @@ import type { ActionFunction } from "@vercel/remix";
 import { nanoid } from "nanoid";
 import { resp } from "routes/helpers/resp";
 import type { FinalRecorderPayload } from "../types/final-recorder";
-import { referral_commission_rate } from "./config.js";
+import { referral_commission_rate } from "./config";
 import { build_donation_msg, commission_fn } from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
 import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
