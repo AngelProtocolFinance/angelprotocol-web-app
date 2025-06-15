@@ -45,6 +45,10 @@ export const discordEnvs = {
   fiatMonitorUrl: _var("DISCORD_FIAT_MONITOR_WEBHOOK_URL"),
 };
 
+export const hubspotEnvs = {
+  accessToken: v.parse(required, process.env.HUBSPOT_ACCESS_TOKEN),
+};
+
 export const stripeEnvs = {
   secretKey: _var("STRIPE_SECRET_KEY"),
   subsProductId: _var("STRIPE_SUBS_PRODUCT_ID"),

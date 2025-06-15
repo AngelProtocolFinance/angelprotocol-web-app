@@ -1,8 +1,8 @@
 import type { ActionFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
 import { parseWithValibot } from "conform-to-valibot";
 import { emailSubs } from "types/hubspot-subscription";
 import { cognito, toAuth } from ".server/auth";
+import { newsletterSubscribe } from ".server/hubspot/newsletter-subscribe";
 import { createBookmark, deleteBookmark } from ".server/user-bookmarks";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -17,10 +17,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (payload.status !== "success") return payload.reply();
 
-    const res = await ap.post(`${ver(1)}/hubspot/email-subs`, {
-      throwHttpErrors: false,
-      json: { email: payload.value.email },
-    });
+    const res = await newsletterSubscribe(payload.value.email);
     if (!res.ok) return "error";
     return "success";
   }
