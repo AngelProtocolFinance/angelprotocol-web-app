@@ -7,16 +7,21 @@ import { cognito, oauth } from ".server/auth";
 export const action: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
   const fv = await request.formData();
-  const redirectTo = from.searchParams.get("redirect") || appRoutes.marketplace;
+  const redirect_to =
+    from.searchParams.get("redirect") || appRoutes.marketplace;
+
+  const { user } = await cognito.retrieve(request);
+  if (user) return redirect(redirect_to);
+
   if (fv.get("intent") === "oauth") {
-    return redirect(oauth.initiateUrl(redirectTo, from.origin));
+    return redirect(oauth.initiateUrl(redirect_to, from.origin));
   }
 
   const p = parseWithValibot(fv, { schema: signUp });
 
   if (p.status !== "success") return p.reply();
 
-  const isNpo = redirectTo.startsWith(appRoutes.register);
+  const isNpo = redirect_to.startsWith(appRoutes.register);
   const res = await cognito.signup(
     p.value.email.toLowerCase(),
     p.value.password,

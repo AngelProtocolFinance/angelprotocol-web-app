@@ -21,15 +21,16 @@ import { cognito, oauth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   try {
-    const { user } = await cognito.retrieve(request);
-    if (user) return redirect(appRoutes.marketplace);
     const from = new URL(request.url);
+    const redirect_to =
+      from.searchParams.get("redirect") || appRoutes.marketplace;
+    const { user } = await cognito.retrieve(request);
+    if (user) return redirect(redirect_to);
 
     const fv = await request.formData();
-    const redirectTo =
-      from.searchParams.get("redirect") || appRoutes.marketplace;
+
     if (fv.get("intent") === "oauth") {
-      return redirect(oauth.initiateUrl(redirectTo, from.origin));
+      return redirect(oauth.initiateUrl(redirect_to, from.origin));
     }
 
     const payload = parseWithValibot(fv, { schema: signIn });
@@ -47,14 +48,14 @@ export const action: ActionFunction = async ({ request }) => {
         const to = new URL(from);
         to.pathname = appRoutes.signup + "/confirm";
         to.searchParams.set("email", payload.value.email);
-        to.searchParams.set("redirect", redirectTo);
+        to.searchParams.set("redirect", redirect_to);
         return redirect(to.toString());
       }
 
       return payload.reply({ fieldErrors: { password: [res.message] } });
     }
 
-    return redirect(redirectTo, { headers: { "Set-Cookie": res } });
+    return redirect(redirect_to, { headers: { "Set-Cookie": res } });
   } catch (err) {
     console.error(err);
     return data<ActionData<any>>({ __error: "Unknown error occured" }, 500);
@@ -63,8 +64,10 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user } = await cognito.retrieve(request);
-  if (user) return redirect(appRoutes.marketplace);
-  return new URL(request.url).searchParams.get("redirect") || "/";
+  const from = new URL(request.url);
+  const redirect_to = from.searchParams.get("redirect");
+  if (user) return redirect(redirect_to || appRoutes.marketplace);
+  return redirect_to || "/";
 };
 
 export const meta: MetaFunction = () =>

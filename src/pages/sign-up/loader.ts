@@ -5,6 +5,8 @@ export const loader: LoaderFunction = async ({
   request,
 }): Promise<Response | unknown> => {
   const { user, headers } = await cognito.retrieve(request);
-  if (user) return redirect("/marketplace", { headers });
-  return new URL(request.url).searchParams.get("redirect") || "/";
+  const from = new URL(request.url);
+  const redirect_to = from.searchParams.get("redirect");
+  if (user) return redirect(redirect_to || "/marketplace", { headers });
+  return redirect_to || "/";
 };
