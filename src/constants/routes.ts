@@ -19,6 +19,7 @@ export enum appRoutes {
   privacy_policy = "/privacy-policy",
   terms_donors = "/terms-of-use",
   terms_nonprofits = "/terms-of-use-npo",
+  terms_referrals = "/terms-of-use-referrals",
   //informationalf
   nonprofit_info = "/nonprofit",
   donor_info = "/donor",

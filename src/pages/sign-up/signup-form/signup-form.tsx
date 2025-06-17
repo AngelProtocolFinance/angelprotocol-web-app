@@ -6,6 +6,7 @@ import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
 import Image from "components/image";
 import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
@@ -15,8 +16,55 @@ import { signUp } from "types/auth";
 export { action } from "./api";
 export { loader } from "../loader";
 export { ErrorBoundary } from "components/error";
+
+interface Terms {
+  to: string;
+  title: string;
+}
+
+interface Context {
+  title: string;
+  description: string;
+  terms: Terms[];
+}
+
+const context: { [id: string]: Context } = {
+  registration: {
+    title: "Philanthropy for Everyone",
+    description: "Sign up to register and manage your nonprofit.",
+    terms: [
+      { to: appRoutes.terms_nonprofits, title: "Terms of Use (Nonprofits)" },
+    ],
+  },
+
+  referrals: {
+    title: "Empower More Nonprofits",
+    description: `Sign up to refer organizations to ${APP_NAME} and help them grow their impact make a difference with every connection.`,
+    terms: [
+      { to: appRoutes.terms_referrals, title: "Terms of Use (Referrals)" },
+    ],
+  },
+  fallback: {
+    title: "Philanthropy for Everyone",
+    description:
+      "Sign up to support 18000+ causes or register and manage your nonprofit.",
+    terms: [
+      { to: appRoutes.terms_donors, title: "Terms of Use (Donors)" },
+      { to: appRoutes.terms_nonprofits, title: "Terms of Use (Nonprofits)" },
+    ],
+  },
+};
+
+const get_context = (to: string): Context => {
+  if (to.startsWith(appRoutes.register)) return context.registration;
+  if (to.startsWith(`${appRoutes.user_dashboard}/referrals`))
+    return context.referrals;
+  return context.fallback;
+};
+
 export default function SignupForm() {
   const to = useLoaderData<string>();
+  const ctx = get_context(to);
   const { data, nav } = useRmxForm<ActionData>();
   const formErr = useActionResult(data);
 
@@ -34,11 +82,10 @@ export default function SignupForm() {
     <div className="grid justify-items-center gap-3.5">
       <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl">
         <h3 className="text-center text-2xl font-bold text-gray-d4">
-          Philanthropy for Everyone
+          {ctx.title}
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
-          Sign up to support 18000+ causes or register and manage your
-          nonprofit.
+          {ctx.title}
         </p>
 
         <RmxForm disabled={isSubmitting} method="POST" className="contents">
