@@ -5,7 +5,7 @@ export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import type { MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
-import { Explainer, Nonprofits, ReferralId } from "components/referrals";
+import { Explainer, Hub, Nonprofits, ReferralId } from "components/referrals";
 import { metas } from "helpers/seo";
 
 export const meta: MetaFunction = () => {
@@ -30,6 +30,7 @@ export function ReferralsPage() {
   return (
     <div className="">
       <Explainer classes="mb-4" />
+      <Hub classes="mb-8" />
       <h3 className="mt-8 mb-4 text-2xl">My Referral ID and Link</h3>
       <ReferralId
         classes="mb-8"

@@ -20,13 +20,13 @@ export const cards: ICard[] = [
     id: "1",
     title: "Logo and Brand Assets",
     img: { src: img1, alt: "laptop" },
-    to: "/referrals/brand-assets",
+    to: "https://intercom.help/better-giving/en/articles/11549962-referral-resource-hub-logos-and-brand-assets",
   },
   {
     id: "2",
     title: "Social Media Templates",
     img: { src: img2, alt: "people using gadget" },
-    to: "/referrals/social-templates",
+    to: " https://intercom.help/better-giving/en/articles/11549960-referral-resource-hub-social-media-guidance-and-templates",
   },
   {
     id: "3",
@@ -35,13 +35,13 @@ export const cards: ICard[] = [
       src: img3,
       alt: "man using laptop",
     },
-    to: "/referrals/shareable-content",
+    to: "https://intercom.help/better-giving/en/articles/11549957-referral-resource-hub-emails",
   },
   {
     id: "4",
     title: "Resource Hub",
     img: { src: img4, alt: "diamond logo" },
-    to: "/referrals/program-overview",
+    to: "https://intercom.help/better-giving/en/collections/13341032-referral-program-resource-hub",
   },
 ];
 
@@ -58,20 +58,21 @@ export const Hub = ({ classes = "" }: Props) => {
           refer nonprofits, grow your network, and earn rewards smoothly.
         </p>
         <div className="overflow-x-auto">
-          <div className="grid grid-cols-5 grid-rows-[auto_1fr] gap-x-8">
+          <div className="grid grid-rows-[auto_1fr] grid-cols-5 gap-x-8 min-w-max">
             {cards.map((card) => (
               <div
                 // to={card.to ?? "#"}
                 key={card.title}
-                className="grid grid-rows-subgrid row-span-2 content-star"
+                className="grid grid-rows-subgrid row-span-2 content-start"
               >
                 <Image
                   src={card.img.src}
                   alt={card.img.alt}
                   width={200}
-                  className="rounded-xl"
+                  className="rounded-xl shrink-0"
                 />
                 <Link
+                  target="_blank"
                   to={card.to}
                   className=" font-heading text-blue hover:text-blue-d1 mt-2 text-center font-semibold text-nowrap"
                 >
