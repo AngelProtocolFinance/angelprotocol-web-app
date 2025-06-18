@@ -65,12 +65,15 @@ export const Hub = ({ classes = "" }: Props) => {
                 key={card.title}
                 className="grid grid-rows-subgrid row-span-2 content-start"
               >
-                <Image
-                  src={card.img.src}
-                  alt={card.img.alt}
-                  width={200}
-                  className="rounded-xl shrink-0"
-                />
+                <Link target="_blank" to={card.to}>
+                  <Image
+                    src={card.img.src}
+                    alt={card.img.alt}
+                    width={200}
+                    className="rounded-xl shrink-0"
+                  />
+                </Link>
+
                 <Link
                   target="_blank"
                   to={card.to}
