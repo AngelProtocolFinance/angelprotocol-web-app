@@ -1,27 +1,7 @@
 import { fixedForwardRef } from "helpers/react";
 import { unpack } from "helpers/unpack";
-import type {
-  ChangeEvent,
-  ForwardedRef,
-  InputHTMLAttributes,
-  PropsWithChildren,
-  ReactNode,
-} from "react";
-import {
-  type FieldValues,
-  type Path,
-  get,
-  useFormContext,
-} from "react-hook-form";
+import type { ForwardedRef, InputHTMLAttributes, ReactNode } from "react";
 import type { Classes } from "./types";
-
-type Props<T extends FieldValues> = PropsWithChildren<{
-  name: Path<T>;
-  classes?: Classes;
-  disabled?: boolean;
-  required?: boolean;
-  onChange?: (val: boolean) => void;
-}>;
 
 type NativeProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -62,27 +42,3 @@ function _CheckField(props: NativeProps, ref: ForwardedRef<HTMLInputElement>) {
 }
 
 export const NativeCheckField = fixedForwardRef(_CheckField);
-
-export function CheckField<T extends FieldValues>({
-  name,
-  onChange,
-  disabled,
-  ...props
-}: Props<T>) {
-  const {
-    register,
-    formState: { isSubmitting, errors },
-  } = useFormContext<T>();
-
-  return (
-    <NativeCheckField
-      {...register(name, {
-        onChange: (event: ChangeEvent<HTMLInputElement>) =>
-          onChange?.(event.target.checked),
-      })}
-      {...props}
-      disabled={isSubmitting || disabled}
-      error={get(errors, name)?.message}
-    />
-  );
-}
