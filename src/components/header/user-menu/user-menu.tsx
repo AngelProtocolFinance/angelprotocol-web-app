@@ -1,47 +1,67 @@
-import { Link, NavLink, useLocation } from "@remix-run/react";
+import { MenuItem } from "@headlessui/react";
+import { Form, Link, useNavigation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { useRootData } from "hooks/use-root-data";
-import { CircleUserRound } from "lucide-react";
+import { CircleDollarSign, Shield } from "lucide-react";
+import type { DetailedUser } from "types/auth";
+import { Bookmarks } from "./bookmarks";
+import { Organizations } from "./organizations";
 
-export default function UserMenu({ classes = "" }) {
-  const user = useRootData();
-  const { pathname: p, search: s } = useLocation();
-  const to = p + s;
-  if (!user) {
-    return (
-      <div className={`${classes} flex items-center gap-x-4`}>
-        <Link
-          to={appRoutes.signin + `?redirect=${to}`}
-          className="btn text-base normal-case hover:underline"
-        >
-          Log in
-        </Link>
-        <Link
-          to={appRoutes.signup + `?redirect=${to}`}
-          className="btn-blue text-nowrap px-6 py-2 rounded-full"
-        >
-          Sign up
-        </Link>
-      </div>
-    );
-  }
-
+type Props = {
+  classes?: string;
+  user: DetailedUser;
+};
+export function UserMenu({ user, classes }: Props) {
+  const navigation = useNavigation();
   return (
-    <NavLink
-      to={`${appRoutes.user_dashboard}/edit-profile`}
-      className="[&:is(.pending)]:grayscale"
-    >
-      {user.avatar ? (
-        //TODO: migrate userdb attribute to custom attribute
-        <img
-          src={user.avatar}
-          className="rounded-full"
-          height={32}
-          width={32}
-        />
-      ) : (
-        <CircleUserRound size={24} className="text-blue disabled:text-gray" />
-      )}
-    </NavLink>
+    <div className={`${classes} text-gray`}>
+      <p className="text-sm p-3 bg-blue-l4">
+        Welcome, {user.firstName || user.email}!
+      </p>
+      <div className="w-64 min-h-[5rem] p-5">
+        <MenuItem
+          as={Link}
+          to={`${appRoutes.user_dashboard}/donations`}
+          className=" hover:text-blue-d1 text-sm flex items-center gap-2"
+        >
+          <CircleDollarSign size={18} />
+          <span>My Dashboard</span>
+        </MenuItem>
+        <Organizations user={user} classes="mt-6" />
+        <Bookmarks user={user} classes="mt-6" />
+        <div className="hidden [&:has(a)]:block mt-6">
+          <h5 className="uppercase text-xs text-gray mb-1">BG Admin</h5>
+          {user.groups.includes("ap-admin") && (
+            <MenuItem
+              as={Link}
+              to={appRoutes.applications}
+              className="hover:text-blue-d1 text-sm flex items-center gap-1"
+            >
+              <Shield size={18} />
+              <span>Applications Dashboard</span>
+            </MenuItem>
+          )}
+          {user.groups.includes("ap-admin") && (
+            <MenuItem
+              as={Link}
+              to={appRoutes.banking_applications}
+              className="hover:text-blue-d1 text-sm flex items-center gap-1 mt-1"
+            >
+              <Shield size={18} />
+              <span>Banking applications</span>
+            </MenuItem>
+          )}
+        </div>
+      </div>
+
+      <Form className="contents" method="POST" action="/logout">
+        <button
+          disabled={navigation.state !== "idle"}
+          type="submit"
+          className="btn btn-blue rounded-none w-full p-3 text-sm mt-4"
+        >
+          Log out
+        </button>
+      </Form>
+    </div>
   );
 }

@@ -4,22 +4,20 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { NavLink, useLocation } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { createNavLinkStyler } from "helpers/create-navlink-styler";
 import { ChevronDown, CornerDownRight, MenuIcon } from "lucide-react";
+import type { ReactNode } from "react";
 import type { DetailedUser } from "types/auth";
-import Menu from "./user-menu/menu";
+import { UserMenu } from "../user-menu";
+import { styler } from "./common";
 
 interface Props {
-  isInAuth: boolean;
+  auth_links: ReactNode | undefined;
   user: DetailedUser | null;
 }
 
-export default function NavDropdown({ user, isInAuth }: Props) {
-  const { pathname: p, search: s } = useLocation();
-  const to = p + s;
-
+export function NavDropdown({ user, auth_links }: Props) {
   return (
     <HuiMenu>
       <MenuButton
@@ -87,34 +85,15 @@ export default function NavDropdown({ user, isInAuth }: Props) {
               Blog
             </NavLink>
           </MenuItem>
-
-          {!isInAuth && (
-            <MenuItem>
-              <NavLink
-                to={appRoutes.signin + `?redirect=${to}`}
-                className={styles + " sm:hidden"}
-              >
-                Login
-              </NavLink>
-            </MenuItem>
-          )}
-          {!isInAuth && (
-            <MenuItem>
-              <NavLink
-                to={appRoutes.signup + `?redirect=${to}`}
-                className={styles + " sm:hidden"}
-              >
-                Sign up
-              </NavLink>
-            </MenuItem>
-          )}
+          <MenuItem>
+            <NavLink to="referral-program" className={styler}>
+              Referral Program
+            </NavLink>
+          </MenuItem>
+          {auth_links}
         </div>
-        {user ? <Menu user={user} /> : null}
+        {user ? <UserMenu user={user} /> : null}
       </MenuItems>
     </HuiMenu>
   );
 }
-
-const styles =
-  "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1 flex items-center gap-x-2";
-const styler = createNavLinkStyler(styles, "pointer-events-none text-gray-d4");

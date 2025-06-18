@@ -1,8 +1,10 @@
 import { Link } from "@remix-run/react";
 import { Footer } from "components/footer";
+import { NavDropdown, UserAvatar } from "components/header";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
+import { useRootData } from "hooks/use-root-data";
 import { Bottom } from "./bottom";
 import { Faq } from "./faq";
 import { Feature } from "./feature";
@@ -16,6 +18,8 @@ export const meta = metas({
 });
 
 export default function Referrals() {
+  const user = useRootData();
+  const to = `${appRoutes.user_dashboard}/referrals`;
   return (
     <div className="w-full grid content-start pb-16 @container">
       <div
@@ -33,17 +37,21 @@ export default function Referrals() {
           observer.observe(node);
         }}
       >
-        <div className="xl:container xl:mx-auto px-10 py-4 flex justify-between gap-x-4 items-center">
+        <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 xl:container xl:mx-auto px-5 py-2">
           <DappLogo classes="h-12" />
-          <Link
-            to={{
-              pathname: appRoutes.signup,
-              search: `?redirect=${appRoutes.user_dashboard}/referrals`,
-            }}
-            className="btn btn-blue max-xl:text-sm normal-case text-nowrap px-6 py-2 rounded-full"
-          >
-            Sign up
-          </Link>
+          {user && <UserAvatar avatar={user.avatar} classes="max-sm:hidden" />}
+          {!user && (
+            <Link
+              to={{
+                pathname: appRoutes.signup,
+                search: `?redirect=${to}`,
+              }}
+              className="btn btn-blue max-xl:text-sm normal-case text-nowrap px-6 py-2 rounded-full"
+            >
+              Sign up
+            </Link>
+          )}
+          {user && <NavDropdown auth_links={undefined} user={user} />}
         </div>
       </div>
 

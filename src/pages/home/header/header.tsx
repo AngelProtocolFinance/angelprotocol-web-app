@@ -1,6 +1,11 @@
 import { useLocation } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import { NavDropdown, UserMenu } from "components/header";
+import {
+  AuthBtns,
+  AuthLinks,
+  NavDropdown,
+  UserAvatar,
+} from "components/header";
 import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
@@ -14,9 +19,9 @@ type Props = { classes?: string };
 export default function Header({ classes }: Props) {
   const user = useRootData();
   const firstPage = useCachedLoaderData() as EndowCardsPage;
-  const location = useLocation();
   const [query, setQuery] = useState("");
-  const isInAuth = authRoutes.includes(location.pathname);
+  const { pathname: p, search: s } = useLocation();
+  const to = authRoutes.includes(p) ? undefined : p + s;
 
   return (
     <header
@@ -42,8 +47,14 @@ export default function Header({ classes }: Props) {
           classes="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         />
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
-          <UserMenu classes="max-sm:hidden" />
-          <NavDropdown isInAuth={isInAuth} user={user} />
+          {user && <UserAvatar avatar={user.avatar} classes="max-sm:hidden" />}
+          {to && !user && <AuthBtns to={to} classes="max-sm:hidden" />}
+          <NavDropdown
+            user={user}
+            auth_links={
+              to && !user && <AuthLinks to={to} classes="sm:hidden" />
+            }
+          />
         </div>
       </div>
       <SearchDropdown

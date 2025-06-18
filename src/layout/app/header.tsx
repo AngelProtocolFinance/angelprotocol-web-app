@@ -1,15 +1,20 @@
 import { useLocation } from "@remix-run/react";
-import { NavDropdown, UserMenu } from "components/header";
+import {
+  AuthBtns,
+  AuthLinks,
+  NavDropdown,
+  UserAvatar,
+} from "components/header";
 import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 
 type Props = { classes?: string };
 
-export default function Header({ classes }: Props) {
+export function Header({ classes }: Props) {
   const user = useRootData();
-  const location = useLocation();
-  const isInAuth = authRoutes.includes(location.pathname);
+  const { pathname: p, search: s } = useLocation();
+  const to = authRoutes.includes(p) ? undefined : p + s;
 
   return (
     <header
@@ -28,9 +33,12 @@ export default function Header({ classes }: Props) {
     >
       <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 xl:container xl:mx-auto px-5 py-2">
         <DappLogo classes="h-12" />
-
-        {!isInAuth && <UserMenu classes="max-sm:hidden" />}
-        <NavDropdown isInAuth={isInAuth} user={user} />
+        {user && <UserAvatar avatar={user.avatar} classes="max-sm:hidden" />}
+        {!user && to && <AuthBtns to={to} classes="max-sm:hidden" />}
+        <NavDropdown
+          auth_links={to && !user && <AuthLinks to={to} classes="sm:hidden" />}
+          user={user}
+        />
       </div>
     </header>
   );
