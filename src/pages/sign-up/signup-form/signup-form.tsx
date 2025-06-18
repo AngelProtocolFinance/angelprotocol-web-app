@@ -1,5 +1,6 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Link, useLoaderData } from "@remix-run/react";
+import type { MetaDescriptor, MetaFunction } from "@vercel/remix";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ext-link";
 import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
@@ -8,6 +9,7 @@ import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { metas } from "helpers/seo";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
 import type { ActionData } from "types/action";
@@ -26,6 +28,7 @@ interface Context {
   title: string;
   description: string;
   terms: Terms[];
+  meta?: MetaDescriptor[];
 }
 
 const context: { [id: string]: Context } = {
@@ -43,6 +46,11 @@ const context: { [id: string]: Context } = {
     terms: [
       { to: appRoutes.terms_referrals, title: "Terms of Use (Referrals)" },
     ],
+    meta: metas({
+      title: "Sign Up Referral | Better Giving",
+      description:
+        "Join Better Giving and start sharing the good! Sign up now to get your own referral code and link, earn rewards by inviting others to give better",
+    }),
   },
   fallback: {
     title: "Philanthropy for Everyone",
@@ -62,9 +70,17 @@ const get_context = (to: string): Context => {
   return context.fallback;
 };
 
+export const meta: MetaFunction = ({ data: to }) => {
+  const ctx = get_context(to as string);
+  return ctx?.meta || [{ title: "Sign Up - Better Giving" }];
+};
+
 export default function SignupForm() {
   const to = useLoaderData<string>();
   const ctx = get_context(to);
+  const terms_0 = ctx.terms[0];
+  const terms_1 = ctx.terms[1];
+
   const { data, nav } = useRmxForm<ActionData>();
   const formErr = useActionResult(data);
 
@@ -85,7 +101,7 @@ export default function SignupForm() {
           {ctx.title}
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
-          {ctx.title}
+          {ctx.description}
         </p>
 
         <RmxForm disabled={isSubmitting} method="POST" className="contents">
@@ -176,20 +192,21 @@ export default function SignupForm() {
         >
           Privacy Policy
         </ExtLink>
-        ,{" "}
-        <ExtLink
-          href={appRoutes.terms_donors}
-          className="text-blue hover:text-blue-l2"
-        >
-          Terms of Use (Donors)
-        </ExtLink>
-        , and{" "}
-        <ExtLink
-          href={appRoutes.terms_nonprofits}
-          className="text-blue hover:text-blue-l2"
-        >
-          Terms of Use (Nonprofits)
-        </ExtLink>
+        , {!terms_1 && ` and  `}
+        {terms_0 && (
+          <ExtLink
+            href={appRoutes.terms_donors}
+            className="text-blue hover:text-blue-l2"
+          >
+            {terms_0.title}
+          </ExtLink>
+        )}
+        {terms_0 && terms_1 && `, and  `}
+        {terms_1 && (
+          <ExtLink href={terms_1.to} className="text-blue hover:text-blue-l2">
+            {terms_1.title}
+          </ExtLink>
+        )}
       </span>
     </div>
   );
