@@ -4,7 +4,7 @@ import { Earnings } from "./earnings";
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
-import { Explainer, Nonprofits, ReferralId } from "components/referrals";
+import { Explainer, Hub, Nonprofits, ReferralId } from "components/referrals";
 
 export function ReferralsPage() {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ export function ReferralsPage() {
   return (
     <div className="">
       <Explainer classes="mb-4" />
+      <Hub classes="mb-8" />
       <h3 className="mt-8 mb-4 text-2xl">Referral ID and Link</h3>
       <ReferralId classes="mb-8" referral_id={id} base_url={base_url} />
       <Earnings
