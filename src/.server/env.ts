@@ -72,3 +72,9 @@ export const anvil_envs = {
   fsa_template_id: _var("ANVIL_FSA_TEMPLATE_ID"),
   org_slug: _var("ANVIL_ORG_SLUG"),
 };
+
+export const cognito_envs = {
+  client_id: _var("COGNITO_CLIENT_ID"),
+  domain: _var("COGNITO_DOMAIN"),
+  endpoint: _var("COGNITO_ENDPOINT"),
+};

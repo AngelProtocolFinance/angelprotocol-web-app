@@ -1,14 +1,19 @@
 import { Buffer } from "node:buffer";
 import { referral_id } from "helpers/referral";
 import type { AuthError, UserV2 } from "types/auth";
-import { env } from "../env";
+import { cognito_envs } from "../env";
 import { type Stored, commitSession, getSession } from "./session";
 import { Util } from "./util";
 
-const clientId =
-  env === "production"
-    ? "207sfl8bl2m2cghbr86vg4je2o"
-    : "7bl9gfckbneg0udsmkvsu48ssg";
+interface Base {
+  client_id: string;
+}
+interface OAuthConfig extends Base {
+  domain: string;
+}
+interface Config extends Base {
+  endpoint: string;
+}
 
 /** api version  2016-04-18 */
 interface AuthSuccess<T extends "new" | "refresh"> {
@@ -90,12 +95,11 @@ class Storage extends Util {
 }
 
 class Cognito extends Storage {
-  private endpoint = "https://cognito-idp.us-east-1.amazonaws.com";
-  private clientId: string;
+  private config: Config;
 
-  constructor(clientId: string) {
+  constructor(config: Config) {
     super();
-    this.clientId = clientId;
+    this.config = config;
   }
 
   private headers(action: string) {
@@ -106,7 +110,7 @@ class Cognito extends Storage {
   }
 
   private body(content: object) {
-    return JSON.stringify({ ...content, ClientId: this.clientId });
+    return JSON.stringify({ ...content, ClientId: this.config.client_id });
   }
 
   private async deliveryDetails(res: Response) {
@@ -122,7 +126,7 @@ class Cognito extends Storage {
     password: string,
     cookieHeader: string | null
   ) {
-    const res = await fetch(this.endpoint, {
+    const res = await fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("InitiateAuth"),
       body: this.body({
@@ -149,7 +153,7 @@ class Cognito extends Storage {
   }
 
   async refresh(session: Stored) {
-    const res = await fetch(this.endpoint, {
+    const res = await fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("InitiateAuth"),
       body: this.body({
@@ -189,7 +193,7 @@ class Cognito extends Storage {
     }
   ) {
     const ref_id = referral_id();
-    return fetch(this.endpoint, {
+    return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("SignUp"),
       body: this.body({
@@ -208,7 +212,7 @@ class Cognito extends Storage {
   }
 
   async confirmSignup(username: string, code: string) {
-    return fetch(this.endpoint, {
+    return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("ConfirmSignUp"),
       body: this.body({
@@ -222,7 +226,7 @@ class Cognito extends Storage {
   }
 
   async resendConfirmationCode(username: string) {
-    return fetch(this.endpoint, {
+    return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("ResendConfirmationCode"),
       body: this.body({
@@ -235,7 +239,7 @@ class Cognito extends Storage {
   }
 
   async forgotPassword(username: string) {
-    return fetch(this.endpoint, {
+    return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("ForgotPassword"),
       body: this.body({
@@ -249,7 +253,7 @@ class Cognito extends Storage {
     newPassword: string,
     code: string
   ) {
-    return fetch(this.endpoint, {
+    return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("ConfirmForgotPassword"),
       body: this.body({
@@ -264,7 +268,7 @@ class Cognito extends Storage {
   }
 
   async signOut(session: Stored): Promise<string | AuthError> {
-    const res = await fetch(this.endpoint, {
+    const res = await fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("GlobalSignOut"),
       body: this.body({
@@ -281,7 +285,7 @@ class Cognito extends Storage {
   }
 
   async updateUserAttributes(attributes: object[], accessToken: string) {
-    return fetch(this.endpoint, {
+    return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("UpdateUserAttributes"),
       body: this.body({
@@ -296,16 +300,11 @@ class Cognito extends Storage {
 }
 
 class OAuth extends Storage {
-  private domain: string;
-  private clientId: string;
+  private config: OAuthConfig;
 
-  constructor(clientId: string) {
+  constructor(config: OAuthConfig) {
     super();
-    this.clientId = clientId;
-    this.domain =
-      env === "production"
-        ? "https://bettergiving.auth.us-east-1.amazoncognito.com"
-        : "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com";
+    this.config = config;
   }
 
   initiateUrl(state: string, base_url: string) {
@@ -318,23 +317,23 @@ class OAuth extends Storage {
 
     const params = new URLSearchParams({
       response_type: "code",
-      client_id: this.clientId,
+      client_id: this.config.client_id,
       redirect_uri: base_url + "/",
       identity_provider: "Google",
       state: Buffer.from(state).toString("base64"),
       scope: scopes.join(" "),
     });
 
-    return `${this.domain}/oauth2/authorize?${params.toString()}`;
+    return `${this.config.domain}/oauth2/authorize?${params.toString()}`;
   }
 
   async exchange(code: string, base_url: string, cookieHeader: string | null) {
-    const res = await fetch(this.domain + "/oauth2/token", {
+    const res = await fetch(this.config.domain + "/oauth2/token", {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
         grant_type: "authorization_code",
-        client_id: this.clientId,
+        client_id: this.config.client_id,
         code,
         redirect_uri: base_url + "/",
       }),
@@ -354,5 +353,5 @@ class OAuth extends Storage {
   }
 }
 
-export const oauth = new OAuth(clientId);
-export const cognito = new Cognito(clientId);
+export const oauth = new OAuth(cognito_envs);
+export const cognito = new Cognito(cognito_envs);
