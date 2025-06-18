@@ -26,7 +26,7 @@ export const cards: ICard[] = [
     id: "2",
     title: "Social Media Templates",
     img: { src: img2, alt: "people using gadget" },
-    to: " https://intercom.help/better-giving/en/articles/11549960-referral-resource-hub-social-media-guidance-and-templates",
+    to: "https://intercom.help/better-giving/en/articles/11549960-referral-resource-hub-social-media-guidance-and-templates",
   },
   {
     id: "3",
