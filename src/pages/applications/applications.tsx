@@ -2,7 +2,7 @@ import type { Page } from "@better-giving/registration/approval";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import Filter from "./filter";
+import { Filter } from "./filter";
 import Table from "./table";
 
 export default function Applications() {

@@ -1,25 +1,65 @@
+import type { QueryParams } from "@better-giving/registration/approval";
 import { PopoverButton, PopoverPanel } from "@headlessui/react";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import countries from "assets/countries/all.json";
-import CountrySelector from "components/country-selector";
-import { DateInput } from "components/form";
-import { Selector } from "components/selector";
+import { ControlledCountrySelector as CountrySelector } from "components/country-selector";
+import { NativeField, dateToFormFormat } from "components/form";
+import { List } from "components/selector";
+import { subWeeks } from "date-fns";
 import { X } from "lucide-react";
-import type { FC, FormEventHandler } from "react";
+import type { FC } from "react";
+import { useController, useForm } from "react-hook-form";
 import { statuses } from "./constants";
-import type { FormValues as FV } from "./types";
-
+import { type FV, schema } from "./schema";
 type Props = {
-  submit: FormEventHandler<HTMLFormElement>;
-  onReset: FormEventHandler<HTMLFormElement>;
+  onSubmit: (data: FV) => void;
+  onReset: () => void;
+  params: QueryParams;
   classes?: string;
 };
 
-const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
+export const Form: FC<Props> = ({
+  onReset,
+  onSubmit,
+  params,
+  classes = "",
+}) => {
+  const status = statuses.find((s) => s.value === params.status);
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FV>({
+    resolver: valibotResolver(schema),
+    values: {
+      //set default value so empty can be tagged as invalid
+      start_date: dateToFormFormat(
+        params.startDate ? new Date(params.startDate) : subWeeks(new Date(), 1)
+      ),
+      end_date: dateToFormFormat(
+        params.endDate ? new Date(params.endDate) : new Date()
+      ),
+      country: { name: params.country ?? "", flag: "", code: "" },
+      status: status || { label: "Under Review", value: "02" },
+    },
+  });
+
+  const { field: country } = useController({ name: "country", control });
+  const { field: stat } = useController({ name: "status", control });
+
   return (
     <PopoverPanel
       as="form"
-      onSubmit={submit}
-      onReset={onReset}
+      onSubmit={handleSubmit(onSubmit, (err) => {
+        console.log(err);
+      })}
+      onReset={(e) => {
+        e.preventDefault();
+        reset();
+        onReset();
+      }}
       className={`${classes} grid content-start gap-4 w-full rounded-sm border border-gray-l3 bg-white dark:bg-blue-d5`}
     >
       <div className="lg:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
@@ -30,27 +70,34 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       </div>
 
       <div className="px-6 lg:pt-6">
-        <CountrySelector<FV, "hqCountry">
-          label="HQ Country"
+        <CountrySelector
+          value={country.value}
+          onChange={country.onChange}
+          label="Country"
           placeholder="Select a country"
-          fieldName="hqCountry"
           options={countries}
-          classes={
-            {
-              // container: "lg:mx-6 lg:mt-6",
-            }
-          }
         />
 
         <div className="grid gap-x-[1.125rem] grid-cols-2 mt-4">
           <label className="col-span-full text-sm mb-2">Date</label>
-          <DateInput<FV> name="startDate" />
-          <DateInput<FV> name="endDate" />
+          <NativeField
+            {...register("start_date")}
+            label=""
+            type="date"
+            error={errors.start_date?.message}
+          />
+          <NativeField
+            {...register("end_date")}
+            label=""
+            type="date"
+            error={errors.end_date?.message}
+          />
         </div>
 
-        <Selector<FV, "status", string>
+        <List
+          value={stat.value}
+          onChange={stat.onChange}
           label="Application Status"
-          name="status"
           classes={{
             button: "dark:bg-blue-d6",
             options: "text-sm",
@@ -78,4 +125,3 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
     </PopoverPanel>
   );
 };
-export default Form;

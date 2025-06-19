@@ -1,28 +1,43 @@
-import type { SchemaShape } from "schemas/types";
-import { type ObjectSchema, date, lazy, object, ref, string } from "yup";
-import type { FormValues } from "./types";
+import * as v from "valibot";
+import { iso_date } from "./helpers";
 
-const endKey: keyof FormValues = "endDate";
-const startKey: keyof FormValues = "startDate";
+const d8 = (end = false) =>
+  v.pipe(
+    v.string(),
+    v.transform((x) => (x ? new Date(x) : undefined)),
+    v.date("invalid date"),
+    v.maxValue(new Date(), "can't be later than today"),
+    v.transform((x) => iso_date(x, end))
+  );
 
-const now = new Date();
-const dateSchema = date()
-  .typeError("invalid")
-  .max(now, "can't be later than today");
+/** not set by user */
+export const country = v.object({
+  name: v.string(),
+  code: v.string(),
+  flag: v.string(),
+});
 
-export const schema = object<any, SchemaShape<FormValues>>({
-  startDate: dateSchema.when(endKey, ([endDate], schema) =>
-    date().isValidSync(endDate)
-      ? schema.max(endDate, "can't be later than end date")
-      : schema
-  ),
-  endDate: lazy((val) =>
-    val
-      ? dateSchema.when(startKey, ([startDate], schema) =>
-          date().isValidSync(startDate)
-            ? schema.min(ref(startKey), "can't be earlier than start date")
-            : schema
-        )
-      : string().required("invalid").trim()
-  ),
-}) as ObjectSchema<FormValues>;
+export const schema = v.pipe(
+  v.object({
+    start_date: v.optional(d8()),
+    end_date: v.optional(d8(true)),
+    country,
+    // not set by user
+    status: v.object({
+      label: v.string(),
+      value: v.string(),
+    }),
+  }),
+  v.forward(
+    v.partialCheck(
+      [["start_date"], ["end_date"]],
+      ({ start_date: a, end_date: b }) => {
+        return a && b ? a <= b : true;
+      },
+      "start date must be earlier than end date"
+    ),
+    ["start_date"]
+  )
+);
+
+export interface FV extends v.InferOutput<typeof schema> {}
