@@ -16,6 +16,8 @@ const donor: FormDonor = {
   zipCode: "",
   streetAddress: "",
   publicMsg: "",
+  msg_to_npo: "",
+  is_with_msg_to_npo: false,
   isPublic: true,
 };
 
@@ -35,7 +37,8 @@ const props: Props = {
   donor,
   honorary,
   coverFee: false,
-  nonprofitName: "Test Nonprofit",
+  recipientName: "Test Nonprofit",
+  recipientMembers: [],
   mode: "live",
   method: "stripe",
 };

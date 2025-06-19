@@ -33,7 +33,7 @@ describe("stocks form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "" },
+      recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);
@@ -52,7 +52,12 @@ describe("stocks form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", progDonationsAllowed: false },
+      recipient: {
+        id: "0",
+        name: "",
+        progDonationsAllowed: false,
+        members: [],
+      },
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);
@@ -63,7 +68,7 @@ describe("stocks form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "" },
+      recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
     const details: StocksDonationDetails = {
@@ -90,7 +95,12 @@ describe("stocks form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", progDonationsAllowed: false },
+      recipient: {
+        id: "0",
+        name: "",
+        progDonationsAllowed: false,
+        members: [],
+      },
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);

@@ -14,6 +14,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
     name: profile.name,
     hide_bg_tip: profile.hide_bg_tip,
     progDonationsAllowed: profile.progDonationsAllowed,
+    members: [],
   };
 
   return (

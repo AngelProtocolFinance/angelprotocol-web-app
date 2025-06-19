@@ -46,6 +46,7 @@ export default function Content() {
               name: endow.name,
               hide_bg_tip: endow.hide_bg_tip,
               progDonationsAllowed: endow.progDonationsAllowed,
+              members: [],
             }}
             config={{
               methodIds: endow.donateMethods,

@@ -60,7 +60,8 @@ export default function Summary(props: SummaryStep) {
         method={details.method}
         mode={init.mode}
         coverFee={!!feeAllowance}
-        nonprofitName={init.recipient.name}
+        recipientName={init.recipient.name}
+        recipientMembers={init.recipient.members}
         donor={
           donor || {
             last_name: user?.lastName ?? "",
@@ -72,6 +73,8 @@ export default function Summary(props: SummaryStep) {
             streetAddress: "",
             isPublic: true,
             publicMsg: "",
+            msg_to_npo: "",
+            is_with_msg_to_npo: false,
             company_name: "",
           }
         }

@@ -27,6 +27,7 @@ export interface To {
   members: number[];
   /** tipping is disabled */
   no_tip: boolean;
+  message?: string;
 }
 
 export interface Amount {

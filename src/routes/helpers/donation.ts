@@ -48,6 +48,7 @@ export const to_final = (
           id: onhold.endowmentId.toString(),
           name: onhold.charityName,
           no_tip: onhold.hideBgTip ?? false,
+          message: onhold.msg_to_npo,
         };
 
   const from: From = {

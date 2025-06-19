@@ -23,6 +23,7 @@ export const onhold_base = (
     endowmentId: recipient.npo.id,
 
     donor_message: intent.donor_message,
+    msg_to_npo: intent.msg_to_npo,
     donor_public: intent.donor_public,
 
     fund_id: recipient.fund.id,

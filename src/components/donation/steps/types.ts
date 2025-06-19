@@ -31,11 +31,12 @@ export const recipientId = v.pipe(
 export const donationRecipient = v.object({
   id: v.fallback(recipientId, "1"),
   name: v.fallback(v.pipe(v.string(), v.nonEmpty()), "Better Giving"),
+  /** int-str array */
+  members: v.array(v.string()),
   hide_bg_tip: v.optional(v.boolean()),
   progDonationsAllowed: v.optional(v.boolean()),
 });
-export const isFund = (recipient: string) =>
-  v.safeParse(uuid, recipient).success; //is uuid
+export const isFund = (recipient: string) => v.UUID_REGEX.test(recipient); //is uuid
 
 export interface DonationRecipient
   extends v.InferOutput<typeof donationRecipient> {}
@@ -128,6 +129,9 @@ export type FormDonor = Pick<
   isPublic: boolean;
   /** initially empty `''` */
   publicMsg: string;
+  /** initially empty `''` */
+  is_with_msg_to_npo: boolean;
+  msg_to_npo: string;
 };
 
 export type Honorary = {

@@ -36,6 +36,8 @@ type FV = Honorary & {
   ukTaxResident: boolean;
   isPublic: boolean;
   publicMsg: string;
+  msg_to_npo: string;
+  is_with_msg_to_npo: boolean;
 };
 type GrantMetaData = FV & {
   _totalCents: number;
@@ -48,6 +50,7 @@ const withHonoraryKey: keyof FV = "withHonorary";
 const withTributeNotifKey: keyof FV = "withTributeNotif";
 const CUSTOM_MSG_MAX_LENGTH = 250;
 const PUBLIC_MSG_MAX_LENGTH = 500;
+const MSG_TO_NPO_MAX_LENGTH = 500;
 
 export default function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
@@ -77,6 +80,14 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
     },
     resolver: yupResolver(
       schema<FV>({
+        publicMsg: string().max(
+          PUBLIC_MSG_MAX_LENGTH,
+          `max ${PUBLIC_MSG_MAX_LENGTH} characters`
+        ),
+        msg_to_npo: string().max(
+          MSG_TO_NPO_MAX_LENGTH,
+          `max ${MSG_TO_NPO_MAX_LENGTH} characters`
+        ),
         honoraryFullName: string().when(withHonoraryKey, (values, schema) => {
           const [withHonorary] = values as [boolean];
           return withHonorary ? schema.required("required") : schema;
@@ -109,6 +120,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const customMsg = watch("tributeNotif.from_msg");
   const isPublic = watch("isPublic");
   const publicMsg = watch("publicMsg");
+  const is_with_msg_to_npo = watch("is_with_msg_to_npo");
+  const msg_to_npo = watch("msg_to_npo");
 
   const newFeeAllowance = fvCoverFee
     ? minFeeAllowance(props.details, props.tip?.value ?? 0)
@@ -180,6 +193,30 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               />
               <p className="text-red text-xs empty:hidden text-right">
                 {errors.publicMsg?.message}
+              </p>
+            </div>
+          )}
+          {props.init.recipient.members.length < 2 && (
+            <CheckField {...register("is_with_msg_to_npo")} classes="mt-4">
+              Add a note for {props.init.recipient.name}
+            </CheckField>
+          )}
+          {is_with_msg_to_npo && (
+            <div className="col-span-full">
+              <p
+                data-exceed={errors.msg_to_npo?.type === "max"}
+                className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
+              >
+                {/** customMsg becomes undefined when unmounted */}
+                {msg_to_npo?.length ?? 0}/{MSG_TO_NPO_MAX_LENGTH}
+              </p>
+              <textarea
+                {...register("msg_to_npo", { shouldUnregister: true })}
+                aria-invalid={!!errors.msg_to_npo?.message}
+                className="field-input w-full text-base font-semibold"
+              />
+              <p className="text-red text-xs empty:hidden text-right">
+                {errors.msg_to_npo?.message}
               </p>
             </div>
           )}
@@ -358,6 +395,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     .filter(Boolean)
                     .join(", "),
                   ukTaxResident: meta.ukTaxResident,
+                  msg_to_npo: props.donor.msg_to_npo,
                 }),
                 source: props.init.source,
                 donor_public: props.donor.isPublic,

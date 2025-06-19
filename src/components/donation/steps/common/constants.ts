@@ -87,7 +87,7 @@ export const initDonorTitleOption: OptionType<FormDonor["title"]["value"]> = {
 };
 
 export const toDonor = (
-  fv: Omit<FormDonor, "publicMsg" | "isPublic">
+  fv: Omit<FormDonor, "publicMsg" | "isPublic" | "is_with_msg_to_npo">
 ): Donor => {
   return {
     title: fv.title.value,
@@ -137,6 +137,8 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
       zipCode: "",
       isPublic: false,
       publicMsg: "",
+      msg_to_npo: "",
+      is_with_msg_to_npo: false,
     },
     honorary: {
       honoraryFullName: "",

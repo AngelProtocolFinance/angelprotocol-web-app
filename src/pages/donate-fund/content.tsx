@@ -55,6 +55,7 @@ export default function Content() {
                 id: fund.id,
                 name: fund.name,
                 hide_bg_tip: fund.settings.hide_bg_tip,
+                members: fund.members.map((x) => x.id.toString()),
                 progDonationsAllowed: false,
               }}
               config={{ methodIds: fund.settings.donateMethods }}
