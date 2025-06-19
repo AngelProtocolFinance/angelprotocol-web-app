@@ -1,13 +1,12 @@
 import { useLocation } from "@remix-run/react";
+import { AuthLinks, NavDropdown, UserAvatar } from "components/header";
 import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
-
-import { AuthLinks, NavDropdown, UserMenu } from "components/header";
 import { useRootData } from "hooks/use-root-data";
 
 type Props = { classes?: string };
 
-export default function Header({ classes }: Props) {
+export function Header({ classes }: Props) {
   const user = useRootData();
   const { pathname: p, search: s } = useLocation();
   const to = authRoutes.includes(p) ? undefined : p + s;
@@ -28,7 +27,7 @@ export default function Header({ classes }: Props) {
       }}
     >
       <DappLogo classes="w-48 h-12" />
-      {user && <UserMenu user={user} classes="max-sm:hidden" />}
+      {user && <UserAvatar avatar={user.avatar} classes="max-sm:hidden" />}
       <NavDropdown
         auth_links={to && !user && <AuthLinks to={to} classes="sm:hidden" />}
         user={user}

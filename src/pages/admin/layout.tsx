@@ -10,7 +10,7 @@ import { CircleAlert } from "lucide-react";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import { linkGroups } from "./constants";
-import Header from "./header";
+import { Header } from "./header";
 import SidebarHeader from "./sidebar-header";
 import { cognito, toAuth } from ".server/auth";
 import { getNpo } from ".server/npo";
