@@ -51,6 +51,10 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     donor_public: fvDonor.isPublic,
   };
 
+  if (fvDonor.msg_to_npo) {
+    intent.msg_to_npo = fvDonor.msg_to_npo;
+  }
+
   if (fvDonor.publicMsg) {
     intent.donor_message = fvDonor.publicMsg;
   }

@@ -23,7 +23,8 @@ export type Props = {
   donor: FormDonor;
   honorary: Honorary;
   coverFee: boolean;
-  nonprofitName: string;
+  recipientName: string;
+  recipientMembers: string[];
   mode: Mode;
   method: DonateMethodId;
 };
@@ -38,18 +39,10 @@ const titleOptions: FV["title"][] = [
   { label: "Mx", value: "Mx" },
 ];
 
-export default function SummaryForm({
-  classes = "",
-  onSubmit,
-  donor,
-  honorary,
-  coverFee,
-  nonprofitName,
-  mode,
-  method,
-}: Props) {
+export default function SummaryForm({ classes = "", ...props }: Props) {
   const CUSTOM_MSG_MAX_LENGTH = 250;
   const PUBLIC_MSG_MAX_LENGTH = 500;
+  const MSG_TO_NPO_MAX_LENGTH = 500;
   const {
     handleSubmit,
     watch,
@@ -58,9 +51,9 @@ export default function SummaryForm({
     control,
   } = useForm<FV>({
     defaultValues: {
-      ...donor,
-      ...honorary,
-      coverFee,
+      ...props.donor,
+      ...props.honorary,
+      coverFee: props.coverFee,
     },
     resolver: yupResolver(
       schema<FV>({
@@ -69,6 +62,10 @@ export default function SummaryForm({
         publicMsg: string().max(
           PUBLIC_MSG_MAX_LENGTH,
           `max ${PUBLIC_MSG_MAX_LENGTH} characters`
+        ),
+        msg_to_npo: string().max(
+          MSG_TO_NPO_MAX_LENGTH,
+          `max ${MSG_TO_NPO_MAX_LENGTH} characters`
         ),
         company_name: string(),
         email: string()
@@ -104,8 +101,9 @@ export default function SummaryForm({
   });
 
   const [withDonorMsg, setWithDonorMsg] = useState<boolean>(
-    donor.publicMsg.length > 0
+    props.donor.publicMsg.length > 0
   );
+
   const { field: title } = useController<FV, "title">({
     name: "title",
     control,
@@ -117,10 +115,12 @@ export default function SummaryForm({
   const customMsg = watch("tributeNotif.from_msg");
   const isPublic = watch("isPublic");
   const publicMsg = watch("publicMsg");
+  const is_with_msg_to_npo = watch("is_with_msg_to_npo");
+  const msg_to_npo = watch("msg_to_npo");
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(props.onSubmit)}
       className={`grid grid-cols-2 gap-x-4 ${classes}`}
     >
       <List
@@ -219,12 +219,36 @@ export default function SummaryForm({
           </p>
         </div>
       )}
+      {props.recipientMembers.length < 2 && (
+        <CheckField {...register("is_with_msg_to_npo")} classes="mt-4">
+          Add a note for {props.recipientName}
+        </CheckField>
+      )}
+      {is_with_msg_to_npo && (
+        <div className="col-span-full">
+          <p
+            data-exceed={errors.msg_to_npo?.type === "max"}
+            className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
+          >
+            {/** customMsg becomes undefined when unmounted */}
+            {msg_to_npo?.length ?? 0}/{MSG_TO_NPO_MAX_LENGTH}
+          </p>
+          <textarea
+            {...register("msg_to_npo", { shouldUnregister: true })}
+            aria-invalid={!!errors.msg_to_npo?.message}
+            className="field-input w-full text-base font-semibold"
+          />
+          <p className="text-red text-xs empty:hidden text-right">
+            {errors.msg_to_npo?.message}
+          </p>
+        </div>
+      )}
 
-      {(method === "crypto" || method === "stripe") && (
+      {(props.method === "crypto" || props.method === "stripe") && (
         <CheckField {...register("coverFee")} classes="col-span-full mt-4">
           Cover payment processing fees for your donation{" "}
           <span className="text-gray text-sm">
-            (&nbsp;{nonprofitName} receives the full amount&nbsp;)
+            (&nbsp;{props.recipientName} receives the full amount&nbsp;)
           </span>
         </CheckField>
       )}
@@ -337,7 +361,7 @@ export default function SummaryForm({
       )}
       <ContinueBtn
         type="submit"
-        disabled={mode === "preview"}
+        disabled={props.mode === "preview"}
         className="px-4 col-span-full mt-6"
         text="Checkout"
       />

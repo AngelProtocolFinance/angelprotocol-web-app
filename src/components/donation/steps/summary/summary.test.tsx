@@ -33,6 +33,8 @@ const donor: FormDonor = {
   zipCode: "12345",
   streetAddress: "123 Main St, Anytown, USA",
   publicMsg: "",
+  msg_to_npo: "",
+  is_with_msg_to_npo: false,
   isPublic: true,
 };
 
@@ -41,7 +43,7 @@ const props: SummaryStep = {
   init: {
     source: "bg-marketplace",
     mode: "live",
-    recipient: { id: "1", name: "Example Charity" },
+    recipient: { id: "1", name: "Example Charity", members: [] },
     config: null,
   },
   details: oneTimeStripeDetails,

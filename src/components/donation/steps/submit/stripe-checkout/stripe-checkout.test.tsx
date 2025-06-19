@@ -47,7 +47,7 @@ const stb = (node: ReactNode) =>
 
 const state: StripeCheckoutStep = {
   init: {
-    recipient: { id: "1", name: "test" },
+    recipient: { id: "1", name: "test", members: [] },
     source: "bg-marketplace",
     mode: "live",
     config: null,
@@ -71,6 +71,8 @@ const state: StripeCheckoutStep = {
     zipCode: "123",
     ukTaxResident: false,
     publicMsg: "",
+    msg_to_npo: "",
+    is_with_msg_to_npo: false,
     isPublic: true,
   },
   feeAllowance: 10,

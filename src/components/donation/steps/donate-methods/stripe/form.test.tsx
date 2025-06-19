@@ -19,6 +19,7 @@ const init: Init = {
   recipient: {
     id: "123456",
     name: "Example Endowment",
+    members: [],
   },
   config: null,
 };
@@ -73,6 +74,7 @@ describe("Stripe form test", () => {
         id: "123456",
         name: "Example Endowment",
         progDonationsAllowed: false,
+        members: [],
       },
       config: null,
     };

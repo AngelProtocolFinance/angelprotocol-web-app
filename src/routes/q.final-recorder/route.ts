@@ -97,6 +97,10 @@ export const action: ActionFunction = async ({ request }) => {
       base.programName = tx.program.name;
     }
 
+    if (tx.to.members.length < 2 && tx.to.message) {
+      base.msg_to_npo = tx.to.message;
+    }
+
     const builder = new TxBuilder();
 
     const processed_tip = apply_fees(

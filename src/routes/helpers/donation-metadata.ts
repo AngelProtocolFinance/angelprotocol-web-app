@@ -100,5 +100,9 @@ export const to_onhold = (
     x.donor_public = m.donor_public === "true";
   }
 
+  if (m.msg_to_npo) {
+    x.msg_to_npo = m.msg_to_npo;
+  }
+
   return x;
 };
