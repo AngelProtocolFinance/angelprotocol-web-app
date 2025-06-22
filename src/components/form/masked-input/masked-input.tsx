@@ -1,14 +1,24 @@
+import type { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
 import { unpack } from "helpers/unpack";
 import { nanoid } from "nanoid";
-import { type ReactElement, type ReactNode, forwardRef, useMemo } from "react";
-import { currency_mask_opts, mask, unmask } from "./currency-mask";
-import { Label } from "./label";
-import type { Classes } from "./types";
+import {
+  type InputHTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  forwardRef,
+  useMemo,
+} from "react";
+import { Label } from "../label";
+import type { Classes } from "../types";
 
 type El = HTMLInputElement;
 
-interface Props {
+interface Base
+  extends Pick<InputHTMLAttributes<El>, "placeholder" | "inputMode" | "type"> {}
+
+interface Props extends Base {
+  mask: MaskitoOptions;
   placeholder?: string;
   classes?: Classes | string;
   label: string | ReactElement;
@@ -20,9 +30,9 @@ interface Props {
   error?: string;
 }
 
-export const CurrencyField = forwardRef<El, Props>((props, ref) => {
+export const MaskedInput = forwardRef<El, Props>((props, ref) => {
   const id = useMemo(() => nanoid(6), []);
-  const maskitoRef = useMaskito({ options: currency_mask_opts });
+  const maskitoRef = useMaskito({ options: props.mask });
   // extract `required` to disable native validation
   const style = unpack(props.classes);
   const errorId = `error_${id}`;
@@ -45,6 +55,7 @@ export const CurrencyField = forwardRef<El, Props>((props, ref) => {
       ) : null}
 
       <input
+        type={props.type ?? "text"}
         ref={(node) => {
           maskitoRef(node);
           if (!ref) return;
@@ -55,17 +66,16 @@ export const CurrencyField = forwardRef<El, Props>((props, ref) => {
           }
         }}
         id={id}
+        inputMode={props.inputMode}
         placeholder={props.placeholder}
-        value={mask(props.value)}
-        type="text"
-        inputMode="numeric"
+        value={props.value}
         aria-invalid={!!props.error}
         aria-disabled={props.disabled}
         aria-errormessage={errorId}
         className={`${style.input} field-input`}
         autoComplete="off"
         spellCheck={false}
-        onInput={(e) => props.onChange(unmask(e.currentTarget.value))}
+        onInput={(e) => props.onChange(e.currentTarget.value)}
       />
 
       <p id={errorId} className={`${style.error} field-err mt-1 empty:hidden`}>

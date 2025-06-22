@@ -7,4 +7,4 @@ export { Radio } from "./radio";
 export { default as RhfForm, Form, RmxForm, useRmxForm } from "./form";
 export { dateToFormFormat } from "./helpers";
 export { default as DateInput } from "./date-input";
-export { CurrencyField } from "./currency-field";
+export * from "./masked-input";

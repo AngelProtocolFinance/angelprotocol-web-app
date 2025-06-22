@@ -1,6 +1,6 @@
 import CurrencySelector from "components/currency-selector";
 import { Form as FormContainer } from "components/form";
-import { CurrencyField } from "components/form/currency-field";
+import { MaskedInput, currency } from "components/form/masked-input";
 import { usdOption } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
@@ -34,10 +34,12 @@ export default function Form(props: Props) {
         }}
         required
       />
-      <CurrencyField
+      <MaskedInput
+        inputMode="decimal"
+        mask={currency.opts}
         ref={rhf.amount.ref}
-        value={rhf.amount.value}
-        onChange={rhf.amount.onChange}
+        value={currency.mask(rhf.amount.value)}
+        onChange={(x) => rhf.amount.onChange(currency.unmask(x))}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{

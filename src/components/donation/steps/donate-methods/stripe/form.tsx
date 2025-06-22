@@ -1,7 +1,10 @@
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/currency-selector";
 import { Form as FormContainer } from "components/form";
-import { CurrencyField } from "components/form/currency-field";
+import {
+  MaskedInput,
+  currency as curr_mask,
+} from "components/form/masked-input";
 import { useRootData } from "hooks/use-root-data";
 import { useEffect } from "react";
 import useSWR from "swr/immutable";
@@ -59,10 +62,12 @@ export default function Form(props: Props) {
         }}
         required
       />
-      <CurrencyField
+      <MaskedInput
+        inputMode="decimal"
+        mask={curr_mask.opts}
         ref={rhf.amount.ref}
-        value={rhf.amount.value}
-        onChange={rhf.amount.onChange}
+        value={curr_mask.mask(rhf.amount.value)}
+        onChange={(x) => rhf.amount.onChange(curr_mask.unmask(x))}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{

@@ -4,14 +4,14 @@ import {
   maskitoParseNumber,
 } from "@maskito/kit";
 
-export const currency_mask_opts = maskitoNumberOptionsGenerator({
+export const opts = maskitoNumberOptionsGenerator({
   min: 0,
   thousandSeparator: ",",
   precision: 2,
 });
 
 export function mask(num: string): string {
-  return maskitoTransform(num.toString(), currency_mask_opts);
+  return maskitoTransform(num.toString(), opts);
 }
 
 export function unmask(masked: string): string {
