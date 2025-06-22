@@ -1,5 +1,6 @@
 import CurrencySelector from "components/currency-selector";
-import { NativeField as Field, Form as FormContainer } from "components/form";
+import { Form as FormContainer } from "components/form";
+import { CurrencyField } from "components/form/currency-field";
 import { usdOption } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
@@ -33,8 +34,10 @@ export default function Form(props: Props) {
         }}
         required
       />
-      <Field
-        {...rhf.register("amount")}
+      <CurrencyField
+        ref={rhf.amount.ref}
+        value={rhf.amount.value}
+        onChange={rhf.amount.onChange}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{
@@ -43,7 +46,7 @@ export default function Form(props: Props) {
           container: "mt-1",
         }}
         required
-        tooltip="The minimum donation amount will depend on your DAF provider."
+        sub="The minimum donation amount will depend on your DAF provider."
         error={rhf.errors.amount?.message}
       />
 

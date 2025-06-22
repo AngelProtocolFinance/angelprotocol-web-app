@@ -1,6 +1,7 @@
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/currency-selector";
-import { Form as FormContainer, NativeField } from "components/form";
+import { Form as FormContainer } from "components/form";
+import { CurrencyField } from "components/form/currency-field";
 import { useRootData } from "hooks/use-root-data";
 import { useEffect } from "react";
 import useSWR from "swr/immutable";
@@ -58,8 +59,10 @@ export default function Form(props: Props) {
         }}
         required
       />
-      <NativeField
-        {...rhf.register("amount")}
+      <CurrencyField
+        ref={rhf.amount.ref}
+        value={rhf.amount.value}
+        onChange={rhf.amount.onChange}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{
@@ -69,7 +72,7 @@ export default function Form(props: Props) {
         error={rhf.errors.amount?.message}
         required
         // validation must be dynamicly set depending on which exact currency is selected
-        tooltip={createTooltip(rhf.currency.value)}
+        sub={createTooltip(rhf.currency.value)}
       />
       {rhf.currency.value.rate && (
         <Incrementers

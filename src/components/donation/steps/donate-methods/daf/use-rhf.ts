@@ -38,6 +38,11 @@ export function useRhf(props: Props) {
     name: "program",
   });
 
+  const { field: amount } = useController({
+    control,
+    name: "amount",
+  });
+
   const onIncrement: OnIncrement = (inc) => {
     const amntNum = Number(getValues("amount"));
     if (Number.isNaN(amntNum)) return trigger("amount", { shouldFocus: true });
@@ -50,6 +55,7 @@ export function useRhf(props: Props) {
     register,
     errors,
     //controllers
+    amount,
     program,
     //utils
     onIncrement,
