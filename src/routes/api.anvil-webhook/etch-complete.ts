@@ -8,7 +8,10 @@ import { signer_fn } from "./helpers";
 import type { EtchPacket } from "./types";
 import { UpdateCommand, ap } from ".server/aws/db";
 
-export const etch_complete = async (data: EtchPacket.Data, origin: string) => {
+export const etch_complete = async (
+  data: EtchPacket.Data,
+  base_url: string
+) => {
   const { signers, documentGroup } = data;
   const signer = await signer_fn(signers[0].eid);
 
@@ -31,7 +34,7 @@ export const etch_complete = async (data: EtchPacket.Data, origin: string) => {
     ConditionExpression: `#irs501c3 = :false AND attribute_exists(#docs) AND attribute_type(#docs,:type)`,
     ExpressionAttributeNames: names,
     ExpressionAttributeValues: {
-      ":url": `${origin}/api/anvil-doc/${documentGroup.eid}`,
+      ":url": `${base_url}/api/anvil-doc/${documentGroup.eid}`,
       ":type": "M",
       ":false": false,
       ":updated_at": new Date().toISOString(),

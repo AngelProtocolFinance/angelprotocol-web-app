@@ -11,11 +11,12 @@ export const action: ActionFunction = async ({ request }) => {
       return new Response("Invalid token", { status: 203 });
     }
 
-    const origin = request.headers.get("origin");
-    if (!origin) return new Response("origin header missing", { status: 205 });
+    const base_url = request.headers.get("origin");
+    if (!base_url)
+      return new Response("origin header missing", { status: 205 });
 
     if (p.action === "etchPacketComplete") {
-      await etch_complete(p.data, origin);
+      await etch_complete(p.data, base_url);
     }
 
     if (p.action === "signerComplete") {

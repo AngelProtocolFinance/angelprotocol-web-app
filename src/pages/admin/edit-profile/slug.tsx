@@ -36,7 +36,7 @@ export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
       </p>
 
       <p className="text-xs sm:text-sm text-gray italic mt-2">
-        Example: {genLink(newSlug || "myNonprofit", origin)}
+        Example: {genLink(newSlug || "myNonprofit", base_url)}
       </p>
     </div>
   );
