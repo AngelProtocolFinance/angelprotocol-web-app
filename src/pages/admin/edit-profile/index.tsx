@@ -16,6 +16,9 @@ export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
+
+const sans_https = (x: string | undefined) => x && x.replace(/^https:\/\//, "");
+
 export { ErrorBoundary } from "components/error";
 export default function EditProfile() {
   const endow = useCachedLoaderData<LoaderData>();
@@ -24,18 +27,18 @@ export default function EditProfile() {
     published: !!endow.published,
     registration_number: endow.registration_number ?? "",
     social_media_urls: {
-      facebook: endow.social_media_urls.facebook,
-      instagram: endow.social_media_urls.instagram,
-      linkedin: endow.social_media_urls.linkedin,
-      twitter: endow.social_media_urls.twitter,
-      discord: endow.social_media_urls.discord,
-      youtube: endow.social_media_urls.youtube,
-      tiktok: endow.social_media_urls.tiktok,
+      facebook: sans_https(endow.social_media_urls.facebook),
+      instagram: sans_https(endow.social_media_urls.instagram),
+      linkedin: sans_https(endow.social_media_urls.linkedin),
+      twitter: sans_https(endow.social_media_urls.twitter),
+      discord: sans_https(endow.social_media_urls.discord),
+      youtube: sans_https(endow.social_media_urls.youtube),
+      tiktok: sans_https(endow.social_media_urls.tiktok),
     },
     slug: endow.slug ?? "",
     street_address: endow.street_address ?? "",
     tagline: endow.tagline ?? "",
-    url: endow.url ?? "",
+    url: sans_https(endow.url) ?? "",
     image: endow.image ?? "",
     logo: endow.logo ?? "",
     card_img: endow.card_img ?? "",

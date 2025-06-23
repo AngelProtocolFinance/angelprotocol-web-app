@@ -1,6 +1,6 @@
 import {
   endowDesignation,
-  maybeEmptyHttpsUrl,
+  https_url,
   reg_number,
   slug,
   social_media_urls,
@@ -72,7 +72,7 @@ export const schema = v.object({
   ),
   street_address: v.optional(str),
   social_media_urls: social_media_urls,
-  url: v.optional(maybeEmptyHttpsUrl),
+  url: v.optional(https_url(false)),
   sdgs: v.pipe(sdgs, v.minLength(1, "required")),
   published: v.boolean(),
 });

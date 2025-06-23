@@ -3,7 +3,12 @@ import { Outlet } from "@remix-run/react";
 import countries from "assets/countries/all.json";
 import { ControlledCountrySelector as CountrySelector } from "components/country-selector";
 import ExtLink from "components/ext-link";
-import { Form as F, NativeField as Field, Label } from "components/form";
+import {
+  Form as F,
+  NativeField as Field,
+  Label,
+  UrlInput,
+} from "components/form";
 import Group from "components/group";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import PromptV2 from "components/prompt";
@@ -161,10 +166,10 @@ export default function Form({ initSlug = "", init, id }: Props) {
           {rhf.errors.overview?.message}
         </p>
 
-        <Field
+        <UrlInput
           {...rhf.register("url")}
           label="Website of your organization"
-          placeholder="https://website.org"
+          placeholder="website.org"
           error={rhf.errors.url?.message}
         />
 
@@ -243,46 +248,46 @@ export default function Form({ initSlug = "", init, id }: Props) {
       </Group>
 
       <Group title="Social Media">
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.facebook")}
           label="Facebook"
-          placeholder="https://facebook.com/"
+          placeholder="facebook.com/"
           error={rhf.errors.social_media_urls?.facebook?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.linkedin")}
           label="LinkedIn"
-          placeholder="https://linkedin.com/"
+          placeholder="linkedin.com/"
           error={rhf.errors.social_media_urls?.linkedin?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.twitter")}
           label="X (fka Twitter)"
-          placeholder="https://x.com/"
+          placeholder="x.com/"
           error={rhf.errors.social_media_urls?.twitter?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.instagram")}
           label="Instagram"
-          placeholder="https://instagram.com/"
+          placeholder="instagram.com/"
           error={rhf.errors.social_media_urls?.instagram?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.youtube")}
           label="YouTube"
-          placeholder="https://youtube.com/"
+          placeholder="youtube.com/"
           error={rhf.errors.social_media_urls?.youtube?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.tiktok")}
           label="Tiktok"
-          placeholder="https://tiktok.com/"
+          placeholder="tiktok.com/"
           error={rhf.errors.social_media_urls?.tiktok?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.discord")}
           label="Discord"
-          placeholder="https://discord.com/"
+          placeholder="discord.com/"
           error={rhf.errors.social_media_urls?.discord?.message}
         />
       </Group>
