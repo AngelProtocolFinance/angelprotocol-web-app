@@ -107,19 +107,7 @@ describe("DAF form test", () => {
     expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
 
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    expect(amountInput).toHaveFocus();
-
-    //user inputs amount
-    await userEvent.type(amountInput, "abc");
-    expect(screen.getByText(/must be a number/i)).toBeInTheDocument();
-
-    await userEvent.clear(amountInput);
-    await userEvent.type(amountInput, "-5");
-    expect(screen.getByText(/must be greater than 0/i)).toBeInTheDocument();
-
-    await userEvent.clear(amountInput);
     await userEvent.type(amountInput, "50");
-
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();
   });

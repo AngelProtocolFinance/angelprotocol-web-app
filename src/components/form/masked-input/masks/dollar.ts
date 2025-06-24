@@ -1,13 +1,13 @@
 import { maskitoTransform } from "@maskito/core";
 import { maskitoNumberOptionsGenerator } from "@maskito/kit";
-export const dollarMaskOpts = maskitoNumberOptionsGenerator({
+export const opts = maskitoNumberOptionsGenerator({
   min: 0,
   prefix: "$ ",
   thousandSeparator: ",",
 });
 
 export function mask(num: number): string {
-  return maskitoTransform(num.toString(), dollarMaskOpts);
+  return maskitoTransform(num.toString(), opts);
 }
 
 export function unmask(masked: string): number {

@@ -47,18 +47,23 @@ export function useRhf(props: Props) {
   });
 
   const { field: frequency } = useController<FV, "frequency">({
-    control: control,
+    control,
     name: "frequency",
   });
 
   const { field: currency } = useController<FV, "currency">({
-    control: control,
+    control,
     name: "currency",
   });
 
   const { field: program } = useController<FV, "program">({
-    control: control,
+    control,
     name: "program",
+  });
+
+  const { field: amount } = useController<FV, "amount">({
+    control,
+    name: "amount",
   });
 
   const onIncrement: OnIncrement = (inc) => {
@@ -71,6 +76,7 @@ export function useRhf(props: Props) {
     frequency,
     currency,
     program,
+    amount,
     onIncrement,
     register,
     handleSubmit,

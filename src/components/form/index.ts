@@ -8,3 +8,4 @@ export { default as RhfForm, Form, RmxForm, useRmxForm } from "./form";
 export { dateToFormFormat } from "./helpers";
 export { default as DateInput } from "./date-input";
 export { UrlInput } from "./url-input";
+export * from "./masked-input";

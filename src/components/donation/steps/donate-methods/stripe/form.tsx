@@ -1,6 +1,10 @@
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/currency-selector";
-import { Field, Form as FormContainer } from "components/form";
+import { Form as FormContainer } from "components/form";
+import {
+  MaskedInput,
+  currency as curr_mask,
+} from "components/form/masked-input";
 import { useRootData } from "hooks/use-root-data";
 import { useEffect } from "react";
 import useSWR from "swr/immutable";
@@ -58,8 +62,12 @@ export default function Form(props: Props) {
         }}
         required
       />
-      <Field
-        {...rhf.register("amount")}
+      <MaskedInput
+        inputMode="decimal"
+        mask={curr_mask.opts}
+        ref={rhf.amount.ref}
+        value={curr_mask.mask(rhf.amount.value)}
+        onChange={(x) => rhf.amount.onChange(curr_mask.unmask(x))}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{
@@ -69,7 +77,7 @@ export default function Form(props: Props) {
         error={rhf.errors.amount?.message}
         required
         // validation must be dynamicly set depending on which exact currency is selected
-        tooltip={createTooltip(rhf.currency.value)}
+        sub={createTooltip(rhf.currency.value)}
       />
       {rhf.currency.value.rate && (
         <Incrementers

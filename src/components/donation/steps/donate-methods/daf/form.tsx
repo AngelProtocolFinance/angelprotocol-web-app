@@ -1,5 +1,6 @@
 import CurrencySelector from "components/currency-selector";
-import { Field, Form as FormContainer } from "components/form";
+import { Form as FormContainer } from "components/form";
+import { MaskedInput, currency } from "components/form/masked-input";
 import { usdOption } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
@@ -33,8 +34,12 @@ export default function Form(props: Props) {
         }}
         required
       />
-      <Field
-        {...rhf.register("amount")}
+      <MaskedInput
+        inputMode="decimal"
+        mask={currency.opts}
+        ref={rhf.amount.ref}
+        value={currency.mask(rhf.amount.value)}
+        onChange={(x) => rhf.amount.onChange(currency.unmask(x))}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{
@@ -43,7 +48,7 @@ export default function Form(props: Props) {
           container: "mt-1",
         }}
         required
-        tooltip="The minimum donation amount will depend on your DAF provider."
+        sub="The minimum donation amount will depend on your DAF provider."
         error={rhf.errors.amount?.message}
       />
 
