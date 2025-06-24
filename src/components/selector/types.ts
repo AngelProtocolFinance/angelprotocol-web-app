@@ -9,11 +9,11 @@ export type Classes = {
   option?: string;
 };
 
-type BaseProps = {
+export interface BaseProps {
   placeholder?: string;
   disabled?: boolean;
   classes?: Classes;
-};
+}
 
 export interface Props<
   T extends FieldValues,

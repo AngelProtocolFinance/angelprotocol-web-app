@@ -52,11 +52,11 @@ export const UrlInput = forwardRef<El, Props>((props, ref) => {
           aria-invalid={!!error}
           disabled={props.disabled}
           aria-errormessage={error_id}
-          className={`${style.input} field-input pl-15 absolute inset-0 z-0 bg-gray-l3`}
+          className={`${style.input} field-input pl-15 absolute inset-0`}
           autoComplete="off"
           spellCheck={false}
         />
-        <span className="relative text-sm text-gray-l1 z-20 pointer-events-none">
+        <span className="relative text-sm text-gray-l1 pointer-events-none">
           https://
         </span>
       </div>
