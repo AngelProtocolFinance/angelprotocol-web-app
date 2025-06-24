@@ -113,7 +113,6 @@ export function Form({ classes = "", ...init }: IForm) {
       <Combo
         label="Country"
         required
-        classes={{ input: "pl-12" }}
         ref={country.ref}
         value={country.value}
         onChange={country.onChange}
@@ -121,6 +120,7 @@ export function Form({ classes = "", ...init }: IForm) {
         options={country_names}
         onReset={() => resetField("usState")}
         error={errors.country?.message}
+        classes={{ input: "pl-12" }}
         option_disp={(c) => (
           <>
             <span className="text-2xl">{countries[c].flag}</span>

@@ -22,7 +22,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
   async function onSubmit(fv: FV) {
     const copy = new URLSearchParams(params);
     copy.set("status", fv.status.value);
-    copy.set("country", fv.country.name);
+    copy.set("country", fv.country);
     if (fv.start_date) copy.set("startDate", fv.start_date);
     if (fv.end_date) copy.set("endDate", fv.end_date);
     setParams(copy);
