@@ -4,7 +4,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Combo } from "components/combo";
 import { NativeField, dateToFormFormat } from "components/form";
 import { DrawerIcon } from "components/icon";
-import { List } from "components/selector";
+import { Select } from "components/selector/select";
 import { countries, country_names } from "constants/countries";
 import { subWeeks } from "date-fns";
 import { X } from "lucide-react";
@@ -25,7 +25,6 @@ export const Form: FC<Props> = ({
   params,
   classes = "",
 }) => {
-  const status = statuses.find((s) => s.value === params.status);
   const {
     register,
     control,
@@ -43,7 +42,7 @@ export const Form: FC<Props> = ({
         params.endDate ? new Date(params.endDate) : new Date()
       ),
       country: params.country ?? "",
-      status: status || { label: "Under Review", value: "02" },
+      status: params.status ?? "",
     },
   });
 
@@ -116,7 +115,7 @@ export const Form: FC<Props> = ({
           />
         </div>
 
-        <List
+        <Select
           value={stat.value}
           onChange={stat.onChange}
           label="Application Status"
@@ -125,7 +124,8 @@ export const Form: FC<Props> = ({
             options: "text-sm",
             container: "max-lg:mb-4 mt-4",
           }}
-          options={statuses}
+          options={Object.keys(statuses)}
+          option_disp={(s) => (statuses as any)[s]}
         />
       </div>
 

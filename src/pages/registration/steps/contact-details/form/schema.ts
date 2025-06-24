@@ -33,16 +33,13 @@ export interface ReferralOption extends InferOutput<typeof referralOption> {}
 
 export const schema = pipe(
   object({
-    ...omit(contact, ["org_role", "referral_method", "goals"]).entries,
+    ...omit(contact, ["goals"]).entries,
     ...pick(init, ["registrant_id"]).entries,
-    org_role: roleOption,
-    referral_method: referralOption,
   }),
   forward(
     partialCheck(
       [["org_role"], ["other_role"]],
-      (inputs) =>
-        inputs.org_role.value === "other" ? !!inputs.other_role : true,
+      (inputs) => (inputs.org_role === "other" ? !!inputs.other_role : true),
       "required"
     ),
     ["other_role"]
@@ -51,9 +48,7 @@ export const schema = pipe(
     partialCheck(
       [["referral_method"], ["referral_code"]],
       (inputs) =>
-        inputs.referral_method.value === "referral"
-          ? !!inputs.referral_code
-          : true,
+        inputs.referral_method === "referral" ? !!inputs.referral_code : true,
       "required"
     ),
     ["referral_code"]
@@ -62,7 +57,7 @@ export const schema = pipe(
     partialCheck(
       [["referral_method"], ["other_referral_method"]],
       (inputs) =>
-        inputs.referral_method.value === "other"
+        inputs.referral_method === "other"
           ? !!inputs.other_referral_method
           : true,
       "required"

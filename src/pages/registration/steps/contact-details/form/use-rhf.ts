@@ -1,15 +1,8 @@
-import type { ReferralMethod, Role } from "@better-giving/registration/models";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import type { Step1Data } from "pages/registration/types";
 import { useController, useForm } from "react-hook-form";
 import type { UserV2 } from "types/auth";
-import { referralMethods, roles } from "../constants";
-import {
-  type FV,
-  type ReferralOption,
-  type RoleOption,
-  schema,
-} from "./schema";
+import { type FV, schema } from "./schema";
 
 export function useRhf(data: Step1Data, user: UserV2) {
   const { contact, init } = data;
@@ -25,23 +18,16 @@ export function useRhf(data: Step1Data, user: UserV2) {
       ? {
           ...contact,
           registrant_id: init.registrant_id,
-          org_role: toRoleOption(contact.org_role),
-          referral_method: toReferralOption(
+          referral_method:
             contact.referral_method === "better-giving-alliance"
               ? "better-giving-alliance"
-              : contact.referral_method
-          ),
+              : contact.referral_method,
           referral_code: contact.referral_code,
         }
       : {
           registrant_id: init.registrant_id,
-          org_role: { value: "", label: roles[""] },
-          referral_method: init.referrer
-            ? { value: "referral", label: referralMethods.referral }
-            : {
-                value: "",
-                label: referralMethods[""],
-              },
+          org_role: "",
+          referral_method: init.referrer ? "referral" : "",
           first_name: user.firstName ?? "",
           last_name: user.lastName ?? "",
           org_name: init.claim?.name ?? "",
@@ -66,12 +52,4 @@ export function useRhf(data: Step1Data, user: UserV2) {
     orgRole,
     refMethod,
   };
-}
-
-function toRoleOption(value: Role): RoleOption {
-  return { value, label: roles[value] };
-}
-
-function toReferralOption(value: ReferralMethod): ReferralOption {
-  return { value, label: referralMethods[value] };
 }

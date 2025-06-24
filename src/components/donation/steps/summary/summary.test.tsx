@@ -29,7 +29,7 @@ const donor: FormDonor = {
   last_name: "Doe",
   company_name: "",
   ukTaxResident: false,
-  title: { value: "Mr", label: "Mr" },
+  title: "Mr",
   zipCode: "12345",
   streetAddress: "123 Main St, Anytown, USA",
   publicMsg: "",

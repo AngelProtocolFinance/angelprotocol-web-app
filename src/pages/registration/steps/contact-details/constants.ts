@@ -1,5 +1,4 @@
 import type { ReferralMethod, Role } from "@better-giving/registration/models";
-import type { OptionType } from "types/components";
 
 export const roles: { [key in Role]: string } = {
   "": "",
@@ -17,7 +16,7 @@ export const roles: { [key in Role]: string } = {
   communications: "Communications",
   other: "Other",
 };
-export const referralMethods: { [key in ReferralMethod]: string } = {
+export const referral_methods: { [key in ReferralMethod]: string } = {
   "": "",
   "better-giving-alliance": "Better.Giving Website",
   discord: "Discord",
@@ -30,17 +29,3 @@ export const referralMethods: { [key in ReferralMethod]: string } = {
   referral: "Referral Code", //not used in hubspot -  coerced to "Other"
   other: "Other",
 };
-
-function genOptions<T extends object>(
-  objOptions: T
-): T extends { [key in infer R extends string]: any }
-  ? OptionType<R>[]
-  : OptionType<never>[] {
-  return Object.entries(objOptions).map(([value, label]) => ({
-    value,
-    label,
-  })) as any;
-}
-
-export const roleOptions = genOptions(roles);
-export const referralOptions = genOptions(referralMethods);

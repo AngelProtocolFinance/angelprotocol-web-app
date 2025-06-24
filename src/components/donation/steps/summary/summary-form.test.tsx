@@ -12,7 +12,7 @@ const donor: FormDonor = {
   company_name: "",
   email: "",
   ukTaxResident: false,
-  title: { label: "Select", value: "" },
+  title: "",
   zipCode: "",
   streetAddress: "",
   publicMsg: "",

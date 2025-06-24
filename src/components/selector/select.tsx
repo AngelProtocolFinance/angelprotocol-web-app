@@ -15,7 +15,6 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
-import { valueKey } from "./constants";
 import type { BaseProps } from "./types";
 
 export interface Props<T extends string> extends BaseProps {
@@ -49,7 +48,6 @@ function _Select<T extends string>(
       <Listbox
         disabled={props.disabled}
         value={props.value}
-        by={valueKey}
         onChange={props.onChange}
         as="div"
         className="relative"
@@ -63,7 +61,7 @@ function _Select<T extends string>(
         >
           {({ open }) => (
             <>
-              <span>{props.value}</span>
+              <span>{props.option_disp(props.value)}</span>
               <DrawerIcon
                 isOpen={open}
                 size={20}

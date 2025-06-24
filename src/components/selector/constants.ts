@@ -1,7 +1,3 @@
-import type { OptionType } from "types/components";
-
-export const valueKey: keyof OptionType<any> = "value";
-
 export const styles = {
   selectorButton: "flex items-center field-input min-h-[3rem] justify-between",
   error:

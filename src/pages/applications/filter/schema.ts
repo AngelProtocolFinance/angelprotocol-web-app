@@ -17,10 +17,7 @@ export const schema = v.pipe(
     // not set by user
     country: v.string(),
     // not set by user
-    status: v.object({
-      label: v.string(),
-      value: v.string(),
-    }),
+    status: v.string(),
   }),
   v.forward(
     v.partialCheck(

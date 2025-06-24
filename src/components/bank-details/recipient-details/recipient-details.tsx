@@ -1,5 +1,5 @@
 import { Label } from "components/form";
-import { NativeSelect } from "components/selector";
+import { Select } from "components/selector/select";
 import { Info, LoadingStatus } from "components/status";
 import { memo, useState } from "react";
 import type { IFormButtons, OnSubmit } from "../types";
@@ -59,10 +59,11 @@ function RecipientDetails({
         <Label required className="mb-2">
           Transfer type
         </Label>
-        <NativeSelect
-          value={selectedIdx}
+        <Select
+          value={selectedIdx.toString()}
           onChange={(value) => setSelectedIdx(+value)}
-          options={requirements.map((x, i) => ({ label: x.title, value: i }))}
+          options={requirements.map((_, i) => i.toString())}
+          option_disp={(x) => requirements[+x].title}
           disabled={disabled || isValidating}
           classes={{ options: "text-sm" }}
         />
