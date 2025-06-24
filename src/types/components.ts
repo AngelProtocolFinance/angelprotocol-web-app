@@ -14,13 +14,6 @@ export interface TokenWithDetails extends Token {
 export type ValKey = string | number;
 export type OptionType<V extends ValKey> = { label: string; value: V };
 
-//country selector
-export type Country = {
-  name: string;
-  flag: string;
-  code: string;
-};
-
 //currency selector
 
 type BaseCurrency = {
