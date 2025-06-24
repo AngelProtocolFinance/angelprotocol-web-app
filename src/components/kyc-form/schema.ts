@@ -9,10 +9,10 @@ export const schema = v.object({
   city: rqrd,
   postalCode: rqrd,
   //internal
-  country: v.object({ name: rqrd, code: str, flag: str }),
+  country: rqrd,
   kycEmail: email,
   //pre-selected
-  usState: v.object({ label: str, value: str }),
+  usState: str,
   state: str,
 });
 

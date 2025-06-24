@@ -54,14 +54,7 @@ export const Combo = forwardRef<El, Props>((props, ref) => {
         className="relative"
       >
         <ComboboxButton className="absolute left-4 top-1/2 -translate-y-1/2">
-          {
-            ({ open }) => props.btn_disp(props.value, open)
-            // props.value.flag ? (
-            //   <span className="text-2xl">{props.value.flag}</span>
-            // ) : (
-            //   <DrawerIcon isOpen={open} size={20} />
-            // )
-          }
+          {({ open }) => props.btn_disp(props.value, open)}
         </ComboboxButton>
 
         <ComboboxInput
