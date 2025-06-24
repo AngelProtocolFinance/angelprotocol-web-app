@@ -1,12 +1,11 @@
 import {
-  endowDesignation,
   https_url,
   reg_number,
   slug,
   social_media_urls,
   str,
-  unSdgNum,
 } from "@better-giving/endowment/schema";
+import { orgDesignation } from "@better-giving/schemas";
 import { type ImgSpec, imgOutput } from "components/img-editor";
 import { richTextContent } from "types/components";
 import type { ImageMIMEType } from "types/lists";
@@ -39,41 +38,22 @@ export const bannerSpec: ImgSpec = {
 
 const requiredStr = v.pipe(str, v.nonEmpty("required"));
 
-/** not set by user */
-const country = v.object({
-  name: requiredStr,
-  code: requiredStr,
-  flag: str,
-});
-
-const sdgs = v.array(
-  v.object({
-    label: requiredStr,
-    value: unSdgNum,
-  })
-);
-
 export const schema = v.object({
   slug,
   registration_number: reg_number,
   name: requiredStr,
-  endow_designation: v.object({
-    label: str,
-    value: endowDesignation,
-  }),
+  endow_designation: orgDesignation,
   overview: richTextContent({ maxChars: MAX_CHARS, required: true }),
   tagline: v.pipe(requiredStr, v.maxLength(140, "max length is 140 chars")),
   image: imgOutput({ required: true }),
   logo: imgOutput({ required: true }),
   card_img: imgOutput({ required: true }),
-  hq_country: country,
-  active_in_countries: v.array(
-    v.object({ label: requiredStr, value: requiredStr })
-  ),
+  hq_country: requiredStr,
+  active_in_countries: v.array(str),
   street_address: v.optional(str),
   social_media_urls: social_media_urls,
   url: v.optional(https_url(false)),
-  sdgs: v.pipe(sdgs, v.minLength(1, "required")),
+  sdgs: v.pipe(v.array(str), v.minLength(1, "required")),
   published: v.boolean(),
 });
 

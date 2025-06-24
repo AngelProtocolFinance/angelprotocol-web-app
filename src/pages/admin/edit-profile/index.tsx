@@ -1,13 +1,9 @@
-import type { EndowDesignation } from "@better-giving/endowment";
 import type { LinksFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
-import { country } from "components/country-selector";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles, toContent } from "components/rich-text";
-import { unsdgs } from "constants/unsdgs";
 import type { LoaderData } from "./api";
 import Form from "./form";
-import { getSDGLabelValuePair } from "./get-sdg-label-value-pair";
 import type { FV } from "./schema";
 
 export { loader, action } from "./api";
@@ -42,15 +38,10 @@ export default function EditProfile() {
     image: endow.image ?? "",
     logo: endow.logo ?? "",
     card_img: endow.card_img ?? "",
-    endow_designation: endow.endow_designation
-      ? { label: endow.endow_designation, value: endow.endow_designation }
-      : { label: "", value: "" as EndowDesignation },
-    hq_country: country(endow.hq_country),
-    sdgs: endow.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
-    active_in_countries: endow.active_in_countries.map((x) => ({
-      label: x,
-      value: x,
-    })),
+    endow_designation: endow.endow_designation,
+    hq_country: endow.hq_country,
+    sdgs: endow.sdgs.map((x) => x.toString()),
+    active_in_countries: endow.active_in_countries,
     overview: toContent(endow.overview),
   };
 

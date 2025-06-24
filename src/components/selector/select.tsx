@@ -6,11 +6,11 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import { DrawerIcon } from "components/icon";
 import { fixedForwardRef } from "helpers/react";
 import { unpack } from "helpers/unpack";
 import {
   type ForwardedRef,
-  type ReactElement,
   type ReactNode,
   useImperativeHandle,
   useRef,
@@ -23,7 +23,6 @@ export interface Props<T extends string> extends BaseProps {
   onChange: (opt: T) => void;
   options: T[];
   option_disp: (opt: T) => ReactNode;
-  button_disp: (opt: T, open: boolean) => ReactElement;
   children?: (selected: T) => ReactNode;
   error?: string;
   label?: ReactNode;
@@ -62,7 +61,16 @@ function _Select<T extends string>(
           as="button"
           className={`${cls.button} selector-btn field-input focus:outline-2 data-open:outline-2 outline-blue-d1`}
         >
-          {({ open }) => props.button_disp(props.value, open)}
+          {({ open }) => (
+            <>
+              <span>{props.value}</span>
+              <DrawerIcon
+                isOpen={open}
+                size={20}
+                className="justify-self-end dark:text-gray shrink-0"
+              />
+            </>
+          )}
         </ListboxButton>
         <ListboxOptions className={`selector-opts ${cls.options} scroller`}>
           {props.options.map((v) => (

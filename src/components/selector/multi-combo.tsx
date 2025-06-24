@@ -71,6 +71,7 @@ function _MultiCombo<T extends string>(
             {props.values.map((v) => (
               <SelectedOption
                 option={v}
+                option_disp={props.option_disp}
                 key={v}
                 on_deselect={(opt) =>
                   props.on_change(props.values.filter((v) => v !== opt))
@@ -144,16 +145,18 @@ export const MultiCombo = fixedForwardRef(_MultiCombo);
 
 type ISelectedOption<T extends string> = {
   option: T;
+  option_disp: (opt: T) => ReactNode;
   on_deselect: (option: T) => void;
 };
 
 function SelectedOption<T extends string>({
   on_deselect,
   option,
+  option_disp,
 }: ISelectedOption<T>) {
   return (
     <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l3 rounded-sm font-semibold text-gray dark:text-gray uppercase">
-      <span className="max-w-[200px] truncate">{option}</span>
+      <span className="max-w-[200px] truncate">{option_disp(option)}</span>
       <button
         type="button"
         onClick={(e) => {

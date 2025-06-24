@@ -6,7 +6,6 @@ import {
   useLoaderData,
   useNavigate,
 } from "@remix-run/react";
-import countries_json from "assets/countries/all.json";
 import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
 import { Label, UrlInput } from "components/form";
@@ -14,6 +13,10 @@ import { DrawerIcon } from "components/icon";
 import { LoadText } from "components/load-text";
 import { MultiCombo } from "components/selector/multi-combo";
 import { Select } from "components/selector/select";
+import {
+  countries as cmap,
+  country_names as cnames,
+} from "constants/countries";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import type { SubmitHandler } from "react-hook-form";
 import { stepLoader } from "../../data/step-loader";
@@ -27,7 +30,6 @@ export { ErrorBoundary } from "components/error";
 export const loader = stepLoader(2);
 export const action = updateAction(nextStep[2]);
 
-const country_flags = new Map(countries_json.map((c) => [c.name, c.flag]));
 export default function Form() {
   const fetcher = useFetcher();
   const navigate = useNavigate();
@@ -93,16 +95,6 @@ export default function Form() {
         label="Nonprofit Designation"
         classes={{ options: "text-sm", container: "mt-4" }}
         options={orgDesignations as any}
-        button_disp={(v, open) => (
-          <>
-            <span>{v}</span>
-            <DrawerIcon
-              isOpen={open}
-              size={20}
-              className="justify-self-end dark:text-gray shrink-0"
-            />
-          </>
-        )}
         option_disp={(v) => v}
         error={errors.designation?.message}
       />
@@ -121,15 +113,15 @@ export default function Form() {
           container: "mt-6 mb-2",
           input: "pl-12",
         }}
-        options={countries_json.map((x) => x.name)}
+        options={cnames}
         option_disp={(c) => (
           <>
-            <span className="text-2xl">{country_flags.get(c)}</span>
+            <span className="text-2xl">{cmap[c].flag}</span>
             <span>{c}</span>
           </>
         )}
         btn_disp={(c, open) => {
-          const flag = country_flags.get(c);
+          const flag = cmap[c]?.flag;
           return flag ? (
             <span data-flag className="text-2xl">
               {flag}
@@ -153,7 +145,7 @@ export default function Form() {
         on_change={countries.onChange}
         on_reset={() => countries.onChange([])}
         classes={{ options: "text-sm" }}
-        options={countries_json.map((x) => x.name)}
+        options={cnames}
         option_disp={(c) => c}
         error={errors.active_in_countries?.message}
         ref={countries.ref}
