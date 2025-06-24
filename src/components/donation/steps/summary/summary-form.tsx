@@ -1,3 +1,4 @@
+import { donor_titles } from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -5,13 +6,12 @@ import {
   NativeField as Field,
   Form,
 } from "components/form";
-import { List } from "components/selector";
+import { Select } from "components/selector/select";
 import { Eraser, PenToolIcon } from "lucide-react";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { mixed, string } from "yup";
-import { initDonorTitleOption } from "../common/constants";
 import ContinueBtn from "../common/continue-btn";
 import type { FormDonor, Honorary, Mode } from "../types";
 
@@ -31,13 +31,6 @@ export type Props = {
 const ukTaxResidentKey: keyof FV = "ukTaxResident";
 const withHonoraryKey: keyof FV = "withHonorary";
 const withTributeNotifKey: keyof FV = "withTributeNotif";
-const titleOptions: FV["title"][] = [
-  initDonorTitleOption,
-  { label: "Mr", value: "Mr" },
-  { label: "Mrs", value: "Mrs" },
-  { label: "Ms", value: "Ms" },
-  { label: "Mx", value: "Mx" },
-];
 
 export default function SummaryForm({ classes = "", ...props }: Props) {
   const CUSTOM_MSG_MAX_LENGTH = 250;
@@ -123,13 +116,14 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
       onSubmit={handleSubmit(props.onSubmit)}
       className={`grid grid-cols-2 gap-x-4 ${classes}`}
     >
-      <List
+      <Select
         label={
           <span className="font-semibold text-base font-heading">Title</span>
         }
         value={title.value}
         onChange={title.onChange}
-        options={titleOptions}
+        options={donor_titles as any}
+        option_disp={(opt) => opt}
         classes={{
           container: "col-span-full mb-4",
           button: "field-input-donate",

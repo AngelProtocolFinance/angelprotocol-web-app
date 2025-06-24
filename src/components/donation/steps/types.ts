@@ -120,7 +120,7 @@ export type FormDonor = Pick<
 > & {
   ukTaxResident: boolean;
 
-  title: OptionType<DonorTitle>;
+  title: DonorTitle;
   /** initially empty `''` */
   zipCode: string;
   /** initially empty `''` */

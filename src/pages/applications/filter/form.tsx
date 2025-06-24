@@ -1,10 +1,11 @@
 import type { QueryParams } from "@better-giving/registration/approval";
 import { PopoverButton, PopoverPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import countries from "assets/countries/all.json";
-import { ControlledCountrySelector as CountrySelector } from "components/country-selector";
+import { Combo } from "components/combo";
 import { NativeField, dateToFormFormat } from "components/form";
-import { List } from "components/selector";
+import { DrawerIcon } from "components/icon";
+import { Select } from "components/selector/select";
+import { countries, country_names } from "constants/countries";
 import { subWeeks } from "date-fns";
 import { X } from "lucide-react";
 import type { FC } from "react";
@@ -24,7 +25,6 @@ export const Form: FC<Props> = ({
   params,
   classes = "",
 }) => {
-  const status = statuses.find((s) => s.value === params.status);
   const {
     register,
     control,
@@ -41,8 +41,8 @@ export const Form: FC<Props> = ({
       end_date: dateToFormFormat(
         params.endDate ? new Date(params.endDate) : new Date()
       ),
-      country: { name: params.country ?? "", flag: "", code: "" },
-      status: status || { label: "Under Review", value: "02" },
+      country: params.country ?? "",
+      status: params.status ?? "",
     },
   });
 
@@ -70,12 +70,33 @@ export const Form: FC<Props> = ({
       </div>
 
       <div className="px-6 lg:pt-6">
-        <CountrySelector
+        <Combo
           value={country.value}
           onChange={country.onChange}
           label="Country"
           placeholder="Select a country"
-          options={countries}
+          options={country_names}
+          classes={{ input: "pl-12" }}
+          option_disp={(c) => (
+            <>
+              <span className="text-2xl">{countries[c].flag}</span>
+              <span>{c}</span>
+            </>
+          )}
+          btn_disp={(c, open) => {
+            const flag = countries[c]?.flag;
+            return flag ? (
+              <span data-flag className="text-2xl">
+                {flag}
+              </span>
+            ) : (
+              <DrawerIcon
+                isOpen={open}
+                size={20}
+                className="justify-self-end dark:text-gray shrink-0"
+              />
+            );
+          }}
         />
 
         <div className="grid gap-x-[1.125rem] grid-cols-2 mt-4">
@@ -94,7 +115,7 @@ export const Form: FC<Props> = ({
           />
         </div>
 
-        <List
+        <Select
           value={stat.value}
           onChange={stat.onChange}
           label="Application Status"
@@ -103,7 +124,8 @@ export const Form: FC<Props> = ({
             options: "text-sm",
             container: "max-lg:mb-4 mt-4",
           }}
-          options={statuses}
+          options={Object.keys(statuses)}
+          option_disp={(s) => (statuses as any)[s]}
         />
       </div>
 

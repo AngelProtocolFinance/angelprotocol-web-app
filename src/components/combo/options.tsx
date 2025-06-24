@@ -1,17 +1,18 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import type { Country } from "types/components";
+import type { ReactNode } from "react";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded-sm overflow-y-scroll scroller";
 
 type Props = {
   query: string;
-  options: Country[];
+  options: string[];
+  option_disp: (string: string) => ReactNode;
 };
 
-export default function Options({ query, options }: Props) {
+export default function Options({ query, options, option_disp }: Props) {
   const filtered = options.filter((o) =>
-    o.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+    o.toLowerCase().includes(query.toLowerCase())
   );
   return (
     <ComboboxOptions
@@ -22,11 +23,10 @@ export default function Options({ query, options }: Props) {
         filtered.map((country) => (
           <ComboboxOption
             className="data-selected:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm font-heading"
-            key={country.name}
+            key={country}
             value={country}
           >
-            <span className="text-2xl">{country.flag}</span>
-            <span>{country.name}</span>
+            {option_disp(country)}
           </ComboboxOption>
         ))) || <div className="p-2 text-sm">{query} not found</div>}
     </ComboboxOptions>

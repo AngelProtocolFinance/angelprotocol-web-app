@@ -1,14 +1,12 @@
-import { optionType } from "schemas/shape";
-import { url, requiredString } from "schemas/string";
-import type { SchemaShape } from "schemas/types";
-import type { Country } from "types/components";
-import { type ObjectSchema, object } from "yup";
-import type { FormValues } from "./types";
+import { https_url, orgDesignation } from "@better-giving/schemas";
+import * as v from "valibot";
 
-export const schema = object<any, SchemaShape<FormValues>>({
-  website: url.required("required"),
-  hq_country: object<any, SchemaShape<Country>>({
-    name: requiredString.trim(),
-  }),
-  designation: optionType({ required: true }),
-}) as ObjectSchema<FormValues>;
+const rqrd = v.pipe(v.string(), v.nonEmpty("required"));
+export const schema = v.object({
+  website: https_url(true),
+  hq_country: rqrd,
+  designation: v.pipe(rqrd, orgDesignation),
+  active_in_countries: v.array(v.string()),
+});
+
+export interface FV extends v.InferOutput<typeof schema> {}

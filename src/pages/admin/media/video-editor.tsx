@@ -1,4 +1,4 @@
-import { httpsUrl } from "@better-giving/endowment/schema";
+import { https_url } from "@better-giving/schemas";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import {
   Link,
@@ -11,13 +11,13 @@ import { Modal } from "components/modal";
 import { parseWithValibot } from "conform-to-valibot";
 import { X } from "lucide-react";
 import { isFormErr } from "types/action";
-import { nonEmpty, object, pipe } from "valibot";
+import { object } from "valibot";
 
 type Props = {
   edit?: { prevUrl: string; mediaId: string };
 };
 
-export const schema = object({ url: pipe(httpsUrl, nonEmpty("required")) });
+export const schema = object({ url: https_url(true) });
 
 export default function VideoEditor() {
   const [params] = useSearchParams();

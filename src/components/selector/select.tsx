@@ -9,19 +9,27 @@ import {
 import { DrawerIcon } from "components/icon";
 import { fixedForwardRef } from "helpers/react";
 import { unpack } from "helpers/unpack";
-import { type ForwardedRef, useImperativeHandle, useRef } from "react";
 import {
-  type FieldValues,
-  type Path,
-  get,
-  useController,
-} from "react-hook-form";
-import type { OptionType, ValKey } from "types/components";
-import { valueKey } from "./constants";
-import type { ControlledProps, Props } from "./types";
+  type ForwardedRef,
+  type ReactNode,
+  useImperativeHandle,
+  useRef,
+} from "react";
+import type { BaseProps } from "./types";
 
-function _List<T extends ValKey>(
-  props: ControlledProps<T>,
+export interface Props<T extends string> extends BaseProps {
+  value: T;
+  onChange: (opt: T) => void;
+  options: T[];
+  option_disp: (opt: T) => ReactNode;
+  children?: (selected: T) => ReactNode;
+  error?: string;
+  label?: ReactNode;
+  required?: boolean;
+}
+
+function _Select<T extends string>(
+  props: Props<T>,
   ref: ForwardedRef<Pick<HTMLButtonElement, "focus" | "scrollTo">>
 ) {
   const cls = unpack(props.classes);
@@ -40,7 +48,6 @@ function _List<T extends ValKey>(
       <Listbox
         disabled={props.disabled}
         value={props.value}
-        by={valueKey}
         onChange={props.onChange}
         as="div"
         className="relative"
@@ -54,7 +61,7 @@ function _List<T extends ValKey>(
         >
           {({ open }) => (
             <>
-              <span>{props.value.label}</span>
+              <span>{props.option_disp(props.value)}</span>
               <DrawerIcon
                 isOpen={open}
                 size={20}
@@ -64,17 +71,15 @@ function _List<T extends ValKey>(
           )}
         </ListboxButton>
         <ListboxOptions className={`selector-opts ${cls.options} scroller`}>
-          {props.options
-            .filter((o) => !!o.value)
-            .map((o) => (
-              <ListboxOption
-                key={o.value}
-                value={o}
-                className={`selector-opt ${cls.option}`}
-              >
-                {o.label}
-              </ListboxOption>
-            ))}
+          {props.options.map((v) => (
+            <ListboxOption
+              key={v}
+              value={v}
+              className={`selector-opt ${cls.option}`}
+            >
+              {props.option_disp(v)}
+            </ListboxOption>
+          ))}
         </ListboxOptions>
         <p className="field-err mt-1 empty:hidden">{props.error}</p>
       </Listbox>
@@ -83,34 +88,4 @@ function _List<T extends ValKey>(
   );
 }
 
-export const List = fixedForwardRef(_List);
-
-export function Selector<
-  T extends FieldValues,
-  K extends Path<T>,
-  V extends ValKey,
->(props: Props<T, K, V>) {
-  const { name, disabled, onOptionChange, ...rest } = props;
-  const {
-    formState: { isSubmitting, errors },
-    field: { value: selected, onChange, ref },
-  } = useController<{ [index: string]: OptionType<V> }>({ name });
-
-  const valuePath = `${name}.${valueKey}`;
-
-  const isDisabled = isSubmitting || disabled;
-
-  return (
-    <List<V>
-      ref={ref}
-      value={selected}
-      onChange={(opt) => {
-        onChange(opt);
-        onOptionChange?.();
-      }}
-      disabled={isDisabled}
-      error={get(errors, valuePath)?.message}
-      {...rest}
-    />
-  );
-}
+export const Select = fixedForwardRef(_Select);

@@ -1,5 +1,5 @@
 import { useRootData } from "hooks/use-root-data";
-import { initDonorTitleOption, initTributeNotif } from "../common/constants";
+import { initTributeNotif } from "../common/constants";
 import { currency } from "../common/currency";
 import { minFeeAllowance } from "../common/min-fee-allowance";
 import SummaryContainer from "../common/summary";
@@ -68,7 +68,7 @@ export default function Summary(props: SummaryStep) {
             first_name: user?.firstName ?? "",
             email: user?.email ?? "",
             ukTaxResident: false,
-            title: initDonorTitleOption,
+            title: "",
             zipCode: "",
             streetAddress: "",
             isPublic: true,

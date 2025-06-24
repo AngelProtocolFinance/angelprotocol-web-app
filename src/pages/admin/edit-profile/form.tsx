@@ -1,28 +1,31 @@
 import type { EndowDesignation } from "@better-giving/endowment";
+import type { OrgDesignation } from "@better-giving/schemas";
 import { Outlet } from "@remix-run/react";
-import countries from "assets/countries/all.json";
-import { ControlledCountrySelector as CountrySelector } from "components/country-selector";
+import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
-import { Form as F, NativeField as Field, Label } from "components/form";
+import {
+  Form as F,
+  NativeField as Field,
+  Label,
+  UrlInput,
+} from "components/form";
 import Group from "components/group";
+import { DrawerIcon } from "components/icon";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import PromptV2 from "components/prompt";
 import { RichText } from "components/rich-text";
-import { List, MultiList } from "components/selector";
+import { MultiCombo } from "components/selector/multi-combo";
+import { Select } from "components/selector/select";
 import { Confirmed, Info } from "components/status";
 import { ControlledToggle as Toggle } from "components/toggle";
+import { countries, country_names } from "constants/countries";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { getSDGLabelValuePair } from "./get-sdg-label-value-pair";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
 import Slug from "./slug";
 import useEditProfile from "./use-edit-profile";
 import useRhf from "./use-rhf";
-
-const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
-  getSDGLabelValuePair(key, title)
-);
 
 const endowDesignations: EndowDesignation[] = [
   "Charity",
@@ -161,10 +164,10 @@ export default function Form({ initSlug = "", init, id }: Props) {
           {rhf.errors.overview?.message}
         </p>
 
-        <Field
+        <UrlInput
           {...rhf.register("url")}
           label="Website of your organization"
-          placeholder="https://website.org"
+          placeholder="website.org"
           error={rhf.errors.url?.message}
         />
 
@@ -186,54 +189,73 @@ export default function Form({ initSlug = "", init, id }: Props) {
         <Label className="-mb-4" required>
           Aligned SDG#
         </Label>
-        <MultiList
-          value={rhf.sdgs.value}
-          onChange={rhf.sdgs.onChange}
-          options={sdgOptions}
+
+        <MultiCombo
+          values={rhf.sdgs.value}
+          on_change={rhf.sdgs.onChange}
+          options={Object.keys(unsdgs)}
           classes={{ options: "text-sm" }}
           error={rhf.errors.sdgs?.message}
-          onReset={() => rhf.resetField("sdgs")}
+          on_reset={() => rhf.resetField("sdgs")}
           ref={rhf.sdgs.ref}
+          option_disp={(sdg) => `${sdg} - ${(unsdgs as any)[sdg].title}`}
         />
-        <List
+        <Select<OrgDesignation>
           required
           label="Organization Designation"
           value={rhf.designation.value}
           onChange={rhf.designation.onChange}
           classes={{ options: "text-sm" }}
-          options={endowDesignations.map((designation) => ({
-            label: designation,
-            value: designation,
-          }))}
+          options={endowDesignations}
           error={rhf.errors.endow_designation?.message}
           ref={rhf.designation.ref}
+          option_disp={(v) => v}
         />
 
-        <CountrySelector
+        <Combo
           required
+          classes={{ input: "pl-12" }}
           label="Headquarters"
           value={rhf.hqCountry.value}
           onChange={rhf.hqCountry.onChange}
           placeholder="Select a country"
-          options={countries}
-          error={rhf.errors.hq_country?.name?.message}
+          options={country_names}
+          error={rhf.errors.hq_country?.message}
           ref={rhf.hqCountry.ref}
+          option_disp={(c) => (
+            <>
+              <span className="text-2xl">{countries[c].flag}</span>
+              <span>{c}</span>
+            </>
+          )}
+          btn_disp={(c, open) => {
+            const flag = countries[c]?.flag;
+            return flag ? (
+              <span data-flag className="text-2xl">
+                {flag}
+              </span>
+            ) : (
+              <DrawerIcon
+                isOpen={open}
+                size={20}
+                className="justify-self-end dark:text-gray shrink-0"
+              />
+            );
+          }}
         />
         <Label className="-mb-4">Active countries</Label>
-        <MultiList
+        <MultiCombo
           searchable
-          value={rhf.activityCountries.value}
-          onChange={rhf.activityCountries.onChange}
+          values={rhf.activityCountries.value}
+          on_change={rhf.activityCountries.onChange}
           ref={rhf.activityCountries.ref}
-          onReset={() => rhf.resetField("active_in_countries")}
-          options={countries.map((c) => ({
-            label: c.name,
-            value: c.name,
-          }))}
+          on_reset={() => rhf.resetField("active_in_countries")}
+          options={country_names}
           classes={{
             container: "bg-white dark:bg-blue-d6",
             options: "text-sm",
           }}
+          option_disp={(c) => c}
         />
         <Field
           {...rhf.register("street_address")}
@@ -243,46 +265,46 @@ export default function Form({ initSlug = "", init, id }: Props) {
       </Group>
 
       <Group title="Social Media">
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.facebook")}
           label="Facebook"
-          placeholder="https://facebook.com/"
+          placeholder="facebook.com/"
           error={rhf.errors.social_media_urls?.facebook?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.linkedin")}
           label="LinkedIn"
-          placeholder="https://linkedin.com/"
+          placeholder="linkedin.com/"
           error={rhf.errors.social_media_urls?.linkedin?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.twitter")}
           label="X (fka Twitter)"
-          placeholder="https://x.com/"
+          placeholder="x.com/"
           error={rhf.errors.social_media_urls?.twitter?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.instagram")}
           label="Instagram"
-          placeholder="https://instagram.com/"
+          placeholder="instagram.com/"
           error={rhf.errors.social_media_urls?.instagram?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.youtube")}
           label="YouTube"
-          placeholder="https://youtube.com/"
+          placeholder="youtube.com/"
           error={rhf.errors.social_media_urls?.youtube?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.tiktok")}
           label="Tiktok"
-          placeholder="https://tiktok.com/"
+          placeholder="tiktok.com/"
           error={rhf.errors.social_media_urls?.tiktok?.message}
         />
-        <Field
+        <UrlInput
           {...rhf.register("social_media_urls.discord")}
           label="Discord"
-          placeholder="https://discord.com/"
+          placeholder="discord.com/"
           error={rhf.errors.social_media_urls?.discord?.message}
         />
       </Group>

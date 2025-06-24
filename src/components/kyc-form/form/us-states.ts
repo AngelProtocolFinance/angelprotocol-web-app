@@ -1,6 +1,4 @@
-import type { OptionType } from "types/components";
-
-export const states: OptionType<string>[] = [
+export const states = [
   //from https://usastatescode.com/state-array-json
   "Alabama",
   "Alaska",
@@ -52,4 +50,4 @@ export const states: OptionType<string>[] = [
   "West Virginia",
   "Wisconsin",
   "Wyoming",
-].map((s) => ({ label: s, value: s }));
+];

@@ -47,15 +47,14 @@ export default function useEditProfile(df: DirtyFields) {
       if (df.overview) update.overview = fv.overview.value;
       if (df.url) update.url = fv.url;
 
-      if (df.sdgs)
-        update.sdgs = fv.sdgs.map((sdg) => sdg.value) as UNSDG_NUMS[];
-      if (df.endow_designation)
-        update.endow_designation = fv.endow_designation.value || undefined;
+      if (df.sdgs) update.sdgs = fv.sdgs.map((x) => +x as UNSDG_NUMS);
+      if (df.endow_designation) update.endow_designation = fv.endow_designation;
 
-      if (df.hq_country) update.hq_country = fv.hq_country.name;
+      if (df.hq_country) update.hq_country = fv.hq_country;
       if (df.active_in_countries) {
-        update.active_in_countries = fv.active_in_countries.map((c) => c.value);
+        update.active_in_countries = fv.active_in_countries;
       }
+
       if (df.street_address) update.street_address = fv.street_address;
 
       if (df.social_media_urls) update.social_media_urls = fv.social_media_urls;

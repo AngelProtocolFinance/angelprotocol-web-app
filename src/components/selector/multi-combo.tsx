@@ -9,43 +9,54 @@ import { DrawerIcon } from "components/icon";
 import { fixedForwardRef } from "helpers/react";
 import { unpack } from "helpers/unpack";
 import { Search, X } from "lucide-react";
-import { type ForwardedRef, type PropsWithChildren, useState } from "react";
 import {
-  type FieldValues,
-  type Path,
-  get,
-  useController,
-  useFormContext,
-} from "react-hook-form";
-import type { OptionType, ValKey } from "types/components";
+  type ForwardedRef,
+  type PropsWithChildren,
+  type ReactNode,
+  useState,
+} from "react";
+
 import { styles } from "./constants";
 import FocusableInput from "./focusable-input";
-import type { ControlledMultiSelectorProps, MultiselectorProps } from "./types";
+import type { BaseProps } from "./types";
 
-function _MultiList<T extends ValKey>(
-  { children, ...props }: ControlledMultiSelectorProps<T>,
+export interface Props<T extends string> extends BaseProps {
+  searchable?: true;
+  values: T[];
+  on_change: (opts: T[]) => void;
+  on_reset: () => void;
+  options: T[];
+  option_disp: (opt: T) => ReactNode;
+  children?: (values: T[]) => ReactNode;
+
+  error?: string;
+  label?: ReactNode;
+  required?: boolean;
+}
+
+function _MultiCombo<T extends string>(
+  { children, ...props }: Props<T>,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const cls = unpack(props.classes);
-  const [searchText, setSearchText] = useState("");
+  const [query, set_query] = useState("");
   const filteredOptions =
-    props.searchable && searchText
+    props.searchable && query
       ? props.options.filter((o) =>
-          o.label.toLowerCase().includes(searchText.toLowerCase())
+          o.toLowerCase().includes(query.toLowerCase())
         )
       : props.options;
 
-  const optionsAvailable = !searchText || filteredOptions.length > 0;
+  const optionsAvailable = !query || filteredOptions.length > 0;
 
-  const isAllSelected = props.value.length === props.options.length;
+  const is_all_selected = props.values.length === props.options.length;
 
   return (
     <>
       <Combobox
         disabled={props.disabled}
-        value={props.value}
-        by="value"
-        onChange={props.onChange}
+        value={props.values}
+        onChange={props.on_change}
         as="div"
         className={`relative ${cls.container}`}
         multiple
@@ -57,14 +68,13 @@ function _MultiList<T extends ValKey>(
           className={`${cls.button} ${styles.selectorButton} flex flex-wrap gap-2 h-full focus-within:ring-2 ring-blue-d1 ring-offset-1 aria-invalid:border-red p-1`}
         >
           <div className="flex flex-wrap gap-2 h-full">
-            {props.value.map((opt) => (
+            {props.values.map((v) => (
               <SelectedOption
-                key={opt.value}
-                {...opt}
-                onDeselect={(opt) =>
-                  props.onChange(
-                    props.value.filter((v) => v.value !== opt.value)
-                  )
+                option={v}
+                option_disp={props.option_disp}
+                key={v}
+                on_deselect={(opt) =>
+                  props.on_change(props.values.filter((v) => v !== opt))
                 }
               />
             ))}
@@ -73,8 +83,8 @@ function _MultiList<T extends ValKey>(
                 <Search size={20} />
                 <ComboboxInput
                   className="appearance-none bg-transparent first:pl-3 focus:outline-hidden h-10"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
+                  value={query}
+                  onChange={(e) => set_query(e.target.value)}
                 />
               </div>
             ) : (
@@ -84,7 +94,7 @@ function _MultiList<T extends ValKey>(
           </div>
           <ComboboxButton
             className={`${
-              props.value.length > 0
+              props.values.length > 0
                 ? "justify-self-end dark:text-gray shrink-0 pr-2"
                 : "absolute inset-0 flex justify-end items-center pr-4 rounded-sm active:ring-2 ring-blue-d1 ring-offset-1"
             }`}
@@ -95,25 +105,27 @@ function _MultiList<T extends ValKey>(
         <ComboboxOptions className={`selector-opts ${cls.options}`}>
           {optionsAvailable && (
             <div className="flex justify-between p-4">
-              {isAllSelected ? (
-                <Action onClick={() => props.onChange([])}>Deselect All</Action>
+              {is_all_selected ? (
+                <Action on_click={() => props.on_change([])}>
+                  Deselect All
+                </Action>
               ) : (
-                <Action onClick={() => props.onChange(props.options)}>
+                <Action on_click={() => props.on_change(props.options)}>
                   Select All
                 </Action>
               )}
-              <Action onClick={props.onReset}>Reset</Action>
+              <Action on_click={props.on_reset}>Reset</Action>
             </div>
           )}
 
           {optionsAvailable &&
             filteredOptions.map((o) => (
               <ComboboxOption
-                key={o.value}
+                key={o}
                 value={o}
                 className={`${cls.option} selector-opt`}
               >
-                {o.label}
+                {props.option_disp(o)}
               </ComboboxOption>
             ))}
           {!optionsAvailable && (
@@ -124,54 +136,32 @@ function _MultiList<T extends ValKey>(
         </ComboboxOptions>
         <p className={styles.error + " empty:hidden"}>{props.error}</p>
       </Combobox>
-      {children && children(props.value)}
+      {children && children(props.values)}
     </>
   );
 }
 
-export const MultiList = fixedForwardRef(_MultiList);
+export const MultiCombo = fixedForwardRef(_MultiCombo);
 
-export function MultiSelector<
-  T extends FieldValues,
-  K extends Path<T>,
-  V extends ValKey,
->({ name, disabled, ...props }: MultiselectorProps<T, K, V>) {
-  ///// ***HOOK FORM*** /////
-  const {
-    formState: { isSubmitting, errors },
-    field: { value: selected, onChange: onSelectedChange, ref },
-  } = useController<{ [index: string]: OptionType<V>[] }>({ name: name });
-  const { resetField } = useFormContext<T>();
-
-  return (
-    <MultiList
-      value={selected}
-      onChange={onSelectedChange}
-      ref={ref}
-      onReset={() => resetField(name)}
-      error={get(errors, name)?.message}
-      disabled={disabled || isSubmitting}
-      {...props}
-    />
-  );
-}
-
-type SelectedProps<T extends ValKey> = OptionType<T> & {
-  onDeselect: (option: OptionType<T>) => void;
+type ISelectedOption<T extends string> = {
+  option: T;
+  option_disp: (opt: T) => ReactNode;
+  on_deselect: (option: T) => void;
 };
 
-function SelectedOption<T extends ValKey>({
-  onDeselect,
-  ...option
-}: SelectedProps<T>) {
+function SelectedOption<T extends string>({
+  on_deselect,
+  option,
+  option_disp,
+}: ISelectedOption<T>) {
   return (
     <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l3 rounded-sm font-semibold text-gray dark:text-gray uppercase">
-      <span className="max-w-[200px] truncate">{option.label}</span>
+      <span className="max-w-[200px] truncate">{option_disp(option)}</span>
       <button
         type="button"
         onClick={(e) => {
           e.preventDefault();
-          onDeselect(option);
+          on_deselect(option);
         }}
       >
         <X size={20} />
@@ -180,12 +170,12 @@ function SelectedOption<T extends ValKey>({
   );
 }
 
-function Action(props: PropsWithChildren<{ onClick: () => void }>) {
+function Action(props: PropsWithChildren<{ on_click: () => void }>) {
   return (
     <button
       type="button"
       className="cursor-pointer text-blue-d1 hover:text-blue hover:underline"
-      onClick={props.onClick}
+      onClick={props.on_click}
     >
       {props.children}
     </button>

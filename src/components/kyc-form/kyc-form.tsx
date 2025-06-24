@@ -1,5 +1,4 @@
 import { useNavigate } from "@remix-run/react";
-import { placeHolderCountryOption } from "components/country-selector";
 import { Modal } from "components/modal";
 import { Form } from "./form";
 import type { FV } from "./schema";
@@ -11,8 +10,8 @@ export default function KycForm() {
     address: { street: "", complement: "" },
     city: "",
     postalCode: "",
-    country: placeHolderCountryOption,
-    usState: { label: "", value: "" },
+    country: "",
+    usState: "",
     state: "",
     kycEmail: "",
   };

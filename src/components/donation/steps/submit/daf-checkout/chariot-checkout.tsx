@@ -18,11 +18,7 @@ import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { mixed, string } from "yup";
-import {
-  initDonorTitleOption,
-  initTributeNotif,
-  toDonor,
-} from "../../common/constants";
+import { initTributeNotif, toDonor } from "../../common/constants";
 import { currency } from "../../common/currency";
 import { minFeeAllowance } from "../../common/min-fee-allowance";
 import Summary from "../../common/summary";
@@ -385,7 +381,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 },
                 recipient: props.init.recipient.id,
                 donor: toDonor({
-                  title: initDonorTitleOption,
+                  title: "",
                   email: grantor.email,
                   first_name: grantor.firstName,
                   last_name: grantor.lastName,

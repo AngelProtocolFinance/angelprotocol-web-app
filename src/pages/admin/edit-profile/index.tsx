@@ -1,13 +1,9 @@
-import type { EndowDesignation } from "@better-giving/endowment";
 import type { LinksFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
-import { country } from "components/country-selector";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles, toContent } from "components/rich-text";
-import { unsdgs } from "constants/unsdgs";
 import type { LoaderData } from "./api";
 import Form from "./form";
-import { getSDGLabelValuePair } from "./get-sdg-label-value-pair";
 import type { FV } from "./schema";
 
 export { loader, action } from "./api";
@@ -16,6 +12,9 @@ export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
+
+const sans_https = (x: string | undefined) => x && x.replace(/^https:\/\//, "");
+
 export { ErrorBoundary } from "components/error";
 export default function EditProfile() {
   const endow = useCachedLoaderData<LoaderData>();
@@ -24,30 +23,25 @@ export default function EditProfile() {
     published: !!endow.published,
     registration_number: endow.registration_number ?? "",
     social_media_urls: {
-      facebook: endow.social_media_urls.facebook,
-      instagram: endow.social_media_urls.instagram,
-      linkedin: endow.social_media_urls.linkedin,
-      twitter: endow.social_media_urls.twitter,
-      discord: endow.social_media_urls.discord,
-      youtube: endow.social_media_urls.youtube,
-      tiktok: endow.social_media_urls.tiktok,
+      facebook: sans_https(endow.social_media_urls.facebook),
+      instagram: sans_https(endow.social_media_urls.instagram),
+      linkedin: sans_https(endow.social_media_urls.linkedin),
+      twitter: sans_https(endow.social_media_urls.twitter),
+      discord: sans_https(endow.social_media_urls.discord),
+      youtube: sans_https(endow.social_media_urls.youtube),
+      tiktok: sans_https(endow.social_media_urls.tiktok),
     },
     slug: endow.slug ?? "",
     street_address: endow.street_address ?? "",
     tagline: endow.tagline ?? "",
-    url: endow.url ?? "",
+    url: sans_https(endow.url) ?? "",
     image: endow.image ?? "",
     logo: endow.logo ?? "",
     card_img: endow.card_img ?? "",
-    endow_designation: endow.endow_designation
-      ? { label: endow.endow_designation, value: endow.endow_designation }
-      : { label: "", value: "" as EndowDesignation },
-    hq_country: country(endow.hq_country),
-    sdgs: endow.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
-    active_in_countries: endow.active_in_countries.map((x) => ({
-      label: x,
-      value: x,
-    })),
+    endow_designation: endow.endow_designation,
+    hq_country: endow.hq_country,
+    sdgs: endow.sdgs.map((x) => x.toString()),
+    active_in_countries: endow.active_in_countries,
     overview: toContent(endow.overview),
   };
 

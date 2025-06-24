@@ -7,7 +7,7 @@ import {
 } from "components/file-dropzone";
 import { Form, Label } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
-import { NativeSelect } from "components/selector";
+import { Select } from "components/selector/select";
 import { errorPrompt } from "helpers/error-prompt";
 import { logger } from "helpers/logger";
 import { useState } from "react";
@@ -167,17 +167,16 @@ export default function RecipientDetailsForm({
                   required: f.required ? "required" : false,
                 }}
                 render={({ field: { name, value, onChange, ref } }) => (
-                  <NativeSelect
+                  <Select
                     aria-invalid={!!get(errors, name)?.message}
-                    id={name}
                     onChange={(value) => {
                       onChange(value);
                       if (f.refreshRequirementsOnChange) refresh();
                     }}
-                    options={f.valuesAllowed?.map((v) => ({
-                      label: v.name,
-                      value: v.key,
-                    }))}
+                    options={f.valuesAllowed?.map((x) => x.key) ?? []}
+                    option_disp={(v) =>
+                      f.valuesAllowed?.find((x) => x.key === v)?.name
+                    }
                     ref={ref}
                     value={value}
                     classes={{ options: "text-sm" }}

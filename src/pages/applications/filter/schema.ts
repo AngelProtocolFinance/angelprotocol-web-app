@@ -10,23 +10,14 @@ const d8 = (end = false) =>
     v.transform((x) => iso_date(x, end))
   );
 
-/** not set by user */
-export const country = v.object({
-  name: v.string(),
-  code: v.string(),
-  flag: v.string(),
-});
-
 export const schema = v.pipe(
   v.object({
     start_date: v.optional(d8()),
     end_date: v.optional(d8(true)),
-    country,
     // not set by user
-    status: v.object({
-      label: v.string(),
-      value: v.string(),
-    }),
+    country: v.string(),
+    // not set by user
+    status: v.string(),
   }),
   v.forward(
     v.partialCheck(

@@ -81,11 +81,6 @@ export const initDetails = (
   }
 };
 
-export const initDonorTitleOption: OptionType<FormDonor["title"]["value"]> = {
-  label: "Select title",
-  value: "",
-};
-
 export const toDonor = (
   fv: Omit<
     FormDonor,
@@ -93,7 +88,7 @@ export const toDonor = (
   >
 ): Donor => {
   return {
-    title: fv.title.value,
+    title: fv.title,
     email: fv.email,
     first_name: fv.first_name,
     last_name: fv.last_name,
@@ -130,7 +125,7 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
   return {
     feeAllowance: 0,
     donor: {
-      title: initDonorTitleOption,
+      title: "",
       first_name: "",
       last_name: "",
       company_name: "",

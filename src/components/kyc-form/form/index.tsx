@@ -1,10 +1,11 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useParams } from "@remix-run/react";
-import countries from "assets/countries/all.json";
-import { ControlledCountrySelector as CountrySelector } from "components/country-selector";
+import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
 import { NativeField as Field } from "components/form";
-import { List as Selector } from "components/selector";
+import { DrawerIcon } from "components/icon";
+import { Select } from "components/selector/select";
+import { countries, country_names } from "constants/countries";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useController, useForm } from "react-hook-form";
 import type { ReceiptPayload } from "types/donate";
@@ -42,7 +43,7 @@ export function Form({ classes = "", ...init }: IForm) {
     name: "usState",
   });
 
-  const isUS = /united states/i.test(country.value.name);
+  const isUS = /united states/i.test(country.value);
 
   return (
     <form
@@ -52,9 +53,9 @@ export function Form({ classes = "", ...init }: IForm) {
           kycEmail: fv.kycEmail,
           streetAddress: `${fv.address.street} ${fv.address.complement}`,
           city: fv.city,
-          state: fv.usState.value || fv.state,
+          state: fv.usState || fv.state,
           zipCode: fv.postalCode,
-          country: fv.country.name,
+          country: fv.country,
         };
         fetcher.submit(payload, {
           encType: "application/json",
@@ -109,25 +110,47 @@ export function Form({ classes = "", ...init }: IForm) {
         error={errors.postalCode?.message}
       />
 
-      <CountrySelector
+      <Combo
         label="Country"
         required
         ref={country.ref}
         value={country.value}
         onChange={country.onChange}
         placeholder="Select a country"
-        options={countries}
+        options={country_names}
         onReset={() => resetField("usState")}
-        error={errors.country?.name?.message || errors.country?.code?.message}
+        error={errors.country?.message}
+        classes={{ input: "pl-12" }}
+        option_disp={(c) => (
+          <>
+            <span className="text-2xl">{countries[c].flag}</span>
+            <span>{c}</span>
+          </>
+        )}
+        btn_disp={(c, open) => {
+          const flag = countries[c]?.flag;
+          return flag ? (
+            <span data-flag className="text-2xl">
+              {flag}
+            </span>
+          ) : (
+            <DrawerIcon
+              isOpen={open}
+              size={20}
+              className="justify-self-end dark:text-gray shrink-0"
+            />
+          );
+        }}
       />
       {isUS ? (
-        <Selector
+        <Select
           required={false}
           label="State"
           onChange={usState.onChange}
           value={usState.value}
           options={states}
           classes={{ options: "text-sm" }}
+          option_disp={(s) => s}
         />
       ) : (
         <Field

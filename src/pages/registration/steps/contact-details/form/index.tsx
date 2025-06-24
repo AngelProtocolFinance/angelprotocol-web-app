@@ -3,12 +3,12 @@ import type { Update } from "@better-giving/registration/update";
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { NativeField as Field } from "components/form";
 import { LoadText } from "components/load-text";
-import { List } from "components/selector";
+import { Select } from "components/selector/select";
 import type { SubmitHandler } from "react-hook-form";
 import { steps } from "../../../routes";
 import type { RegStep1 } from "../../../types";
 import { useUser } from "../../../user";
-import { referralOptions, roleOptions } from "../constants";
+import { referral_methods, roles } from "../constants";
 import type { FV } from "./schema";
 import { useRhf } from "./use-rhf";
 
@@ -29,8 +29,8 @@ export default function Form({ classes = "" }: { classes?: string }) {
     const update: Update = {
       type: "contact",
       ...rest,
-      org_role: org_role.value,
-      referral_method: referral_method.value,
+      org_role: org_role,
+      referral_method: referral_method,
     };
     fetcher.submit(update, {
       action: ".",
@@ -98,18 +98,20 @@ export default function Form({ classes = "" }: { classes?: string }) {
         error={errors.org_name?.message}
         classes={{ container: "mb-4" }}
       />
-      <List
+      <Select
         required
         label=" What's your role within the organization?"
         value={orgRole.value}
         onChange={orgRole.onChange}
-        options={roleOptions}
-        error={errors.org_role?.value?.message}
+        options={Object.keys(roles)}
+        error={errors.org_role?.message}
         ref={orgRole.ref}
         classes={{ option: "text-sm" }}
+        option_disp={(x) => (roles as any)[x]}
       />
-      {orgRole.value.value === "other" && (
+      {orgRole.value === "other" && (
         <Field
+          classes="mt-4"
           required
           label="Specify your role"
           {...register("other_role", { shouldUnregister: true })}
@@ -118,18 +120,19 @@ export default function Form({ classes = "" }: { classes?: string }) {
         />
       )}
       <h3 className="mt-8 mb-4">Other information</h3>
-      <List
+      <Select
         label="How did you find about us?"
         required
         value={refMethod.value}
         onChange={refMethod.onChange}
-        options={referralOptions}
-        error={errors.referral_method?.value?.message}
+        options={Object.keys(referral_methods)}
+        error={errors.referral_method?.message}
         ref={refMethod.ref}
         classes={{ option: "text-sm", container: "mb-4" }}
+        option_disp={(x) => (referral_methods as any)[x]}
       />
 
-      {refMethod.value.value === "other" && (
+      {refMethod.value === "other" && (
         <Field
           required
           label="Please provide additional information"
@@ -138,7 +141,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           error={errors.other_referral_method?.message}
         />
       )}
-      {refMethod.value.value === "referral" && (
+      {refMethod.value === "referral" && (
         <Field
           required
           label="Referral Code"
