@@ -1,5 +1,5 @@
 import CurrencySelector from "components/currency-selector";
-import { NativeField as Field, Form as FormContainer } from "components/form";
+import { Field, Form as FormContainer } from "components/form";
 import { usdOption } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";

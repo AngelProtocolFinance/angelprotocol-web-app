@@ -41,4 +41,4 @@ function _CheckField(props: NativeProps, ref: ForwardedRef<HTMLInputElement>) {
   );
 }
 
-export const NativeCheckField = fixedForwardRef(_CheckField);
+export const CheckField = fixedForwardRef(_CheckField);

@@ -9,11 +9,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Outlet, useFetcher } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import { DonateMethods, fill } from "components/donate-methods";
-import {
-  NativeCheckField as CheckField,
-  Form as F,
-  NativeField as Field,
-} from "components/form";
+import { CheckField, Form as F, Field } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import Increments from "components/increments";
 import { BG_ID } from "constants/common";

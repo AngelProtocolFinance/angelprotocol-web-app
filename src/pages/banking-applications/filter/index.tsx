@@ -1,5 +1,5 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import { NativeField as Field } from "components/form";
+import { Field } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { FilterIcon, XIcon } from "lucide-react";
 import { useRef } from "react";

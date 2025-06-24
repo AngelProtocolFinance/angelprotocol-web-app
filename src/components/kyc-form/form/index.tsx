@@ -2,7 +2,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useParams } from "@remix-run/react";
 import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
-import { NativeField as Field } from "components/form";
+import { Field } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { Select } from "components/selector/select";
 import { countries, country_names } from "constants/countries";

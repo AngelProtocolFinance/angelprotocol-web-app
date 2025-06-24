@@ -2,7 +2,7 @@ import type { QueryParams } from "@better-giving/registration/approval";
 import { PopoverButton, PopoverPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Combo } from "components/combo";
-import { NativeField, dateToFormFormat } from "components/form";
+import { Field, dateToFormFormat } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { Select } from "components/selector/select";
 import { countries, country_names } from "constants/countries";
@@ -101,13 +101,13 @@ export const Form: FC<Props> = ({
 
         <div className="grid gap-x-[1.125rem] grid-cols-2 mt-4">
           <label className="col-span-full text-sm mb-2">Date</label>
-          <NativeField
+          <Field
             {...register("start_date")}
             label=""
             type="date"
             error={errors.start_date?.message}
           />
-          <NativeField
+          <Field
             {...register("end_date")}
             label=""
             type="date"

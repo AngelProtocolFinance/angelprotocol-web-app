@@ -4,11 +4,7 @@ import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/donate-methods";
 import { ProgramSelector } from "components/donation";
-import {
-  NativeCheckField as CheckField,
-  NativeField as Field,
-  Form,
-} from "components/form";
+import { CheckField, Field, Form } from "components/form";
 import Increments from "components/increments";
 import { DollarSign } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";

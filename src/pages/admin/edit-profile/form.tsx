@@ -3,12 +3,7 @@ import type { OrgDesignation } from "@better-giving/schemas";
 import { Outlet } from "@remix-run/react";
 import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
-import {
-  Form as F,
-  NativeField as Field,
-  Label,
-  UrlInput,
-} from "components/form";
+import { Form as F, Field, Label, UrlInput } from "components/form";
 import Group from "components/group";
 import { DrawerIcon } from "components/icon";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";

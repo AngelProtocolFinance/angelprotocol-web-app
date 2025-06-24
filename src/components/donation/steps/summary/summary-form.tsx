@@ -1,11 +1,7 @@
 import { donor_titles } from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  NativeCheckField as CheckField,
-  NativeField as Field,
-  Form,
-} from "components/form";
+import { CheckField, Field, Form } from "components/form";
 import { Select } from "components/selector/select";
 import { Eraser, PenToolIcon } from "lucide-react";
 import { useState } from "react";

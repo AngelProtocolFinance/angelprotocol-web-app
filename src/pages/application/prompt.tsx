@@ -1,5 +1,5 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import {
   Link,
   useFetcher,
@@ -10,14 +10,8 @@ import {
 import { Field } from "components/form";
 import { ChevronRight, CircleAlert, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import {
-  FormProvider,
-  type SubmitHandler,
-  type UseFormReturn,
-  useForm,
-} from "react-hook-form";
-import { requiredString } from "schemas/string";
-import { object, string } from "yup";
+import { useForm } from "react-hook-form";
+import { nonEmpty, object, pipe, string, trim } from "valibot";
 
 function Content() {
   const { verdict } = useParams();
@@ -26,29 +20,32 @@ function Content() {
 
   const fetcher = useFetcher({ key: "application-review" });
 
-  const methods = useForm({
-    resolver: yupResolver(
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: valibotResolver(
       object({
         reason:
-          verdict === "approved" ? string().trim() : requiredString.trim(),
+          verdict === "approved"
+            ? pipe(string(), trim())
+            : pipe(string(), trim(), nonEmpty("required")),
       })
     ),
     defaultValues: { reason: "" },
   });
 
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-
-  const onSubmit: SubmitHandler<FV> = async (fv) =>
-    fetcher.submit(fv, {
-      encType: "application/json",
-      method: "POST",
-      action: ".",
-    });
-
   return (
     <DialogPanel
       as="form"
-      onSubmit={methods.handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((fv) =>
+        fetcher.submit(fv, {
+          encType: "application/json",
+          method: "POST",
+          action: ".",
+        })
+      )}
       className="fixed-center z-10 grid content-start justify-items-center text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="relative w-full">
@@ -102,16 +99,15 @@ function Content() {
       </div>
 
       {verdict === "rejected" && (
-        <FormProvider {...methods}>
-          <div className="px-6 w-full pb-6">
-            <Field<FV, "textarea">
-              required
-              name="reason"
-              type="textarea"
-              label="Reason for rejection:"
-            />
-          </div>
-        </FormProvider>
+        <div className="px-6 w-full pb-6">
+          <Field
+            {...register("reason")}
+            error={errors.reason?.message}
+            required
+            type="textarea"
+            label="Reason for rejection:"
+          />
+        </div>
       )}
 
       <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3">

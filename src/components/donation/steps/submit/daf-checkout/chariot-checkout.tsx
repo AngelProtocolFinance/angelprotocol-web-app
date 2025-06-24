@@ -3,11 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
 import { ErrorBoundaryClass } from "components/error";
-import {
-  NativeCheckField as CheckField,
-  NativeField as Field,
-  Form,
-} from "components/form";
+import { CheckField, Field, Form } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";

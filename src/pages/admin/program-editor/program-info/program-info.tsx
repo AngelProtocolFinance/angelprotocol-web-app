@@ -1,6 +1,6 @@
 import type { Program } from "@better-giving/endowment";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { NativeField as Field, Form, Label } from "components/form";
+import { Field, Form, Label } from "components/form";
 import Group from "components/group";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";

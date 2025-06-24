@@ -6,7 +6,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
-import { NativeField as Field } from "components/form";
+import { Field } from "components/form";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";

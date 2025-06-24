@@ -9,12 +9,7 @@ import {
 } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher } from "@remix-run/react";
-import {
-  NativeField as Field,
-  Form,
-  Label,
-  dateToFormFormat,
-} from "components/form";
+import { Field, Form, Label, dateToFormFormat } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";

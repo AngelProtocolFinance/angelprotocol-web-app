@@ -1,6 +1,6 @@
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import { useFetcher } from "@remix-run/react";
-import { NativeField as Field, Form as Frm } from "components/form";
+import { Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";

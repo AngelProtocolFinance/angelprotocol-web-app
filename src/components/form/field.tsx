@@ -8,12 +8,6 @@ import {
   createElement,
   forwardRef,
 } from "react";
-import {
-  type FieldValues,
-  type Path,
-  get,
-  useFormContext,
-} from "react-hook-form";
 import { Label } from ".";
 import type { Classes } from "./types";
 
@@ -107,24 +101,4 @@ function _Field<T extends InputType = InputType>(
   );
 }
 
-export const NativeField = forwardRef(_Field) as typeof _Field;
-
-export function Field<T extends FieldValues, K extends InputType = InputType>({
-  name,
-  disabled,
-  ...rest
-}: Omit<Props<K>, "name"> & { name: Path<T> }) {
-  const {
-    register,
-    formState: { errors, isSubmitting },
-  } = useFormContext();
-
-  return (
-    <NativeField
-      {...register(name)}
-      {...rest}
-      disabled={disabled || isSubmitting}
-      error={get(errors, name)?.message}
-    />
-  );
-}
+export const Field = forwardRef(_Field) as typeof _Field;

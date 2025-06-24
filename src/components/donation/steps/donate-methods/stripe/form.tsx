@@ -1,6 +1,6 @@
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/currency-selector";
-import { Form as FormContainer, NativeField } from "components/form";
+import { Field, Form as FormContainer } from "components/form";
 import { useRootData } from "hooks/use-root-data";
 import { useEffect } from "react";
 import useSWR from "swr/immutable";
@@ -58,7 +58,7 @@ export default function Form(props: Props) {
         }}
         required
       />
-      <NativeField
+      <Field
         {...rhf.register("amount")}
         label="Donation amount"
         placeholder="Enter amount"

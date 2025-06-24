@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NativeField as Field, Form as FormContainer } from "components/form";
+import { Field, Form as FormContainer } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";

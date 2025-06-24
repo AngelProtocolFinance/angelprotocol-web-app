@@ -2,7 +2,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Link } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { FileDropzone } from "components/file-dropzone";
-import { NativeField as Field, Form as Frm, Label } from "components/form";
+import { Field, Form as Frm, Label } from "components/form";
 import { LoadText } from "components/load-text";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useController, useForm } from "react-hook-form";

@@ -2,7 +2,7 @@ export * from "./label";
 export * from "./field";
 export * from "./input";
 export * from "./password-input";
-export { NativeCheckField } from "./check-field";
+export { CheckField } from "./check-field";
 export { Radio } from "./radio";
 export { default as RhfForm, Form, RmxForm, useRmxForm } from "./form";
 export { dateToFormFormat } from "./helpers";
