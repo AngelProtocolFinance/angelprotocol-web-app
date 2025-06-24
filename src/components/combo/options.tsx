@@ -27,8 +27,6 @@ export default function Options({ query, options, option_disp }: Props) {
             value={country}
           >
             {option_disp(country)}
-            {/* <span className="text-2xl">{country.flag}</span>
-            <span>{country}</span> */}
           </ComboboxOption>
         ))) || <div className="p-2 text-sm">{query} not found</div>}
     </ComboboxOptions>
