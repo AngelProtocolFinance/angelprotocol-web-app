@@ -1,19 +1,10 @@
+import { endOfDay, iso_date, startOfDay } from "helpers/date";
 import * as v from "valibot";
-import { iso_date } from "./helpers";
-
-const d8 = (end = false) =>
-  v.pipe(
-    v.string(),
-    v.transform((x) => (x ? new Date(x) : undefined)),
-    v.date("invalid date"),
-    v.maxValue(new Date(), "can't be later than today"),
-    v.transform((x) => iso_date(x, end))
-  );
 
 export const schema = v.pipe(
   v.object({
-    start_date: v.optional(d8()),
-    end_date: v.optional(d8(true)),
+    start_date: v.optional(iso_date(startOfDay)),
+    end_date: v.optional(iso_date(endOfDay)),
     // not set by user
     country: v.string(),
     // not set by user

@@ -33,6 +33,13 @@ export type Currency = BaseCurrency & {
   rate: number | null;
 };
 
+export const currency = v.object({
+  name: v.optional(v.string()),
+  code: v.string(),
+  min: v.optional(v.number()),
+  rate: v.union([v.number(), v.null()]),
+});
+
 export type CurrencyOption = Currency | DetailedCurrency;
 /**
  * Rich text strings contain not only the user input itself, but is a

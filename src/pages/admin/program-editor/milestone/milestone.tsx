@@ -9,7 +9,7 @@ import {
 } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher } from "@remix-run/react";
-import { Field, Form, Label, dateToFormFormat } from "components/form";
+import { Field, Form, Label, toYYYMMDD } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
@@ -28,7 +28,7 @@ export default function Milestone(props: Props) {
     resetField,
   } = useForm<FV>({
     values: {
-      date: dateToFormFormat(new Date(props.date)),
+      date: toYYYMMDD(new Date(props.date)),
       title: props.title,
       media: props.media ?? "",
       description: { value: props.description ?? "" },

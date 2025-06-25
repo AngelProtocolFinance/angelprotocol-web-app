@@ -1,5 +1,6 @@
 import { Description, Field, Input, Label } from "@headlessui/react";
-import { MaskedInput, dollar } from "components/form";
+import { MaskedInput } from "components/form";
+import { dollar } from "components/form/masks";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelpIcon } from "lucide-react";
 import { type OgInput, methods, methodsArr } from "types/donation-calculator";

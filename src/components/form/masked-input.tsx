@@ -9,8 +9,7 @@ import {
   forwardRef,
   useMemo,
 } from "react";
-import { Label } from "../label";
-import type { Classes } from "../types";
+import type { Classes } from "./types";
 
 type El = HTMLInputElement;
 
@@ -39,13 +38,13 @@ export const MaskedInput = forwardRef<El, Props>((props, ref) => {
 
   return (
     <div className={style.container + " "}>
-      <Label
+      <label
+        data-required={props.required}
         className={style.label + ` label ${props.sub ? "" : "mb-2"}`}
-        required={props.required}
         htmlFor={id}
       >
         {props.label}
-      </Label>
+      </label>
       {props.sub ? (
         typeof props.sub === "string" ? (
           <p className="text-gray text-sm mb-2">{props.sub}</p>
@@ -55,7 +54,7 @@ export const MaskedInput = forwardRef<El, Props>((props, ref) => {
       ) : null}
 
       <input
-        type={props.type ?? "text"}
+        type={props.type}
         ref={(node) => {
           maskitoRef(node);
           if (!ref) return;

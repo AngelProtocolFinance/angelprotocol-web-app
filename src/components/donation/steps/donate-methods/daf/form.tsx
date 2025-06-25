@@ -1,6 +1,7 @@
 import CurrencySelector from "components/currency-selector";
 import { Form as FormContainer } from "components/form";
-import { MaskedInput, currency } from "components/form/masked-input";
+import { MaskedInput } from "components/form";
+import { currency } from "components/form/masks";
 import { usdOption } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";

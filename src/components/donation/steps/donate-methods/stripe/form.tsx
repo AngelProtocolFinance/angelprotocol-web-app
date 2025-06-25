@@ -1,10 +1,7 @@
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/currency-selector";
-import { Form as FormContainer } from "components/form";
-import {
-  MaskedInput,
-  currency as curr_mask,
-} from "components/form/masked-input";
+import { Form as FormContainer, MaskedInput } from "components/form";
+import { currency as curr_mask } from "components/form/masks";
 import { useRootData } from "hooks/use-root-data";
 import { useEffect } from "react";
 import useSWR from "swr/immutable";
@@ -36,9 +33,9 @@ export default function Form(props: Props) {
 
   return (
     <FormContainer
-      onSubmit={rhf.handleSubmit((fv) =>
-        setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }))
-      )}
+      onSubmit={rhf.handleSubmit((fv) => {
+        setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }));
+      })}
       className="grid gap-4"
     >
       <Frequency
