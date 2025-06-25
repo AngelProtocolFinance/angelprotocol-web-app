@@ -97,7 +97,6 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
     register,
     trigger,
     getValues,
-    resetField,
     setValue,
   } = useForm<FV>({
     defaultValues: default_fv(
