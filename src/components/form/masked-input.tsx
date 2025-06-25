@@ -54,7 +54,7 @@ export const MaskedInput = forwardRef<El, Props>((props, ref) => {
       ) : null}
 
       <input
-        type={props.type}
+        type={props.type ?? "text"}
         ref={(node) => {
           maskitoRef(node);
           if (!ref) return;

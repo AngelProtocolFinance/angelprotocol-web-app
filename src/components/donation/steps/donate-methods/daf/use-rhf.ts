@@ -1,9 +1,9 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { roundDown } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
-import { schema, stringNumber } from "schemas/shape";
 import { usdOption } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
+import { daf_donation_details } from "../../types";
 import type { FormValues as FV, Props } from "./types";
 
 export function useRhf(props: Props) {
@@ -23,14 +23,7 @@ export function useRhf(props: Props) {
     formState: { isSubmitting, errors },
   } = useForm<FV>({
     defaultValues: props.details || initial,
-    resolver: yupResolver(
-      schema<FV>({
-        amount: stringNumber(
-          (s) => s.required("Please enter an amount"),
-          (n) => n.positive("Amount must be greater than 0")
-        ),
-      })
-    ),
+    resolver: valibotResolver(daf_donation_details),
   });
 
   const { field: program } = useController<FV, "program">({
