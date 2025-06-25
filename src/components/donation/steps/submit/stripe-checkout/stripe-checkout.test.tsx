@@ -68,7 +68,6 @@ const state: StripeCheckoutStep = {
     email: "donor@gmail.com",
   },
   feeAllowance: 10,
-  honorary: {},
 };
 
 describe("stripe checkout", () => {

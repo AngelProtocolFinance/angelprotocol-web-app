@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import type { FormDonor } from "../types";
+import type { Donor } from "../types";
 import SummaryForm, { type Props } from "./summary-form";
 
 const mockOnSubmit = vi.fn();
 
-const donor: FormDonor = {
+const donor: Donor = {
   first_name: "",
   last_name: "",
   email: "",

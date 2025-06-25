@@ -7,10 +7,8 @@ import type {
 import type {
   DonationDetails,
   DonationState,
-  Donor,
   FinishedSummaryData,
-  FormDonor,
-  TributeNotif,
+  Tribute,
 } from "../types";
 
 export const DEFAULT_PROGRAM: OptionType<""> = {
@@ -81,26 +79,7 @@ export const initDetails = (
   }
 };
 
-export const toDonor = (fv: FormDonor): Donor => {
-  return {
-    title: fv.title,
-    email: fv.email,
-    first_name: fv.first_name,
-    last_name: fv.last_name,
-    company_name: fv.company_name,
-    address: fv.address
-      ? {
-          street: fv.address.street,
-          city: "",
-          zip_code: fv.address.zip_code,
-          country: "United Kingdom",
-          uk_gift_aid: true,
-        }
-      : undefined,
-  };
-};
-
-export const init_tribute_notif: TributeNotif = {
+export const init_tribute_notif: Tribute["notif"] = {
   to_email: "",
   to_fullname: "",
   from_msg: "",
@@ -108,10 +87,10 @@ export const init_tribute_notif: TributeNotif = {
 
 export const summaryData = (state: DonationState): FinishedSummaryData => {
   if ("donor" in state) {
-    if (state.donor && state.honorary && state.feeAllowance) {
+    if (state.donor && state.tribute && state.feeAllowance) {
       return {
         donor: state.donor,
-        honorary: state.honorary,
+        tribute: state.tribute,
         feeAllowance: state.feeAllowance,
       };
     }
@@ -123,8 +102,8 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
       first_name: "",
       last_name: "",
       email: "",
-      donor_public: true,
+      is_public: true,
     },
-    honorary: { honorary_fullname: "", tribute_notif: init_tribute_notif },
+    tribute: { full_name: "", notif: init_tribute_notif },
   };
 };

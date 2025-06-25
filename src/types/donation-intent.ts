@@ -27,7 +27,7 @@ export type DonorTitle = v.InferOutput<typeof donor_title>;
 
 export const donor_address = v.object({
   street: required_str,
-  city: required_str,
+  city: str,
   state: v.optional(required_str),
   zip_code: required_str,
   /** country name */
@@ -37,6 +37,8 @@ export const donor_address = v.object({
 
 export type DonorAddress = v.InferOutput<typeof donor_address>;
 
+export const donor_public_msg_max_length = 500;
+export const donor_msg_to_npo_max_length = 500;
 export const donor = v.object({
   title: donor_title,
   first_name: v.pipe(str, v.nonEmpty("Please enter your first name")),
@@ -48,6 +50,25 @@ export const donor = v.object({
     v.email("Please check your email for correctness")
   ),
   address: v.optional(donor_address),
+  public_msg: v.optional(
+    v.pipe(
+      required_str,
+      v.maxLength(
+        donor_public_msg_max_length,
+        (x) => `max ${x.requirement} characters`
+      )
+    )
+  ),
+  msg_to_npo: v.optional(
+    v.pipe(
+      required_str,
+      v.maxLength(
+        donor_msg_to_npo_max_length,
+        (x) => `max ${x.requirement} characters`
+      )
+    )
+  ),
+  is_public: v.optional(v.boolean()),
 });
 
 export type Donor = v.InferOutput<typeof donor>;
@@ -102,33 +123,12 @@ export const tribute = v.object({
 
 export type Tribute = v.InferOutput<typeof tribute>;
 
-export const donor_msg_max_length = 500;
-export const msg_to_npo_max_length = 500;
-
 export const intent = v.object({
   amount,
   recipient,
   program: v.optional(program),
   donor,
-  donor_message: v.optional(
-    v.pipe(
-      required_str,
-      v.maxLength(
-        donor_msg_max_length,
-        (x) => `max ${x.requirement} characters`
-      )
-    )
-  ),
-  donor_public: v.optional(v.boolean()),
-  msg_to_npo: v.optional(
-    v.pipe(
-      required_str,
-      v.maxLength(
-        msg_to_npo_max_length,
-        (x) => `max ${x.requirement} characters`
-      )
-    )
-  ),
+
   source: donation_source,
   tribute: v.optional(tribute),
   frequency,

@@ -5,15 +5,14 @@ import {
   type TokenWithDetails,
   detailed_currency,
 } from "types/components";
-import {
+import { type Donor, type Tribute, frequency } from "types/donation-intent";
+export {
+  type Tribute,
+  type Frequency,
+  type Donor,
+  tribute,
   donor,
-  donor_address,
-  frequency,
-  intent,
-  required_str,
-  tribute_notif,
 } from "types/donation-intent";
-export type { TributeNotif, Frequency, Donor } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
@@ -175,40 +174,20 @@ export type TipStep = {
   tip?: { value: number; format: TipFormat };
 } & From<FormStep>;
 
-export const form_donor = v.object({
-  ...v.pick(donor, [
-    "title",
-    "first_name",
-    "last_name",
-    "company_name",
-    "email",
-  ]).entries,
-  ...v.pick(intent, ["donor_message", "msg_to_npo", "donor_public"]).entries,
-  address: v.optional(v.pick(donor_address, ["street", "zip_code"])),
-});
-
-export interface FormDonor extends v.InferOutput<typeof form_donor> {}
-export const honorary = v.object({
-  honorary_fullname: v.optional(required_str),
-  tribute_notif: v.optional(tribute_notif),
-});
-
-export interface Honorary extends v.InferOutput<typeof honorary> {}
-
 export type SummaryStep = {
   step: "summary";
-  donor?: FormDonor;
-  honorary?: Honorary;
+  donor?: Donor;
+  tribute?: Tribute;
   feeAllowance?: number;
 } & From<TipStep, "tip">;
 
 export type FinishedSummaryData = Required<
-  Pick<SummaryStep, "donor" | "honorary" | "feeAllowance">
+  Pick<SummaryStep, "donor" | "tribute" | "feeAllowance">
 >;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
+} & Omit<From<SummaryStep, "tip" | "tribute">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;

@@ -22,9 +22,9 @@ export const onhold_base = (
     donationFinalized: false,
     endowmentId: recipient.npo.id,
 
-    donor_message: intent.donor_message,
-    msg_to_npo: intent.msg_to_npo,
-    donor_public: intent.donor_public,
+    donor_message: intent.donor.public_msg,
+    msg_to_npo: intent.donor.msg_to_npo,
+    donor_public: intent.donor.is_public,
 
     fund_id: recipient.fund.id,
     fund_name: recipient.name,

@@ -13,30 +13,31 @@ import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
 import type { DonationIntent } from "types/donation-intent";
 import {
-  donor_msg_max_length,
+  donor,
+  donor_address,
+  donor_msg_to_npo_max_length,
+  donor_public_msg_max_length,
   from_msg_max_length,
-  msg_to_npo_max_length,
+  tribute,
 } from "types/donation-intent";
-import { type InferOutput, boolean, object, pick } from "valibot";
-import { toDonor } from "../../common/constants";
+import {
+  type InferOutput,
+  boolean,
+  object,
+  optional,
+  pick,
+  safeParse,
+} from "valibot";
+import { init_tribute_notif } from "../../common/constants";
 import { currency } from "../../common/currency";
 import { minFeeAllowance } from "../../common/min-fee-allowance";
 import Summary from "../../common/summary";
 import { useDonationState } from "../../context";
-import {
-  type DafCheckoutStep,
-  type Honorary,
-  form_donor,
-  honorary,
-} from "../../types";
+import type { DafCheckoutStep, Tribute } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { type AdjustedAmounts, toPlatformValues } from "./to-platform-values";
 
-const chariot_donor = pick(form_donor, [
-  "msg_to_npo",
-  "donor_message",
-  "donor_public",
-]);
+const chariot_donor = pick(donor, ["msg_to_npo", "public_msg", "is_public"]);
 
 interface ChariotDonor extends InferOutput<typeof chariot_donor> {}
 
@@ -45,35 +46,23 @@ const schema = object({
   ...chariot_donor.entries,
   with_honorary: boolean(),
   with_tribute_notif: boolean(),
-  ...honorary.entries,
+  tribute: optional(tribute),
   cover_fee: boolean(),
 });
 
 const default_fv = (
   cover_fee: boolean,
-  honorary?: Honorary,
+  tribute?: Tribute,
   donor?: ChariotDonor
 ): FV => {
-  console.log(donor, honorary);
   const fv: FV = {
-    is_with_msg_to_npo: (donor?.donor_message?.length ?? 0) > 0,
+    is_with_msg_to_npo: (donor?.public_msg?.length ?? 0) > 0,
     with_honorary: false,
     with_tribute_notif: false,
     cover_fee,
     ...donor,
+    tribute,
   };
-  if (honorary?.honorary_fullname) {
-    fv.honorary_fullname = honorary.honorary_fullname;
-    fv.with_honorary = true;
-    if (honorary.tribute_notif) {
-      fv.with_tribute_notif = true;
-      fv.tribute_notif = {
-        to_email: honorary.tribute_notif.to_email,
-        to_fullname: honorary.tribute_notif.to_fullname,
-        from_msg: honorary.tribute_notif.from_msg,
-      };
-    }
-  }
   return fv;
 };
 
@@ -99,25 +88,21 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
     getValues,
     setValue,
   } = useForm<FV>({
-    defaultValues: default_fv(
-      !!props.feeAllowance,
-      props.honorary,
-      props.donor
-    ),
+    defaultValues: default_fv(!!props.feeAllowance, props.tribute, props.donor),
     resolver: valibotResolver(schema),
   });
 
   /** save actual grant amount and reflect in Summary form */
   const [adjusted, setAdjusted] = useState<AdjustedAmounts>();
   const [with_donor_msg, set_with_donor_msg] = useState(
-    (props.donor.donor_message?.length ?? 0) > 0
+    (props.donor.public_msg?.length ?? 0) > 0
   );
   const with_honorary = watch("with_honorary");
   const with_tribute_notif = watch("with_tribute_notif");
   const fv_cover_fee = watch("cover_fee");
-  const custom_msg = watch("tribute_notif.from_msg");
-  const is_public = watch("donor_public");
-  const public_msg = watch("donor_message");
+  const custom_msg = watch("tribute.notif.from_msg");
+  const is_public = watch("is_public");
+  const public_msg = watch("public_msg");
 
   const is_with_msg_to_npo = watch("is_with_msg_to_npo");
   const msg_to_npo = watch("msg_to_npo");
@@ -155,11 +140,11 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         <Form className="grid grid-cols-2 gap-x-4 mt-4">
           <div className="col-span-full flex gap-x-2 flex-wrap gap-y-1 items-center">
             <CheckField
-              {...register("donor_public", {
+              {...register("is_public", {
                 onChange: (e: ChangeEvent<HTMLInputElement>) => {
                   const x = e.target.checked;
                   set_with_donor_msg(x);
-                  setValue("donor_message", x ? "" : undefined);
+                  setValue("public_msg", x ? "" : undefined);
                 },
               })}
             >
@@ -183,19 +168,19 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           {is_public && with_donor_msg && (
             <div className="col-span-full">
               <p
-                data-exceed={errors.donor_message?.type === "max"}
+                data-exceed={errors.public_msg?.type === "max"}
                 className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
               >
                 {/** customMsg becomes undefined when unmounted */}
-                {public_msg?.length ?? 0}/{donor_msg_max_length}
+                {public_msg?.length ?? 0}/{donor_public_msg_max_length}
               </p>
               <textarea
-                {...register("donor_message", { shouldUnregister: true })}
-                aria-invalid={!!errors.donor_message?.message}
+                {...register("public_msg", { shouldUnregister: true })}
+                aria-invalid={!!errors.public_msg?.message}
                 className="field-input w-full text-base font-semibold"
               />
               <p className="text-red text-xs empty:hidden text-right">
-                {errors.donor_message?.message}
+                {errors.public_msg?.message}
               </p>
             </div>
           )}
@@ -211,7 +196,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
               >
                 {/** customMsg becomes undefined when unmounted */}
-                {msg_to_npo?.length ?? 0}/{msg_to_npo_max_length}
+                {msg_to_npo?.length ?? 0}/{donor_msg_to_npo_max_length}
               </p>
               <textarea
                 {...register("msg_to_npo", { shouldUnregister: true })}
@@ -241,8 +226,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             {...register("with_honorary", {
               onChange: (ev: ChangeEvent<HTMLInputElement>) => {
                 const x = ev.target.checked;
-                setValue("honorary_fullname", x ? "" : undefined);
-                if (!x) setValue("tribute_notif", undefined);
+                setValue("tribute", x ? { full_name: "" } : undefined);
+                if (!x) setValue("tribute.notif", undefined);
               },
             })}
             classes="col-span-full mt-4"
@@ -253,7 +238,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           {with_honorary && (
             <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
               <Field
-                {...register("honorary_fullname")}
+                {...register("tribute.full_name")}
                 label="Honoree's name"
                 placeholder="e.g. Jane Doe"
                 classes={{
@@ -261,21 +246,15 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   input: "field-input-donate",
                 }}
                 required
-                error={errors.honorary_fullname?.message}
+                error={errors.tribute?.full_name?.message}
               />
               <CheckField
                 {...register("with_tribute_notif", {
                   onChange: (ev: ChangeEvent<HTMLInputElement>) => {
                     const x = ev.target.checked;
                     setValue(
-                      "tribute_notif",
-                      x
-                        ? {
-                            to_email: "",
-                            to_fullname: "",
-                            from_msg: "",
-                          }
-                        : undefined
+                      "tribute.notif",
+                      x ? init_tribute_notif : undefined
                     );
                   },
                 })}
@@ -287,7 +266,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               {with_tribute_notif && (
                 <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
                   <Field
-                    {...register("tribute_notif.to_fullname")}
+                    {...register("tribute.notif.to_fullname")}
                     label="Recipient name"
                     placeholder="e.g. Jane Doe"
                     classes={{
@@ -295,10 +274,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                       input: "field-input-donate",
                     }}
                     required
-                    error={errors.tribute_notif?.to_fullname?.message}
+                    error={errors.tribute?.notif?.to_fullname?.message}
                   />
                   <Field
-                    {...register("tribute_notif.to_email")}
+                    {...register("tribute.notif.to_email")}
                     label="Email address"
                     placeholder="e.g. janedoe@better.giving"
                     classes={{
@@ -306,10 +285,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                       input: "field-input-donate",
                     }}
                     required
-                    error={errors.tribute_notif?.to_email?.message}
+                    error={errors.tribute?.notif?.to_email?.message}
                   />
                   <Field
-                    {...register("tribute_notif.from_msg")}
+                    {...register("tribute.notif.from_msg")}
                     rows={2}
                     type="textarea"
                     label="Custom message"
@@ -319,10 +298,12 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                       input: "field-input-donate",
                     }}
                     required={false}
-                    error={errors.tribute_notif?.from_msg?.message}
+                    error={errors.tribute?.notif?.from_msg?.message}
                   />
                   <p
-                    data-exceed={errors.tribute_notif?.from_msg?.type === "max"}
+                    data-exceed={
+                      errors.tribute?.notif?.from_msg?.type === "max"
+                    }
                     className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
                   >
                     {custom_msg.length}/{from_msg_max_length}
@@ -387,13 +368,15 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               setAdjusted(adjusted);
 
-              const {
-                postalCode,
-                line1,
-                line2,
-                city: _,
-                state: _2,
-              } = grantor.address;
+              const { postalCode, line1, line2, city, state } = grantor.address;
+
+              const addr = safeParse(donor_address, {
+                street: [line1, line2].filter(Boolean).join(", "),
+                city,
+                state,
+                country: "n/a",
+                zip_code: postalCode,
+              });
 
               const intent: DonationIntent = {
                 frequency: "one-time",
@@ -406,43 +389,26 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   fee_allowance: adjusted.feeAllowance,
                 },
                 recipient: props.init.recipient.id,
-                donor: toDonor({
+                donor: {
                   title: "",
                   email: grantor.email,
                   first_name: grantor.firstName,
                   last_name: grantor.lastName,
                   company_name: "",
-                  address: {
-                    street: [line1, line2].filter(Boolean).join(", "),
-                    zip_code: postalCode,
-                  },
-                }),
+                  address: addr.issues ? undefined : addr.output,
+                  is_public: props.donor.is_public,
+                  public_msg: props.donor.public_msg,
+                  msg_to_npo: props.donor.msg_to_npo,
+                },
+                tribute: meta.tribute,
                 source: props.init.source,
-                donor_public: props.donor.donor_public,
               };
-
-              if (props.donor.msg_to_npo) {
-                intent.msg_to_npo = props.donor.msg_to_npo;
-              }
-
-              if (props.donor.donor_message) {
-                intent.donor_message = props.donor.donor_message;
-              }
 
               if (props.details.program.value) {
                 intent.program = {
                   id: props.details.program.value,
                   name: props.details.program.label,
                 };
-              }
-
-              if (meta.honorary_fullname) {
-                intent.tribute = {
-                  full_name: meta.honorary_fullname,
-                };
-                if (meta.with_tribute_notif) {
-                  intent.tribute.notif = meta.tribute_notif;
-                }
               }
 
               setGrantState("pending");

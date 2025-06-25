@@ -7,7 +7,6 @@ import { roundToCents } from "helpers/decimal";
 import useSWR from "swr/immutable";
 import type { Payment } from "types/crypto";
 import type { DonationIntent } from "types/donation-intent";
-import { toDonor } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";
 import { PayQr } from "./pay-qr";
@@ -26,14 +25,7 @@ const fetcher = async (intent: DonationIntent) =>
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
-  const {
-    details,
-    init,
-    tip,
-    donor: fvDonor,
-    feeAllowance,
-    honorary,
-  } = donation;
+  const { details, init, tip, donor, feeAllowance, tribute } = donation;
 
   const intent: DonationIntent = {
     frequency: "one-time",
@@ -47,26 +39,9 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     via_name: chains[details.token.network].name,
     recipient: init.recipient.id,
     source: init.source,
-    donor: toDonor(fvDonor),
-    donor_public: fvDonor.donor_public,
+    donor,
+    tribute,
   };
-
-  if (fvDonor.msg_to_npo) {
-    intent.msg_to_npo = fvDonor.msg_to_npo;
-  }
-
-  if (fvDonor.donor_message) {
-    intent.donor_message = fvDonor.donor_message;
-  }
-
-  if (honorary.honorary_fullname) {
-    intent.tribute = {
-      full_name: honorary.honorary_fullname,
-    };
-    if (honorary.tribute_notif) {
-      intent.tribute.notif = honorary.tribute_notif;
-    }
-  }
 
   if (details.program.value) {
     intent.program = {

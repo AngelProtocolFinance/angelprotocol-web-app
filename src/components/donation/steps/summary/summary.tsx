@@ -9,7 +9,7 @@ import SummaryForm from "./summary-form";
 
 export default function Summary(props: SummaryStep) {
   const user = useRootData();
-  const { details, donor, honorary, tip, init, feeAllowance } = props;
+  const { details, donor, tribute, tip, init, feeAllowance } = props;
 
   const { setState } = useDonationState();
 
@@ -67,15 +67,14 @@ export default function Summary(props: SummaryStep) {
             last_name: user?.lastName ?? "",
             email: user?.email ?? "",
             title: "",
-            donor_public: true,
+            is_public: true,
           }
         }
-        honorary={honorary}
+        tribute={tribute}
         onSubmit={({
-          with_honorary,
-          honorary_fullname,
+          with_tribute,
+          tribute,
           with_tribute_notif,
-          tribute_notif,
           is_with_msg_to_npo,
           uk_tax_resident,
           cover_fee: fv_cover_fee,
@@ -85,7 +84,7 @@ export default function Summary(props: SummaryStep) {
             ...props,
             step: "submit",
             donor,
-            honorary: { honorary_fullname, tribute_notif },
+            tribute,
             feeAllowance: fv_cover_fee
               ? minFeeAllowance(details, tip?.value ?? 0)
               : 0,

@@ -5,7 +5,7 @@ import { stb } from "../__tests__/test-data";
 import { initTokenOption } from "../common/constants";
 import type {
   CryptoDonationDetails,
-  FormDonor,
+  Donor,
   StripeDonationDetails,
   SummaryStep,
 } from "../types";
@@ -23,7 +23,7 @@ const oneTimeStripeDetails: StripeDonationDetails = {
   program: { value: "prog_789", label: "Education Initiative" },
 };
 
-const donor: FormDonor = {
+const donor: Donor = {
   email: "john@doe.com",
   first_name: "John",
   last_name: "Doe",

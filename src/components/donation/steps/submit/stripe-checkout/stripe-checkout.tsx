@@ -4,7 +4,6 @@ import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import useSWR from "swr/immutable";
 import type { DonationIntent } from "types/donation-intent";
-import { toDonor } from "../../common/constants";
 import { currency } from "../../common/currency";
 import Summary from "../../common/summary";
 import { useDonationState } from "../../context";
@@ -24,7 +23,7 @@ const fetcher = async (intent: DonationIntent) =>
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
+  const { init, details, tip, donor, tribute, feeAllowance } = props;
   const { setState } = useDonationState();
 
   const intent: DonationIntent = {
@@ -36,28 +35,12 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       currency: details.currency.code,
     },
     recipient: init.recipient.id,
-    donor: toDonor(fvDonor),
+    donor,
     source: init.source,
     via_id: "fiat",
     via_name: "Stripe",
+    tribute,
   };
-
-  if (fvDonor.msg_to_npo) {
-    intent.msg_to_npo = fvDonor.msg_to_npo;
-  }
-
-  if (fvDonor.donor_message) {
-    intent.donor_message = fvDonor.donor_message;
-  }
-
-  if (honorary.honorary_fullname) {
-    intent.tribute = {
-      full_name: honorary.honorary_fullname,
-    };
-    if (honorary.tribute_notif) {
-      intent.tribute.notif = honorary.tribute_notif;
-    }
-  }
 
   if (details.program.value) {
     intent.program = {
