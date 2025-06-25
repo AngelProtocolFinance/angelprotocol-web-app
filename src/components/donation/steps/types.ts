@@ -8,23 +8,16 @@ import {
 import {
   donor,
   donor_address,
+  frequency,
   intent,
   required_str,
   tribute_notif,
 } from "types/donation-intent";
+export type { TributeNotif, Frequency, Donor } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
 import * as v from "valibot";
-
-export type { TributeNotif, Donor } from "@better-giving/donation/intent";
-
-export const frequencies = ["one-time", "subscription"] as const;
-export const frequency = v.picklist(
-  frequencies,
-  "Please select donation frequency"
-);
-export type Frequency = v.InferOutput<typeof frequency>;
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,

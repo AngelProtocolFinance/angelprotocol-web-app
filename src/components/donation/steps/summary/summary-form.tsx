@@ -1,4 +1,3 @@
-import { donor_titles } from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { CheckField, Field, Form } from "components/form";
@@ -6,6 +5,7 @@ import { Select } from "components/selector/select";
 import { Eraser, PenToolIcon } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 import { useController, useForm } from "react-hook-form";
+import { donor_titles } from "types/donation-intent";
 import {
   donor_msg_max_length,
   from_msg_max_length,

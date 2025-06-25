@@ -66,7 +66,7 @@ describe("summary step", () => {
 
   const subsStripeDetails: StripeDonationDetails = {
     ...oneTimeStripeDetails,
-    frequency: "subscription",
+    frequency: "recurring",
   };
   test("total amount text - subscription", async () => {
     // render(<Summary {...props} details={subsStripeDetails} />);

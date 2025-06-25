@@ -1,5 +1,4 @@
 import chains from "@better-giving/assets/chains";
-import type { DonationIntent } from "@better-giving/donation/intent";
 import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
 import QueryLoader from "components/query-loader";
@@ -7,6 +6,7 @@ import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers/decimal";
 import useSWR from "swr/immutable";
 import type { Payment } from "types/crypto";
+import type { DonationIntent } from "types/donation-intent";
 import { toDonor } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";

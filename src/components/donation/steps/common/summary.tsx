@@ -83,7 +83,7 @@ export default function Summary({
 
         <div className="grid col-span-full grid-cols-[1fr_auto] font-medium py-3">
           <dt className="mr-auto text-gray-d4" aria-label="total">
-            Total {frequency === "subscription" ? "monthly " : ""}charge
+            Total {frequency === "recurring" ? "monthly " : ""}charge
           </dt>
           <Amount
             amount={props.amount + tipValue + (props.feeAllowance ?? 0)}

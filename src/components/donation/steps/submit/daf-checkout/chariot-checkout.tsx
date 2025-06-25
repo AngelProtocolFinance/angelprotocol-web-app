@@ -1,4 +1,3 @@
-import type { DonationIntent } from "@better-giving/donation/intent";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
@@ -12,6 +11,7 @@ import { Eraser, PenToolIcon } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
+import type { DonationIntent } from "types/donation-intent";
 import {
   donor_msg_max_length,
   from_msg_max_length,

@@ -1,9 +1,9 @@
-import type { DonationIntent } from "@better-giving/donation/intent";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import useSWR from "swr/immutable";
+import type { DonationIntent } from "types/donation-intent";
 import { toDonor } from "../../common/constants";
 import { currency } from "../../common/currency";
 import Summary from "../../common/summary";
@@ -28,7 +28,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
   const { setState } = useDonationState();
 
   const intent: DonationIntent = {
-    frequency: details.frequency === "subscription" ? "recurring" : "one-time",
+    frequency: details.frequency,
     amount: {
       amount: +details.amount,
       tip: tip?.value ?? 0,

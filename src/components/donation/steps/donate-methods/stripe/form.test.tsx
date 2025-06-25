@@ -92,7 +92,7 @@ describe("Stripe form test", () => {
     const details: StripeDonationDetails = {
       amount: "60",
       currency: { code: currency_code, min: minimum_amount, rate },
-      frequency: "subscription",
+      frequency: "recurring",
       method: "stripe",
       program: { value: mockPrograms[0].id, label: mockPrograms[0].title },
     };

@@ -1,13 +1,13 @@
 import { isCustom } from "@better-giving/assets/tokens";
 import tokenMap from "@better-giving/assets/tokens/map";
 import type { OnHoldDonation } from "@better-giving/donation";
-import { intent as schema } from "@better-giving/donation/intent";
 import { tables } from "@better-giving/types/list";
 import type { ActionFunction } from "@vercel/remix";
 import { round_number } from "helpers/round-number";
 import { nanoid } from "nanoid";
 import { create_payment_intent } from "routes/api.donation-intents.$type/stripe/create-payment-intent";
 import { setup_intent } from "routes/api.donation-intents.$type/stripe/setup-intent";
+import { intent as schema } from "types/donation-intent";
 import { parse } from "valibot";
 import { resp } from "../helpers/resp";
 import { type Order, crypto_payment } from "./crypto-payment";

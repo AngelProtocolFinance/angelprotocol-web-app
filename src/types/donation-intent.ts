@@ -4,7 +4,10 @@ export const str = v.pipe(v.string(), v.trim());
 export const required_str = v.pipe(str, v.nonEmpty("required"));
 
 export const frequencies = ["one-time", "recurring"] as const;
-export const frequency = v.picklist(frequencies);
+export const frequency = v.picklist(
+  frequencies,
+  "Please select donation frequency"
+);
 
 export type Frequency = v.InferOutput<typeof frequency>;
 

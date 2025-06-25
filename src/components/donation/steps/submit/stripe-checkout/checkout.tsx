@@ -55,7 +55,7 @@ export default function Checkout(props: StripeCheckoutStep) {
     };
 
     const { error } =
-      props.details.frequency === "subscription"
+      props.details.frequency === "recurring"
         ? await stripe.confirmSetup(stripeConfirmParams)
         : await stripe.confirmPayment(stripeConfirmParams);
 

@@ -74,7 +74,7 @@ export const initDetails = (
         method: "stripe",
         amount: "",
         currency: usdOption,
-        frequency: "subscription",
+        frequency: "recurring",
         program,
       };
     }
