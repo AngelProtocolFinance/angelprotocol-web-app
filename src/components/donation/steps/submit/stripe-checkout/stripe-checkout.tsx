@@ -40,23 +40,22 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     source: init.source,
     via_id: "fiat",
     via_name: "Stripe",
-    donor_public: fvDonor.isPublic,
   };
 
   if (fvDonor.msg_to_npo) {
     intent.msg_to_npo = fvDonor.msg_to_npo;
   }
 
-  if (fvDonor.publicMsg) {
-    intent.donor_message = fvDonor.publicMsg;
+  if (fvDonor.donor_message) {
+    intent.donor_message = fvDonor.donor_message;
   }
 
-  if (honorary.honoraryFullName) {
+  if (honorary.honorary_fullname) {
     intent.tribute = {
-      full_name: honorary.honoraryFullName,
+      full_name: honorary.honorary_fullname,
     };
-    if (honorary.withTributeNotif) {
-      intent.tribute.notif = honorary.tributeNotif;
+    if (honorary.tribute_notif) {
+      intent.tribute.notif = honorary.tribute_notif;
     }
   }
 

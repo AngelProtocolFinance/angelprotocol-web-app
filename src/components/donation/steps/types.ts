@@ -1,8 +1,3 @@
-import type {
-  Donor,
-  DonorTitle,
-  TributeNotif,
-} from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import {
@@ -10,6 +5,13 @@ import {
   type TokenWithDetails,
   detailed_currency,
 } from "types/components";
+import {
+  donor,
+  donor_address,
+  intent,
+  required_str,
+  tribute_notif,
+} from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
@@ -20,7 +22,7 @@ export type { TributeNotif, Donor } from "@better-giving/donation/intent";
 export const frequencies = ["one-time", "subscription"] as const;
 export const frequency = v.picklist(
   frequencies,
-  "please select donation frequency"
+  "Please select donation frequency"
 );
 export type Frequency = v.InferOutput<typeof frequency>;
 
@@ -180,33 +182,25 @@ export type TipStep = {
   tip?: { value: number; format: TipFormat };
 } & From<FormStep>;
 
-export type FormDonor = Pick<
-  Donor,
-  "email" | "first_name" | "last_name" | "company_name"
-> & {
-  ukTaxResident: boolean;
+export const form_donor = v.object({
+  ...v.pick(donor, [
+    "title",
+    "first_name",
+    "last_name",
+    "company_name",
+    "email",
+  ]).entries,
+  ...v.pick(intent, ["donor_message", "msg_to_npo", "donor_public"]).entries,
+  address: v.optional(v.pick(donor_address, ["street", "zip_code"])),
+});
 
-  title: DonorTitle;
-  /** initially empty `''` */
-  zipCode: string;
-  /** initially empty `''` */
-  streetAddress: string;
+export interface FormDonor extends v.InferOutput<typeof form_donor> {}
+export const honorary = v.object({
+  honorary_fullname: v.optional(required_str),
+  tribute_notif: v.optional(tribute_notif),
+});
 
-  isPublic: boolean;
-  /** initially empty `''` */
-  publicMsg: string;
-  /** initially empty `''` */
-  is_with_msg_to_npo: boolean;
-  msg_to_npo: string;
-};
-
-export type Honorary = {
-  withHonorary: boolean;
-  /** initially empty `''` */
-  honoraryFullName: string;
-  withTributeNotif: boolean;
-  tributeNotif: TributeNotif;
-};
+export interface Honorary extends v.InferOutput<typeof honorary> {}
 
 export type SummaryStep = {
   step: "summary";

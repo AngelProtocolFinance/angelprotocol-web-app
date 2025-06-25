@@ -81,31 +81,26 @@ export const initDetails = (
   }
 };
 
-export const toDonor = (
-  fv: Omit<
-    FormDonor,
-    "publicMsg" | "isPublic" | "is_with_msg_to_npo" | "msg_to_npo"
-  >
-): Donor => {
+export const toDonor = (fv: FormDonor): Donor => {
   return {
     title: fv.title,
     email: fv.email,
     first_name: fv.first_name,
     last_name: fv.last_name,
     company_name: fv.company_name,
-    address: fv.ukTaxResident
+    address: fv.address
       ? {
-          street: fv.streetAddress,
+          street: fv.address.street,
           city: "",
-          zip_code: fv.zipCode,
+          zip_code: fv.address.zip_code,
           country: "United Kingdom",
-          uk_gift_aid: fv.ukTaxResident,
+          uk_gift_aid: true,
         }
       : undefined,
   };
 };
 
-export const initTributeNotif: TributeNotif = {
+export const init_tribute_notif: TributeNotif = {
   to_email: "",
   to_fullname: "",
   from_msg: "",
@@ -121,32 +116,15 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
       };
     }
   }
-
   return {
     feeAllowance: 0,
     donor: {
       title: "",
       first_name: "",
       last_name: "",
-      company_name: "",
       email: "",
-      ukTaxResident: false,
-      streetAddress: "",
-      zipCode: "",
-      isPublic: false,
-      publicMsg: "",
-      msg_to_npo: "",
-      is_with_msg_to_npo: false,
+      donor_public: true,
     },
-    honorary: {
-      honoraryFullName: "",
-      withHonorary: false,
-      withTributeNotif: false,
-      tributeNotif: {
-        from_msg: "",
-        to_email: "",
-        to_fullname: "",
-      },
-    },
+    honorary: { honorary_fullname: "", tribute_notif: init_tribute_notif },
   };
 };

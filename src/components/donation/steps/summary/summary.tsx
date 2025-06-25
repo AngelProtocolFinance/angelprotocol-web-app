@@ -1,5 +1,4 @@
 import { useRootData } from "hooks/use-root-data";
-import { initTributeNotif } from "../common/constants";
 import { currency } from "../common/currency";
 import { minFeeAllowance } from "../common/min-fee-allowance";
 import SummaryContainer from "../common/summary";
@@ -64,47 +63,30 @@ export default function Summary(props: SummaryStep) {
         recipientMembers={init.recipient.members}
         donor={
           donor || {
-            last_name: user?.lastName ?? "",
             first_name: user?.firstName ?? "",
+            last_name: user?.lastName ?? "",
             email: user?.email ?? "",
-            ukTaxResident: false,
             title: "",
-            zipCode: "",
-            streetAddress: "",
-            isPublic: true,
-            publicMsg: "",
-            msg_to_npo: "",
-            is_with_msg_to_npo: false,
-            company_name: "",
+            donor_public: true,
           }
         }
-        honorary={
-          honorary || {
-            withHonorary: false,
-            honoraryFullName: "",
-            withTributeNotif: false,
-            tributeNotif: initTributeNotif,
-          }
-        }
+        honorary={honorary}
         onSubmit={({
-          withHonorary,
-          honoraryFullName,
-          coverFee: fvCoverFee,
-          withTributeNotif,
-          tributeNotif,
+          with_honorary,
+          honorary_fullname,
+          with_tribute_notif,
+          tribute_notif,
+          is_with_msg_to_npo,
+          uk_tax_resident,
+          cover_fee: fv_cover_fee,
           ...donor
         }) => {
           setState({
             ...props,
             step: "submit",
             donor,
-            honorary: {
-              withHonorary,
-              honoraryFullName,
-              withTributeNotif,
-              tributeNotif,
-            },
-            feeAllowance: fvCoverFee
+            honorary: { honorary_fullname, tribute_notif },
+            feeAllowance: fv_cover_fee
               ? minFeeAllowance(details, tip?.value ?? 0)
               : 0,
           });

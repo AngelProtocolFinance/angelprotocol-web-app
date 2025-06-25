@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import type { FormDonor, Honorary } from "../types";
+import type { FormDonor } from "../types";
 import SummaryForm, { type Props } from "./summary-form";
 
 const mockOnSubmit = vi.fn();
@@ -9,33 +9,13 @@ const mockOnSubmit = vi.fn();
 const donor: FormDonor = {
   first_name: "",
   last_name: "",
-  company_name: "",
   email: "",
-  ukTaxResident: false,
   title: "",
-  zipCode: "",
-  streetAddress: "",
-  publicMsg: "",
-  msg_to_npo: "",
-  is_with_msg_to_npo: false,
-  isPublic: true,
-};
-
-const honorary: Honorary = {
-  withHonorary: false,
-  honoraryFullName: "",
-  withTributeNotif: false,
-  tributeNotif: {
-    from_msg: "",
-    to_email: "",
-    to_fullname: "",
-  },
 };
 
 const props: Props = {
   onSubmit: mockOnSubmit,
   donor,
-  honorary,
   coverFee: false,
   recipientName: "Test Nonprofit",
   recipientMembers: [],

@@ -65,27 +65,10 @@ const state: StripeCheckoutStep = {
     title: "",
     first_name: "first",
     last_name: "last",
-    company_name: "",
     email: "donor@gmail.com",
-    streetAddress: "street",
-    zipCode: "123",
-    ukTaxResident: false,
-    publicMsg: "",
-    msg_to_npo: "",
-    is_with_msg_to_npo: false,
-    isPublic: true,
   },
   feeAllowance: 10,
-  honorary: {
-    withHonorary: true,
-    honoraryFullName: "first last",
-    withTributeNotif: true,
-    tributeNotif: {
-      from_msg: "custom message",
-      to_email: "to@gmail.com",
-      to_fullname: "tofirst tolast",
-    },
-  },
+  honorary: {},
 };
 
 describe("stripe checkout", () => {

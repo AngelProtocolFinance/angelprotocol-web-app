@@ -33,12 +33,9 @@ export default function Form(props: Props) {
 
   return (
     <FormContainer
-      onSubmit={rhf.handleSubmit(
-        (fv) => {
-          setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }));
-        },
-        (err) => console.log(err)
-      )}
+      onSubmit={rhf.handleSubmit((fv) => {
+        setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }));
+      })}
       className="grid gap-4"
     >
       <Frequency
