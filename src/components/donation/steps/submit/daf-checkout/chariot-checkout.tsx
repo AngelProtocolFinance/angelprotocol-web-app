@@ -44,7 +44,7 @@ interface ChariotDonor extends InferOutput<typeof chariot_donor> {}
 const schema = object({
   is_with_msg_to_npo: boolean(),
   ...chariot_donor.entries,
-  with_honorary: boolean(),
+  with_tribute: boolean(),
   with_tribute_notif: boolean(),
   tribute: optional(tribute),
   cover_fee: boolean(),
@@ -57,7 +57,7 @@ const default_fv = (
 ): FV => {
   const fv: FV = {
     is_with_msg_to_npo: (donor?.public_msg?.length ?? 0) > 0,
-    with_honorary: false,
+    with_tribute: false,
     with_tribute_notif: false,
     cover_fee,
     ...donor,
@@ -97,7 +97,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const [with_donor_msg, set_with_donor_msg] = useState(
     (props.donor.public_msg?.length ?? 0) > 0
   );
-  const with_honorary = watch("with_honorary");
+  const with_tribute = watch("with_tribute");
   const with_tribute_notif = watch("with_tribute_notif");
   const fv_cover_fee = watch("cover_fee");
   const custom_msg = watch("tribute.notif.from_msg");
@@ -223,7 +223,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
       */}
 
           <CheckField
-            {...register("with_honorary", {
+            {...register("with_tribute", {
               onChange: (ev: ChangeEvent<HTMLInputElement>) => {
                 const x = ev.target.checked;
                 setValue("tribute", x ? { full_name: "" } : undefined);
@@ -235,7 +235,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             Dedicate my donation
           </CheckField>
 
-          {with_honorary && (
+          {with_tribute && (
             <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
               <Field
                 {...register("tribute.full_name")}

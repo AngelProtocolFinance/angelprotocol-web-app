@@ -40,10 +40,10 @@ const default_fv = (
     email: "",
     cover_fee,
     uk_tax_resident: false,
-    is_with_msg_to_npo: (donor?.public_msg?.length ?? 0) > 0,
+    is_with_msg_to_npo: (donor?.msg_to_npo?.length ?? 0) > 0,
     ...donor,
-    with_tribute: false,
-    with_tribute_notif: false,
+    with_tribute: tribute != null,
+    with_tribute_notif: tribute?.notif != null,
     tribute,
   };
   return fv;
