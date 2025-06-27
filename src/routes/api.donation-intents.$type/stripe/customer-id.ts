@@ -10,7 +10,7 @@ export async function get_customer_id(
   email: string
 ): Promise<Stripe.Customer["id"]> {
   // Search for existing Stripe Customer data
-  const subs: Stripe.Customer[] = [];
+  const actives: Stripe.Customer[] = [];
   let next_page: string | undefined;
   do {
     const result = await stripe.customers.search({
@@ -19,18 +19,17 @@ export async function get_customer_id(
       page: next_page,
     });
 
-    const filtered = result.data.filter(
-      (x) => !x.deleted && x.currency?.toUpperCase() === currency
-    );
-    subs.push(...filtered);
-
+    actives.push(...result.data.filter((x) => !x.deleted));
     if (result.next_page) next_page = result.next_page;
   } while (next_page);
 
-  if (subs.length === 0) {
+  if (actives.length === 0) {
     // no existing customer found, create a new one
     return stripe.customers.create({ email }).then((x) => x.id);
   }
+  const with_currency = actives.find(
+    (x) => x.currency?.toUpperCase() === currency
+  );
 
-  return subs[0].id;
+  return (with_currency || actives[0]).id;
 }
