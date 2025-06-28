@@ -1,7 +1,7 @@
 import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { dateFormat } from "helpers/date-format";
+import { toPP } from "helpers/date";
 import { Folder } from "lucide-react";
 import type { BankingApplicationStatus } from "types/applications";
 import LoadMoreBtn from "./load-more-btn";
@@ -48,7 +48,7 @@ export default function Table({
                 nextPageKey ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
-              <>{dateFormat(row.dateCreated)}</>
+              <>{toPP(row.dateCreated)}</>
               <>{row.endowmentID}</>
               <>{row.bankSummary}</>
               <td className="text-center">

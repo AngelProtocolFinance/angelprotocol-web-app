@@ -50,7 +50,7 @@ interface Props extends IForm {
   methods: UseFormReturn<any, any, any>;
 }
 
-export default forwardRef<HTMLFormElement, Props>(
+export const RhfForm = forwardRef<HTMLFormElement, Props>(
   ({ methods, ...props }, ref) => {
     return (
       <FormProvider {...methods}>

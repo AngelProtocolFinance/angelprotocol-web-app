@@ -1,1 +1,1 @@
-export { default } from "./chariot-checkout";
+export { ChariotCheckout } from "./chariot-checkout";

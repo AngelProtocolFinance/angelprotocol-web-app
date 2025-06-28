@@ -2,7 +2,7 @@ import { Link } from "@remix-run/react";
 import Copier from "components/copier";
 import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { dateFormat } from "helpers/date-format";
+import { toPP } from "helpers/date";
 import { humanize } from "helpers/decimal";
 import { maskAddress } from "helpers/mask-address";
 import { CircleCheck, X } from "lucide-react";
@@ -20,7 +20,7 @@ export default function Row(
       type="td"
       cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${props.classes}`}
     >
-      <span className="text-sm">{dateFormat(props.date)}</span>
+      <span className="text-sm">{toPP(props.date)}</span>
 
       {props.program_id ? (
         <Link

@@ -4,7 +4,7 @@ import ExtLink from "components/ext-link";
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
-import { dateFormat } from "helpers/date-format";
+import { toPP } from "helpers/date";
 import { humanize } from "helpers/decimal";
 import { maskAddress } from "helpers/mask-address";
 import useSort from "hooks/use-sort";
@@ -116,7 +116,7 @@ export default function Table({
               ) : (
                 <>--</>
               )}
-              <>{dateFormat(row.date)}</>
+              <>{toPP(row.date)}</>
               <span className="capitalize">
                 {donationMethod(
                   row.payment_method ?? { id: row.via_id, name: row.via_name }

@@ -1,5 +1,4 @@
 import { useRootData } from "hooks/use-root-data";
-import { initTributeNotif } from "../common/constants";
 import { currency } from "../common/currency";
 import { minFeeAllowance } from "../common/min-fee-allowance";
 import SummaryContainer from "../common/summary";
@@ -10,7 +9,7 @@ import SummaryForm from "./summary-form";
 
 export default function Summary(props: SummaryStep) {
   const user = useRootData();
-  const { details, donor, honorary, tip, init, feeAllowance } = props;
+  const { details, donor, tribute, tip, init, feeAllowance } = props;
 
   const { setState } = useDonationState();
 
@@ -64,47 +63,28 @@ export default function Summary(props: SummaryStep) {
         recipientMembers={init.recipient.members}
         donor={
           donor || {
-            last_name: user?.lastName ?? "",
             first_name: user?.firstName ?? "",
+            last_name: user?.lastName ?? "",
             email: user?.email ?? "",
-            ukTaxResident: false,
             title: "",
-            zipCode: "",
-            streetAddress: "",
-            isPublic: true,
-            publicMsg: "",
-            msg_to_npo: "",
-            is_with_msg_to_npo: false,
-            company_name: "",
+            is_public: true,
           }
         }
-        honorary={
-          honorary || {
-            withHonorary: false,
-            honoraryFullName: "",
-            withTributeNotif: false,
-            tributeNotif: initTributeNotif,
-          }
-        }
+        tribute={tribute}
         onSubmit={({
-          withHonorary,
-          honoraryFullName,
-          coverFee: fvCoverFee,
-          withTributeNotif,
-          tributeNotif,
+          with_tribute,
+          tribute,
+          with_tribute_notif,
+          is_with_msg_to_npo,
+          cover_fee: fv_cover_fee,
           ...donor
         }) => {
           setState({
             ...props,
             step: "submit",
             donor,
-            honorary: {
-              withHonorary,
-              honoraryFullName,
-              withTributeNotif,
-              tributeNotif,
-            },
-            feeAllowance: fvCoverFee
+            tribute,
+            feeAllowance: fv_cover_fee
               ? minFeeAllowance(details, tip?.value ?? 0)
               : 0,
           });

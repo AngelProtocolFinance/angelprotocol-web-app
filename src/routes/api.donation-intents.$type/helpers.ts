@@ -1,6 +1,6 @@
 import type { OnHoldDonation } from "@better-giving/donation";
-import type { DonationIntent } from "@better-giving/donation/intent";
 import type { Except } from "type-fest";
+import type { DonationIntent } from "types/donation-intent";
 import type { Recipient } from ".server/donation-recipient";
 import { env } from ".server/env";
 type TBase = Except<
@@ -22,9 +22,9 @@ export const onhold_base = (
     donationFinalized: false,
     endowmentId: recipient.npo.id,
 
-    donor_message: intent.donor_message,
-    msg_to_npo: intent.msg_to_npo,
-    donor_public: intent.donor_public,
+    donor_message: intent.donor.public_msg,
+    msg_to_npo: intent.donor.msg_to_npo,
+    donor_public: intent.donor.is_public,
 
     fund_id: recipient.fund.id,
     fund_name: recipient.name,

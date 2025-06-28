@@ -2,7 +2,7 @@ import type { QueryParams } from "@better-giving/registration/approval";
 import { PopoverButton, PopoverPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Combo } from "components/combo";
-import { Field, dateToFormFormat } from "components/form";
+import { Field, toYYYMMDD } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { Select } from "components/selector/select";
 import { countries, country_names } from "constants/countries";
@@ -35,10 +35,10 @@ export const Form: FC<Props> = ({
     resolver: valibotResolver(schema),
     values: {
       //set default value so empty can be tagged as invalid
-      start_date: dateToFormFormat(
+      start_date: toYYYMMDD(
         params.startDate ? new Date(params.startDate) : subWeeks(new Date(), 1)
       ),
-      end_date: dateToFormFormat(
+      end_date: toYYYMMDD(
         params.endDate ? new Date(params.endDate) : new Date()
       ),
       country: params.country ?? "",

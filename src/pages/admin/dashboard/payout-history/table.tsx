@@ -1,6 +1,6 @@
 import TableSection, { Cells } from "components/table-section";
 import { Arrow, Content, Tooltip } from "components/tooltip";
-import { dateFormat } from "helpers/date-format";
+import { toPP } from "helpers/date";
 import { humanize } from "helpers/decimal";
 import {
   ArrowLeft,
@@ -141,7 +141,7 @@ export default function Table({
                 }`}
               >
                 <td className="w-4">{tx(row.amount).icon}</td>
-                <>{dateFormat(row.date)}</>
+                <>{toPP(row.date)}</>
                 <>{tx(row.amount).description}</>
                 <>$ {humanize(row.amount)}</>
               </Cells>

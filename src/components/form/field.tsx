@@ -8,7 +8,7 @@ import {
   createElement,
   forwardRef,
 } from "react";
-import { Label } from ".";
+import { Label } from "./label";
 import type { Classes } from "./types";
 
 const textarea = "textarea" as const;

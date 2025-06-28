@@ -10,7 +10,7 @@ const stripeDonation: StripeDonationDetails = {
   method: "stripe",
   amount: "100",
   currency: { code: "usd", min: 1, rate: 1 },
-  frequency: "subscription",
+  frequency: "recurring",
   program: DEFAULT_PROGRAM,
 };
 

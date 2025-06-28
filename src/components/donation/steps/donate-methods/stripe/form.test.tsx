@@ -92,7 +92,7 @@ describe("Stripe form test", () => {
     const details: StripeDonationDetails = {
       amount: "60",
       currency: { code: currency_code, min: minimum_amount, rate },
-      frequency: "subscription",
+      frequency: "recurring",
       method: "stripe",
       program: { value: mockPrograms[0].id, label: mockPrograms[0].title },
     };
@@ -140,9 +140,6 @@ describe("Stripe form test", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveFocus();
 
-    await userEvent.type(amountInput, "abc");
-    expect(screen.getByText(/must be a number/i)).toBeInTheDocument();
-
     await userEvent.clear(amountInput);
     expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
 
@@ -165,20 +162,16 @@ describe("Stripe form test", () => {
     render(<Stub />);
 
     const amountInput = await screen.findByPlaceholderText(/enter amount/i);
-    await userEvent.type(amountInput, "abc");
 
     //user tries to increment invalid input
     const incrementers = screen.getAllByTestId("incrementer");
-    await userEvent.click(incrementers[0]);
-    expect(screen.getByText(/must be a number/i)).toBeInTheDocument();
-    expect(amountInput).toHaveFocus();
 
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, "13");
     await userEvent.click(incrementers[0]); // 50PHP * 40
-    expect(amountInput).toHaveDisplayValue("2013");
+    expect(amountInput).toHaveDisplayValue("2,013");
 
     await userEvent.click(incrementers[1]); // 50PHP * 100
-    expect(amountInput).toHaveDisplayValue("7013");
+    expect(amountInput).toHaveDisplayValue("7,013");
   });
 });

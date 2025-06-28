@@ -1,6 +1,6 @@
 import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/table-section";
-import { dateFormat } from "helpers/date-format";
+import { toPP } from "helpers/date";
 import { CircleCheck, FolderIcon } from "lucide-react";
 import type {
   BankingApplicationStatus,
@@ -43,7 +43,7 @@ export default function Table({ methods, classes = "" }: Props) {
             type="td"
             cellClass="p-3 border-t border-blue-l2 truncate first:rounded-bl last:rounded-br"
           >
-            <>{dateFormat(row.dateCreated)}</>
+            <>{toPP(row.dateCreated)}</>
             <>{row.bankSummary}</>
             <td className="text-center">
               <Status status={row.status} />

@@ -1,22 +1,22 @@
-import type {
-  Donor,
-  DonorTitle,
-  TributeNotif,
-} from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
-import type {
-  DetailedCurrency,
-  OptionType,
-  TokenWithDetails,
+import {
+  type OptionType,
+  type TokenWithDetails,
+  detailed_currency,
 } from "types/components";
+import { type Donor, type Tribute, frequency } from "types/donation-intent";
+export {
+  type Tribute,
+  type Frequency,
+  type Donor,
+  tribute,
+  donor,
+} from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
 import * as v from "valibot";
-
-export type { TributeNotif, Donor } from "@better-giving/donation/intent";
-export type Frequency = "one-time" | "subscription";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
@@ -41,34 +41,94 @@ export const isFund = (recipient: string) => v.UUID_REGEX.test(recipient); //is 
 export interface DonationRecipient
   extends v.InferOutput<typeof donationRecipient> {}
 
+export const program_opt = v.object({
+  label: v.string(),
+  value: v.string(),
+});
+
+export interface ProgramOption extends v.InferOutput<typeof program_opt> {}
+
 type BaseDonationDetails = {
   /** value is "" if no program is selected   */
   program: OptionType<string>;
 };
+
+export const base_donation_details = v.object({
+  program: program_opt,
+});
 
 export type CryptoDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
   token: TokenWithDetails;
 };
 
-type FiatDonationDetails = BaseDonationDetails & {
-  amount: string;
-  currency: DetailedCurrency;
-};
+export const amount = v.lazy((x) => {
+  if (!x) return v.pipe(v.string(), v.nonEmpty("Please enter an amount"));
+  return v.pipe(
+    v.string(),
+    v.transform((x) => +x),
+    v.minValue(0, "amount must be greater than 0"),
+    v.transform((x) => x.toString())
+  );
+});
 
-export type StripeDonationDetails = {
+export const fiat_donation_details = v.object({
+  ...base_donation_details.entries,
+  amount,
+  currency: detailed_currency,
+});
+
+export interface FiatDonationDetails
+  extends v.InferOutput<typeof fiat_donation_details> {}
+
+export const stripe_donation_details = v.pipe(
+  v.object({
+    frequency,
+    ...fiat_donation_details.entries,
+  }),
+  v.forward(
+    v.partialCheck(
+      [["amount"], ["currency"]],
+      ({ amount, currency }) => {
+        if (!currency.min) return true;
+        return +amount >= currency.min;
+      },
+      "less than min"
+    ),
+    ["amount"]
+  )
+);
+
+export interface StripeDonationDetails
+  extends v.InferOutput<typeof stripe_donation_details> {
   method: Extract<DonateMethodId, "stripe">;
-  frequency: Frequency;
-} & FiatDonationDetails;
+}
 
 export type StocksDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "stocks">;
   symbol: string;
   numShares: string;
 };
-export type DafDonationDetails = {
+
+export const daf_donation_details = v.pipe(
+  fiat_donation_details,
+  v.forward(
+    v.partialCheck(
+      [["amount"], ["currency"]],
+      ({ amount, currency }) => {
+        if (!currency.min) return true;
+        return +amount >= currency.min;
+      },
+      "less than min"
+    ),
+    ["amount"]
+  )
+);
+
+export interface DafDonationDetails
+  extends v.InferOutput<typeof daf_donation_details> {
   method: Extract<DonateMethodId, "daf">;
-} & FiatDonationDetails;
+}
 
 export type DonationDetails =
   | StripeDonationDetails
@@ -114,48 +174,20 @@ export type TipStep = {
   tip?: { value: number; format: TipFormat };
 } & From<FormStep>;
 
-export type FormDonor = Pick<
-  Donor,
-  "email" | "first_name" | "last_name" | "company_name"
-> & {
-  ukTaxResident: boolean;
-
-  title: DonorTitle;
-  /** initially empty `''` */
-  zipCode: string;
-  /** initially empty `''` */
-  streetAddress: string;
-
-  isPublic: boolean;
-  /** initially empty `''` */
-  publicMsg: string;
-  /** initially empty `''` */
-  is_with_msg_to_npo: boolean;
-  msg_to_npo: string;
-};
-
-export type Honorary = {
-  withHonorary: boolean;
-  /** initially empty `''` */
-  honoraryFullName: string;
-  withTributeNotif: boolean;
-  tributeNotif: TributeNotif;
-};
-
 export type SummaryStep = {
   step: "summary";
-  donor?: FormDonor;
-  honorary?: Honorary;
+  donor?: Donor;
+  tribute?: Tribute;
   feeAllowance?: number;
 } & From<TipStep, "tip">;
 
 export type FinishedSummaryData = Required<
-  Pick<SummaryStep, "donor" | "honorary" | "feeAllowance">
->;
+  Pick<SummaryStep, "donor" | "feeAllowance">
+> & { tribute?: Tribute };
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
+} & Omit<From<SummaryStep, "tip" | "tribute">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;

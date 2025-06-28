@@ -55,7 +55,7 @@ export default function Checkout(props: StripeCheckoutStep) {
     };
 
     const { error } =
-      props.details.frequency === "subscription"
+      props.details.frequency === "recurring"
         ? await stripe.confirmSetup(stripeConfirmParams)
         : await stripe.confirmPayment(stripeConfirmParams);
 
@@ -92,10 +92,10 @@ export default function Checkout(props: StripeCheckoutStep) {
               name: `${props.donor.first_name} ${props.donor.last_name}`,
               email: props.donor.email,
               /** we only collect address when donor wants to opt for uk gift aid */
-              ...(props.donor.ukTaxResident && {
+              ...(props.donor.address && {
                 address: {
-                  line1: props.donor.streetAddress,
-                  postal_code: props.donor.zipCode,
+                  line1: props.donor.address.street,
+                  postal_code: props.donor.address.zip_code,
                   country: "United Kingdom",
                 },
               }),

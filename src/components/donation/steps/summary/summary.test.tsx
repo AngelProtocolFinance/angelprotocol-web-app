@@ -5,7 +5,7 @@ import { stb } from "../__tests__/test-data";
 import { initTokenOption } from "../common/constants";
 import type {
   CryptoDonationDetails,
-  FormDonor,
+  Donor,
   StripeDonationDetails,
   SummaryStep,
 } from "../types";
@@ -23,19 +23,11 @@ const oneTimeStripeDetails: StripeDonationDetails = {
   program: { value: "prog_789", label: "Education Initiative" },
 };
 
-const donor: FormDonor = {
+const donor: Donor = {
   email: "john@doe.com",
   first_name: "John",
   last_name: "Doe",
-  company_name: "",
-  ukTaxResident: false,
   title: "Mr",
-  zipCode: "12345",
-  streetAddress: "123 Main St, Anytown, USA",
-  publicMsg: "",
-  msg_to_npo: "",
-  is_with_msg_to_npo: false,
-  isPublic: true,
 };
 
 const props: SummaryStep = {
@@ -74,7 +66,7 @@ describe("summary step", () => {
 
   const subsStripeDetails: StripeDonationDetails = {
     ...oneTimeStripeDetails,
-    frequency: "subscription",
+    frequency: "recurring",
   };
   test("total amount text - subscription", async () => {
     // render(<Summary {...props} details={subsStripeDetails} />);

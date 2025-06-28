@@ -7,10 +7,8 @@ import type {
 import type {
   DonationDetails,
   DonationState,
-  Donor,
   FinishedSummaryData,
-  FormDonor,
-  TributeNotif,
+  Tribute,
 } from "../types";
 
 export const DEFAULT_PROGRAM: OptionType<""> = {
@@ -74,38 +72,14 @@ export const initDetails = (
         method: "stripe",
         amount: "",
         currency: usdOption,
-        frequency: "subscription",
+        frequency: "recurring",
         program,
       };
     }
   }
 };
 
-export const toDonor = (
-  fv: Omit<
-    FormDonor,
-    "publicMsg" | "isPublic" | "is_with_msg_to_npo" | "msg_to_npo"
-  >
-): Donor => {
-  return {
-    title: fv.title,
-    email: fv.email,
-    first_name: fv.first_name,
-    last_name: fv.last_name,
-    company_name: fv.company_name,
-    address: fv.ukTaxResident
-      ? {
-          street: fv.streetAddress,
-          city: "",
-          zip_code: fv.zipCode,
-          country: "United Kingdom",
-          uk_gift_aid: fv.ukTaxResident,
-        }
-      : undefined,
-  };
-};
-
-export const initTributeNotif: TributeNotif = {
+export const init_tribute_notif: Tribute["notif"] = {
   to_email: "",
   to_fullname: "",
   from_msg: "",
@@ -113,40 +87,22 @@ export const initTributeNotif: TributeNotif = {
 
 export const summaryData = (state: DonationState): FinishedSummaryData => {
   if ("donor" in state) {
-    if (state.donor && state.honorary && state.feeAllowance) {
+    if (state.donor && state.tribute && state.feeAllowance) {
       return {
         donor: state.donor,
-        honorary: state.honorary,
+        tribute: state.tribute,
         feeAllowance: state.feeAllowance,
       };
     }
   }
-
   return {
     feeAllowance: 0,
     donor: {
       title: "",
       first_name: "",
       last_name: "",
-      company_name: "",
       email: "",
-      ukTaxResident: false,
-      streetAddress: "",
-      zipCode: "",
-      isPublic: false,
-      publicMsg: "",
-      msg_to_npo: "",
-      is_with_msg_to_npo: false,
-    },
-    honorary: {
-      honoraryFullName: "",
-      withHonorary: false,
-      withTributeNotif: false,
-      tributeNotif: {
-        from_msg: "",
-        to_email: "",
-        to_fullname: "",
-      },
+      is_public: true,
     },
   };
 };

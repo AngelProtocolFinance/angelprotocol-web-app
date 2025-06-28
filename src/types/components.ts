@@ -16,22 +16,29 @@ export type OptionType<V extends ValKey> = { label: string; value: V };
 
 //currency selector
 
-type BaseCurrency = {
-  name?: string;
-  code: string;
-};
+export const base_currency = v.object({
+  name: v.optional(v.string()),
+  /** uppercase ISO 4217 */
+  code: v.string(),
+});
+export interface BaseCurrency extends v.InferOutput<typeof base_currency> {}
 
-export type DetailedCurrency = BaseCurrency & {
-  /** unit/usd */
-  rate: number;
-  min: number;
-};
+export const detailed_currency = v.object({
+  ...base_currency.entries,
+  /** unit per usd */
+  rate: v.number(),
+  min: v.number(),
+});
 
-export type Currency = BaseCurrency & {
-  min?: number;
-  /** unit/usd */
-  rate: number | null;
-};
+export type DetailedCurrency = v.InferOutput<typeof detailed_currency>;
+
+export const currency = v.object({
+  ...base_currency.entries,
+  min: v.optional(v.number()),
+  rate: v.union([v.number(), v.null()]),
+});
+
+export interface Currency extends v.InferOutput<typeof currency> {}
 
 export type CurrencyOption = Currency | DetailedCurrency;
 /**

@@ -1,111 +1,95 @@
-import { donor_titles } from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { CheckField, Field, Form } from "components/form";
 import { Select } from "components/selector/select";
 import { Eraser, PenToolIcon } from "lucide-react";
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { useController, useForm } from "react-hook-form";
-import { schema } from "schemas/shape";
-import { mixed, string } from "yup";
+import { type Donor, donor, donor_titles } from "types/donation-intent";
+import {
+  donor_msg_to_npo_max_length,
+  donor_public_msg_max_length,
+} from "types/donation-intent";
+import { type InferOutput, boolean, object, optional } from "valibot";
 import ContinueBtn from "../common/continue-btn";
-import type { FormDonor, Honorary, Mode } from "../types";
+import { TributeFields } from "../common/tribute-fields";
+import { type Mode, type Tribute, tribute } from "../types";
 
-type FV = FormDonor & Honorary & { coverFee: boolean };
+const schema = object({
+  is_with_msg_to_npo: boolean(),
+  ...donor.entries,
+  with_tribute: boolean(),
+  with_tribute_notif: optional(boolean()),
+  tribute: optional(tribute),
+  cover_fee: boolean(),
+});
+
+interface FV extends InferOutput<typeof schema> {}
+
+const default_fv = (
+  cover_fee: boolean,
+  tribute?: Tribute,
+  donor?: Donor
+): FV => {
+  const fv: FV = {
+    title: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    cover_fee,
+    is_with_msg_to_npo: (donor?.msg_to_npo?.length ?? 0) > 0,
+    ...donor,
+    with_tribute: tribute != null,
+    with_tribute_notif: tribute?.notif != null,
+    tribute,
+  };
+  return fv;
+};
 
 export type Props = {
   onSubmit(formValues: FV): void;
   classes?: string;
-  donor: FormDonor;
-  honorary: Honorary;
+  donor?: Donor;
+  tribute?: Tribute;
   coverFee: boolean;
   recipientName: string;
   recipientMembers: string[];
   mode: Mode;
   method: DonateMethodId;
 };
-const ukTaxResidentKey: keyof FV = "ukTaxResident";
-const withHonoraryKey: keyof FV = "withHonorary";
-const withTributeNotifKey: keyof FV = "withTributeNotif";
 
 export default function SummaryForm({ classes = "", ...props }: Props) {
-  const CUSTOM_MSG_MAX_LENGTH = 250;
-  const PUBLIC_MSG_MAX_LENGTH = 500;
-  const MSG_TO_NPO_MAX_LENGTH = 500;
   const {
     handleSubmit,
     watch,
     formState: { errors },
     register,
     control,
+    setValue,
   } = useForm<FV>({
-    defaultValues: {
-      ...props.donor,
-      ...props.honorary,
-      coverFee: props.coverFee,
-    },
-    resolver: yupResolver(
-      schema<FV>({
-        first_name: string().required("Please enter your first name"),
-        last_name: string().required("Please enter your last name"),
-        publicMsg: string().max(
-          PUBLIC_MSG_MAX_LENGTH,
-          `max ${PUBLIC_MSG_MAX_LENGTH} characters`
-        ),
-        msg_to_npo: string().max(
-          MSG_TO_NPO_MAX_LENGTH,
-          `max ${MSG_TO_NPO_MAX_LENGTH} characters`
-        ),
-        company_name: string(),
-        email: string()
-          .required("Please enter your email")
-          .email("Please check your email for correctness"),
-        streetAddress: string().when(ukTaxResidentKey, (values, schema) => {
-          const [ukTaxResident] = values as [boolean];
-          return ukTaxResident ? schema.required("required") : schema;
-        }),
-        zipCode: string().when(ukTaxResidentKey, (values, schema) => {
-          const [ukTaxResident] = values as [boolean];
-          return ukTaxResident ? schema.required("required") : schema;
-        }),
-        honoraryFullName: string().when(withHonoraryKey, (values, schema) => {
-          const [withHonorary] = values as [boolean];
-          return withHonorary ? schema.required("required") : schema;
-        }),
-        tributeNotif: mixed().when(withTributeNotifKey, (values, obj) => {
-          const [withTributeNotif] = values as [boolean];
-          return !withTributeNotif
-            ? obj.optional()
-            : schema<FV["tributeNotif"]>({
-                to_fullname: string().required("required"),
-                to_email: string().required("required").email("invalid email"),
-                from_msg: string().max(
-                  CUSTOM_MSG_MAX_LENGTH,
-                  "must be less than 250 characters"
-                ),
-              });
-        }),
-      })
-    ),
+    defaultValues: default_fv(props.coverFee, props.tribute, props.donor),
+    resolver: valibotResolver(schema),
+    shouldUnregister: true,
   });
 
-  const [withDonorMsg, setWithDonorMsg] = useState<boolean>(
-    props.donor.publicMsg.length > 0
+  const [with_donor_msg, set_with_donor_msg] = useState<boolean>(
+    (props.donor?.public_msg?.length ?? 0) > 0
   );
 
-  const { field: title } = useController<FV, "title">({
+  const { field: title } = useController({
     name: "title",
     control,
   });
 
-  const ukTaxResident = watch("ukTaxResident");
-  const withHonorary = watch("withHonorary");
-  const withTributeNotif = watch("withTributeNotif");
-  const customMsg = watch("tributeNotif.from_msg");
-  const isPublic = watch("isPublic");
-  const publicMsg = watch("publicMsg");
+  const uk_tax_resident = watch("address.uk_gift_aid");
+  const with_tribute = watch("with_tribute");
+  const with_tribute_notif = watch("with_tribute_notif");
+  // tribute.notif can be undefined when unregisters
+  const custom_msg: string | undefined = watch("tribute.notif.from_msg");
+  const is_donor_public = watch("is_public");
+  const donor_public_msg = watch("public_msg");
+  const donor_msg_to_npo = watch("msg_to_npo");
   const is_with_msg_to_npo = watch("is_with_msg_to_npo");
-  const msg_to_npo = watch("msg_to_npo");
 
   return (
     <Form
@@ -171,46 +155,58 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
       />
       <div className="col-span-full flex gap-x-2 flex-wrap gap-y-1 items-center">
         <CheckField
-          {...register("isPublic", { onChange: () => setWithDonorMsg(false) })}
+          {...register("is_public", {
+            onChange: (ev: ChangeEvent<HTMLInputElement>) => {
+              const x = ev.target.checked;
+              if (!x) set_with_donor_msg(false);
+            },
+          })}
         >
           Share my support publicly
         </CheckField>
-        {isPublic && (
+        {is_donor_public && (
           <button
-            onClick={() => setWithDonorMsg((p) => !p)}
+            onClick={() => set_with_donor_msg((p) => !p)}
             type="button"
-            className={`${withDonorMsg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"} font-semibold normal-case flex items-center gap-x-1 text-xs`}
+            className={`${with_donor_msg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"} font-semibold normal-case flex items-center gap-x-1 text-xs`}
           >
-            {withDonorMsg ? (
+            {with_donor_msg ? (
               <Eraser size={12} className="shrink-0" />
             ) : (
               <PenToolIcon size={12} className="rotate-z-270 shrink-0" />
             )}
-            <span>{withDonorMsg ? "Remove" : "Add"} testimony</span>
+            <span>{with_donor_msg ? "Remove" : "Add"} testimony</span>
           </button>
         )}
       </div>
-      {isPublic && withDonorMsg && (
+      {is_donor_public && with_donor_msg && (
         <div className="col-span-full">
           <p
-            data-exceed={errors.publicMsg?.type === "max"}
+            data-exceed={errors.public_msg?.type === "max"}
             className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
           >
             {/** customMsg becomes undefined when unmounted */}
-            {publicMsg?.length ?? 0}/{PUBLIC_MSG_MAX_LENGTH}
+            {donor_public_msg?.length ?? 0}/{donor_public_msg_max_length}
           </p>
           <textarea
-            {...register("publicMsg", { shouldUnregister: true })}
-            aria-invalid={!!errors.publicMsg?.message}
+            {...register("public_msg")}
+            aria-invalid={!!errors.public_msg?.message}
             className="field-input w-full text-base font-semibold"
           />
           <p className="text-red text-xs empty:hidden text-right">
-            {errors.publicMsg?.message}
+            {errors.public_msg?.message}
           </p>
         </div>
       )}
       {props.recipientMembers.length < 2 && (
-        <CheckField {...register("is_with_msg_to_npo")} classes="mt-4">
+        <CheckField
+          {...register("is_with_msg_to_npo", {
+            onChange(ev: ChangeEvent<HTMLInputElement>) {
+              setValue("msg_to_npo", ev.target.checked ? "" : undefined);
+            },
+          })}
+          classes="mt-4"
+        >
           Add a note for {props.recipientName}
         </CheckField>
       )}
@@ -221,10 +217,10 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
             className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
           >
             {/** customMsg becomes undefined when unmounted */}
-            {msg_to_npo?.length ?? 0}/{MSG_TO_NPO_MAX_LENGTH}
+            {donor_msg_to_npo?.length ?? 0}/{donor_msg_to_npo_max_length}
           </p>
           <textarea
-            {...register("msg_to_npo", { shouldUnregister: true })}
+            {...register("msg_to_npo")}
             aria-invalid={!!errors.msg_to_npo?.message}
             className="field-input w-full text-base font-semibold"
           />
@@ -235,7 +231,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
       )}
 
       {(props.method === "crypto" || props.method === "stripe") && (
-        <CheckField {...register("coverFee")} classes="col-span-full mt-4">
+        <CheckField {...register("cover_fee")} classes="col-span-full mt-4">
           Cover payment processing fees for your donation{" "}
           <span className="text-gray text-sm">
             (&nbsp;{props.recipientName} receives the full amount&nbsp;)
@@ -249,106 +245,38 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
         </CheckField>
       )}
       */}
-      {ukTaxResident && (
+      {uk_tax_resident && (
         <div className="grid col-span-full gap-y-4 mt-2 mb-6">
           <Field
-            {...register("streetAddress")}
+            {...register("address.street")}
             label="House number"
             placeholder="e.g. 100 Better Giving Rd"
             classes={{ input: "field-input-donate" }}
             required
-            error={errors.streetAddress?.message}
+            error={errors.address?.street?.message}
           />
           <Field
-            {...register("zipCode")}
+            {...register("address.zip_code")}
             label="Postal code"
             placeholder="e.g. BG21 1BG"
             classes={{ input: "field-input-donate" }}
             required
-            error={errors.zipCode?.message}
+            error={errors.address?.zip_code?.message}
           />
         </div>
       )}
-      <CheckField {...register("withHonorary")} classes="col-span-full mt-4">
-        Dedicate my donation
-      </CheckField>
 
-      {withHonorary && (
-        <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
-          <Field
-            {...register("honoraryFullName", {
-              shouldUnregister: true,
-            })}
-            label="Honoree's name"
-            placeholder="e.g. Jane Doe"
-            classes={{
-              container: "[&_input]:bg-white",
-              input: "field-input-donate",
-            }}
-            required
-            error={errors.honoraryFullName?.message}
-          />
-          <CheckField
-            {...register("withTributeNotif")}
-            classes="col-span-full mt-3 text-sm"
-          >
-            Notify someone about this tribute
-          </CheckField>
+      <TributeFields
+        classes="mt-4 col-span-full"
+        register={register as any}
+        errors={errors}
+        wid={{
+          tribute: with_tribute,
+          tribute_notif: with_tribute_notif,
+        }}
+        custom_msg={custom_msg}
+      />
 
-          {withTributeNotif && (
-            <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
-              <Field
-                {...register("tributeNotif.to_fullname", {
-                  shouldUnregister: true,
-                })}
-                label="Recipient name"
-                placeholder="e.g. Jane Doe"
-                classes={{
-                  container: "[&_label]:text-sm [&_input]:text-sm",
-                  input: "field-input-donate",
-                }}
-                required
-                error={errors.tributeNotif?.to_fullname?.message}
-              />
-              <Field
-                {...register("tributeNotif.to_email", {
-                  shouldUnregister: true,
-                })}
-                label="Email address"
-                placeholder="e.g. janedoe@better.giving"
-                classes={{
-                  container: "[&_label]:text-sm [&_input]:text-sm",
-                  input: "field-input-donate",
-                }}
-                required
-                error={errors.tributeNotif?.to_email?.message}
-              />
-              <Field
-                {...register("tributeNotif.from_msg", {
-                  shouldUnregister: true,
-                })}
-                rows={2}
-                type="textarea"
-                label="Custom message"
-                placeholder="Message to recipient"
-                classes={{
-                  container: "[&_label]:text-sm [&_textarea]:text-sm",
-                  input: "field-input-donate",
-                }}
-                required={false}
-                error={errors.tributeNotif?.from_msg?.message}
-              />
-              <p
-                data-exceed={errors.tributeNotif?.from_msg?.type === "max"}
-                className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
-              >
-                {/** customMsg becomes undefined when unmounted */}
-                {customMsg?.length ?? 0}/{CUSTOM_MSG_MAX_LENGTH}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
       <ContinueBtn
         type="submit"
         disabled={props.mode === "preview"}

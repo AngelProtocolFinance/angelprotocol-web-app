@@ -1,9 +1,9 @@
 import { Description, Field, Input, Label } from "@headlessui/react";
-import { useMaskito } from "@maskito/react";
+import { MaskedInput } from "components/form";
+import { dollar } from "components/form/masks";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelpIcon } from "lucide-react";
 import { type OgInput, methods, methodsArr } from "types/donation-calculator";
-import { dollarMaskOpts, mask, unmask } from "./dollar-mask";
 import { PctSlider } from "./pct-slider";
 
 interface Props {
@@ -13,31 +13,27 @@ interface Props {
 }
 
 export function Form1({ classes = "", state, setState }: Props) {
-  const dollarMaskRef1 = useMaskito({ options: dollarMaskOpts });
-  const dollarMaskRef2 = useMaskito({ options: dollarMaskOpts });
   return (
     <form className={`${classes} p-6 @container`}>
       <h2 className="text-lg sm:text-xl mb-4">
         How Do You Manage Online Donations Today?
       </h2>
 
-      <div>
-        <label className="label text-base font-semibold">
-          Annual Online Donations
-        </label>
-        <p className="text-gray mb-1">
-          Total amount received through online platforms
-        </p>
-        <input
-          placeholder="$"
-          className="field-input text-base"
-          ref={dollarMaskRef1}
-          value={mask(state.amnt)}
-          onInput={(e) =>
-            setState({ ...state, amnt: unmask(e.currentTarget.value) })
-          }
-        />
-      </div>
+      <MaskedInput
+        id="annual-online-donations"
+        inputMode="decimal"
+        mask={dollar.opts}
+        value={dollar.mask(state.amnt)}
+        onChange={(x) => setState({ ...state, amnt: dollar.unmask(x) })}
+        label="Annual Online Donations"
+        placeholder="$"
+        classes={{
+          label: "label text-base font-semibold",
+          input: "field-input text-base",
+          container: "mb-4",
+        }}
+        sub="Total amount received through online platforms"
+      />
 
       <PctSlider
         range={[0, 0.1]}
@@ -56,23 +52,20 @@ export function Form1({ classes = "", state, setState }: Props) {
         tooltip="Platform fees are additional charges imposed by donation platform providers, separate from payment processing fees. These may include per-transaction fees or percentage-based platform fees."
       />
 
-      <div className="mt-6">
-        <label className="label text-base font-semibold mb-2">
-          Annual Platform Subscription Cost
-        </label>
-        <input
-          placeholder="$"
-          className="field-input text-base"
-          ref={dollarMaskRef2}
-          value={mask(state.subsCost)}
-          onInput={(e) =>
-            setState({
-              ...state,
-              subsCost: unmask(e.currentTarget.value),
-            })
-          }
-        />
-      </div>
+      <MaskedInput
+        id="annual-platform-subscription-cost"
+        inputMode="decimal"
+        mask={dollar.opts}
+        value={dollar.mask(state.subsCost)}
+        onChange={(x) => setState({ ...state, subsCost: dollar.unmask(x) })}
+        label="Annual Platform Subscription Cost"
+        placeholder="$"
+        classes={{
+          label: "label text-base font-semibold",
+          input: "field-input text-base",
+          container: "mt-6",
+        }}
+      />
 
       <Field className="mt-6">
         <div className="">

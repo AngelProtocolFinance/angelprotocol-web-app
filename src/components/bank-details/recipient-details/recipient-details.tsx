@@ -39,6 +39,12 @@ function RecipientDetails({
     );
   }
 
+  if (amount === 0) {
+    return (
+      <Info classes="text-sm">Please enter expected donation amount.</Info>
+    );
+  }
+
   if (requirements.length === 0 || error) {
     return (
       <Info classes="text-sm">

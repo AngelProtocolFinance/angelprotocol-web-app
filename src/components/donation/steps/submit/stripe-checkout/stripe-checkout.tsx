@@ -1,10 +1,9 @@
-import type { DonationIntent } from "@better-giving/donation/intent";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import useSWR from "swr/immutable";
-import { toDonor } from "../../common/constants";
+import type { DonationIntent } from "types/donation-intent";
 import { currency } from "../../common/currency";
 import Summary from "../../common/summary";
 import { useDonationState } from "../../context";
@@ -24,11 +23,11 @@ const fetcher = async (intent: DonationIntent) =>
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
+  const { init, details, tip, donor, tribute, feeAllowance } = props;
   const { setState } = useDonationState();
 
   const intent: DonationIntent = {
-    frequency: details.frequency === "subscription" ? "recurring" : "one-time",
+    frequency: details.frequency,
     amount: {
       amount: +details.amount,
       tip: tip?.value ?? 0,
@@ -36,29 +35,12 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       currency: details.currency.code,
     },
     recipient: init.recipient.id,
-    donor: toDonor(fvDonor),
+    donor,
     source: init.source,
     via_id: "fiat",
     via_name: "Stripe",
-    donor_public: fvDonor.isPublic,
+    tribute,
   };
-
-  if (fvDonor.msg_to_npo) {
-    intent.msg_to_npo = fvDonor.msg_to_npo;
-  }
-
-  if (fvDonor.publicMsg) {
-    intent.donor_message = fvDonor.publicMsg;
-  }
-
-  if (honorary.honoraryFullName) {
-    intent.tribute = {
-      full_name: honorary.honoraryFullName,
-    };
-    if (honorary.withTributeNotif) {
-      intent.tribute.notif = honorary.tributeNotif;
-    }
-  }
 
   if (details.program.value) {
     intent.program = {

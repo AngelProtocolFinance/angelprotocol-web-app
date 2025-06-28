@@ -26,7 +26,7 @@ export default function Frequency({ value, onChange, error }: Props) {
         Frequency <span className="text-red">*</span>
       </label>
       <div className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex">
-        <Radio value={"subscription" satisfies Freq} className={styles.option}>
+        <Radio value={"recurring" satisfies Freq} className={styles.option}>
           <span>Give Monthly</span>
           <Check size={16} className={styles.icon} />
         </Radio>

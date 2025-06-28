@@ -1,5 +1,4 @@
 import chains from "@better-giving/assets/chains";
-import type { DonationIntent } from "@better-giving/donation/intent";
 import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
 import QueryLoader from "components/query-loader";
@@ -7,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers/decimal";
 import useSWR from "swr/immutable";
 import type { Payment } from "types/crypto";
-import { toDonor } from "../../common/constants";
+import type { DonationIntent } from "types/donation-intent";
 import ContinueBtn from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";
 import { PayQr } from "./pay-qr";
@@ -26,14 +25,7 @@ const fetcher = async (intent: DonationIntent) =>
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
-  const {
-    details,
-    init,
-    tip,
-    donor: fvDonor,
-    feeAllowance,
-    honorary,
-  } = donation;
+  const { details, init, tip, donor, feeAllowance, tribute } = donation;
 
   const intent: DonationIntent = {
     frequency: "one-time",
@@ -47,26 +39,9 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     via_name: chains[details.token.network].name,
     recipient: init.recipient.id,
     source: init.source,
-    donor: toDonor(fvDonor),
-    donor_public: fvDonor.isPublic,
+    donor,
+    tribute,
   };
-
-  if (fvDonor.msg_to_npo) {
-    intent.msg_to_npo = fvDonor.msg_to_npo;
-  }
-
-  if (fvDonor.publicMsg) {
-    intent.donor_message = fvDonor.publicMsg;
-  }
-
-  if (honorary.honoraryFullName) {
-    intent.tribute = {
-      full_name: honorary.honoraryFullName,
-    };
-    if (honorary.withTributeNotif) {
-      intent.tribute.notif = honorary.tributeNotif;
-    }
-  }
 
   if (details.program.value) {
     intent.program = {
