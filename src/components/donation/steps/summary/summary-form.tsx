@@ -9,10 +9,10 @@ import { type Donor, donor, donor_titles } from "types/donation-intent";
 import {
   donor_msg_to_npo_max_length,
   donor_public_msg_max_length,
-  from_msg_max_length,
 } from "types/donation-intent";
 import { type InferOutput, boolean, object, optional } from "valibot";
 import ContinueBtn from "../common/continue-btn";
+import { TributeFields } from "../common/tribute-fields";
 import { type Mode, type Tribute, tribute } from "../types";
 
 const schema = object({
@@ -82,7 +82,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
   });
 
   const uk_tax_resident = watch("address.uk_gift_aid");
-  const with_honorary = watch("with_tribute");
+  const with_tribute = watch("with_tribute");
   const with_tribute_notif = watch("with_tribute_notif");
   // tribute.notif can be undefined when unregisters
   const custom_msg: string | undefined = watch("tribute.notif.from_msg");
@@ -265,77 +265,18 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
           />
         </div>
       )}
-      <CheckField {...register("with_tribute")} classes="col-span-full mt-4">
-        Dedicate my donation
-      </CheckField>
 
-      {with_honorary && (
-        <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
-          <Field
-            {...register("tribute.full_name")}
-            label="Honoree's name"
-            placeholder="e.g. Jane Doe"
-            classes={{
-              container: "[&_input]:bg-white",
-              input: "field-input-donate",
-            }}
-            required
-            error={errors.tribute?.full_name?.message}
-          />
-          <CheckField
-            {...register("with_tribute_notif")}
-            classes="col-span-full mt-3 text-sm"
-          >
-            Notify someone about this tribute
-          </CheckField>
+      <TributeFields
+        classes="mt-4 col-span-full"
+        register={register as any}
+        errors={errors}
+        wid={{
+          tribute: with_tribute,
+          tribute_notif: with_tribute_notif,
+        }}
+        custom_msg={custom_msg}
+      />
 
-          {with_tribute_notif && (
-            <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
-              <Field
-                {...register("tribute.notif.to_fullname")}
-                label="Recipient name"
-                placeholder="e.g. Jane Doe"
-                classes={{
-                  container: "[&_label]:text-sm [&_input]:text-sm",
-                  input: "field-input-donate",
-                }}
-                required
-                error={errors.tribute?.notif?.to_fullname?.message}
-              />
-              <Field
-                {...register("tribute.notif.to_email")}
-                label="Email address"
-                placeholder="e.g. janedoe@better.giving"
-                classes={{
-                  container: "[&_label]:text-sm [&_input]:text-sm",
-                  input: "field-input-donate",
-                }}
-                required
-                error={errors.tribute?.notif?.to_email?.message}
-              />
-              <Field
-                {...register("tribute.notif.from_msg")}
-                rows={2}
-                type="textarea"
-                label="Custom message"
-                placeholder="Message to recipient"
-                classes={{
-                  container: "[&_label]:text-sm [&_textarea]:text-sm",
-                  input: "field-input-donate",
-                }}
-                required={false}
-                error={errors.tribute?.notif?.from_msg?.message}
-              />
-              <p
-                data-exceed={errors.tribute?.notif?.from_msg?.type === "max"}
-                className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
-              >
-                {custom_msg?.length ?? 0}/{from_msg_max_length}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
       <ContinueBtn
         type="submit"
         disabled={props.mode === "preview"}

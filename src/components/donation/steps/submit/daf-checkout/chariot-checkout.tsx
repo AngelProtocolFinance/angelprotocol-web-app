@@ -31,6 +31,7 @@ import {
 import { currency } from "../../common/currency";
 import { minFeeAllowance } from "../../common/min-fee-allowance";
 import Summary from "../../common/summary";
+import { TributeFields } from "../../common/tribute-fields";
 import { useDonationState } from "../../context";
 import type { DafCheckoutStep, Tribute } from "../../types";
 import { DonationTerms } from "../donation-terms";
@@ -223,6 +224,16 @@ export function ChariotCheckout(props: DafCheckoutStep) {
       )}
       */}
 
+          <TributeFields
+            register={register as any}
+            errors={errors}
+            classes="mt-4 col-span-full"
+            wid={{
+              tribute_notif: with_tribute_notif,
+              tribute: with_tribute,
+            }}
+            custom_msg={custom_msg}
+          />
           <CheckField
             {...register("with_tribute")}
             classes="col-span-full mt-4"
