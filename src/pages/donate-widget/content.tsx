@@ -29,7 +29,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
       {config.isDescriptionTextShown && (
         <p className="text-xs text-center sm:text-base">
           {config.description ||
-            "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
+            "Select your preferred payment option from our comprehensive donation choices and get an immediate tax receipt for your records."}
         </p>
       )}
       <Steps
