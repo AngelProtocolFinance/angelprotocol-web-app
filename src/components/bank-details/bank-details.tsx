@@ -1,9 +1,11 @@
+import { MaskedInput } from "components/form";
+import { dollar } from "components/form/masks";
 import { Separator } from "components/separator";
+import { APP_NAME } from "constants/env";
 import useDebouncer from "hooks/use-debouncer";
 import { useState } from "react";
 import type { Currency } from "types/components";
 import CurrencySelector from "../currency-selector";
-import ExpectedFunds from "./expected-funds";
 import RecipientDetails from "./recipient-details";
 import type { IFormButtons, OnSubmit } from "./types";
 import { useCurrencies } from "./use-currencies";
@@ -38,8 +40,7 @@ export function BankDetails({
   const [amount, setAmount] = useState(
     DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
   );
-  const [debouncedAmount] = useDebouncer(amount, 500);
-  const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
+  const [debounced_amount] = useDebouncer(amount, 500);
 
   const handleSubmit: OnSubmit = async (...params) => {
     try {
@@ -66,9 +67,20 @@ export function BankDetails({
         label="Select your bank account currency:"
         required
       />
-      <ExpectedFunds
-        value={amount}
-        onChange={(amount) => setAmount(amount)}
+      <MaskedInput
+        id="expected-monthly-donations"
+        label="What is the amount you expect to receive monthly on our
+        platform?"
+        sub={
+          <p className="text-gray text-sm my-2 italic">
+            Depending on how much you expect to receive each month via{" "}
+            {APP_NAME}, different details are required. At this point, we
+            recommend using a conservative figure - Maybe $1000 per month.
+          </p>
+        }
+        mask={dollar.opts}
+        value={dollar.mask(+amount)}
+        onChange={(amount) => setAmount(dollar.unmask(amount).toString())}
         classes={{ input: "md:w-80" }}
         disabled={isSubmitting}
       />
@@ -77,7 +89,7 @@ export function BankDetails({
 
       <RecipientDetails
         verified={verified}
-        amount={amnt}
+        amount={+debounced_amount}
         currency={currency.code}
         disabled={isSubmitting || isLoading}
         FormButtons={FormButtons}
