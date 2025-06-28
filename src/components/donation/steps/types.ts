@@ -14,6 +14,7 @@ export {
   donor,
 } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
+import type { Ensure } from "types/utils";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
 import * as v from "valibot";
@@ -181,8 +182,9 @@ export type SummaryStep = {
   feeAllowance?: number;
 } & From<TipStep, "tip">;
 
-export type FinishedSummaryData = Required<
-  Pick<SummaryStep, "donor" | "tribute" | "feeAllowance">
+export type FinishedSummaryData = Ensure<
+  Pick<SummaryStep, "donor" | "tribute" | "feeAllowance">,
+  "donor"
 >;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {

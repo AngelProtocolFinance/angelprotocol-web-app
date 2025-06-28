@@ -104,6 +104,5 @@ export const summaryData = (state: DonationState): FinishedSummaryData => {
       email: "",
       is_public: true,
     },
-    tribute: { full_name: "", notif: init_tribute_notif },
   };
 };

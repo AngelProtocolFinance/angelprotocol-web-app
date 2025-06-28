@@ -12,16 +12,14 @@ import {
   from_msg_max_length,
 } from "types/donation-intent";
 import { type InferOutput, boolean, object, optional } from "valibot";
-import { init_tribute_notif } from "../common/constants";
 import ContinueBtn from "../common/continue-btn";
 import { type Mode, type Tribute, tribute } from "../types";
 
 const schema = object({
   is_with_msg_to_npo: boolean(),
-  uk_tax_resident: boolean(),
   ...donor.entries,
   with_tribute: boolean(),
-  with_tribute_notif: boolean(),
+  with_tribute_notif: optional(boolean()),
   tribute: optional(tribute),
   cover_fee: boolean(),
 });
@@ -39,7 +37,6 @@ const default_fv = (
     last_name: "",
     email: "",
     cover_fee,
-    uk_tax_resident: false,
     is_with_msg_to_npo: (donor?.msg_to_npo?.length ?? 0) > 0,
     ...donor,
     with_tribute: tribute != null,
@@ -72,6 +69,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
   } = useForm<FV>({
     defaultValues: default_fv(props.coverFee, props.tribute, props.donor),
     resolver: valibotResolver(schema),
+    shouldUnregister: true,
   });
 
   const [with_donor_msg, set_with_donor_msg] = useState<boolean>(
@@ -83,10 +81,11 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
     control,
   });
 
-  const uk_tax_resident = watch("uk_tax_resident");
+  const uk_tax_resident = watch("address.uk_gift_aid");
   const with_honorary = watch("with_tribute");
   const with_tribute_notif = watch("with_tribute_notif");
-  const custom_msg = watch("tribute.notif.from_msg");
+  // tribute.notif can be undefined when unregisters
+  const custom_msg: string | undefined = watch("tribute.notif.from_msg");
   const is_donor_public = watch("is_public");
   const donor_public_msg = watch("public_msg");
   const donor_msg_to_npo = watch("msg_to_npo");
@@ -159,10 +158,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
           {...register("is_public", {
             onChange: (ev: ChangeEvent<HTMLInputElement>) => {
               const x = ev.target.checked;
-              if (!x) {
-                setValue("public_msg", undefined);
-                set_with_donor_msg(false);
-              }
+              if (!x) set_with_donor_msg(false);
             },
           })}
         >
@@ -193,7 +189,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
             {donor_public_msg?.length ?? 0}/{donor_public_msg_max_length}
           </p>
           <textarea
-            {...register("public_msg", { shouldUnregister: true })}
+            {...register("public_msg")}
             aria-invalid={!!errors.public_msg?.message}
             className="field-input w-full text-base font-semibold"
           />
@@ -224,7 +220,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
             {donor_msg_to_npo?.length ?? 0}/{donor_msg_to_npo_max_length}
           </p>
           <textarea
-            {...register("msg_to_npo", { shouldUnregister: true })}
+            {...register("msg_to_npo")}
             aria-invalid={!!errors.msg_to_npo?.message}
             className="field-input w-full text-base font-semibold"
           />
@@ -269,25 +265,14 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
           />
         </div>
       )}
-      <CheckField
-        {...register("with_tribute", {
-          onChange: (ev: ChangeEvent<HTMLInputElement>) => {
-            const x = ev.target.checked;
-            setValue("tribute", x ? { full_name: "" } : undefined);
-            if (!x) setValue("tribute.notif", undefined);
-          },
-        })}
-        classes="col-span-full mt-4"
-      >
+      <CheckField {...register("with_tribute")} classes="col-span-full mt-4">
         Dedicate my donation
       </CheckField>
 
       {with_honorary && (
         <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
           <Field
-            {...register("tribute.full_name", {
-              shouldUnregister: true,
-            })}
+            {...register("tribute.full_name")}
             label="Honoree's name"
             placeholder="e.g. Jane Doe"
             classes={{
@@ -298,12 +283,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
             error={errors.tribute?.full_name?.message}
           />
           <CheckField
-            {...register("with_tribute_notif", {
-              onChange: (ev: ChangeEvent<HTMLInputElement>) => {
-                const x = ev.target.checked;
-                setValue("tribute.notif", x ? init_tribute_notif : undefined);
-              },
-            })}
+            {...register("with_tribute_notif")}
             classes="col-span-full mt-3 text-sm"
           >
             Notify someone about this tribute
@@ -312,9 +292,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
           {with_tribute_notif && (
             <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
               <Field
-                {...register("tribute.notif.to_fullname", {
-                  shouldUnregister: true,
-                })}
+                {...register("tribute.notif.to_fullname")}
                 label="Recipient name"
                 placeholder="e.g. Jane Doe"
                 classes={{
@@ -325,9 +303,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
                 error={errors.tribute?.notif?.to_fullname?.message}
               />
               <Field
-                {...register("tribute.notif.to_email", {
-                  shouldUnregister: true,
-                })}
+                {...register("tribute.notif.to_email")}
                 label="Email address"
                 placeholder="e.g. janedoe@better.giving"
                 classes={{
@@ -338,9 +314,7 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
                 error={errors.tribute?.notif?.to_email?.message}
               />
               <Field
-                {...register("tribute.notif.from_msg", {
-                  shouldUnregister: true,
-                })}
+                {...register("tribute.notif.from_msg")}
                 rows={2}
                 type="textarea"
                 label="Custom message"
@@ -356,7 +330,6 @@ export default function SummaryForm({ classes = "", ...props }: Props) {
                 data-exceed={errors.tribute?.notif?.from_msg?.type === "max"}
                 className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
               >
-                {/** customMsg becomes undefined when unmounted */}
                 {custom_msg?.length ?? 0}/{from_msg_max_length}
               </p>
             </div>

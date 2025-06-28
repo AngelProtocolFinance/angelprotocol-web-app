@@ -28,7 +28,6 @@ import {
   pick,
   safeParse,
 } from "valibot";
-import { init_tribute_notif } from "../../common/constants";
 import { currency } from "../../common/currency";
 import { minFeeAllowance } from "../../common/min-fee-allowance";
 import Summary from "../../common/summary";
@@ -44,8 +43,8 @@ interface ChariotDonor extends InferOutput<typeof chariot_donor> {}
 const schema = object({
   is_with_msg_to_npo: boolean(),
   ...chariot_donor.entries,
-  with_tribute: boolean(),
-  with_tribute_notif: boolean(),
+  with_tribute: optional(boolean()),
+  with_tribute_notif: optional(boolean()),
   tribute: optional(tribute),
   cover_fee: boolean(),
 });
@@ -57,8 +56,8 @@ const default_fv = (
 ): FV => {
   const fv: FV = {
     is_with_msg_to_npo: (donor?.public_msg?.length ?? 0) > 0,
-    with_tribute: false,
-    with_tribute_notif: false,
+    with_tribute: tribute != null,
+    with_tribute_notif: tribute?.notif != null,
     cover_fee,
     ...donor,
     tribute,
@@ -74,7 +73,7 @@ interface GrantMetaData extends FV {
   _amount: number;
 }
 
-export default function ChariotCheckout(props: DafCheckoutStep) {
+export function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
   const [prompt, setPrompt] = useState<IPromptV2>();
   const [grantState, setGrantState] = useState<"pending">();
@@ -86,10 +85,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
     register,
     trigger,
     getValues,
-    setValue,
   } = useForm<FV>({
     defaultValues: default_fv(!!props.feeAllowance, props.tribute, props.donor),
     resolver: valibotResolver(schema),
+    shouldUnregister: true,
   });
 
   /** save actual grant amount and reflect in Summary form */
@@ -100,7 +99,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const with_tribute = watch("with_tribute");
   const with_tribute_notif = watch("with_tribute_notif");
   const fv_cover_fee = watch("cover_fee");
-  const custom_msg = watch("tribute.notif.from_msg");
+  // tribute.notif can be undefined when unregisters
+  const custom_msg: string | undefined = watch("tribute.notif.from_msg");
   const is_public = watch("is_public");
   const public_msg = watch("public_msg");
 
@@ -142,9 +142,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             <CheckField
               {...register("is_public", {
                 onChange: (e: ChangeEvent<HTMLInputElement>) => {
-                  const x = e.target.checked;
-                  set_with_donor_msg(x);
-                  setValue("public_msg", x ? "" : undefined);
+                  if (!e.target.checked) set_with_donor_msg(false);
                 },
               })}
             >
@@ -175,7 +173,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 {public_msg?.length ?? 0}/{donor_public_msg_max_length}
               </p>
               <textarea
-                {...register("public_msg", { shouldUnregister: true })}
+                {...register("public_msg")}
                 aria-invalid={!!errors.public_msg?.message}
                 className="field-input w-full text-base font-semibold"
               />
@@ -185,7 +183,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             </div>
           )}
           {props.init.recipient.members.length < 2 && (
-            <CheckField {...register("is_with_msg_to_npo")} classes="mt-4">
+            <CheckField
+              {...register("is_with_msg_to_npo")}
+              classes="mt-4 col-span-full"
+            >
               Add a note for {props.init.recipient.name}
             </CheckField>
           )}
@@ -199,7 +200,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 {msg_to_npo?.length ?? 0}/{donor_msg_to_npo_max_length}
               </p>
               <textarea
-                {...register("msg_to_npo", { shouldUnregister: true })}
+                {...register("msg_to_npo")}
                 aria-invalid={!!errors.msg_to_npo?.message}
                 className="field-input w-full text-base font-semibold"
               />
@@ -223,13 +224,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
       */}
 
           <CheckField
-            {...register("with_tribute", {
-              onChange: (ev: ChangeEvent<HTMLInputElement>) => {
-                const x = ev.target.checked;
-                setValue("tribute", x ? { full_name: "" } : undefined);
-                if (!x) setValue("tribute.notif", undefined);
-              },
-            })}
+            {...register("with_tribute")}
             classes="col-span-full mt-4"
           >
             Dedicate my donation
@@ -249,15 +244,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 error={errors.tribute?.full_name?.message}
               />
               <CheckField
-                {...register("with_tribute_notif", {
-                  onChange: (ev: ChangeEvent<HTMLInputElement>) => {
-                    const x = ev.target.checked;
-                    setValue(
-                      "tribute.notif",
-                      x ? init_tribute_notif : undefined
-                    );
-                  },
-                })}
+                {...register("with_tribute_notif")}
                 classes="col-span-full mt-3 text-sm"
               >
                 Notify someone about this tribute
@@ -306,7 +293,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     }
                     className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
                   >
-                    {custom_msg.length}/{from_msg_max_length}
+                    {custom_msg?.length}/{from_msg_max_length}
                   </p>
                 </div>
               )}
