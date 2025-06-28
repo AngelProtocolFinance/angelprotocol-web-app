@@ -20,6 +20,7 @@ export function Form1({ classes = "", state, setState }: Props) {
       </h2>
 
       <MaskedInput
+        id="annual-online-donations"
         inputMode="decimal"
         mask={dollar.opts}
         value={dollar.mask(state.amnt)}
@@ -52,6 +53,7 @@ export function Form1({ classes = "", state, setState }: Props) {
       />
 
       <MaskedInput
+        id="annual-platform-subscription-cost"
         inputMode="decimal"
         mask={dollar.opts}
         value={dollar.mask(state.subsCost)}

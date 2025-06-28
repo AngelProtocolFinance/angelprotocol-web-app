@@ -108,11 +108,9 @@ export const from_msg_max_length = 250;
 export const tribute_notif = v.object({
   to_email: v.pipe(required_str, v.email("invalid email")),
   to_fullname: required_str,
-  from_msg: v.optional(
-    v.pipe(
-      str,
-      v.maxLength(from_msg_max_length, (x) => `max ${x.requirement} characters`)
-    )
+  from_msg: v.pipe(
+    str,
+    v.maxLength(from_msg_max_length, (x) => `max ${x.requirement} characters`)
   ),
 });
 

@@ -76,7 +76,6 @@ export default function Summary(props: SummaryStep) {
           tribute,
           with_tribute_notif,
           is_with_msg_to_npo,
-          uk_tax_resident,
           cover_fee: fv_cover_fee,
           ...donor
         }) => {

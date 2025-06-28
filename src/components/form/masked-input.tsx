@@ -1,13 +1,11 @@
 import type { MaskitoOptions } from "@maskito/core";
 import { useMaskito } from "@maskito/react";
 import { unpack } from "helpers/unpack";
-import { nanoid } from "nanoid";
 import {
   type InputHTMLAttributes,
   type ReactElement,
   type ReactNode,
   forwardRef,
-  useMemo,
 } from "react";
 import type { Classes } from "./types";
 
@@ -17,6 +15,7 @@ interface Base
   extends Pick<InputHTMLAttributes<El>, "placeholder" | "inputMode" | "type"> {}
 
 interface Props extends Base {
+  id: string;
   mask: MaskitoOptions;
   placeholder?: string;
   classes?: Classes | string;
@@ -30,18 +29,17 @@ interface Props extends Base {
 }
 
 export const MaskedInput = forwardRef<El, Props>((props, ref) => {
-  const id = useMemo(() => nanoid(6), []);
   const maskitoRef = useMaskito({ options: props.mask });
   // extract `required` to disable native validation
   const style = unpack(props.classes);
-  const errorId = `error_${id}`;
+  const errorId = `error_${props.id}`;
 
   return (
     <div className={style.container + " "}>
       <label
         data-required={props.required}
         className={style.label + ` label ${props.sub ? "" : "mb-2"}`}
-        htmlFor={id}
+        htmlFor={props.id}
       >
         {props.label}
       </label>
@@ -64,7 +62,7 @@ export const MaskedInput = forwardRef<El, Props>((props, ref) => {
             ref.current = node;
           }
         }}
-        id={id}
+        id={props.id}
         inputMode={props.inputMode}
         placeholder={props.placeholder}
         value={props.value}

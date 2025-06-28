@@ -36,6 +36,7 @@ export default function Form(props: Props) {
         required
       />
       <MaskedInput
+        id="donation-amount"
         inputMode="decimal"
         mask={currency.opts}
         ref={rhf.amount.ref}

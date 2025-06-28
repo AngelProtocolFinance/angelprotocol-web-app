@@ -60,6 +60,7 @@ export default function Form(props: Props) {
         required
       />
       <MaskedInput
+        id="donation-amount"
         inputMode="decimal"
         mask={curr_mask.opts}
         ref={rhf.amount.ref}
