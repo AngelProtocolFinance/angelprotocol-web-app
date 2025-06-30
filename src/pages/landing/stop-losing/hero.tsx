@@ -12,9 +12,9 @@ export default function Hero({ className = "" }) {
         <p className="text-center @6xl:text-left text-gray-d4 mb-5">
           Used by 100+ nonprofits • $6M+ saved from fees
         </p>
-        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-gray-d4">
-          Stop Losing <span className="text-blue-d1">$3,000+</span> Every Year
-          to Donation Fees.
+        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-gray-d4 text-balance mb-4 ">
+          Stop Losing <span className="text-blue">$3,000+</span> Every Year to
+          Donation Fees.
         </h1>
         <p className="mb-4 text-lg @6xl:text-xl text-center @6xl:text-left">
           Every donation costs you 3-7% in fees. That's $3,000 lost on $100,000
