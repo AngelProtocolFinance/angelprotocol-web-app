@@ -7,9 +7,9 @@ interface Props {
 export function Section2({ classes = "" }: Props) {
   return (
     <div className={`${classes} py-26`}>
-      <h1 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
+      <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
         Why <span className="text-red">pay $3,000</span> to accept $100,000?
-      </h1>
+      </h2>
       <p className="text-xl @6xl:text-2xl mb-6 font-heading @6xl:leading-tight capitalize text-gray-d1 font-medium text-center text-balance">
         Every donation shouldn't cost you money.
       </p>
