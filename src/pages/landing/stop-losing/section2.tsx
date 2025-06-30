@@ -1,4 +1,4 @@
-import { ClockIcon, TriangleAlertIcon } from "lucide-react";
+import { ClockIcon, TrendingDownIcon, TriangleAlertIcon } from "lucide-react";
 
 interface Props {
   classes?: string;
@@ -38,7 +38,7 @@ export function Section2({ classes = "" }: Props) {
           </p>
         </div>
         <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm justify-self-center">
-          <TriangleAlertIcon className="text-blue justify-self-center" />
+          <TrendingDownIcon className="text-blue justify-self-center" />
           <h4 className="capitalize text-center">Dead money earns nothing</h4>
           <p className="text-center">
             Your reserves sit in{" "}
