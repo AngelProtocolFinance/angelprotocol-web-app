@@ -14,7 +14,7 @@ export function Section2({ classes = "" }: Props) {
         Every donation shouldn't cost you money.
       </p>
       <div className="grid @6xl:grid-cols-3 gap-4">
-        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm justify-self-center">
+        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
           <TriangleAlertIcon className="text-blue justify-self-center" />
           <h4 className="capitalize text-center">
             High fees steal your impact
@@ -27,7 +27,7 @@ export function Section2({ classes = "" }: Props) {
             to processing fees. That's an entire arts program. Gone.
           </p>
         </div>
-        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm justify-self-center">
+        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
           <ClockIcon className="text-blue justify-self-center" />
           <h4 className="capitalize text-center">
             Admin works devours your time
@@ -37,7 +37,7 @@ export function Section2({ classes = "" }: Props) {
             donation tracking, receipts, reports. Time stolen from your mission.
           </p>
         </div>
-        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm justify-self-center">
+        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
           <TrendingDownIcon className="text-blue justify-self-center" />
           <h4 className="capitalize text-center">Dead money earns nothing</h4>
           <p className="text-center">
