@@ -40,9 +40,9 @@ export default function Hero({ className = "" }) {
           </Link>
           <Link
             to={BOOK_A_DEMO}
-            className="capitalize bg-white border-blue-d1 text-blue-d1 active:translate-x-1 font-bold font-heading border-2 rounded-full px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
+            className="capitalize text-center bg-white border-blue-d1 text-blue-d1 active:translate-x-1 font-bold font-heading border-2 rounded-full px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
           >
-            See how in 5 Minutes ( Demo )
+            See how in 5 Minutes (&nbsp;Demo&nbsp;)
           </Link>
         </div>
       </div>
