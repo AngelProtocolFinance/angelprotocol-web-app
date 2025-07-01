@@ -30,7 +30,6 @@ export type Base = Pick<
   | "donationFinalTxHash"
   | "donationFinalDenom"
   | "company_name"
-  | "msg_to_npo"
 > &
   (Donation.WithKYC | Donation.WithoutKYC);
 
@@ -70,6 +69,7 @@ export interface Overrides {
   endowName: string;
   claimed: boolean;
   fiscal_sponsored: boolean;
+  msg_to_npo?: string;
 }
 
 export function settle_txs(base: Base, o: Overrides): TxItems {
@@ -100,6 +100,10 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
   if (o.referrer) {
     uniques.referrer = o.referrer.id;
     uniques.referrer_commission = o.referrer.commission;
+  }
+
+  if (o.msg_to_npo) {
+    uniques.msg_to_npo = o.msg_to_npo;
   }
 
   const record: Donation.V2DBRecord = {
