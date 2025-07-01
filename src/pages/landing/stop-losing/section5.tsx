@@ -76,7 +76,7 @@ export function Section5({ classes = "" }: { classes?: string }) {
               {item.icon}
             </div>
             <div className="ml-4">
-              <h4 className="text-2xl @max-3xl:text-center font-semibold relative flex items-center">
+              <h4 className="text-2xl @max-3xl:text-center font-semibold relative">
                 <span className="absolute -left-8 text-2xl hidden @3xl:block">
                   {item.emoji}
                 </span>
