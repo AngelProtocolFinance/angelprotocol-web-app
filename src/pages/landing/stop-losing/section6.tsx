@@ -36,7 +36,8 @@ export function Section6({ classes = "" }: { classes?: string }) {
   return (
     <div className={`${classes} py-26 grid`}>
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
-        "What's the Catch?" <span className="text-blue">(There Isn't One)</span>
+        "What's the Catch?"{" "}
+        <span className="text-blue">(There&nbsp;Isn't One)</span>
       </h2>
       <div className="grid gap-y-16 justify-self-center mt-8">
         {items.map((item, index) => (
