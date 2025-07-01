@@ -79,7 +79,7 @@ export function Section3({ classes = "" }: Props) {
       </div>
       <Link
         to={`${appRoutes.register}/welcome`}
-        className="block mt-8 text-center justify-self-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading capitalize font-bold shadow-2xl rounded-full"
+        className="block mt-8 text-center justify-self-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading capitalize font-bold shadow-2xl rounded-xl"
       >
         Reclaim my donations - Free signup
       </Link>
