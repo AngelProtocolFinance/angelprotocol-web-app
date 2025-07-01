@@ -18,7 +18,7 @@ export const Testimonials = ({ classes = "" }) => {
   });
 
   return (
-    <div className={` ${classes} grid relative pt-48 overflow-x-clip`}>
+    <div className={` ${classes} grid pt-48 overflow-x-clip`}>
       <img
         src={quotation}
         alt="quotation mark"
@@ -28,24 +28,16 @@ export const Testimonials = ({ classes = "" }) => {
         Nonprofit Success Stories: <br /> Inspiring Change Together
       </h3>
 
-      <div className="relative w-[90vw] lg:w-[80vw] mx-auto">
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="flex-[0_0_100%] sm:flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-2.5"
-              >
-                <Card key={index} {...testimonial} />
-              </div>
-            ))}
-          </div>
+      <div className="overflow-hidden relative" ref={emblaRef}>
+        <div className="flex gap-x-8">
+          {testimonials.map((testimonial, index) => (
+            <Card key={index} {...testimonial} />
+          ))}
         </div>
-
         <button
           type="button"
           onClick={() => emblaApi?.scrollPrev()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 -left-5"
+          className="p-4  text-blue-d1 z-10 absolute -top-4 left-0"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -53,7 +45,7 @@ export const Testimonials = ({ classes = "" }) => {
         <button
           type="button"
           onClick={() => emblaApi?.scrollNext()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 -right-5"
+          className="p-4  text-blue-d1 z-10 absolute -top-4 right-0"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" />
