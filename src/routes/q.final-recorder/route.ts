@@ -149,7 +149,7 @@ export const action: ActionFunction = async ({ request }) => {
           endowName: endow.name,
           claimed: endow.claimed,
           fiscal_sponsored: endow.fiscal_sponsored,
-          msg_to_npo: tx.from.message,
+          msg_to_npo: num_members === 1 ? tx.from.message : undefined,
         };
 
         // for fund members without referrer, commission remains with BG
