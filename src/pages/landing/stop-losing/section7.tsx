@@ -9,6 +9,13 @@ const features = [
   "🛡️ 100% secure - FDIC protected",
   "📞 Human support - when you need it",
 ];
+
+const badges = [
+  "no credit card required",
+  "501(c)(3) verified",
+  "used by 100+ nonprofits",
+];
+
 export function Section7({ classes = "" }: { classes?: string }) {
   return (
     <div className={`${classes} py-26 grid`}>
@@ -26,17 +33,22 @@ export function Section7({ classes = "" }: { classes?: string }) {
         Join 100+ arts nonprofits who've eliminated fees and reclaimed their
         financial power.
       </p>
-      <div className="grid gap-4 grid-cols-2 justify-self-center mt-8">
+      <div className="grid gap-10 grid-cols-2 justify-self-center mt-12">
         {features.map((x, idx) => (
-          <div key={idx} className="flex items-center gap-x-4">
+          <div
+            key={idx}
+            className="flex @max-3xl:flex-col items-center gap-x-4"
+          >
             <div className="relative p-3 bg-blue-l2 rounded-full">
               <CheckIcon
-                className="absolute-center stroke-white"
+                className="absolute-center stroke-white "
                 size={15}
                 strokeWidth={4}
               />
             </div>
-            <p className="text-white font-semibold">{x}</p>
+            <p className="text-white font-semibold @max-3xl:text-center @max-3xl:mt-4">
+              {x}
+            </p>
           </div>
         ))}
       </div>
@@ -53,6 +65,16 @@ export function Section7({ classes = "" }: { classes?: string }) {
         >
           Questions? Chat with our nonprofit team
         </Link>
+      </div>
+      <div className="bg-blue-l5/10 text-white rounded-xl p-8 mt-8">
+        <h6 className="text-center mb-4">Trust Badge:</h6>
+        <div className="flex flex-wrap justify-center items-center gap-8">
+          {badges.map((badge, idx) => (
+            <p key={idx} className="flex items-center gap-x-2 text-sm">
+              <CheckIcon className="stroke-green-l3" size={18} /> {badge}
+            </p>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ interface Props {
 
 export function Section2({ classes = "" }: Props) {
   return (
-    <div className={`${classes} py-26`}>
+    <div className={`${classes}`}>
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
         Why <span className="text-red">pay $3,000</span> to accept $100,000?
       </h2>
@@ -15,8 +15,11 @@ export function Section2({ classes = "" }: Props) {
       </p>
       <div className="grid @6xl:grid-cols-3 gap-4">
         <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
-          <TriangleAlertIcon className="text-blue justify-self-center" />
-          <h4 className="capitalize text-center">
+          <TriangleAlertIcon
+            size={30}
+            className="text-blue justify-self-center"
+          />
+          <h4 className="text-lg capitalize text-center">
             High fees steal your impact
           </h4>
           <p className="text-center">
@@ -28,8 +31,8 @@ export function Section2({ classes = "" }: Props) {
           </p>
         </div>
         <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
-          <ClockIcon className="text-blue justify-self-center" />
-          <h4 className="capitalize text-center">
+          <ClockIcon size={30} className="text-blue justify-self-center" />
+          <h4 className="text-lg capitalize text-center">
             Admin works devours your time
           </h4>
           <p className="text-center">
@@ -38,8 +41,13 @@ export function Section2({ classes = "" }: Props) {
           </p>
         </div>
         <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
-          <TrendingDownIcon className="text-blue justify-self-center" />
-          <h4 className="capitalize text-center">Dead money earns nothing</h4>
+          <TrendingDownIcon
+            size={30}
+            className="text-blue justify-self-center"
+          />
+          <h4 className="text-lg capitalize text-center">
+            Dead money earns nothing
+          </h4>
           <p className="text-center">
             Your reserves sit in{" "}
             <span className="text-red font-medium">0.1% savings</span> while

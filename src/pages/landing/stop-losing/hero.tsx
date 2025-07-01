@@ -16,25 +16,24 @@ export default function Hero({ className = "" }) {
           Stop Losing <span className="text-blue">$3,000+</span> Every Year to
           Donation Fees.
         </h1>
-        <p className="mb-4 text-lg @6xl:text-xl text-center @6xl:text-left">
+        <p className="mb-4 text-lg @6xl:text-xl text-balance text-center @6xl:text-left">
           Every donation costs you 3-7% in fees. That's $3,000 lost on $100,000
           raised.
         </p>
-        <p className="mb-4 text-lg @6xl:text-xl text-center @6xl:text-left">
-          {APP_NAME} ends this robbery.
-          <br />
+        <p className="mb-4 text-lg @6xl:text-xl text-balance text-center @6xl:text-left">
+          {APP_NAME} ends this robbery.{" "}
           <span className="font-semibold">
             Zero platform fees. Your donors' money goes 100% to your mission.
           </span>
         </p>
-        <p className="mb-10 text @6xl:text-lg text-center @6xl:text-left">
+        <p className="mb-4 mt-10 text-center @6xl:text-left text-gray-d1">
           **Every day you wait costs another $47.**
         </p>
 
         <div className="flex flex-col @xl:flex-row justify-center @6xl:justify-start items-center gap-6">
           <Link
             to={`${appRoutes.register}/welcome`}
-            className="btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-xl"
+            className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-xl"
           >
             Start free
           </Link>

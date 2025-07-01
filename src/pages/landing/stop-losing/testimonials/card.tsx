@@ -3,7 +3,7 @@ import type { Testimonial } from "content/testimonials";
 
 export const Card = (props: Testimonial) => {
   return (
-    <div className="shrink-0 max-w-80">
+    <div className="shrink-0 max-w-96">
       <Image
         width={120}
         height={120}
