@@ -18,7 +18,7 @@ export const Testimonials = ({ classes = "" }) => {
   });
 
   return (
-    <div className={` ${classes} grid relative pt-48`}>
+    <div className={` ${classes} grid relative pt-48 overflow-x-clip`}>
       <img
         src={quotation}
         alt="quotation mark"
@@ -36,7 +36,7 @@ export const Testimonials = ({ classes = "" }) => {
                 key={index}
                 className="flex-[0_0_100%] sm:flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-2.5"
               >
-                <Card {...testimonial} />
+                <Card key={index} {...testimonial} />
               </div>
             ))}
           </div>

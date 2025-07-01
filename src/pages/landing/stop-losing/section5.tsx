@@ -22,7 +22,7 @@ export const items: Item[] = [
     description:
       "Accept cash, credit, stock, crypto, DAF donations. One simple form. No multiple platforms. No complexity.",
     result: "Result: Never lose a donor due to payment limitations.",
-    icon: <TargetIcon className="text-blue-l2" size={50} />,
+    icon: <TargetIcon className="text-blue-l2" size={30} />,
   },
   {
     emoji: "⚡",
@@ -30,7 +30,7 @@ export const items: Item[] = [
     description:
       "Register today. Accept donations tonight. No technical headaches. No waiting weeks.",
     result: "Result: Start saving on fees immediately.",
-    icon: <ZapIcon className="text-blue-l2" size={50} />,
+    icon: <ZapIcon className="text-blue-l2" size={30} />,
   },
   {
     emoji: "🛡️",
@@ -38,7 +38,7 @@ export const items: Item[] = [
     description:
       "FDIC-insured. PCI-compliant. Built by a 501(c)(3). Your donors' data is fortress-protected.",
     result: "Result: Sleep easy knowing everything's secure.",
-    icon: <Shield className="text-blue-l2" size={50} />,
+    icon: <Shield className="text-blue-l2" size={30} />,
   },
   {
     emoji: "📊",
@@ -47,7 +47,7 @@ export const items: Item[] = [
       "See every donation, track growth, download reports instantly. No more manual tracking.",
     result: "Result: Financial clarity in seconds, not hours.",
     icon: (
-      <ChartNoAxesColumnIncreasingIcon className="text-blue-l2" size={50} />
+      <ChartNoAxesColumnIncreasingIcon className="text-blue-l2" size={30} />
     ),
   },
   {
@@ -56,29 +56,36 @@ export const items: Item[] = [
     description:
       "Withdraw funds anytime. Choose savings or investment options. You stay in complete control.",
     result: "Result: Flexibility without sacrificing growth.",
-    icon: <DollarSignIcon className="text-blue-l2" size={50} />,
+    icon: <DollarSignIcon className="text-blue-l2" size={30} />,
   },
 ];
 
 export function Section5({ classes = "" }: { classes?: string }) {
   return (
-    <div className={`${classes} py-26`}>
+    <div className={`${classes} py-26 grid`}>
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
         How We End Your Financial Pain
       </h2>
-      <div>
+      <div className="grid gap-y-16 justify-self-center mt-8">
         {items.map((item, index) => (
-          <div key={index} className="flex items-center gap-x-8 last:mb-0">
-            {item.icon}
+          <div
+            key={index}
+            className="flex @max-3xl:flex-col gap-y-4 items-center gap-x-16 last:mb-0"
+          >
+            <div className="flex items-center justify-center p-4 rounded-full bg-blue-l5">
+              {item.icon}
+            </div>
             <div className="ml-4">
-              <h4 className="text-xl font-medium relative flex items-center">
-                <span className="absolute -left-7 text-2xl bottom-[0.5px]">
+              <h4 className="text-2xl @max-3xl:text-center font-semibold relative flex items-center">
+                <span className="absolute -left-8 text-2xl hidden @3xl:block">
                   {item.emoji}
                 </span>
                 {item.title}
               </h4>
-              <p className="mt-2 text-gray-700">{item.description}</p>
-              <p className="mt-1 italic font-semibold text-blue-l1">
+              <p className="mt-2 text-lg  @max-3xl:text-center">
+                {item.description}
+              </p>
+              <p className="mt-1 italic font-semibold text-blue-l1  @max-3xl:text-center">
                 {item.result}
               </p>
             </div>
