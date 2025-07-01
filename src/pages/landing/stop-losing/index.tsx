@@ -12,11 +12,11 @@ export default function Page() {
     <main className="w-full grid content-start pb-16 @container">
       <Hero className="xl:container xl:mx-auto px-10" />
       <Section1 classes="xl:container xl:mx-auto px-10" />
-      <Section2 classes="xl:container xl:mx-auto px-10" />
-      <Section3 classes="xl:container xl:mx-auto px-10" />
+      <Section2 classes="xl:container xl:mx-auto px-10 mt-48" />
+      <Section3 classes="xl:container xl:mx-auto px-10 mt-48" />
       <Testimonials classes="xl:container xl:mx-auto px-10" />
-      <Section5 classes="xl:container xl:mx-auto px-10" />
-      <Section6 classes="xl:container xl:mx-auto px-10" />
+      <Section5 classes="xl:container xl:mx-auto px-10 mt-24" />
+      <Section6 classes="xl:container xl:mx-auto px-10 mt-24" />
       <div className="bg-gradient-to-tr from-blue to-blue-l1">
         <Section7 classes="xl:container xl:mx-auto px-10" />
       </div>
