@@ -4,6 +4,7 @@ import { Section2 } from "./section2";
 import { Section3 } from "./section3";
 import { Section5 } from "./section5";
 import { Section6 } from "./section6";
+import { Section7 } from "./section7";
 import { Testimonials } from "./testimonials";
 
 export default function Page() {
@@ -16,6 +17,9 @@ export default function Page() {
       <Testimonials classes="xl:container xl:mx-auto px-10" />
       <Section5 classes="xl:container xl:mx-auto px-10" />
       <Section6 classes="xl:container xl:mx-auto px-10" />
+      <div className="bg-gradient-to-tr from-blue to-blue-l1">
+        <Section7 classes="xl:container xl:mx-auto px-10" />
+      </div>
     </main>
   );
 }
