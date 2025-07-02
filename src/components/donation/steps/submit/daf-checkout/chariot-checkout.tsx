@@ -418,8 +418,8 @@ export function ChariotCheckout(props: DafCheckoutStep) {
 
               setPrompt(undefined);
 
-              const to = encodeURIComponent(props.init.recipient.name);
-              navigate(`${appRoutes.donate_thanks}?recipient_name=${to}`);
+              const search = `?name=${encodeURIComponent(props.init.recipient.name)}&id=${props.init.recipient.id}`;
+              navigate(`${appRoutes.donate_thanks}${search}`);
             } catch (err) {
               setPrompt(errorPrompt(err, { context: "processing donation" }));
             } finally {

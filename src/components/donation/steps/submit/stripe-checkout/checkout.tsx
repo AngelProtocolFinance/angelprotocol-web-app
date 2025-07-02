@@ -44,8 +44,8 @@ export default function Checkout(props: StripeCheckoutStep) {
     const search = `?name=${encoded_name}&id=${props.init.recipient.id}`;
     const return_url =
       props.init.source === "bg-widget"
-        ? `${window.location.origin}${appRoutes.donate_widget}/donate-thanks/${search}`
-        : `${window.location.origin}/donate-thanks/${search}`;
+        ? `${window.location.origin}${appRoutes.donate_widget}/donate-thanks${search}`
+        : `${window.location.origin}/donate-thanks${search}`;
 
     const stripeConfirmParams = {
       elements,
