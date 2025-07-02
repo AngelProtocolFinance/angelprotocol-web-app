@@ -7,19 +7,18 @@ import {
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import char from "assets/images/celebrating-character.webp";
 import { laira } from "assets/laira/laira";
-import {
-  type DonationRecipient,
-  Share,
-  donationRecipient,
-  isFund,
-} from "components/donation";
+import { Share, donationRecipient, isFund } from "components/donation";
 import ExtLink from "components/ext-link";
 import Image from "components/image";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { metas } from "helpers/seo";
-import { partial, safeParse } from "valibot";
+import { type InferOutput, partial, safeParse } from "valibot";
+
+const donation_recipient_params = partial(donationRecipient);
+interface DonationRecipientParam
+  extends InferOutput<typeof donation_recipient_params> {}
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -32,7 +31,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export const meta: MetaFunction = ({ data }) => {
-  const d = data as Partial<DonationRecipient> | null;
+  const d = data as DonationRecipientParam | null;
   const donateUrl =
     d && d.id
       ? isFund(d.id)
@@ -50,7 +49,7 @@ export const meta: MetaFunction = ({ data }) => {
 
 export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const recipient = useLoaderData() as DonationRecipient | null;
+  const recipient = useLoaderData() as DonationRecipientParam | null;
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
