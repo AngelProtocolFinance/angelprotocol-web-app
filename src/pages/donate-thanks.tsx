@@ -19,12 +19,12 @@ import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { metas } from "helpers/seo";
-import { safeParse } from "valibot";
+import { partial, safeParse } from "valibot";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const recipient = safeParse(
-    donationRecipient,
+    partial(donationRecipient),
     Object.fromEntries(url.searchParams.entries())
   );
   if (recipient.issues) return null;
@@ -32,17 +32,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export const meta: MetaFunction = ({ data }) => {
-  const d = data as DonationRecipient | null;
-  const donateUrl = d
-    ? isFund(d.id)
-      ? `${BASE_URL}${appRoutes.funds}/${d.id}/donate`
-      : `${BASE_URL}${appRoutes.donate}/${d.id}`
-    : undefined;
+  const d = data as Partial<DonationRecipient> | null;
+  const donateUrl =
+    d && d.id
+      ? isFund(d.id)
+        ? `${BASE_URL}${appRoutes.funds}/${d.id}/donate`
+        : `${BASE_URL}${appRoutes.donate}/${d.id}`
+      : undefined;
 
   return metas({
     title: `Donation to ${d?.name ?? "a Nonprofit"}`,
     image: laira.gift,
-    description: `I just donated to ${d?.name ?? "a nonprofit"} on Better Giving! ${d && isFund(d.id) ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
+    description: `I just donated to ${d?.name ?? "a nonprofit"} on Better Giving! ${d && d.id && isFund(d.id) ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
     url: donateUrl,
   });
 };
