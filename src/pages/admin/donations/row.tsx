@@ -10,7 +10,6 @@ import type { Donation } from "types/donations";
 export default function Row(
   props: Donation.Item & { hasMore?: boolean; classes?: string }
 ) {
-  console.log(props.init_amount);
   return (
     <Cells
       type="td"
