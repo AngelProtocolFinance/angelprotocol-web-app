@@ -5,7 +5,7 @@ import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
-import { humanize } from "helpers/decimal";
+import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { maskAddress } from "helpers/mask-address";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
@@ -31,9 +31,9 @@ export default function Table({
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l3`}
     >
-      <TableSection type="thead" rowClass="bg-blue-l4 divide-x divide-blue-l2">
+      <TableSection type="thead" rowClass="bg-blue-l4 divide-x divide-gray-l3">
         <Cells
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
@@ -61,10 +61,8 @@ export default function Table({
             _sortKey="via_name"
             _sortDirection={sortDirection}
           >
-            Donation Type
+            method
           </HeaderButton>
-          <>Recurring</>
-          <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("init_amount")}
             _activeSortKey={sortKey}
@@ -73,20 +71,12 @@ export default function Table({
           >
             Amount
           </HeaderButton>
-          <HeaderButton
-            onClick={handleHeaderClick("init_amount_usd")}
-            _activeSortKey={sortKey}
-            _sortKey="usdValue"
-            _sortDirection={sortDirection}
-          >
-            USD Value
-          </HeaderButton>
           <span className="flex justify-center">{lastHeaderName[status]}</span>
         </Cells>
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-blue-l5 divide-x divide-blue-l2"
+        rowClass="even:bg-blue-l5 divide-x divide-gray-l3"
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {sorted
@@ -94,7 +84,7 @@ export default function Table({
             <Cells
               key={row.id}
               type="td"
-              cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
+              cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
@@ -122,14 +112,26 @@ export default function Table({
                   row.payment_method ?? { id: row.via_id, name: row.via_name }
                 )}
               </span>
-              <>{row.is_recurring ? "YES" : "NO"}</>
-              <span className="text-sm">{row.symbol}</span>
-              <>{humanize(row.init_amount, 3)}</>
-              <>
-                {row.init_amount_usd
-                  ? `$${humanize(row.init_amount_usd, 2)}`
-                  : "--"}
-              </>
+              <td>
+                <div>
+                  {row.symbol}{" "}
+                  {roundToCents(
+                    row.init_amount,
+                    centsDecimals(
+                      (row.final_amount_usd || 0) /
+                        (row.init_amount || Number.MAX_SAFE_INTEGER)
+                    )
+                  )}{" "}
+                  <span className="text-gray text-sm">
+                    {row.init_amount_usd && row.symbol !== "USD"
+                      ? `$${humanize(row.init_amount_usd)}`
+                      : null}
+                  </span>
+                  <p className="text-2xs text-gray-d1 uppercase">
+                    {row.is_recurring ? "recurring" : "one time"}
+                  </p>
+                </div>
+              </td>
               <LastRowColContent {...row} status={status} />
             </Cells>
           ))
@@ -138,7 +140,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-blue-l2 rounded-b"
+                className="border-t border-gray-l3 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}
