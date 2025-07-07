@@ -18,7 +18,7 @@ export default function CurrencyOptions({
       filterFn={(c) => {
         const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
         const matchesCode = c.code.toLowerCase().includes(formatQuery);
-        const matchesName = c.name
+        const matchesName = ("name" in c ? c.name : undefined)
           ?.toLowerCase()
           .replace(/\s+/g, "") // ignore spaces and casing
           .includes(formatQuery);
@@ -51,13 +51,15 @@ export default function CurrencyOptions({
           anchor="bottom"
           className={`${classes} w-[var(--input-width)] bg-white shadow-lg rounded-sm [--anchor-max-height:13rem] overflow-y-auto scroller text-base outline-blue-d1`}
         >
-          {currencies.map(({ code, name, min, rate }) => (
+          {currencies.map((c) => (
             <ComboboxOption
-              key={code}
-              value={{ code, name, min, rate }}
+              key={c.code}
+              value={c}
               className="flex items-center gap-2 p-2 cursor-pointer truncate data-selected:bg-(--accent-secondary) hover:bg-(--accent-secondary)"
             >
-              {!!name ? `${code.toUpperCase()} - ${name}` : code.toUpperCase()}
+              {"name" in c
+                ? `${c.code.toUpperCase()} - ${c.name}`
+                : c.code.toUpperCase()}
             </ComboboxOption>
           ))}
         </ComboboxOptions>

@@ -34,7 +34,7 @@ type Props<T extends CurrencyOption> = {
   onChange: (currency: T) => void;
 };
 
-export default function CurrencySelector<T extends CurrencyOption>({
+export function CurrencySelector<T extends CurrencyOption>({
   currencies,
   ...props
 }: Props<T>) {
@@ -67,7 +67,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         <ComboboxInput
           className={`h-full field-input ${style.input}`}
           displayValue={(currency: T) =>
-            !!currency.name
+            "name" in currency
               ? `${currency.code.toUpperCase()} - ${currency.name}`
               : currency.code.toUpperCase()
           }

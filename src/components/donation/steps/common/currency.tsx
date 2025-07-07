@@ -1,8 +1,8 @@
 import { humanize } from "helpers/decimal";
-import type { Currency as TCurrency } from "types/components";
+import type { DBCurrency } from "types/components";
 
 type Props = { classes?: string; amount: string | number };
-export function currency({ rate, code }: TCurrency) {
+export function currency({ rate, code }: DBCurrency) {
   const CODE = code.toUpperCase();
   return function Amount({ classes = "", amount }: Props) {
     return (

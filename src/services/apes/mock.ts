@@ -1,7 +1,7 @@
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
 import type { TokenV2 } from "types/components";
-import type { Currency, FiatCurrencyData } from "types/donate";
+import type { DBCurrency, UserCurrencies } from "types/currency";
 
 export const mockTokens: TokenV2[] = [
   {
@@ -28,20 +28,20 @@ export const mockTokens: TokenV2[] = [
   },
 ];
 
-export const mockPhpCurrency: Currency = {
-  currency_code: "PHP",
-  rate: 50,
-  minimum_amount: 50,
+export const mock_usd: DBCurrency = {
+  code: "USD",
+  rate: 1,
+  min: 1,
 };
-const mockCurrencies: Currency[] = [
-  { currency_code: "USD", rate: 1, minimum_amount: 1 },
-  { currency_code: "EUR", rate: 0.92, minimum_amount: 0.92 },
-  { currency_code: "GBP", rate: 0.79, minimum_amount: 0.79 },
+const mockCurrencies: DBCurrency[] = [
+  { code: "USD", rate: 1, min: 1 },
+  { code: "EUR", rate: 0.92, min: 0.92 },
+  { code: "GBP", rate: 0.79, min: 0.79 },
 ];
 
 export const endpoints = {
   tokens: `${APIs.apes}/v1/tokens/:chainId`,
-  fiatCurrencies: `${APIs.apes}/fiat-currencies`,
+  fiatCurrencies: `api/currencies`,
 };
 
 export const fiatCurrenciesErrorHandler = http.get(
@@ -57,14 +57,8 @@ export const handlers = [
     return HttpResponse.json(mockTokens);
   }),
 
-  http.get(endpoints.fiatCurrencies, ({ request }) => {
-    const url = new URL(request.url);
-    const prefCode = url.searchParams.get("prefCode");
-
-    const data: FiatCurrencyData = {
-      default: prefCode ? mockPhpCurrency : mockCurrencies[0],
-      currencies: mockCurrencies,
-    };
+  http.get(endpoints.fiatCurrencies, () => {
+    const data: UserCurrencies = { all: mockCurrencies };
     return HttpResponse.json(data);
   }),
 ];

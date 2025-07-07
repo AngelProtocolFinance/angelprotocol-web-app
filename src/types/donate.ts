@@ -7,16 +7,3 @@ export type ReceiptPayload = {
   zipCode: string; //2000
   country: string;
 };
-
-export type Currency = {
-  /** ISO 3166-1 alpha-3 code */
-  currency_code: string;
-  minimum_amount: number;
-  /** unit/usd */
-  rate: number;
-};
-
-export type FiatCurrencyData = {
-  default?: Currency;
-  currencies: Currency[];
-};

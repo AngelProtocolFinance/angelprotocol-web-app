@@ -1,11 +1,9 @@
-import { getFiatCurrencies } from "api/get/fiat-currencies";
-import CurrencySelector from "components/currency-selector";
+import { CurrencySelector } from "components/currency-selector";
 import { Form as FormContainer, MaskedInput } from "components/form";
 import { currency as curr_mask } from "components/form/masks";
-import { useRootData } from "hooks/use-root-data";
 import { useEffect } from "react";
 import useSWR from "swr/immutable";
-import type { Currency } from "types/components";
+import type { DBCurrency } from "types/currency";
 import { USD_CODE } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
@@ -17,13 +15,13 @@ import type { Props } from "./types";
 import { useRhf } from "./use-rhf";
 
 export default function Form(props: Props) {
-  /** supplied by page loader */
-  const user = useRootData();
-  const currency = useSWR(user?.currency ?? "none", getFiatCurrencies);
+  const currency = useSWR("/api/currencies", (path) =>
+    fetch(path).then((res) => res.json())
+  );
   const { setState } = useDonationState();
   const rhf = useRhf(props);
 
-  const userCurrency = currency.data?.main;
+  const userCurrency = currency.data?.pref;
   //biome-ignore lint:
   useEffect(() => {
     if (userCurrency) {
@@ -107,7 +105,7 @@ export default function Form(props: Props) {
   );
 }
 
-function createTooltip({ code, min }: Currency): string | undefined {
+function createTooltip({ code, min }: DBCurrency): string | undefined {
   if (!min) return undefined;
   return code === USD_CODE
     ? "The minimum donation amount is 1 USD"

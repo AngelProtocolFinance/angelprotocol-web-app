@@ -2,7 +2,6 @@ export * from "./steps";
 export {
   type DonationState,
   type DonationRecipient,
-  type DetailedCurrency,
   donationRecipient,
   isFund,
 } from "./steps/types";

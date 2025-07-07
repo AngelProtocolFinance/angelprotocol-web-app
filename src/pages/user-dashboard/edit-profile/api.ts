@@ -1,20 +1,18 @@
 import { type ActionFunction, type LoaderFunction, data } from "@vercel/remix";
-import {
-  type FiatCurrencies,
-  getFiatCurrencies,
-} from "api/get/fiat-currencies";
 import type { ActionData } from "types/action";
 import { type UserV2, isError } from "types/auth";
+import type { UserCurrencies } from "types/currency";
 import { cognito, toAuth } from ".server/auth";
+import { get_db_currencies } from ".server/currency";
 
-export interface LoaderData extends FiatCurrencies {
+export interface LoaderData extends UserCurrencies {
   user: UserV2;
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
-  const currencies = await getFiatCurrencies(user.currency ?? "none");
+  const currencies = await get_db_currencies(user.currency);
   return { user, ...currencies } satisfies LoaderData;
 };
 

@@ -1,6 +1,6 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import type {
-  DetailedCurrency,
+  DBCurrency,
   OptionType,
   TokenWithDetails,
 } from "types/components";
@@ -32,8 +32,7 @@ export const initTokenOption: TokenWithDetails = {
 };
 
 export const USD_CODE = "usd";
-
-export const usdOption: DetailedCurrency = { code: USD_CODE, min: 1, rate: 1 };
+export const usdOption: DBCurrency = { code: USD_CODE, min: 1, rate: 1 };
 
 export const initDetails = (
   methodId: DonateMethodId,

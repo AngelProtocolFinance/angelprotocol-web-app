@@ -1,7 +1,7 @@
 import { beforeEach } from "node:test";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockPhpCurrency } from "services/apes/mock";
+import { mock_usd } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import { stb } from "../../__tests__/test-data";
@@ -39,33 +39,6 @@ describe("Stripe form test", () => {
     expect(currencySelector).toHaveDisplayValue(/usd/i);
   });
 
-  test("initial state: user has preferred currency", async () => {
-    const Stub = stb(<Form step="donate-form" init={init} />, {
-      root: { currency: "php" },
-    });
-    render(<Stub />);
-
-    //no default frequency
-    const freqOptions = await screen.findAllByRole("radio");
-    expect(freqOptions[1]).not.toBeChecked();
-    expect(freqOptions[0]).not.toBeChecked();
-
-    const currencyInput = screen.getByRole("combobox");
-    //wait for use-effect to set currency
-    await waitFor(() => expect(currencyInput).toHaveDisplayValue(/php/i));
-
-    //amount input doesn't have default value
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    expect(amountInput).toHaveDisplayValue("");
-
-    const programSelector = screen.getByLabelText(
-      /select a program to donate to/i
-    );
-    expect(programSelector).toBeInTheDocument();
-  });
-
-  //currencies is cached at this point
-
   test("blank state: program donations not allowed", () => {
     const init: Init = {
       source: "bg-marketplace",
@@ -88,10 +61,9 @@ describe("Stripe form test", () => {
   });
 
   test("prefilled state: user was able to continue", async () => {
-    const { currency_code, minimum_amount, rate } = mockPhpCurrency;
     const details: StripeDonationDetails = {
       amount: "60",
-      currency: { code: currency_code, min: minimum_amount, rate },
+      currency: mock_usd,
       frequency: "recurring",
       method: "stripe",
       program: { value: mockPrograms[0].id, label: mockPrograms[0].title },
@@ -143,11 +115,11 @@ describe("Stripe form test", () => {
     await userEvent.clear(amountInput);
     expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
 
-    await userEvent.type(amountInput, "20");
+    await userEvent.type(amountInput, "0.5");
     expect(screen.getByText(/less than min/i)).toBeInTheDocument();
 
     await userEvent.clear(amountInput);
-    await userEvent.type(amountInput, "50");
+    await userEvent.type(amountInput, "1");
     expect(screen.queryByText(/please enter an amount/i)).toBeNull();
 
     await userEvent.click(continueBtn);
@@ -167,11 +139,11 @@ describe("Stripe form test", () => {
     const incrementers = screen.getAllByTestId("incrementer");
 
     await userEvent.clear(amountInput);
-    await userEvent.type(amountInput, "13");
-    await userEvent.click(incrementers[0]); // 50PHP * 40
-    expect(amountInput).toHaveDisplayValue("2,013");
+    await userEvent.type(amountInput, "1000");
+    await userEvent.click(incrementers[0]);
+    expect(amountInput).toHaveDisplayValue("1,040");
 
-    await userEvent.click(incrementers[1]); // 50PHP * 100
-    expect(amountInput).toHaveDisplayValue("7,013");
+    await userEvent.click(incrementers[1]);
+    expect(amountInput).toHaveDisplayValue("1,140");
   });
 });

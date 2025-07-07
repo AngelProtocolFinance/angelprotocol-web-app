@@ -2,7 +2,8 @@ import type { Token } from "@better-giving/assets/tokens";
 import { donateMethodId } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
-export type { Token as TokenV2 } from "@better-giving/assets/tokens";
+
+import type { DBCurrency } from "types/currency";
 
 export interface TokenWithDetails extends Token {
   amount: string;
@@ -14,33 +15,18 @@ export interface TokenWithDetails extends Token {
 export type ValKey = string | number;
 export type OptionType<V extends ValKey> = { label: string; value: V };
 
-//currency selector
-
-export const base_currency = v.object({
-  name: v.optional(v.string()),
-  /** uppercase ISO 4217 */
+export const wise_currency_option = v.object({
   code: v.string(),
-});
-export interface BaseCurrency extends v.InferOutput<typeof base_currency> {}
-
-export const detailed_currency = v.object({
-  ...base_currency.entries,
-  /** unit per usd */
-  rate: v.number(),
-  min: v.number(),
+  name: v.string(),
+  rate: v.null(),
 });
 
-export type DetailedCurrency = v.InferOutput<typeof detailed_currency>;
+export interface WiseCurrencyOption
+  extends v.InferOutput<typeof wise_currency_option> {}
 
-export const currency = v.object({
-  ...base_currency.entries,
-  min: v.optional(v.number()),
-  rate: v.union([v.number(), v.null()]),
-});
-
-export interface Currency extends v.InferOutput<typeof currency> {}
-
-export type CurrencyOption = Currency | DetailedCurrency;
+export type CurrencyOption =
+  | DBCurrency
+  | { name: string; code: string; rate: null };
 /**
  * Rich text strings contain not only the user input itself, but is a
  * stringified object that describes the styling of particular parts of
@@ -97,3 +83,7 @@ export const donateMethod = v.object({
 });
 
 export type TDonateMethod = v.InferOutput<typeof donateMethod>;
+
+//re-exports
+export type { Token as TokenV2 } from "@better-giving/assets/tokens";
+export type { DBCurrency } from "types/currency";

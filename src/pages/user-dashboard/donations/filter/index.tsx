@@ -78,7 +78,7 @@ export default function Filter({ classes = "", isDisabled }: Props) {
       <PopoverPanel
         as="form"
         onSubmit={handleSubmit(submit, (err) => {
-          console.log(err);
+          console.error(err);
         })}
         onReset={() => {
           const p = new URLSearchParams(params);

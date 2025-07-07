@@ -23,7 +23,7 @@ export function useRhf(props: LoaderData) {
   } = useForm({
     resolver: valibotResolver(schema),
     values: {
-      prefCurrency: props.main || { code: "usd", min: 1, rate: 1 },
+      prefCurrency: props.pref || { code: "usd", min: 1, rate: 1 },
       firstName: props.user.firstName ?? "",
       lastName: props.user.lastName ?? "",
       avatar: props.user.avatar ?? "",

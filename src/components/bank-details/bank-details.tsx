@@ -4,8 +4,8 @@ import { Separator } from "components/separator";
 import { APP_NAME } from "constants/env";
 import useDebouncer from "hooks/use-debouncer";
 import { useState } from "react";
-import type { Currency } from "types/components";
-import CurrencySelector from "../currency-selector";
+import type { WiseCurrencyOption } from "types/components";
+import { CurrencySelector } from "../currency-selector";
 import RecipientDetails from "./recipient-details";
 import type { IFormButtons, OnSubmit } from "./types";
 import { useCurrencies } from "./use-currencies";
@@ -31,10 +31,10 @@ export function BankDetails({
 }: Props) {
   const currencies = useCurrencies();
   const [isSubmitting, setSubmitting] = useState(false);
-  const [currency, setCurrency] = useState<Currency>({
+  const [currency, setCurrency] = useState<WiseCurrencyOption>({
     code: "USD",
     name: "United States Dollar",
-    rate: 1,
+    rate: null,
   });
 
   const [amount, setAmount] = useState(

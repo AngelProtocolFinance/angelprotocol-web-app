@@ -1,4 +1,4 @@
-import CurrencySelector from "components/currency-selector";
+import { CurrencySelector } from "components/currency-selector";
 import { Form as FormContainer } from "components/form";
 import { MaskedInput } from "components/form";
 import { currency } from "components/form/masks";

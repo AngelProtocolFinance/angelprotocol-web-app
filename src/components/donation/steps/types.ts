@@ -1,10 +1,7 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
-import {
-  type OptionType,
-  type TokenWithDetails,
-  detailed_currency,
-} from "types/components";
+import type { OptionType, TokenWithDetails } from "types/components";
+import { db_currency } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
 export {
   type Tribute,
@@ -15,7 +12,6 @@ export {
 } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
-export type { DetailedCurrency } from "types/components";
 import * as v from "valibot";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
@@ -75,7 +71,7 @@ export const amount = v.lazy((x) => {
 export const fiat_donation_details = v.object({
   ...base_donation_details.entries,
   amount,
-  currency: detailed_currency,
+  currency: db_currency,
 });
 
 export interface FiatDonationDetails
