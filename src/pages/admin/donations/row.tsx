@@ -3,14 +3,9 @@ import Copier from "components/copier";
 import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
-import { humanize } from "helpers/decimal";
+import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { maskAddress } from "helpers/mask-address";
-import { CircleCheck, X } from "lucide-react";
 import type { Donation } from "types/donations";
-
-const Amount = ({ amount = 0 }) => {
-  return amount >= 0.01 ? <>${humanize(amount)}</> : <>--</>;
-};
 
 export default function Row(
   props: Donation.Item & { hasMore?: boolean; classes?: string }
@@ -20,8 +15,14 @@ export default function Row(
       type="td"
       cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${props.classes}`}
     >
+      <Copier
+        size={16}
+        text={props.id}
+        classes="text-center inline-flex items-center gap-x-2 text-sm"
+      >
+        {maskAddress(props.id)}
+      </Copier>
       <span className="text-sm">{toPP(props.date)}</span>
-
       {props.program_id ? (
         <Link
           className="text-blue hover:text-blue-d1"
@@ -35,48 +36,48 @@ export default function Row(
 
       <>{props.app_used === "bg-widget" ? "Donation Form" : "Marketplace"}</>
       <>{props.payment_method ?? "--"}</>
-      <>{props.is_recurring ? "Yes" : "No"}</>
-      <>{props.symbol}</>
-      <>{humanize(props.init_amount)}</>
-
-      <Amount amount={props.final_amount_usd} />
-
-      {props.via_id === "staging" || props.via_id === "fiat" ? (
-        <>--</>
-      ) : (
-        <Copier
-          size={16}
-          text={props.id}
-          classes="text-center inline-flex items-center gap-x-2 text-sm"
-        >
-          {maskAddress(props.id)}
-        </Copier>
-      )}
-
-      <td className="relative">
-        {!props.donor_details ? (
-          <X
-            //prevent icon size from affecting row height
-            className="left-4 absolute top-1/2 -translate-y-1/2 text-red "
-            size={22}
-          />
-        ) : (
-          <CircleCheck
-            className="left-4 absolute top-1/2 -translate-y-1/2  text-green"
-            size={20}
-          />
-        )}
+      <td>
+        <div>
+          {props.symbol}{" "}
+          {roundToCents(
+            props.init_amount,
+            centsDecimals(
+              (props.final_amount_usd || 0) /
+                (props.init_amount || Number.MAX_SAFE_INTEGER)
+            )
+          )}{" "}
+          {props.symbol !== "USD" && (
+            <span className="text-gray">
+              ${humanize(props.final_amount_usd || 0)}
+            </span>
+          )}
+          <p className="text-2xs text-gray-d1 uppercase">
+            {props.is_recurring ? "recurring" : "one time"}
+          </p>
+        </div>
       </td>
 
-      <>{props.donor_details?.full_name ?? "--"}</>
-      <>{props.donor_details?.company ?? "--"}</>
-      <>{props.donor_details?.kyc_email ?? "--"}</>
-      <>{props.donor_details?.address?.line1 ?? "--"}</>
-      <>{props.donor_details?.address?.line2 ?? "--"}</>
-      <>{props.donor_details?.address?.city || "--"}</>
-      <>{props.donor_details?.address?.state ?? "--"}</>
-      <>{props.donor_details?.address?.zip_code ?? "--"}</>
-      <>{props.donor_details?.address?.country ?? "--"}</>
+      <td>
+        <div>{props.donor_details?.full_name ?? "--"}</div>
+        <div className="text-xs text-gray-d1">
+          {props.donor_details?.kyc_email}
+        </div>
+        <p className="text-xs text-gray-d1 mt-0.5">
+          {[
+            props.donor_details?.address?.line1,
+            props.donor_details?.address?.line2,
+            props.donor_details?.address?.city,
+            props.donor_details?.address?.state,
+            props.donor_details?.address?.zip_code,
+            props.donor_details?.address?.country,
+          ]
+            .filter(Boolean)
+            .join(", ")}
+        </p>
+        <p className="text-xs text-gray-d1 mt-0.5">
+          {props.donor_details?.company}
+        </p>
+      </td>
     </Cells>
   );
 }

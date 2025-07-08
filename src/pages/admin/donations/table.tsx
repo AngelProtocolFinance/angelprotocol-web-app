@@ -33,6 +33,7 @@ export default function Table({
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
+          <>ID</>
           <HeaderButton
             onClick={handleHeaderClick("date")}
             _activeSortKey={sortKey}
@@ -48,7 +49,7 @@ export default function Table({
             _sortKey="appUsed"
             _sortDirection={sortDirection}
           >
-            Donation Origin
+            Origin
           </HeaderButton>
           <HeaderButton
             onClick={handleHeaderClick("payment_method")}
@@ -56,44 +57,17 @@ export default function Table({
             _sortKey="paymentMethod"
             _sortDirection={sortDirection}
           >
-            Donation Type
+            Method
           </HeaderButton>
-          <HeaderButton
-            onClick={handleHeaderClick("is_recurring")}
-            _activeSortKey={sortKey}
-            _sortKey="isRecurring"
-            _sortDirection={sortDirection}
-          >
-            Recurring Donation
-          </HeaderButton>
-          <HeaderButton
-            onClick={handleHeaderClick("symbol")}
-            _activeSortKey={sortKey}
-            _sortKey="symbol"
-            _sortDirection={sortDirection}
-          >
-            Donation Asset
-          </HeaderButton>
-          <>Donation Amount</>
           <HeaderButton
             onClick={handleHeaderClick("final_amount_usd")}
             _activeSortKey={sortKey}
             _sortKey="finalAmountUsd"
             _sortDirection={sortDirection}
           >
-            Donation Value USD
+            Amount
           </HeaderButton>
-          <>Transaction Hash</>
-          <>Receipt Provided</>
-          <>Full Name</>
-          <>Company</>
-          <>Email</>
-          <>Address Line 1</>
-          <>Address Line 2</>
-          <>City</>
-          <>State</>
-          <>Zip Code</>
-          <>Country</>
+          <>Donor</>
         </Cells>
       </TableSection>
       <TableSection
