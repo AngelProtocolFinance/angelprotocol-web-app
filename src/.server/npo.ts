@@ -1,8 +1,8 @@
 import type { Endow, EndowUpdate } from "@better-giving/endowment";
 import * as db from "@better-giving/endowment/db";
+import { UpdateBuilder } from "@better-giving/helpers-db/update-builder";
 import { tables } from "@better-giving/types/list";
 import { GetCommand, QueryCommand, UpdateCommand, ap } from "./aws/db";
-import { UpdateBuilder } from "./aws/update-builder";
 import { env } from "./env";
 
 type K = keyof Endow;

@@ -2,6 +2,7 @@ import type * as endowDb from "@better-giving/endowment/db";
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import { type SlugEnvGsi, fundGsi } from "@better-giving/fundraiser/db";
 import type * as db from "@better-giving/fundraiser/db";
+import { UpdateBuilder } from "@better-giving/helpers-db/update-builder";
 import { tables } from "@better-giving/types/list";
 import type { AttrNames } from "@better-giving/types/utils";
 import * as v from "valibot";
@@ -13,7 +14,6 @@ import {
   UpdateCommand,
   ap,
 } from "./aws/db";
-import { UpdateBuilder } from "./aws/update-builder";
 import { env } from "./env";
 
 export const getFund = async (

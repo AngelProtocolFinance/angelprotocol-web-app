@@ -54,8 +54,8 @@ importers:
         specifier: 1.1.7
         version: 1.1.7(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)
       '@better-giving/helpers-db':
-        specifier: 1.1.2
-        version: 1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))
+        specifier: 1.1.4
+        version: 1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))
       '@better-giving/nowpayments':
         specifier: 1.1.2
         version: 1.1.2
@@ -683,8 +683,8 @@ packages:
       '@better-giving/types': 1.1.7
       valibot: 0.42.0
 
-  '@better-giving/helpers-db@1.1.2':
-    resolution: {integrity: sha512-UW/wofCR+wowtd3wG+MwohlrXK+59KeHKojPvzzLPJIsNdXVHrQS08sJwvycOUeoXvTjq23paRyEsclQ8K+6Vg==}
+  '@better-giving/helpers-db@1.1.4':
+    resolution: {integrity: sha512-qtbODy7mR4Behg2QvMydQHdR1Jk7rj5b5giPgq2tsYabWU4duPUvNVjeZxpDQp0XTpvkbpgBoGyifzZoPYCVkA==}
     peerDependencies:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0
@@ -6010,7 +6010,7 @@ snapshots:
       '@better-giving/types': 1.1.7
       valibot: 0.42.0(typescript@5.7.3)
 
-  '@better-giving/helpers-db@1.1.2(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))':
+  '@better-giving/helpers-db@1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))':
     dependencies:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
