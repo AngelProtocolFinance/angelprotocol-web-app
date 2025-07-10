@@ -1,6 +1,10 @@
 import type { Allocation } from "@better-giving/endowment";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { allocationOptions, toAlloc, toAllocOptValue } from "./common";
+import {
+  allocationOptions,
+  toAlloc,
+  toAllocOptValue,
+} from "../../dashboard/schedule/common";
 
 interface Props {
   value: Allocation;

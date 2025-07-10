@@ -1,16 +1,16 @@
 import type { Allocation } from "@better-giving/endowment";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Field, Label, Switch } from "@headlessui/react";
-import { useFetcher, useNavigate, useRouteLoaderData } from "@remix-run/react";
+import { useFetcher, useNavigate } from "@remix-run/react";
+import { use_admin_data } from "pages/admin/use-admin-data";
 import { useState } from "react";
 import type { EndowmentUpdate } from "services/types";
-import { AllocationOptions } from "../../donations/allocation-edit/options";
-import { AllocationSlider } from "../../donations/allocation-edit/slider";
-import type { DashboardData } from "../api";
 import { allocationOptions, toAllocOptValue } from "./common";
+import { AllocationOptions } from "./options";
+import { AllocationSlider } from "./slider";
 
-export default function Edit() {
-  const { alloc, bal } = useRouteLoaderData("dashboard") as DashboardData;
+export default function AllocationEdit() {
+  const data = use_admin_data();
   const navigate = useNavigate();
   return (
     <Dialog
@@ -21,12 +21,14 @@ export default function Edit() {
       className="relative z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
-      <Content amount={bal.payoutsPending} {...alloc} />
+      <Content
+        {...(data?.endow.allocation ?? { liq: 100, lock: 0, cash: 0 })}
+      />
     </Dialog>
   );
 }
 
-function Content({ amount, ...props }: Allocation & { amount: number }) {
+function Content(props: Allocation) {
   const fetcher = useFetcher();
   const [alloc, setAlloc] = useState<Allocation>(props);
   const [isCustom, setIsCustom] = useState(
