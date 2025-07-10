@@ -1,34 +1,20 @@
 import type { Allocation } from "@better-giving/endowment";
 import { NavLink } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
-import { humanize } from "helpers/decimal";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
-import { allocationOptions, toAllocOptValue } from "./common";
 
 interface Props {
   amount: number;
   allocation: Allocation;
   classes?: string;
-  periodNext: string;
-  periodRemaining: string;
   disabled?: boolean;
 }
 export function Schedule(props: Props) {
-  const presetOpt = allocationOptions.find(
-    (opt) => opt.value === toAllocOptValue(props.allocation)
-  );
-
   return (
-    <div className="p-4 grid rounded-sm border border-gray-l3 mt-4">
+    <div className={`grid rounded-sm mt-4 ${props.classes ?? ""}`}>
       <div className="flex items-center mt-4 gap-x-2">
         <h4 className="mb-1">Distribution</h4>
-        {presetOpt ? (
-          <div className="text-sm flex items-center gap-x-1 bg-blue-l4 rounded-full px-3 py-1">
-            <span className="scale-75">{presetOpt.icon}</span>
-            <span className="text-xs text-gray">{presetOpt.label}</span>
-          </div>
-        ) : null}
 
         <NavLink
           title="Edit allocation settings"
@@ -96,10 +82,6 @@ function Row(props: IRow) {
       {props.title}
       <span className="ml-2 text-gray font-medium text-sm font-heading">
         {props.pct ?? 50} %
-      </span>
-      <span className="text-right">$</span>
-      <span className="text-left font-heading font-medium">
-        {humanize(val)}
       </span>
     </div>
   );

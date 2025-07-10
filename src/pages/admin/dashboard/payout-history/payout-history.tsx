@@ -49,8 +49,6 @@ export function PayoutHistory({ classes = "", id }: Props) {
 
   return (
     <div className={`${classes} grid content-start`}>
-      <h4 className="text-lg mb-2">Transaction history</h4>
-
       {items.length === 0 ? (
         <Info>No record found</Info>
       ) : (
