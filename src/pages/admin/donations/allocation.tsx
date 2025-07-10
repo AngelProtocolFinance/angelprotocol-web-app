@@ -1,19 +1,18 @@
-import type { Allocation } from "@better-giving/endowment";
+import type { Allocation as IAllocation } from "@better-giving/endowment";
 import { NavLink } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface Props {
-  amount: number;
-  allocation: Allocation;
+  allocation: IAllocation;
   classes?: string;
   disabled?: boolean;
 }
-export function Schedule(props: Props) {
+export function Allocation(props: Props) {
   return (
     <div className={`grid rounded-sm mt-4 ${props.classes ?? ""}`}>
-      <div className="flex items-center mt-4 gap-x-2">
+      <div className="flex items-baseline gap-x-2 mb-1">
         <h4 className="mb-1">Distribution</h4>
 
         <NavLink
@@ -24,11 +23,11 @@ export function Schedule(props: Props) {
           aria-disabled={props.disabled}
           className="hover:text-blue disabled:text-gray [&:is(.pending)]:text-gray"
         >
-          <Pencil className="h-4 w-4" />
+          <Pencil size={14} />
         </NavLink>
       </div>
 
-      <div className="grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-y-3 gap-x-2 mt-4">
+      <div className="flex flex-wrap gap-4 items-center">
         <Row
           icon={<HandCoins className="h-4 w-4 mr-2 text-gray" />}
           title={
@@ -48,20 +47,17 @@ export function Schedule(props: Props) {
             </div>
           }
           pct={props.allocation.cash}
-          amount={props.amount}
         />
         <Row
           icon={<PiggyBank width={20} className="mr-2 text-amber" />}
           title={<span>Savings</span>}
           pct={props.allocation.liq}
-          amount={props.amount}
         />
 
         <Row
           icon={<Sprout size={20} className="mr-2 text-green" />}
           title={<span>Investments</span>}
           pct={props.allocation.lock}
-          amount={props.amount}
         />
       </div>
     </div>
@@ -69,18 +65,16 @@ export function Schedule(props: Props) {
 }
 
 interface IRow {
-  amount: number;
   pct: number;
   icon: ReactNode;
   title: ReactNode;
 }
 function Row(props: IRow) {
-  const val = props.amount * (props.pct / 100);
   return (
-    <div className="grid grid-cols-subgrid col-span-full items-center">
+    <div className="flex items-center border border-gray-l3 rounded p-4">
       {props.icon}
       {props.title}
-      <span className="ml-2 text-gray font-medium text-sm font-heading">
+      <span className="ml-12 text-gray font-medium text-sm font-heading">
         {props.pct ?? 50} %
       </span>
     </div>
