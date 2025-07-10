@@ -10,9 +10,7 @@ import { LockActions } from "./lock-actions";
 import { monthPeriod } from "./month-period";
 import { Movements } from "./movements";
 import { PayoutHistory } from "./payout-history";
-import { Schedule } from "./schedule";
 import { SfPerf } from "./sf-perf";
-import { Summary } from "./summary";
 
 interface Props {
   id: number;
@@ -36,7 +34,6 @@ export function Loaded({ classes = "", ...props }: Props) {
 
   return (
     <div className={`${classes} mt-6`}>
-      <h3 className="uppercase mb-4 font-black">Account Balances</h3>
       <div className="grid gap-4 @lg:grid-cols-2">
         <Figure
           title="Savings"
@@ -97,20 +94,16 @@ export function Loaded({ classes = "", ...props }: Props) {
 
       {/** div scopes when the sticky header ends */}
       <div className="@container/period">
-        <h3 className="py-4 font-medium flex flex-col @lg/period:flex-row @lg/period:justify-between gap-y-2  sticky top-[4rem] bg-white z-10">
-          <div className="flex items-center">
-            <span className="text-sm uppercase font-normal">Period</span>
-            <span className="ml-2 uppercase text-sm">
-              {period.from} - {period.to}
-            </span>
-          </div>
+        <div className="py-4 font-medium flex flex-col @lg/period:flex-row @lg/period:justify-between gap-y-2  sticky top-[4rem] bg-white z-10">
+          <h4 className="flex items-center text-lg">Grants</h4>
           <p className="text-sm text-gray">
-            <span>Ends in </span>
+            <span>Payouts in </span>
             <span className="p-1 px-2 bg-gray-d4 text-gray-l4 text-xs rounded-sm ml-1">
               in {period.distance}
             </span>
           </p>
-        </h3>
+        </div>
+        <h5>$1000.15</h5>
 
         <Movements
           disabled={period.isPre}
@@ -127,22 +120,15 @@ export function Loaded({ classes = "", ...props }: Props) {
             }
           }}
         />
-        <Schedule
-          disabled={period.isPre}
-          amount={props.balances.payoutsPending}
-          periodNext={period.next}
-          periodRemaining={period.distance}
-          allocation={props.allocation}
-        />
       </div>
-      <Summary
+      {/* <Summary
         classes="mt-4"
         alloc={props.allocation}
         balances={props.balances}
         mov={mov}
-      />
+      /> */}
 
-      <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
+      {/* <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" /> */}
       <PayoutHistory classes="mt-2" id={props.id} />
     </div>
   );
