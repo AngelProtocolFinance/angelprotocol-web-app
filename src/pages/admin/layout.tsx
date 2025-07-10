@@ -1,4 +1,3 @@
-import type { Endow } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
@@ -7,19 +6,13 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
-import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import { linkGroups } from "./constants";
 import { Header } from "./header";
 import SidebarHeader from "./sidebar-header";
+import type { LoaderData } from "./types";
 import { cognito, toAuth } from ".server/auth";
 import { getNpo } from ".server/npo";
-
-interface LoaderData {
-  id: number;
-  user: UserV2;
-  endow: Pick<Endow, "logo" | "name">;
-}
 
 export const meta: MetaFunction = ({ data }) => {
   const d = data as LoaderData;
@@ -34,7 +27,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const id = parse(plusInt, params.id);
 
-  const npo = await getNpo(id, ["name", "logo"]);
+  const npo = await getNpo(id, ["logo", "name", "allocation"]);
   if (!npo) return new Response("Not found", { status: 404 });
 
   return {

@@ -47,9 +47,11 @@ const rmx = remix({
         });
       });
       // no robots
-      r("admin/:id", "./pages/admin/layout.tsx", () => {
+      r("admin/:id", "./pages/admin/layout.tsx", { id: "admin" }, () => {
         r("", "./pages/admin/redirect.ts", { index: true });
-        r("donations", "./pages/admin/donations/donations.tsx");
+        r("donations", "./pages/admin/donations/index.tsx", () => {
+          r("edit-alloc", "./pages/admin/donations/allocation-edit/index.tsx");
+        });
         r("programs", "./pages/admin/programs/programs.tsx");
         r("funds", "./pages/admin/funds/funds.tsx");
         r("integrations", "./pages/admin/integrations/index.tsx");
@@ -103,7 +105,6 @@ const rmx = remix({
           "./pages/admin/dashboard/dashboard.tsx",
           { id: "dashboard" },
           () => {
-            r("edit-alloc", "./pages/admin/dashboard/schedule/edit.tsx");
             r("move-funds", "./pages/admin/dashboard/move-fund-form.tsx");
           }
         );

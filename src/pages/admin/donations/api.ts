@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import * as v from "valibot";
+import { endowUpdate } from "../endow-update-action";
 import { cognito, toAuth } from ".server/auth";
 import { get_donations } from ".server/donations";
 
@@ -19,3 +20,5 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   return page;
 };
+
+export const action = endowUpdate({ redirect: "." });
