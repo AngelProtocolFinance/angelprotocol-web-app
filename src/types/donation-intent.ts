@@ -1,29 +1,14 @@
+import { donor_title, frequency } from "@better-giving/donation/schema";
+export {
+  donor_titles,
+  type Frequency,
+  frequency,
+} from "@better-giving/donation/schema";
 import * as v from "valibot";
+import { donation_source } from "./donations";
 
 export const str = v.pipe(v.string(), v.trim());
 export const required_str = v.pipe(str, v.nonEmpty("required"));
-
-export const frequencies = ["one-time", "recurring"] as const;
-export const frequency = v.picklist(
-  frequencies,
-  "Please select donation frequency"
-);
-
-export type Frequency = v.InferOutput<typeof frequency>;
-
-export const donation_sources = [
-  "bg-marketplace",
-  "bg-widget",
-  "tester-app",
-] as const;
-
-export const donation_source = v.picklist(donation_sources);
-export type DonationSource = v.InferOutput<typeof donation_source>;
-
-export const donor_titles = ["Mr", "Mrs", "Ms", "Mx", ""] as const;
-export const donor_title = v.picklist(donor_titles);
-
-export type DonorTitle = v.InferOutput<typeof donor_title>;
 
 export const donor_address = v.object({
   street: required_str,
