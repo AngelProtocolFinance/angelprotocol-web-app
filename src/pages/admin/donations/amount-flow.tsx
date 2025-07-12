@@ -62,16 +62,16 @@ export function AmountFlow({ total, font_size = 14, allocation }: Props) {
       {/* Curved Branching Arrow */}
       <div className="relative flex items-center">
         <svg
-          width="100"
+          width="50"
           height={svg_height}
           className="overflow-visible"
-          viewBox={`0 0 100 ${svg_height}`}
+          viewBox={`0 0 50 ${svg_height}`}
         >
           {/* Main horizontal line */}
           <line
-            x1="10"
+            x1="5"
             y1={svg_height / 2}
-            x2="40"
+            x2="20"
             y2={svg_height / 2}
             stroke="var(--color-gray-l1)"
             strokeWidth="1"
@@ -80,14 +80,14 @@ export function AmountFlow({ total, font_size = 14, allocation }: Props) {
           {/* Curved branch lines with arrows */}
           {branch_positions.map((target_y, index) => {
             const center_y = svg_height / 2;
-            const start_x = 40;
-            const curve_end_x = 65; // End the curve here
-            const end_x = 85; // Arrow pointer position
+            const start_x = 20;
+            const curve_end_x = 32.5;
+            const end_x = 42.5;
 
             // Create smooth S-curve using cubic Bézier, then add straight line
-            const control1_x = start_x + 15;
+            const control1_x = start_x + 7.5;
             const control1_y = center_y;
-            const control2_x = curve_end_x - 15;
+            const control2_x = curve_end_x - 7.5;
             const control2_y = target_y;
 
             const path_data = `M ${start_x} ${center_y} C ${control1_x} ${control1_y} ${control2_x} ${control2_y} ${curve_end_x} ${target_y} L ${end_x} ${target_y}`;
@@ -128,14 +128,11 @@ export function AmountFlow({ total, font_size = 14, allocation }: Props) {
         }}
       >
         {branches.map((item, index) => (
-          <div key={index} className="flex items-center gap-3">
+          <div key={index} className="flex items-center gap-x-1">
             {/* Icon */}
             <item.Icon className={item.class} size={icon_size} />
             {/* Amount */}
-            <div
-              className="text-gray-l2 font-medium"
-              style={{ fontSize: `${font_size}px` }}
-            >
+            <div className="text-sm" style={{ fontSize: `${font_size}px` }}>
               ${humanize(item.amount)}
             </div>
             {/* Optional text */}
