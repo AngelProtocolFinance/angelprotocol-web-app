@@ -35,7 +35,7 @@ const desc_map: DescMap = {
 export function AmountFlow({ total, font_size = 14, allocation }: Props) {
   const branches = (Object.entries(allocation) as [Acc, number][])
     .filter(([, v]) => v > 0)
-    .map(([k, v]) => ({
+    .map(([k]) => ({
       ...desc_map[k],
       amount: total * (allocation[k] / 100),
     }));
@@ -48,6 +48,14 @@ export function AmountFlow({ total, font_size = 14, allocation }: Props) {
     60 * spacing_multiplier
   );
   const icon_size = Math.max(16, font_size * 0.9); // Icon size scales with font
+
+  // Calculate branch positions for consistent alignment between SVG and content
+  const branch_positions = branches.map((_, index) => {
+    const center_y = svg_height / 2;
+    return branches.length === 1
+      ? center_y
+      : branch_spacing / 2 + index * branch_spacing;
+  });
 
   return (
     <div className="flex items-center gap-2">
@@ -70,12 +78,8 @@ export function AmountFlow({ total, font_size = 14, allocation }: Props) {
           />
 
           {/* Curved branch lines with arrows */}
-          {branches.map((_, index) => {
+          {branch_positions.map((target_y, index) => {
             const center_y = svg_height / 2;
-            const target_y =
-              branches.length === 1
-                ? center_y
-                : branch_spacing / 2 + index * branch_spacing;
             const start_x = 40;
             const curve_end_x = 65; // End the curve here
             const end_x = 85; // Arrow pointer position
@@ -108,12 +112,19 @@ export function AmountFlow({ total, font_size = 14, allocation }: Props) {
         </svg>
       </div>
 
-      {/* Branches - all in one line */}
+      {/* Branches content */}
       <div
-        className="flex flex-col"
+        className="flex flex-col justify-between"
         style={{
-          gap: branches.length === 1 ? "0" : `${branch_spacing - font_size}px`,
-          paddingTop: branches.length === 1 ? "0" : `${branch_spacing / 4}px`,
+          height: branches.length === 1 ? "auto" : `${svg_height}px`,
+          paddingTop:
+            branches.length === 1
+              ? 0
+              : `${svg_height / (branches.length * 2) - font_size / 2}px`,
+          paddingBottom:
+            branches.length === 1
+              ? 0
+              : `${svg_height / (branches.length * 2) - font_size / 2}px`,
         }}
       >
         {branches.map((item, index) => (
