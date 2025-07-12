@@ -10,7 +10,6 @@ export { clientLoader } from "api/cache";
 export default function Donations() {
   const page1 = useCachedLoaderData() as DonationsPage;
   const data = use_admin_data();
-  console.log({ data });
   return (
     <div>
       <h2 className="text-[2rem] font-bold mb-4">Donations</h2>

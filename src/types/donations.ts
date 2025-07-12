@@ -1,3 +1,4 @@
+import { allocation } from "@better-giving/endowment/schema";
 import { plusInt } from "api/schema/endow-id";
 import * as v from "valibot";
 // import Joi from "joi";
@@ -113,6 +114,7 @@ export const donation_item = v.object({
   via_id: v.fallback(via_id, "staging"),
   via_name: v.optional(v.string(), "Unknown"),
   payment_id: v.optional(v.union([int, uuid])),
+  allocation: v.optional(allocation),
 });
 
 export namespace Donation {

@@ -67,6 +67,7 @@ export default function Table({
           >
             Amount
           </HeaderButton>
+          <>Allocation</>
           <>Donor</>
         </Cells>
       </TableSection>
