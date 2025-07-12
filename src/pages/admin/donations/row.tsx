@@ -6,6 +6,7 @@ import { toPP } from "helpers/date";
 import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { maskAddress } from "helpers/mask-address";
 import type { Donation } from "types/donations";
+import { AmountFlow } from "./amount-flow";
 
 export default function Row(
   props: Donation.Item & { hasMore?: boolean; classes?: string }
@@ -55,6 +56,13 @@ export default function Row(
             {props.is_recurring ? "recurring" : "one time"}
           </p>
         </div>
+      </td>
+      <td>
+        <AmountFlow
+          total={props.final_amount_usd ?? 0}
+          allocation={props.allocation ?? { liq: 100, lock: 0, cash: 0 }}
+        />
+        {/* <div>{JSON.stringify(props.allocation)}</div> */}
       </td>
 
       <td>
