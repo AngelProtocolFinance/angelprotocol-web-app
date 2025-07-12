@@ -2,6 +2,7 @@ import type { Allocation } from "@better-giving/endowment";
 import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
+import { default_allocation } from "constants/common";
 import type { EndowmentBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
@@ -10,7 +11,7 @@ import { npoBalances } from ".server/npo-balances";
 
 const getAllocation = (id: number) =>
   getEndow(id, ["allocation"]).then<Allocation>(
-    (data) => data.allocation ?? { cash: 0, liq: 100, lock: 0 }
+    (data) => data.allocation ?? default_allocation
   );
 
 export interface DashboardData {

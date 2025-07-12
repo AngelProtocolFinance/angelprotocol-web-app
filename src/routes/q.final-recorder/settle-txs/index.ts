@@ -1,4 +1,5 @@
 import type { Donation } from "@better-giving/donation";
+import type { Allocation } from "@better-giving/donation/schema";
 import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
 import type { Payout } from "@better-giving/payout";
 import { tables } from "@better-giving/types/list";
@@ -70,6 +71,7 @@ export interface Overrides {
   claimed: boolean;
   fiscal_sponsored: boolean;
   msg_to_npo?: string;
+  allocation: Allocation;
 }
 
 export function settle_txs(base: Base, o: Overrides): TxItems {
@@ -104,6 +106,10 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
 
   if (o.msg_to_npo) {
     uniques.msg_to_npo = o.msg_to_npo;
+  }
+
+  if (o.allocation) {
+    uniques.allocation = o.allocation;
   }
 
   const record: Donation.V2DBRecord = {

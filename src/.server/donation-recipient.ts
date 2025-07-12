@@ -1,8 +1,9 @@
-import type { Endow } from "@better-giving/endowment/db";
+import type { Allocation } from "@better-giving/donation/schema";
 import type { DbRecord, Keys } from "@better-giving/fundraiser/db";
 import { tables } from "@better-giving/types/list";
+import { default_allocation } from "constants/common";
 import { GetCommand, ap } from "./aws/db";
-import { env } from "./env";
+import { getNpo } from "./npo";
 
 export interface Recipient {
   npo: {
@@ -19,6 +20,7 @@ export interface Recipient {
   hide_bg_tip: boolean;
   fiscal_sponsored: boolean;
   receiptMsg: string;
+  allocation: Allocation;
 }
 
 /**
@@ -28,34 +30,20 @@ export interface Recipient {
 export async function get_recipient(id: string | number) {
   //recipient is endowment
   if (typeof id === "number") {
-    const key: Endow.Keys = {
-      PK: `Endow#${id}`,
-      SK: env,
+    const npo = await getNpo(id);
+    if (!npo) return undefined;
+    const recipient: Recipient = {
+      npo: { id },
+      fund: { id: "", members: [] },
+      name: npo.name,
+      claimed: npo.claimed,
+      fiscal_sponsored: npo.fiscal_sponsored,
+      hide_bg_tip: npo.hide_bg_tip ?? false,
+      receiptMsg: npo.receiptMsg ?? "",
+      allocation: npo.allocation ?? default_allocation,
     };
-    const getEndowProfileCommand = new GetCommand({
-      TableName: tables.endowments_v3,
-      Key: key,
-      ProjectionExpression:
-        "#name, claimed, fiscal_sponsored, hide_bg_tip, receiptMsg",
-      ExpressionAttributeNames: { "#name": "name" },
-    });
 
-    return ap
-      .send(getEndowProfileCommand)
-      .then((result) => result.Item)
-      .then((data) => {
-        if (!data) return undefined;
-        const recipient: Recipient = {
-          npo: { id },
-          fund: { id: "", members: [] },
-          name: data.name,
-          claimed: data.claimed,
-          fiscal_sponsored: data.fiscal_sponsored,
-          hide_bg_tip: data.hide_bg_tip ?? false,
-          receiptMsg: data.receiptMsg,
-        };
-        return recipient;
-      });
+    return recipient;
   }
 
   //recipient is fund
@@ -80,6 +68,7 @@ export async function get_recipient(id: string | number) {
         fiscal_sponsored: false,
         hide_bg_tip: data.settings.hide_bg_tip,
         receiptMsg: "",
+        allocation: default_allocation,
       };
       return recipient;
     });

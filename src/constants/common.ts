@@ -1,3 +1,4 @@
+import type { Allocation } from "@better-giving/donation/schema";
 import type { Increment } from "types/widget";
 import { EMAIL_SUPPORT, IS_TEST } from "./env";
 
@@ -20,6 +21,12 @@ export const DONATION_INCREMENTS: Increment[] = [
   { value: 400, label: "" },
 ];
 export const BG_ID = IS_TEST ? 8 : 1;
+
+export const default_allocation: Allocation = {
+  liq: 100,
+  cash: 0,
+  lock: 0,
+};
 
 export const logoUrl = (path: string, isBg = false) =>
   isBg ? path : `https://nowpayments.io${path}`;

@@ -104,5 +104,9 @@ export const to_onhold = (
     x.msg_to_npo = m.msg_to_npo;
   }
 
+  if (m.allocation) {
+    x.allocation = JSON.parse(m.allocation);
+  }
+
   return x;
 };

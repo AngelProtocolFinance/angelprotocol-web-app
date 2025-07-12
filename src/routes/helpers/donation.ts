@@ -1,4 +1,5 @@
 import type { OnHoldDonation } from "@better-giving/donation";
+import { default_allocation } from "constants/common";
 import type {
   Amount,
   Destination,
@@ -42,6 +43,7 @@ export const to_final = (
           name: onhold.fund_name,
           members: onhold.fund_members,
           no_tip: false,
+          allocation: onhold.allocation || default_allocation,
         }
       : {
           members: [],
@@ -49,6 +51,7 @@ export const to_final = (
           name: onhold.charityName,
           no_tip: onhold.hideBgTip ?? false,
           message: onhold.msg_to_npo,
+          allocation: onhold.allocation || default_allocation,
         };
 
   const from: From = {

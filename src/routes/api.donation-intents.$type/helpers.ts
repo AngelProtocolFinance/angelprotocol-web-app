@@ -53,6 +53,7 @@ export const onhold_base = (
     title: intent.donor?.title || undefined,
     ...intent.donor.address,
     ukGiftAid: intent.donor.address?.uk_gift_aid ?? false,
+    allocation: recipient.allocation,
   };
   return obj;
 };

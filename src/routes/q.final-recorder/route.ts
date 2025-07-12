@@ -4,6 +4,7 @@ import { partition } from "@better-giving/helpers";
 import { TxBuilder } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
 import type { ActionFunction } from "@vercel/remix";
+import { default_allocation } from "constants/common";
 import { nanoid } from "nanoid";
 import { resp } from "routes/helpers/resp";
 import type { FinalRecorderPayload } from "../types/final-recorder";
@@ -150,6 +151,7 @@ export const action: ActionFunction = async ({ request }) => {
           claimed: endow.claimed,
           fiscal_sponsored: endow.fiscal_sponsored,
           msg_to_npo: num_members === 1 ? tx.from.message : undefined,
+          allocation: endow.allocation || default_allocation,
         };
 
         // for fund members without referrer, commission remains with BG
@@ -224,6 +226,7 @@ export const action: ActionFunction = async ({ request }) => {
         claimed: endow.claimed,
         fiscal_sponsored: endow.fiscal_sponsored,
         msg_to_npo: tx.from.message,
+        allocation: endow.allocation || default_allocation,
       };
       const c = commission_fn(
         {
@@ -277,6 +280,7 @@ export const action: ActionFunction = async ({ request }) => {
       endowName: "Better Giving",
       claimed: true,
       fiscal_sponsored: false,
+      allocation: default_allocation,
     };
 
     //deduct paid commissions
