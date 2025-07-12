@@ -68,6 +68,7 @@ export function to_items(records: DBRecord[], asker: string | number) {
       via_id: r.chainId,
       via_name: r.chainId === "fiat" ? r.fiatRamp : r.chainName,
       payment_id: r.chainId !== "fiat" ? r.payment_id : undefined,
+      allocation: r.allocation,
     };
 
     const item = safeParse(donation_item, raw);
