@@ -1,4 +1,13 @@
-import Hero from "./hero";
+import { useLoaderData } from "@remix-run/react";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
+import { APP_NAME } from "constants/env";
+import { metas } from "helpers/seo";
+import { animal_rescue } from "./contexts/animal-rescue";
+import { arts_culture } from "./contexts/arts-culture";
+import { education } from "./contexts/education";
+import { environment } from "./contexts/environment";
+import { health_care } from "./contexts/health-care";
+import { Hero } from "./hero";
 import { Section1 } from "./section1";
 import { Section2 } from "./section2";
 import { Section3 } from "./section3";
@@ -6,40 +15,60 @@ import { Section5 } from "./section5";
 import { Section6 } from "./section6";
 import { Section7 } from "./section7";
 import { Testimonials } from "./testimonials";
+import type { PageContext } from "./types";
 
-const page_context = {
-  "arts-culture": {},
-  education: {},
-  environment: {},
-  "animal-rescue": {},
-  healthcare: {},
-  "mental-health": {},
-  "disease-awareness": {},
-  "medical-research": {},
-  "legal-justice": {},
-  "job-training": {},
-  "food-nutrition": {},
-  "housing-shelter": {},
-  "public-safety": {},
-  "recreation-sports": {},
-  "youth-development": {},
-  "human-services": {},
-  "international-aid": {},
-  "civil-rights": {},
-  "community-improvement": {},
-  "philanthropy-volunteering": {},
-  "science-technology": {},
-  "social-science": {},
-  "public-benefit": {},
-  "religious-organizations": {},
-  "membership-organizations": {},
+const page_context: Record<string, PageContext> = {
+  "arts-culture": arts_culture,
+  education: education,
+  environment: environment,
+  "animal-rescue": animal_rescue,
+  healthcare: health_care,
+  // "mental-health": {},
+  // "disease-awareness": {},
+  // "medical-research": {},
+  // "legal-justice": {},
+  // "job-training": {},
+  // "food-nutrition": {},
+  // "housing-shelter": {},
+  // "public-safety": {},
+  // "recreation-sports": {},
+  // "youth-development": {},
+  // "human-services": {},
+  // "international-aid": {},
+  // "civil-rights": {},
+  // "community-improvement": {},
+  // "philanthropy-volunteering": {},
+  // "science-technology": {},
+  // "social-science": {},
+  // "public-benefit": {},
+  // "religious-organizations": {},
+  // "membership-organizations": {},
+};
+
+export const meta: MetaFunction = ({ params: { slug = "" } }) => {
+  const ctx = page_context[slug];
+  return metas({
+    title: `${ctx.meta_title} | ${APP_NAME}`,
+    description: `${APP_NAME} ${ctx.meta_description}`,
+    image: ctx.hero,
+  });
+};
+
+export const loader: LoaderFunction = async ({ params }) => {
+  const { slug = "" } = params;
+  const ctx = page_context[slug];
+  if (!ctx) {
+    throw new Response("Not Found", { status: 404 });
+  }
+  return ctx;
 };
 
 export default function Page() {
+  const ctx = useLoaderData<PageContext>();
   return (
     <main className="w-full grid content-start pb-16 @container">
-      <Hero className="xl:container xl:mx-auto px-10" />
-      <Section1 classes="xl:container xl:mx-auto px-10" />
+      <Hero className="xl:container xl:mx-auto px-10" {...ctx} />
+      <Section1 classes="xl:container xl:mx-auto px-10" {...ctx} />
       <Section2 classes="xl:container xl:mx-auto px-10 mt-48" />
       <Section3 classes="xl:container xl:mx-auto px-10 mt-48" />
       <Testimonials classes="xl:container xl:mx-auto px-10" />

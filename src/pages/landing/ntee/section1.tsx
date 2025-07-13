@@ -1,12 +1,12 @@
-import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { APP_NAME } from "constants/env";
+import type { PageContext } from "./types";
 
-interface Props {
+interface Props extends PageContext {
   classes?: string;
 }
 
-export function Section1({ classes = "" }: Props) {
+export function Section1({ classes = "", ...props }: Props) {
   return (
     <div className={classes}>
       <div className="relative w-full max-w-3xl mx-auto p-8 rounded-xl shadow-xl border-t border-gray-l5">
@@ -31,14 +31,14 @@ export function Section1({ classes = "" }: Props) {
           Based on $100,000 raised annually
         </p>
         <Image
-          src={laira.floating}
-          width={150}
-          className="@max-5xl:hidden absolute -right-24 top-0"
+          src={props.left}
+          width={110}
+          className="@max-5xl:hidden absolute -right-24 -bottom-12"
         />
         <Image
-          src={laira.yellow}
-          width={70}
-          className="@max-5xl:hidden absolute -left-24"
+          src={props.right}
+          width={110}
+          className="@max-5xl:hidden absolute -left-24 -bottom-12"
         />
       </div>
     </div>

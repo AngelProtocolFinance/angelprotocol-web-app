@@ -1,9 +1,13 @@
 import { Link } from "@remix-run/react";
-import { Video, videos } from "components/video/video";
-import { BOOK_A_DEMO } from "constants/env";
+import Image from "components/image";
+import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
+import type { PageContext } from "./types";
 
-export default function Hero({ className = "" }) {
+interface Props extends PageContext {
+  className?: string;
+}
+export function Hero({ className = "", ...props }: Props) {
   return (
     <section
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-2 py-24`}
@@ -16,8 +20,10 @@ export default function Hero({ className = "" }) {
           Keep <span className="text-blue">100%</span> of Your Donations.
         </h1>
         <p className="my-10 text-lg @6xl:text-xl text-balance text-center @6xl:text-left">
-          Zero platform fees. Zero admin headaches. Just more funding for your
-          mission.
+          {props.copy[1]}{" "}
+          <span className="font-semibold">
+            {APP_NAME} {props.copy[2]}
+          </span>
         </p>
 
         <div className="flex flex-col @xl:flex-row justify-center @6xl:justify-start items-center gap-6">
@@ -35,9 +41,9 @@ export default function Hero({ className = "" }) {
           </Link>
         </div>
       </div>
-      <Video
-        classes="max-w-2xl @6xl:max-w-auto order-1 @6xl:order-2 w-full self-center"
-        vid={videos.about}
+      <Image
+        className="max-w-2xl @6xl:max-w-auto order-1 @6xl:order-2 w-full self-center rounded-2xl"
+        src={props.hero}
       />
     </section>
   );
