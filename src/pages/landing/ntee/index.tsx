@@ -7,6 +7,34 @@ import { Section6 } from "./section6";
 import { Section7 } from "./section7";
 import { Testimonials } from "./testimonials";
 
+const page_context = {
+  "arts-culture": {},
+  education: {},
+  environment: {},
+  "animal-rescue": {},
+  healthcare: {},
+  "mental-health": {},
+  "disease-awareness": {},
+  "medical-research": {},
+  "legal-justice": {},
+  "job-training": {},
+  "food-nutrition": {},
+  "housing-shelter": {},
+  "public-safety": {},
+  "recreation-sports": {},
+  "youth-development": {},
+  "human-services": {},
+  "international-aid": {},
+  "civil-rights": {},
+  "community-improvement": {},
+  "philanthropy-volunteering": {},
+  "science-technology": {},
+  "social-science": {},
+  "public-benefit": {},
+  "religious-organizations": {},
+  "membership-organizations": {},
+};
+
 export default function Page() {
   return (
     <main className="w-full grid content-start pb-16 @container">
