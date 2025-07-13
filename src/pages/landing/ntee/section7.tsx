@@ -4,26 +4,23 @@ import { appRoutes } from "constants/routes";
 import { CheckIcon } from "lucide-react";
 
 const features = [
-  "Zero fees - forever",
-  "5-minute setup",
-  "FDIC protected",
-  "Human support",
+  "🎯 Zero platform fees - forever",
+  "📞 Human support - when you need it",
 ];
 
 const badges = [
-  "No credit card required",
-  "501(c)(3) verified",
-  "FDIC protected",
+  "Platinum Transparency 2025 - Candid",
+  "501(c)(3) (EIN 87-3758939) Verified",
 ];
 
 export function Section7({ classes = "" }: { classes?: string }) {
   return (
     <div className={`${classes} py-26 grid`}>
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-white text-balance mb-8">
-        Stop losing money. Start tonight.
+        Stop losing money. Start Free.
       </h2>
       <p className="text-center text-lg @max-3xl:text-base text-white max-w-3xl mb-8 mx-auto">
-        Every day you wait costs you money. That changes tonight.
+        Every day you wait costs you money. That changes today.
       </p>
       <h3 className="my-4 text-center text-1.5xl @6xl:text-2xl @6xl:leading-tight capitalize text-white text-balance">
         Tonight, that changes.
@@ -32,7 +29,7 @@ export function Section7({ classes = "" }: { classes?: string }) {
         Join 100+ arts nonprofits who've eliminated fees and reclaimed their
         financial power.
       </p>
-      <div className="grid gap-10 grid-cols-2 justify-self-center mt-12">
+      <div className="grid gap-10 @xl:grid-cols-2 justify-self-center mt-12">
         {features.map((x, idx) => (
           <div
             key={idx}
@@ -56,7 +53,7 @@ export function Section7({ classes = "" }: { classes?: string }) {
           to={`${appRoutes.register}/welcome`}
           className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading font-bold shadow-2xl rounded-xl"
         >
-          Start Tonight - Free
+          Start Today - Free
         </Link>
         <Link
           to={BOOK_A_DEMO}

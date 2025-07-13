@@ -1,4 +1,6 @@
-import { CircleQuestionMark } from "lucide-react";
+import ExtLink from "components/ext-link";
+import { INTERCOM_HELP } from "constants/env";
+import { ArrowRight, CircleQuestionMark } from "lucide-react";
 interface Item {
   title: string;
   description: string;
@@ -59,6 +61,27 @@ export function Section6({ classes = "" }: { classes?: string }) {
             </div>
           </div>
         ))}
+      </div>
+      <div className="grid pt-8 mt-8">
+        <ExtLink
+          href={INTERCOM_HELP}
+          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+        >
+          <span>Complete FAQs</span>
+          <ArrowRight size={15} />
+        </ExtLink>
+        <button
+          type="button"
+          onClick={() => {
+            if ((window as any).Intercom) {
+              return (window as any).Intercom("show");
+            }
+            window.open(INTERCOM_HELP, "_blank");
+          }}
+          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+        >
+          Need additional support? Live Chat.
+        </button>
       </div>
     </div>
   );
