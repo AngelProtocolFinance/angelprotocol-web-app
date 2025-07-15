@@ -8,8 +8,8 @@ interface Props extends PageContext {
 
 export function Section1({ classes = "", ...props }: Props) {
   return (
-    <div className={classes}>
-      <div className="relative w-full max-w-3xl mx-auto p-8 rounded-xl shadow-xl border-t border-gray-l5">
+    <div className={`${classes} bg-gray-l5`}>
+      <div className="relative bg-white w-full max-w-3xl mx-auto p-8 rounded-xl shadow-xl">
         <h2 className="mb-8 text-center text-2xl @6xl:text-3xl @6xl:leading-tight text-gray-d4">
           Your current reality:
         </h2>

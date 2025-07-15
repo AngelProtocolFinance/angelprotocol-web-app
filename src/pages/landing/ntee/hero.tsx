@@ -14,10 +14,10 @@ export function Hero({ className = "", ...props }: Props) {
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <p className="text-center @6xl:text-left text-gray-d4 mb-5">
-          Used by 100+ nonprofits • $6M+ saved from fees
+          Trusted by 100+ nonprofits • $6M+ saved from fees
         </p>
         <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-gray-d4 text-balance mb-4 ">
-          Keep <span className="text-blue">100%</span> of Your Donations.
+          Lower Costs, Increase <span className="text-blue">Donations</span>
         </h1>
         <p className="my-10 text-lg @6xl:text-xl text-balance text-center @6xl:text-left">
           {props.copy[1]}{" "}

@@ -89,7 +89,10 @@ export default function Page() {
         </div>
       </div>
       <Hero className="xl:container xl:mx-auto px-10" {...ctx} />
-      <Section1 classes="xl:container xl:mx-auto px-10" {...ctx} />
+      <Section1
+        classes="xl:container xl:mx-auto px-10 py-20 rounded-lg"
+        {...ctx}
+      />
       <Section2 classes="xl:container xl:mx-auto px-10 mt-48" />
       <DonationFormInfo className="mt-28 xl:container xl:mx-auto px-5" />
       {/* <Section3 classes="xl:container xl:mx-auto px-10 mt-48" /> */}

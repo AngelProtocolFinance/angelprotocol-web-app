@@ -37,7 +37,7 @@ export const Testimonials = ({ classes = "" }) => {
         <button
           type="button"
           onClick={() => emblaApi?.scrollPrev()}
-          className="p-4  text-blue-d1 z-10 absolute -top-4 left-0"
+          className="p-4 text-blue-d1 bg-white rounded-full border border-gray-l3 shadow-xl z-10 absolute top-32 left-0"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -45,7 +45,7 @@ export const Testimonials = ({ classes = "" }) => {
         <button
           type="button"
           onClick={() => emblaApi?.scrollNext()}
-          className="p-4  text-blue-d1 z-10 absolute -top-4 right-0"
+          className="p-4 text-blue-d1 bg-white rounded-full border border-gray-l3 shadow-xl z-10 absolute top-32 right-0"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" />
