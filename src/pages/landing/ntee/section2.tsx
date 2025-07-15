@@ -14,7 +14,7 @@ export function Section2({ classes = "" }: Props) {
         Every donation shouldn't cost you money.
       </p>
       <div className="grid @6xl:grid-cols-3 gap-4">
-        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
+        <div className="grid grid-rows-subgrid row-span-3 bg-white shadow-xl shadow-black/10 p-6 rounded-xl max-w-sm w-full justify-self-center">
           <TriangleAlertIcon
             size={30}
             className="text-blue justify-self-center"
@@ -30,7 +30,7 @@ export function Section2({ classes = "" }: Props) {
             to processing fees. That's an entire arts program. Gone.
           </p>
         </div>
-        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
+        <div className="grid grid-rows-subgrid row-span-3 bg-white shadow-xl shadow-black/10 p-6 rounded-xl max-w-sm w-full justify-self-center">
           <ClockIcon size={30} className="text-blue justify-self-center" />
           <h4 className="text-lg capitalize text-center">
             Admin works devours your time
@@ -40,7 +40,7 @@ export function Section2({ classes = "" }: Props) {
             donation tracking, receipts, reports. Time stolen from your mission.
           </p>
         </div>
-        <div className="grid grid-rows-subgrid row-span-3 shadow-xl p-6 rounded-xl max-w-sm w-full justify-self-center">
+        <div className="grid grid-rows-subgrid row-span-3 bg-white shadow-xl shadow-black/10 p-6 rounded-xl max-w-sm w-full justify-self-center">
           <TrendingDownIcon
             size={30}
             className="text-blue justify-self-center"

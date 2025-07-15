@@ -18,7 +18,7 @@ export const Testimonials = ({ classes = "" }) => {
   });
 
   return (
-    <div className={` ${classes} grid pt-48 overflow-x-clip`}>
+    <div className={` ${classes} grid pt-20 overflow-x-clip`}>
       <img
         src={quotation}
         alt="quotation mark"

@@ -93,12 +93,20 @@ export default function Page() {
         classes="xl:container xl:mx-auto px-10 py-20 rounded-lg"
         {...ctx}
       />
-      <Section2 classes="xl:container xl:mx-auto px-10 mt-48" />
+
+      <div className="mt-48 bg-gray-l5">
+        <Section2 classes="xl:container xl:mx-auto p-16" />
+      </div>
+
       <DonationFormInfo className="mt-28 xl:container xl:mx-auto px-5" />
       {/* <Section3 classes="xl:container xl:mx-auto px-10 mt-48" /> */}
-      <Testimonials classes="xl:container xl:mx-auto px-10" />
+      <div className="bg-gray-l5 mt-28">
+        <Testimonials classes="xl:container xl:mx-auto px-10" />
+      </div>
       <Section5 classes="xl:container xl:mx-auto px-10 mt-24" />
-      <Section6 classes="xl:container xl:mx-auto px-10 mt-24" />
+      <div className="bg-gray-l5">
+        <Section6 classes="xl:container xl:mx-auto px-10 mt-24" />
+      </div>
       <div className="bg-gradient-to-tr from-blue to-blue-l1">
         <Section7 classes="xl:container xl:mx-auto px-10" />
       </div>

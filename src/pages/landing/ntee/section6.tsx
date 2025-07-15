@@ -36,16 +36,16 @@ export const items: Item[] = [
 
 export function Section6({ classes = "" }: { classes?: string }) {
   return (
-    <div className={`${classes} py-26 grid`}>
+    <div className={`${classes} py-12 grid`}>
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
         "What's the Catch?"{" "}
         <span className="text-blue">(There&nbsp;Isn't One)</span>
       </h2>
-      <div className="grid gap-y-16 justify-self-center mt-8">
+      <div className="grid gap-y-8 justify-self-center mt-8">
         {items.map((item, index) => (
           <div
             key={index}
-            className="flex @max-3xl:flex-col gap-y-4 items-center gap-x-8 last:mb-0"
+            className="flex @max-3xl:flex-col gap-y-4 items-center gap-x-8 last:mb-0 bg-white p-8 rounded-xl shadow-xl shadow-black/2"
           >
             <div className="flex items-center justify-center p-4 rounded-full bg-blue-l5">
               <CircleQuestionMark className="text-blue" size={30} />
