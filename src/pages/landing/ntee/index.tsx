@@ -8,6 +8,7 @@ import { arts_culture } from "./contexts/arts-culture";
 import { education } from "./contexts/education";
 import { environment } from "./contexts/environment";
 import { health_care } from "./contexts/health-care";
+import { mental_health } from "./contexts/mental-health";
 import { DonationFormInfo } from "./donation-form-info";
 import { Footer } from "./footer";
 import { Hero } from "./hero";
@@ -25,7 +26,7 @@ const page_context: Record<string, PageContext> = {
   environment: environment,
   "animal-rescue": animal_rescue,
   healthcare: health_care,
-  // "mental-health": {},
+  "mental-health": mental_health,
   // "disease-awareness": {},
   // "medical-research": {},
   // "legal-justice": {},
