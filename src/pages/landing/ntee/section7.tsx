@@ -22,14 +22,7 @@ export function Section7({ classes = "" }: { classes?: string }) {
       <p className="text-center text-lg @max-3xl:text-base text-white max-w-3xl mb-8 mx-auto">
         Every day you wait costs you money. That changes today.
       </p>
-      <h3 className="my-4 text-center text-1.5xl @6xl:text-2xl @6xl:leading-tight capitalize text-white text-balance">
-        Tonight, that changes.
-      </h3>
-      <p className="text-center text-lg @max-3xl:text-base text-white max-w-3xl mx-auto">
-        Join 100+ arts nonprofits who've eliminated fees and reclaimed their
-        financial power.
-      </p>
-      <div className="grid gap-10 @xl:grid-cols-2 justify-self-center mt-12">
+      <div className="grid gap-10 @xl:grid-cols-2 justify-self-center">
         {features.map((x, idx) => (
           <div
             key={idx}
@@ -48,7 +41,7 @@ export function Section7({ classes = "" }: { classes?: string }) {
           </div>
         ))}
       </div>
-      <div className="flex flex-col @xl:flex-row justify-center items-center gap-6 mt-16">
+      <div className="flex flex-col @xl:flex-row justify-center items-center gap-6 mt-10">
         <Link
           to={`${appRoutes.register}/welcome`}
           className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading font-bold shadow-2xl rounded-xl"

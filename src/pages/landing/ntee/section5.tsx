@@ -26,10 +26,10 @@ export const items: Item[] = [
   },
   {
     emoji: "⚡",
-    title: "5-Minute Setup. Tonight You're Live.",
+    title: "Quick Setup. Live in a Day.",
     description:
-      "Register today. Accept donations tonight. No technical headaches. No waiting weeks.",
-    result: "Result: Start saving on fees immediately.",
+      "Start accepting donations fast - no fees, no complex tech, no waiting weeks.",
+    result: "Result: Grow your impact and savings from day one.   ",
     icon: <ZapIcon className="text-blue-l2" size={30} />,
   },
   {

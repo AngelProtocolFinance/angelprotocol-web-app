@@ -2,13 +2,15 @@ import { ClockIcon, TrendingDownIcon, TriangleAlertIcon } from "lucide-react";
 
 interface Props {
   classes?: string;
+  copy: string;
 }
 
-export function Section2({ classes = "" }: Props) {
+export function Section2({ classes = "", copy }: Props) {
   return (
     <div className={`${classes}`}>
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
-        Why <span className="text-red">pay $3,000</span> to accept $100,000?
+        You could be <span className="text-red">losing $3,000+</span> every
+        year.
       </h2>
       <p className="text-xl @6xl:text-2xl mb-6 font-heading @6xl:leading-tight capitalize text-gray-d1 font-medium text-center text-balance">
         Every donation shouldn't cost you money.
@@ -19,25 +21,18 @@ export function Section2({ classes = "" }: Props) {
             size={30}
             className="text-blue justify-self-center"
           />
-          <h4 className="text-lg capitalize text-center">
-            High fees steal your impact
-          </h4>
+          <h4 className="text-lg capitalize text-center">High fees</h4>
           <p className="text-center">
-            You{" "}
-            <span className="text-red font-medium">
-              lose $500 - $700 annually
-            </span>{" "}
-            to processing fees. That's an entire arts program. Gone.
+            <span className="text-red font-medium">Thousands</span> are lost to
+            processing fees every year.
           </p>
         </div>
         <div className="grid grid-rows-subgrid row-span-3 bg-white shadow-xl shadow-black/10 p-6 rounded-xl max-w-sm w-full justify-self-center">
           <ClockIcon size={30} className="text-blue justify-self-center" />
-          <h4 className="text-lg capitalize text-center">
-            Admin works devours your time
-          </h4>
+          <h4 className="text-lg capitalize text-center">Time waste</h4>
           <p className="text-center">
             <span className="text-red font-medium">10+ hours weekly</span> on
-            donation tracking, receipts, reports. Time stolen from your mission.
+            admin work.
           </p>
         </div>
         <div className="grid grid-rows-subgrid row-span-3 bg-white shadow-xl shadow-black/10 p-6 rounded-xl max-w-sm w-full justify-self-center">
@@ -45,24 +40,16 @@ export function Section2({ classes = "" }: Props) {
             size={30}
             className="text-blue justify-self-center"
           />
-          <h4 className="text-lg capitalize text-center">
-            Dead money earns nothing
-          </h4>
+          <h4 className="text-lg capitalize text-center">Donors denied!</h4>
           <p className="text-center">
-            Your reserves sit in{" "}
-            <span className="text-red font-medium">0.1% savings</span> while
-            inflation kills your buying power. Lost opportunity cost you
-            thousands.
+            Donors leave as they{" "}
+            <span className="text-red font-medium">can't donate</span> in the
+            way they want!
           </p>
         </div>
       </div>
       <div className="text-balance text-center bg-red-l5 mt-16 p-8 border-l-8 border-red rounded-xl rounded-tl-none rounded-bl-none max-w-3xl mx-auto">
-        <p>
-          The brutal truth: While you're drowning in paperwork and bleeding
-          fees, your community programs suffer. Every dollar lost to fees is a
-          student who can't take art classes. A show that can't be produced. A
-          dream deferred.
-        </p>
+        <p>{copy}</p>
         <p className="text-center text-xl @6xl:text-2xl @6xl:leading-tight text-red mt-4 font-semibold">
           How much longer can you afford this?
         </p>

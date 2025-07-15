@@ -3,11 +3,12 @@ export interface PageContext {
   meta_title: string;
   /** prepend with APP_NAME */
   meta_description: string;
-  copy: {
+  hero_copy: {
     1: string;
     /** prepend with APP_NAME */
     2: string;
   };
+  red_copy: string;
   hero: string;
   left: string;
   right: string;

@@ -1,6 +1,8 @@
+import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import { StepsCarousel } from "components/donation";
 import Image from "components/image";
+import { appRoutes } from "constants/routes";
 
 type TListItem = {
   title: string;
@@ -56,6 +58,12 @@ export function DonationFormInfo({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
+      <Link
+        to={`${appRoutes.register}/welcome`}
+        className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading font-bold shadow-2xl rounded-xl justify-self-center col-span-full mt-8"
+      >
+        Start Free
+      </Link>
     </section>
   );
 }

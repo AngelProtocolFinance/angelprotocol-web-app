@@ -30,7 +30,7 @@ export const items: Item[] = [
   {
     title: "How fast can we start?",
     description:
-      "Tonight. 5-minute signup. Immediate approval for most nonprofits. Start accepting donations in hours, not weeks.",
+      "Right now! 5-minute signup. Speedy approval for most nonprofits. Start accepting donations in hours, not weeks.",
   },
 ];
 

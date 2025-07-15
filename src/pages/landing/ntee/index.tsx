@@ -96,7 +96,7 @@ export default function Page() {
       />
 
       <div className="mt-48 bg-gray-l5">
-        <Section2 classes="xl:container xl:mx-auto p-16" />
+        <Section2 classes="xl:container xl:mx-auto p-16" copy={ctx.red_copy} />
       </div>
 
       <DonationFormInfo className="mt-28 xl:container xl:mx-auto px-5" />

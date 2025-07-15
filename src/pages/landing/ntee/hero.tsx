@@ -14,15 +14,15 @@ export function Hero({ className = "", ...props }: Props) {
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <p className="text-center @6xl:text-left text-gray-d4 mb-5">
-          Trusted by 100+ nonprofits • $6M+ saved from fees
+          Trusted by nonprofits • $6M+ saved from fees
         </p>
         <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-gray-d4 text-balance mb-4 ">
           Lower Costs, Increase <span className="text-blue">Donations</span>
         </h1>
         <p className="my-10 text-lg @6xl:text-xl text-balance text-center @6xl:text-left">
-          {props.copy[1]}{" "}
+          {props.hero_copy[1]}{" "}
           <span className="font-semibold">
-            {APP_NAME} {props.copy[2]}
+            {APP_NAME} {props.hero_copy[2]}
           </span>
         </p>
 
@@ -37,7 +37,7 @@ export function Hero({ className = "", ...props }: Props) {
             to={BOOK_A_DEMO}
             className="capitalize text-center bg-white border-blue-d1 text-blue-d1 active:translate-x-1 font-bold font-heading border-2 rounded-xl px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
           >
-            See how in 5 Minutes (&nbsp;Demo&nbsp;)
+            See how it works (&nbsp;Book&nbsp;a&nbsp;call&nbsp;)
           </Link>
         </div>
       </div>
