@@ -33,12 +33,12 @@ export function Section1({ classes = "", ...props }: Props) {
         <Image
           src={props.left}
           width={110}
-          className="@max-5xl:hidden absolute -right-24 -bottom-12"
+          className="@max-xl:hidden absolute right-0 @5xl:-right-24 -bottom-12"
         />
         <Image
           src={props.right}
           width={110}
-          className="@max-5xl:hidden absolute -left-24 -bottom-12"
+          className="@max-xl:hidden absolute left-0 @5xl:-left-24 -bottom-12"
         />
       </div>
     </div>

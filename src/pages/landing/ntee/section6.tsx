@@ -10,27 +10,27 @@ export const items: Item[] = [
   {
     title: "How is it really free?",
     description:
-      "We're a nonprofit. Our mission is helping other nonprofits succeed. No platform fees, ever. Donors optionally cover small credit card fees (95% do).",
+      "A: We're a nonprofit. Our mission is helping other nonprofits succeed. No platform fees, ever. Donors optionally cover small credit card fees (95% do).",
   },
   {
     title: "Is our money safe?",
     description:
-      "Absolutely. FDIC-insured accounts. Held with Fidelity Investments. PCI-Level 1 compliant. Same security as major banks.",
+      "A: Absolutely. FDIC-insured accounts. Held with Fidelity Investments. PCI-Level 1 compliant. Same security as major banks.",
   },
   {
     title: "What if we're too small?",
     description:
-      "Perfect. We built this for organizations like yours. From $10,000 to $10 million raised annually - all benefit equally.",
+      "A: Perfect. We built this for organizations like yours. From $10,000 to $10 million raised annually - all benefit equally.",
   },
   {
     title: "Can we keep our current bank?",
     description:
-      "Yes. We grant funds to your existing accounts. No need to switch banks or change anything else.",
+      "A: Yes. We grant funds to your existing accounts. No need to switch banks or change anything else.",
   },
   {
     title: "How fast can we start?",
     description:
-      "Right now! 5-minute signup. Speedy approval for most nonprofits. Start accepting donations in hours, not weeks.",
+      "A: Right now! 5-minute signup. Speedy approval for most nonprofits. Start accepting donations in hours, not weeks.",
   },
 ];
 

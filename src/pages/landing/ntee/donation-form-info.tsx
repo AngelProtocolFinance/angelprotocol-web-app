@@ -45,7 +45,7 @@ export function DonationFormInfo({ className = "" }) {
         Your all-in-one donation form
       </h4>
       <h2 className="col-span-full text-center text-3xl @3xl:text-4.5xl mb-4">
-        Raise more. Save more. Do less.
+        <span className="text-blue-d1">Raise more.</span> Do less.
       </h2>
       <p className="col-span-full mb-12 text-center text-xl text-navy">
         100% free. No setup costs, no recurring charges, no platform fees.
