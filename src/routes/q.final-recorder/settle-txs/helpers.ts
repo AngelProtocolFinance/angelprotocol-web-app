@@ -1,5 +1,6 @@
 import type { Balance } from "@better-giving/balance";
 import type { Donation } from "@better-giving/donation";
+import type { Allocation } from "@better-giving/endowment";
 import type { Keys } from "@better-giving/fundraiser/db";
 import type { TxType } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
@@ -35,11 +36,13 @@ interface Fees {
   processing: number;
 }
 export const balance_update = (
-  total: number,
+  /** values are resolved */
+  alloc: Allocation,
   tip: number,
   appUsed: Donation.App,
   fees: Fees
 ): Readonly<Balance.DonationBalanceUpdate> => {
+  const total = alloc.cash + alloc.liq + alloc.lock + tip;
   return {
     totalContributions: total,
     contributionsCount: 1,
@@ -51,7 +54,7 @@ export const balance_update = (
     totalProcessingFees: fees.processing,
     totalTips: tip,
     //include here as these would be included in atomic transaction
-    payoutsPending: total,
+    payoutsPending: 0,
   };
 };
 

@@ -1,6 +1,6 @@
+import { type TxItems, Txs } from "@better-giving/db/txs";
 import type { Donation } from "@better-giving/donation";
 import type { Allocation } from "@better-giving/donation/schema";
-import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
 import type { Payout } from "@better-giving/payout";
 import { tables } from "@better-giving/types/list";
 import { nanoid } from "nanoid";
@@ -127,6 +127,14 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
     id: o.endowId,
   });
 
+  const [cash, liq, lock] = [
+    o.net * o.allocation.cash,
+    o.net * o.allocation.liq,
+    o.net * o.allocation.lock,
+  ];
+
+  // const payouts = new PayoutsDB(apes, base.network);
+
   const payout: Payout.UnprocessedDBRecord = {
     source: "donation",
     uuid: nanoid(),
@@ -137,14 +145,14 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
     network: base.network,
   };
 
-  const builder = new TxBuilder();
-  builder.put({
+  const txs = new Txs();
+  txs.put({
     TableName: tables.donations,
     Item: record,
   });
 
   if (payout.amount > 0) {
-    builder
+    txs
       .put({
         TableName: tables.payouts,
         Item: payout,
@@ -152,5 +160,5 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
       .update(dbBalUpdate);
   }
 
-  return builder.txs;
+  return txs.all;
 }
