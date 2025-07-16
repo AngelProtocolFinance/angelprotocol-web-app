@@ -27,8 +27,8 @@ importers:
         specifier: 1.0.33
         version: 1.0.33
       '@better-giving/balance':
-        specifier: 1.1.7
-        version: 1.1.7(@better-giving/types@1.1.7)
+        specifier: 1.1.8
+        version: 1.1.8(@better-giving/types@1.1.7)
       '@better-giving/balance-tx':
         specifier: 1.1.7
         version: 1.1.7(@better-giving/types@1.1.7)
@@ -643,8 +643,8 @@ packages:
     peerDependencies:
       '@better-giving/types': 1.1.7
 
-  '@better-giving/balance@1.1.7':
-    resolution: {integrity: sha512-QvWDBg5SV5jBY2FtKD4Qhrz7iPc18dTUVQwPyKBVoIetKN/VK9j0oqbEXusAp0PEYx6ddUSFHrUBZazpci1lHQ==}
+  '@better-giving/balance@1.1.8':
+    resolution: {integrity: sha512-YYKfW8j7cfd5nCPfSAWHs26dIjsvPGRyXcUp5Qq++AoKDls9L/QRG6aJTMclQPY6fkwBFE8WNMlPCDD3BFa+lw==}
     peerDependencies:
       '@better-giving/types': 1.1.7
 
@@ -5977,7 +5977,7 @@ snapshots:
     dependencies:
       '@better-giving/types': 1.1.7
 
-  '@better-giving/balance@1.1.7(@better-giving/types@1.1.7)':
+  '@better-giving/balance@1.1.8(@better-giving/types@1.1.7)':
     dependencies:
       '@better-giving/types': 1.1.7
 
