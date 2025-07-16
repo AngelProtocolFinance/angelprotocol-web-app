@@ -2,6 +2,7 @@ import lairaAnnounce from "./laira-announce.webp";
 import lairaCalling from "./laira-calling.webp";
 import lairaCheering from "./laira-cheering.webp";
 import lairaCoin from "./laira-coin.webp";
+import lairaFloating from "./laira-floating.png";
 import lairaGift from "./laira-gift.webp";
 import lairaGiggling from "./laira-giggling.webp";
 import lairaHappyJump from "./laira-happy-jump.webp";
@@ -48,6 +49,7 @@ export const laira = {
   pointing: lairaPointing,
   trophy: lairaTrophy,
   yellow: lairaYellow,
+  floating: lairaFloating,
 };
 
 const lairas = Object.values(laira);
