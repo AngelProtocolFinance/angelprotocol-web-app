@@ -154,6 +154,7 @@ async function initBalance(endowId: number) {
         totalFiscalSponsorFees: 0,
         totalProcessingFees: 0,
         totalTips: 0,
+        liq: 0,
       } satisfies Balance.DBRecord,
     })
   );
