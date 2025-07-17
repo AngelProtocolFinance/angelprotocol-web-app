@@ -55,6 +55,10 @@ export const balance_update = (
     totalTips: tip,
     //include here as these would be included in atomic transaction
     payoutsPending: total,
+    liq: alloc.liq,
+    lock: alloc.lock,
+    //pending payout
+    cash: alloc.cash,
   };
 };
 
