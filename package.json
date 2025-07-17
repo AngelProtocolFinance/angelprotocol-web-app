@@ -48,7 +48,7 @@
     "@better-giving/nowpayments": "1.1.2",
     "@better-giving/payout": "1.1.4",
     "@better-giving/referrals": "1.0.6",
-    "@better-giving/registration": "2.0.0",
+    "@better-giving/registration": "2.0.1",
     "@better-giving/schemas": "1.2.0",
     "@better-giving/types": "1.1.7",
     "@better-giving/user": "2.0.0",
