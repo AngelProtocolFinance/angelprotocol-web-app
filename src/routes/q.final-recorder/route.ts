@@ -170,7 +170,7 @@ export const action: ActionFunction = async ({ request }) => {
           tip_tos.push(c.to);
         }
 
-        const _txs = settle_txs(base, overrides);
+        const _txs = await settle_txs(base, overrides);
         builder.append(_txs);
         //use net as it reflects fee allowance add-back
         fund_net += processed.net;
@@ -241,7 +241,7 @@ export const action: ActionFunction = async ({ request }) => {
         builder.append(c.txs);
         tip_tos.push(c.to);
       }
-      const _txs = settle_txs(base, overrides);
+      const _txs = await settle_txs(base, overrides);
       builder.append(_txs);
     }
 
@@ -295,7 +295,7 @@ export const action: ActionFunction = async ({ request }) => {
       };
       overrides.net -= tip_commission;
     }
-    const tipTxs = settle_txs(base, overrides);
+    const tipTxs = await settle_txs(base, overrides);
     builder.append(tipTxs);
 
     const res = await apes.send(
