@@ -7,6 +7,7 @@ export { loader, action } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
 import ExtLink from "components/ext-link";
+import { toYYYMMDD } from "components/form";
 import { XIcon } from "lucide-react";
 import { filter_factory } from "./common";
 import { Contacts } from "./contacts";
@@ -88,6 +89,15 @@ export default function Page() {
           <table className="self-start border-collapse overflow-x-auto [&_th]:text-left [&_th]:align-top [&_th]:text-balance [&_td]:text-nowrap [&_td,&_th]:p-2 [&_td,&_th]:border [&_td,&_th]:border-gray-l3">
             <thead>
               <tr>
+                <H
+                  k="last_updated"
+                  filter={(k) => (
+                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
+                  )}
+                  sort={sort_obj}
+                >
+                  Date
+                </H>
                 <H>EIN</H>
                 <H>Name</H>
                 <H
@@ -281,6 +291,9 @@ export default function Page() {
             <tbody>
               {data.items.map((d, i) => (
                 <tr key={d._id + i}>
+                  <td>
+                    {d.last_updated && toYYYMMDD(new Date(d.last_updated))}
+                  </td>
                   <td>{d.ein}</td>
                   <td>{d.name}</td>
                   <td>

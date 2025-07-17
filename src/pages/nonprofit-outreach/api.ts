@@ -33,6 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 const headers = [
+  "last_updated",
   "ein",
   "name",
   "website",
@@ -85,6 +86,7 @@ export const action: ActionFunction = async ({ request }) => {
       controller.enqueue(encoder.encode(`${Object.keys(headers).join(",")}\n`));
       source.on("data", (doc: NonprofitItem) => {
         const {
+          last_updated,
           ein,
           name,
           website,
@@ -114,6 +116,7 @@ export const action: ActionFunction = async ({ request }) => {
           sort_name,
         } = doc;
         const row1 = [
+          last_updated,
           ein,
           name,
           website,
