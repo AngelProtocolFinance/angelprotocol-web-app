@@ -59,11 +59,12 @@ class Filter {
   }
   range<T extends string>(
     kv: { [key in T]: T },
-    wrapper: typeof Date | typeof Number
+    wrapper: (...args: any[]) => any = (x) => x
   ) {
     const [[k, v]] = Object.entries(kv);
     if (!v) return;
     const range = this.extract_blank_exists(k, v as string);
+    console.log(range, wrapper(range[0]), wrapper(range[1]));
     if (range.length > 1) {
       this.filter.$and ||= [];
       this.filter.$and.push({
@@ -133,7 +134,7 @@ export const nposParams = (request: Request) => {
   filter.range({ income_amount }, Number);
   filter.range({ asset_amount }, Number);
   filter.range({ revenue_amount }, Number);
-  filter.range({ last_updated }, Date);
+  filter.range({ last_updated }, (x) => new Date(x));
 
   return { filter: filter.all, page: +page, limit: +limit, sort: sort };
 };
