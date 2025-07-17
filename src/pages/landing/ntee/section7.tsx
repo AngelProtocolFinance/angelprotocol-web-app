@@ -56,7 +56,7 @@ export function Section7({ classes = "" }: { classes?: string }) {
         </Link>
       </div>
       <div className="bg-blue-l5/10 text-white rounded-xl p-8 mt-8">
-        <h6 className="text-center mb-4">Trusted by 100+ nonprofits</h6>
+        <h6 className="text-center mb-4">Trust Badge</h6>
         <div className="flex flex-wrap justify-center items-center gap-8">
           {badges.map((badge, idx) => (
             <p key={idx} className="flex items-center gap-x-2 text-sm">
