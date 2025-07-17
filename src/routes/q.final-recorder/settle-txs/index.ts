@@ -117,7 +117,16 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
     ...uniques,
   };
 
-  const balUpdate = balance_update(o.net, 0, base.appUsed, {
+  const net_alloc: Allocation = {
+    cash: o.allocation.cash,
+    liq: o.allocation.liq,
+    lock: o.allocation.lock,
+  };
+
+  if (net_alloc.lock) {
+  }
+
+  const balUpdate = balance_update(net_alloc, 0, base.appUsed, {
     base: o.fees.base,
     fsa: o.fees.fsa,
     processing: o.fees.processing,
@@ -126,12 +135,6 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
     network: base.network,
     id: o.endowId,
   });
-
-  const [cash, liq, lock] = [
-    o.net * o.allocation.cash,
-    o.net * o.allocation.liq,
-    o.net * o.allocation.lock,
-  ];
 
   // const payouts = new PayoutsDB(apes, base.network);
 

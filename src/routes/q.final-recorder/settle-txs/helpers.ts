@@ -54,7 +54,7 @@ export const balance_update = (
     totalProcessingFees: fees.processing,
     totalTips: tip,
     //include here as these would be included in atomic transaction
-    payoutsPending: 0,
+    payoutsPending: total,
   };
 };
 
