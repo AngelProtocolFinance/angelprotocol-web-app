@@ -1,9 +1,11 @@
 import type { LoaderFunction } from "@vercel/remix";
+import { format } from "date-fns";
 import { nposParams } from "helpers/npos-params";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
 import { nonprofits } from ".server/mongodb/db";
 
 const heads = [
+  "last_updated",
   "ein",
   "name",
   "website",
@@ -55,6 +57,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       controller.enqueue(encoder.encode(`${heads.join(",")}\n`));
       source.on("data", (doc: NonprofitItem) => {
         const {
+          last_updated,
           ein,
           name,
           website,
@@ -95,6 +98,9 @@ export const loader: LoaderFunction = async ({ request }) => {
           value?.replace(/,/g, "").replace(/\n/g, "").trim() ?? "";
 
         const row1 = [
+          cleanValue(
+            last_updated && format(new Date(last_updated), "yyyy-MM-dd")
+          ),
           cleanValue(ein),
           cleanValue(name),
           cleanValue(website),
