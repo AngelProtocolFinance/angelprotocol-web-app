@@ -3,7 +3,7 @@ import type { LoaderData } from "./api";
 import { ListFilter } from "./list-filter";
 import { Paginator } from "./paginator";
 import { RangeFilter } from "./range-filter";
-export { loader, action } from "./api";
+export { loader } from "./api";
 export { clientLoader } from "api/cache";
 import { useCachedLoaderData } from "api/cache";
 import ExtLink from "components/ext-link";
