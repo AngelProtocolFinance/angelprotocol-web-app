@@ -79,7 +79,7 @@ export const nposParams = (request: Request) => {
   const {
     page = "1",
     limit = "10",
-    sort = "",
+    sort = "last_updated+desc",
     asset_code,
     income_code,
     website,
