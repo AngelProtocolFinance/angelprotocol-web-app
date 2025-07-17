@@ -1,10 +1,13 @@
 import { type TxItems, Txs } from "@better-giving/db/txs";
 import type { Donation } from "@better-giving/donation";
 import type { Allocation } from "@better-giving/donation/schema";
+import { NavHistoryDB } from "@better-giving/nav-history/db";
 import type { Payout } from "@better-giving/payout";
 import { tables } from "@better-giving/types/list";
+import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { balance_update, to_db_update } from "./helpers";
+import { apes } from ".server/aws/db";
 export type Base = Pick<
   Donation.V2DBRecord,
   | "transactionDate"
@@ -74,7 +77,8 @@ export interface Overrides {
   allocation: Allocation;
 }
 
-export function settle_txs(base: Base, o: Overrides): TxItems {
+export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
+  const timestamp = new Date().toISOString();
   if (o.net <= 0) return [];
 
   const uniques: Uniques = {
@@ -123,7 +127,25 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
     lock: o.allocation.lock,
   };
 
+  const txs = new Txs();
   if (net_alloc.lock) {
+    const navdb = new NavHistoryDB(apes, base.network);
+    const nav = await navdb.ltd();
+
+    const new_nav = produce(nav, (x) => {
+      const purchased_units = net_alloc.lock / nav.price;
+      const old_units = nav.holders[o.endowId] || 0;
+
+      x.reason = `npo:${o.endowId} donation allocation to lock`;
+      x.date = timestamp;
+      x.units += purchased_units;
+      // new investments are allocated to cash portion and rebalanced later
+      x.composition.CASH.qty += net_alloc.cash;
+      x.value += net_alloc.lock;
+      x.holders[o.endowId] += old_units;
+    });
+
+    txs.append(navdb.log_items(new_nav));
   }
 
   const balUpdate = balance_update(net_alloc, 0, base.appUsed, {
@@ -143,12 +165,11 @@ export function settle_txs(base: Base, o: Overrides): TxItems {
     uuid: nanoid(),
     sourceId: o.txId,
     amount: balUpdate.payoutsPending,
-    dateAdded: new Date().toISOString(),
+    dateAdded: timestamp,
     endowmentId: o.endowId,
     network: base.network,
   };
 
-  const txs = new Txs();
   txs.put({
     TableName: tables.donations,
     Item: record,

@@ -27,8 +27,8 @@ importers:
         specifier: 1.0.33
         version: 1.0.33
       '@better-giving/balance':
-        specifier: 1.1.8
-        version: 1.1.8(@better-giving/types@1.1.7)
+        specifier: 1.2.0
+        version: 1.2.0(@better-giving/types@1.1.7)
       '@better-giving/balance-tx':
         specifier: 1.1.7
         version: 1.1.7(@better-giving/types@1.1.7)
@@ -188,6 +188,9 @@ importers:
       fuse.js:
         specifier: 7.0.0
         version: 7.0.0
+      immer:
+        specifier: 10.1.1
+        version: 10.1.1
       isbot:
         specifier: 4.1.0
         version: 4.1.0
@@ -652,8 +655,8 @@ packages:
     peerDependencies:
       '@better-giving/types': 1.1.7
 
-  '@better-giving/balance@1.1.8':
-    resolution: {integrity: sha512-YYKfW8j7cfd5nCPfSAWHs26dIjsvPGRyXcUp5Qq++AoKDls9L/QRG6aJTMclQPY6fkwBFE8WNMlPCDD3BFa+lw==}
+  '@better-giving/balance@1.2.0':
+    resolution: {integrity: sha512-SEaxt/QpIUK8+upCbJSmbst02e/XZOVVcOIpkzLIq5K19dfHKJ4OcGz9rRj2dYyj9iEwGhURv1Ye8PODsCQh6g==}
     peerDependencies:
       '@better-giving/types': 1.1.7
 
@@ -3333,6 +3336,9 @@ packages:
   ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
+  immer@10.1.1:
+    resolution: {integrity: sha512-s2MPrmjovJcoMaHtx6K11Ra7oD05NT97w1IC5zpMkT6Atjr7H8LjaDd81iIxUYpMKSRRNMJE703M1Fhr/TctHw==}
+
   imurmurhash@0.1.4:
     resolution: {integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==}
     engines: {node: '>=0.8.19'}
@@ -6010,7 +6016,7 @@ snapshots:
     dependencies:
       '@better-giving/types': 1.1.7
 
-  '@better-giving/balance@1.1.8(@better-giving/types@1.1.7)':
+  '@better-giving/balance@1.2.0(@better-giving/types@1.1.7)':
     dependencies:
       '@better-giving/types': 1.1.7
 
@@ -8803,6 +8809,8 @@ snapshots:
       postcss: 8.5.1
 
   ieee754@1.2.1: {}
+
+  immer@10.1.1: {}
 
   imurmurhash@0.1.4: {}
 
