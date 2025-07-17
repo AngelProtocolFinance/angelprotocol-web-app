@@ -11,6 +11,7 @@ import { toYYYMMDD } from "components/form";
 import { XIcon } from "lucide-react";
 import { filter_factory } from "./common";
 import { Contacts } from "./contacts";
+import { DateFilter } from "./date-filter";
 import { H } from "./header";
 import { Socials } from "./socials";
 import type { ISort } from "./sort";
@@ -91,9 +92,7 @@ export default function Page() {
               <tr>
                 <H
                   k="last_updated"
-                  filter={(k) => (
-                    <ListFilter {...filter_props(k)} optsFn={async () => []} />
-                  )}
+                  filter={(k) => <DateFilter {...filter_props(k)} />}
                   sort={sort_obj}
                 >
                   Date

@@ -333,6 +333,9 @@ importers:
       vite:
         specifier: 5.2.0
         version: 5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)
+      vite-plugin-devtools-json:
+        specifier: 0.3.0
+        version: 0.3.0(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1))
       vite-tsconfig-paths:
         specifier: 5.1.4
         version: 5.1.4(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1))
@@ -5052,6 +5055,10 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
+  uuid@11.1.0:
+    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
+    hasBin: true
+
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
@@ -5117,6 +5124,11 @@ packages:
     resolution: {integrity: sha512-uPAwSr57kYjAUux+8E2j0q0Fxpn8M9VoyfGiRI8Kfktz9NcYMCenwY5RnZxnF1WTu3TGiYipirIzacLL3VVGFg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
+
+  vite-plugin-devtools-json@0.3.0:
+    resolution: {integrity: sha512-y8QdN/uZNV0Jj96H9R3s7G9jtcSuyssk8EwSfWaY+NUAdy7976d7rjtXJzqmeCcgp4CZywcTyUc+k6zpPFHdeg==}
+    peerDependencies:
+      vite: ^2.7.0 || ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
 
   vite-tsconfig-paths@5.1.4:
     resolution: {integrity: sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==}
@@ -10658,6 +10670,8 @@ snapshots:
 
   utils-merge@1.0.1: {}
 
+  uuid@11.1.0: {}
+
   uuid@8.3.2: {}
 
   uuid@9.0.1: {}
@@ -10756,6 +10770,11 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+
+  vite-plugin-devtools-json@0.3.0(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)):
+    dependencies:
+      uuid: 11.1.0
+      vite: 5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)
 
   vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)):
     dependencies:

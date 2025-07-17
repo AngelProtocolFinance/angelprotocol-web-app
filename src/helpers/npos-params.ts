@@ -57,14 +57,17 @@ class Filter {
       });
     }
   }
-  range<T extends string>(kv: { [key in T]: T }) {
+  range<T extends string>(
+    kv: { [key in T]: T },
+    wrapper: typeof Date | typeof Number
+  ) {
     const [[k, v]] = Object.entries(kv);
     if (!v) return;
     const range = this.extract_blank_exists(k, v as string);
     if (range.length > 1) {
       this.filter.$and ||= [];
       this.filter.$and.push({
-        [k]: { $gte: Number(range[0]), $lte: Number(range[1]) },
+        [k]: { $gte: wrapper(range[0]), $lte: wrapper(range[1]) },
       });
     }
   }
@@ -77,6 +80,7 @@ class Filter {
 export const nposParams = (request: Request) => {
   const url = new URL(request.url);
   const {
+    last_updated = "",
     page = "1",
     limit = "10",
     sort = "last_updated+desc",
@@ -126,9 +130,10 @@ export const nposParams = (request: Request) => {
   filter.opts({ filing_requirement_code });
   filter.opts({ sort_name });
   filter.starts_with({ ntee_code });
-  filter.range({ income_amount });
-  filter.range({ asset_amount });
-  filter.range({ revenue_amount });
+  filter.range({ income_amount }, Number);
+  filter.range({ asset_amount }, Number);
+  filter.range({ revenue_amount }, Number);
+  filter.range({ last_updated }, Date);
 
   return { filter: filter.all, page: +page, limit: +limit, sort: sort };
 };
