@@ -79,6 +79,7 @@ export interface Overrides {
 }
 
 export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
+  console.log({ base, o });
   const timestamp = new Date().toISOString();
   if (o.net <= 0) return [];
 
