@@ -135,16 +135,14 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
 
     const new_nav = produce(nav, (x) => {
       const purchased_units = net_alloc.lock / nav.price;
-      const old_units = nav.holders[o.endowId] || 0;
-
       x.reason = `npo:${o.endowId} donation allocation to lock`;
       x.date = timestamp;
       x.units += purchased_units;
       // new investments are allocated to cash portion and rebalanced later
-      x.composition.CASH.qty += net_alloc.cash;
+      x.composition.CASH.qty += net_alloc.lock;
       x.value += net_alloc.lock;
       x.holders[o.endowId] ||= 0;
-      x.holders[o.endowId] += old_units;
+      x.holders[o.endowId] += purchased_units;
     });
 
     txs.append(navdb.log_items(new_nav));
