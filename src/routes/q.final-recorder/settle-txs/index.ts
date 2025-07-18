@@ -8,76 +8,10 @@ import { tables } from "@better-giving/types/list";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { balance_update, to_db_update } from "./helpers";
+import type { Base, Overrides, Uniques } from "./types";
 import { apes } from ".server/aws/db";
-export type Base = Pick<
-  Donation.V2DBRecord,
-  | "transactionDate"
-  | "email"
-  | "inHonorOf"
-  | "tributeNotif"
-  | "appUsed"
-  | "denomination"
-  | "splitLiq"
-  | "chainId"
-  | "chainName"
-  // not speficied for fund donations
-  | "programId"
-  | "fiatRamp"
-  // not speficied for fund donations
-  | "programName"
-  | "client"
-  | "network"
-  | "paymentMethod"
-  | "isRecurring"
-  | "destinationChainId"
-  | "donationFinalChainId"
-  | "donationFinalTxDate"
-  | "donationFinalTxHash"
-  | "donationFinalDenom"
-  | "company_name"
-> &
-  (Donation.WithKYC | Donation.WithoutKYC);
 
-export type Uniques = Omit<Donation.V2DBRecord, keyof Base>;
-
-export interface Overrides {
-  input: number;
-  inputUsd: number;
-  /** usd, net of processing fee */
-  settled: number;
-  /** usd, net of bg fees fsa, base */
-  net: number;
-  /** usd */
-  feeAllowance: number;
-  /** usd */
-  excessFeeAllowance: number;
-  referrer?: {
-    id: string;
-    commission: Donation.ReferrerCommission;
-  };
-  /** usd */
-  fees: {
-    base: number;
-    processing: number;
-    fsa: number;
-  };
-  txId: string;
-  /** exclusive for tips */
-  parentTx?: string;
-
-  /** exclusive for donations originating from fundraiser */
-  fundTx?: string;
-  fundId?: string;
-  fundName?: string;
-
-  endowId: number;
-  endowName: string;
-  claimed: boolean;
-  fiscal_sponsored: boolean;
-  msg_to_npo?: string;
-  allocation: Allocation;
-}
-
+export type { Base, Overrides, Uniques } from "./types";
 export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   const timestamp = new Date().toISOString();
   if (o.net <= 0) return [];
