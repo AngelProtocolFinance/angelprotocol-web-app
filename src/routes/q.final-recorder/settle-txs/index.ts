@@ -79,7 +79,6 @@ export interface Overrides {
 }
 
 export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
-  console.log({ base, o });
   const timestamp = new Date().toISOString();
   if (o.net <= 0) return [];
 
@@ -144,10 +143,9 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
       // new investments are allocated to cash portion and rebalanced later
       x.composition.CASH.qty += net_alloc.cash;
       x.value += net_alloc.lock;
+      x.holders[o.endowId] ||= 0;
       x.holders[o.endowId] += old_units;
     });
-
-    console.log({ new_nav });
 
     txs.append(navdb.log_items(new_nav));
   }
