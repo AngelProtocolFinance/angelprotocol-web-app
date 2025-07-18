@@ -20,4 +20,7 @@ export type EndowmentBalances = {
   movementDetails?: BalanceMovement;
   /** savings balance */
   liq?: number;
+  lock?: number;
+  /** pending payouts */
+  cash?: number;
 };
