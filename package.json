@@ -35,7 +35,7 @@
     "@aws-sdk/client-sqs": "3.485.0",
     "@aws-sdk/lib-dynamodb": "3.485.0",
     "@better-giving/assets": "1.0.33",
-    "@better-giving/balance": "1.2.0",
+    "@better-giving/balance": "1.2.1",
     "@better-giving/balance-tx": "1.1.7",
     "@better-giving/banking-applications": "2.0.0",
     "@better-giving/chariot": "1.1.7",

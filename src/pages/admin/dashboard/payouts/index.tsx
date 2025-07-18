@@ -1,19 +1,19 @@
+import type { INpoPayoutsPage } from "@better-giving/payouts/interfaces";
 import { Info, LoadingStatus } from "components/status";
 import useSWR from "swr/immutable";
-import type { BalanceTxsPage } from "types/balance-tx";
-import Table from "./table";
+import { Table } from "./table";
 
 const fetcher = ([, id, key]: [string, number, string | null]) =>
   fetch(
-    `/api/npo/${id}/txs${key ? `?nextKey=${key}` : ""}`
-  ).then<BalanceTxsPage>((res) => res.json());
+    `/api/npo/${id}/payouts${key ? `?nextKey=${key}` : ""}`
+  ).then<INpoPayoutsPage>((res) => res.json());
 
 interface Props {
   id: number;
   classes?: string;
 }
 
-export function PayoutHistory({ classes = "", id }: Props) {
+export function Payouts({ classes = "", id }: Props) {
   const { data, mutate, isLoading, isValidating, error } = useSWR(
     ["txs", id, null],
     fetcher
@@ -31,7 +31,7 @@ export function PayoutHistory({ classes = "", id }: Props) {
     return <Info classes="mt-4">Failed to get transactions</Info>;
   }
 
-  const { items, nextPageKey } = data;
+  const { items, next } = data;
   if (items.length === 0) return <Info>No record found</Info>;
 
   async function load(nextKey: string) {
@@ -40,7 +40,7 @@ export function PayoutHistory({ classes = "", id }: Props) {
       (x) => {
         return {
           items: [...(x?.items || []), ...res.items],
-          nextPageKey: res.nextPageKey,
+          nextPageKey: res.next,
         };
       },
       { revalidate: false }
@@ -54,7 +54,7 @@ export function PayoutHistory({ classes = "", id }: Props) {
       ) : (
         <Table
           records={items}
-          onLoadMore={nextPageKey ? () => load(nextPageKey) : undefined}
+          onLoadMore={next ? () => load(next) : undefined}
           disabled={isValidating}
           isLoading={isValidating}
         />
