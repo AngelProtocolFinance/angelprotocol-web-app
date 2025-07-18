@@ -124,9 +124,9 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   };
 
   const net_alloc: Allocation = {
-    cash: o.allocation.cash,
-    liq: o.allocation.liq,
-    lock: o.allocation.lock,
+    cash: o.allocation.cash * o.net,
+    liq: o.allocation.liq * o.net,
+    lock: o.allocation.lock * o.net,
   };
 
   const txs = new Txs();
@@ -146,6 +146,8 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
       x.value += net_alloc.lock;
       x.holders[o.endowId] += old_units;
     });
+
+    console.log({ new_nav });
 
     txs.append(navdb.log_items(new_nav));
   }
