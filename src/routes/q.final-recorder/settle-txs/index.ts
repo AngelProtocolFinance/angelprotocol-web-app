@@ -57,9 +57,9 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   };
 
   const net_alloc: Allocation = {
-    cash: o.allocation.cash * o.net,
-    liq: o.allocation.liq * o.net,
-    lock: o.allocation.lock * o.net,
+    cash: (o.allocation.cash / 100) * o.net,
+    liq: (o.allocation.liq / 100) * o.net,
+    lock: (o.allocation.lock / 100) * o.net,
   };
 
   const txs = new Txs();
