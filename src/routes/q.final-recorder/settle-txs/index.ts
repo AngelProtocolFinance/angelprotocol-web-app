@@ -74,6 +74,8 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
       x.units += purchased_units;
       // new investments are allocated to cash portion and rebalanced later
       x.composition.CASH.qty += net_alloc.lock;
+      x.composition.CASH.value += net_alloc.lock;
+
       x.value += net_alloc.lock;
       x.holders[o.endowId] ||= 0;
       x.holders[o.endowId] += purchased_units;
