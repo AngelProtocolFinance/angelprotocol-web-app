@@ -9,7 +9,7 @@ import { LiqActions } from "./liq-actions";
 import { LockActions } from "./lock-actions";
 import { monthPeriod } from "./month-period";
 import { Movements } from "./movements";
-import { PayoutHistory } from "./payout-history";
+import { Payouts } from "./payouts";
 import { SfPerf } from "./sf-perf";
 
 interface Props {
@@ -103,7 +103,7 @@ export function Loaded({ classes = "", ...props }: Props) {
             </span>
           </p>
         </div>
-        <h5>$1000.15</h5>
+        <h5>${humanize(props.balances.cash ?? 0)}</h5>
 
         <Movements
           disabled={period.isPre}
@@ -129,7 +129,7 @@ export function Loaded({ classes = "", ...props }: Props) {
       /> */}
 
       {/* <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" /> */}
-      <PayoutHistory classes="mt-2" id={props.id} />
+      <Payouts classes="mt-2" id={props.id} />
     </div>
   );
 }

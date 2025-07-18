@@ -1,7 +1,7 @@
-import type { BalanceTx } from "types/balance-tx";
+import type { IPayout } from "@better-giving/payouts/interfaces";
 
 export interface TableProps {
-  records: BalanceTx[];
+  records: IPayout[];
   classes?: string;
   onLoadMore?(): void;
   disabled: boolean;
