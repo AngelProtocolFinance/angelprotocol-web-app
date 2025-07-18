@@ -20,8 +20,7 @@ export async function getNpos(
 
   const filters = {
     env: `env:'${env}'`,
-    //TODO: uncomment when all unclaimed NPOs are published
-    // published: `published:1`,
+    published: `published:1`,
     country: component(
       p.countries,
       (v) => `hq_country:'${v}' active_in_countries:'${v}'`
