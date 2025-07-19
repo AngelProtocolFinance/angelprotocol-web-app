@@ -1,26 +1,28 @@
-import type { Allocation } from "@better-giving/endowment";
-import { useFetcher } from "@remix-run/react";
+import type { INpoPayoutsPage } from "@better-giving/payouts";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import { Arrow, Content } from "components/tooltip";
+import { format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
 import type { BalanceMovement, EndowmentBalances } from "types/npo-balance";
+import { PayoutsTable } from "./common/payouts-table";
 import Figure from "./figure";
 import { LiqActions } from "./liq-actions";
 import { LockActions } from "./lock-actions";
 import { monthPeriod } from "./month-period";
 import { Movements } from "./movements";
-import { PayoutHistory } from "./payout-history";
-import { Schedule } from "./schedule";
 import { SfPerf } from "./sf-perf";
-import { Summary } from "./summary";
 
 interface Props {
   id: number;
   balances: EndowmentBalances;
-  allocation: Allocation;
+  next_payout: string;
+  recent_payouts: INpoPayoutsPage;
   classes?: string;
 }
 export function Loaded({ classes = "", ...props }: Props) {
+  const now = new Date();
+  const next_payout = new Date(props.next_payout);
   const fetcher = useFetcher({ key: "bal-mov" });
   const period = monthPeriod();
 
@@ -34,9 +36,10 @@ export function Loaded({ classes = "", ...props }: Props) {
       "lock-liq": 0,
     };
 
+  const navigate = useNavigate();
+
   return (
     <div className={`${classes} mt-6`}>
-      <h3 className="uppercase mb-4 font-black">Account Balances</h3>
       <div className="grid gap-4 @lg:grid-cols-2">
         <Figure
           title="Savings"
@@ -96,21 +99,17 @@ export function Loaded({ classes = "", ...props }: Props) {
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
 
       {/** div scopes when the sticky header ends */}
-      <div className="@container/period">
-        <h3 className="py-4 font-medium flex flex-col @lg/period:flex-row @lg/period:justify-between gap-y-2  sticky top-[4rem] bg-white z-10">
-          <div className="flex items-center">
-            <span className="text-sm uppercase font-normal">Period</span>
-            <span className="ml-2 uppercase text-sm">
-              {period.from} - {period.to}
-            </span>
-          </div>
-          <p className="text-sm text-gray">
-            <span>Ends in </span>
-            <span className="p-1 px-2 bg-gray-d4 text-gray-l4 text-xs rounded-sm ml-1">
-              in {period.distance}
-            </span>
+      <div className="@container/period mt-4">
+        <h4 className="text-lg mb-2">Grants</h4>
+        <div className="flex items-center gap-x-1">
+          <h5 className="text text-gray-d1">
+            ${humanize(props.balances.cash ?? 0)}
+          </h5>
+          <p className="text-sm text-gray mt-1">
+            pays out {format(next_payout, "PP")}- in{" "}
+            {formatDistance(next_payout, now)}.
           </p>
-        </h3>
+        </div>
 
         <Movements
           disabled={period.isPre}
@@ -127,23 +126,25 @@ export function Loaded({ classes = "", ...props }: Props) {
             }
           }}
         />
-        <Schedule
-          disabled={period.isPre}
-          amount={props.balances.payoutsPending}
-          periodNext={period.next}
-          periodRemaining={period.distance}
-          allocation={props.allocation}
-        />
       </div>
-      <Summary
+      {/* <Summary
         classes="mt-4"
         alloc={props.allocation}
         balances={props.balances}
         mov={mov}
-      />
+      /> */}
 
-      <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
-      <PayoutHistory classes="mt-2" id={props.id} />
+      {(props.balances.cash || 0) < 0 ? null : (
+        <PayoutsTable
+          classes="mt-2"
+          records={props.recent_payouts.items}
+          onLoadMore={
+            props.recent_payouts.next ? () => navigate("payouts") : undefined
+          }
+          isLoading={false}
+          disabled={false}
+        />
+      )}
     </div>
   );
 }
