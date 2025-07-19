@@ -6,14 +6,11 @@ import { Loaded } from "./loaded";
 import { monthPeriod } from "./month-period";
 
 export { clientLoader } from "api/cache";
-export {
-  dashboardData as loader,
-  endowUpdateAction as action,
-} from "./api";
+export { loader, endowUpdateAction as action } from "./api";
 
 export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const { alloc, bal, id } = useCachedLoaderData<DashboardData>();
+  const { bal, id, next_payout } = useCachedLoaderData<DashboardData>();
   const period = monthPeriod();
 
   return (
@@ -26,7 +23,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <Loaded balances={bal} allocation={alloc} id={id} />
+      <Loaded balances={bal} id={id} next_payout={next_payout} />
       {/** prompts render here */}
       <Outlet />
     </div>
