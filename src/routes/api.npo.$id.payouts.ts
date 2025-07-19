@@ -1,5 +1,5 @@
 import { endowIdParam } from "@better-giving/endowment/schema";
-import { PayoutsDB } from "@better-giving/payouts/db";
+import { PayoutsDB } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
 import * as v from "valibot";
 import { resp } from "./helpers/resp";

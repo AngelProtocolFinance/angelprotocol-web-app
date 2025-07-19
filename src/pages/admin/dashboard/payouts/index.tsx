@@ -1,7 +1,7 @@
-import type { INpoPayoutsPage } from "@better-giving/payouts/interfaces";
+import type { INpoPayoutsPage } from "@better-giving/payouts";
 import { Info, LoadingStatus } from "components/status";
 import useSWR from "swr/immutable";
-import { Table } from "./table";
+import { PayoutsTable } from "../common/payouts-table";
 
 const fetcher = ([, id, key]: [string, number, string | null]) =>
   fetch(
@@ -15,32 +15,30 @@ interface Props {
 
 export function Payouts({ classes = "", id }: Props) {
   const { data, mutate, isLoading, isValidating, error } = useSWR(
-    ["txs", id, null],
+    ["payouts", id, null],
     fetcher
   );
 
   if (isLoading) {
     return (
-      <LoadingStatus classes="mt-4 text-sm">
-        Loading transactions...
-      </LoadingStatus>
+      <LoadingStatus classes="mt-4 text-sm">Loading payouts...</LoadingStatus>
     );
   }
 
   if (error || !data) {
-    return <Info classes="mt-4">Failed to get transactions</Info>;
+    return <Info classes="mt-4">Failed to get payouts</Info>;
   }
 
   const { items, next } = data;
-  if (items.length === 0) return <Info>No record found</Info>;
+  if (items.length === 0) return <Info>No payouts found</Info>;
 
-  async function load(nextKey: string) {
-    const res = await fetcher(["txs", id, nextKey]);
+  async function load(next_key: string) {
+    const res = await fetcher(["payouts", id, next_key]);
     mutate(
       (x) => {
         return {
           items: [...(x?.items || []), ...res.items],
-          nextPageKey: res.next,
+          next: res.next,
         };
       },
       { revalidate: false }
@@ -52,7 +50,7 @@ export function Payouts({ classes = "", id }: Props) {
       {items.length === 0 ? (
         <Info>No record found</Info>
       ) : (
-        <Table
+        <PayoutsTable
           records={items}
           onLoadMore={next ? () => load(next) : undefined}
           disabled={isValidating}

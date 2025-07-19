@@ -1,16 +1,24 @@
+import type { IPayout } from "@better-giving/payouts";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { InfoIcon } from "lucide-react";
-import type { TableProps } from "./types";
 
-export function Table({
+export interface IPayoutsTable {
+  records: IPayout[];
+  classes?: string;
+  onLoadMore?(): void;
+  disabled: boolean;
+  isLoading: boolean;
+}
+
+export function PayoutsTable({
   records,
   classes = "",
   disabled,
   isLoading,
   onLoadMore,
-}: TableProps) {
+}: IPayoutsTable) {
   return (
     <div className={`${classes} overflow-x-auto`}>
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">

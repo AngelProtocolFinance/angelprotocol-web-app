@@ -3,7 +3,7 @@ import type { Donation } from "@better-giving/donation";
 import type { Allocation } from "@better-giving/donation/schema";
 import { NavHistoryDB } from "@better-giving/nav-history/db";
 import type { Payout } from "@better-giving/payout";
-import { PayoutsDB } from "@better-giving/payouts/db";
+import { PayoutsDB } from "@better-giving/payouts";
 import { tables } from "@better-giving/types/list";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
