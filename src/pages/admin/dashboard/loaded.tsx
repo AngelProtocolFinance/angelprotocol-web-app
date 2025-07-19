@@ -1,21 +1,23 @@
-import { useFetcher } from "@remix-run/react";
+import type { INpoPayoutsPage } from "@better-giving/payouts";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import { Arrow, Content } from "components/tooltip";
 import { format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
 import type { BalanceMovement, EndowmentBalances } from "types/npo-balance";
+import { PayoutsTable } from "./common/payouts-table";
 import Figure from "./figure";
 import { LiqActions } from "./liq-actions";
 import { LockActions } from "./lock-actions";
 import { monthPeriod } from "./month-period";
 import { Movements } from "./movements";
-import { Payouts } from "./payouts";
 import { SfPerf } from "./sf-perf";
 
 interface Props {
   id: number;
   balances: EndowmentBalances;
   next_payout: string;
+  recent_payouts: INpoPayoutsPage;
   classes?: string;
 }
 export function Loaded({ classes = "", ...props }: Props) {
@@ -33,6 +35,8 @@ export function Loaded({ classes = "", ...props }: Props) {
       "lock-cash": 0,
       "lock-liq": 0,
     };
+
+  const navigate = useNavigate();
 
   return (
     <div className={`${classes} mt-6`}>
@@ -130,8 +134,17 @@ export function Loaded({ classes = "", ...props }: Props) {
         mov={mov}
       /> */}
 
-      {/* <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" /> */}
-      <Payouts classes="mt-2" id={props.id} />
+      {(props.balances.cash || 0) < 0 ? null : (
+        <PayoutsTable
+          classes="mt-2"
+          records={props.recent_payouts.items}
+          onLoadMore={
+            props.recent_payouts.next ? () => navigate("payouts") : undefined
+          }
+          isLoading={false}
+          disabled={false}
+        />
+      )}
     </div>
   );
 }

@@ -10,7 +10,8 @@ export { loader, endowUpdateAction as action } from "./api";
 
 export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const { bal, id, next_payout } = useCachedLoaderData<DashboardData>();
+  const { bal, id, next_payout, recent_payouts } =
+    useCachedLoaderData<DashboardData>();
   const period = monthPeriod();
 
   return (
@@ -23,7 +24,12 @@ export default function Dashboard() {
         </div>
       )}
 
-      <Loaded balances={bal} id={id} next_payout={next_payout} />
+      <Loaded
+        balances={bal}
+        id={id}
+        next_payout={next_payout}
+        recent_payouts={recent_payouts}
+      />
       {/** prompts render here */}
       <Outlet />
     </div>
