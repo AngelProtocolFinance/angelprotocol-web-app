@@ -78,3 +78,4 @@ export const cognito_envs = {
   domain: _var("COGNITO_DOMAIN"),
   endpoint: _var("COGNITO_ENDPOINT"),
 };
+export const mongo_url = _var("MONGODB_URL");
