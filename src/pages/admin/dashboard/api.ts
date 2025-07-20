@@ -1,3 +1,4 @@
+import { type IItem, priority_nums } from "@better-giving/banking-applications";
 import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
@@ -7,6 +8,7 @@ import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
 import { cognito, toAuth } from ".server/auth";
 import { apes } from ".server/aws/db";
+import { npo_banks } from ".server/banking-applications";
 import { env } from ".server/env";
 import { npoBalances } from ".server/npo-balances";
 
@@ -16,6 +18,7 @@ export interface DashboardData {
   /** compute in server save client bundle */
   recent_payouts: INpoPayoutsPage;
   next_payout: string;
+  pm?: IItem;
 }
 
 export const endowUpdateAction = endowUpdate({ redirect: "." });
@@ -28,14 +31,22 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const interval = CronExpressionParser.parse("0 0 */3 * *"); //every 3 days
   // console.log("next payout", interval.next().toString());
 
+  const [bal, recent_payouts, pm] = await Promise.all([
+    npoBalances(id),
+    payouts_db.npo_payouts(id.toString(), undefined, "pending"),
+    npo_banks(id, 1).then(([x]) => {
+      if (!x) return;
+      // no default payout method
+      if (x.thisPriorityNum < priority_nums.approved) return;
+      return x;
+    }),
+  ]);
+
   return {
     id,
-    bal: await npoBalances(id),
-    recent_payouts: await payouts_db.npo_payouts(
-      id.toString(),
-      undefined,
-      "pending"
-    ),
+    bal,
+    recent_payouts,
     next_payout: interval.next().toString(),
+    pm,
   } satisfies DashboardData;
 };
