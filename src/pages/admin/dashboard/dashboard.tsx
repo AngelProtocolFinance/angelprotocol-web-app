@@ -10,8 +10,7 @@ export { loader, endowUpdateAction as action } from "./api";
 
 export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const { bal, id, next_payout, recent_payouts } =
-    useCachedLoaderData<DashboardData>();
+  const data = useCachedLoaderData<DashboardData>();
   const period = monthPeriod();
 
   return (
@@ -23,13 +22,7 @@ export default function Dashboard() {
           Pending transactions are now locked for processing
         </div>
       )}
-
-      <Loaded
-        balances={bal}
-        id={id}
-        next_payout={next_payout}
-        recent_payouts={recent_payouts}
-      />
+      <Loaded {...data} />
       {/** prompts render here */}
       <Outlet />
     </div>
