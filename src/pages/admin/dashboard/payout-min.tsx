@@ -1,15 +1,9 @@
 import type { EndowUpdate } from "@better-giving/endowment";
 import { min_payout_amount } from "@better-giving/endowment/schema";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Field,
-  Input,
-  Label,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useNavigate, useSearchParams } from "@remix-run/react";
+import { Field } from "components/form";
 import { endowUpdate } from "pages/admin/endow-update-action";
 import { useForm } from "react-hook-form";
 import * as v from "valibot";
@@ -19,16 +13,16 @@ interface IContent {
 }
 
 export { ErrorModal as ErrorBoundary } from "components/error";
-export const action = endowUpdate({ redirect: "." });
+export const action = endowUpdate({ redirect: ".." });
 
 export const amount = v.pipe(
   v.string(),
   v.transform((x) => +x),
-  v.minValue(0, "amount must be greater than 0"),
+  v.minValue(min_payout_amount, (x) => `minimum is $${x.requirement}`),
   v.transform((x) => x.toString())
 );
 
-export default function Form() {
+export default function PayoutMin() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
@@ -64,6 +58,7 @@ function Content(props: IContent) {
     <DialogPanel
       onSubmit={handleSubmit(async ({ amount }) => {
         fetcher.submit({ payout_minimum: +amount } satisfies EndowUpdate, {
+          method: "PATCH",
           encType: "application/json",
         });
       })}
@@ -72,20 +67,15 @@ function Content(props: IContent) {
     >
       <h4 className="mb-2">Payout threshold</h4>
 
-      <Field className="grid my-4">
-        <Label className="font-semibold mb-1">
-          Amount
-          <span className="text-red"> *</span>
-        </Label>
-        <Input
-          placeholder="e.g. $ 100"
-          {...register("amount")}
-          className="px-4 py-3 rounded-lg outline-blue-d1 border border-gray-l3 font-heading"
-        />
-        <span className="text-red text-xs text-right empty:hidden mt-1">
-          {errors.amount?.message}
-        </span>
-      </Field>
+      <Field
+        required
+        label="Amount"
+        placeholder="e.g. $100"
+        {...register("amount")}
+        error={errors.amount?.message}
+        classes="mb-8 mt-4"
+      />
+
       <button
         disabled={fetcher.state !== "idle" || !isDirty}
         className="text-sm btn-blue rounded-full px-4 py-2 font-heading uppercase font-bold"
