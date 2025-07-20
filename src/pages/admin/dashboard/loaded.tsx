@@ -4,7 +4,14 @@ import { Info } from "components/status";
 import { Arrow, Content } from "components/tooltip";
 import { format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { ChartSpline, PencilIcon, PiggyBank, UsersRound } from "lucide-react";
+import {
+  ArrowRightIcon,
+  ChartSpline,
+  HistoryIcon,
+  PencilIcon,
+  PiggyBank,
+  UsersRound,
+} from "lucide-react";
 import type { BalanceMovement } from "types/npo-balance";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
@@ -100,8 +107,24 @@ export function Loaded({ classes = "", ...props }: Props) {
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
 
       {/** div scopes when the sticky header ends */}
-      <div className="@container/period mt-4">
-        <h4 className="text-lg mb-2">Grants</h4>
+      <div className="@container/period mt-6">
+        <div className="flex items-center justify-between mb-4 border-b border-gray-l3 pb-1">
+          <h4 className="text-lg">Grants</h4>
+          <Link
+            to="grants-history"
+            className="group flex items-center gap-x-1 text-blue hover:text-blue-d1"
+          >
+            <HistoryIcon
+              size={18}
+              className="group-hover:hidden @max-lg:hidden"
+            />
+            <ArrowRightIcon
+              size={18}
+              className=" @max-lg:hidden hidden @lg:group-hover:block group-active:translate-x-0.5"
+            />
+            <span className="text-sm">Grants History</span>
+          </Link>
+        </div>
         <div className="flex flex-wrap items-center gap-x-1">
           <h5 className="text text-gray-d1">
             ${humanize(props.bal.cash ?? 0)}
