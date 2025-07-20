@@ -100,6 +100,7 @@ const profileFields: { [K in keyof Required<Endow>]: "" } = {
   referrer_expiry: "",
   referral_id: "",
   w_form: "",
+  payout_minimum: "",
 };
 
 export const editNpo = async (

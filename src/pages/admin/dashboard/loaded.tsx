@@ -1,10 +1,12 @@
+import { min_payout_amount } from "@better-giving/endowment/schema";
 import type { INpoPayoutsPage } from "@better-giving/payouts";
-import { useFetcher, useNavigate } from "@remix-run/react";
+import { Link, useFetcher, useNavigate } from "@remix-run/react";
 import { Arrow, Content } from "components/tooltip";
 import { format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
+import { ChartSpline, PencilIcon, PiggyBank, UsersRound } from "lucide-react";
 import type { BalanceMovement, EndowmentBalances } from "types/npo-balance";
+import { use_admin_data } from "../use-admin-data";
 import { PayoutsTable } from "./common/payouts-table";
 import Figure from "./figure";
 import { LiqActions } from "./liq-actions";
@@ -23,6 +25,8 @@ interface Props {
 export function Loaded({ classes = "", ...props }: Props) {
   const now = new Date();
   const next_payout = new Date(props.next_payout);
+  const data = use_admin_data();
+  const payout_min = data?.endow.payout_minimum ?? min_payout_amount;
   const fetcher = useFetcher({ key: "bal-mov" });
   const period = monthPeriod();
 
@@ -109,6 +113,23 @@ export function Loaded({ classes = "", ...props }: Props) {
             pays out {format(next_payout, "PP")}- in{" "}
             {formatDistance(next_payout, now)}.
           </p>
+        </div>
+
+        <div className="mt-4">
+          <p className="text-sm text-gray">Payout threshold</p>
+          <div className="flex gap-x-1 items-center">
+            <p className="font-semibold text-amber-d1">
+              ${humanize(payout_min)}
+            </p>
+            <Link
+              to={{ pathname: "payout-min", search: `?min=${payout_min}` }}
+              replace
+              preventScrollReset
+              className="text-xs"
+            >
+              <PencilIcon size={12} />
+            </Link>
+          </div>
         </div>
 
         <Movements

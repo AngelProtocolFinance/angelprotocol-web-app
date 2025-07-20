@@ -106,6 +106,7 @@ const rmx = remix({
           { id: "dashboard" },
           () => {
             r("move-funds", "./pages/admin/dashboard/move-fund-form.tsx");
+            r("payout-min", "./pages/admin/dashboard/payout-min.tsx");
           }
         );
         r("referrals", "./pages/admin/referrals/index.tsx");
