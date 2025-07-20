@@ -6,7 +6,7 @@ import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
-import { maskAddress } from "helpers/mask-address";
+import { mask_string } from "helpers/mask-string";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
 import type { Donation } from "types/donations";
@@ -205,7 +205,7 @@ function LastRowColContent(props: Donation.Item & { status: Donation.Status }) {
       text={props.id}
       classes="text-center inline-flex items-center gap-x-2 text-sm"
     >
-      {maskAddress(props.id)}
+      {mask_string(props.id)}
     </Copier>
   );
 }

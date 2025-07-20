@@ -2,6 +2,7 @@ import type { IPayout } from "@better-giving/payouts";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import { mask_string } from "helpers/mask-string";
 import { InfoIcon } from "lucide-react";
 
 export interface IPayoutsTable {
@@ -21,11 +22,13 @@ export function PayoutsTable({
 }: IPayoutsTable) {
   return (
     <div className={`${classes} overflow-x-auto`}>
-      <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
-        <thead>
+      <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
+        <thead className="bg-blue-l5">
           <tr>
             <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">Amount</th>
+            <th className="font-medium text-sm text-gray">Description</th>
+            <th className="font-medium text-sm text-gray">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -55,6 +58,21 @@ export function PayoutsTable({
                   )}
                   ${humanize(payout.amount)}{" "}
                 </div>
+              </td>
+              <td>
+                {payout.source}:{" "}
+                <span className="text-xs text-gray-d1">
+                  {mask_string(payout.source_id, 4)}
+                </span>
+              </td>
+              <td className="uppercase text-xs">
+                {payout.type === "error" ? (
+                  <span className="text-red">Error</span>
+                ) : payout.type === "pending" ? (
+                  <span className="text-amber">Pending</span>
+                ) : (
+                  <span className="text-green">Paid</span>
+                )}
               </td>
             </tr>
           ))}

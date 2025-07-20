@@ -176,7 +176,7 @@ export function Loaded({ classes = "", ...props }: Props) {
 
       {(props.bal.cash || 0) < 0 ? null : (
         <PayoutsTable
-          classes="mt-2"
+          classes="mt-6"
           records={props.recent_payouts.items}
           onLoadMore={
             props.recent_payouts.next ? () => navigate("payouts") : undefined
