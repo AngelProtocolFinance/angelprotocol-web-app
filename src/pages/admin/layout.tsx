@@ -27,7 +27,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const id = parse(plusInt, params.id);
 
-  const npo = await getNpo(id, ["logo", "name", "allocation"]);
+  const npo = await getNpo(id, [
+    "logo",
+    "name",
+    "allocation",
+    "payout_minimum",
+  ]);
   if (!npo) return new Response("Not found", { status: 404 });
 
   return {
