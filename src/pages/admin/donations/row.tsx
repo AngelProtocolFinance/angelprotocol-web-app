@@ -4,7 +4,7 @@ import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
-import { maskAddress } from "helpers/mask-address";
+import { mask_string } from "helpers/mask-string";
 import type { Donation } from "types/donations";
 import { AmountFlow } from "./amount-flow";
 
@@ -21,7 +21,7 @@ export default function Row(
         text={props.id}
         classes="text-center inline-flex items-center gap-x-2 text-sm"
       >
-        {maskAddress(props.id)}
+        {mask_string(props.id)}
       </Copier>
       <span className="text-sm">{toPP(props.date)}</span>
       {props.program_id ? (
