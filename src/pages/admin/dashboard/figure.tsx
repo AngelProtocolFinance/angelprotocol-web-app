@@ -1,14 +1,15 @@
+import { NavLink } from "@remix-run/react";
 import { Tooltip } from "components/tooltip";
-import { CircleHelp } from "lucide-react";
+import { ArrowRightIcon, CircleHelp } from "lucide-react";
 import type { ReactNode } from "react";
 
 type Props = {
   title: string;
-  icon: ReactNode;
   /** e.g. $100,000 */
   amount: string;
   /** must be wrapped by tooltip content */
   tooltip?: ReactNode;
+  to: string;
 };
 
 export default function Figure(props: Props) {
@@ -22,7 +23,12 @@ export default function Figure(props: Props) {
           </Tooltip>
         )}
 
-        <span className="ml-auto">{props.icon}</span>
+        <NavLink
+          to={props.to}
+          className="ml-auto text-blue hover:text-blue-d1 active:translate-x-0.5"
+        >
+          <ArrowRightIcon size={18} />
+        </NavLink>
       </div>
       <div className="text-lg font-medium font-heading">{props.amount}</div>
       {/* {props.actions} */}
