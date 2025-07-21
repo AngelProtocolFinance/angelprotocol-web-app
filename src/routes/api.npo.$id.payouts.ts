@@ -15,6 +15,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     return resp.status(403);
   }
   const db = new PayoutsDB(apes, env);
-  const page = await db.npo_payouts(id.toString());
+  const page = await db.npo_payouts(id.toString(), {});
   return resp.json(page);
 };
