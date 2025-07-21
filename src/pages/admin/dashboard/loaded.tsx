@@ -8,10 +8,8 @@ import {
   ArrowDownToLineIcon,
   ArrowLeftRightIcon,
   ArrowRightIcon,
-  ChartSpline,
   HistoryIcon,
   PencilIcon,
-  PiggyBank,
   PlusIcon,
 } from "lucide-react";
 import type { BalanceMovement } from "types/npo-balance";
@@ -51,6 +49,7 @@ export function Loaded({ classes = "", ...props }: Props) {
       <div className="grid gap-4 @lg:grid-cols-2">
         <Figure
           title="Savings"
+          to="savings"
           tooltip={
             <Content className="bg-gray-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg">
               Funds held in Fidelity Government Money Market (SPAXX) consisting
@@ -58,11 +57,11 @@ export function Loaded({ classes = "", ...props }: Props) {
               <Arrow />
             </Content>
           }
-          icon={<PiggyBank size={21} strokeWidth={1.5} />}
           amount={`$ ${humanize(props.bal.liq ?? 0, 2)}`}
         />
         <Figure
           title="Investments"
+          to="investments"
           tooltip={
             <Content className="bg-gray-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg shadow-lg">
               <span className="block mb-2">
@@ -77,7 +76,6 @@ export function Loaded({ classes = "", ...props }: Props) {
               <Arrow />
             </Content>
           }
-          icon={<ChartSpline size={16} />}
           amount={`$ ${humanize(props.bal.sustainabilityFundBal, 2)}`}
           // perf={<SfPerf id={props.id} />}
         />
