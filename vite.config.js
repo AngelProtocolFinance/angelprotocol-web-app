@@ -110,6 +110,7 @@ const rmx = remix({
           }
         );
         r("referrals", "./pages/admin/referrals/index.tsx");
+        r("dashboard/payouts", "./pages/admin/dashboard/payouts/index.tsx");
         r(
           "referrals/earnings",
           "./pages/admin/referrals/earnings-history/index.tsx"

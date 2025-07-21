@@ -1,61 +1,45 @@
-import type { INpoPayoutsPage } from "@better-giving/payouts";
-import { Info, LoadingStatus } from "components/status";
-import useSWR from "swr/immutable";
+import { endowIdParam } from "@better-giving/endowment/schema";
+import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
+import { Link } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
+import { useCachedLoaderData } from "api/cache";
+import { Info } from "components/status";
+import { ChevronLeft } from "lucide-react";
+import * as v from "valibot";
 import { PayoutsTable } from "../common/payouts-table";
+import { cognito, toAuth } from ".server/auth";
+import { apes } from ".server/aws/db";
+import { env } from ".server/env";
 
-const fetcher = ([, id, key]: [string, number, string | null]) =>
-  fetch(
-    `/api/npo/${id}/payouts${key ? `?nextKey=${key}` : ""}`
-  ).then<INpoPayoutsPage>((res) => res.json());
+interface LoaderData extends INpoPayoutsPage {}
 
-interface Props {
-  id: number;
-  classes?: string;
-}
+export { clientLoader } from "api/cache";
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return toAuth(request, headers);
 
-export function Payouts({ classes = "", id }: Props) {
-  const { data, mutate, isLoading, isValidating, error } = useSWR(
-    ["payouts", id, null],
-    fetcher
-  );
+  const id = v.parse(endowIdParam, params.id);
 
-  if (isLoading) {
-    return (
-      <LoadingStatus classes="mt-4 text-sm">Loading payouts...</LoadingStatus>
-    );
-  }
+  const payouts_db = new PayoutsDB(apes, env);
+  return payouts_db.npo_payouts(id.toString(), {});
+};
 
-  if (error || !data) {
-    return <Info classes="mt-4">Failed to get payouts</Info>;
-  }
-
-  const { items, next } = data;
-  if (items.length === 0) return <Info>No payouts found</Info>;
-
-  async function load(next_key: string) {
-    const res = await fetcher(["payouts", id, next_key]);
-    mutate(
-      (x) => {
-        return {
-          items: [...(x?.items || []), ...res.items],
-          next: res.next,
-        };
-      },
-      { revalidate: false }
-    );
-  }
+export default function Payouts() {
+  const { items } = useCachedLoaderData() as LoaderData;
 
   return (
-    <div className={`${classes} grid content-start`}>
+    <div className="grid content-start">
+      <Link
+        to=".."
+        className="flex items-center gap-1 text-blue-d1 hover:text-blue text-sm -ml-1 mb-3"
+      >
+        <ChevronLeft size={18} />
+        <span>Back</span>
+      </Link>
       {items.length === 0 ? (
-        <Info>No record found</Info>
+        <Info>No payouts found</Info>
       ) : (
-        <PayoutsTable
-          records={items}
-          onLoadMore={next ? () => load(next) : undefined}
-          disabled={isValidating}
-          isLoading={isValidating}
-        />
+        <PayoutsTable records={items} disabled={false} isLoading={false} />
       )}
     </div>
   );

@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const [bal, recent_payouts, pm] = await Promise.all([
     npoBalances(id),
-    payouts_db.npo_payouts(id.toString(), undefined, "pending"),
+    payouts_db.npo_payouts(id.toString(), { status: "pending", limit: 3 }),
     npo_banks(id, 1).then(([x]) => {
       if (!x) return;
       // no default payout method
