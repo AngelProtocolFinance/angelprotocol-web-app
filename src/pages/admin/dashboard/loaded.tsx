@@ -5,23 +5,23 @@ import { Arrow, Content } from "components/tooltip";
 import { format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import {
+  ArrowDownToLineIcon,
+  ArrowLeftRightIcon,
   ArrowRightIcon,
   ChartSpline,
   HistoryIcon,
   PencilIcon,
   PiggyBank,
-  UsersRound,
+  PlusIcon,
 } from "lucide-react";
 import type { BalanceMovement } from "types/npo-balance";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
 import { PayoutsTable } from "./common/payouts-table";
 import Figure from "./figure";
-import { LiqActions } from "./liq-actions";
-import { LockActions } from "./lock-actions";
 import { monthPeriod } from "./month-period";
 import { Movements } from "./movements";
-import { SfPerf } from "./sf-perf";
+// import { SfPerf } from "./sf-perf";
 
 interface Props extends DashboardData {
   classes?: string;
@@ -60,14 +60,6 @@ export function Loaded({ classes = "", ...props }: Props) {
           }
           icon={<PiggyBank size={21} strokeWidth={1.5} />}
           amount={`$ ${humanize(props.bal.liq ?? 0, 2)}`}
-          actions={
-            <LiqActions
-              disabled={period.isPre}
-              classes="mt-8"
-              mov={mov}
-              balance={props.bal.liq ?? 0}
-            />
-          }
         />
         <Figure
           title="Investments"
@@ -87,21 +79,25 @@ export function Loaded({ classes = "", ...props }: Props) {
           }
           icon={<ChartSpline size={16} />}
           amount={`$ ${humanize(props.bal.sustainabilityFundBal, 2)}`}
-          perf={<SfPerf id={props.id} />}
-          actions={
-            <LockActions
-              disabled={period.isPre}
-              classes="mt-8"
-              balance={props.bal.sustainabilityFundBal ?? 0}
-              mov={mov}
-            />
-          }
+          // perf={<SfPerf id={props.id} />}
         />
-        <Figure
-          title="Contributions count"
-          icon={<UsersRound size={17} />}
-          amount={props.bal.contributionsCount.toString()}
-        />
+      </div>
+      <div className="grid @2xl:grid-cols-3 mt-4 gap-4">
+        <button
+          className="btn-blue rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2"
+          disabled
+        >
+          <PlusIcon size={16} />
+          Add Funds <span className="text-xs">( coming soon! )</span>
+        </button>
+        <button className="btn-outline rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2">
+          <ArrowDownToLineIcon size={16} />
+          Withdraw
+        </button>
+        <button className="btn-amber rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2">
+          <ArrowLeftRightIcon size={16} />
+          Transfer
+        </button>
       </div>
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
@@ -126,7 +122,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           </Link>
         </div>
         <div className="flex flex-wrap items-center gap-x-1">
-          <h5 className="text text-gray-d1">
+          <h5 className="text-lg text-gray-d1">
             ${humanize(props.bal.cash ?? 0)}
           </h5>
           <p className="text-sm text-gray mt-1">
