@@ -5,7 +5,7 @@ import { Table } from "./table";
 
 const fetcher = ([, id, key]: [string, number, string | null]) =>
   fetch(
-    `/api/npo/${id}/bal-txs${key ? `?next=${key}` : ""}`
+    `/api/npo/${id}/bal-txs/savings${key ? `?next=${key}` : ""}`
   ).then<IBalanceTxsPage>((res) => res.json());
 
 interface Props {
