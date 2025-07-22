@@ -2,7 +2,7 @@ import { NavLink, useOutletContext } from "@remix-run/react";
 import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
 import type { PropsWithChildren } from "react";
-import type { EndowmentBalances } from "types/npo-balance";
+import type { NpoBalances } from "types/npo-balance";
 import { useProfileContext } from "../../../profile-context";
 import { Fundraisers } from "./fundraisers";
 import Socials from "./socials";
@@ -10,7 +10,7 @@ import Tags from "./tags";
 
 export default function DetailsColumn({ className = "" }) {
   const p = useProfileContext();
-  const bal = useOutletContext() as EndowmentBalances;
+  const bal = useOutletContext() as NpoBalances;
   const { active_in_countries = [] } = p;
   return (
     <div className="flex flex-col gap-6 w-full">

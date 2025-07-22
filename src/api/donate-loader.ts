@@ -1,6 +1,6 @@
 import type { Endow } from "@better-giving/endowment";
 import { type LoaderFunction, data } from "@vercel/remix";
-import type { EndowmentBalances } from "types/npo-balance";
+import type { NpoBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { plusInt } from "./schema/endow-id";
 import { getNpo } from ".server/npo";
@@ -10,7 +10,7 @@ export interface DonateData {
   id: number;
   endow: Endow;
   /** need to await */
-  balance: Promise<EndowmentBalances>;
+  balance: Promise<NpoBalances>;
 }
 
 export const loader: LoaderFunction = async ({ params }) => {

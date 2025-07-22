@@ -2,7 +2,7 @@ import { priority_nums } from "@better-giving/banking-applications";
 import { PayoutsDB } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
-import type { EndowmentBalances } from "types/npo-balance";
+import type { NpoBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { apes } from ".server/aws/db";
@@ -12,7 +12,7 @@ import { npoBalances } from ".server/npo-balances";
 
 export interface LoaderData {
   id: number;
-  bal: EndowmentBalances;
+  bal: NpoBalances;
 }
 
 export const loader: LoaderFunction = async ({ params, request }) => {

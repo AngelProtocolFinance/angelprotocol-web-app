@@ -1,17 +1,10 @@
 import type { Balance } from "@better-giving/balance";
 import { tables } from "@better-giving/types/list";
+import type { NpoBalances } from "types/npo-balance";
 import { GetCommand, apes } from "./aws/db";
 import { env } from "./env";
 
-type ResponseData = Omit<
-  Balance.V2Attributes,
-  | "version"
-  | "sfInvestments"
-  | "sfPendingContributions"
-  | "sfWeeklyContributions"
->;
-
-export const npoBalances = async (npoId: number): Promise<ResponseData> => {
+export const npoBalances = async (npoId: number): Promise<NpoBalances> => {
   const result = await apes.send(
     new GetCommand({
       TableName: tables.balances,
@@ -46,7 +39,7 @@ export const npoBalances = async (npoId: number): Promise<ResponseData> => {
   // `id` and `network` are DB keys
   const { id, network, ...rest } = balance;
 
-  const data: ResponseData =
+  const data: NpoBalances =
     rest.version === 2
       ? rest
       : {

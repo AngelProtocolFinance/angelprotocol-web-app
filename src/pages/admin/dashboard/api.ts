@@ -3,7 +3,7 @@ import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import { CronExpressionParser } from "cron-parser";
-import type { EndowmentBalances } from "types/npo-balance";
+import type { NpoBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
 import { cognito, toAuth } from ".server/auth";
@@ -14,7 +14,7 @@ import { npoBalances } from ".server/npo-balances";
 
 export interface DashboardData {
   id: number;
-  bal: EndowmentBalances;
+  bal: NpoBalances;
   /** compute in server save client bundle */
   recent_payouts: INpoPayoutsPage;
   next_payout: string;
