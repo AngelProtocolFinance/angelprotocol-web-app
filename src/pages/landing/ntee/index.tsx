@@ -10,6 +10,7 @@ import { education } from "./contexts/education";
 import { environment } from "./contexts/environment";
 import { health_care } from "./contexts/health-care";
 import { mental_health } from "./contexts/mental-health";
+import { public_safety } from "./contexts/public-safety";
 import { DonationFormInfo } from "./donation-form-info";
 import { Footer } from "./footer";
 import { Hero } from "./hero";
@@ -29,6 +30,7 @@ const page_context: Record<string, PageContext> = {
   healthcare: health_care,
   "mental-health": mental_health,
   "civil-rights": civil_rights,
+  "public-safety": public_safety,
   // "disease-awareness": {},
   // "medical-research": {},
   // "legal-justice": {},
