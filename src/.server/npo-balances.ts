@@ -11,7 +11,7 @@ type ResponseData = Omit<
   | "sfWeeklyContributions"
 >;
 
-export const npoBalances = async (npoId: number) => {
+export const npoBalances = async (npoId: number): Promise<ResponseData> => {
   const result = await apes.send(
     new GetCommand({
       TableName: tables.balances,
@@ -31,7 +31,15 @@ export const npoBalances = async (npoId: number) => {
       payoutsPending: 0,
       sustainabilityFundBal: 0,
       totalContributions: 0,
-      totalEarnings: 0,
+      totalBaseFees: 0,
+      totalFiscalSponsorFees: 0,
+      totalProcessingFees: 0,
+      payoutsMadeDonation: 0,
+      payoutsMadeGrant: 0,
+      totalGrantsEarned: 0,
+      totalContributionsViaMarketplace: 0,
+      totalContributionsViaWidget: 0,
+      totalTips: 0,
     };
   }
 
