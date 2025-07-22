@@ -3,7 +3,8 @@ import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
-import { InfoIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, InfoIcon } from "lucide-react";
+import type { ReactNode } from "react";
 
 export interface Props {
   records: IBalanceTx[];
@@ -11,6 +12,67 @@ export interface Props {
   onLoadMore?(): void;
   disabled: boolean;
   isLoading: boolean;
+}
+
+interface IRowMeta {
+  icon: ReactNode;
+  description: ReactNode;
+}
+
+/** pov: savings */
+export const row_meta = (data: IBalanceTx): IRowMeta => {
+  // always positive
+  if (data.account_other === "donation") {
+    return {
+      icon: <ArrowRight size={16} className="text-green" />,
+      description: (
+        <p>
+          Donation :{" "}
+          <span className="text-xs text-gray">
+            {mask_string(data.account_other_id, 4)}
+          </span>
+        </p>
+      ),
+    };
+  }
+  // always negative
+  if (data.account_other === "grants") {
+    return {
+      icon: <ArrowLeft size={16} className="text-red" />,
+      description: (
+        <p>
+          Grant :{" "}
+          <span className="text-xs text-gray">
+            {mask_string(data.account_other_id, 4)}
+          </span>
+        </p>
+      ),
+    };
+  }
+  //investments
+  const flow = data.bal_end - data.bal_begin > 0 ? "in" : "out";
+  return {
+    icon:
+      flow === "in" ? (
+        <ArrowRight size={16} className="text-green" />
+      ) : (
+        <ArrowLeft size={16} className="text-red" />
+      ),
+    description: (
+      <p>
+        Transfer {flow === "in" ? "from" : "to"} investments:{" "}
+        <span className="text-xs text-gray">
+          {mask_string(data.account_other_id, 4)}
+        </span>
+      </p>
+    ),
+  };
+};
+
+export function FlowIcon(this_account: string, data: IBalanceTx): ReactNode {
+  if (data.account === this_account) {
+    return <ArrowRight size={16} className="text-green" />;
+  }
 }
 
 export function Table({
@@ -25,6 +87,7 @@ export function Table({
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
         <thead className="bg-blue-l5">
           <tr>
+            <th /> {/** icons */}
             <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">Amount</th>
             <th className="font-medium text-sm text-gray">Description</th>
@@ -34,6 +97,7 @@ export function Table({
         <tbody>
           {records.map((r, idx) => (
             <tr key={idx} className="text-sm">
+              <td>{row_meta(r).icon}</td>
               <td>{format(r.date_updated, "PP")}</td>
               <td>
                 <div className="relative">
@@ -56,12 +120,7 @@ export function Table({
                   ${humanize(r.amount)}{" "}
                 </div>
               </td>
-              <td>
-                {r.account_other}:{" "}
-                <span className="text-xs text-gray-d1">
-                  {mask_string(r.account_other_id, 4)}
-                </span>
-              </td>
+              <td>{row_meta(r).description}</td>
               <td className="uppercase text-xs">
                 {r.status === "cancelled" ? (
                   <span className="text-red">Cancelled</span>
