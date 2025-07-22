@@ -5,6 +5,7 @@ import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
 import { animal_rescue } from "./contexts/animal-rescue";
 import { arts_culture } from "./contexts/arts-culture";
+import { civil_rights } from "./contexts/civil-rights";
 import { education } from "./contexts/education";
 import { environment } from "./contexts/environment";
 import { health_care } from "./contexts/health-care";
@@ -27,6 +28,7 @@ const page_context: Record<string, PageContext> = {
   "animal-rescue": animal_rescue,
   healthcare: health_care,
   "mental-health": mental_health,
+  "civil-rights": civil_rights,
   // "disease-awareness": {},
   // "medical-research": {},
   // "legal-justice": {},
