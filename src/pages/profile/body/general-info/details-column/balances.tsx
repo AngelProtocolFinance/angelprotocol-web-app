@@ -1,9 +1,9 @@
 import { useOutletContext } from "@remix-run/react";
 import { toUsd } from "helpers/to-usd";
-import type { EndowmentBalances } from "types/npo-balance";
+import type { NpoBalances } from "types/npo-balance";
 
 export default function Balances() {
-  const bal = useOutletContext() as EndowmentBalances;
+  const bal = useOutletContext() as NpoBalances;
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">

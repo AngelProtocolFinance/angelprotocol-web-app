@@ -1,3 +1,5 @@
+import type { Balance } from "@better-giving/balance";
+
 export interface BalanceMovement {
   /** investment */
   "liq-lock": number;
@@ -9,18 +11,11 @@ export interface BalanceMovement {
   "lock-liq": number;
 }
 
-export type EndowmentBalances = {
-  contributionsCount: number;
-  donationsBal: number;
-  payoutsMade: number;
-  payoutsPending: number;
-  sustainabilityFundBal: number;
-  totalContributions: number;
-  totalEarnings?: number;
-  movementDetails?: BalanceMovement;
-  /** savings balance */
-  liq?: number;
-  lock?: number;
-  /** pending payouts */
-  cash?: number;
-};
+export interface NpoBalances
+  extends Omit<
+    Balance.V2Attributes,
+    | "version"
+    | "sfInvestments"
+    | "sfPendingContributions"
+    | "sfWeeklyContributions"
+  > {}
