@@ -2,9 +2,9 @@ import type { IBalanceTx } from "@better-giving/balance-txs";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { mask_string } from "helpers/mask-string";
-import { ArrowLeft, ArrowRight, InfoIcon } from "lucide-react";
+import { ArrowRight, InfoIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { row_meta } from "./row-meta";
 
 export interface Props {
   records: IBalanceTx[];
@@ -13,61 +13,6 @@ export interface Props {
   disabled: boolean;
   isLoading: boolean;
 }
-
-interface IRowMeta {
-  icon: ReactNode;
-  description: ReactNode;
-}
-
-/** pov: savings */
-export const row_meta = (data: IBalanceTx): IRowMeta => {
-  // always positive
-  if (data.account_other === "donation") {
-    return {
-      icon: <ArrowRight size={16} className="text-green" />,
-      description: (
-        <p>
-          Donation :{" "}
-          <span className="text-xs text-gray">
-            {mask_string(data.account_other_id, 4)}
-          </span>
-        </p>
-      ),
-    };
-  }
-  // always negative
-  if (data.account_other === "grants") {
-    return {
-      icon: <ArrowLeft size={16} className="text-red" />,
-      description: (
-        <p>
-          Grant :{" "}
-          <span className="text-xs text-gray">
-            {mask_string(data.account_other_id, 4)}
-          </span>
-        </p>
-      ),
-    };
-  }
-  //investments
-  const flow = data.bal_end - data.bal_begin > 0 ? "in" : "out";
-  return {
-    icon:
-      flow === "in" ? (
-        <ArrowRight size={16} className="text-green" />
-      ) : (
-        <ArrowLeft size={16} className="text-red" />
-      ),
-    description: (
-      <p>
-        Transfer {flow === "in" ? "from" : "to"} investments:{" "}
-        <span className="text-xs text-gray">
-          {mask_string(data.account_other_id, 4)}
-        </span>
-      </p>
-    ),
-  };
-};
 
 export function FlowIcon(this_account: string, data: IBalanceTx): ReactNode {
   if (data.account === this_account) {
