@@ -16,7 +16,7 @@ import type { BalanceMovement } from "types/npo-balance";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
 import { PayoutsTable } from "./common/payouts-table";
-import Figure from "./figure";
+import { Figure } from "./figure";
 import { monthPeriod } from "./month-period";
 import { Movements } from "./movements";
 // import { SfPerf } from "./sf-perf";
@@ -49,7 +49,7 @@ export function Loaded({ classes = "", ...props }: Props) {
       <div className="grid gap-4 @lg:grid-cols-2">
         <Figure
           title="Savings"
-          to="savings"
+          to="../savings"
           tooltip={
             <Content className="bg-gray-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg">
               Funds held in Fidelity Government Money Market (SPAXX) consisting
@@ -61,7 +61,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         />
         <Figure
           title="Investments"
-          to="investments"
+          to="../investments"
           tooltip={
             <Content className="bg-gray-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg shadow-lg">
               <span className="block mb-2">

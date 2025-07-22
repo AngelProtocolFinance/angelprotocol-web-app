@@ -42,6 +42,8 @@ export const adminRoutes = {
   funds: "funds",
   integrations: "integrations",
   referrals: "referrals",
+  savings: "savings",
+  investments: "investments",
 } as const;
 
 export enum donateWidgetRoutes {
