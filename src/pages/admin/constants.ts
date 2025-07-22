@@ -9,8 +9,10 @@ import {
   LayoutDashboard,
   ListCheck,
   MegaphoneIcon,
+  PiggyBankIcon,
   PlugZap,
   Settings,
+  SproutIcon,
   UsersRound,
   Wallet,
 } from "lucide-react";
@@ -33,6 +35,22 @@ const linkGroup1: LinkGroup = {
       to: sidebarRoutes.donations,
       icon: {
         fn: CircleDollarSign,
+        size: 22,
+      },
+    },
+    {
+      title: "Savings",
+      to: sidebarRoutes.savings,
+      icon: {
+        fn: PiggyBankIcon,
+        size: 22,
+      },
+    },
+    {
+      title: "Investments",
+      to: sidebarRoutes.investments,
+      icon: {
+        fn: SproutIcon,
         size: 22,
       },
     },

@@ -12,7 +12,7 @@ type Props = {
   to: string;
 };
 
-export default function Figure(props: Props) {
+export function Figure(props: Props) {
   return (
     <div className="@container rounded-sm border border-gray-l3 p-4">
       <div className="flex items-center mb-4">
