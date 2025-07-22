@@ -8,6 +8,7 @@ import {
   PlusIcon,
 } from "lucide-react";
 import type { LoaderData } from "./api";
+import { Txs } from "./txs";
 
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
@@ -57,6 +58,7 @@ export default function Page() {
           Transfer
         </button>
       </div>
+      <Txs id={data.id} classes="mt-8" />
     </div>
   );
 }

@@ -3,10 +3,10 @@ import { Info, LoadingStatus } from "components/status";
 import useSWR from "swr/immutable";
 import { Table } from "./table";
 
-export const cache_key = "bal-txs-savings";
+const cache_key = "bal-txs-investments";
 const fetcher = ([, id, key]: [string, number, string | null]) =>
   fetch(
-    `/api/npo/${id}/bal-txs/savings${key ? `?next=${key}` : ""}`
+    `/api/npo/${id}/bal-txs/investments${key ? `?next=${key}` : ""}`
   ).then<IBalanceTxsPage>((res) => res.json());
 
 interface Props {
@@ -35,8 +35,8 @@ export function Txs({ classes = "", id }: Props) {
   const { items, next } = data;
   if (items.length === 0) return <Info>No record found</Info>;
 
-  async function load(nextKey: string) {
-    const res = await fetcher([cache_key, id, nextKey]);
+  async function load(next_key: string) {
+    const res = await fetcher([cache_key, id, next_key]);
     mutate(
       (x) => {
         return {
