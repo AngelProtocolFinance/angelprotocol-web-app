@@ -1,3 +1,5 @@
 import { styles } from "./constants";
-export { default as FocusableInput } from "./focusable-input";
+export { FocusableInput } from "./focusable-input";
+export { Select } from "./select";
+export { MultiCombo } from "./multi-combo";
 export const { selectorButton: selectorButtonStyle } = styles;

@@ -27,8 +27,8 @@ importers:
         specifier: 1.0.33
         version: 1.0.33
       '@better-giving/balance':
-        specifier: 1.2.0
-        version: 1.2.0(@better-giving/types@1.1.7)
+        specifier: 1.2.3
+        version: 1.2.3(@better-giving/types@1.1.7)
       '@better-giving/balance-tx':
         specifier: 1.1.7
         version: 1.1.7(@better-giving/types@1.1.7)
@@ -668,8 +668,8 @@ packages:
       '@better-giving/db': 1.0.2
       '@better-giving/types': 1.1.7
 
-  '@better-giving/balance@1.2.0':
-    resolution: {integrity: sha512-SEaxt/QpIUK8+upCbJSmbst02e/XZOVVcOIpkzLIq5K19dfHKJ4OcGz9rRj2dYyj9iEwGhURv1Ye8PODsCQh6g==}
+  '@better-giving/balance@1.2.3':
+    resolution: {integrity: sha512-zxfORTu8DdMO5WVb+PtJLu3PpBjkTNZk+PrzIHUqfm1Z/rvyWTxyJm+GV0ZkUV4z6QVyLJYaUWf6dRXCg6e1eQ==}
     peerDependencies:
       '@better-giving/types': 1.1.7
 
@@ -6043,7 +6043,7 @@ snapshots:
       '@better-giving/db': 1.0.2(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.7)
       '@better-giving/types': 1.1.7
 
-  '@better-giving/balance@1.2.0(@better-giving/types@1.1.7)':
+  '@better-giving/balance@1.2.3(@better-giving/types@1.1.7)':
     dependencies:
       '@better-giving/types': 1.1.7
 
