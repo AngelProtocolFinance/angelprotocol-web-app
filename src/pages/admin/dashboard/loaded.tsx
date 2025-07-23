@@ -73,10 +73,13 @@ export function Loaded({ classes = "", ...props }: Props) {
           <PlusIcon size={16} />
           Add Funds <span className="text-xs">( coming soon! )</span>
         </button>
-        <button className="btn-outline rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2">
+        <Link
+          to="withdraw"
+          className="btn-outline rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2"
+        >
           <ArrowDownToLineIcon size={16} />
           Withdraw
-        </button>
+        </Link>
         <button className="btn-amber rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2">
           <ArrowLeftRightIcon size={16} />
           Transfer

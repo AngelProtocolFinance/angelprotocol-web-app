@@ -1,5 +1,3 @@
-import type { Balance } from "@better-giving/balance";
-
 export interface BalanceMovement {
   /** investment */
   "liq-lock": number;
@@ -10,12 +8,3 @@ export interface BalanceMovement {
   /** savings */
   "lock-liq": number;
 }
-
-export interface NpoBalances
-  extends Omit<
-    Balance.V2Attributes,
-    | "version"
-    | "sfInvestments"
-    | "sfPendingContributions"
-    | "sfWeeklyContributions"
-  > {}

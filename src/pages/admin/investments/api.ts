@@ -1,3 +1,4 @@
+import { BalanceDb } from "@better-giving/balance";
 import { NavHistoryDB } from "@better-giving/nav-history/db";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
@@ -5,7 +6,6 @@ import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { apes } from ".server/aws/db";
 import { env } from ".server/env";
-import { npoBalances } from ".server/npo-balances";
 
 export interface LoaderData {
   id: number;
@@ -17,10 +17,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   if (!user) return toAuth(request, headers);
 
   const navdb = new NavHistoryDB(apes, env);
+  const baldb = new BalanceDb(apes, env);
   const id = v.parse(plusInt, params.id);
 
-  const [{ lock_units = 0 }, ltd] = await Promise.all([
-    npoBalances(id),
+  const [{ lock_units }, ltd] = await Promise.all([
+    baldb.npo_balance(id),
     navdb.ltd(),
   ]);
   return {

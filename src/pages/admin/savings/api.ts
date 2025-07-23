@@ -1,8 +1,10 @@
+import { BalanceDb } from "@better-giving/balance";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
-import { npoBalances } from ".server/npo-balances";
+import { apes } from ".server/aws/db";
+import { env } from ".server/env";
 
 export interface LoaderData {
   id: number;
@@ -14,8 +16,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   if (!user) return toAuth(request, headers);
 
   const id = v.parse(plusInt, params.id);
+  const db = new BalanceDb(apes, env);
 
-  const [{ liq = 0 }] = await Promise.all([npoBalances(id)]);
+  const [{ liq }] = await Promise.all([db.npo_balance(id)]);
 
   return {
     id,
