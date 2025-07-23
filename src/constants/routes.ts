@@ -5,6 +5,7 @@ export enum appRoutes {
   home = "/",
   applications = "/applications",
   banking_applications = "/banking-applications",
+  fund_management = "/fund-management",
   register = "/register",
   signin = "/login",
   signup = "/signup",

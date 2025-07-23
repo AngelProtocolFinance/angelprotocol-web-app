@@ -12,7 +12,7 @@ type Props = { classes?: string };
 export function Footer({ classes = "" }: Props) {
   return (
     <footer
-      className={`grid ${classes} grid-cols-[1fr_auto_1fr] max-2xl:gap-x-0 2xl:grid-cols-[auto_auto_1fr] items-center px-10 gap-10`}
+      className={`grid ${classes} grid-cols-[1fr_auto_1fr] max-2xl:gap-x-0 2xl:grid-cols-[auto_auto_1fr] items-center p-10 gap-10`}
     >
       <div className="flex items-center gap-x-2 shrink-0 max-2xl:col-start-2">
         <img

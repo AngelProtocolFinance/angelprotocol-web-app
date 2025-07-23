@@ -122,6 +122,15 @@ const rmx = remix({
           "./pages/admin/referrals/payout-history/index.tsx"
         );
       });
+      r(
+        "fund-management",
+        "./pages/fund-management/layout.tsx",
+        { id: "fund-management" },
+        () => {
+          r("", "./pages/fund-management/redirect.ts", { index: true });
+          r("nav", "./pages/fund-management/nav/index.tsx");
+        }
+      );
       // no robots
       r("dashboard", "./pages/user-dashboard/layout.tsx", () => {
         r("", "./pages/user-dashboard/index-route.ts", { index: true });
