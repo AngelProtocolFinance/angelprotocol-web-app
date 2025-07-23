@@ -1,6 +1,5 @@
 import type { Balance } from "@better-giving/balance";
 import type { Donation } from "@better-giving/donation";
-import type { Allocation } from "@better-giving/endowment";
 import type { Keys } from "@better-giving/fundraiser/db";
 import type { TxType } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
@@ -35,30 +34,36 @@ interface Fees {
   fsa: number;
   processing: number;
 }
+
+export interface Increments {
+  liq: number;
+  lock: number;
+  lock_units: number;
+  cash: number;
+  tip: number;
+  fees: Fees;
+}
+
 export const balance_update = (
-  /** values are resolved */
-  alloc: Allocation,
-  tip: number,
-  appUsed: Donation.App,
-  fees: Fees
+  i: Increments,
+  appUsed: Donation.App
 ): Readonly<Balance.DonationBalanceUpdate> => {
-  const total = alloc.cash + alloc.liq + alloc.lock + tip;
+  const total = i.liq + i.lock + i.cash;
   return {
     totalContributions: total,
     contributionsCount: 1,
     totalContributionsViaMarketplace:
       appUsed === "bg-marketplace" || appUsed === "angel-protocol" ? total : 0,
     totalContributionsViaWidget: appUsed === "bg-widget" ? total : 0,
-    totalBaseFees: fees.base,
-    totalFiscalSponsorFees: fees.fsa,
-    totalProcessingFees: fees.processing,
-    totalTips: tip,
+    totalBaseFees: i.fees.base,
+    totalFiscalSponsorFees: i.fees.fsa,
+    totalProcessingFees: i.fees.processing,
+    totalTips: i.tip,
     //include here as these would be included in atomic transaction
     payoutsPending: total,
-    liq: alloc.liq,
-    lock: alloc.lock,
-    //pending payout
-    cash: alloc.cash,
+    liq: i.liq,
+    lock_units: i.lock_units,
+    cash: i.cash,
   };
 };
 
