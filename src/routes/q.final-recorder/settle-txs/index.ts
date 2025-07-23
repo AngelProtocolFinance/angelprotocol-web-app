@@ -8,7 +8,7 @@ import { PayoutsDB } from "@better-giving/payouts";
 import { tables } from "@better-giving/types/list";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
-import { balance_update, to_db_update } from "./helpers";
+import { type Increments, balance_update, to_db_update } from "./helpers";
 import type { Base, Overrides, Uniques } from "./types";
 import { apes } from ".server/aws/db";
 import { npoBalances } from ".server/npo-balances";
@@ -65,13 +65,13 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   };
 
   const txs = new Txs();
+  const navdb = new NavHistoryDB(apes, base.network);
   if (net_alloc.lock || net_alloc.liq) {
-    const { lock = 0 } = await npoBalances(o.endowId);
+    const { lock_units = 0, liq = 0 } = await npoBalances(o.endowId);
+    const nav = await navdb.ltd();
     const baltxs_db = new BalanceTxsDb(apes, base.network);
 
     if (net_alloc.lock) {
-      const navdb = new NavHistoryDB(apes, base.network);
-      const nav = await navdb.ltd();
       const purchased_units = net_alloc.lock / nav.price;
 
       const new_nav = produce(nav, (x) => {
@@ -95,8 +95,8 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         date_updated: timestamp,
         owner: o.endowId.toString(),
         account: "investments",
-        bal_begin: lock,
-        bal_end: lock + net_alloc.lock,
+        bal_begin: lock_units,
+        bal_end: lock_units + purchased_units,
         amount: net_alloc.lock,
         amount_units: purchased_units,
         status: "final",
@@ -119,8 +119,8 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         date_updated: timestamp,
         owner: o.endowId.toString(),
         account: "savings",
-        bal_begin: lock,
-        bal_end: lock + net_alloc.liq,
+        bal_begin: liq,
+        bal_end: liq + net_alloc.liq,
         amount: net_alloc.liq,
         amount_units: net_alloc.liq,
         status: "final",
@@ -137,11 +137,22 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
     }
   }
 
-  const balUpdate = balance_update(net_alloc, 0, base.appUsed, {
-    base: o.fees.base,
-    fsa: o.fees.fsa,
-    processing: o.fees.processing,
-  });
+  const incs: Increments = {
+    liq: net_alloc.liq,
+    lock: net_alloc.lock,
+    lock_units: net_alloc.lock
+      ? net_alloc.lock / (await navdb.ltd().then((x) => x.price))
+      : 0,
+    cash: net_alloc.cash,
+    tip: 0,
+    fees: {
+      base: o.fees.base,
+      fsa: o.fees.fsa,
+      processing: o.fees.processing,
+    },
+  };
+
+  const balUpdate = balance_update(incs, base.appUsed);
   const dbBalUpdate = to_db_update(balUpdate, {
     network: base.network,
     id: o.endowId,

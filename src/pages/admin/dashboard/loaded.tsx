@@ -1,5 +1,5 @@
 import { min_payout_amount } from "@better-giving/endowment/schema";
-import { Link, useFetcher, useNavigate } from "@remix-run/react";
+import { Link, useNavigate } from "@remix-run/react";
 import { Info } from "components/status";
 import { Arrow, Content } from "components/tooltip";
 import { format, formatDistance } from "date-fns";
@@ -12,13 +12,10 @@ import {
   PencilIcon,
   PlusIcon,
 } from "lucide-react";
-import type { BalanceMovement } from "types/npo-balance";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
 import { PayoutsTable } from "./common/payouts-table";
 import { Figure } from "./figure";
-import { monthPeriod } from "./month-period";
-import { Movements } from "./movements";
 // import { SfPerf } from "./sf-perf";
 
 interface Props extends DashboardData {
@@ -29,18 +26,6 @@ export function Loaded({ classes = "", ...props }: Props) {
   const next_payout = new Date(props.next_payout);
   const data = use_admin_data();
   const payout_min = data?.endow.payout_minimum ?? min_payout_amount;
-  const fetcher = useFetcher({ key: "bal-mov" });
-  const period = monthPeriod();
-
-  const nextMov = fetcher.json as unknown as BalanceMovement | undefined;
-
-  const mov = nextMov ??
-    props.bal.movementDetails ?? {
-      "liq-cash": 0,
-      "liq-lock": 0,
-      "lock-cash": 0,
-      "lock-liq": 0,
-    };
 
   const navigate = useNavigate();
 
@@ -57,7 +42,7 @@ export function Loaded({ classes = "", ...props }: Props) {
               <Arrow />
             </Content>
           }
-          amount={`$ ${humanize(props.bal.liq ?? 0, 2)}`}
+          amount={`$ ${humanize(props.bal_liq, 2)}`}
         />
         <Figure
           title="Investments"
@@ -76,7 +61,7 @@ export function Loaded({ classes = "", ...props }: Props) {
               <Arrow />
             </Content>
           }
-          amount={`$ ${humanize(props.bal.sustainabilityFundBal, 2)}`}
+          amount={`$ ${humanize(props.bal_lock, 2)}`}
           // perf={<SfPerf id={props.id} />}
         />
       </div>
@@ -120,9 +105,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           </Link>
         </div>
         <div className="flex flex-wrap items-center gap-x-1">
-          <h5 className="text-lg text-gray-d1">
-            ${humanize(props.bal.cash ?? 0)}
-          </h5>
+          <h5 className="text-lg text-gray-d1">${humanize(props.bal_cash)}</h5>
           <p className="text-sm text-gray mt-1">
             pays out {format(next_payout, "PP")}- in{" "}
             {formatDistance(next_payout, now)}.
@@ -167,31 +150,9 @@ export function Loaded({ classes = "", ...props }: Props) {
             </Link>
           </div>
         )}
-
-        <Movements
-          disabled={period.isPre}
-          mov={mov}
-          classes="mt-4"
-          balance={(flow) => {
-            switch (flow) {
-              case "liq-lock":
-              case "liq-cash":
-                return props.bal.liq ?? 0;
-              default:
-                flow satisfies `lock-${string}`;
-                return props.bal.sustainabilityFundBal;
-            }
-          }}
-        />
       </div>
-      {/* <Summary
-        classes="mt-4"
-        alloc={props.allocation}
-        balances={props.balances}
-        mov={mov}
-      /> */}
 
-      {(props.bal.cash || 0) < 0 ? null : (
+      {props.bal_cash < 0 ? null : (
         <PayoutsTable
           classes="mt-6"
           records={props.recent_payouts.items}
