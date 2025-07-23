@@ -41,13 +41,13 @@ export const schema = v.pipe(
   )
 );
 
-export interface FV extends v.InferOutput<typeof schema> {}
+export interface Schema extends v.InferOutput<typeof schema> {}
+export interface SubmitFV extends Omit<Schema, "bals"> {}
 
 export interface Props {
   /** preset */
   from?: Source;
-  amount: number;
   bals: Bals;
-  onSubmit: (fv: FV) => void;
+  onSubmit: (fv: SubmitFV) => void;
   is_submitting?: boolean;
 }

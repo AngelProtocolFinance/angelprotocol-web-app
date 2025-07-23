@@ -1,3 +1,4 @@
+import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { type TxItems, Txs } from "@better-giving/db/txs";
 import type { Donation } from "@better-giving/donation";
@@ -8,11 +9,9 @@ import { PayoutsDB } from "@better-giving/payouts";
 import { tables } from "@better-giving/types/list";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
-import { type Increments, balance_update, to_db_update } from "./helpers";
+import { type Increments, bal_deltas_fn } from "./helpers";
 import type { Base, Overrides, Uniques } from "./types";
 import { apes } from ".server/aws/db";
-import { npoBalances } from ".server/npo-balances";
-
 export type { Base, Overrides, Uniques } from "./types";
 export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   const timestamp = new Date().toISOString();
@@ -66,8 +65,9 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
 
   const txs = new Txs();
   const navdb = new NavHistoryDB(apes, base.network);
+  const baldb = new BalanceDb(apes, base.network);
   if (net_alloc.lock || net_alloc.liq) {
-    const { lock_units = 0, liq = 0 } = await npoBalances(o.endowId);
+    const { lock_units, liq } = await baldb.npo_balance(o.endowId);
     const nav = await navdb.ltd();
     const baltxs_db = new BalanceTxsDb(apes, base.network);
 
@@ -151,19 +151,14 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
       processing: o.fees.processing,
     },
   };
-
-  const balUpdate = balance_update(incs, base.appUsed);
-  const dbBalUpdate = to_db_update(balUpdate, {
-    network: base.network,
-    id: o.endowId,
-  });
+  const bal_deltas = bal_deltas_fn(incs, base.appUsed);
 
   // const payouts = new PayoutsDB(apes, base.network);
   const payout: Payout.UnprocessedDBRecord = {
     source: "donation",
     uuid: nanoid(),
     sourceId: o.txId,
-    amount: balUpdate.payoutsPending,
+    amount: bal_deltas.payoutsPending,
     dateAdded: timestamp,
     endowmentId: o.endowId,
     network: base.network,
@@ -197,7 +192,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         TableName: tables.payouts,
         Item: payout,
       })
-      .update(dbBalUpdate);
+      .update(baldb.update_balance_item(o.endowId, bal_deltas));
   }
 
   return txs.all;

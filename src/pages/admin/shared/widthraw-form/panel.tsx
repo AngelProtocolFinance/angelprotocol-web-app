@@ -4,7 +4,7 @@ import { Field } from "components/form";
 import { Select } from "components/selector";
 import { humanize } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
-import { type FV, type Props, type Source, schema, sources } from "./types";
+import { type Props, type Schema, type Source, schema, sources } from "./types";
 
 const opts_display: { [K in Source]: string } = {
   liq: "Savings",
@@ -17,7 +17,7 @@ export function Panel(props: Props) {
     register,
     formState: { errors, isDirty },
     control,
-  } = useForm<FV>({
+  } = useForm<Schema>({
     defaultValues: {
       source: props.from,
       bals: props.bals,
