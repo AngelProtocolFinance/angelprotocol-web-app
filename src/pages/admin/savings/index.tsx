@@ -32,7 +32,7 @@ export default function Page() {
         </Tooltip>
       </div>
       <p className="text-xl font-heading font-semibold border border-gray-l4 p-4 rounded">
-        ${humanize(data.bal.liq ?? 0)}
+        ${humanize(data.bal_liq)}
       </p>
       <div className="grid @2xl:grid-cols-3 mt-4 gap-4">
         <button
