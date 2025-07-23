@@ -1,4 +1,4 @@
-import type { Balance } from "@better-giving/balance";
+import { BalanceDb } from "@better-giving/balance";
 import type { Endow } from "@better-giving/endowment/db";
 import type { Verdict } from "@better-giving/registration/approval";
 import type { ApplicationDbRecord } from "@better-giving/registration/db";
@@ -6,13 +6,7 @@ import { isIrs501c3 } from "@better-giving/registration/models";
 import { tables } from "@better-giving/types/list";
 import { addYears } from "date-fns";
 import { referral_id } from "helpers/referral";
-import {
-  PutCommand,
-  TransactWriteCommand,
-  UpdateCommand,
-  ap,
-  apes,
-} from "../../aws/db";
+import { TransactWriteCommand, UpdateCommand, ap, apes } from "../../aws/db";
 import { env } from "../../env";
 import {
   bankingRecord,
@@ -64,11 +58,12 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     ecfr.gsi1SK = expiry;
   }
 
+  const baldb = new BalanceDb(apes, reg.env);
   ///////////// APPROVAL OF CLAIM /////////////
   if (isIrs501c3(reg.docs) && reg.docs.claim) {
     const { id } = reg.docs.claim;
     //init balances first: if endow creation fails, would simply override prev id
-    await initBalance(id);
+    await baldb.new_balance(id);
 
     const transactionCommand = new TransactWriteCommand({
       TransactItems: [
@@ -97,7 +92,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   const newEndowID = await nextEndowId(env);
 
   //init balances first: if endow creation fails, would simply override prev id
-  await initBalance(newEndowID);
+  await baldb.new_balance(newEndowID);
 
   const newEndow: Endow.DbRecord = {
     ...ecfr,
@@ -127,35 +122,3 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   console.info("new endow created!", newEndowID);
   return;
 };
-
-async function initBalance(endowId: number) {
-  return apes.send(
-    new PutCommand({
-      TableName: tables.balances,
-      Item: {
-        version: 2,
-        contributionsCount: 0,
-        donationsBal: 0,
-        id: endowId,
-        network: env,
-        payoutsMade: 0,
-        payoutsMadeDonation: 0,
-        payoutsMadeGrant: 0,
-        payoutsPending: 0,
-        sfInvestments: 0,
-        sfPendingContributions: 0,
-        sfWeeklyContributions: 0,
-        sustainabilityFundBal: 0,
-        totalContributions: 0,
-        totalGrantsEarned: 0,
-        totalContributionsViaMarketplace: 0,
-        totalContributionsViaWidget: 0,
-        totalBaseFees: 0,
-        totalFiscalSponsorFees: 0,
-        totalProcessingFees: 0,
-        totalTips: 0,
-        liq: 0,
-      } satisfies Balance.DBRecord,
-    })
-  );
-}

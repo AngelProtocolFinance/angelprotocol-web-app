@@ -41,7 +41,7 @@ export default function OrgCard({ classes = "", ...props }: Props) {
           props.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={b.totalContributions}
+              progress={b.ltd}
               target={toTarget(props.target)}
               classes="order-1 @xl/org-card:order-2"
             />
