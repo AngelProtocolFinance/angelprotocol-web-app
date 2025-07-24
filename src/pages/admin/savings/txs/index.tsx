@@ -22,18 +22,18 @@ export function Txs({ classes = "", id }: Props) {
 
   if (isLoading) {
     return (
-      <LoadingStatus classes="mt-4 text-sm">
+      <LoadingStatus classes={`${classes} text-sm`}>
         Loading transactions...
       </LoadingStatus>
     );
   }
 
   if (error || !data) {
-    return <Info classes="mt-4">Failed to get transactions</Info>;
+    return <Info classes={classes}>Failed to get transactions</Info>;
   }
 
   const { items, next } = data;
-  if (items.length === 0) return <Info>No record found</Info>;
+  if (items.length === 0) return <Info classes={classes}>No record found</Info>;
 
   async function load(nextKey: string) {
     const res = await fetcher([cache_key, id, nextKey]);

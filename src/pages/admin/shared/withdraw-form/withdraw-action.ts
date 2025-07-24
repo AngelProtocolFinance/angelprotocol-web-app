@@ -87,7 +87,10 @@ export const withdraw_action =
         TableName: BalanceTxsDb.name,
         Item: bal_txs_db.new_tx_item(tx),
       });
-      const bal_update = baldb.update_balance_item(id, { liq: -fv.amount });
+      const bal_update = baldb.update_balance_item(id, {
+        liq: -fv.amount,
+        cash: +fv.amount,
+      });
       txs.update(bal_update);
 
       // liq withdrawals create payouts immediately

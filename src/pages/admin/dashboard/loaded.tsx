@@ -158,7 +158,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         )}
       </div>
 
-      {props.bal_cash < 0 ? null : (
+      {props.recent_payouts.items.length > 0 ? (
         <PayoutsTable
           classes="mt-6"
           records={props.recent_payouts.items}
@@ -168,7 +168,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           isLoading={false}
           disabled={false}
         />
-      )}
+      ) : null}
     </div>
   );
 }

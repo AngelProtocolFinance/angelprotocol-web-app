@@ -7,8 +7,8 @@ import type { LoaderData } from "../shared/transfer-form/transfer-loader";
 export { clientLoader } from "api/cache";
 export { withdraw_loader as loader } from "../shared/withdraw-form/withdraw-loader";
 export const action = transfer_action({
-  liq: "../../savings",
-  lock: "../../investments",
+  liq: "..",
+  lock: "..",
 });
 
 export default function Page() {
