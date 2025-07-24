@@ -113,9 +113,11 @@ const rmx = remix({
         r("referrals", "./pages/admin/referrals/index.tsx");
         r("investments", "./pages/admin/investments/index.tsx", () => {
           r("withdraw", "./pages/admin/investments/withdraw.tsx");
+          r("transfer", "./pages/admin/investments/transfer.tsx");
         });
         r("savings", "./pages/admin/savings/index.tsx", () => {
           r("withdraw", "./pages/admin/savings/withdraw.tsx");
+          r("transfer", "./pages/admin/savings/transfer.tsx");
         });
         r("dashboard/payouts", "./pages/admin/dashboard/payouts/index.tsx");
         r(
