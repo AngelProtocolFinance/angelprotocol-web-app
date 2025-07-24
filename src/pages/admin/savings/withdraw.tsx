@@ -7,7 +7,7 @@ import type { LoaderData } from "../shared/withdraw-form/withdraw-loader.server"
 export { clientLoader } from "api/cache";
 export { withdraw_loader as loader } from "../shared/withdraw-form/withdraw-loader.server";
 export const action = withdraw_action({
-  liq: "../../savings",
+  liq: "..",
   lock: "../../investments",
 });
 
@@ -23,6 +23,7 @@ export default function Page() {
       onSubmit={(fv) =>
         fetcher.submit(fv, { method: "POST", encType: "application/json" })
       }
+      from="liq"
       is_submitting={fetcher.state !== "idle"}
     />
   );

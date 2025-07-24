@@ -3,10 +3,10 @@ import { Info, LoadingStatus } from "components/status";
 import useSWR from "swr/immutable";
 import { Table } from "./table";
 
-export const cache_key = "bal-txs-savings";
+export const cache_key = "bal-txs-liq";
 const fetcher = ([, id, key]: [string, number, string | null]) =>
   fetch(
-    `/api/npo/${id}/bal-txs/savings${key ? `?next=${key}` : ""}`
+    `/api/npo/${id}/bal-txs/liq${key ? `?next=${key}` : ""}`
   ).then<IBalanceTxsPage>((res) => res.json());
 
 interface Props {

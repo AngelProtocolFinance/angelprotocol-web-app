@@ -3,9 +3,7 @@ import { useNavigate } from "@remix-run/react";
 import { Panel } from "./panel";
 import type { Props } from "./types";
 
-export { type SubmitFV, type Schema, schema } from "./types";
-
-export function WithdrawForm(props: Props) {
+export function Form(props: Props) {
   const navigate = useNavigate();
 
   return (
