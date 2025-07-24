@@ -107,6 +107,7 @@ const rmx = remix({
           () => {
             r("payout-min", "./pages/admin/dashboard/payout-min.tsx");
             r("withdraw", "./pages/admin/dashboard/withdraw.tsx");
+            r("transfer", "./pages/admin/dashboard/transfer.tsx");
           }
         );
         r("referrals", "./pages/admin/referrals/index.tsx");
