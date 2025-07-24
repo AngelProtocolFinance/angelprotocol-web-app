@@ -5,6 +5,7 @@ import { endowIdParam } from "@better-giving/endowment/schema";
 import { NavHistoryDB } from "@better-giving/nav-history/db";
 import { redirect } from "@remix-run/react";
 import type { ActionFunction } from "@vercel/remix";
+import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { parse } from "valibot";
 import { type Schema, type Source, schema } from "./types";
@@ -115,6 +116,21 @@ export const transfer_action =
         liq: -fv.amount,
         lock_units: units,
       });
+
+      const nav_log = produce(ltd, (x) => {
+        x.reason = `npo:${id} transfer allocation from liq to lock`;
+        x.date = timestamp;
+        x.units += units;
+        // new investments are allocated to cash portion and rebalanced later
+        x.composition.CASH.qty += +fv.amount;
+        x.composition.CASH.value += +fv.amount;
+
+        x.value += +fv.amount;
+        x.holders[id] ||= 0;
+        x.holders[id] += units;
+      });
+
+      txs.append(navdb.log_items(nav_log));
       txs.update(bal_update);
     }
 
