@@ -3,7 +3,6 @@ import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
 import { endowIdParam } from "@better-giving/endowment/schema";
 import { NavHistoryDB } from "@better-giving/nav-history/db";
-import { type IPayout, PayoutsDB } from "@better-giving/payouts";
 import { redirect } from "@remix-run/react";
 import type { ActionFunction } from "@vercel/remix";
 import { nanoid } from "nanoid";
@@ -37,32 +36,33 @@ export const transfer_action =
 
     const txs = new Txs();
     const bal_txs_db = new BalanceTxsDb(apes, env);
-    const payouts_db = new PayoutsDB(apes, env);
     const timestamp = new Date().toISOString();
     const to_id = nanoid();
     const from_id = nanoid();
 
-    const common = {
-      id: from_id,
+    interface Common
+      extends Pick<IBalanceTx, "date_created" | "date_updated" | "owner"> {}
+    const common: Common = {
       date_created: timestamp,
       date_updated: timestamp,
       owner: id.toString(),
-      account_other_id: to_id,
-      account_other: "grant",
-      account_other_bal_begin: 0,
-      account_other_bal_end: +fv.amount,
-    } as IBalanceTx;
+    };
 
+    const units = +fv.amount / ltd.price;
     if (fv.source === "lock") {
-      const units = +fv.amount / ltd.price;
       const tx: IBalanceTx = {
         ...common,
+        id: from_id,
         status: "pending",
         account: "lock",
         bal_begin: bal.lock_units,
         bal_end: bal.lock_units - units,
         amount: +fv.amount,
         amount_units: units,
+        account_other_id: to_id,
+        account_other: "liq",
+        account_other_bal_begin: bal.liq,
+        account_other_bal_end: bal.liq + +fv.amount,
       };
       txs.put({
         TableName: BalanceTxsDb.name,
@@ -75,36 +75,47 @@ export const transfer_action =
     if (fv.source === "liq") {
       const tx: IBalanceTx = {
         ...common,
-        // liq withdrawals create payouts immediately
+        id: from_id,
         status: "final",
         account: "liq",
         bal_begin: bal.liq,
         bal_end: bal.liq - +fv.amount,
         amount: +fv.amount,
         amount_units: +fv.amount,
+        account_other_id: to_id,
+        account_other: "lock",
+        account_other_bal_begin: bal.lock_units,
+        account_other_bal_end: bal.lock_units + units,
+      };
+      const lock_tx: IBalanceTx = {
+        ...common,
+        id: to_id,
+        status: "final",
+        account: "lock",
+        bal_begin: bal.lock_units,
+        bal_end: bal.lock_units + units,
+        amount: +fv.amount,
+        amount_units: units,
+        account_other_id: from_id,
+        account_other: "liq",
+        account_other_bal_begin: bal.liq,
+        account_other_bal_end: bal.liq - +fv.amount,
       };
       txs.put({
         TableName: BalanceTxsDb.name,
         Item: bal_txs_db.new_tx_item(tx),
       });
-      const bal_update = baldb.update_balance_item(id, { liq: -fv.amount });
-      txs.update(bal_update);
-
-      // liq withdrawals create payouts immediately
-      const payout: IPayout = {
-        id: to_id,
-        source_id: from_id,
-        recipient_id: id.toString(),
-        source: fv.source,
-        date: timestamp,
-        amount: +fv.amount,
-        type: "pending",
-      };
 
       txs.put({
-        TableName: PayoutsDB.name,
-        Item: payouts_db.new_payout_item(payout),
+        TableName: BalanceTxsDb.name,
+        Item: bal_txs_db.new_tx_item(lock_tx),
       });
+
+      const bal_update = baldb.update_balance_item(id, {
+        liq: -fv.amount,
+        lock_units: units,
+      });
+      txs.update(bal_update);
     }
 
     const cmd = new TransactWriteCommand({
