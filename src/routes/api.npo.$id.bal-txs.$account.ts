@@ -11,7 +11,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const { searchParams: s } = new URL(request.url);
   const id = v.parse(endowIdParam, params.id);
   const account = v.parse(
-    v.pipe(v.string(), v.picklist(["savings", "investments"])),
+    v.pipe(v.string(), v.picklist(["liq", "lock"])),
     params.account
   );
   const key = v.parse(
