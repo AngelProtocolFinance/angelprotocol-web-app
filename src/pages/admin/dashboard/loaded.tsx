@@ -80,10 +80,13 @@ export function Loaded({ classes = "", ...props }: Props) {
           <ArrowDownToLineIcon size={16} />
           Withdraw
         </Link>
-        <button className="btn-amber rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2">
+        <Link
+          to="transfer"
+          className="btn-amber rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2"
+        >
           <ArrowLeftRightIcon size={16} />
           Transfer
-        </button>
+        </Link>
       </div>
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
