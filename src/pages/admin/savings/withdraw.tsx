@@ -1,11 +1,11 @@
 import { useFetcher } from "@remix-run/react";
 import { useCachedLoaderData } from "remix-client-cache";
 import { WithdrawForm } from "../shared/withdraw-form";
-import { withdraw_action } from "../shared/withdraw-form/withdraw-action.server";
-import type { LoaderData } from "../shared/withdraw-form/withdraw-loader.server";
+import { withdraw_action } from "../shared/withdraw-form/withdraw-action";
+import type { LoaderData } from "../shared/withdraw-form/withdraw-loader";
 
 export { clientLoader } from "api/cache";
-export { withdraw_loader as loader } from "../shared/withdraw-form/withdraw-loader.server";
+export { withdraw_loader as loader } from "../shared/withdraw-form/withdraw-loader";
 export const action = withdraw_action({
   liq: "..",
   lock: "../../investments",
