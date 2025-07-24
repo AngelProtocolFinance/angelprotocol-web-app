@@ -44,7 +44,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     date_created: timestamp,
     date_updated: timestamp,
     owner: id.toString(),
-    status: "pending",
     account_other_id: to_id,
     account_other: "grant",
     account_other_bal_begin: 0,
@@ -55,6 +54,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const units = +fv.amount / ltd.price;
     const tx: IBalanceTx = {
       ...common,
+      status: "pending",
       account: "lock",
       bal_begin: bal.lock_units,
       bal_end: bal.lock_units - units,
@@ -72,6 +72,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (fv.source === "liq") {
     const tx: IBalanceTx = {
       ...common,
+      status: "final",
       account: "liq",
       bal_begin: bal.liq,
       bal_end: bal.liq - +fv.amount,
@@ -84,22 +85,23 @@ export const action: ActionFunction = async ({ request, params }) => {
     });
     const bal_update = baldb.update_balance_item(id, { liq: -fv.amount });
     txs.update(bal_update);
+
+    // liq withdrawals create payouts immediately
+    const payout: IPayout = {
+      id: to_id,
+      source_id: from_id,
+      recipient_id: id.toString(),
+      source: fv.source,
+      date: timestamp,
+      amount: +fv.amount,
+      type: "pending",
+    };
+
+    txs.put({
+      TableName: PayoutsDB.name,
+      Item: payouts_db.new_payout_item(payout),
+    });
   }
-
-  const payout: IPayout = {
-    id: to_id,
-    source_id: from_id,
-    recipient_id: id.toString(),
-    source: fv.source,
-    date: timestamp,
-    amount: +fv.amount,
-    type: "pending",
-  };
-
-  txs.put({
-    TableName: PayoutsDB.name,
-    Item: payouts_db.new_payout_item(payout),
-  });
 
   const cmd = new TransactWriteCommand({
     TransactItems: txs.all,
