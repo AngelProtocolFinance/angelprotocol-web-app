@@ -31,7 +31,7 @@ export const row_meta = (data: IBalanceTx): IRowMeta => {
     };
   }
   // always negative
-  if (data.account_other === "grants") {
+  if (data.account_other === "grant") {
     return {
       icon: <ArrowLeft size={16} className="text-red" />,
       description: <Description text="Grant" id={data.account_other_id} />,
@@ -48,7 +48,7 @@ export const row_meta = (data: IBalanceTx): IRowMeta => {
       ),
     description: (
       <Description
-        text={`Transfer ${flow === "in" ? "from" : "to"} investments`}
+        text={`Transfer ${flow === "in" ? "from" : "to"} savings`}
         id={data.account_other_id}
       />
     ),

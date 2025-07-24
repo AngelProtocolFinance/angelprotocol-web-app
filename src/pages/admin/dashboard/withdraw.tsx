@@ -55,7 +55,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const units = +fv.amount / ltd.price;
     const tx: IBalanceTx = {
       ...common,
-      account: "investments",
+      account: "lock",
       bal_begin: bal.lock_units,
       bal_end: bal.lock_units - units,
       amount: +fv.amount,
@@ -72,7 +72,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (fv.source === "liq") {
     const tx: IBalanceTx = {
       ...common,
-      account: "savings",
+      account: "liq",
       bal_begin: bal.liq,
       bal_end: bal.liq - +fv.amount,
       amount: +fv.amount,
@@ -90,7 +90,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     id: to_id,
     source_id: from_id,
     recipient_id: id.toString(),
-    source: "lock",
+    source: fv.source,
     date: timestamp,
     amount: +fv.amount,
     type: "pending",
