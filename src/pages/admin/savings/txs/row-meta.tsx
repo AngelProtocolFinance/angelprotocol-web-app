@@ -31,7 +31,7 @@ export const row_meta = (data: IBalanceTx): IRowMeta => {
     };
   }
   // always negative
-  if (data.account_other === "grants") {
+  if (data.account_other === "grant") {
     return {
       icon: <ArrowLeft size={16} className="text-red" />,
       description: <Description text="Grant" id={data.account_other_id} />,
