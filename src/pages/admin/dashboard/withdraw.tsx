@@ -8,7 +8,7 @@ import { redirect, useFetcher } from "@remix-run/react";
 import type { ActionFunction } from "@vercel/remix";
 import { nanoid } from "nanoid";
 import { parse } from "valibot";
-import { type Schema, WithdrawForm, schema } from "../shared/widthraw-form";
+import { type Schema, WithdrawForm, schema } from "../shared/withdraw-form";
 import { use_dashboard_data } from "./use-dashboard-data";
 import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, apes } from ".server/aws/db";
@@ -100,6 +100,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     TableName: PayoutsDB.name,
     Item: payouts_db.new_payout_item(payout),
   });
+
   const cmd = new TransactWriteCommand({
     TransactItems: txs.all,
   });
