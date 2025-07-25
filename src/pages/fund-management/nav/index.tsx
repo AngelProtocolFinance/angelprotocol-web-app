@@ -81,24 +81,74 @@ export default function Page() {
     <div className="@container w-full max-w-4xl grid content-start gap-8">
       <h3 className="font-bold text-2xl mb-4">NAV</h3>
       <div className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-          <span className="text-gray text-sm mb-2">Portfolio Value</span>
-          <span className="text-3xl font-bold">
+        <div className="bg-white rounded-lg">
+          <p className="text-gray text-sm mb-2">Portfolio Value</p>
+          <p className="text-3xl font-bold">
             {metrics.value.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
             })}
-          </span>
+          </p>
         </div>
-        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-          <span className="text-gray text-sm mb-2">Portfolio Units</span>
-          <span className="text-3xl font-bold">{humanize(metrics.units)}</span>
+        <div className="bg-white">
+          <p className="text-gray text-sm mb-2">Portfolio Units</p>
+          <p className="text-3xl font-bold">{humanize(metrics.units)}</p>
         </div>
-
-        <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center">
-          <span className="text-gray text-sm mb-2">Holders</span>
-          <span className="text-3xl font-bold">{num_holders}</span>
-        </div>
+      </div>
+      <div className="">
+        <h4 className="font-bold text-lg mb-4">NAV Price & Units</h4>
+        <div className="mb-4" />
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart
+            data={line_data}
+            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+          >
+            <Legend wrapperStyle={{ fontSize: 14 }} />
+            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <YAxis
+              yAxisId="left"
+              orientation="left"
+              stroke="#2d89c8"
+              tick={{ fontSize: 12 }}
+            />
+            <YAxis
+              yAxisId="right"
+              orientation="right"
+              stroke="#10b981"
+              tick={{ fontSize: 12 }}
+            />
+            <Line
+              yAxisId="left"
+              type="monotone"
+              dataKey="units"
+              stroke="#2d89c8"
+              name="Units"
+              dot={{ r: 3 }}
+              isAnimationActive={false}
+            />
+            <Line
+              yAxisId="right"
+              type="monotone"
+              dataKey="price"
+              stroke="#10b981"
+              name="Price"
+              dot={{ r: 3 }}
+              isAnimationActive={false}
+            />
+            <RechartsTooltip
+              contentStyle={{ fontSize: 12 }}
+              formatter={(val, name) => [
+                typeof val === "number"
+                  ? val.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })
+                  : val,
+                name,
+              ]}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
       <div className="mb-8">
         <div className="grid grid-cols-1 @6xl:grid-cols-2 gap-8">
@@ -125,118 +175,55 @@ export default function Page() {
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
-            <div className="mt-6">
-              <h5 className="font-bold text-md mb-2">Tickers</h5>
-              <div className="overflow-x-auto">
-                <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
-                  <thead>
-                    <tr>
-                      <th className="font-medium text-sm text-gray">Symbol</th>
-                      <th className="font-medium text-sm text-gray">Units</th>
-                      <th className="font-medium text-sm text-gray">Price</th>
-                      <th className="font-medium text-sm text-gray">
-                        Price Date
-                      </th>
-                      <th className="font-medium text-sm text-gray">Value</th>
-                      <th className="font-medium text-sm text-gray">%</th>
+            <div className="overflow-x-auto">
+              <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
+                <thead>
+                  <tr>
+                    <th className="font-medium text-sm text-gray">Symbol</th>
+                    <th className="font-medium text-sm text-gray">Units</th>
+                    <th className="font-medium text-sm text-gray">Price</th>
+                    <th className="font-medium text-sm text-gray">
+                      Price Date
+                    </th>
+                    <th className="font-medium text-sm text-gray">Value</th>
+                    <th className="font-medium text-sm text-gray">%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pie_data.map((ticker) => (
+                    <tr key={ticker.name} className="text-sm text-gray-d4">
+                      <td
+                        style={{ color: colors[ticker.name] || "#64748b" }}
+                        className="font-bold"
+                      >
+                        {ticker.name}
+                      </td>
+                      <td className="text-right">{humanize(ticker.units)}</td>
+                      <td className="text-right">${humanize(ticker.price)}</td>
+                      <td className="text-right">
+                        {ticker.price_date
+                          ? format(new Date(ticker.price_date), "PP")
+                          : "-"}
+                      </td>
+                      <td className="text-right font-bold">
+                        ${humanize(ticker.value)}
+                      </td>
+                      <td className="text-right">
+                        {humanize(ticker.percent)}%
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {pie_data.map((ticker) => (
-                      <tr key={ticker.name} className="text-sm text-gray-d4">
-                        <td
-                          style={{ color: colors[ticker.name] || "#64748b" }}
-                          className="font-bold"
-                        >
-                          {ticker.name}
-                        </td>
-                        <td className="text-right">{humanize(ticker.units)}</td>
-                        <td className="text-right">
-                          {ticker.price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                        </td>
-                        <td className="text-right">
-                          {ticker.price_date
-                            ? format(new Date(ticker.price_date), "PP")
-                            : "-"}
-                        </td>
-                        <td className="text-right font-bold">
-                          {ticker.value.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
-                        </td>
-                        <td className="text-right">
-                          {ticker.percent.toFixed(1)}%
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-          <div className="">
-            <h4 className="font-bold text-lg mb-4">
-              NAV Units & Price Over Time
-            </h4>
-            <div className="mb-4" />
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart
-                data={line_data}
-                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-              >
-                <Legend wrapperStyle={{ fontSize: 14 }} />
-                <XAxis dataKey="date" tick={{ fontSize: 12 }} />
-                <YAxis
-                  yAxisId="left"
-                  orientation="left"
-                  stroke="#2d89c8"
-                  tick={{ fontSize: 12 }}
-                />
-                <YAxis
-                  yAxisId="right"
-                  orientation="right"
-                  stroke="#10b981"
-                  tick={{ fontSize: 12 }}
-                />
-                <Line
-                  yAxisId="left"
-                  type="monotone"
-                  dataKey="units"
-                  stroke="#2d89c8"
-                  name="Units"
-                  dot={{ r: 3 }}
-                  isAnimationActive={false}
-                />
-                <Line
-                  yAxisId="right"
-                  type="monotone"
-                  dataKey="price"
-                  stroke="#10b981"
-                  name="Price"
-                  dot={{ r: 3 }}
-                  isAnimationActive={false}
-                />
-                <RechartsTooltip
-                  contentStyle={{ fontSize: 12 }}
-                  formatter={(val, name) => [
-                    typeof val === "number"
-                      ? val.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })
-                      : val,
-                    name,
-                  ]}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-            <div className="mb-4" />
+
+          <div>
             <div className="mt-6">
-              <h5 className="font-bold text-md mb-2">Top 10 Holders</h5>
+              <h5 className="font-bold text-md mb-2">
+                Top Holders{" "}
+                <span className="text-sm text-gray">( of {num_holders} )</span>
+              </h5>
               <div className="overflow-x-auto">
                 <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
                   <thead>
