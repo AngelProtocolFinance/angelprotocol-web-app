@@ -1,6 +1,6 @@
 import { BalanceDb } from "@better-giving/balance";
 import { endowIdParam } from "@better-giving/endowment/schema";
-import { NavHistoryDB } from "@better-giving/nav-history/db";
+import { NavHistoryDB } from "@better-giving/nav-history";
 import type { LoaderFunction } from "@vercel/remix";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";

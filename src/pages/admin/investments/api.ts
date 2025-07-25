@@ -1,5 +1,5 @@
 import { BalanceDb } from "@better-giving/balance";
-import { NavHistoryDB } from "@better-giving/nav-history/db";
+import { NavHistoryDB } from "@better-giving/nav-history";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import * as v from "valibot";
