@@ -1,4 +1,4 @@
-import { type ActionFunction, redirect } from "@remix-run/server-runtime";
+import { type ActionFunction, redirect } from "@vercel/remix";
 import { cognito, toAuth } from ".server/auth";
 import { stripe } from ".server/sdks";
 
