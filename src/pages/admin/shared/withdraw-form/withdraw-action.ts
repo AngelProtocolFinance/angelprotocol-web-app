@@ -2,7 +2,7 @@ import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
 import { endowIdParam } from "@better-giving/endowment/schema";
-import { NavHistoryDB } from "@better-giving/nav-history/db";
+import { NavHistoryDB } from "@better-giving/nav-history";
 import { type IPayout, PayoutsDB } from "@better-giving/payouts";
 import { redirect } from "@remix-run/react";
 import type { ActionFunction } from "@vercel/remix";
