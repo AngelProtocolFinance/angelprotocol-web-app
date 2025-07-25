@@ -144,7 +144,12 @@ export default function Page() {
                   <tbody>
                     {pie_data.map((ticker) => (
                       <tr key={ticker.name} className="text-sm text-gray-d4">
-                        <td>{ticker.name}</td>
+                        <td
+                          style={{ color: colors[ticker.name] || "#64748b" }}
+                          className="font-bold"
+                        >
+                          {ticker.name}
+                        </td>
                         <td className="text-right">{humanize(ticker.units)}</td>
                         <td className="text-right">
                           {ticker.price.toLocaleString("en-US", {
@@ -177,8 +182,13 @@ export default function Page() {
             <h4 className="font-bold text-lg mb-4">
               NAV Units & Price Over Time
             </h4>
+            <div className="mb-4" />
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={line_data}>
+              <LineChart
+                data={line_data}
+                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+              >
+                <Legend wrapperStyle={{ fontSize: 14 }} />
                 <XAxis dataKey="date" tick={{ fontSize: 12 }} />
                 <YAxis
                   yAxisId="left"
@@ -210,8 +220,8 @@ export default function Page() {
                   dot={{ r: 3 }}
                   isAnimationActive={false}
                 />
-                <Legend />
                 <RechartsTooltip
+                  contentStyle={{ fontSize: 12 }}
                   formatter={(val, name) => [
                     typeof val === "number"
                       ? val.toLocaleString("en-US", {
@@ -224,6 +234,7 @@ export default function Page() {
                 />
               </LineChart>
             </ResponsiveContainer>
+            <div className="mb-4" />
             <div className="mt-6">
               <h5 className="font-bold text-md mb-2">Top 10 Holders</h5>
               <div className="overflow-x-auto">
