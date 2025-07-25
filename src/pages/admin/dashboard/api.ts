@@ -1,6 +1,6 @@
 import { BalanceDb } from "@better-giving/balance";
 import { type IItem, priority_nums } from "@better-giving/banking-applications";
-import { NavHistoryDB } from "@better-giving/nav-history/db";
+import { NavHistoryDB } from "@better-giving/nav-history";
 import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
