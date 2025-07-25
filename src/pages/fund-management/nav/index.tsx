@@ -20,14 +20,14 @@ export { clientLoader } from "api/cache";
 
 export const colors: { [ticker: string]: string } = {
   BTC: "#f7931a",
-  ETH: "#10b981",
-  IEFA: "#f59e0b",
-  QQQ: "#ef4444",
-  BNDX: "#64748b",
-  CASH: "#10b981",
-  FLOT: "#c5192d",
-  FNDF: "#fbc412",
-  IVV: "#a31c44",
+  ETH: "#627eea",
+  IEFA: "#8b5cf6",
+  QQQ: "#06b6d4",
+  BNDX: "#6b7280",
+  CASH: "#22c55e",
+  FLOT: "#3b82f6",
+  FNDF: "#f59e0b",
+  IVV: "#dc2626",
 };
 
 function get_portfolio_metrics(log: ILog) {
@@ -103,19 +103,19 @@ export default function Page() {
             data={line_data}
             margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
-            <Legend wrapperStyle={{ fontSize: 14 }} />
-            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <Legend wrapperStyle={{ fontSize: 14, paddingTop: 10 }} />
+            <XAxis dataKey="date" tick={{ fontSize: 12, dy: 4 }} />
             <YAxis
               yAxisId="left"
               orientation="left"
               stroke="#2d89c8"
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, dx: -4 }}
             />
             <YAxis
               yAxisId="right"
               orientation="right"
               stroke="#10b981"
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, dx: 4 }}
             />
             <Line
               yAxisId="left"
@@ -137,15 +137,7 @@ export default function Page() {
             />
             <RechartsTooltip
               contentStyle={{ fontSize: 12 }}
-              formatter={(val, name) => [
-                typeof val === "number"
-                  ? val.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    })
-                  : val,
-                name,
-              ]}
+              formatter={(val, name) => [`${humanize(val as number)}`, name]}
             />
           </LineChart>
         </ResponsiveContainer>
