@@ -6,7 +6,7 @@ const linkGroup1: LinkGroup = {
   links: [
     {
       title: "Dashboard",
-      to: routes.nav,
+      to: routes.dashboard,
       icon: {
         fn: PieChartIcon,
         size: 18,
