@@ -21,7 +21,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const db = new NavHistoryDB(apes, env);
   const page = await db.list({
-    limit: 10,
+    limit: 3,
+    next: key ?? undefined,
   });
 
   return resp.json(page);

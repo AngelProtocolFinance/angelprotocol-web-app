@@ -31,7 +31,6 @@ export function Table({
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
         <thead className="bg-blue-l5">
           <tr>
-            <th /> {/** icons */}
             <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">Description</th>
             <th className="font-medium text-sm text-gray">Value</th>
@@ -45,7 +44,7 @@ export function Table({
               <td>{format(r.date, "PP")}</td>
               <td>{r.reason}</td>
               <td>${humanize(r.value)}</td>
-              <td>{r.units}</td>
+              <td>{humanize(r.units)}</td>
               <td>${humanize(r.price)}</td>
             </tr>
           ))}

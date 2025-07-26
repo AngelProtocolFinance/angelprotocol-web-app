@@ -48,19 +48,12 @@ export function History({ classes = "" }: Props) {
   }
 
   return (
-    <div className={`${classes} grid content-start`}>
-      <h4 className="text-lg mb-2">Logs</h4>
-
-      {items.length === 0 ? (
-        <Info>No record found</Info>
-      ) : (
-        <Table
-          records={items}
-          onLoadMore={next ? () => load(next) : undefined}
-          disabled={isValidating}
-          isLoading={isValidating}
-        />
-      )}
-    </div>
+    <Table
+      classes={classes}
+      records={items}
+      onLoadMore={next ? () => load(next) : undefined}
+      disabled={isValidating}
+      isLoading={isValidating}
+    />
   );
 }

@@ -143,7 +143,11 @@ export default function Page() {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <History />
+      <div className="grid content-start">
+        <h4 className="text-lg mb-2">Logs</h4>
+        <History />
+      </div>
+
       <div className="mb-8">
         <div className="grid grid-cols-1 @6xl:grid-cols-2 gap-8">
           <div className="bg-white">
