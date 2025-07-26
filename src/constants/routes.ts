@@ -5,6 +5,7 @@ export enum appRoutes {
   home = "/",
   applications = "/applications",
   banking_applications = "/banking-applications",
+  fund_management = "/fund-management",
   register = "/register",
   signin = "/login",
   signup = "/signup",
@@ -42,6 +43,8 @@ export const adminRoutes = {
   funds: "funds",
   integrations: "integrations",
   referrals: "referrals",
+  savings: "savings",
+  investments: "investments",
 } as const;
 
 export enum donateWidgetRoutes {

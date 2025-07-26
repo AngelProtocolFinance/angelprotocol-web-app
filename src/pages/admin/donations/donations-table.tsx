@@ -3,7 +3,7 @@ import CsvExporter from "components/csv-exporter";
 import { Info } from "components/status";
 import { humanize } from "helpers/decimal";
 import { replaceWithEmptyString } from "helpers/replace-with-empty-string";
-import { FileSpreadsheet } from "lucide-react";
+import { ArrowDownToLine } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Donation, DonationsPage } from "types/donations";
 import type { Ensure } from "types/utils";
@@ -87,7 +87,7 @@ export default function DonationsTable({ classes = "", page1 }: Props) {
     <div className={classes}>
       <div className="grid w-full sm:flex items-center sm:justify-end mb-2 gap-2">
         <CsvExporter
-          classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded-sm px-4 py-2 text-sm"
+          classes=" hover:text-blue"
           headers={csvHeaders}
           data={items
             .filter(
@@ -115,8 +115,7 @@ export default function DonationsTable({ classes = "", page1 }: Props) {
             })}
           filename="received_donations.csv"
         >
-          <FileSpreadsheet size={17} className="text-2xl" />
-          Donation Records
+          <ArrowDownToLine size={17} />
         </CsvExporter>
       </div>
 

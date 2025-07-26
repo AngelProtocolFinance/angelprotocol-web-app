@@ -1,6 +1,6 @@
 import type { ActionFunction } from "@vercel/remix";
+import { resp } from "helpers/https";
 import { parse, stage as schema } from "routes/types/donation-message";
-import { resp } from "../helpers/resp";
 import {
   handle_intent_failed,
   handle_intent_requires_action,

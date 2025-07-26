@@ -1,8 +1,8 @@
+import type { IPrettyBalance } from "@better-giving/balance";
 import { NavLink, useOutletContext } from "@remix-run/react";
 import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
 import type { PropsWithChildren } from "react";
-import type { EndowmentBalances } from "types/npo-balance";
 import { useProfileContext } from "../../../profile-context";
 import { Fundraisers } from "./fundraisers";
 import Socials from "./socials";
@@ -10,7 +10,7 @@ import Tags from "./tags";
 
 export default function DetailsColumn({ className = "" }) {
   const p = useProfileContext();
-  const bal = useOutletContext() as EndowmentBalances;
+  const bal = useOutletContext() as IPrettyBalance;
   const { active_in_countries = [] } = p;
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -31,10 +31,10 @@ export default function DetailsColumn({ className = "" }) {
           {p.social_media_urls && (
             <Socials social_media_urls={p.social_media_urls} />
           )}
-          {bal.totalContributions != null && p.target && (
+          {p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.totalContributions}
+              progress={bal.ltd}
               target={toTarget(p.target)}
               classes="-mb-5 mt-4"
             />

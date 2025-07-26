@@ -1,7 +1,6 @@
-import type { Balance } from "@better-giving/balance";
+import type { IBalanceUpdateables } from "@better-giving/balance";
 import type { Donation } from "@better-giving/donation";
 import type { Keys } from "@better-giving/fundraiser/db";
-import type { TxType } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
 import { UpdateCommand } from ".server/aws/db";
 
@@ -34,49 +33,36 @@ interface Fees {
   fsa: number;
   processing: number;
 }
-export const balance_update = (
-  total: number,
-  tip: number,
-  appUsed: Donation.App,
-  fees: Fees
-): Readonly<Balance.DonationBalanceUpdate> => {
+
+export interface Increments {
+  liq: number;
+  lock: number;
+  lock_units: number;
+  cash: number;
+  tip: number;
+  fees: Fees;
+}
+
+export const bal_deltas_fn = (
+  i: Increments,
+  app: Donation.App
+): Readonly<IBalanceUpdateables> => {
+  const total = i.liq + i.lock + i.cash;
   return {
     totalContributions: total,
     contributionsCount: 1,
     totalContributionsViaMarketplace:
-      appUsed === "bg-marketplace" || appUsed === "angel-protocol" ? total : 0,
-    totalContributionsViaWidget: appUsed === "bg-widget" ? total : 0,
-    totalBaseFees: fees.base,
-    totalFiscalSponsorFees: fees.fsa,
-    totalProcessingFees: fees.processing,
-    totalTips: tip,
+      app === "bg-marketplace" || app === "angel-protocol" ? total : 0,
+    totalContributionsViaWidget: app === "bg-widget" ? total : 0,
+    totalBaseFees: i.fees.base,
+    totalFiscalSponsorFees: i.fees.fsa,
+    totalProcessingFees: i.fees.processing,
+    totalTips: i.tip,
     //include here as these would be included in atomic transaction
     payoutsPending: total,
-  };
-};
-
-export const to_db_update = (
-  update: Balance.DonationBalanceUpdate,
-  key: Balance.PrimaryKey
-): TxType["Update"] => {
-  const comps = Object.entries(update).map(([k, v]) => ({
-    update: `#${k} = if_not_exists(#${k}, :zero) + :${k}`,
-    name: [`#${k}`, k],
-    value: [`:${k}`, v],
-  }));
-  return {
-    TableName: tables.balances,
-    Key: key,
-    UpdateExpression:
-      "SET #ver = :v, " + comps.map(({ update: u }) => u).join(","),
-    ExpressionAttributeNames: comps.reduce(
-      (p, { name: [n, _n] }) => ({ ...p, [n]: _n }),
-      { "#ver": "version" }
-    ),
-    ExpressionAttributeValues: comps.reduce(
-      (p, { value: [v, _v] }) => ({ ...p, [v]: _v }),
-      { ":zero": 0, ":v": 2 }
-    ),
+    liq: i.liq,
+    lock_units: i.lock_units,
+    cash: i.cash,
   };
 };
 
