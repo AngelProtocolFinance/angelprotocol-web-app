@@ -14,6 +14,7 @@ import {
 } from "recharts";
 import { useCachedLoaderData } from "remix-client-cache";
 import type { ILog, ITicker, LoaderData } from "./api";
+import { History } from "./history";
 
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
@@ -142,6 +143,7 @@ export default function Page() {
           </LineChart>
         </ResponsiveContainer>
       </div>
+      <History />
       <div className="mb-8">
         <div className="grid grid-cols-1 @6xl:grid-cols-2 gap-8">
           <div className="bg-white">
