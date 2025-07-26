@@ -1,15 +1,15 @@
 import type { LinkGroup } from "layout/dashboard";
-import { BarChart2 } from "lucide-react";
+import { PieChartIcon } from "lucide-react";
 import { routes } from "./routes";
 
 const linkGroup1: LinkGroup = {
   links: [
     {
-      title: "Nav",
+      title: "Dashboard",
       to: routes.nav,
       icon: {
-        fn: BarChart2,
-        size: 20,
+        fn: PieChartIcon,
+        size: 18,
       },
       end: true,
     },
