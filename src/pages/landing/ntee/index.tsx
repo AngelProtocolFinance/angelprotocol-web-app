@@ -6,6 +6,7 @@ import { metas } from "helpers/seo";
 import { animal_rescue } from "./contexts/animal-rescue";
 import { arts_culture } from "./contexts/arts-culture";
 import { civil_rights } from "./contexts/civil-rights";
+import { disease_awareness } from "./contexts/disease-awareness";
 import { education } from "./contexts/education";
 import { environment } from "./contexts/environment";
 import { health_care } from "./contexts/health-care";
@@ -31,6 +32,7 @@ const page_context: Record<string, PageContext> = {
   "mental-health": mental_health,
   "civil-rights": civil_rights,
   "public-safety": public_safety,
+  "disease-awareness": disease_awareness,
   // "disease-awareness": {},
   // "medical-research": {},
   // "legal-justice": {},
