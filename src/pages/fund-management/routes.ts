@@ -1,3 +1,3 @@
 export const routes = {
-  nav: "nav",
+  dashboard: "dashboard",
 } as const;
