@@ -3,6 +3,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { vitePlugin as remix } from "@remix-run/dev";
 import { vercelPreset } from "@vercel/remix/vite";
 import tailwind from "@tailwindcss/vite";
+import devtoolsJson from 'vite-plugin-devtools-json';
 
 const rmx = remix({
   presets: [vercelPreset()],
@@ -170,6 +171,7 @@ const rmx = remix({
         r("login/reset", "./pages/reset-password/reset-password.tsx");
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/nonprofit-info/index.ts");
+        r("nonprofit-outreach","./pages/nonprofit-outreach/index.tsx")
         r("donor", "./pages/informational/donor-info/index.ts");
         r("wp-plugin", "./pages/informational/wp-plugin.tsx");
         r(
@@ -273,6 +275,7 @@ export default defineConfig({
     process.env.NODE_ENV === "test" ? undefined : rmx,
     tsconfigPaths(),
     tailwind(),
+    devtoolsJson()
   ],
   test: {
     setupFiles: ["./src/setup-tests.ts"],
