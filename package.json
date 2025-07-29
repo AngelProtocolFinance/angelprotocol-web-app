@@ -37,7 +37,7 @@
     "@better-giving/assets": "1.0.33",
     "@better-giving/balance": "1.2.9",
     "@better-giving/balance-tx": "1.1.7",
-    "@better-giving/balance-txs": "1.0.8",
+    "@better-giving/balance-txs": "1.0.10",
     "@better-giving/banking-applications": "2.0.0",
     "@better-giving/chariot": "1.1.7",
     "@better-giving/constants": "1.1.2",
