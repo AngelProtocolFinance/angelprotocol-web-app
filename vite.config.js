@@ -136,6 +136,7 @@ const rmx = remix({
         () => {
           r("", "./pages/fund-management/redirect.ts", { index: true });
           r("dashboard", "./pages/fund-management/dashboard/index.tsx");
+          r("tx-requests", "./pages/fund-management/tx-requests/index.tsx");
         }
       );
       // no robots
