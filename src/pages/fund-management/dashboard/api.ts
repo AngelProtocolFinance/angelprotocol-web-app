@@ -46,7 +46,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const navdb = new NavHistoryDB(apes, env);
 
-  const [ltd, logs] = await Promise.all([navdb.ltd(), navdb.list_weekly()]);
+  const [ltd, logs] = await Promise.all([navdb.ltd(), navdb.week_series()]);
 
   return resp.json({
     ltd,

@@ -1,3 +1,4 @@
+import { Outlet } from "@remix-run/react";
 import { Requests } from "./table";
 
 export default function Page() {
@@ -6,6 +7,7 @@ export default function Page() {
       <h3 className="font-bold text-2xl mb-4">Tx Requests</h3>
 
       <Requests />
+      <Outlet />
     </div>
   );
 }
