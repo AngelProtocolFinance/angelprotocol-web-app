@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import * as v from "valibot";
 
 export const tickers: string[] = [
@@ -82,16 +83,19 @@ export const tx_log = v.pipe(
         //calculate total reduction from bals
         const ticker_nets = x.txs.reduce(
           (prev, tx) => {
-            //init from bals
-            prev[tx.from_id] ||= x.bals[tx.from_id];
-            prev[tx.to_id] ||= x.bals[tx.to_id];
+            const n = produce(prev, (o) => {
+              //init from bals
+              o[tx.from_id] ||= x.bals[tx.from_id];
+              o[tx.to_id] ||= x.bals[tx.to_id];
 
-            prev[tx.from_id] = prev[tx.from_id] - +tx.from_qty;
-            prev[tx.to_id] = prev[tx.to_id] + +tx.from_qty;
-            return prev;
+              o[tx.from_id] -= +tx.from_qty;
+              o[tx.to_id] += +tx.from_qty;
+            });
+            return n;
           },
           {} as { [ticker: string]: number }
         );
+        console.log(ticker_nets);
         return Object.entries(ticker_nets).every(([, net]) => net >= 0);
       },
       "tickers must have non-negative balance"
