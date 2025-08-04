@@ -54,12 +54,16 @@ function Content(props: ILog) {
           <button
             className="btn-outline btn text-sm px-8 py-2"
             type="button"
-            onClick={(x) => setState({ ...x, type: "form" })}
+            onClick={() => setState((x) => ({ ...x, type: "form" }))}
           >
             Edit
           </button>
         )}
-        <button type="button" className="btn btn-blue px-8 py-2 text-sm">
+        <button
+          form={state.type === "form" ? "rebalance-form" : undefined}
+          type={state.type === "form" ? "submit" : "button"}
+          className="btn btn-blue px-8 py-2 text-sm"
+        >
           {state.type === "form" ? "Review" : "Submit"}
         </button>
       </div>

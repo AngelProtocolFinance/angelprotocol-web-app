@@ -3,7 +3,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FieldCell } from "./field-cell";
-import { type IBals, type Schema, tx_log } from "./types";
+import { type IBals, type Schema, type Tx, tx_log } from "./types";
 
 const to_bals = (from: IComposition): IBals => {
   return Object.entries(from).reduce((acc, [ticker, { qty }]) => {
@@ -19,6 +19,16 @@ interface Props {
   on_submit: (data: Schema) => void;
 }
 
+const default_tx: Tx = {
+  tx_id: "",
+  out_id: "",
+  out_qty: "",
+  in_id: "",
+  in_qty: "",
+  price: "",
+  fee: "",
+};
+
 export function RebalanceForm({
   init,
   classes,
@@ -33,16 +43,18 @@ export function RebalanceForm({
   } = useForm<Schema>({
     resolver: valibotResolver(tx_log),
     defaultValues: init || {
-      txs: [],
+      txs: [default_tx],
       bals: to_bals(composition),
     },
   });
 
   const txs = useFieldArray({ control, name: "txs" });
+
   return (
     <form
-      onSubmit={handleSubmit((x) => on_submit(x), console.error)}
-      className={`${classes} grid`}
+      id="rebalance-form"
+      onSubmit={handleSubmit((x) => on_submit(x))}
+      className={`${classes} grid p-4`}
     >
       <div className="mb-2">
         <p className="font-heading uppercase text-sm font-bold">Tickers</p>
@@ -60,17 +72,7 @@ export function RebalanceForm({
                 <button
                   className="align-middle"
                   type="button"
-                  onClick={() =>
-                    txs.append({
-                      tx_id: "",
-                      out_id: "",
-                      out_qty: "",
-                      in_id: "",
-                      in_qty: "",
-                      fee: "",
-                      price: "",
-                    })
-                  }
+                  onClick={() => txs.append(default_tx)}
                 >
                   <PlusIcon size={16} className="stroke-green" />
                 </button>
@@ -140,8 +142,9 @@ export function RebalanceForm({
           </tbody>
         </table>
       </div>
-
-      <button type="submit">submit</button>
+      <p className="text-red text-xs mt-1 empty:hidden">
+        {errors.txs?.root?.message}
+      </p>
     </form>
   );
 }
