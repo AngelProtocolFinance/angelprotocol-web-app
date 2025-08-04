@@ -127,7 +127,7 @@ export default function Page() {
         </ResponsiveContainer>
       </div>
       <div className="grid content-start">
-        <h4 className="text-lg mb-2">Logs</h4>
+        <h4 className="text-lg mb-2">Recent changes</h4>
         <History />
       </div>
 
