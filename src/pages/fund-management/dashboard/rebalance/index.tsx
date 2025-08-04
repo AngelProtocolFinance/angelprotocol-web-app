@@ -1,132 +1,68 @@
-import type { ILog, ITicker } from "@better-giving/nav-history";
-import { valibotResolver } from "@hookform/resolvers/valibot";
-import { MinusIcon, PlusIcon } from "lucide-react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { FieldCell } from "./field-cell";
-import { type IBals, type Schema, tx_log } from "./types";
+import type { ILog } from "@better-giving/nav-history";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { Link, useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
+import { useState } from "react";
+import { RebalanceForm } from "./form";
+import type { State } from "./types";
+export { loader, action } from "./api";
 
-const to_bals = (from: Record<string, ITicker>): IBals => {
-  return Object.entries(from).reduce((acc, [ticker, { qty }]) => {
-    acc[ticker] = qty;
-    return acc;
-  }, {} as IBals);
-};
-
-export function RebalanceForm(props: ILog) {
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<Schema>({
-    resolver: valibotResolver(tx_log),
-    defaultValues: {
-      txs: [],
-      bals: to_bals(props.composition),
-    },
-  });
-
-  const txs = useFieldArray({ control, name: "txs" });
+export default function Page() {
+  const navigate = useNavigate();
+  const data = useLoaderData() as ILog;
   return (
-    <form onSubmit={handleSubmit(console.log, console.error)} className="grid">
-      <div className="mb-2">
-        <p className="font-heading uppercase text-sm font-bold">Tickers</p>
-        <p className="font-mono text-sm text-gray">
-          {Object.keys(props.composition)
-            .map((x) => x.toLowerCase())
-            .join(" ")}
-        </p>
+    <Dialog
+      open={true}
+      onClose={() =>
+        navigate("..", { preventScrollReset: true, replace: true })
+      }
+      className="relative z-50"
+    >
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
+      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden">
+        <Content {...data} />
+      </DialogPanel>
+    </Dialog>
+  );
+}
+
+function Content(props: ILog) {
+  const [state, setState] = useState<State>({ type: "form" });
+  const fetcher = useFetcher();
+
+  return (
+    <div>
+      {state.type === "form" && (
+        <RebalanceForm
+          composition={props.composition}
+          init={state.data}
+          on_submit={(x) => setState({ type: "review", data: x })}
+        />
+      )}
+
+      <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3">
+        {state.type === "form" ? (
+          <Link
+            replace
+            preventScrollReset
+            to=".."
+            aria-disabled={fetcher.state !== "idle"}
+            className="btn-outline btn text-sm px-8 py-2"
+          >
+            Back
+          </Link>
+        ) : (
+          <button
+            className="btn-outline btn text-sm px-8 py-2"
+            type="button"
+            onClick={(x) => setState({ ...x, type: "form" })}
+          >
+            Edit
+          </button>
+        )}
+        <button type="button" className="btn btn-blue px-8 py-2 text-sm">
+          {state.type === "form" ? "Review" : "Submit"}
+        </button>
       </div>
-      <div className="overflow-x-auto">
-        <table className="border border-gray-l2 min-w-full [&_th]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 [&_tr]:divide-x [&_tr]:divide-gray-l2">
-          <thead className="bg-blue-l5">
-            <tr className="text-xs text-left">
-              <th>
-                <button
-                  className="align-middle"
-                  type="button"
-                  onClick={() =>
-                    txs.append({
-                      tx_id: "",
-                      from_id: "",
-                      from_qty: "",
-                      to_id: "",
-                      to_qty: "",
-                      fee: "",
-                      price: "",
-                    })
-                  }
-                >
-                  <PlusIcon size={16} className="stroke-green" />
-                </button>
-              </th>
-              <th className="font-bold text-red">out</th>
-              <th className="font-bold text-red">out-qty</th>
-              <th className="font-bold text-green">in</th>
-              <th className="font-bold text-green">in-qty</th>
-              <th className="font-bold">price</th>
-              <th className="font-bold">id</th>
-              <th className="font-bold">fee</th>
-            </tr>
-          </thead>
-          <tbody>
-            {txs.fields.map((tx, idx) => {
-              return (
-                <tr key={tx.id}>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() => txs.remove(idx)}
-                      className="px-2 align-middle"
-                    >
-                      <MinusIcon size={16} className="stroke-red" />
-                    </button>
-                  </td>
-                  <FieldCell
-                    placeholder="bndx"
-                    {...register(`txs.${idx}.from_id`)}
-                    error={errors.txs?.[idx]?.from_id?.message}
-                  />
-                  <FieldCell
-                    placeholder="2.023"
-                    {...register(`txs.${idx}.from_qty`)}
-                    error={errors.txs?.[idx]?.from_qty?.message}
-                  />
-
-                  <FieldCell
-                    placeholder="cash"
-                    {...register(`txs.${idx}.to_id`)}
-                    error={errors.txs?.[idx]?.to_id?.message}
-                  />
-
-                  <FieldCell
-                    placeholder="100"
-                    {...register(`txs.${idx}.to_qty`)}
-                    error={errors.txs?.[idx]?.to_qty?.message}
-                  />
-                  <FieldCell
-                    placeholder="49.42"
-                    {...register(`txs.${idx}.price`)}
-                    error={errors.txs?.[idx]?.price?.message}
-                  />
-                  <FieldCell
-                    placeholder="tx123abc.."
-                    {...register(`txs.${idx}.tx_id`)}
-                    error={errors.txs?.[idx]?.tx_id?.message}
-                  />
-                  <FieldCell
-                    placeholder="0.24"
-                    {...register(`txs.${idx}.fee`)}
-                    error={errors.txs?.[idx]?.fee?.message}
-                  />
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      <button type="submit">submit</button>
-    </form>
+    </div>
   );
 }
