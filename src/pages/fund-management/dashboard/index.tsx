@@ -237,13 +237,7 @@ export default function Page() {
                         <td>{holder}</td>
                         <td className="text-right">{humanize(units)}</td>
                         <td className="text-right font-bold">
-                          {(
-                            (units * metrics.value) /
-                            metrics.units
-                          ).toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })}
+                          ${humanize(units * (metrics.value / metrics.units))}
                         </td>
                       </tr>
                     ))}
