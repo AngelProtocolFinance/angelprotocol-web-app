@@ -57,8 +57,8 @@ export function Table({
                       }
                     >
                       <InfoIcon
-                        size={16}
-                        className="absolute -left-5 top-0.5"
+                        size={14}
+                        className="text-gray absolute -left-5 top-0.5"
                       />
                     </Tooltip>
                   )}

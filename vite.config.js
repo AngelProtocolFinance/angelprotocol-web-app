@@ -136,7 +136,20 @@ const rmx = remix({
         () => {
           r("", "./pages/fund-management/redirect.ts", { index: true });
           r("dashboard", "./pages/fund-management/dashboard/index.tsx");
-          r("tx-requests", "./pages/fund-management/tx-requests/index.tsx");
+          r(
+            "tx-requests",
+            "./pages/fund-management/tx-requests/index.tsx",
+            () => {
+              r(
+                ":tx_id/approve",
+                "./pages/fund-management/tx-requests/verdict/verdict-approve.tsx"
+              );
+              r(
+                ":tx_id/reject",
+                "./pages/fund-management/tx-requests/verdict/verdict-reject.tsx"
+              );
+            }
+          );
         }
       );
       // no robots

@@ -1,4 +1,5 @@
 import type { IBalanceTx } from "@better-giving/balance-txs";
+import { NavLink } from "@remix-run/react";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 
@@ -28,6 +29,7 @@ export function Table({
             <th className="font-medium text-sm text-gray">Units</th>
             <th className="font-medium text-sm text-gray">Price</th>
             <th className="font-medium text-sm text-gray">Value</th>
+            <th />
           </tr>
         </thead>
         <tbody>
@@ -39,6 +41,22 @@ export function Table({
               <td>{humanize(r.amount_units)}</td>
               <td>${humanize(r.amount / r.amount_units)}</td>
               <td>${humanize(r.amount)}</td>
+              <td>
+                <div className="flex items-center gap-x-2">
+                  <NavLink
+                    to={`${r.id}/approve`}
+                    className="btn-green text-xs uppercase font-bold px-2 py-1 rounded-xs"
+                  >
+                    Approve
+                  </NavLink>
+                  <NavLink
+                    to={`${r.id}/reject`}
+                    className="btn-red text-xs uppercase font-bold px-2 py-1 rounded-xs"
+                  >
+                    Reject
+                  </NavLink>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
