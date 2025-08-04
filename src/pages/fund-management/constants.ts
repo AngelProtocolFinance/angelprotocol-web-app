@@ -1,5 +1,5 @@
 import type { LinkGroup } from "layout/dashboard";
-import { BookOpenCheckIcon, PieChartIcon } from "lucide-react";
+import { BookOpenCheckIcon, LayoutDashboardIcon } from "lucide-react";
 import { routes } from "./routes";
 
 const linkGroup1: LinkGroup = {
@@ -8,7 +8,7 @@ const linkGroup1: LinkGroup = {
       title: "Dashboard",
       to: routes.dashboard,
       icon: {
-        fn: PieChartIcon,
+        fn: LayoutDashboardIcon,
         size: 18,
       },
       end: true,
