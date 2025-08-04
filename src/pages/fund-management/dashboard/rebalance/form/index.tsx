@@ -64,7 +64,7 @@ export function RebalanceForm({
             .join(" ")}
         </p>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto pb-4">
         <table className="border border-gray-l2 min-w-full [&_th]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 [&_tr]:divide-x [&_tr]:divide-gray-l2">
           <thead className="bg-blue-l5">
             <tr className="text-xs text-left">
