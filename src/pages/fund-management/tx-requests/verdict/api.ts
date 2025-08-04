@@ -22,8 +22,8 @@ export const action: ActionFunction = async ({ params, request }) => {
   if (!user) return toAuth(request, { headers });
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
-  const json = await request.json();
-  const { verdict } = v.parse(v.object({ verdict: verdict_schema }), json);
+  const fv = await request.formData();
+  const verdict = v.parse(verdict_schema, fv.get("verdict"));
   const tx_id = v.parse(tx_id_schema, params.tx_id);
 
   const timestamp = new Date().toISOString();
@@ -83,7 +83,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 
     x.reason = `npo:${tx.owner} units redemption with diff:${tx.amount - curr_val}`;
     x.date = timestamp;
-    x.units += tx.amount_units;
+    x.units -= tx.amount_units;
 
     //redemptions are from cash portion
     x.composition.CASH.qty -= curr_val;
@@ -94,4 +94,9 @@ export const action: ActionFunction = async ({ params, request }) => {
   });
 
   txs.append(navdb.log_items(new_nav));
+
+  const cmd = new TransactWriteCommand({ TransactItems: txs.all });
+  await baldb.client.send(cmd);
+
+  return redirect("..");
 };

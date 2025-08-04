@@ -53,13 +53,6 @@ function Content({ verdict }: Props) {
         You are about to {verdict} this request.
       </p>
 
-      {verdict === "approve" ? (
-        <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2">
-          This will This will create a payout all pending funds to newly linked
-          bank account and is irreversible.
-        </div>
-      ) : null}
-
       <div className="flex items-center gap-2 mb-6">
         <Status classes="bg-gray-d2">Pending</Status>
         <ChevronRight size={20} />

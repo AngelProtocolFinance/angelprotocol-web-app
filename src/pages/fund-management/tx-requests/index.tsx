@@ -13,9 +13,8 @@ export const loader = () => {
 export default function Page() {
   // const ltd = useLoaderData() as any;
   return (
-    <div className="@container w-full max-w-4xl grid content-start gap-8">
+    <div className="@container w-full max-w-4xl grid content-start">
       <h3 className="font-bold text-2xl mb-4">Tx Requests</h3>
-
       <Requests />
       {/* <RebalanceForm {...ltd} /> */}
       <Outlet />
