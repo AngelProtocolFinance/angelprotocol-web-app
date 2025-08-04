@@ -13,7 +13,7 @@ import {
   YAxis,
 } from "recharts";
 import { useCachedLoaderData } from "remix-client-cache";
-import type { ILog, ITicker, LoaderData } from "./api";
+import type { ITicker, LoaderData } from "./api";
 import { History } from "./history";
 
 export { loader } from "./api";
@@ -31,17 +31,7 @@ export const colors: { [ticker: string]: string } = {
   IVV: "#dc2626",
 };
 
-function get_portfolio_metrics(log: ILog) {
-  const { value, units, composition, holders } = log;
-  return {
-    value,
-    units,
-    composition,
-    holders,
-  };
-}
-
-function get_composition_pie_data(composition: Record<string, ITicker>) {
+function pie_fn(composition: Record<string, ITicker>) {
   const tickers = Object.values(composition);
   const total_value = tickers.reduce((sum, t) => sum + t.value, 0);
   return tickers
@@ -56,27 +46,25 @@ function get_composition_pie_data(composition: Record<string, ITicker>) {
     .sort((a, b) => b.value - a.value); // sort by value descending
 }
 
-function get_nav_line_data(logs: ILog[]) {
-  return logs.map((log) => ({
-    date: format(new Date(log.date), "yyyy-MM-dd"),
-    units: log.units,
-    price: log.price,
-  }));
-}
-
-function get_top_holders(holders: Record<string, number>) {
+function top_holders_fn(holders: Record<string, number>) {
   return Object.entries(holders)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10);
 }
 
 export default function Page() {
-  const data = useCachedLoaderData() as LoaderData;
-  const metrics = get_portfolio_metrics(data.ltd);
-  const pie_data = get_composition_pie_data(metrics.composition);
-  const line_data = get_nav_line_data(data.logs);
-  const num_holders = Object.keys(metrics.holders).length;
-  const top_holders = get_top_holders(metrics.holders);
+  const { ltd, logs } = useCachedLoaderData() as LoaderData;
+  const pie_data = pie_fn(ltd.composition);
+  const line_data = logs.map((x) => {
+    const { date, units, price } = x;
+    return {
+      date: format(new Date(date), "yyyy-MM-dd"),
+      units,
+      price,
+    };
+  });
+  const num_holders = Object.keys(ltd.holders).length;
+  const top_holders = top_holders_fn(ltd.holders);
 
   return (
     <div className="@container w-full max-w-4xl grid content-start gap-8">
@@ -84,16 +72,11 @@ export default function Page() {
       <div className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-lg">
           <p className="text-gray text-sm mb-2">Portfolio Value</p>
-          <p className="text-3xl font-bold">
-            {metrics.value.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-          </p>
+          <p className="text-3xl font-bold">${humanize(ltd.value)}</p>
         </div>
         <div className="bg-white">
           <p className="text-gray text-sm mb-2">Portfolio Units</p>
-          <p className="text-3xl font-bold">{humanize(metrics.units)}</p>
+          <p className="text-3xl font-bold">{humanize(ltd.units)}</p>
         </div>
       </div>
       <div className="">
@@ -237,7 +220,7 @@ export default function Page() {
                         <td>{holder}</td>
                         <td className="text-right">{humanize(units)}</td>
                         <td className="text-right font-bold">
-                          ${humanize(units * (metrics.value / metrics.units))}
+                          ${humanize(units * ltd.price)}
                         </td>
                       </tr>
                     ))}
