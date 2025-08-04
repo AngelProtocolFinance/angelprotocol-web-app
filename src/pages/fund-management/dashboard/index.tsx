@@ -1,3 +1,4 @@
+import { NavLink, Outlet } from "@remix-run/react";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import {
@@ -128,7 +129,18 @@ export default function Page() {
       <h4 className="text-lg mb-4 mt-8">Recent changes</h4>
       <History />
 
-      <h4 className="font-bold text-lg mt-8">Portfolio Composition</h4>
+      <div className="flex items-center gap-x-2 mt-8">
+        <h4 className="font-bold text-lg">Portfolio Composition</h4>
+        <NavLink
+          replace
+          preventScrollReset
+          to="rebalance"
+          className="btn-blue text-xs px-2 py-1 roundes-xs"
+        >
+          Rebalance
+        </NavLink>
+      </div>
+
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
@@ -214,6 +226,7 @@ export default function Page() {
           </table>
         </div>
       </div>
+      <Outlet />
     </div>
   );
 }

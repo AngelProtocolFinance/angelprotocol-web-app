@@ -85,8 +85,8 @@ export const tx_log = v.pipe(
           (prev, tx) => {
             const n = produce(prev, (o) => {
               //init from bals
-              o[tx.out_id] ||= x.bals[tx.out_id];
-              o[tx.in_id] ||= x.bals[tx.in_id];
+              o[tx.out_id] ??= x.bals[tx.out_id];
+              o[tx.in_id] ??= x.bals[tx.in_id];
 
               o[tx.out_id] -= +tx.out_qty;
               o[tx.in_id] += +tx.in_qty;

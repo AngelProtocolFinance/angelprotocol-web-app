@@ -135,7 +135,12 @@ const rmx = remix({
         { id: "fund-management" },
         () => {
           r("", "./pages/fund-management/redirect.ts", { index: true });
-          r("dashboard", "./pages/fund-management/dashboard/index.tsx");
+          r("dashboard", "./pages/fund-management/dashboard/index.tsx", () => {
+            r(
+              "rebalance",
+              "./pages/fund-management/dashboard/rebalance/index.tsx"
+            );
+          });
           r(
             "tx-requests",
             "./pages/fund-management/tx-requests/index.tsx",
