@@ -29,8 +29,20 @@ export const action: ActionFunction = async ({ params, request }) => {
   const timestamp = new Date().toISOString();
   const txsdb = new BalanceTxsDb(apes, env);
   const baldb = new BalanceDb(apes, env);
+
   const tx = await txsdb.tx(tx_id);
+
   if (!tx) return { status: 404 };
+  const navdb = new NavHistoryDB(apes, env);
+  const ltd = await navdb.ltd();
+
+  if (ltd.composition.CASH.value < tx.amount) {
+    return {
+      status: 400,
+      message: "insufficient cash balance to approve this request.",
+    };
+  }
+
   if (verdict === "reject") {
     const txs = new Txs();
     const upd81 = await txsdb.tx_update_status_item(tx, "cancelled");
@@ -65,9 +77,6 @@ export const action: ActionFunction = async ({ params, request }) => {
   });
 
   //log nav
-  const navdb = new NavHistoryDB(apes, env);
-  const ltd = await navdb.ltd();
-
   const new_nav = produce(ltd, (x) => {
     // value based on ltd price
     const curr_val = x.price * tx.amount_units;
