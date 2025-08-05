@@ -3,6 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Link, useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { RebalanceForm } from "./form";
+import { Review } from "./review";
 import type { State } from "./types";
 export { loader, action } from "./api";
 
@@ -18,7 +19,7 @@ export default function Page() {
       className="relative z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
-      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden">
+      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 w-[90vw] rounded-sm overflow-hidden">
         <Content {...data} />
       </DialogPanel>
     </Dialog>
@@ -38,6 +39,7 @@ function Content(props: ILog) {
           on_submit={(x) => setState({ type: "review", data: x })}
         />
       )}
+      {state.type === "review" && <Review fv={state.data} ltd={props} />}
 
       <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3">
         {state.type === "form" ? (

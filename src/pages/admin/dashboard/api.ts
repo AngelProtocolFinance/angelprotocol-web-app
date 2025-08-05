@@ -33,7 +33,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const baldb = new BalanceDb(apes, env);
   const id = v.parse(plusInt, params.id);
   const interval = CronExpressionParser.parse("0 0 */3 * *"); //every 3 days
-  // console.log("next payout", interval.next().toString());
 
   const [ltd, bal, recent_payouts, pm] = await Promise.all([
     navdb.ltd(),
