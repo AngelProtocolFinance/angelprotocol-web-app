@@ -30,7 +30,8 @@ const Diff = ({ formatter, a, b }: IDiff) => {
   }
   return (
     <td className="text-right text-red">
-      {formatter(b)} <span className="text-2xs">({formatter(diff)})</span>
+      {formatter(b)}{" "}
+      <span className="text-2xs">(-{formatter(Math.abs(diff))})</span>
     </td>
   );
 };
@@ -39,40 +40,45 @@ export function Review(props: Props) {
   const nets = ticker_nets(props.fv.bals, props.fv.txs);
   const prices = props.fv.txs.reduce(
     (acc, tx) => {
-      // if (tx.in_id === "CASH" || tx.out_id === "CASH") return acc;
+      if (tx.in_id === "CASH") {
+        acc[tx.out_id] ||= [];
+        acc[tx.out_id].push(+tx.price);
+        return acc;
+      }
+      //out_id is cash
       acc[tx.in_id] ||= [];
-      acc[tx.out_id] ||= [];
       acc[tx.in_id].push(+tx.price);
-      acc[tx.out_id].push(+tx.price);
       return acc;
     },
     {} as { [ticker: string]: number[] }
   );
 
-  const tickers = Object.values(props.ltd.composition).map((t) => {
-    const ps = prices[t.id] || [];
-    const ps_sum = ps.reduce((a, b) => a + b, 0);
-    const avg = ps.length > 0 ? ps_sum / ps.length : 0;
-    const qty2 = nets[t.id] ?? t.qty;
-    const price2 = avg || t.price;
+  const tickers = Object.values(props.ltd.composition)
+    .map((t) => {
+      const ps = prices[t.id] || [];
+      const ps_sum = ps.reduce((a, b) => a + b, 0);
+      const avg = ps.length > 0 ? ps_sum / ps.length : 0;
+      const qty2 = nets[t.id] ?? t.qty;
+      const price2 = avg || t.price;
 
-    const qty_change = (qty2 - t.qty) / t.qty;
-    const price_change = (price2 - t.price) / t.price;
-    const value2 = qty2 * price2;
-    const value_change = (value2 - t.value) / t.value;
+      const qty_change = (qty2 - t.qty) / t.qty;
+      const price_change = (price2 - t.price) / t.price;
+      const value2 = qty2 * price2;
+      const value_change = (value2 - t.value) / t.value;
 
-    return {
-      ...t,
-      pct: (t.value / props.ltd.value) * 100,
-      qty2,
-      qty_change,
-      price2,
-      price_change,
-      value2,
-      value_change,
-      changed: t.id in prices || t.id in nets,
-    };
-  });
+      return {
+        ...t,
+        pct: (t.value / props.ltd.value) * 100,
+        qty2,
+        qty_change,
+        price2,
+        price_change,
+        value2,
+        value_change,
+        changed: t.id in prices || t.id in nets,
+      };
+    })
+    .toSorted((a, b) => b.value - a.value);
 
   return (
     <div className={`overflow-x-auto ${props.classes || ""} p-8`}>
