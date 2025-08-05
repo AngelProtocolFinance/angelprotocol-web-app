@@ -14,38 +14,12 @@ import {
   YAxis,
 } from "recharts";
 import { useCachedLoaderData } from "remix-client-cache";
-import type { ITicker, LoaderData } from "./api";
+import type { LoaderData } from "./api";
+import { ticker_colors } from "./common";
 import { History } from "./history";
 
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
-
-export const colors: { [ticker: string]: string } = {
-  BTC: "#f7931a",
-  ETH: "#627eea",
-  IEFA: "#8b5cf6",
-  QQQ: "#06b6d4",
-  BNDX: "#6b7280",
-  CASH: "#22c55e",
-  FLOT: "#3b82f6",
-  FNDF: "#f59e0b",
-  IVV: "#dc2626",
-};
-
-function pie_fn(composition: Record<string, ITicker>) {
-  const tickers = Object.values(composition);
-  const total_value = tickers.reduce((sum, t) => sum + t.value, 0);
-  return tickers
-    .map((ticker) => ({
-      name: ticker.id,
-      value: ticker.value,
-      units: ticker.qty,
-      price: ticker.price,
-      price_date: ticker.price_date,
-      percent: total_value ? (ticker.value / total_value) * 100 : 0,
-    }))
-    .sort((a, b) => b.value - a.value); // sort by value descending
-}
 
 function top_holders_fn(holders: Record<string, number>) {
   return Object.entries(holders)
@@ -55,7 +29,12 @@ function top_holders_fn(holders: Record<string, number>) {
 
 export default function Page() {
   const { ltd, logs } = useCachedLoaderData() as LoaderData;
-  const pie_data = pie_fn(ltd.composition);
+  const pie_data = Object.values(ltd.composition)
+    .map((x) => ({
+      ...x,
+      pct: (x.value / ltd.value) * 100,
+    }))
+    .sort((a, b) => b.pct - a.pct);
   const line_data = logs.map((x) => {
     const { date, units, price } = x;
     return {
@@ -146,17 +125,17 @@ export default function Page() {
           <Pie
             data={pie_data}
             dataKey="value"
-            nameKey="name"
+            nameKey="id"
             cx="50%"
             cy="50%"
             innerRadius={60}
             outerRadius={100}
             label={({ name }) => name}
           >
-            {pie_data.map((ticker) => (
+            {pie_data.map((p) => (
               <Cell
-                key={ticker.name}
-                fill={colors[ticker.name] || "#64748b"} // default gray
+                key={p.id}
+                fill={ticker_colors[p.id] || "#64748b"} // default gray
               />
             ))}
           </Pie>
@@ -175,25 +154,21 @@ export default function Page() {
             </tr>
           </thead>
           <tbody>
-            {pie_data.map((ticker) => (
-              <tr key={ticker.name} className="text-sm text-gray-d4">
+            {pie_data.map((t) => (
+              <tr key={t.id} className="text-sm text-gray-d4">
                 <td
-                  style={{ color: colors[ticker.name] || "#64748b" }}
+                  style={{ color: ticker_colors[t.id] || "#64748b" }}
                   className="font-bold"
                 >
-                  {ticker.name}
+                  {t.id}
                 </td>
-                <td className="text-right">{humanize(ticker.units)}</td>
-                <td className="text-right">${humanize(ticker.price)}</td>
+                <td className="text-right">{humanize(t.qty)}</td>
+                <td className="text-right">${humanize(t.price)}</td>
                 <td className="text-right">
-                  {ticker.price_date
-                    ? format(new Date(ticker.price_date), "PP")
-                    : "-"}
+                  {t.price_date ? format(new Date(t.price_date), "PP") : "-"}
                 </td>
-                <td className="text-right font-bold">
-                  ${humanize(ticker.value)}
-                </td>
-                <td className="text-right">{humanize(ticker.percent)}%</td>
+                <td className="text-right font-bold">${humanize(t.value)}</td>
+                <td className="text-right">{humanize(t.pct)}%</td>
               </tr>
             ))}
           </tbody>

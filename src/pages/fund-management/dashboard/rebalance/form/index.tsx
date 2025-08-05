@@ -2,21 +2,15 @@ import type { IComposition } from "@better-giving/nav-history";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
+import { to_bals } from "../helpers";
+import { type FV, type Tx, tx_log } from "../types";
 import { FieldCell } from "./field-cell";
-import { type IBals, type Schema, type Tx, tx_log } from "./types";
-
-const to_bals = (from: IComposition): IBals => {
-  return Object.entries(from).reduce((acc, [ticker, { qty }]) => {
-    acc[ticker] = qty;
-    return acc;
-  }, {} as IBals);
-};
 
 interface Props {
-  init?: Schema;
+  init?: FV;
   composition: IComposition;
   classes?: string;
-  on_submit: (data: Schema) => void;
+  on_submit: (fv: FV) => void;
 }
 
 const default_tx: Tx = {
@@ -40,7 +34,7 @@ export function RebalanceForm({
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<Schema>({
+  } = useForm<FV>({
     resolver: valibotResolver(tx_log),
     defaultValues: init || {
       txs: [default_tx],
