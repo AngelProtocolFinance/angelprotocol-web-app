@@ -49,7 +49,7 @@ export const row_meta = (data: IBalanceTx): IRowMeta => {
     description: (
       <Description
         text={`Transfer ${flow === "in" ? "from" : "to"} savings`}
-        id={data.account_other_id}
+        id={flow === "in" ? data.account_other_id : data.id}
       />
     ),
   };
