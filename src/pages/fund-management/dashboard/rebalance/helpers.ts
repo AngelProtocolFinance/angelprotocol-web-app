@@ -21,6 +21,6 @@ export const prices_fn = (txs: Tx[]) => {
       acc[tx.in_id].push(+tx.price);
       return acc;
     },
-    {} as { [ticker: string]: number[] }
+    { CASH: [1] } as { [ticker: string]: number[] }
   );
 };
