@@ -1,15 +1,14 @@
 import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
-import { endowIdParam } from "@better-giving/endowment/schema";
 import { NavHistoryDB } from "@better-giving/nav-history";
 import { type IPayout, PayoutsDB } from "@better-giving/payouts";
 import { redirect } from "@remix-run/react";
 import type { ActionFunction } from "@vercel/remix";
 import { nanoid } from "nanoid";
+import { admin_checks, is_resp } from "pages/admin/utils";
 import { parse } from "valibot";
 import { type Schema, type Source, schema } from "./types";
-import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, apes } from ".server/aws/db";
 import { env } from ".server/env";
 
@@ -17,16 +16,17 @@ type TRedirects = { [S in Source]: string };
 
 export const withdraw_action =
   (redirects: TRedirects): ActionFunction =>
-  async ({ request, params }) => {
-    const { user, headers } = await cognito.retrieve(request);
-    if (!user) return toAuth(request, headers);
-    const id = parse(endowIdParam, params.id);
-    if (!user.endowments.includes(id)) return { status: 403 };
+  async (x) => {
+    const adm = await admin_checks(x);
+    if (is_resp(adm)) return adm;
 
     const navdb = new NavHistoryDB(apes, env);
     const baldb = new BalanceDb(apes, env);
-    const [bal, ltd] = await Promise.all([baldb.npo_balance(id), navdb.ltd()]);
-    const json = await request.json();
+    const [bal, ltd] = await Promise.all([
+      baldb.npo_balance(adm.id),
+      navdb.ltd(),
+    ]);
+    const json = await adm.req.json();
     const fv = parse(schema, {
       ...json,
       bals: {
@@ -46,7 +46,7 @@ export const withdraw_action =
       id: from_id,
       date_created: timestamp,
       date_updated: timestamp,
-      owner: id.toString(),
+      owner: adm.id.toString(),
       account_other_id: to_id,
       account_other: "grant",
       account_other_bal_begin: 0,
@@ -68,7 +68,9 @@ export const withdraw_action =
         TableName: BalanceTxsDb.name,
         Item: bal_txs_db.new_tx_item(tx),
       });
-      const bal_update = baldb.update_balance_item(id, { lock_units: -units });
+      const bal_update = baldb.update_balance_item(adm.id, {
+        lock_units: -units,
+      });
       txs.update(bal_update);
     }
 
@@ -87,7 +89,7 @@ export const withdraw_action =
         TableName: BalanceTxsDb.name,
         Item: bal_txs_db.new_tx_item(tx),
       });
-      const bal_update = baldb.update_balance_item(id, {
+      const bal_update = baldb.update_balance_item(adm.id, {
         liq: -fv.amount,
         cash: +fv.amount,
       });
@@ -97,7 +99,7 @@ export const withdraw_action =
       const payout: IPayout = {
         id: to_id,
         source_id: from_id,
-        recipient_id: id.toString(),
+        recipient_id: adm.id.toString(),
         source: fv.source,
         date: timestamp,
         amount: +fv.amount,

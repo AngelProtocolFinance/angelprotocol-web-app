@@ -1,15 +1,14 @@
 import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
-import { endowIdParam } from "@better-giving/endowment/schema";
 import { NavHistoryDB } from "@better-giving/nav-history";
 import { redirect } from "@remix-run/react";
 import type { ActionFunction } from "@vercel/remix";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
+import { admin_checks, is_resp } from "pages/admin/utils";
 import { parse } from "valibot";
 import { type Schema, type Source, schema } from "./types";
-import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, apes } from ".server/aws/db";
 import { env } from ".server/env";
 
@@ -17,16 +16,17 @@ type TRedirects = { [S in Source]: string };
 
 export const transfer_action =
   (redirects: TRedirects): ActionFunction =>
-  async ({ request, params }) => {
-    const { user, headers } = await cognito.retrieve(request);
-    if (!user) return toAuth(request, headers);
-    const id = parse(endowIdParam, params.id);
-    if (!user.endowments.includes(id)) return { status: 403 };
+  async (x) => {
+    const adm = await admin_checks(x);
+    if (is_resp(adm)) return adm;
 
     const navdb = new NavHistoryDB(apes, env);
     const baldb = new BalanceDb(apes, env);
-    const [bal, ltd] = await Promise.all([baldb.npo_balance(id), navdb.ltd()]);
-    const json = await request.json();
+    const [bal, ltd] = await Promise.all([
+      baldb.npo_balance(adm.id),
+      navdb.ltd(),
+    ]);
+    const json = await adm.req.json();
     const fv = parse(schema, {
       ...json,
       bals: {
@@ -46,7 +46,7 @@ export const transfer_action =
     const common: Common = {
       date_created: timestamp,
       date_updated: timestamp,
-      owner: id.toString(),
+      owner: adm.id.toString(),
     };
 
     const units = +fv.amount / ltd.price;
@@ -69,7 +69,9 @@ export const transfer_action =
         TableName: BalanceTxsDb.name,
         Item: bal_txs_db.new_tx_item(tx),
       });
-      const bal_update = baldb.update_balance_item(id, { lock_units: -units });
+      const bal_update = baldb.update_balance_item(adm.id, {
+        lock_units: -units,
+      });
       txs.update(bal_update);
     }
 
@@ -112,13 +114,13 @@ export const transfer_action =
         Item: bal_txs_db.new_tx_item(lock_tx),
       });
 
-      const bal_update = baldb.update_balance_item(id, {
+      const bal_update = baldb.update_balance_item(adm.id, {
         liq: -fv.amount,
         lock_units: units,
       });
 
       const nav_log = produce(ltd, (x) => {
-        x.reason = `npo:${id} transfer allocation from liq to lock`;
+        x.reason = `npo:${adm.id} transfer allocation from liq to lock`;
         x.date = timestamp;
         x.units += units;
         // new investments are allocated to cash portion and rebalanced later
@@ -126,11 +128,11 @@ export const transfer_action =
         x.composition.CASH.value += +fv.amount;
 
         x.value += +fv.amount;
-        x.holders[id] ||= 0;
-        x.holders[id] += units;
+        x.holders[adm.id] ||= 0;
+        x.holders[adm.id] += units;
       });
 
-      txs.append(navdb.log_items(nav_log));
+      txs.append(navdb.log_txis(nav_log));
       txs.update(bal_update);
     }
 

@@ -1,27 +1,23 @@
-import { endowIdParam } from "@better-giving/endowment/schema";
 import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
 import { Link } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { ChevronLeft } from "lucide-react";
-import * as v from "valibot";
+import { admin_checks, is_resp } from "pages/admin/utils";
 import { PayoutsTable } from "../common/payouts-table";
-import { cognito, toAuth } from ".server/auth";
 import { apes } from ".server/aws/db";
 import { env } from ".server/env";
 
 interface LoaderData extends INpoPayoutsPage {}
 
 export { clientLoader } from "api/cache";
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const id = v.parse(endowIdParam, params.id);
+export const loader: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
 
   const payouts_db = new PayoutsDB(apes, env);
-  return payouts_db.npo_payouts(id.toString(), {});
+  return payouts_db.npo_payouts(adm.id.toString(), {});
 };
 
 export default function Payouts() {

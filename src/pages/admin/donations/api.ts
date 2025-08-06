@@ -1,19 +1,17 @@
 import type { LoaderFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
-import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
-import { cognito, toAuth } from ".server/auth";
+import { admin_checks, is_resp } from "../utils";
 import { get_donations } from ".server/donations";
 
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const from = new URL(request.url);
+export const loader: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+
+  const from = new URL(adm.req.url);
   const pageNum = from.searchParams.get("page") ?? "1";
 
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
   const page = await get_donations({
-    asker: v.parse(plusInt, params.id),
+    asker: adm.id,
     status: "final",
     page: +pageNum,
   });

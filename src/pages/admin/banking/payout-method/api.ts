@@ -6,9 +6,9 @@ import {
   redirect,
 } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
+import { admin_checks, is_resp } from "pages/admin/utils";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
-import { cognito, toAuth } from ".server/auth";
 import {
   bank,
   delete_bank,
@@ -19,33 +19,32 @@ import { wise } from ".server/sdks";
 
 export interface LoaderData extends V2RecipientAccount, IItem {}
 
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const id = v.parse(plusInt, params.id);
-  const bankId = v.parse(plusInt, params.bankId);
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+export const loader: LoaderFunction = async (args) => {
+  const bankId = v.parse(plusInt, args.params.bankId);
+  const admn = await admin_checks(args);
+  if (is_resp(admn)) return admn;
 
-  const x = await npo_bank(id, bankId.toString());
+  const x = await npo_bank(admn.id, bankId.toString());
   if (!x) return { status: 404 };
 
   const y = await wise.v2Account(bankId);
   return { ...x, ...y } satisfies LoaderData;
 };
 
-export const deleteAction: ActionFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const bank_id = v.parse(plusInt, params.bankId);
+export const deleteAction: ActionFunction = async (x) => {
+  const bank_id = v.parse(plusInt, x.params.bankId);
+  const admn = await admin_checks(x);
+  if (is_resp(admn)) return admn;
 
   await delete_bank(bank_id.toString());
   return redirect("../..");
 };
 
-export const prioritizeAction: ActionFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-  const bank_id = v.parse(plusInt, params.bankId);
+export const prioritizeAction: ActionFunction = async (args) => {
+  const bank_id = v.parse(plusInt, args.params.bankId);
+  const admn = await admin_checks(args);
+  if (is_resp(admn)) return admn;
+
   const x = await bank(bank_id.toString()).then((x) => x && to_item(x));
   if (!x) return { status: 404, statusText: `Bank:${bank_id} not found` };
 
