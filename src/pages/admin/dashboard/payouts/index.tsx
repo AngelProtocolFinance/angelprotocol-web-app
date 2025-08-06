@@ -4,7 +4,7 @@ import type { LoaderFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { ChevronLeft } from "lucide-react";
-import { admin_checks, is_resp } from "pages/admin/utils";
+import { admin_checks, is_resp } from "../../utils";
 import { PayoutsTable } from "../common/payouts-table";
 import { apes } from ".server/aws/db";
 import { env } from ".server/env";

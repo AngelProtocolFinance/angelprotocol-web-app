@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@vercel/remix";
-import { admin_checks, is_resp } from "pages/admin/utils";
 import type { PayoutsPage } from "types/referrals";
+import { admin_checks, is_resp } from "../../utils";
 import { getNpo } from ".server/npo";
 import { paidOut } from ".server/referrals";
 
