@@ -1,7 +1,7 @@
 import { BalanceDb } from "@better-giving/balance";
 import { NavHistoryDB } from "@better-giving/nav-history";
 import type { LoaderFunction } from "@vercel/remix";
-import { admin_checks, is_resp } from "pages/admin/utils";
+import { admin_checks, is_resp } from "../../utils";
 import { apes } from ".server/aws/db";
 import { env } from ".server/env";
 

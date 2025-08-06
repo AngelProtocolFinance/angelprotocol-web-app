@@ -6,9 +6,9 @@ import {
   redirect,
 } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
-import { admin_checks, is_resp } from "pages/admin/utils";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
+import { admin_checks, is_resp } from "../../utils";
 import {
   bank,
   delete_bank,

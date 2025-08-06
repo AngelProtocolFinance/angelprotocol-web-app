@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "@vercel/remix";
-import { admin_checks, is_resp } from "pages/admin/utils";
 import type { EarningsPage } from "types/referrals";
+import { admin_checks, is_resp } from "../../utils";
 import { getEarnings } from ".server/donations";
 import { getNpo } from ".server/npo";
 
