@@ -1,5 +1,5 @@
 import { BalanceDb } from "@better-giving/balance";
-import { BalanceTxsDb } from "@better-giving/balance-txs";
+import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
 import { NavHistoryDB } from "@better-giving/nav-history";
 import { type IPayout, PayoutsDB } from "@better-giving/payouts";
@@ -31,16 +31,15 @@ export const action: ActionFunction = async ({ params, request }) => {
   const baldb = new BalanceDb(apes, env);
 
   const tx = await txsdb.tx(tx_id);
-
   if (!tx) return { status: 404 };
+
+  if (tx.account !== "lock") throw `expected lock account, got ${tx.account}`;
+
   const navdb = new NavHistoryDB(apes, env);
   const ltd = await navdb.ltd();
 
   if (ltd.composition.CASH.value < tx.amount) {
-    return {
-      status: 400,
-      message: "insufficient cash balance to approve this request.",
-    };
+    throw `insufficient cash balance to approve this request.`;
   }
 
   if (verdict === "reject") {
@@ -59,22 +58,6 @@ export const action: ActionFunction = async ({ params, request }) => {
   const txs = new Txs();
   const upd81 = await txsdb.tx_update_status_item(tx, "final");
   txs.update(upd81);
-
-  //create payout
-  const payoutsdb = new PayoutsDB(apes, env);
-  const payout: IPayout = {
-    id: nanoid(),
-    source_id: tx.id,
-    recipient_id: tx.owner,
-    source: "lock",
-    date: timestamp,
-    amount: tx.amount,
-    type: "pending",
-  };
-  txs.put({
-    TableName: PayoutsDB.name,
-    Item: payoutsdb.new_payout_item(payout),
-  });
 
   //log nav
   const new_nav = produce(ltd, (x) => {
@@ -95,6 +78,58 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   txs.append(navdb.log_txis(new_nav));
 
+  //transfer to savings
+  if (tx.account_other === "liq") {
+    const bal = await baldb.npo_balance(+tx.owner);
+    const liq_tx: IBalanceTx = {
+      id: nanoid(),
+      date_created: timestamp,
+      date_updated: timestamp,
+      owner: tx.owner,
+      status: "final",
+      account: "liq",
+      bal_begin: bal.liq,
+      bal_end: bal.liq + tx.amount,
+      amount: tx.amount,
+      amount_units: tx.amount,
+      account_other_id: tx.id,
+      account_other: "lock",
+      account_other_bal_begin: tx.bal_begin,
+      account_other_bal_end: tx.bal_begin - tx.amount_units,
+    };
+    const upd82 = baldb.update_balance_item(+tx.owner, {
+      liq: tx.amount,
+      // lock_units - already deducted in tx creation
+    });
+
+    txs.put({ TableName: BalanceTxsDb.name, Item: txsdb.new_tx_item(liq_tx) });
+    txs.update(upd82);
+    const cmd = new TransactWriteCommand({ TransactItems: txs.all });
+    await baldb.client.send(cmd);
+
+    return redirect("..");
+  }
+
+  //transfer to grant
+  const payoutsdb = new PayoutsDB(apes, env);
+  const payout: IPayout = {
+    id: nanoid(),
+    source_id: tx.id,
+    recipient_id: tx.owner,
+    source: "lock",
+    date: timestamp,
+    amount: tx.amount,
+    type: "pending",
+  };
+  txs.put({
+    TableName: PayoutsDB.name,
+    Item: payoutsdb.new_payout_item(payout),
+  });
+  const bal_update = baldb.update_balance_item(+tx.owner, {
+    payoutsPending: tx.amount,
+    cash: tx.amount,
+  });
+  txs.update(bal_update);
   const cmd = new TransactWriteCommand({ TransactItems: txs.all });
   await baldb.client.send(cmd);
 
