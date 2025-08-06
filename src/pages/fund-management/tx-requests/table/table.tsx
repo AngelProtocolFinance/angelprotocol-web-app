@@ -42,20 +42,26 @@ export function Table({
               <td>${humanize(r.amount / r.amount_units)}</td>
               <td>${humanize(r.amount)}</td>
               <td>
-                <div className="flex items-center gap-x-2">
-                  <NavLink
-                    to={`${r.id}/approve`}
-                    className="btn-green text-xs uppercase font-bold px-2 py-1 rounded-xs"
-                  >
-                    Approve
-                  </NavLink>
-                  <NavLink
-                    to={`${r.id}/reject`}
-                    className="btn-red text-xs uppercase font-bold px-2 py-1 rounded-xs"
-                  >
-                    Reject
-                  </NavLink>
-                </div>
+                {r.status === "pending" ? (
+                  <div className="flex items-center gap-x-2">
+                    <NavLink
+                      to={`${r.id}/approve`}
+                      className="btn-green text-xs uppercase font-bold px-2 py-1 rounded-xs"
+                    >
+                      Approve
+                    </NavLink>
+                    <NavLink
+                      to={`${r.id}/reject`}
+                      className="btn-red text-xs uppercase font-bold px-2 py-1 rounded-xs"
+                    >
+                      Reject
+                    </NavLink>
+                  </div>
+                ) : r.status === "cancelled" ? (
+                  <span className="text-red">Cancelled</span>
+                ) : (
+                  <span className="text-green">Final</span>
+                )}
               </td>
             </tr>
           ))}
