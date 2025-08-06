@@ -1,4 +1,4 @@
-import { type TStatus, statuses } from "@better-giving/balance-txs";
+import type { TStatus } from "@better-giving/balance-txs";
 import { Outlet } from "@remix-run/react";
 import { Select } from "components/selector";
 import { useState } from "react";
@@ -11,7 +11,7 @@ export default function Page() {
       <div className="flex items-center gap-x-4 mb-4">
         <h3 className="font-bold text-2xl">Tx Requests</h3>
         <Select
-          options={statuses as any}
+          options={["pending", "final", "cancelled"]}
           onChange={(x) => setStatus(x as any)}
           value={status}
           option_disp={(x) => x}
