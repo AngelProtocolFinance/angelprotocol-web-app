@@ -12,7 +12,7 @@ export default function Page() {
         <h3 className="font-bold text-2xl">Tx Requests</h3>
         <Select
           options={["pending", "final", "cancelled"]}
-          onChange={(x) => setStatus(x as any)}
+          onChange={(x) => setStatus(x)}
           value={status}
           option_disp={(x) => x}
           classes={{ button: "px-4 py-0", option: "text-sm" }}
