@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ticker_colors } from "../../common";
 import { type FV, ticker_nets } from "../types";
-import { DiffCell } from "./diff-cell";
+import { Diff } from "./diff";
 
 interface Props {
   fv: FV;
@@ -55,6 +55,22 @@ export function Review(props: Props) {
 
   return (
     <div className={`overflow-x-auto ${props.classes || ""} p-8`}>
+      <p className="text-gray text-sm font-semibold">Portfolio value</p>
+      <Diff
+        classes="text-2xl font-bold mb-4"
+        el="div"
+        a={props.ltd.value}
+        b={total_value_2}
+        formatter={(x) => `$${humanize(x)}`}
+      />
+      <p className="text-gray text-sm font-semibold">Unit price</p>
+      <Diff
+        classes="text-2xl font-bold mb-4"
+        el="div"
+        a={props.ltd.price}
+        b={total_value_2 / props.ltd.units}
+        formatter={(x) => `$${humanize(x)}`}
+      />
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
         <thead>
           <tr>
@@ -75,8 +91,16 @@ export function Review(props: Props) {
               >
                 {t.id}
               </td>
-              <DiffCell a={t.qty} b={t.qty2} formatter={(x) => humanize(x)} />
-              <DiffCell
+              <Diff
+                el="td"
+                classes="text-right"
+                a={t.qty}
+                b={t.qty2}
+                formatter={(x) => humanize(x)}
+              />
+              <Diff
+                el="td"
+                classes="text-right"
                 a={t.price}
                 b={t.price2}
                 formatter={(x) => `$${humanize(x)}`}
@@ -84,12 +108,16 @@ export function Review(props: Props) {
               <td className="text-right">
                 {t.price_date ? format(new Date(t.price_date), "PP") : "-"}
               </td>
-              <DiffCell
+              <Diff
+                el="td"
+                classes="text-right"
                 a={t.value}
                 b={t.value2}
                 formatter={(x) => `$${humanize(x)}`}
               />
-              <DiffCell
+              <Diff
+                el="td"
+                classes="text-right"
                 a={t.pct}
                 b={t.pct2}
                 formatter={(x) => `${humanize(x)}%`}
