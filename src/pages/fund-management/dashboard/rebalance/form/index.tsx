@@ -3,7 +3,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { to_bals } from "../helpers";
-import { type FV, type Tx, tx_log } from "../types";
+import { type FV, type Tx, fv } from "../types";
 import { FieldCell } from "./field-cell";
 
 interface Props {
@@ -35,7 +35,7 @@ export function RebalanceForm({
     control,
     formState: { errors },
   } = useForm<FV>({
-    resolver: valibotResolver(tx_log),
+    resolver: valibotResolver(fv),
     defaultValues: init || {
       txs: [default_tx],
       bals: to_bals(composition),

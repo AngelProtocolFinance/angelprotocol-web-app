@@ -57,14 +57,14 @@ importers:
         specifier: 2.0.2
         version: 2.0.2(@better-giving/endowment@2.0.2(@better-giving/schemas@1.2.0(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.7)(valibot@0.42.0(typescript@5.7.3)))(@better-giving/schemas@1.2.0(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.7)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/helpers':
-        specifier: 1.1.9
-        version: 1.1.9(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0)
+        specifier: 1.1.10
+        version: 1.1.10(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0)
       '@better-giving/helpers-db':
         specifier: 1.1.4
         version: 1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))
       '@better-giving/nav-history':
-        specifier: 1.0.23
-        version: 1.0.23(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@1.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.7))(@better-giving/helpers@1.1.9(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0))(@better-giving/types@1.1.7)(date-fns@4.1.0)
+        specifier: 1.0.24
+        version: 1.0.24(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@1.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.7))(@better-giving/helpers@1.1.10(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0))(@better-giving/types@1.1.7)(date-fns@4.1.0)
       '@better-giving/nowpayments':
         specifier: 1.1.2
         version: 1.1.2
@@ -724,15 +724,15 @@ packages:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0
 
-  '@better-giving/helpers@1.1.9':
-    resolution: {integrity: sha512-dLyfzDfQRqdjyaE/IMDw4H80IivKBysUgPajFdPU49ehAdTITqtaKyZ87wOppCtV2vgU9cX/7xDUItk0JCSCTA==}
+  '@better-giving/helpers@1.1.10':
+    resolution: {integrity: sha512-ufVCGW6IVb8KctaYnNn68YjPN5mqDmBb3l235+UMQJvo7UOxIOcpRIygRH6TB6rlE3/J31XxP08hXnza08+nbQ==}
     peerDependencies:
       '@better-giving/types': 1.1.7
       '@types/aws-lambda': 8.10.130
       date-fns: 4.1.0
 
-  '@better-giving/nav-history@1.0.23':
-    resolution: {integrity: sha512-8Vw5x0TpYV1jdg9dQ4JvMa91J/QQxSPbXHsbanWZaN45MyQjEoTeVK+9TyoYKxIxL8JCmGfSMsWkin+AETw2hA==}
+  '@better-giving/nav-history@1.0.24':
+    resolution: {integrity: sha512-peJlee4ZL6Zd6dGR3AYsBMxhaaJ92V4crQ8t63PWpxbTZvBMB4ioou0MwHh11UNiI5vD4GUplqfm2deIK/qrZw==}
     peerDependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0
       '@better-giving/db': 1.0.7
@@ -6093,17 +6093,17 @@ snapshots:
       '@aws-sdk/client-dynamodb': 3.485.0
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
 
-  '@better-giving/helpers@1.1.9(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0)':
+  '@better-giving/helpers@1.1.10(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0)':
     dependencies:
       '@better-giving/types': 1.1.7
       '@types/aws-lambda': 8.10.130
       date-fns: 4.1.0
 
-  '@better-giving/nav-history@1.0.23(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@1.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.7))(@better-giving/helpers@1.1.9(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0))(@better-giving/types@1.1.7)(date-fns@4.1.0)':
+  '@better-giving/nav-history@1.0.24(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@1.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.7))(@better-giving/helpers@1.1.10(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0))(@better-giving/types@1.1.7)(date-fns@4.1.0)':
     dependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
       '@better-giving/db': 1.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/helpers-db@1.1.4(@aws-sdk/client-dynamodb@3.485.0)(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0)))(@better-giving/types@1.1.7)
-      '@better-giving/helpers': 1.1.9(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0)
+      '@better-giving/helpers': 1.1.10(@better-giving/types@1.1.7)(@types/aws-lambda@8.10.130)(date-fns@4.1.0)
       '@better-giving/types': 1.1.7
       date-fns: 4.1.0
 

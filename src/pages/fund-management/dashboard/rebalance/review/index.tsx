@@ -2,6 +2,7 @@ import type { ILog } from "@better-giving/nav-history";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ticker_colors } from "../../common";
+import { prices_fn } from "../helpers";
 import { type FV, ticker_nets } from "../types";
 import { Diff } from "./diff";
 
@@ -13,20 +14,7 @@ interface Props {
 
 export function Review(props: Props) {
   const nets = ticker_nets(props.fv.bals, props.fv.txs);
-  const prices = props.fv.txs.reduce(
-    (acc, tx) => {
-      if (tx.in_id === "CASH") {
-        acc[tx.out_id] ||= [];
-        acc[tx.out_id].push(+tx.price);
-        return acc;
-      }
-      //out_id is cash
-      acc[tx.in_id] ||= [];
-      acc[tx.in_id].push(+tx.price);
-      return acc;
-    },
-    {} as { [ticker: string]: number[] }
-  );
+  const prices = prices_fn(props.fv.txs);
 
   const tickers = Object.values(props.ltd.composition)
     .map((t) => {
