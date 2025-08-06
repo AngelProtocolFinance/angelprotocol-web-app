@@ -71,13 +71,13 @@ export function RebalanceForm({
                   <PlusIcon size={16} className="stroke-green" />
                 </button>
               </th>
-              <th className="font-bold text-red">out</th>
-              <th className="font-bold text-red">out-qty</th>
-              <th className="font-bold text-green">in</th>
-              <th className="font-bold text-green">in-qty</th>
-              <th className="font-bold">price</th>
-              <th className="font-bold">id</th>
-              <th className="font-bold">fee</th>
+              <th>out</th>
+              <th>in</th>
+              <th>out-qty</th>
+              <th>in-qty</th>
+              <th>price</th>
+              <th>id</th>
+              <th>fee</th>
             </tr>
           </thead>
           <tbody>
@@ -99,17 +99,15 @@ export function RebalanceForm({
                     error={errors.txs?.[idx]?.out_id?.message}
                   />
                   <FieldCell
-                    placeholder="2.023"
-                    {...register(`txs.${idx}.out_qty`)}
-                    error={errors.txs?.[idx]?.out_qty?.message}
-                  />
-
-                  <FieldCell
                     placeholder="cash"
                     {...register(`txs.${idx}.in_id`)}
                     error={errors.txs?.[idx]?.in_id?.message}
                   />
-
+                  <FieldCell
+                    placeholder="2.023"
+                    {...register(`txs.${idx}.out_qty`)}
+                    error={errors.txs?.[idx]?.out_qty?.message}
+                  />
                   <FieldCell
                     placeholder="100"
                     {...register(`txs.${idx}.in_qty`)}
