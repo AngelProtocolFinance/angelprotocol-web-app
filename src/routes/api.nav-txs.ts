@@ -9,7 +9,7 @@ import { env } from ".server/env";
 export const loader: LoaderFunction = async ({ request }) => {
   const { searchParams } = new URL(request.url);
   const s = Object.fromEntries(searchParams.entries());
-  const search = v.parse(balance_txs_options, s);
+  const opts = v.parse(balance_txs_options, s);
 
   const { user } = await cognito.retrieve(request);
   if (!user) return resp.status(401);
@@ -18,7 +18,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   const db = new BalanceTxsDb(apes, env);
-  const page = await db.txs(search);
+  const page = await db.txs(opts);
 
   return resp.json(page);
 };
