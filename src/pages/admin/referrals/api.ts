@@ -1,10 +1,8 @@
 import { type IItem, priority_nums } from "@better-giving/banking-applications";
 import type { LoaderFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
-import { parse } from "valibot";
+import { admin_checks, is_resp } from "../utils";
 import { config } from "./config";
-import { cognito, toAuth } from ".server/auth";
 import { npo_banks } from ".server/banking-applications";
 import { getEarnings } from ".server/donations";
 import { getNpo } from ".server/npo";
@@ -21,17 +19,14 @@ export interface LoaderData {
   base_url: string;
 }
 
-export const loader: LoaderFunction = async ({ request, params }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+export const loader: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
 
-  const npo_id = parse(plusInt, params.id);
-  if (!user.endowments.includes(npo_id)) throw `not authorized`;
+  const endow = await getNpo(adm.id);
+  if (!endow) throw `npo:${adm.id} not found`;
 
-  const endow = await getNpo(npo_id);
-  if (!endow) throw `npo:${npo_id} not found`;
-
-  if (!endow.referral_id) throw `@dev: referral_id not found for npo:${npo_id}`;
+  if (!endow.referral_id) throw `@dev: referral_id not found for npo:${adm.id}`;
 
   const [pendings, referreds, earnings, p, pltd] = await Promise.all([
     pendingEarnings(endow.referral_id),
@@ -48,7 +43,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   return {
     id: endow.referral_id,
-    base_url: new URL(request.url).origin,
+    base_url: new URL(adm.req.url).origin,
     referreds,
     earnings,
     pendings,

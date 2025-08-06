@@ -8,8 +8,8 @@ import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
 import { parse } from "valibot";
+import { admin_checks, is_resp } from "../utils";
 import { schema } from "./video-editor";
-import { cognito, toAuth } from ".server/auth";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
   const endowId = parse(plusInt, params.id);
@@ -26,56 +26,52 @@ export const allVideos: LoaderFunction = async ({ request, params }) => {
   });
 };
 
-export const videosAction: LoaderFunction = async ({ params, request }) => {
-  const endowId = parse(plusInt, params.id);
+export const videosAction: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
 
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const fv = await request.formData();
+  const fv = await adm.req.formData();
   const intent = fv.get("intent") as "feature" | "delete";
   const featured = fv.get("featured") === "1";
   const mediaId = fv.get("mediaId");
 
-  const path = `${ver(1)}/endowments/${endowId}/media/${mediaId}`;
+  const path = `${ver(1)}/endowments/${adm.id}/media/${mediaId}`;
   const res =
     intent === "feature"
       ? await ap.patch(path, {
-          headers: { authorization: user.idToken },
+          headers: { authorization: adm.idToken },
           json: { featured: !featured },
         })
       : await ap.delete(path, {
-          headers: { authorization: user.idToken },
+          headers: { authorization: adm.idToken },
         });
 
   return { ok: res.ok };
 };
 
-export const newAction: ActionFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const fv = await request.formData();
+export const newAction: ActionFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+  const fv = await adm.req.formData();
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
-  await ap.post(`${ver(1)}/endowments/${params.id}/media`, {
-    headers: { authorization: user.idToken },
+  await ap.post(`${ver(1)}/endowments/${adm.id}/media`, {
+    headers: { authorization: adm.idToken },
     body: payload.value.url,
   });
   return redirect("..");
 };
 
-export const editAction: ActionFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const fv = await request.formData();
+export const editAction: ActionFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+  const fv = await adm.req.formData();
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
-  await ap.patch(`${ver(1)}/endowments/${params.id}/media/${params.mediaId}`, {
-    headers: { authorization: user.idToken },
+  await ap.patch(`${ver(1)}/endowments/${adm.id}/media/${adm.params.mediaId}`, {
+    headers: { authorization: adm.idToken },
     json: { url: payload.value.url },
   });
 

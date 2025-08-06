@@ -93,7 +93,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     x.holders[tx.owner] -= tx.amount_units;
   });
 
-  txs.append(navdb.log_items(new_nav));
+  txs.append(navdb.log_txis(new_nav));
 
   const cmd = new TransactWriteCommand({ TransactItems: txs.all });
   await baldb.client.send(cmd);
