@@ -67,7 +67,7 @@ export const tx = v.pipe(
 const bals = v.record(ticker, v.number());
 export interface IBals extends v.InferOutput<typeof bals> {}
 
-const tx_log_raw = v.object({
+const tx_log = v.object({
   txs: v.pipe(v.array(tx), v.minLength(1, "at least one tx")),
   /** internal */
   bals: v.record(v.string(), v.number()),
@@ -91,8 +91,8 @@ export const ticker_nets = (bals: IBals, txs: Tx[]) => {
   return a;
 };
 
-export const tx_log = v.pipe(
-  tx_log_raw,
+export const fv = v.pipe(
+  tx_log,
   v.forward(
     v.partialCheck(
       [["txs"], ["bals"]],

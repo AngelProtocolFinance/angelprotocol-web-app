@@ -62,8 +62,18 @@ function Content(props: ILog) {
           </button>
         )}
         <button
+          disabled={fetcher.state !== "idle"}
           form={state.type === "form" ? "rebalance-form" : undefined}
           type={state.type === "form" ? "submit" : "button"}
+          onClick={
+            state.type === "review"
+              ? () =>
+                  fetcher.submit(state.data.txs, {
+                    method: "post",
+                    encType: "application/json",
+                  })
+              : undefined
+          }
           className="btn btn-blue px-8 py-2 text-sm"
         >
           {state.type === "form" ? "Review" : "Submit"}
