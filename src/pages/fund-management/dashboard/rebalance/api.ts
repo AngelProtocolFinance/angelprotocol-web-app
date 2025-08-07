@@ -1,6 +1,7 @@
 import { Txs } from "@better-giving/db";
 import {
   type IComposition,
+  type IRebalanceLog,
   type ITicker,
   NavHistoryDB,
 } from "@better-giving/nav-history";
@@ -66,7 +67,20 @@ export const action: ActionFunction = async ({ request }) => {
     {} as IComposition
   );
 
+  const txs = new Txs();
   const rebalance_id = nanoid();
+  const rebalance: IRebalanceLog = {
+    txs: fv.txs,
+    bals: fv.bals,
+    id: rebalance_id,
+    date: timestamp,
+  };
+
+  txs.put({
+    TableName: NavHistoryDB.name,
+    Item: navdb.rebalance_item(rebalance),
+  });
+
   const updated_nav = produce(ltd, (x) => {
     x.reason = `rebalance: ${rebalance_id}`;
     x.composition = comp;
@@ -75,7 +89,6 @@ export const action: ActionFunction = async ({ request }) => {
     x.price_updated = timestamp;
   });
 
-  const txs = new Txs();
   const nav_update_txis = navdb.update_txis(updated_nav);
   txs.append(nav_update_txis);
 
