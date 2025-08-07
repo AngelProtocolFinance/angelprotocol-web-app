@@ -1,14 +1,25 @@
-import { Outlet } from "@remix-run/react";
+import { Outlet, useSearchParams } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
-import type { DonationsPage } from "types/donations";
+import { use_paginator } from "hooks/use-paginator";
 import { use_admin_data } from "../use-admin-data";
 import { Allocation } from "./allocation";
+import type { LoaderData } from "./api";
 import DonationsTable from "./donations-table";
 export { ErrorBoundary } from "components/error";
 export { loader, action } from "./api";
 export { clientLoader } from "api/cache";
 export default function Donations() {
-  const page1 = useCachedLoaderData() as DonationsPage;
+  const [search] = useSearchParams();
+  const page1 = useCachedLoaderData() as LoaderData;
+  const node = use_paginator({
+    Table: DonationsTable,
+    page1,
+    gen_loader: (load, next) => () => {
+      const p = new URLSearchParams(search);
+      if (next) p.set("page", next);
+      load(`?${p.toString()}`);
+    },
+  });
   const data = use_admin_data();
   return (
     <div>
@@ -23,7 +34,7 @@ export default function Donations() {
           }
         }
       />
-      <DonationsTable page1={page1} />
+      {node}
       {/** edit allocation */}
       <Outlet />
     </div>
