@@ -6,8 +6,8 @@ export default function LoadMoreBtn({
   isLoading,
 }: {
   onLoadMore(): void;
-  disabled: boolean;
-  isLoading: boolean;
+  disabled?: boolean;
+  isLoading?: boolean;
 }) {
   return (
     <button
