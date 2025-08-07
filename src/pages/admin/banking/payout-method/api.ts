@@ -1,11 +1,11 @@
 import { type IItem, to_item } from "@better-giving/banking-applications";
+import { $int_gte1 } from "@better-giving/schemas";
 import type { V2RecipientAccount } from "@better-giving/wise";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
 import {
@@ -20,7 +20,7 @@ import { admin_checks, is_resp } from ".server/utils";
 export interface LoaderData extends V2RecipientAccount, IItem {}
 
 export const loader: LoaderFunction = async (args) => {
-  const bankId = v.parse(plusInt, args.params.bankId);
+  const bankId = v.parse($int_gte1, args.params.bankId);
   const admn = await admin_checks(args);
   if (is_resp(admn)) return admn;
 
@@ -32,7 +32,7 @@ export const loader: LoaderFunction = async (args) => {
 };
 
 export const deleteAction: ActionFunction = async (x) => {
-  const bank_id = v.parse(plusInt, x.params.bankId);
+  const bank_id = v.parse($int_gte1, x.params.bankId);
   const admn = await admin_checks(x);
   if (is_resp(admn)) return admn;
 
@@ -41,7 +41,7 @@ export const deleteAction: ActionFunction = async (x) => {
 };
 
 export const prioritizeAction: ActionFunction = async (args) => {
-  const bank_id = v.parse(plusInt, args.params.bankId);
+  const bank_id = v.parse($int_gte1, args.params.bankId);
   const admn = await admin_checks(args);
   if (is_resp(admn)) return admn;
 

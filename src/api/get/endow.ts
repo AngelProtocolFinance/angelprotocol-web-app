@@ -1,13 +1,13 @@
 import type { Endow } from "@better-giving/endowment";
+import { $int_gte1 } from "@better-giving/schemas";
 import * as v from "valibot";
 import { ap, toSearch, ver } from "../api";
-import { plusInt } from "../schema/endow-id";
 import { segment } from "../schema/segment";
 
 type K = keyof Endow;
 type ArrayValues<T extends readonly unknown[]> = T[number];
 
-const schema = v.union([plusInt, segment]);
+const schema = v.union([$int_gte1, segment]);
 
 export async function getEndow<T extends K[]>(
   idParamOrSlug: number | string | undefined,

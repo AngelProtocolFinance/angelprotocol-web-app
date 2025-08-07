@@ -1,6 +1,6 @@
+import { $int_gte1 } from "@better-giving/schemas";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
 import { Footer } from "components/footer";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const id = parse(plusInt, params.id);
+  const id = parse($int_gte1, params.id);
 
   const npo = await getNpo(id, [
     "logo",

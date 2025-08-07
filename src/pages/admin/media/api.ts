@@ -1,3 +1,4 @@
+import { $int_gte1 } from "@better-giving/schemas";
 import {
   type ActionFunction,
   type LoaderFunction,
@@ -5,20 +6,19 @@ import {
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getMedia } from "api/get/media";
-import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
 import { parse } from "valibot";
 import { schema } from "./video-editor";
 import { admin_checks, is_resp } from ".server/utils";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
-  const endowId = parse(plusInt, params.id);
+  const endowId = parse($int_gte1, params.id);
   return getMedia(endowId, { featured: true, type: "video", limit: 3 });
 };
 export const allVideos: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const nextPageKey = url.searchParams.get("nextPageKey") ?? undefined;
-  const endowId = parse(plusInt, params.id);
+  const endowId = parse($int_gte1, params.id);
   return getMedia(endowId, {
     type: "video",
     limit: 10,
