@@ -1,9 +1,8 @@
 import type { IBalanceTxsPage, TStatus } from "@better-giving/balance-txs";
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Select } from "components/selector";
-
+import { use_paginator } from "hooks/use-paginator";
 import { Table } from "./table";
-import { use_paginator } from "./use-paginator";
 export { loader } from "./api";
 
 export default function Page() {

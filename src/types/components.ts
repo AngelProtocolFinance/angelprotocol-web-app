@@ -87,3 +87,11 @@ export type TDonateMethod = v.InferOutput<typeof donateMethod>;
 //re-exports
 export type { Token as TokenV2 } from "@better-giving/assets/tokens";
 export type { DBCurrency } from "types/currency";
+
+export interface IPaginator<T> {
+  items: T[];
+  load_next?: () => void;
+  loading?: boolean;
+  disabled?: boolean;
+  classes?: string;
+}

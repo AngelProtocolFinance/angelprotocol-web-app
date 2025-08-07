@@ -4,14 +4,9 @@ import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+import type { IPaginator } from "types/components";
 
-export interface Props {
-  records: ILog[];
-  classes?: string;
-  onLoadMore?(): void;
-  disabled: boolean;
-  isLoading: boolean;
-}
+export interface Props extends IPaginator<ILog> {}
 
 export function FlowIcon(this_account: string, data: IBalanceTx): ReactNode {
   if (data.account === this_account) {
@@ -19,12 +14,12 @@ export function FlowIcon(this_account: string, data: IBalanceTx): ReactNode {
   }
 }
 
-export function Table({
-  records,
+export function HistoryTable({
+  items,
   classes = "",
   disabled,
-  isLoading,
-  onLoadMore,
+  loading,
+  load_next,
 }: Props) {
   return (
     <div className={`${classes} overflow-x-auto`}>
@@ -39,7 +34,7 @@ export function Table({
           </tr>
         </thead>
         <tbody>
-          {records.map((r, idx) => (
+          {items.map((r, idx) => (
             <tr key={idx} className="text-sm">
               <td>{format(r.date, "PP")}</td>
               <td>{r.reason}</td>
@@ -50,12 +45,12 @@ export function Table({
           ))}
         </tbody>
         <tfoot>
-          {onLoadMore && (
+          {load_next && (
             <tr>
               <td colSpan={3}>
                 <button
-                  disabled={disabled || isLoading}
-                  onClick={onLoadMore}
+                  disabled={disabled || loading}
+                  onClick={load_next}
                   type="button"
                   className="text-sm text-blue hover:text-blue-d1"
                 >

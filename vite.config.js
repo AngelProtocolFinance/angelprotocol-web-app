@@ -142,6 +142,10 @@ const rmx = remix({
             );
           });
           r(
+            "dashboard/nav-history",
+            "./pages/fund-management/dashboard/history/index.tsx"
+          );
+          r(
             "tx-requests",
             "./pages/fund-management/tx-requests/index.tsx",
             () => {

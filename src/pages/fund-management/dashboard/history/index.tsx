@@ -1,59 +1,34 @@
 import type { ILog, IPage } from "@better-giving/nav-history";
-import { Info, LoadingStatus } from "components/status";
-import useSWR from "swr/immutable";
-import { Table } from "./table";
+import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import { use_paginator } from "hooks/use-paginator";
+import { ChevronLeftIcon } from "lucide-react";
+import { HistoryTable } from "../history-table";
+export { loader } from "./api";
 
-export const cache_key = "nav-history";
-const fetcher = ([, key]: [string, string | null]) =>
-  fetch(`/api/nav-logs${key ? `?next=${key}` : ""}`).then<IPage<ILog>>((res) =>
-    res.json()
-  );
-
-interface Props {
-  classes?: string;
-}
-
-export function History({ classes = "" }: Props) {
-  const { data, mutate, isLoading, isValidating, error } = useSWR(
-    [cache_key, null],
-    fetcher
-  );
-
-  if (isLoading) {
-    return (
-      <LoadingStatus classes={`${classes} text-sm`}>
-        Loading transactions...
-      </LoadingStatus>
-    );
-  }
-
-  if (error || !data) {
-    return <Info classes={classes}>Failed to get transactions</Info>;
-  }
-
-  const { items, next } = data;
-  if (items.length === 0) return <Info classes={classes}>No record found</Info>;
-
-  async function load(next_key: string) {
-    const res = await fetcher([cache_key, next_key]);
-    mutate(
-      (x) => {
-        return {
-          items: [...(x?.items || []), ...res.items],
-          next: res.next,
-        };
-      },
-      { revalidate: false }
-    );
-  }
+export default function Page() {
+  const [search] = useSearchParams();
+  const page1 = useLoaderData() as IPage<ILog>;
+  const node = use_paginator({
+    Table: HistoryTable,
+    page1,
+    classes: "mt-4",
+    gen_loader: (load, next) => () => {
+      const p = new URLSearchParams(search);
+      if (next) p.set("next", next);
+      load(`?${p.toString()}`);
+    },
+  });
 
   return (
-    <Table
-      classes={classes}
-      records={items}
-      onLoadMore={next ? () => load(next) : undefined}
-      disabled={isValidating}
-      isLoading={isValidating}
-    />
+    <div>
+      <Link
+        to={".."}
+        className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm"
+      >
+        <ChevronLeftIcon size={18} />
+        <span>Back</span>
+      </Link>
+      {node}
+    </div>
   );
 }
