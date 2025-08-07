@@ -9,7 +9,7 @@ export default function Page() {
   const [search] = useSearchParams();
   const page1 = useLoaderData() as IPage<ILog>;
   const { node } = use_paginator({
-    Table: HistoryTable,
+    table: (x) => <HistoryTable {...x} />,
     page1,
     classes: "mt-4",
     gen_loader: (load, next) => () => {

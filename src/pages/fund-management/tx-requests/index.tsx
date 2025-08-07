@@ -11,7 +11,7 @@ export default function Page() {
   const status = (search.get("status") ?? "pending") as TStatus;
   const { node } = use_paginator({
     page1,
-    Table,
+    table: (props) => <Table {...props} />,
     classes: "mt-4",
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(search);

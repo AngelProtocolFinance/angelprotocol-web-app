@@ -12,7 +12,7 @@ export default function Donations() {
   const [search] = useSearchParams();
   const page1 = useCachedLoaderData() as LoaderData;
   const { node } = use_paginator({
-    Table: DonationsTable,
+    table: (props) => <DonationsTable {...props} />,
     page1,
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(search);
