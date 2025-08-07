@@ -38,6 +38,7 @@ interface Props<T> {
   Empty?: FunctionComponent<{ classes?: string }>;
   classes?: string;
   gen_loader: (loader_fn: (href: string) => void, next: string) => () => void;
+  filter?: (item: T) => boolean;
 }
 
 export function use_paginator<I>({
@@ -46,6 +47,7 @@ export function use_paginator<I>({
   page1,
   classes = "",
   gen_loader,
+  filter = () => true,
   id,
 }: Props<I>) {
   const { state, data, load } = useFetcher<Page<I>>({ key: id });
@@ -65,22 +67,23 @@ export function use_paginator<I>({
 
   const next = data ? np(data) : np(page1);
   const node = (({ Empty, ...x }): ReactNode => {
-    if (x.items.length === 0 && Empty) {
+    const xis = x.items.filter((x) => filter(x));
+    if (xis.length === 0 && Empty) {
       return <Empty classes={x.classes} />;
     }
-    if (x.items.length === 0) {
+    if (xis.length === 0) {
       return <Info classes={x.classes}>No records found</Info>;
     }
     return (
       <Table
         {...x}
-        items={x.items}
+        items={xis}
         load_next={x.next ? x.gen_loader(x.load, x.next) : undefined}
         disabled={x.state !== "idle"}
         loading={x.state === "loading"}
       />
     );
-  })({ items, next, classes, load, gen_loader, Empty, state });
+  })({ items, next, classes, load, gen_loader, Empty, state, filter });
 
   return { node, loading: state === "loading", load };
 }
