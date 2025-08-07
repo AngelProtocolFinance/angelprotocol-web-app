@@ -7,13 +7,12 @@ import type { BankingApplicationStatus } from "types/applications";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";
 
-export default function Table({
-  applications,
+export function Table({
+  items,
   classes = "",
   disabled,
-  isLoading,
-  nextPageKey,
-  onLoadMore,
+  loading,
+  load_next,
 }: TableProps) {
   return (
     <table
@@ -39,13 +38,13 @@ export default function Table({
         rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
-        {applications
+        {items
           .map((row) => (
             <Cells
               key={row.wiseRecipientID}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
-                nextPageKey ? "" : "first:rounded-bl last:rounded-br"
+                load_next ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <>{toPP(row.dateCreated)}</>
@@ -67,16 +66,16 @@ export default function Table({
             </Cells>
           ))
           .concat(
-            nextPageKey ? (
+            load_next ? (
               <td
                 colSpan={9}
                 key="load-more-btn"
                 className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
-                  onLoadMore={() => onLoadMore(nextPageKey)}
+                  onLoadMore={load_next}
                   disabled={disabled}
-                  isLoading={isLoading}
+                  isLoading={loading}
                 />
               </td>
             ) : (

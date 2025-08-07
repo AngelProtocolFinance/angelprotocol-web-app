@@ -8,7 +8,7 @@ export { loader } from "./api";
 export default function Page() {
   const [search] = useSearchParams();
   const page1 = useLoaderData() as IPage<ILog>;
-  const node = use_paginator({
+  const { node } = use_paginator({
     Table: HistoryTable,
     page1,
     classes: "mt-4",

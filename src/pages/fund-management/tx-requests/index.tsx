@@ -9,7 +9,7 @@ export default function Page() {
   const page1 = useLoaderData<IBalanceTxsPage>();
   const [search, set_search] = useSearchParams();
   const status = (search.get("status") ?? "pending") as TStatus;
-  const node = use_paginator({
+  const { node } = use_paginator({
     page1,
     Table,
     classes: "mt-4",
