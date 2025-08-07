@@ -1,15 +1,3 @@
-export const tickers: string[] = [
-  "IVV",
-  "FLOT",
-  "QQQ",
-  "BNDX",
-  "FNDF",
-  "IEFA",
-  "CASH",
-  "ETH",
-  "BTC",
-];
-
 export const ticker_colors: { [ticker: string]: string } = {
   BTC: "#f7931a",
   ETH: "#627eea",
