@@ -1,5 +1,5 @@
 import type { Token } from "@better-giving/assets/tokens";
-import { donateMethodId } from "@better-giving/endowment/schema";
+import { donate_method_id } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
 
@@ -75,7 +75,7 @@ export function isQuery<T>(val: T | QueryState<T>): val is QueryState<T> {
 export type RichTextContent = v.InferOutput<ReturnType<typeof richTextContent>>;
 
 export const donateMethod = v.object({
-  id: donateMethodId,
+  id: donate_method_id,
   name: v.string(),
   disabled: v.boolean(),
   locked: v.optional(v.boolean()),

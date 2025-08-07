@@ -1,4 +1,4 @@
-import { endowIdParam } from "@better-giving/endowment/schema";
+import { $int_gte1 } from "@better-giving/endowment/schema";
 import { PayoutsDB } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
@@ -8,7 +8,7 @@ import { apes } from ".server/aws/db";
 import { env } from ".server/env";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const id = v.parse(endowIdParam, params.id);
+  const id = v.parse($int_gte1, params.id);
   const { user } = await cognito.retrieve(request);
   if (!user) return resp.status(401);
   if (!user.endowments.includes(id) && !user.groups.includes("ap-admin")) {
