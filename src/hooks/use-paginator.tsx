@@ -8,9 +8,27 @@ import {
 } from "react";
 import type { IPaginator } from "types/components";
 
-interface Page<T> {
-  items: T[];
+interface ViaKey {
   next?: string;
+}
+interface ViaNums {
+  page: number;
+  num_pages: number;
+}
+
+type Via = ViaKey | ViaNums;
+
+type Page<T> = {
+  items: T[];
+} & Via;
+
+function np(via: Via): string | undefined {
+  if ("page" in via) {
+    const { page = 1, num_pages = 1 } = via || {};
+    const n = page < num_pages ? page + 1 : undefined;
+    return n?.toString();
+  }
+  return via.next;
 }
 
 interface Props<T> {
@@ -29,7 +47,7 @@ export function use_paginator<I>({
   classes = "",
   gen_loader,
   id,
-}: Props<I>): { loading: boolean; node: ReactNode } {
+}: Props<I>) {
   const { state, data, load } = useFetcher<Page<I>>({ key: id });
   const [items, set_items] = useState<I[]>(page1.items);
 
@@ -39,10 +57,13 @@ export function use_paginator<I>({
 
   useEffect(() => {
     if (state !== "idle" || !data) return;
+    if ("page" in data && data.page === 1) {
+      return set_items(data.items as I[]);
+    }
     set_items((prev) => [...prev, ...(data as Page<I>).items]);
   }, [state, data]);
 
-  const next = data ? (data as Page<I>).next : page1.next;
+  const next = data ? np(data) : np(page1);
   const node = (({ Empty, ...x }): ReactNode => {
     if (x.items.length === 0 && Empty) {
       return <Empty classes={x.classes} />;
@@ -61,5 +82,5 @@ export function use_paginator<I>({
     );
   })({ items, next, classes, load, gen_loader, Empty, state });
 
-  return { node, loading: state === "loading" };
+  return { node, loading: state === "loading", load };
 }
