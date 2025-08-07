@@ -1,17 +1,17 @@
-import { Outlet, useFetcher, useSearchParams } from "@remix-run/react";
+import { Outlet, useSearchParams } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import CsvExporter from "components/csv-exporter";
 import { humanize } from "helpers/decimal";
 import { replaceWithEmptyString as fill } from "helpers/replace-with-empty-string";
+import { use_paginator } from "hooks/use-paginator";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Donation } from "types/donations";
 import type { DonationsData } from "./donations-loader";
 import Filter from "./filter";
-import MobileTable from "./mobile-table";
 import NoDonations from "./no-donations";
 import StatusTabs from "./status-tabs";
-import Table from "./table";
+import { Table } from "./table";
 
 export { loader } from "./donations-loader";
 export { ErrorBoundary } from "components/error";
@@ -19,32 +19,26 @@ export { clientLoader } from "api/cache";
 
 export default function Donations() {
   const [params, setParams] = useSearchParams();
-  const { load, data, state } = useFetcher<DonationsData>();
-  const { user, ...page1 } = useCachedLoaderData<DonationsData>();
-  const [items, setItems] = useState<Donation.Item[]>(page1.items);
+  const status = (params.get("status") ?? "final") as Donation.Status;
+  const { user, ...page1 } = useCachedLoaderData() as DonationsData;
+  const { node, loading, items } = use_paginator({
+    table: (props) => <Table {...props} status={status} />,
+    classes: "mt-6",
+    empty: ({ classes }) => (
+      <NoDonations
+        classes={`${classes} place-self-center col-span-full`}
+        status={status}
+      />
+    ),
+    page1: { items: page1.items, next: page1.next_page?.toString() },
+    gen_loader: (load, next) => () => {
+      const copy = new URLSearchParams(params);
+      if (next) copy.set("page", next.toString());
+      load(`?${copy.toString()}`);
+    },
+  });
 
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    if (!data || state !== "idle") return;
-    setItems((prev) => [...prev, ...data.items]);
-  }, [data, state]);
-
-  useEffect(() => {
-    setItems(page1.items);
-  }, [page1.items]);
-
-  const nextPage = data ? data.next_page : page1.next_page;
-  function loadNextPage() {
-    if (!nextPage) return;
-    const p = new URLSearchParams(params);
-    p.set("page", nextPage.toString());
-    load(`?${p.toString()}`);
-  }
-
-  const status: Donation.Status = (params.get("status") ??
-    "final") as Donation.Status;
-  const isLoading = state !== "idle";
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 @5xl:gap-y-8 @5xl:gap-x-3 relative">
@@ -54,7 +48,7 @@ export default function Donations() {
         My Donations
       </h1>
       <CsvExporter
-        aria-disabled={isLoading || items.length === 0}
+        aria-disabled={loading || items.length === 0}
         classes="row-start-5 @5xl:row-auto col-span-full @5xl:col-span-1 @5xl:justify-self-end btn btn-blue px-8 py-3"
         headers={csvHeaders}
         data={
@@ -92,10 +86,10 @@ export default function Donations() {
         />
       </div>
       <Filter
-        isDisabled={isLoading}
+        isDisabled={loading}
         classes="col-span-full @5xl:col-span-1 w-full @5xl:w-auto"
       />
-      <div className="grid col-span-full overflow-x-auto">
+      <div className="grid col-span-full">
         <StatusTabs
           status={status}
           changeStatus={(s) => {
@@ -104,35 +98,8 @@ export default function Donations() {
             setParams(copy);
           }}
         />
-        <div className="p-5 bg-gray-l6 border border-gray-l3 rounded-b @2xl:rounded-tr grid">
-          {items.length === 0 ? (
-            <NoDonations
-              classes="mt-8 place-self-center col-span-full"
-              status={status}
-            />
-          ) : (
-            <div className="grid">
-              <Table
-                donations={items}
-                disabled={isLoading}
-                hasMore={!!nextPage}
-                isLoading={isLoading}
-                status={status}
-                onLoadMore={loadNextPage}
-                classes="hidden mt-4 @5xl:mt-0 @5xl:table"
-              />
-              <MobileTable
-                donations={items}
-                disabled={isLoading}
-                hasMore={!!nextPage}
-                status={status}
-                isLoading={isLoading}
-                onLoadMore={loadNextPage}
-                classes="@5xl:hidden my-4 @5xl:my-0"
-              />
-            </div>
-          )}
-        </div>
+
+        {node}
       </div>
     </div>
   );

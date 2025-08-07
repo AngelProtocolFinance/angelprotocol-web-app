@@ -1,4 +1,7 @@
-import type { Page } from "@better-giving/registration/approval";
+import type {
+  ApplicationItem,
+  Page,
+} from "@better-giving/registration/approval";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
 import { Search } from "lucide-react";
@@ -10,11 +13,19 @@ export default function Applications() {
   const [params] = useSearchParams();
   const page1 = useLoaderData() as Page;
   const [query, setQuery] = useState("");
-  const { node, loading } = use_paginator({
-    Table,
+  const { node, loading } = use_paginator<ApplicationItem>({
+    table: ({ items, ...props }) => (
+      <Table
+        items={items.filter(
+          (item) =>
+            item.org_name.toLowerCase().includes(query.toLowerCase()) ||
+            item.id.toLowerCase().includes(query.toLowerCase())
+        )}
+        {...props}
+        loading={loading}
+      />
+    ),
     page1: { items: page1.items, next: page1.nextPageKey },
-    filter: ({ org_name, id }) =>
-      (org_name + id).toLowerCase().includes(query.toLowerCase()),
     gen_loader: (load, next) => () => {
       const copy = new URLSearchParams(params);
       if (next) copy.set("nextPageKey", next);

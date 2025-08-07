@@ -9,23 +9,26 @@ import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
+import type { IPaginator } from "types/components";
 import type { Donation } from "types/donations";
 import { donationMethod, lastHeaderName } from "./common";
 import LoadMoreBtn from "./load-more-btn";
 import PaymentResumer from "./payment-resumer";
-import type { TableProps } from "./types";
 
-export default function Table({
-  donations,
+interface Props extends IPaginator<Donation.Item> {
+  status: Donation.Status;
+}
+
+export function Table({
+  items,
   classes = "",
   disabled,
-  isLoading,
-  hasMore,
+  loading,
   status,
-  onLoadMore,
-}: TableProps) {
+  load_next,
+}: Props) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    donations,
+    items,
     "date"
   );
 
@@ -85,7 +88,7 @@ export default function Table({
               key={row.id}
               type="td"
               cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${
-                hasMore ? "" : "first:rounded-bl last:rounded-br"
+                load_next ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <Link
@@ -136,16 +139,16 @@ export default function Table({
             </Cells>
           ))
           .concat(
-            hasMore ? (
+            load_next ? (
               <td
                 colSpan={9}
                 key="load-more-btn"
                 className="border-t border-gray-l3 rounded-b"
               >
                 <LoadMoreBtn
-                  onLoadMore={onLoadMore}
+                  onLoadMore={load_next}
                   disabled={disabled}
-                  isLoading={isLoading}
+                  isLoading={loading}
                 />
               </td>
             ) : (

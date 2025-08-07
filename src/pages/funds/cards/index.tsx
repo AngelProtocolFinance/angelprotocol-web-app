@@ -2,7 +2,9 @@ import type { FundItem } from "@better-giving/fundraiser";
 import type { IPaginator } from "types/components";
 import Card from "./card";
 
-interface Props extends IPaginator<FundItem> {}
+interface Props extends IPaginator<FundItem> {
+  classes?: string;
+}
 
 export function Cards({ classes = "", ...props }: Props) {
   return (

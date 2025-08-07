@@ -1,11 +1,6 @@
 import { useFetcher } from "@remix-run/react";
 import { Info } from "components/status";
-import {
-  type FunctionComponent,
-  type ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import type { IPaginator } from "types/components";
 
 interface ViaKey {
@@ -33,22 +28,20 @@ function np(via: Via): string | undefined {
 
 interface Props<T> {
   id?: string;
-  page1: Page<T>;
-  Table: FunctionComponent<IPaginator<T>>;
-  Empty?: FunctionComponent<{ classes?: string }>;
   classes?: string;
+  page1: Page<T>;
+  table: (props: IPaginator<T>) => ReactNode;
+  empty?: (props: { classes?: string }) => ReactNode;
   gen_loader: (loader_fn: (href: string) => void, next: string) => () => void;
-  filter?: (item: T) => boolean;
 }
 
 export function use_paginator<I>({
-  Table,
-  Empty,
+  table,
+  empty,
   page1,
-  classes = "",
   gen_loader,
-  filter = () => true,
   id,
+  classes = "",
 }: Props<I>) {
   const { state, data, load } = useFetcher<Page<I>>({ key: id });
   const [items, set_items] = useState<I[]>(page1.items);
@@ -66,24 +59,30 @@ export function use_paginator<I>({
   }, [state, data]);
 
   const next = data ? np(data) : np(page1);
-  const node = (({ Empty, ...x }): ReactNode => {
-    const xis = x.items.filter((x) => filter(x));
-    if (xis.length === 0 && Empty) {
-      return <Empty classes={x.classes} />;
+  const node = (({ empty: et, table: t, ...x }): ReactNode => {
+    if (x.items.length === 0) {
+      return (
+        et?.({ classes: x.classes }) || (
+          <Info classes={x.classes}>No records found</Info>
+        )
+      );
     }
-    if (xis.length === 0) {
-      return <Info classes={x.classes}>No records found</Info>;
-    }
-    return (
-      <Table
-        {...x}
-        items={xis}
-        load_next={x.next ? x.gen_loader(x.load, x.next) : undefined}
-        disabled={x.state !== "idle"}
-        loading={x.state === "loading"}
-      />
-    );
-  })({ items, next, classes, load, gen_loader, Empty, state, filter });
+    return t({
+      ...x,
+      load_next: next ? x.gen_loader(x.load, next) : undefined,
+      disabled: x.state !== "idle",
+      loading: x.state !== "idle",
+    });
+  })({
+    items,
+    next,
+    load,
+    gen_loader,
+    state,
+    empty,
+    table,
+    classes,
+  });
 
-  return { node, loading: state === "loading", load };
+  return { node, loading: state !== "idle", load, items };
 }

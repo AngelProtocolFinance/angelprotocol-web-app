@@ -44,7 +44,7 @@ export default function Funds() {
   const { node, load } = use_paginator({
     id: "funds",
     page1,
-    Table: Cards,
+    table: (x) => <Cards {...x} />,
     classes: "mt-4",
     gen_loader: (l, next) => () => {
       const p = new URLSearchParams(params);

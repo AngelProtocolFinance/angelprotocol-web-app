@@ -9,7 +9,7 @@ export default function BankingApplications() {
   const page1 = useLoaderData() as IPage;
 
   const { node, loading } = use_paginator({
-    Table,
+    table: (x) => <Table {...x} />,
     page1,
     gen_loader: (load, next) => () => {
       const copy = new URLSearchParams(params);
