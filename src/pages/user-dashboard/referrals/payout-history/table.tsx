@@ -3,21 +3,10 @@ import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { Info } from "lucide-react";
-import type { ReactNode } from "react";
+import type { IPaginator } from "types/components";
 
-export interface Props {
-  items: Payout[];
-  onViewMore?: () => void;
-  emptyEl?: ReactNode;
-  classes?: string;
-}
-export function Table({
-  items,
-  classes = "",
-  onViewMore,
-  emptyEl = null,
-}: Props) {
-  if (items.length === 0) return emptyEl;
+export interface Props extends IPaginator<Payout> {}
+export function Table({ items, classes = "", load_next }: Props) {
   return (
     <div className={`${classes} overflow-x-auto`}>
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
@@ -56,11 +45,11 @@ export function Table({
           ))}
         </tbody>
         <tfoot>
-          {onViewMore && (
+          {load_next && (
             <tr>
               <td colSpan={3}>
                 <button
-                  onClick={onViewMore}
+                  onClick={load_next}
                   type="button"
                   className="text-sm text-blue hover:text-blue-d1"
                 >
