@@ -16,9 +16,9 @@ export const admin_checks = async ({
   request,
   params,
 }: LoaderFunctionArgs | ActionFunctionArgs): Promise<Response | IChecked> => {
+  const id = parse($int_gte1, params.id);
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, { headers });
-  const id = parse($int_gte1, params.id);
   if (!user.groups.includes("ap-admin") && !user.endowments.includes(id)) {
     return resp.status(403);
   }

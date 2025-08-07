@@ -3,8 +3,8 @@ import { endowUpdate as endowUpdateSchema } from "@better-giving/endowment/schem
 import { type ActionFunction, redirect } from "@vercel/remix";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
-import { admin_checks, is_resp } from "./utils";
 import { editNpo, getNpo } from ".server/npo";
+import { admin_checks, is_resp } from ".server/utils";
 
 type Next = { success: string } | { redirect: string };
 

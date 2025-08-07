@@ -1,8 +1,8 @@
 import { BalanceDb } from "@better-giving/balance";
 import type { LoaderFunction } from "@vercel/remix";
-import { admin_checks, is_resp } from "../utils";
 import { apes } from ".server/aws/db";
 import { env } from ".server/env";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   id: number;

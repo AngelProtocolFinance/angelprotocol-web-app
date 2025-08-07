@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@vercel/remix";
 import type { PayoutMethod } from "types/applications";
-import { admin_checks, is_resp } from "../../utils";
 import { npo_banks } from ".server/banking-applications/banking-applications";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   methods: PayoutMethod[];

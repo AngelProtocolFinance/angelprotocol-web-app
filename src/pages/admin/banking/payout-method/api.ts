@@ -8,7 +8,6 @@ import {
 import { plusInt } from "api/schema/endow-id";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
-import { admin_checks, is_resp } from "../../utils";
 import {
   bank,
   delete_bank,
@@ -16,6 +15,7 @@ import {
   update_bank,
 } from ".server/banking-applications";
 import { wise } from ".server/sdks";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData extends V2RecipientAccount, IItem {}
 

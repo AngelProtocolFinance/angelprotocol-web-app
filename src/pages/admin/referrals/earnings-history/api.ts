@@ -1,8 +1,8 @@
 import type { LoaderFunction } from "@vercel/remix";
 import type { EarningsPage } from "types/referrals";
-import { admin_checks, is_resp } from "../../utils";
 import { getEarnings } from ".server/donations";
 import { getNpo } from ".server/npo";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData extends EarningsPage {}
 

@@ -1,12 +1,12 @@
 import { type IItem, priority_nums } from "@better-giving/banking-applications";
 import type { LoaderFunction } from "@vercel/remix";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
-import { admin_checks, is_resp } from "../utils";
 import { config } from "./config";
 import { npo_banks } from ".server/banking-applications";
 import { getEarnings } from ".server/donations";
 import { getNpo } from ".server/npo";
 import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   id: string;

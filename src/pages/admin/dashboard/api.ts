@@ -5,10 +5,10 @@ import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
 import { CronExpressionParser } from "cron-parser";
 import { endowUpdate } from "../endow-update-action";
-import { admin_checks, is_resp } from "../utils";
 import { apes } from ".server/aws/db";
 import { npo_banks } from ".server/banking-applications";
 import { env } from ".server/env";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface DashboardData {
   id: number;

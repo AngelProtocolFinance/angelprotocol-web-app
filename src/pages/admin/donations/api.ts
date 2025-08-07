@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@vercel/remix";
 import { endowUpdate } from "../endow-update-action";
-import { admin_checks, is_resp } from "../utils";
 import { get_donations } from ".server/donations";
+import { admin_checks, is_resp } from ".server/utils";
 
 export const loader: LoaderFunction = async (x) => {
   const adm = await admin_checks(x);
