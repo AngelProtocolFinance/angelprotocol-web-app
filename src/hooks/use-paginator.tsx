@@ -59,29 +59,25 @@ export function use_paginator<I>({
   }, [state, data]);
 
   const next = data ? np(data) : np(page1);
-  const node = (({ empty: et, table: t, ...x }): ReactNode => {
-    if (x.items.length === 0) {
-      return (
-        et?.({ classes: x.classes }) || (
-          <Info classes={x.classes}>No records found</Info>
-        )
-      );
+  const node = (({ emt, t, is, c, n, gl, l, s }): ReactNode => {
+    if (is.length === 0) {
+      return emt?.({ classes: c }) || <Info classes={c}>No records found</Info>;
     }
     return t({
-      ...x,
-      load_next: next ? x.gen_loader(x.load, next) : undefined,
-      disabled: x.state !== "idle",
-      loading: x.state !== "idle",
+      items: is,
+      load_next: n ? gl(l, n) : undefined,
+      disabled: s !== "idle",
+      loading: s !== "idle",
     });
   })({
-    items,
-    next,
-    load,
-    gen_loader,
-    state,
-    empty,
-    table,
-    classes,
+    is: items,
+    n: next,
+    l: load,
+    gl: gen_loader,
+    s: state,
+    emt: empty,
+    t: table,
+    c: classes,
   });
 
   return { node, loading: state !== "idle", load, items };
