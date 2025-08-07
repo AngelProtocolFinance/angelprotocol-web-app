@@ -1,11 +1,11 @@
-import type { IPage } from "@better-giving/nav-history";
+import type { ILog, IPage } from "@better-giving/nav-history";
 import { Info, LoadingStatus } from "components/status";
 import useSWR from "swr/immutable";
 import { Table } from "./table";
 
 export const cache_key = "nav-history";
 const fetcher = ([, key]: [string, string | null]) =>
-  fetch(`/api/nav-logs${key ? `?next=${key}` : ""}`).then<IPage>((res) =>
+  fetch(`/api/nav-logs${key ? `?next=${key}` : ""}`).then<IPage<ILog>>((res) =>
     res.json()
   );
 
