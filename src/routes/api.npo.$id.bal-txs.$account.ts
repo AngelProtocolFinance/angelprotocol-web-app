@@ -1,5 +1,5 @@
 import { BalanceTxsDb } from "@better-giving/balance-txs";
-import { endowIdParam } from "@better-giving/endowment/schema";
+import { $int_gte1 } from "@better-giving/endowment/schema";
 import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import * as v from "valibot";
@@ -9,7 +9,7 @@ import { env } from ".server/env";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const { searchParams: s } = new URL(request.url);
-  const id = v.parse(endowIdParam, params.id);
+  const id = v.parse($int_gte1, params.id);
   const account = v.parse(
     v.pipe(v.string(), v.picklist(["liq", "lock"])),
     params.account

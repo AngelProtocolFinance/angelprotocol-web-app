@@ -1,4 +1,4 @@
-import { endowIdParam } from "@better-giving/endowment/schema";
+import { $int_gte1 } from "@better-giving/endowment/schema";
 import type { Params } from "@remix-run/react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@vercel/remix";
 import { resp } from "helpers/https";
@@ -18,7 +18,7 @@ export const admin_checks = async ({
 }: LoaderFunctionArgs | ActionFunctionArgs): Promise<Response | IChecked> => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, { headers });
-  const id = parse(endowIdParam, params.id);
+  const id = parse($int_gte1, params.id);
   if (!user.groups.includes("ap-admin") && !user.endowments.includes(id)) {
     return resp.status(403);
   }
