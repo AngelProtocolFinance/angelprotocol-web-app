@@ -1,25 +1,15 @@
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
 import useSort from "hooks/use-sort";
+import type { IPaginator } from "types/components";
 import type { Donation } from "types/donations";
 import Row from "./row";
 
-type Props = {
-  donations: Donation.Item[];
-  classes?: string;
-  onLoadMore?(): void;
-  disabled: boolean;
-  isLoading: boolean;
-};
+interface Props extends IPaginator<Donation.Item> {}
 
-export default function Table({
-  donations,
-  onLoadMore,
-  isLoading,
-  disabled,
-}: Props) {
+export default function Table({ items, load_next, loading, disabled }: Props) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    donations,
+    items,
     "date"
   );
 
@@ -81,11 +71,11 @@ export default function Table({
             <Row
               key={record.id}
               {...record}
-              classes={onLoadMore ? "" : "first:rounded-bl last:rounded-br"}
+              classes={load_next ? "" : "first:rounded-bl last:rounded-br"}
             />
           ))
           .concat(
-            onLoadMore ? (
+            load_next ? (
               <td
                 colSpan={19}
                 key="load-more-btn"
@@ -93,11 +83,11 @@ export default function Table({
               >
                 <button
                   type="button"
-                  onClick={onLoadMore}
+                  onClick={load_next}
                   disabled={disabled}
                   className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 active:bg-blue-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 dark:aria-disabled:bg-gray-d1 dark:disabled:bg-gray-d1"
                 >
-                  {isLoading ? "Loading..." : "Load More"}
+                  {loading ? "Loading..." : "Load More"}
                 </button>
               </td>
             ) : (

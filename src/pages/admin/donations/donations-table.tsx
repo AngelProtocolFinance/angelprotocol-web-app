@@ -1,18 +1,13 @@
-import { useFetcher, useSearchParams } from "@remix-run/react";
 import CsvExporter from "components/csv-exporter";
-import { Info } from "components/status";
 import { humanize } from "helpers/decimal";
 import { replaceWithEmptyString } from "helpers/replace-with-empty-string";
 import { ArrowDownToLine } from "lucide-react";
-import { useEffect, useState } from "react";
-import type { Donation, DonationsPage } from "types/donations";
+import type { IPaginator } from "types/components";
+import type { Donation } from "types/donations";
 import type { Ensure } from "types/utils";
 import Table from "./table";
 
-interface Props {
-  classes?: string;
-  page1: DonationsPage;
-}
+interface Props extends IPaginator<Donation.Item> {}
 
 const csvHeaders: {
   key: keyof Donation.Item | keyof Donation.KYC | "receipt";
@@ -61,35 +56,14 @@ export interface CsvRow {
   country: string;
 }
 
-export default function DonationsTable({ classes = "", page1 }: Props) {
-  const { data, state, load } = useFetcher<DonationsPage>(); //initially undefined
-  const [params] = useSearchParams();
-  const [items, setItems] = useState(page1.items);
-
-  useEffect(() => {
-    if (!data || state === "loading") return;
-    setItems((prev) => [...prev, ...(data.items || [])]);
-  }, [data, state]);
-
-  if (items.length === 0) {
-    return <Info>No donations found</Info>;
-  }
-
-  const nextPage = data ? data.next_page : page1.next_page;
-
-  function loadNext(next_page: number) {
-    const n = new URLSearchParams(params);
-    n.set("page", next_page.toString());
-    load(`?${n.toString()}`);
-  }
-
+export default function DonationsTable({ classes = "", ...props }: Props) {
   return (
     <div className={classes}>
       <div className="grid w-full sm:flex items-center sm:justify-end mb-2 gap-2">
         <CsvExporter
           classes=" hover:text-blue"
           headers={csvHeaders}
-          data={items
+          data={props.items
             .filter(
               (d): d is Ensure<Donation.Item, "donor_details"> =>
                 !!d.donor_details
@@ -120,12 +94,7 @@ export default function DonationsTable({ classes = "", page1 }: Props) {
       </div>
 
       <div className="overflow-x-auto">
-        <Table
-          donations={items}
-          onLoadMore={nextPage ? () => loadNext(nextPage) : undefined}
-          disabled={state === "loading"}
-          isLoading={state === "loading"}
-        />
+        <Table {...props} />
       </div>
     </div>
   );
