@@ -11,7 +11,7 @@ export { clientLoader } from "api/cache";
 export default function Donations() {
   const [search] = useSearchParams();
   const page1 = useCachedLoaderData() as LoaderData;
-  const node = use_paginator({
+  const { node } = use_paginator({
     Table: DonationsTable,
     page1,
     gen_loader: (load, next) => () => {
