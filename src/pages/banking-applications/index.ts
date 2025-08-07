@@ -17,6 +17,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     source.searchParams.entries()
   );
   const page = await bank_applications(status as any, nextPageKey as any);
-  return page;
+  // TODO: convert to {items, next}
+  return { items: page.items, next: page.next_key };
 };
 export const meta = () => metas({ title: "Banking Applications" });

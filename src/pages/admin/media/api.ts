@@ -19,11 +19,16 @@ export const allVideos: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const nextPageKey = url.searchParams.get("nextPageKey") ?? undefined;
   const endowId = parse($int_gte1, params.id);
-  return getMedia(endowId, {
+  const res = await getMedia(endowId, {
     type: "video",
     limit: 10,
     nextPageKey: nextPageKey,
   });
+  // TODO: convert to {items, next}
+  return {
+    items: res.items,
+    next: res.nextPageKey,
+  };
 };
 
 export const videosAction: LoaderFunction = async (x) => {
