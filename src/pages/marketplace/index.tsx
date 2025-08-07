@@ -1,12 +1,14 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
-import { Outlet } from "@remix-run/react";
+import { Outlet, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
+import { Info } from "components/status";
 import { metas } from "helpers/seo";
+import { use_paginator } from "hooks/use-paginator";
 import type { EndowCardsPage } from "types/npo";
 import { safeParse } from "valibot";
 import ActiveFilters from "./active-filters";
-import Cards from "./cards";
+import { Cards } from "./cards";
 import Hero from "./hero";
 import hero from "./hero.webp?url";
 import Toolbar from "./toolbar";
@@ -38,14 +40,26 @@ export const meta: MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Marketplace() {
-  const page1 = useCachedLoaderData<EndowCardsPage>();
+  const [params] = useSearchParams();
+  const { items, numPages, page } = useCachedLoaderData() as EndowCardsPage;
+  const { node } = use_paginator({
+    id: "marketplace",
+    page1: { items, page, num_pages: numPages },
+    table: (props) => <Cards {...props} />,
+    empty: (x) => <Info {...x}>No organisations found</Info>,
+    gen_loader: (load, next) => () => {
+      const p = new URLSearchParams(params);
+      if (next) p.set("page", next.toString());
+      load(`?${p.toString()}`);
+    },
+  });
   return (
     <div className="w-full grid content-start pb-16">
       <Hero classes="grid isolate mt-8 xl:container xl:mx-auto px-5" />
       <div className="grid gap-y-4 content-start xl:container xl:mx-auto px-5 min-h-screen">
         <Toolbar classes="mt-10" />
         <ActiveFilters />
-        <Cards page1={page1} />
+        {node}
       </div>
       <Outlet />
     </div>
