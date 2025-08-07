@@ -8,8 +8,8 @@ import { getEndow } from "api/get/endow";
 import { parseWithValibot } from "conform-to-valibot";
 import type { UserV2 } from "types/auth";
 import type { EndowAdmin } from "types/npo";
-import { admin_checks, is_resp } from "../utils";
 import { schema } from "./schema";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   user: UserV2;

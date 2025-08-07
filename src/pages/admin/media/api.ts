@@ -8,8 +8,8 @@ import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
 import { parse } from "valibot";
-import { admin_checks, is_resp } from "../utils";
 import { schema } from "./video-editor";
+import { admin_checks, is_resp } from ".server/utils";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
   const endowId = parse(plusInt, params.id);

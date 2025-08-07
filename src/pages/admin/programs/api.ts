@@ -3,7 +3,7 @@ import { type LoaderFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getPrograms } from "api/get/programs";
 import { adminRoutes } from "constants/routes";
-import { admin_checks, is_resp } from "../utils";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   programs: Program[];

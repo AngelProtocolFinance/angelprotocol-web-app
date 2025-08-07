@@ -1,17 +1,11 @@
-import { $int_gte1 } from "@better-giving/endowment/schema";
 import type { LoaderFunction } from "@vercel/remix";
-import * as v from "valibot";
-import { cognito } from ".server/auth";
 import { npoSfws } from ".server/npo-sfws";
+import { admin_checks, is_resp } from ".server/utils";
 
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const id = v.parse($int_gte1, params.id);
-  const { user } = await cognito.retrieve(request);
-  if (!user) return new Response(null, { status: 401 });
-  if (!user.endowments.includes(id) && !user.groups.includes("ap-admin"))
-    return new Response(null, { status: 403 });
-
-  const page = await npoSfws(id);
+export const loader: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+  const page = await npoSfws(adm.id);
   return new Response(JSON.stringify(page), {
     headers: { "content-type": "application/json" },
   });

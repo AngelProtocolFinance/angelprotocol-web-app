@@ -5,8 +5,8 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
-import { admin_checks, is_resp } from "../utils";
 import { getFundsNpoMemberOf } from ".server/funds";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   user: UserV2;

@@ -3,7 +3,7 @@ import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
 
 import type { ActionData } from "types/action";
-import { admin_checks, is_resp } from "../utils";
+import { admin_checks, is_resp } from ".server/utils";
 
 export const loader: LoaderFunction = async ({ params }) =>
   getProgram(params.id, params.programId);
