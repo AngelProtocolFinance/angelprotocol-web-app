@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "@remix-run/react";
+import { NavLink, Outlet, useNavigate } from "@remix-run/react";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import {
@@ -16,7 +16,7 @@ import {
 import { useCachedLoaderData } from "remix-client-cache";
 import type { LoaderData } from "./api";
 import { ticker_colors } from "./common";
-import { History } from "./history";
+import { HistoryTable } from "./history-table";
 
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
@@ -28,7 +28,8 @@ function top_holders_fn(holders: Record<string, number>) {
 }
 
 export default function Page() {
-  const { ltd, logs } = useCachedLoaderData() as LoaderData;
+  const navigate = useNavigate();
+  const { ltd, logs, recent_logs } = useCachedLoaderData() as LoaderData;
   const pie_data = Object.values(ltd.composition)
     .map((x) => ({
       ...x,
@@ -106,8 +107,12 @@ export default function Page() {
       </ResponsiveContainer>
 
       <h4 className="text-lg mb-4 mt-8">Recent changes</h4>
-      <History />
-
+      <HistoryTable
+        items={recent_logs.items}
+        load_next={() => {
+          navigate("nav-history");
+        }}
+      />
       <div className="flex items-center gap-x-2 mt-8">
         <h4 className="font-bold text-lg">Portfolio Composition</h4>
         <NavLink

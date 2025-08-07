@@ -2,14 +2,9 @@ import type { IBalanceTx } from "@better-giving/balance-txs";
 import { NavLink } from "@remix-run/react";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import type { IPaginator } from "types/components";
 
-export interface Props {
-  items: IBalanceTx[];
-  classes?: string;
-  load_next?(): void;
-  disabled?: boolean;
-  loading?: boolean;
-}
+export interface Props extends IPaginator<IBalanceTx> {}
 
 export function Table({
   items,

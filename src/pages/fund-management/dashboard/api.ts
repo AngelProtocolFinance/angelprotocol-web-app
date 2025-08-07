@@ -1,4 +1,8 @@
-import { type ILog, NavHistoryDB } from "@better-giving/nav-history";
+import {
+  type ILog,
+  type IPage,
+  NavHistoryDB,
+} from "@better-giving/nav-history";
 import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import { cognito, toAuth } from ".server/auth";
@@ -8,6 +12,7 @@ import { env } from ".server/env";
 export interface LoaderData {
   ltd: ILog;
   logs: ILog[];
+  recent_logs: IPage<ILog>;
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -17,10 +22,17 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const navdb = new NavHistoryDB(apes, env);
 
-  const [ltd, logs] = await Promise.all([navdb.ltd(), navdb.week_series()]);
+  const [ltd, logs, recent_logs] = await Promise.all([
+    navdb.ltd(),
+    navdb.week_series(),
+    navdb.list({
+      limit: 3,
+    }),
+  ]);
 
   return resp.json({
     ltd,
     logs: logs.items,
+    recent_logs,
   } satisfies LoaderData);
 };

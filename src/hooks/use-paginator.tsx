@@ -1,24 +1,16 @@
 import { useFetcher } from "@remix-run/react";
 import { Info } from "components/status";
 import { type FunctionComponent, useEffect, useState } from "react";
+import type { IPaginator } from "types/components";
 
 interface Page<T> {
   items: T[];
   next?: string;
 }
 
-export interface ITable<T>
-  extends FunctionComponent<{
-    items: T[];
-    load_next?: () => void;
-    loading?: boolean;
-    disabled?: boolean;
-    classes?: string;
-  }> {}
-
 interface Props<T> {
   page1: Page<T>;
-  Table: ITable<T>;
+  Table: FunctionComponent<IPaginator<T>>;
   classes?: string;
   gen_loader: (loader_fn: (href: string) => void, next: string) => () => void;
 }
