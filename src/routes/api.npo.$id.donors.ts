@@ -1,11 +1,11 @@
 // import { cognito } from ".server/auth";
 import { fundId } from "@better-giving/fundraiser/schema";
+import { $int_gte1 } from "@better-giving/schemas";
 import type { LoaderFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
 import * as v from "valibot";
 import { npoDonors } from ".server/npo-donors";
 
-const schema = v.union([fundId, plusInt]);
+const schema = v.union([fundId, $int_gte1]);
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const { searchParams: s } = new URL(request.url);

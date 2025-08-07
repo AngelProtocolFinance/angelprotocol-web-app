@@ -1,5 +1,4 @@
-import { allocation } from "@better-giving/endowment/schema";
-import { plusInt } from "api/schema/endow-id";
+import { $int_gte1, allocation } from "@better-giving/endowment/schema";
 import * as v from "valibot";
 // import Joi from "joi";
 
@@ -42,10 +41,10 @@ const date = v.pipe(v.string(), v.isoTimestamp());
 
 export const donations_query_params = v.pipe(
   v.object({
-    asker: v.union([email, plusInt]),
+    asker: v.union([email, $int_gte1]),
     status: v.optional(donation_status),
-    page: v.optional(plusInt),
-    limit: v.optional(plusInt),
+    page: v.optional($int_gte1),
+    limit: v.optional($int_gte1),
     symbol: v.optional(v.pipe(v.string(), v.minLength(3))),
     recipient_name: v.optional(v.string()),
     via_id: v.optional(via_id),
