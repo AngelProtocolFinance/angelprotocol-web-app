@@ -48,14 +48,14 @@ export const getFunds = async ({
     return {
       items: [],
       page: 1,
-      num_pages: 1,
+      pages: 1,
     };
   }
 
   return {
     items: hits.map((hit: any) => hitToItem(hit.fields)),
     page,
-    num_pages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
+    pages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
   };
 };
 

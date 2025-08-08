@@ -1,4 +1,5 @@
 import type { Payout } from "@better-giving/referrals/interface";
+import type { IPageKeyed } from "@better-giving/types/api";
 
 export interface Referred {
   id: number;
@@ -18,15 +19,8 @@ export interface Earning {
   status: "paid" | "pending";
 }
 
-export interface EarningsPage {
-  items: Earning[];
-  nextKey?: string;
-}
-
-export interface PayoutsPage {
-  items: Payout[];
-  nextKey?: string;
-}
+export interface EarningsPage extends IPageKeyed<Earning> {}
+export interface PayoutsPage extends IPageKeyed<Payout> {}
 
 export interface PendingEarnings {
   total: number;

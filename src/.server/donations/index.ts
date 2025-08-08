@@ -93,9 +93,10 @@ export const get_donations = async (
   const start = (page - 1) * limit;
   const end = Math.min(page * limit, numItems);
 
+  const next_num = end === numItems ? undefined : page + 1;
   return {
     items: to_sorted(items, "desc", "date").slice(start, end),
-    next_page: end === numItems ? undefined : page + 1,
+    next: next_num?.toString(),
   };
 };
 
@@ -138,6 +139,6 @@ export const getEarnings = async (
       },
       status: x.referrer_commission?.transfer_id ? "paid" : "pending",
     })),
-    nextKey: nextPageKey,
+    next: nextPageKey,
   };
 };

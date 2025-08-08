@@ -10,7 +10,7 @@ export const handlers = [
   http.get("api/npos", () => {
     const data: EndowsPage = {
       items: [],
-      numPages: 1,
+      pages: 1,
       page: 1,
     };
     return HttpResponse.json(data);

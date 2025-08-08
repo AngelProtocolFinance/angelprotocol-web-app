@@ -41,10 +41,10 @@ export const meta: MetaFunction = () =>
 export { ErrorBoundary } from "components/error";
 export default function Marketplace() {
   const [params] = useSearchParams();
-  const { items, numPages, page } = useCachedLoaderData() as EndowCardsPage;
+  const page1 = useCachedLoaderData() as EndowCardsPage;
   const { node } = use_paginator({
     id: "marketplace",
-    page1: { items, page, num_pages: numPages },
+    page1,
     table: (props) => <Cards {...props} />,
     empty: (x) => <Info {...x}>No organisations found</Info>,
     gen_loader: (load, next) => () => {

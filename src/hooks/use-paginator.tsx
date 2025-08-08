@@ -1,29 +1,18 @@
+import type { IPageKeyed, IPageNumbered } from "@better-giving/types/api";
 import { useFetcher } from "@remix-run/react";
 import { Info } from "components/status";
 import { type ReactNode, useEffect, useState } from "react";
 import type { IPaginator } from "types/components";
 
-interface ViaKey {
-  next?: string;
-}
-interface ViaNums {
-  page: number;
-  num_pages: number;
-}
+type Page<T> = IPageKeyed<T> | IPageNumbered<T>;
 
-type Via = ViaKey | ViaNums;
-
-type Page<T> = {
-  items: T[];
-} & Via;
-
-function np(via: Via): string | undefined {
-  if ("page" in via) {
-    const { page = 1, num_pages = 1 } = via || {};
-    const n = page < num_pages ? page + 1 : undefined;
+function np(p: Page<any>): string | undefined {
+  if ("page" in p) {
+    const { page = 1, pages = 1 } = p || {};
+    const n = page < pages ? page + 1 : undefined;
     return n?.toString();
   }
-  return via.next;
+  return p.next;
 }
 
 interface Props<T> {

@@ -114,7 +114,11 @@ export function Earnings({
             </div>
           )}
 
-          <EarningsHistory {...earnings} classes="mt-6" />
+          <EarningsHistory
+            items={earnings.items}
+            load_next={earnings.load_next}
+            classes="mt-6"
+          />
         </div>
       </div>
       {/** payout min form */}
