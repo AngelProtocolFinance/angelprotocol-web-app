@@ -1,4 +1,5 @@
 import { $int_gte1, allocation } from "@better-giving/endowment/schema";
+import type { IPageKeyed } from "@better-giving/types/api";
 import * as v from "valibot";
 // import Joi from "joi";
 
@@ -135,4 +136,4 @@ export interface DonationsQueryParams
   extends v.InferInput<typeof donations_query_params> {}
 export interface DonationsQueryParamsParsed
   extends v.InferOutput<typeof donations_query_params> {}
-export type DonationsPage = { items: Donation.Item[]; next_page?: number };
+export interface DonationsPage extends IPageKeyed<Donation.Item> {}

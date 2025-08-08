@@ -22,10 +22,7 @@ export const loader: LoaderFunction = async (x) => {
     page: +pageNum,
   });
 
-  return {
-    items: page.items,
-    next: page.next_page?.toString(),
-  } satisfies LoaderData;
+  return page;
 };
 
 export const action = endowUpdate({ redirect: "." });

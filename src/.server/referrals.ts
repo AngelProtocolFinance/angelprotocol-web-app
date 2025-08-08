@@ -79,7 +79,7 @@ export async function paidOut(
   const items = (res.Items || []) as db.Payout[];
   return {
     items,
-    nextKey: res.LastEvaluatedKey
+    next: res.LastEvaluatedKey
       ? JSON.stringify(res.LastEvaluatedKey)
       : undefined,
   };

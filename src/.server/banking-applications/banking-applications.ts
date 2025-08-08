@@ -114,7 +114,7 @@ export const bank_applications = async (
 
   return {
     items: items.map((item) => to_item(item)),
-    next_key: nk_encoded,
+    next: nk_encoded,
   };
 };
 

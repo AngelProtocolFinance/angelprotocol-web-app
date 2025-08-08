@@ -18,7 +18,7 @@ export default function Videos() {
   const params = useParams();
   const page1 = useCachedLoaderData<MediaPage>();
   const { node } = use_paginator({
-    page1: { items: page1.items, next: page1.nextPageKey },
+    page1,
     table: (p) => <List {...p} />,
     empty: (c) => <NoVideo {...c} />,
     classes: "mt-6",

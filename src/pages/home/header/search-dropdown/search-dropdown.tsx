@@ -98,7 +98,7 @@ function SearchResult(props: ISearchResult) {
           <span className="text-gray">{endow.name}</span>
         </Link>
       ))}
-      {props.page < props.numPages && (
+      {props.page < props.pages && (
         <Link
           className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
           to={{

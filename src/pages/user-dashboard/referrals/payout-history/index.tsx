@@ -8,11 +8,11 @@ export { loader } from "./api";
 
 export default function Page() {
   const [params] = useSearchParams();
-  const ld = useLoaderData<LoaderData>();
+  const page1 = useLoaderData<LoaderData>();
   const { node } = use_paginator({
     table: (props) => <Table {...props} />,
     empty: (x) => <Info {...x}>No payouts found</Info>,
-    page1: { items: ld.items, next: ld.nextKey },
+    page1,
     classes: "mt-2",
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(params);

@@ -25,7 +25,7 @@ export default function Applications() {
         loading={loading}
       />
     ),
-    page1: { items: page1.items, next: page1.nextPageKey },
+    page1,
     gen_loader: (load, next) => () => {
       const copy = new URLSearchParams(params);
       if (next) copy.set("nextPageKey", next);

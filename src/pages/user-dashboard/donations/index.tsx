@@ -23,14 +23,14 @@ export default function Donations() {
   const { user, ...page1 } = useCachedLoaderData() as DonationsData;
   const { node, loading, items } = use_paginator({
     table: (props) => <Table {...props} status={status} />,
-    classes: "mt-6",
+    classes: "mt-2",
     empty: ({ classes }) => (
       <NoDonations
         classes={`${classes} place-self-center col-span-full`}
         status={status}
       />
     ),
-    page1: { items: page1.items, next: page1.next_page?.toString() },
+    page1,
     gen_loader: (load, next) => () => {
       const copy = new URLSearchParams(params);
       if (next) copy.set("page", next.toString());
@@ -89,7 +89,7 @@ export default function Donations() {
         isDisabled={loading}
         classes="col-span-full @5xl:col-span-1 w-full @5xl:w-auto"
       />
-      <div className="grid col-span-full">
+      <div className="grid col-span-full gap-y-4">
         <StatusTabs
           status={status}
           changeStatus={(s) => {
@@ -98,7 +98,6 @@ export default function Donations() {
             setParams(copy);
           }}
         />
-
         {node}
       </div>
     </div>
