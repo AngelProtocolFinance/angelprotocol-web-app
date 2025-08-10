@@ -46,8 +46,8 @@ export const action: ActionFunction = async ({ params, request }) => {
     const txs = new Txs();
     const upd81 = await txsdb.tx_update_status_item(tx, "cancelled");
     //add back units
-    const upd82 = baldb.update_balance_item(+tx.owner, {
-      lock_units: tx.amount_units,
+    const upd82 = baldb.balance_update_txi(+tx.owner, {
+      lock_units: ["inc", tx.amount_units],
     });
     txs.update(upd81).update(upd82);
     const cmd = new TransactWriteCommand({ TransactItems: txs.all });
@@ -97,8 +97,8 @@ export const action: ActionFunction = async ({ params, request }) => {
       account_other_bal_begin: tx.bal_begin,
       account_other_bal_end: tx.bal_begin - tx.amount_units,
     };
-    const upd82 = baldb.update_balance_item(+tx.owner, {
-      liq: tx.amount,
+    const upd82 = baldb.balance_update_txi(+tx.owner, {
+      liq: ["inc", tx.amount],
       // lock_units - already deducted in tx creation
     });
 
@@ -125,9 +125,9 @@ export const action: ActionFunction = async ({ params, request }) => {
     TableName: PayoutsDB.name,
     Item: payoutsdb.payout_record(payout),
   });
-  const bal_update = baldb.update_balance_item(+tx.owner, {
-    payoutsPending: tx.amount,
-    cash: tx.amount,
+  const bal_update = baldb.balance_update_txi(+tx.owner, {
+    payoutsPending: ["inc", tx.amount],
+    cash: ["inc", tx.amount],
   });
   txs.update(bal_update);
   const cmd = new TransactWriteCommand({ TransactItems: txs.all });

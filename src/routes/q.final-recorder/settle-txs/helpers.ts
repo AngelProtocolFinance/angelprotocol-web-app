@@ -1,4 +1,4 @@
-import type { IBalanceUpdateables } from "@better-giving/balance";
+import type { IBalanceUpdate } from "@better-giving/balance";
 import type { Donation } from "@better-giving/donation";
 import type { Keys } from "@better-giving/fundraiser/db";
 import { tables } from "@better-giving/types/list";
@@ -46,23 +46,25 @@ export interface Increments {
 export const bal_deltas_fn = (
   i: Increments,
   app: Donation.App
-): Readonly<IBalanceUpdateables> => {
+): Readonly<IBalanceUpdate> => {
   const total = i.liq + i.lock + i.cash;
   return {
-    totalContributions: total,
-    contributionsCount: 1,
-    totalContributionsViaMarketplace:
+    totalContributions: ["inc", total],
+    contributionsCount: ["inc", 1],
+    totalContributionsViaMarketplace: [
+      "inc",
       app === "bg-marketplace" || app === "angel-protocol" ? total : 0,
-    totalContributionsViaWidget: app === "bg-widget" ? total : 0,
-    totalBaseFees: i.fees.base,
-    totalFiscalSponsorFees: i.fees.fsa,
-    totalProcessingFees: i.fees.processing,
-    totalTips: i.tip,
+    ],
+    totalContributionsViaWidget: ["inc", app === "bg-widget" ? total : 0],
+    totalBaseFees: ["inc", i.fees.base],
+    totalFiscalSponsorFees: ["inc", i.fees.fsa],
+    totalProcessingFees: ["inc", i.fees.processing],
+    totalTips: ["inc", i.tip],
     //include here as these would be included in atomic transaction
-    payoutsPending: total,
-    liq: i.liq,
-    lock_units: i.lock_units,
-    cash: i.cash,
+    payoutsPending: ["inc", total],
+    liq: ["inc", i.liq],
+    lock_units: ["inc", i.lock_units],
+    cash: ["inc", i.cash],
   };
 };
 
