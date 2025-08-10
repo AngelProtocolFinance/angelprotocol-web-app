@@ -123,7 +123,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   };
   txs.put({
     TableName: PayoutsDB.name,
-    Item: payoutsdb.new_payout_item(payout),
+    Item: payoutsdb.payout_record(payout),
   });
   const bal_update = baldb.update_balance_item(+tx.owner, {
     payoutsPending: tx.amount,
