@@ -108,7 +108,7 @@ export const withdraw_action =
 
       txs.put({
         TableName: PayoutsDB.name,
-        Item: payouts_db.new_payout_item(payout),
+        Item: payouts_db.payout_record(payout),
       });
     }
 

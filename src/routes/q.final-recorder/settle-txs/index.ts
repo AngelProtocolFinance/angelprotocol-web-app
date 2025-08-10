@@ -166,7 +166,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
 
   //create payout-v2
   const payout_db = new PayoutsDB(apes, base.network);
-  const payout_item = payout_db.new_payout_item({
+  const payout_item = payout_db.payout_record({
     id: nanoid(),
     source_id: o.txId,
     recipient_id: o.endowId.toString(),
