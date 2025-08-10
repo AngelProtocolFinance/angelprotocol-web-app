@@ -68,8 +68,8 @@ export const withdraw_action =
         TableName: BalanceTxsDb.name,
         Item: bal_txs_db.new_tx_item(tx),
       });
-      const bal_update = baldb.update_balance_item(adm.id, {
-        lock_units: -units,
+      const bal_update = baldb.balance_update_txi(adm.id, {
+        lock_units: ["dec", units],
       });
       txs.update(bal_update);
     }
@@ -89,9 +89,9 @@ export const withdraw_action =
         TableName: BalanceTxsDb.name,
         Item: bal_txs_db.new_tx_item(tx),
       });
-      const bal_update = baldb.update_balance_item(adm.id, {
-        liq: -fv.amount,
-        cash: +fv.amount,
+      const bal_update = baldb.balance_update_txi(adm.id, {
+        liq: ["dec", +fv.amount],
+        cash: ["inc", +fv.amount],
       });
       txs.update(bal_update);
 

@@ -63,7 +63,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   if (isIrs501c3(reg.docs) && reg.docs.claim) {
     const { id } = reg.docs.claim;
     //init balances first: if endow creation fails, would simply override prev id
-    await baldb.new_balance(id);
+    await baldb.balance_put(id);
 
     const transactionCommand = new TransactWriteCommand({
       TransactItems: [
@@ -92,7 +92,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   const newEndowID = await nextEndowId(env);
 
   //init balances first: if endow creation fails, would simply override prev id
-  await baldb.new_balance(newEndowID);
+  await baldb.balance_put(newEndowID);
 
   const newEndow: Endow.DbRecord = {
     ...ecfr,

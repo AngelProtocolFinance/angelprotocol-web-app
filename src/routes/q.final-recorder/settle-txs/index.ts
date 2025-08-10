@@ -4,7 +4,6 @@ import { type TxItems, Txs } from "@better-giving/db/txs";
 import type { Donation } from "@better-giving/donation";
 import type { Allocation } from "@better-giving/donation/schema";
 import { NavHistoryDB } from "@better-giving/nav-history/db";
-import type { Payout } from "@better-giving/payout";
 import { PayoutsDB } from "@better-giving/payouts";
 import { tables } from "@better-giving/types/list";
 import { produce } from "immer";
@@ -151,49 +150,31 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
       processing: o.fees.processing,
     },
   };
-  const bal_deltas = bal_deltas_fn(incs, base.appUsed);
-
-  // const payouts = new PayoutsDB(apes, base.network);
-  const payout: Payout.UnprocessedDBRecord = {
-    source: "donation",
-    uuid: nanoid(),
-    sourceId: o.txId,
-    amount: bal_deltas.payoutsPending,
-    dateAdded: timestamp,
-    endowmentId: o.endowId,
-    network: base.network,
-  };
 
   //create payout-v2
-  const payout_db = new PayoutsDB(apes, base.network);
-  const payout_item = payout_db.payout_record({
-    id: nanoid(),
-    source_id: o.txId,
-    recipient_id: o.endowId.toString(),
-    source: "donation",
-    date: timestamp,
-    amount: net_alloc.cash,
-    type: "pending",
-  });
+  if (net_alloc.cash > 0) {
+    const payout_db = new PayoutsDB(apes, base.network);
+    const por = payout_db.payout_record({
+      id: nanoid(),
+      source_id: o.txId,
+      recipient_id: o.endowId.toString(),
+      source: "donation",
+      date: timestamp,
+      amount: net_alloc.cash,
+      type: "pending",
+    });
+    txs.put({ TableName: PayoutsDB.name, Item: por });
+  }
 
-  txs.put({
-    TableName: PayoutsDB.name,
-    Item: payout_item,
-  });
+  if (o.net > 0) {
+    const bal_deltas = bal_deltas_fn(incs, base.appUsed);
+    txs.update(baldb.balance_update_txi(o.endowId, bal_deltas));
+  }
 
   txs.put({
     TableName: tables.donations,
     Item: record,
   });
-
-  if (payout.amount > 0) {
-    txs
-      .put({
-        TableName: tables.payouts,
-        Item: payout,
-      })
-      .update(baldb.update_balance_item(o.endowId, bal_deltas));
-  }
 
   return txs.all;
 }
