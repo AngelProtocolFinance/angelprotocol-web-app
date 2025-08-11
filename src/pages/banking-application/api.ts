@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export const action: ActionFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, { headers });
+  if (!user) return toAuth(request, headers);
 
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 

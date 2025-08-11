@@ -78,3 +78,10 @@ export const cognito_envs = {
   domain: _var("COGNITO_DOMAIN"),
   endpoint: _var("COGNITO_ENDPOINT"),
 };
+
+export const session_secret = _var("SESSION_SECRET");
+
+export const kv_envs = {
+  url: _var("KV_REST_API_URL"),
+  token: _var("KV_REST_API_TOKEN"),
+};
