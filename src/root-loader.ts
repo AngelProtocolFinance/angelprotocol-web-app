@@ -52,7 +52,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 
   const { user, headers } = await cognito.retrieve(cookie_header);
-  headers?.set("Set-Cookie", rc_commit);
+  headers?.append("Set-Cookie", rc_commit);
   if (!user) return data(null, { headers });
 
   const duser: DetailedUser = {
