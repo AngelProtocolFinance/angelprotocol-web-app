@@ -44,7 +44,7 @@ interface OauthTokenRes {
 type Auth = {
   user: UserV2 | null;
   /** include in response when !user */
-  headers?: Record<string, string>;
+  headers?: Headers;
   session: Stored;
 };
 
@@ -65,17 +65,15 @@ class Storage extends Util {
     const token_access = session.get("token_access");
     const token_refresh = session.get("token_refresh");
     const token_expiry = session.get("token_expiry");
+    const h = new Headers();
 
     if (!token_id || !token_access || !token_refresh || !token_expiry)
-      return { user: null, session };
+      return { user: null, session, headers: h };
 
     if (token_expiry < new Date().toISOString()) {
+      h.append("Set-Cookie", await commitSession(session));
       this.unset(session);
-      return {
-        user: null,
-        headers: { "Set-Cookie": await commitSession(session) },
-        session,
-      };
+      return { user: null, headers: h, session };
     }
 
     return {
@@ -86,6 +84,7 @@ class Storage extends Util {
         token_expiry: token_expiry,
       }),
       session,
+      headers: h,
     };
   }
 

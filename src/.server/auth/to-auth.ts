@@ -1,6 +1,6 @@
 import { redirect } from "@vercel/remix";
 
-export const toAuth = (req: Request, headers?: any) => {
+export const toAuth = (req: Request, headers?: Headers) => {
   const from = new URL(req.url);
   const to = new URL(from);
   const { pathname: p, search: s } = from;

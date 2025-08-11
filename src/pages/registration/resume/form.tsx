@@ -8,17 +8,17 @@ import {
 import { Field } from "components/form";
 import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
-import { regCookie } from "../data/cookie.server";
 import { getRegState } from "../data/step-loader";
 import { schema } from "./types";
 import { cognito, toAuth } from ".server/auth";
+import { reg_cookie } from ".server/cookie";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const cookieHeader = request.headers.get("Cookie");
   const { user, headers } = await cognito.retrieve(cookieHeader);
   if (!user) return toAuth(request, headers);
 
-  const rc = await regCookie.parse(cookieHeader).then((x) => x || {});
+  const rc = await reg_cookie.parse(cookieHeader).then((x) => x || {});
   return rc.reference || null;
 };
 
@@ -33,14 +33,14 @@ export const action: ActionFunction = async ({ request }) => {
   const { data, step } = await getRegState(parsed.value.reference, user);
 
   /** set existing reference user inputs */
-  const rc = await regCookie
+  const rc = await reg_cookie
     .parse(request.headers.get("Cookie"))
     .then((x) => x || {});
   rc.reference = data.init.id;
 
   return redirect(`../${data.init.id}/${step}`, {
     headers: {
-      "Set-Cookie": await regCookie.serialize(rc),
+      "Set-Cookie": await reg_cookie.serialize(rc),
     },
   });
 };
