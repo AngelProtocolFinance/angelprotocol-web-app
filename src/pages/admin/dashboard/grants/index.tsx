@@ -1,16 +1,16 @@
-import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
+import { type INpoSettlementsPage, PayoutsDB } from "@better-giving/payouts";
 import { Link, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
-import { PayoutsTable } from "../common/payouts-table";
+import { Table } from "./table";
 import { apes } from ".server/aws/db";
 import { env } from ".server/env";
 import { admin_checks, is_resp } from ".server/utils";
 
-interface LoaderData extends INpoPayoutsPage {}
+interface LoaderData extends INpoSettlementsPage {}
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async (x) => {
@@ -21,18 +21,18 @@ export const loader: LoaderFunction = async (x) => {
   if (is_resp(adm)) return adm;
 
   const payouts_db = new PayoutsDB(apes, env);
-  return payouts_db.npo_payouts(adm.id.toString(), {
+  return payouts_db.npo_settlements(adm.id.toString(), {
     next: next || undefined,
     limit: 5,
   });
 };
 
-export default function Payouts() {
+export default function Page() {
   const page1 = useCachedLoaderData() as LoaderData;
   const [search] = useSearchParams();
   const { node } = use_paginator({
     page1,
-    table: (x) => <PayoutsTable {...x} />,
+    table: (x) => <Table {...x} />,
     empty: () => <Info>No payouts found</Info>,
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(search);

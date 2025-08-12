@@ -10,13 +10,11 @@ import {
   ArrowRightIcon,
   HistoryIcon,
   PencilIcon,
-  PlusIcon,
 } from "lucide-react";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
 import { PayoutsTable } from "./common/payouts-table";
 import { Figure } from "./figure";
-// import { SfPerf } from "./sf-perf";
 
 interface Props extends DashboardData {
   classes?: string;
@@ -65,24 +63,17 @@ export function Loaded({ classes = "", ...props }: Props) {
           // perf={<SfPerf id={props.id} />}
         />
       </div>
-      <div className="grid @2xl:grid-cols-3 mt-4 gap-4">
-        <button
-          className="btn-blue rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2"
-          disabled
-        >
-          <PlusIcon size={16} />
-          Add Funds <span className="text-xs">( coming soon! )</span>
-        </button>
+      <div className="flex items-center gap-4 mt-4">
         <NavLink
           to="withdraw"
-          className="btn-outline rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2"
+          className="btn-outline rounded px-4.5 py-2.5 text-sm flex items-center gap-2"
         >
           <ArrowDownToLineIcon size={16} />
           Withdraw
         </NavLink>
         <NavLink
           to="transfer"
-          className="btn-amber rounded-full px-4.5 py-2.5 text-sm flex items-center gap-2"
+          className="btn-amber rounded px-4.5 py-2.5 text-sm flex items-center gap-2"
         >
           <ArrowLeftRightIcon size={16} />
           Transfer
@@ -96,7 +87,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         <div className="flex items-center justify-between mb-4 border-b border-gray-l3 pb-1">
           <h4 className="text-lg">Grants</h4>
           <Link
-            to="grants-history"
+            to="grants"
             className="group flex items-center gap-x-1 text-blue hover:text-blue-d1"
           >
             <HistoryIcon
