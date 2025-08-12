@@ -1,3 +1,5 @@
+import { redirect } from "@vercel/remix";
+
 export const toAuth = (req: Request, headers?: Headers) => {
   const from = new URL(req.url);
   const to = new URL(from);
@@ -5,8 +7,5 @@ export const toAuth = (req: Request, headers?: Headers) => {
   to.pathname = "/signup";
   to.searchParams.set("redirect", p + s);
   headers?.append("Location", to.toString());
-  return new Response(null, {
-    status: 303,
-    headers,
-  });
+  return redirect(to.toString(), { headers });
 };
