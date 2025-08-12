@@ -15,7 +15,7 @@ export { loader } from "./api";
 export { clientLoader } from "api/cache";
 
 export default function Page() {
-  const data = useCachedLoaderData() as LoaderData;
+  const { bal_liq, ...btxs_page1 } = useCachedLoaderData() as LoaderData;
   return (
     <div className="@container w-full max-w-4xl grid content-start">
       <div className="font-bold text-2xl mb-4 flex items-baseline gap-x-2">
@@ -33,7 +33,7 @@ export default function Page() {
         </Tooltip>
       </div>
       <p className="text-xl font-heading font-semibold border border-gray-l4 p-4 rounded">
-        ${humanize(data.bal_liq)}
+        ${humanize(bal_liq)}
       </p>
       <div className="grid @2xl:grid-cols-3 mt-4 gap-4">
         <button
@@ -58,7 +58,7 @@ export default function Page() {
           Transfer
         </NavLink>
       </div>
-      <Txs id={data.id} classes="mt-8" />
+      <Txs page1={btxs_page1} classes="mt-8" />
       <Outlet />
     </div>
   );
