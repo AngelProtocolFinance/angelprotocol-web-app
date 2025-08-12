@@ -7,7 +7,7 @@ import type { LoaderData } from "../shared/withdraw-form/withdraw-loader";
 export { clientLoader } from "api/cache";
 export { withdraw_loader as loader } from "../shared/withdraw-form/withdraw-loader";
 export const action = withdraw_action({
-  liq: "../../savings",
+  liq: "..",
   lock: "..",
 });
 

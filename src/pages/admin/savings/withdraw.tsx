@@ -8,7 +8,7 @@ export { clientLoader } from "api/cache";
 export { withdraw_loader as loader } from "../shared/withdraw-form/withdraw-loader";
 export const action = withdraw_action({
   liq: "..",
-  lock: "../../investments",
+  lock: "..",
 });
 
 export default function Page() {

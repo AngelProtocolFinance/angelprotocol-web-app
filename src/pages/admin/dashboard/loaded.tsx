@@ -161,12 +161,10 @@ export function Loaded({ classes = "", ...props }: Props) {
       {props.recent_payouts.items.length > 0 ? (
         <PayoutsTable
           classes="mt-6"
-          records={props.recent_payouts.items}
-          onLoadMore={
+          items={props.recent_payouts.items}
+          load_next={
             props.recent_payouts.next ? () => navigate("payouts") : undefined
           }
-          isLoading={false}
-          disabled={false}
         />
       ) : null}
     </div>
