@@ -4,21 +4,16 @@ import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
 import { InfoIcon } from "lucide-react";
+import type { IPaginator } from "types/components";
 
-export interface IPayoutsTable {
-  records: IPayout[];
-  classes?: string;
-  onLoadMore?(): void;
-  disabled: boolean;
-  isLoading: boolean;
-}
+export interface IPayoutsTable extends IPaginator<IPayout> {}
 
 export function PayoutsTable({
-  records,
+  items,
   classes = "",
   disabled,
-  isLoading,
-  onLoadMore,
+  loading,
+  load_next,
 }: IPayoutsTable) {
   return (
     <div className={`${classes} overflow-x-auto`}>
@@ -32,7 +27,7 @@ export function PayoutsTable({
           </tr>
         </thead>
         <tbody>
-          {records.map((payout, idx) => (
+          {items.map((payout, idx) => (
             <tr
               key={idx}
               className={`text-sm ${payout.type === "error" ? "text-red" : "text-gray-d4"}`}
@@ -78,12 +73,12 @@ export function PayoutsTable({
           ))}
         </tbody>
         <tfoot>
-          {onLoadMore && (
+          {load_next && (
             <tr>
               <td colSpan={3}>
                 <button
-                  disabled={disabled || isLoading}
-                  onClick={onLoadMore}
+                  disabled={disabled || loading}
+                  onClick={load_next}
                   type="button"
                   className="text-sm text-blue hover:text-blue-d1"
                 >

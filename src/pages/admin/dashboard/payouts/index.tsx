@@ -1,8 +1,9 @@
 import { type INpoPayoutsPage, PayoutsDB } from "@better-giving/payouts";
-import { Link } from "@remix-run/react";
+import { Link, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
+import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
 import { PayoutsTable } from "../common/payouts-table";
 import { apes } from ".server/aws/db";
@@ -13,15 +14,32 @@ interface LoaderData extends INpoPayoutsPage {}
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async (x) => {
+  const s = new URL(x.request.url).searchParams;
+  const next = s.get("next");
+
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
   const payouts_db = new PayoutsDB(apes, env);
-  return payouts_db.npo_payouts(adm.id.toString(), {});
+  return payouts_db.npo_payouts(adm.id.toString(), {
+    next: next || undefined,
+    limit: 5,
+  });
 };
 
 export default function Payouts() {
-  const { items } = useCachedLoaderData() as LoaderData;
+  const page1 = useCachedLoaderData() as LoaderData;
+  const [search] = useSearchParams();
+  const { node } = use_paginator({
+    page1,
+    table: (x) => <PayoutsTable {...x} />,
+    empty: () => <Info>No payouts found</Info>,
+    gen_loader: (load, next) => () => {
+      const p = new URLSearchParams(search);
+      if (next) p.set("next", next);
+      load(`?${p.toString()}`);
+    },
+  });
 
   return (
     <div className="grid content-start">
@@ -32,11 +50,7 @@ export default function Payouts() {
         <ChevronLeft size={18} />
         <span>Back</span>
       </Link>
-      {items.length === 0 ? (
-        <Info>No payouts found</Info>
-      ) : (
-        <PayoutsTable records={items} disabled={false} isLoading={false} />
-      )}
+      {node}
     </div>
   );
 }
