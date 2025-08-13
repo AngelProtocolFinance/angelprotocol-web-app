@@ -8,6 +8,7 @@ import { env } from ".server/env";
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData extends IBalanceTxsPage {
+  id: number;
   bal_lock: number;
 }
 
@@ -34,6 +35,7 @@ export const loader: LoaderFunction = async (x) => {
     }),
   ]);
   return {
+    id: adm.id,
     bal_lock: lock_units * ltd.price,
     ...btxs_page1,
   } satisfies LoaderData;

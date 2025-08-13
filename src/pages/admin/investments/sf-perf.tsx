@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState } from "react";
 import useSWR from "swr/immutable";
-import type { SfwPage } from "types/npo-sfws";
+import type { INpoMetrics } from "types/npo-sf-metrics";
 import { SfPerChart } from "./sf-perf-chart";
 
 interface Props {
@@ -9,13 +9,16 @@ interface Props {
   classes?: string;
 }
 
-const sfwPage = (path: string) =>
-  fetch(path).then<SfwPage>((res) => res.json());
+const fetcher = (path: string) =>
+  fetch(path).then<INpoMetrics>((res) => res.json());
 
 export function SfPerf({ id, classes = "" }: Props) {
   const [expanded, expand] = useState(false);
-  const { data = { all: [], twr: 0 } } = useSWR(`/api/npo/${id}/sfws`, sfwPage);
-  if (data.all.length === 0) return null;
+  const { data = { points: [], twr: 0 } } = useSWR(
+    `/api/npo/${id}/sf-metrics`,
+    fetcher
+  );
+  if (data.points.length === 0) return null;
   return (
     <div className={classes + " inline relative bottom-1"}>
       <button
