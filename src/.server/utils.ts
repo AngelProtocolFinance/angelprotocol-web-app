@@ -26,3 +26,8 @@ export const admin_checks = async ({
 };
 
 export const is_resp = (x: any): x is Response => x instanceof Response;
+
+export const $earch = (r: Request): { [idx: string]: string } => {
+  const s = new URL(r.url).searchParams;
+  return Object.fromEntries(s.entries());
+};

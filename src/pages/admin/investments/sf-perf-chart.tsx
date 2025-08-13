@@ -1,15 +1,16 @@
 import { Modal } from "components/modal";
 import { humanize } from "helpers/decimal";
 import {
+  Bar,
   CartesianGrid,
+  ComposedChart,
   Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import type { Item, SfwPage } from "types/npo-sfws";
+import type { INpoMetrics } from "types/npo-sf-metrics";
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -20,7 +21,7 @@ const formatDate = (dateString: string): string => {
 };
 
 export function SfPerChart(
-  props: SfwPage & { open: boolean; onClose: () => void }
+  props: INpoMetrics & { open: boolean; onClose: () => void }
 ) {
   return (
     <Modal
@@ -54,8 +55,8 @@ export function SfPerChart(
         </div>
       </div>
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          data={props.all}
+        <ComposedChart
+          data={props.points}
           margin={{
             top: 40,
             right: 30,
@@ -76,59 +77,57 @@ export function SfPerChart(
             interval={0}
           />
           <YAxis
+            yAxisId="left"
             className="text-xs"
             domain={["dataMin", "dataMax"]}
             tickFormatter={(v) => humanize(v, 2)}
           />
-          <Tooltip content={<CustomTooltip />} />
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            className="text-xs"
+            domain={["dataMin", "dataMax"]}
+            tickFormatter={(v) => humanize(v, 2)}
+          />
+          <Tooltip
+            contentStyle={{ fontSize: "14px" }}
+            formatter={(value, name) => [
+              name === "price"
+                ? `$${humanize(value as number)}`
+                : humanize(value as number),
+              name === "units" ? "Units" : name === "price" ? "NAVPU" : name,
+            ]}
+            labelFormatter={(label, payload) => {
+              if (payload && payload.length > 0) {
+                const data = payload[0].payload;
+                return (
+                  <div className="text-sm">
+                    <div>{formatDate(label)}</div>
+                    <div className="text-gray mt-1">
+                      Value: ${humanize(data.value)}
+                    </div>
+                  </div>
+                );
+              }
+              return formatDate(label);
+            }}
+          />
+          <Bar
+            yAxisId="left"
+            dataKey="units"
+            fill="var(--color-blue-l2)"
+            opacity={0.6}
+          />
           <Line
+            yAxisId="right"
             type="monotone"
-            dataKey="end"
+            dataKey="price"
             stroke="var(--color-blue-d1)"
             dot={false}
             strokeWidth={2}
           />
-        </LineChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </Modal>
   );
 }
-
-interface ICustomTooltip {
-  active?: boolean;
-  payload?: Array<{
-    payload: Item;
-  }>;
-  label?: string;
-}
-const CustomTooltip: React.FC<ICustomTooltip> = ({
-  active,
-  payload,
-  label,
-}) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div className="bg-white px-2 py-1 border border-gray-l3 rounded-sm text-xs font-heading">
-        <p className="text-gray flex gap-x-2">
-          <span className=""> {formatDate(label ?? "")}</span>
-          <span className="text-gray-d1">{humanize(data.end)}</span>
-        </p>
-        {data.flow ? (
-          data.flow > 0 ? (
-            <p className="pt-2 mt-2 border-t border-gray-l3 text-green">
-              Deposit
-            </p>
-          ) : (
-            <p className="pt-2 mt-2 border-t border-gray-l3 text-red">
-              Withdrawal
-            </p>
-          )
-        ) : null}
-
-        {data.flow ? <p>${humanize(Math.abs(data.flow))}</p> : null}
-      </div>
-    );
-  }
-  return null;
-};

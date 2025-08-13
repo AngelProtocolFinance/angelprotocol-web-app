@@ -36,7 +36,7 @@ export default function Page() {
       pct: (x.value / ltd.value) * 100,
     }))
     .sort((a, b) => b.pct - a.pct);
-  const line_data = logs.map((x) => {
+  const line_data = logs.toReversed().map((x) => {
     const { date, units, price } = x;
     return {
       date: format(new Date(date), "yyyy-MM-dd"),

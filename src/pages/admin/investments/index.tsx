@@ -8,13 +8,14 @@ import {
   CircleHelp,
 } from "lucide-react";
 import type { LoaderData } from "./api";
+import { SfPerf } from "./sf-perf";
 import { Txs } from "./txs";
 
 export { loader } from "./api";
 export { clientLoader } from "api/cache";
 
 export default function Page() {
-  const { bal_lock, ...btxs_page1 } = useCachedLoaderData() as LoaderData;
+  const { bal_lock, id, ...btxs_page1 } = useCachedLoaderData() as LoaderData;
   return (
     <div className="@container w-full max-w-4xl grid content-start">
       <div className="font-bold text-2xl mb-4 flex items-baseline gap-x-2">
@@ -39,7 +40,7 @@ export default function Page() {
         </Tooltip>
       </div>
       <p className="text-xl font-heading font-semibold border border-gray-l4 p-4 rounded">
-        ${humanize(bal_lock)}
+        ${humanize(bal_lock)} <SfPerf id={id} />
       </p>
       <div className="flex items-center gap-4 mt-4">
         <NavLink
