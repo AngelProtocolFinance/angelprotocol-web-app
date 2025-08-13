@@ -28,9 +28,9 @@ export function Table({
         <thead className="bg-blue-l5">
           <tr>
             <th /> {/** icons */}
-            <th className="font-medium text-sm text-gray">Date</th>
+            <th />
             <th className="font-medium text-sm text-gray">Amount</th>
-            <th className="font-medium text-sm text-gray">Description</th>
+            <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">Status</th>
           </tr>
         </thead>
@@ -38,7 +38,8 @@ export function Table({
           {items.map((r, idx) => (
             <tr key={idx} className="text-sm">
               <td>{row_meta(r).icon}</td>
-              <td>{format(r.date_updated, "PP")}</td>
+              <td>{row_meta(r).description}</td>
+
               <td>
                 <div className="relative">
                   {r.status === "cancelled" && (
@@ -60,7 +61,7 @@ export function Table({
                   ${humanize(r.amount)}{" "}
                 </div>
               </td>
-              <td>{row_meta(r).description}</td>
+              <td>{format(r.date_updated, "PP")}</td>
               <td className="uppercase text-xs">
                 {r.status === "cancelled" ? (
                   <span className="text-red">Cancelled</span>

@@ -17,7 +17,6 @@ export const loader: LoaderFunction = async (x) => {
 
   const db = new NavHistoryDB(apes, env);
   const items = await db.npo_series(adm.id, opts);
-  console.log(items);
 
   /** compute twr */
   let $twr = 1;
