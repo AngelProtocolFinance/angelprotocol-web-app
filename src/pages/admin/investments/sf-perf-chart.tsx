@@ -81,6 +81,7 @@ export function SfPerChart(
             className="text-xs"
             domain={["dataMin", "dataMax"]}
             tickFormatter={(v) => humanize(v, 2)}
+            label={{ value: "Units", angle: -90, position: "insideLeft" }}
           />
           <YAxis
             yAxisId="right"
@@ -88,28 +89,19 @@ export function SfPerChart(
             className="text-xs"
             domain={["dataMin", "dataMax"]}
             tickFormatter={(v) => humanize(v, 2)}
+            label={{ value: "NAVPU ($)", angle: 90, position: "insideRight" }}
           />
           <Tooltip
-            contentStyle={{ fontSize: "14px" }}
-            formatter={(value, name) => [
-              name === "price"
-                ? `$${humanize(value as number)}`
-                : humanize(value as number),
-              name === "units" ? "Units" : name === "price" ? "NAVPU" : name,
-            ]}
-            labelFormatter={(label, payload) => {
-              if (payload && payload.length > 0) {
+            content={({ payload, active }) => {
+              if (active && payload && payload.length > 0) {
                 const data = payload[0].payload;
                 return (
-                  <div className="text-sm">
-                    <div>{formatDate(label)}</div>
-                    <div className="text-gray mt-1">
-                      Value: ${humanize(data.value)}
-                    </div>
+                  <div className="text-sm font-semibold text-gray-d4 pointer-events-none">
+                    ${humanize(data.value)}
                   </div>
                 );
               }
-              return formatDate(label);
+              return null;
             }}
           />
           <Bar
