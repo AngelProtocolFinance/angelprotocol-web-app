@@ -41,13 +41,6 @@ export function SfPerChart(
           <button
             disabled
             type="button"
-            className="font-heading btn-outline text-xs px-2 py-1 rounded-sm uppercase pointer-events-none"
-          >
-            6 months
-          </button>
-          <button
-            disabled
-            type="button"
             className="font-heading btn-outline text-xs px-2 py-1 rounded-sm uppercase"
           >
             1 year
