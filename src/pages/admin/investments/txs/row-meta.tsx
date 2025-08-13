@@ -15,7 +15,7 @@ interface IDescription {
 export const Description = (props: IDescription) => {
   return (
     <p>
-      {props.text} :{" "}
+      {props.text}{" "}
       <span className="text-xs text-gray">{mask_string(props.id, 4)}</span>
     </p>
   );

@@ -2,9 +2,9 @@ import type { IPayout } from "@better-giving/payouts";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { mask_string } from "helpers/mask-string";
-import { InfoIcon } from "lucide-react";
+import { ArrowRightIcon, InfoIcon } from "lucide-react";
 import type { IPaginator } from "types/components";
+import { desc } from "./desc";
 
 export interface IPayoutsTable extends IPaginator<IPayout> {}
 
@@ -20,9 +20,10 @@ export function PayoutsTable({
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
         <thead className="bg-blue-l5">
           <tr>
-            <th className="font-medium text-sm text-gray">Date</th>
+            <th />
+            <th className="font-medium text-sm text-gray">From</th>
             <th className="font-medium text-sm text-gray">Amount</th>
-            <th className="font-medium text-sm text-gray">Description</th>
+            <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">Status</th>
           </tr>
         </thead>
@@ -32,7 +33,10 @@ export function PayoutsTable({
               key={idx}
               className={`text-sm ${payout.type === "error" ? "text-red" : "text-gray-d4"}`}
             >
-              <td>{format(payout.date, "PP")}</td>
+              <td className="w-8">
+                <ArrowRightIcon size={14} className="inline stroke-green" />
+              </td>
+              <td>{desc(payout)}</td>
               <td>
                 <div className="relative">
                   {payout.type === "error" && (
@@ -54,12 +58,7 @@ export function PayoutsTable({
                   ${humanize(payout.amount)}{" "}
                 </div>
               </td>
-              <td>
-                {payout.source}:{" "}
-                <span className="text-xs text-gray-d1">
-                  {mask_string(payout.source_id, 4)}
-                </span>
-              </td>
+              <td>{format(payout.date, "PP")}</td>
               <td className="uppercase text-xs">
                 {payout.type === "error" ? (
                   <span className="text-red">Error</span>
