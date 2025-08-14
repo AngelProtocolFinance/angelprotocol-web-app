@@ -2,7 +2,7 @@ import { DialogPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field } from "components/form";
 import { humanize } from "helpers/decimal";
-import { MoveLeft, MoveRight } from "lucide-react";
+import { InfoIcon, MoveLeft, MoveRight } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
 import { type Props, type Schema, schema } from "./types";
 
@@ -97,6 +97,17 @@ export function Panel(props: Props) {
         placeholder="e.g. $ 100"
         error={errors.amount?.message}
       />
+
+      {source.value && (
+        <div className="text-sm text-amber-d1 bg-amber-l5  rounded-md p-2 mt-4">
+          <InfoIcon className="inline relative bottom-px" size={15} /> This
+          operation is irreversible.{" "}
+          {source.value === "liq"
+            ? "Transferring to investments purchases underlying asset of corresponding value"
+            : "Withdrawing from investments redeems underlying asset of corresponding value after approval"}
+          .
+        </div>
+      )}
 
       <button
         disabled={props.is_submitting || !isDirty}
