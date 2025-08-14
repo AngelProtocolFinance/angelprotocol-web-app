@@ -6,6 +6,5 @@ export const toAuth = (req: Request, headers?: Headers) => {
   const { pathname: p, search: s } = from;
   to.pathname = "/signup";
   to.searchParams.set("redirect", p + s);
-  headers?.append("Location", to.toString());
   return redirect(to.toString(), { headers });
 };
