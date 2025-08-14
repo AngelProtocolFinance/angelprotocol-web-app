@@ -1,10 +1,9 @@
-import { BalanceTxsDb, balance_txs_options } from "@better-giving/balance-txs";
+import { balance_txs_options } from "@better-giving/balance-txs";
 import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import * as v from "valibot";
 import { cognito } from ".server/auth";
-import { apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { btxdb } from ".server/aws/db";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { searchParams } = new URL(request.url);
@@ -17,8 +16,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     return resp.status(403);
   }
 
-  const db = new BalanceTxsDb(apes, env);
-  const page = await db.txs(opts);
+  const page = await btxdb.txs(opts);
 
   return resp.json(page);
 };

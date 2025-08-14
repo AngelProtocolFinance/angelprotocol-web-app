@@ -1,4 +1,4 @@
-import { type INpoSettlementsPage, PayoutsDB } from "@better-giving/payouts";
+import type { INpoSettlementsPage } from "@better-giving/payouts";
 import { Link, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
@@ -6,8 +6,7 @@ import { Info } from "components/status";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
 import { Table } from "./table";
-import { apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { podb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
 interface LoaderData extends INpoSettlementsPage {}
@@ -20,8 +19,7 @@ export const loader: LoaderFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
-  const payouts_db = new PayoutsDB(apes, env);
-  return payouts_db.npo_settlements(adm.id.toString(), {
+  return podb.npo_settlements(adm.id.toString(), {
     next: next || undefined,
     limit: 5,
   });

@@ -16,15 +16,13 @@ import { parse } from "valibot";
 import { prices_fn, to_bals } from "./helpers";
 import { fv as schema, ticker_nets } from "./types";
 import { cognito, toAuth } from ".server/auth";
-import { TransactWriteCommand, apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { TransactWriteCommand, navdb } from ".server/aws/db";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };
-  const db = new NavHistoryDB(apes, env);
-  return db.ltd();
+  return navdb.ltd();
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -32,7 +30,6 @@ export const action: ActionFunction = async ({ request }) => {
   if (!user) return toAuth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
-  const navdb = new NavHistoryDB(apes, env);
   const ltd = await navdb.ltd();
   const bals = to_bals(ltd.composition);
 

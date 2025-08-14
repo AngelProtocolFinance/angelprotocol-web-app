@@ -1,8 +1,5 @@
-import { BalanceDb } from "@better-giving/balance";
-import { NavHistoryDB } from "@better-giving/nav-history";
 import type { LoaderFunction } from "@vercel/remix";
-import { apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { baldb, navdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
@@ -15,11 +12,8 @@ export const transfer_loader: LoaderFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
-  const nav_db = new NavHistoryDB(apes, env);
-  const baldb = new BalanceDb(apes, env);
-
   const [ltd, bal] = await Promise.all([
-    nav_db.ltd(),
+    navdb.ltd(),
     baldb.npo_balance(adm.id),
   ]);
 

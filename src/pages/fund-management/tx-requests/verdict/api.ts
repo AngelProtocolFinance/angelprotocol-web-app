@@ -1,15 +1,18 @@
-import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
-import { NavHistoryDB } from "@better-giving/nav-history";
 import { type IPayout, PayoutsDB } from "@better-giving/payouts";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
-import { TransactWriteCommand, apes } from ".server/aws/db";
-import { env } from ".server/env";
+import {
+  TransactWriteCommand,
+  baldb,
+  btxdb,
+  navdb,
+  podb,
+} from ".server/aws/db";
 
 const verdict_schema = v.picklist(["approve", "reject"]);
 const tx_id_schema = v.pipe(
@@ -27,15 +30,12 @@ export const action: ActionFunction = async ({ params, request }) => {
   const tx_id = v.parse(tx_id_schema, params.tx_id);
 
   const timestamp = new Date().toISOString();
-  const txsdb = new BalanceTxsDb(apes, env);
-  const baldb = new BalanceDb(apes, env);
 
-  const tx = await txsdb.tx(tx_id);
+  const tx = await btxdb.tx(tx_id);
   if (!tx) return { status: 404 };
 
   if (tx.account !== "lock") throw `expected lock account, got ${tx.account}`;
 
-  const navdb = new NavHistoryDB(apes, env);
   const ltd = await navdb.ltd();
 
   if (ltd.composition.CASH.value < tx.amount) {
@@ -44,7 +44,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   if (verdict === "reject") {
     const txs = new Txs();
-    const upd81 = await txsdb.tx_update_status_item(tx, "cancelled");
+    const upd81 = await btxdb.tx_update_status_item(tx, "cancelled");
     //add back units
     const upd82 = baldb.balance_update_txi(+tx.owner, {
       lock_units: ["inc", tx.amount_units],
@@ -56,7 +56,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   }
 
   const txs = new Txs();
-  const upd81 = await txsdb.tx_update_status_item(tx, "final");
+  const upd81 = await btxdb.tx_update_status_item(tx, "final");
   txs.update(upd81);
 
   //log nav
@@ -102,7 +102,7 @@ export const action: ActionFunction = async ({ params, request }) => {
       // lock_units - already deducted in tx creation
     });
 
-    txs.put({ TableName: BalanceTxsDb.name, Item: txsdb.new_tx_item(liq_tx) });
+    txs.put({ TableName: BalanceTxsDb.name, Item: btxdb.new_tx_item(liq_tx) });
     txs.update(upd82);
     const cmd = new TransactWriteCommand({ TransactItems: txs.all });
     await baldb.client.send(cmd);
@@ -111,7 +111,6 @@ export const action: ActionFunction = async ({ params, request }) => {
   }
 
   //transfer to grant
-  const payoutsdb = new PayoutsDB(apes, env);
   const payout: IPayout = {
     id: nanoid(),
     source_id: tx.id,
@@ -123,7 +122,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   };
   txs.put({
     TableName: PayoutsDB.name,
-    Item: payoutsdb.payout_record(payout),
+    Item: podb.payout_record(payout),
   });
   const bal_update = baldb.balance_update_txi(+tx.owner, {
     payoutsPending: ["inc", tx.amount],

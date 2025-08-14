@@ -1,9 +1,9 @@
+import type { TStatus } from "@better-giving/banking-applications";
 import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { Folder } from "lucide-react";
-import type { BankingApplicationStatus } from "types/applications";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";
 
@@ -41,20 +41,20 @@ export function Table({
         {items
           .map((row) => (
             <Cells
-              key={row.wiseRecipientID}
+              key={row.id}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
                 load_next ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
-              <>{toPP(row.dateCreated)}</>
-              <>{row.endowmentID}</>
-              <>{row.bankSummary}</>
+              <>{toPP(row.date_created)}</>
+              <>{row.npo_id}</>
+              <>{row.bank_summary}</>
               <td className="text-center">
                 <Status status={row.status} />
               </td>
               <NavLink
-                to={appRoutes.banking_applications + `/${row.wiseRecipientID}`}
+                to={appRoutes.banking_applications + `/${row.id}`}
                 className="text-center w-full inline-block hover:text-blue-d1 [&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none"
               >
                 <Folder
@@ -87,19 +87,19 @@ export function Table({
   );
 }
 
-const bg: { [key in BankingApplicationStatus]: string } = {
+const bg: { [key in TStatus]: string } = {
   approved: "bg-green",
   "under-review": "bg-gray-d1",
   rejected: "bg-red",
 };
 
-const text: { [key in BankingApplicationStatus]: string } = {
+const text: { [key in TStatus]: string } = {
   "under-review": "Under review",
   rejected: "Rejected",
   approved: "Approved",
 };
 
-function Status({ status }: { status: BankingApplicationStatus }) {
+function Status({ status }: { status: TStatus }) {
   return (
     <p
       className={`${bg[status]} rounded-sm px-3 py-1 inline-block uppercase text-xs text-white`}
