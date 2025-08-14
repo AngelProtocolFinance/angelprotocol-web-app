@@ -24,7 +24,7 @@ export default function Form(props: Props) {
   const userCurrency = currency.data?.pref;
   //biome-ignore lint:
   useEffect(() => {
-    if (userCurrency) {
+    if (userCurrency && !props.details?.currency) {
       rhf.currency.onChange(userCurrency);
     }
   }, [userCurrency]);
