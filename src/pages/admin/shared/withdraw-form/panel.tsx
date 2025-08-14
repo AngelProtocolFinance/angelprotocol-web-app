@@ -3,6 +3,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field } from "components/form";
 import { Select } from "components/selector";
 import { humanize } from "helpers/decimal";
+import { InfoIcon } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
 import { type Props, type Schema, type Source, schema, sources } from "./types";
 
@@ -61,6 +62,18 @@ export function Panel(props: Props) {
         placeholder="e.g. $ 100"
         error={errors.amount?.message}
       />
+
+      {source.value && (
+        <div className="text-sm text-amber-d1 bg-amber-l5  rounded-md p-2 mt-4">
+          <InfoIcon className="inline relative bottom-px" size={15} /> This
+          operation is irreversible. Withdrawing from{" "}
+          {source.value === "liq"
+            ? "savings"
+            : "investments redeems underlying asset and"}{" "}
+          creates a grant of corresponding value{" "}
+          {source.value === "lock" ? " upon approval" : ""}.
+        </div>
+      )}
 
       <button
         disabled={props.is_submitting || !isDirty}
