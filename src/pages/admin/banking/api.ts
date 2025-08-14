@@ -2,7 +2,7 @@ import { new_bank as schema } from "@better-giving/banking-applications/schema";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { adminRoutes } from "constants/routes";
 import * as v from "valibot";
-import { new_bank } from ".server/banking-applications";
+import { bappdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
 export const action: ActionFunction = async (args) => {
@@ -12,7 +12,7 @@ export const action: ActionFunction = async (args) => {
   const payload = await args.request.json();
   const x = v.parse(schema, payload);
 
-  await new_bank(x);
+  await bappdb.bapp_put({ ...x, rejectionReason: "" });
 
   return redirect(`../${adminRoutes.banking}`);
 };

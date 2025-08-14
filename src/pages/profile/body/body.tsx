@@ -1,4 +1,4 @@
-import { BalanceDb, type IPrettyBalance } from "@better-giving/balance";
+import type { IPrettyBalance } from "@better-giving/balance";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import BookmarkBtn from "components/bookmark-btn";
@@ -11,14 +11,12 @@ import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
 import { useProfileContext } from "../profile-context";
 import { npoId } from "./common/npo-id";
-import { apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { baldb } from ".server/aws/db";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = await npoId(params.id);
   if (typeof id !== "number") return id;
-  const db = new BalanceDb(apes, env);
-  return db.npo_balance(id);
+  return baldb.npo_balance(id);
 };
 
 export default function Body() {

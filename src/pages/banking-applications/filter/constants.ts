@@ -1,5 +1,6 @@
-import type { BankingApplicationStatus } from "types/applications";
-export const status: Record<BankingApplicationStatus, string> = {
+import type { TStatus } from "@better-giving/banking-applications";
+
+export const status: Record<TStatus, string> = {
   rejected: "Rejected",
   "under-review": "Under Review",
   approved: "Approved",

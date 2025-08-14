@@ -1,4 +1,4 @@
-import { type IItem, to_item } from "@better-giving/banking-applications";
+import type { IBapp } from "@better-giving/banking-applications";
 import { $int_gte1 } from "@better-giving/schemas";
 import type { V2RecipientAccount } from "@better-giving/wise";
 import {
@@ -8,27 +8,24 @@ import {
 } from "@vercel/remix";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
-import {
-  bank,
-  delete_bank,
-  npo_bank,
-  update_bank,
-} from ".server/banking-applications";
+import { bappdb } from ".server/aws/db";
 import { wise } from ".server/sdks";
 import { admin_checks, is_resp } from ".server/utils";
 
-export interface LoaderData extends V2RecipientAccount, IItem {}
+export interface LoaderData extends V2RecipientAccount {
+  ba: IBapp;
+}
 
 export const loader: LoaderFunction = async (args) => {
   const bankId = v.parse($int_gte1, args.params.bankId);
   const admn = await admin_checks(args);
   if (is_resp(admn)) return admn;
 
-  const x = await npo_bank(admn.id, bankId.toString());
+  const x = await bappdb.npo_bapp(bankId.toString(), admn.id);
   if (!x) return { status: 404 };
 
   const y = await wise.v2Account(bankId);
-  return { ...x, ...y } satisfies LoaderData;
+  return { ...y, ba: x } satisfies LoaderData;
 };
 
 export const deleteAction: ActionFunction = async (x) => {
@@ -36,7 +33,7 @@ export const deleteAction: ActionFunction = async (x) => {
   const admn = await admin_checks(x);
   if (is_resp(admn)) return admn;
 
-  await delete_bank(bank_id.toString());
+  await bappdb.bapp_delete(bank_id.toString());
   return redirect("../..");
 };
 
@@ -45,9 +42,9 @@ export const prioritizeAction: ActionFunction = async (args) => {
   const admn = await admin_checks(args);
   if (is_resp(admn)) return admn;
 
-  const x = await bank(bank_id.toString()).then((x) => x && to_item(x));
+  const x = await bappdb.bapp(bank_id.toString());
   if (!x) return { status: 404, statusText: `Bank:${bank_id} not found` };
 
-  await update_bank(x, { type: "prioritize" });
+  await bappdb.bapp_update(x, { type: "prioritize" });
   return { __ok: "Payout method prioritized" } satisfies ActionData;
 };

@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
 import { cognito, toAuth } from ".server/auth";
-import { bank_applications } from ".server/banking-applications";
+import { bappdb } from ".server/aws/db";
 
 export { default } from "./banking-applications";
 export { ErrorBoundary } from "components/error";
@@ -16,7 +16,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { status, nextPageKey } = Object.fromEntries(
     source.searchParams.entries()
   );
-  const page = await bank_applications(status as any, nextPageKey as any);
+  const page = await bappdb.bapps({
+    status: status as any,
+    next: nextPageKey as any,
+  });
   return page;
 };
 export const meta = () => metas({ title: "Banking Applications" });

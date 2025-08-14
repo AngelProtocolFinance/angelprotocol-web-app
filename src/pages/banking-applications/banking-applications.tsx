@@ -1,4 +1,4 @@
-import type { IPage } from "@better-giving/banking-applications";
+import type { IBappsPage } from "@better-giving/banking-applications";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
 import Filter from "./filter";
@@ -6,7 +6,7 @@ import { Table } from "./table";
 
 export default function BankingApplications() {
   const [params, setParams] = useSearchParams();
-  const page1 = useLoaderData() as IPage;
+  const page1 = useLoaderData() as IBappsPage;
 
   const { node, loading } = use_paginator({
     table: (x) => <Table {...x} />,

@@ -1,10 +1,8 @@
-import { NavHistoryDB } from "@better-giving/nav-history";
 import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import * as v from "valibot";
 import { cognito } from ".server/auth";
-import { apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { navdb } from ".server/aws/db";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { searchParams: s } = new URL(request.url);
@@ -19,8 +17,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     return resp.status(403);
   }
 
-  const db = new NavHistoryDB(apes, env);
-  const page = await db.list({
+  const page = await navdb.list({
     limit: 6,
     next: key ?? undefined,
   });

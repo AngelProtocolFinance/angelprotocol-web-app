@@ -1,11 +1,9 @@
-import { NavHistoryDB } from "@better-giving/nav-history";
 import { npo_series_opts } from "@better-giving/nav-history/schemas";
 import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import type { INpoMetrics } from "types/npo-sf-metrics";
 import { parse } from "valibot";
-import { apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { navdb } from ".server/aws/db";
 import { $earch, admin_checks, is_resp } from ".server/utils";
 
 export const loader: LoaderFunction = async (x) => {
@@ -15,8 +13,7 @@ export const loader: LoaderFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
-  const db = new NavHistoryDB(apes, env);
-  const items = await db.npo_series(adm.id, opts);
+  const items = await navdb.npo_series(adm.id, opts);
 
   /** compute twr */
   let $twr = 1;

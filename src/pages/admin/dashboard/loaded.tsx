@@ -133,7 +133,7 @@ export function Loaded({ classes = "", ...props }: Props) {
               to="../banking"
               className="text-blue hover:text-blue-d1 text-sm"
             >
-              {props.pm.bankSummary}
+              {props.pm.bank_summary}
             </Link>
           </div>
         ) : (

@@ -1,8 +1,8 @@
-import { type IItem, priority_nums } from "@better-giving/banking-applications";
+import type { IBapp } from "@better-giving/banking-applications";
 import type { LoaderFunction } from "@vercel/remix";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { config } from "./config";
-import { npo_banks } from ".server/banking-applications";
+import { bappdb } from ".server/aws/db";
 import { getEarnings } from ".server/donations";
 import { getNpo } from ".server/npo";
 import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
@@ -13,7 +13,7 @@ export interface LoaderData {
   referreds: Referred[];
   earnings: EarningsPage;
   pendings: PendingEarnings;
-  payout?: IItem;
+  payout?: IBapp;
   payout_ltd: number;
   payout_min?: number;
   base_url: string;
@@ -32,12 +32,7 @@ export const loader: LoaderFunction = async (x) => {
     pendingEarnings(endow.referral_id),
     referredBy(endow.referral_id),
     getEarnings(endow.referral_id, null, 4),
-    npo_banks(endow.id, 1).then(([x]) => {
-      if (!x) return;
-      // no default payout method
-      if (x.thisPriorityNum < priority_nums.approved) return;
-      return x;
-    }),
+    bappdb.npo_default_bapp(endow.id),
     paidOutLtd(endow.referral_id),
   ]);
 

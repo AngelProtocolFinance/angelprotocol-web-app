@@ -1,15 +1,12 @@
-import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
-import { NavHistoryDB } from "@better-giving/nav-history";
 import { redirect } from "@remix-run/react";
 import type { ActionFunction } from "@vercel/remix";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { parse } from "valibot";
 import { type Schema, type Source, schema } from "./types";
-import { TransactWriteCommand, apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { TransactWriteCommand, baldb, btxdb, navdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
 type TRedirects = { [S in Source]: string };
@@ -20,8 +17,6 @@ export const transfer_action =
     const adm = await admin_checks(x);
     if (is_resp(adm)) return adm;
 
-    const navdb = new NavHistoryDB(apes, env);
-    const baldb = new BalanceDb(apes, env);
     const [bal, ltd] = await Promise.all([
       baldb.npo_balance(adm.id),
       navdb.ltd(),
@@ -36,7 +31,6 @@ export const transfer_action =
     } satisfies Schema);
 
     const txs = new Txs();
-    const bal_txs_db = new BalanceTxsDb(apes, env);
     const timestamp = new Date().toISOString();
     const to_id = nanoid();
     const from_id = nanoid();
@@ -67,7 +61,7 @@ export const transfer_action =
       };
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: bal_txs_db.new_tx_item(tx),
+        Item: btxdb.new_tx_item(tx),
       });
       const bal_update = baldb.balance_update_txi(adm.id, {
         lock_units: ["dec", units],
@@ -106,12 +100,12 @@ export const transfer_action =
       };
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: bal_txs_db.new_tx_item(tx),
+        Item: btxdb.new_tx_item(tx),
       });
 
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: bal_txs_db.new_tx_item(lock_tx),
+        Item: btxdb.new_tx_item(lock_tx),
       });
 
       const bal_update = baldb.balance_update_txi(adm.id, {

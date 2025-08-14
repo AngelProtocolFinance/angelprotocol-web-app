@@ -1,10 +1,8 @@
-import { BalanceDb } from "@better-giving/balance";
-import { BalanceTxsDb, type IBalanceTxsPage } from "@better-giving/balance-txs";
-import { NavHistoryDB } from "@better-giving/nav-history";
+import type { IBalanceTxsPage } from "@better-giving/balance-txs";
 import type { LoaderFunction } from "@vercel/remix";
 import * as v from "valibot";
-import { apes } from ".server/aws/db";
-import { env } from ".server/env";
+import { baldb, btxdb, navdb } from ".server/aws/db";
+
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData extends IBalanceTxsPage {
@@ -21,10 +19,6 @@ export const loader: LoaderFunction = async (x) => {
 
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
-
-  const navdb = new NavHistoryDB(apes, env);
-  const baldb = new BalanceDb(apes, env);
-  const btxdb = new BalanceTxsDb(apes, env);
 
   const [{ lock_units }, ltd, btxs_page1] = await Promise.all([
     baldb.npo_balance(adm.id),
