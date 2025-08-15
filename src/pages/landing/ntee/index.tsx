@@ -10,8 +10,10 @@ import { disease_awareness } from "./contexts/disease-awareness";
 import { education } from "./contexts/education";
 import { environment } from "./contexts/environment";
 import { health_care } from "./contexts/health-care";
+import { human_services } from "./contexts/human-services";
 import { mental_health } from "./contexts/mental-health";
 import { public_safety } from "./contexts/public-safety";
+import { religious_organizations } from "./contexts/religious-organizations";
 import { DonationFormInfo } from "./donation-form-info";
 import { Footer } from "./footer";
 import { Hero } from "./hero";
@@ -42,7 +44,7 @@ const page_context: Record<string, PageContext> = {
   // "public-safety": {},
   // "recreation-sports": {},
   // "youth-development": {},
-  // "human-services": {},
+  "human-services": human_services,
   // "international-aid": {},
   // "civil-rights": {},
   // "community-improvement": {},
@@ -50,7 +52,7 @@ const page_context: Record<string, PageContext> = {
   // "science-technology": {},
   // "social-science": {},
   // "public-benefit": {},
-  // "religious-organizations": {},
+  "religious-organizations": religious_organizations,
   // "membership-organizations": {},
 };
 
