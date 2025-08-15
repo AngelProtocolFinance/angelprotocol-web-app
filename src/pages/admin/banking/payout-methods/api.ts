@@ -1,21 +1,16 @@
+import type { IBapp } from "@better-giving/banking-applications";
 import type { LoaderFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
-import type { PayoutMethod } from "types/applications";
-import { parse } from "valibot";
-import { cognito, toAuth } from ".server/auth";
-import { npo_banks } from ".server/banking-applications/banking-applications";
+import { bappdb } from ".server/aws/db";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
-  methods: PayoutMethod[];
+  methods: IBapp[];
 }
 
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const id = parse(plusInt, params.id);
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+export const loader: LoaderFunction = async (x) => {
+  const admn = await admin_checks(x);
+  if (is_resp(admn)) return admn;
 
-  if (!user.endowments.includes(id)) throw `not authorized`;
-
-  const items = await npo_banks(id);
-  return { methods: items } satisfies LoaderData;
+  const page = await bappdb.npo_bapps(admn.id);
+  return { methods: page.items } satisfies LoaderData;
 };

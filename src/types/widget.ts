@@ -1,5 +1,5 @@
 import {
-  donateMethodId,
+  donate_method_id,
   increment,
   incrementLabel,
   incrementVal,
@@ -54,7 +54,7 @@ export const widgetUrlSearchParams = v.object({
     v.pipe(
       str, //csv of method ids
       v.transform((x) => x.split(",")),
-      v.everyItem((x) => v.safeParse(donateMethodId, x).success)
+      v.everyItem((x) => v.safeParse(donate_method_id, x).success)
     )
   ),
   title: v.optional(title),

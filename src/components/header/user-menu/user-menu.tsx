@@ -1,7 +1,12 @@
 import { MenuItem } from "@headlessui/react";
 import { Form, Link, useNavigation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { CircleDollarSign, Shield } from "lucide-react";
+import {
+  Building2Icon,
+  CircleDollarSign,
+  LandmarkIcon,
+  PieChartIcon,
+} from "lucide-react";
 import type { DetailedUser } from "types/auth";
 import { Bookmarks } from "./bookmarks";
 import { Organizations } from "./organizations";
@@ -34,20 +39,30 @@ export function UserMenu({ user, classes }: Props) {
             <MenuItem
               as={Link}
               to={appRoutes.applications}
-              className="hover:text-blue-d1 text-sm flex items-center gap-1"
+              className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
-              <Shield size={18} />
-              <span>Applications Dashboard</span>
+              <Building2Icon size={18} />
+              <span>NPO Applications</span>
             </MenuItem>
           )}
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
               to={appRoutes.banking_applications}
-              className="hover:text-blue-d1 text-sm flex items-center gap-1 mt-1"
+              className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
-              <Shield size={18} />
-              <span>Banking applications</span>
+              <LandmarkIcon size={18} />
+              <span>Banking Applications</span>
+            </MenuItem>
+          )}
+          {user.groups.includes("ap-admin") && (
+            <MenuItem
+              as={Link}
+              to={appRoutes.fund_management}
+              className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
+            >
+              <PieChartIcon size={16} />
+              <span>Fund Management</span>
             </MenuItem>
           )}
         </div>

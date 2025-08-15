@@ -1,13 +1,13 @@
+import type { IPrettyBalance } from "@better-giving/balance";
 import { useOutletContext } from "@remix-run/react";
 import { toUsd } from "helpers/to-usd";
-import type { EndowmentBalances } from "types/npo-balance";
 
 export default function Balances() {
-  const bal = useOutletContext() as EndowmentBalances;
+  const bal = useOutletContext() as IPrettyBalance;
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <Balance title="Total Contributions" amount={bal.totalContributions} />
+      <Balance title="Total Contributions" amount={bal.ltd} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { priority_nums } from "@better-giving/banking-applications";
+import { priority_nums } from "@better-giving/banking-applications/schema";
 import { NavLink, Outlet, useFetcher } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import ExtLink from "components/ext-link";
@@ -14,15 +14,15 @@ export {
 } from "./api";
 export { ErrorBoundary } from "components/error";
 export default function PayoutMethod() {
-  const bank = useCachedLoaderData() as LoaderData;
+  const d = useCachedLoaderData() as LoaderData;
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
 
-  const is_rejected = bank.status === "rejected";
-  const is_approved = bank.status === "approved";
+  const is_rejected = d.ba.status === "rejected";
+  const is_approved = d.ba.status === "approved";
   const prevVerdict = is_rejected || is_approved;
-  const is_default = bank.thisPriorityNum === bank.topPriorityNum;
-  const is_with_heir = (bank.heirPriorityNum || 0) >= priority_nums.approved;
+  const is_default = d.ba.this_pn === d.ba.top_pn;
+  const is_with_heir = (d.ba.heir_pn || 0) >= priority_nums.approved;
 
   return (
     <div className="grid">
@@ -48,28 +48,28 @@ export default function PayoutMethod() {
       {is_rejected && (
         <p className="text-sm text-red my-2">
           <CircleAlert className="relative inline bottom-px mr-1" />
-          <span>{bank.rejectionReason}</span>
+          <span>{d.ba.rejection_reason}</span>
         </p>
       )}
 
       <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l3 rounded-sm mt-2">
-        <Row label="Currency">{bank.currency}</Row>
-        <Row label="Country">{bank.country}</Row>
-        <Row label="Recipient name">{bank.name.fullName}</Row>
-        <Row label="Account type">{bank.type}</Row>
-        <Row label="Legal entity type">{bank.legalEntityType}</Row>
-        {bank.displayFields.map(({ label, value, key }) => (
+        <Row label="Currency">{d.currency}</Row>
+        <Row label="Country">{d.country}</Row>
+        <Row label="Recipient name">{d.name.fullName}</Row>
+        <Row label="Account type">{d.type}</Row>
+        <Row label="Legal entity type">{d.legalEntityType}</Row>
+        {d.displayFields.map(({ label, value, key }) => (
           <Row key={key} label={label}>
             {value}
           </Row>
         ))}
         <Row label="Bank statement">
           <ExtLink
-            href={bank.bankStatementFile.publicUrl}
+            href={d.ba.bank_statement_file.publicUrl}
             className="text-blue hover:text-blue-d1"
           >
             <span className="break-all">
-              {bank.bankStatementFile.publicUrl}
+              {d.ba.bank_statement_file.publicUrl}
             </span>
             <SquareArrowOutUpRight
               className="inline relative bottom-px ml-2"

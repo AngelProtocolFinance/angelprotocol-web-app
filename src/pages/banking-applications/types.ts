@@ -1,10 +1,4 @@
-import type { BankingApplication } from "types/applications";
+import type { IBapp } from "@better-giving/banking-applications";
+import type { IPaginator } from "types/components";
 
-export type TableProps = {
-  applications: BankingApplication[];
-  classes?: string;
-  onLoadMore(key: string): void;
-  nextPageKey?: string;
-  disabled: boolean;
-  isLoading: boolean;
-};
+export interface TableProps extends IPaginator<IBapp> {}

@@ -5,7 +5,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/donate-methods";
 import { ProgramSelector } from "components/donation";
 import { CheckField, Field, Form } from "components/form";
-import Increments from "components/increments";
+import { Increments } from "components/increments";
 import { DollarSign } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 import {

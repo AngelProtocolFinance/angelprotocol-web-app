@@ -11,7 +11,7 @@ import { useCachedLoaderData } from "api/cache";
 import { DonateMethods, fill } from "components/donate-methods";
 import { CheckField, Form as F, Field } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import Increments from "components/increments";
+import { Increments } from "components/increments";
 import { BG_ID } from "constants/common";
 import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";

@@ -73,14 +73,14 @@ export async function getNpos(
     return {
       items: [],
       page: 1,
-      numPages: 1,
+      pages: 1,
     };
   }
 
   return {
     items: hits.map((hit: any) => processFields(hit.fields)),
     page,
-    numPages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
+    pages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
   };
 }
 

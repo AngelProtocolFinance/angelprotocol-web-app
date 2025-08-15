@@ -5,8 +5,8 @@ import { TxBuilder } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
 import type { ActionFunction } from "@vercel/remix";
 import { default_allocation } from "constants/common";
+import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
-import { resp } from "routes/helpers/resp";
 import type { FinalRecorderPayload } from "../types/final-recorder";
 import { referral_commission_rate } from "./config";
 import { build_donation_msg, commission_fn } from "./helpers";
@@ -170,7 +170,7 @@ export const action: ActionFunction = async ({ request }) => {
           tip_tos.push(c.to);
         }
 
-        const _txs = settle_txs(base, overrides);
+        const _txs = await settle_txs(base, overrides);
         builder.append(_txs);
         //use net as it reflects fee allowance add-back
         fund_net += processed.net;
@@ -241,7 +241,7 @@ export const action: ActionFunction = async ({ request }) => {
         builder.append(c.txs);
         tip_tos.push(c.to);
       }
-      const _txs = settle_txs(base, overrides);
+      const _txs = await settle_txs(base, overrides);
       builder.append(_txs);
     }
 
@@ -295,7 +295,7 @@ export const action: ActionFunction = async ({ request }) => {
       };
       overrides.net -= tip_commission;
     }
-    const tipTxs = settle_txs(base, overrides);
+    const tipTxs = await settle_txs(base, overrides);
     builder.append(tipTxs);
 
     const res = await apes.send(

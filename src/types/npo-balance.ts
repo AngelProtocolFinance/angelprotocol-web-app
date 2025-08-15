@@ -8,16 +8,3 @@ export interface BalanceMovement {
   /** savings */
   "lock-liq": number;
 }
-
-export type EndowmentBalances = {
-  contributionsCount: number;
-  donationsBal: number;
-  payoutsMade: number;
-  payoutsPending: number;
-  sustainabilityFundBal: number;
-  totalContributions: number;
-  totalEarnings?: number;
-  movementDetails?: BalanceMovement;
-  /** savings balance */
-  liq?: number;
-};

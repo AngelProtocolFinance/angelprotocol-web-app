@@ -17,7 +17,7 @@ interface Props {
   onAdd: (value: string) => void;
   onRemove: (index: number) => void;
 }
-export default function Increments({
+export function Increments({
   classes = "",
   countError,
   onRemove,

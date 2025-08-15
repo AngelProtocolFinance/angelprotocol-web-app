@@ -6,8 +6,8 @@ import type { PropsWithChildren } from "react";
 import type { LoaderData } from "./api";
 
 export function Loaded(props: LoaderData) {
-  const isApproved = props.status === "approved";
-  const isRejected = props.status === "rejected";
+  const isApproved = props.ba.status === "approved";
+  const isRejected = props.ba.status === "rejected";
   const prevVerdict = isApproved || isRejected;
 
   return (
@@ -22,7 +22,7 @@ export function Loaded(props: LoaderData) {
         </div>
       )}
       {isRejected && (
-        <p className="text-red text-sm -mt-3">{props.rejectionReason}</p>
+        <p className="text-red text-sm -mt-3">{props.ba.rejection_reason}</p>
       )}
       <div className="flex max-sm:flex-col gap-x-4">
         <span className="text-sm font-semibold uppercase">Account ID:</span>
@@ -31,7 +31,7 @@ export function Loaded(props: LoaderData) {
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
         <span className="uppercase text-sm">
-          {new Date(props.dateCreated).toLocaleDateString()}
+          {new Date(props.ba.rejection_reason).toLocaleDateString()}
         </span>
       </div>
 
@@ -48,11 +48,11 @@ export function Loaded(props: LoaderData) {
         ))}
         <Row label="Bank statement">
           <ExtLink
-            href={props.bankStatementFile.publicUrl}
+            href={props.ba.bank_statement_file.publicUrl}
             className="text-blue hover:text-blue-d1"
           >
             <span className="break-all">
-              {props.bankStatementFile.publicUrl}
+              {props.ba.bank_statement_file.publicUrl}
             </span>
             <SquareArrowOutUpRight
               className="inline relative bottom-px ml-2"
