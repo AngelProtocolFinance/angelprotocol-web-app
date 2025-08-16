@@ -1,4 +1,4 @@
-import type { EndowUpdate } from "@better-giving/endowment";
+import type { INpoUpdate } from "@better-giving/endowment";
 import { min_payout_amount } from "@better-giving/endowment/schema";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
@@ -57,7 +57,7 @@ function Content(props: IContent) {
   return (
     <DialogPanel
       onSubmit={handleSubmit(async ({ amount }) => {
-        fetcher.submit({ payout_minimum: +amount } satisfies EndowUpdate, {
+        fetcher.submit({ payout_minimum: +amount } satisfies INpoUpdate, {
           method: "PATCH",
           encType: "application/json",
         });

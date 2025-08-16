@@ -1,20 +1,19 @@
 import { BalanceDb } from "@better-giving/balance";
-import type { Endow } from "@better-giving/endowment/db";
+import { type INpo, NpoDb } from "@better-giving/endowment";
 import type { Verdict } from "@better-giving/registration/approval";
 import type { ApplicationDbRecord } from "@better-giving/registration/db";
 import { isIrs501c3 } from "@better-giving/registration/models";
-import { tables } from "@better-giving/types/list";
 import { addYears } from "date-fns";
 import { referral_id } from "helpers/referral";
-import { TransactWriteCommand, UpdateCommand, ap, apes } from "../../aws/db";
-import { env } from "../../env";
 import {
-  bankingRecord,
-  dbUpdate,
-  endowAdmin,
-  nextEndowId,
-  regUpdate,
-} from "./helpers";
+  TransactWriteCommand,
+  UpdateCommand,
+  ap,
+  apes,
+  npodb,
+} from "../../aws/db";
+import { env } from "../../env";
+import { bankingRecord, endowAdmin, regUpdate } from "./helpers";
 import type { EndowContentFromReg } from "./types";
 
 // registrations/{id}/submit
@@ -45,17 +44,13 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     url: reg.org.website,
     claimed: true,
     referral_id: rid,
-    gsi2PK: `Rid#${rid}`,
-    gsi2SK: `Rid#${rid}`,
   };
 
   if (reg.referrer) {
     const onboarded = new Date();
     const expiry = addYears(onboarded, 3).toISOString();
     ecfr.referrer = reg.referrer;
-    ecfr.gsi1PK = `ReferredBy#${reg.referrer}`;
     ecfr.referrer_expiry = expiry;
-    ecfr.gsi1SK = expiry;
   }
 
   const baldb = new BalanceDb(apes, reg.env);
@@ -72,12 +67,9 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
         { Update: regUpdate<"tx">(reg, { endowment_id: id }) },
         {
           Update: {
-            TableName: tables.endowments_v3,
-            Key: {
-              SK: env,
-              PK: `Endow#${id}`,
-            } satisfies Endow.Keys,
-            ...dbUpdate(ecfr),
+            TableName: NpoDb.name,
+            Key: npodb.key_npo(id),
+            ...npodb.npo_update_comps(ecfr),
           },
         },
       ],
@@ -89,16 +81,14 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   }
 
   ///////////// APPROVAL OF NEW ENDOWMENT /////////////
-  const newEndowID = await nextEndowId(env);
+  const newEndowID = await npodb.npo_count_inc();
 
   //init balances first: if endow creation fails, would simply override prev id
   await baldb.balance_put(newEndowID);
 
-  const newEndow: Endow.DbRecord = {
+  const newEndow: INpo = {
     ...ecfr,
     env,
-    PK: `Endow#${newEndowID}`,
-    SK: env,
     id: newEndowID,
     social_media_urls: {},
     sdgs: [],
@@ -111,8 +101,8 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
       { Update: regUpdate<"tx">(reg, { endowment_id: newEndowID }) },
       {
         Put: {
-          TableName: tables.endowments_v3,
-          Item: newEndow,
+          TableName: NpoDb.name,
+          Item: npodb.npo_record(newEndow),
         },
       },
     ],

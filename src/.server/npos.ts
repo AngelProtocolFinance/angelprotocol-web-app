@@ -1,7 +1,7 @@
 import type {
   EndowItem,
-  EndowsPage,
   EndowsQueryParamsParsed,
+  INposPage,
   UnSdgNum,
 } from "@better-giving/endowment";
 import type * as cs from "@better-giving/endowment/cloudsearch";
@@ -15,7 +15,7 @@ const HITS_PER_PAGE = 20;
 
 export async function getNpos(
   params: EndowsQueryParamsParsed
-): Promise<EndowsPage> {
+): Promise<INposPage> {
   const { fields, query: q, page = 1, ...p } = params;
 
   const filters = {

@@ -1,12 +1,12 @@
-import type { Allocation } from "@better-giving/endowment";
+import type { IAllocation } from "@better-giving/endowment";
 import { Banknote, Sprout, Trees, TrendingUp, Zap } from "lucide-react";
 
-export function toAlloc(input: string): Allocation {
+export function toAlloc(input: string): IAllocation {
   const [a, b, c] = input.split("-").map((str) => Number.parseInt(str, 10));
   return { cash: a, liq: b, lock: c };
 }
 
-export function toAllocOptValue(input: Allocation): string {
+export function toAllocOptValue(input: IAllocation): string {
   const padNumber = (num: number): string => num.toString().padStart(3, "0");
   return `${padNumber(input.cash)}-${padNumber(input.liq)}-${padNumber(
     input.lock

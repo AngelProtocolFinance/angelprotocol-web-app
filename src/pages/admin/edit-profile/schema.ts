@@ -2,7 +2,6 @@ import {
   $,
   $req,
   endow_designation,
-  https_url,
   reg_number,
   slug,
   social_media_urls,

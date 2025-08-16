@@ -1,4 +1,4 @@
-import type { Allocation } from "@better-giving/endowment";
+import type { IAllocation } from "@better-giving/endowment";
 import { humanize } from "helpers/decimal";
 import {
   HandCoins,
@@ -10,7 +10,7 @@ import {
 interface Props {
   total: number;
   font_size?: number; // Font size in pixels, defaults to 18
-  allocation: Allocation;
+  allocation: IAllocation;
 }
 
 interface Desc {
@@ -19,7 +19,7 @@ interface Desc {
   text: string;
 }
 
-type Acc = keyof Allocation;
+type Acc = keyof IAllocation;
 
 type DescMap = { [acc in Acc]: Desc };
 const desc_map: DescMap = {

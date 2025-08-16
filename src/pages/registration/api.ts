@@ -13,7 +13,7 @@ import { cognito, toAuth } from ".server/auth";
 import { reg_cookie } from ".server/cookie";
 import { env } from ".server/env";
 import { createRegistration } from ".server/registration/create-reg";
-import { isClaimed } from ".server/registration/helpers";
+import { is_claimed } from ".server/registration/helpers";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
@@ -63,7 +63,7 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
     throw new Response("Unauthorized", { status: 403 });
   }
 
-  if (init.claim && (await isClaimed(init.claim.ein, env))) {
+  if (init.claim && (await is_claimed(init.claim.ein))) {
     throw new Response(`to-claim:${init.claim.id} is already claimed`, {
       status: 400,
     });

@@ -1,8 +1,8 @@
-import type * as endowDb from "@better-giving/endowment/db";
+import type { INpo } from "@better-giving/endowment";
 import { tables } from "@better-giving/types/list";
 import type { UserEndow } from "@better-giving/user";
 import type * as userDb from "@better-giving/user/db";
-import { BatchGetCommand, QueryCommand, ap } from "./aws/db";
+import { BatchGetCommand, QueryCommand, ap, npodb } from "./aws/db";
 import { env } from "./env";
 
 export async function getUserNpos(userId: string): Promise<UserEndow[]> {
@@ -23,12 +23,7 @@ export async function getUserNpos(userId: string): Promise<UserEndow[]> {
   const batchGet = new BatchGetCommand({
     RequestItems: {
       [tables.endowments_v3]: {
-        Keys: creds.map((cred) => {
-          return {
-            PK: `Endow#${cred.endowID}`,
-            SK: env,
-          } satisfies endowDb.Endow.Keys;
-        }),
+        Keys: creds.map((cred) => npodb.key_npo(cred.endowID)),
         ProjectionExpression: "#name, #id, #logo",
         ExpressionAttributeNames: {
           "#name": "name",
@@ -40,7 +35,7 @@ export async function getUserNpos(userId: string): Promise<UserEndow[]> {
   });
 
   const { Responses } = await ap.send(batchGet);
-  type EndowMeta = Pick<endowDb.Endow.DbRecord, "name" | "logo" | "id">;
+  type EndowMeta = Pick<INpo, "name" | "logo" | "id">;
 
   const endows = (Responses?.[tables.endowments_v3] ??
     []) as unknown as EndowMeta[];
