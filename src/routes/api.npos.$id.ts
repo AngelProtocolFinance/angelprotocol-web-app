@@ -8,7 +8,6 @@ import { npodb } from ".server/aws/db";
 export const loader: LoaderFunction = async ({ params, request }) => {
   const id = v.parse(v.union([$int_gte1, segment]), params.id);
   const { fields } = v.parse(npo_search, search(request));
-
   const npo = await npodb.npo(id, fields);
   if (!npo) return resp.status(404);
   return resp.json(npo);

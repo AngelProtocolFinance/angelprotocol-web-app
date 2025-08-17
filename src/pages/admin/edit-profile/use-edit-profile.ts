@@ -26,10 +26,10 @@ export default function useEditProfile(df: DirtyFields) {
       if (df.slug) {
         if (fv.slug !== "") {
           const npo = await fetch(`/api/npos/${fv.slug}?fields=id`).then((r) =>
-            r.json()
+            r.status === 404 ? undefined : r.json()
           );
-          //npo is found with update.slug
-          if (npo.id) {
+
+          if (npo?.id) {
             return setPrompt({
               type: "error",
               children: `Slug "${fv.slug}" is already taken`,

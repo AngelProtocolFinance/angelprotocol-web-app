@@ -22,7 +22,7 @@ export const allVideos: LoaderFunction = async ({ request, params }) => {
   const endowId = parse($int_gte1, params.id);
   const page = await npodb.npo_media(endowId, {
     type: "video",
-    limit: 1,
+    limit: 5,
     next,
   });
   return page;
