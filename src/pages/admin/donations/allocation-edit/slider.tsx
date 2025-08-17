@@ -1,4 +1,4 @@
-import type { Allocation } from "@better-giving/endowment";
+import type { IAllocation } from "@better-giving/endowment";
 import * as Slider from "@radix-ui/react-slider";
 import { HandCoins, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
@@ -6,18 +6,18 @@ import type { ReactNode } from "react";
 interface Props {
   disabled?: boolean;
   /** cash, liq, lock */
-  value: Allocation;
-  onChange: (value: Allocation) => void;
+  value: IAllocation;
+  onChange: (value: IAllocation) => void;
   classes?: string;
 }
 
 export type Boundary = [number, number];
 
-const toBoundary = (val: Allocation): Boundary => {
+const toBoundary = (val: IAllocation): Boundary => {
   return [val.cash, 100 - val.lock];
 };
 
-const toAlloc = ([b1, b2]: Boundary): Allocation => {
+const toAlloc = ([b1, b2]: Boundary): IAllocation => {
   return {
     cash: b1,
     liq: b2 - b1,

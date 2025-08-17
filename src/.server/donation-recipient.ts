@@ -2,8 +2,7 @@ import type { Allocation } from "@better-giving/donation/schema";
 import type { DbRecord, Keys } from "@better-giving/fundraiser/db";
 import { tables } from "@better-giving/types/list";
 import { default_allocation } from "constants/common";
-import { GetCommand, ap } from "./aws/db";
-import { getNpo } from "./npo";
+import { GetCommand, ap, npodb } from "./aws/db";
 
 export interface Recipient {
   npo: {
@@ -30,7 +29,7 @@ export interface Recipient {
 export async function get_recipient(id: string | number) {
   //recipient is endowment
   if (typeof id === "number") {
-    const npo = await getNpo(id);
+    const npo = await npodb.npo(id);
     if (!npo) return undefined;
     const recipient: Recipient = {
       npo: { id },

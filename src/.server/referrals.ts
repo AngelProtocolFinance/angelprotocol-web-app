@@ -1,8 +1,6 @@
-import type { Gsi1 } from "@better-giving/endowment/db";
 import * as db from "@better-giving/referrals/db";
-import { tables } from "@better-giving/types/list";
 import type { PayoutsPage, PendingEarnings, Referred } from "types/referrals";
-import { GetCommand, QueryCommand, ap, apes } from "./aws/db";
+import { GetCommand, QueryCommand, apes, npodb } from "./aws/db";
 
 export const referredBy = async (id: string): Promise<Referred[]> => {
   const ltdCmd = new GetCommand({
@@ -15,26 +13,13 @@ export const referredBy = async (id: string): Promise<Referred[]> => {
 
   const { Item: ltds = {} } = await apes.send(ltdCmd);
 
-  const referredsCmd = new QueryCommand({
-    TableName: tables.endowments_v3,
-    IndexName: "gsi1",
-    KeyConditionExpression: "#pk = :pk",
-    ExpressionAttributeValues: {
-      ":pk": `ReferredBy#${id}`,
-    },
-    ExpressionAttributeNames: { "#pk": "gsi1PK" },
-  });
-  return ap
-    .send(referredsCmd)
-    .then(({ Items = [] }) => Items as Gsi1.ReferredNpos.DbRecord[])
-    .then((items) =>
-      items.map((i) => ({
-        id: i.id,
-        name: i.name,
-        up_until: i.referrer_expiry,
-        ltd: ltds?.[`#${i.id}`] || 0,
-      }))
-    );
+  const npos = await npodb.npo_referred_by(id);
+  return npos.map((i) => ({
+    id: i.id,
+    name: i.name,
+    up_until: i.referrer_expiry,
+    ltd: ltds?.[`#${i.id}`] || 0,
+  }));
 };
 
 export const pendingEarnings = async (id: string): Promise<PendingEarnings> => {
@@ -63,7 +48,7 @@ export const pendingEarnings = async (id: string): Promise<PendingEarnings> => {
 
 export async function paidOut(
   id: string,
-  nextKey: string | null,
+  next?: string,
   limit = 10
 ): Promise<PayoutsPage> {
   const cmd = new QueryCommand({
@@ -72,7 +57,7 @@ export async function paidOut(
     ExpressionAttributeValues: { ":pk": `Po#${id}` satisfies db.Payout["PK"] },
     ScanIndexForward: false,
     Limit: limit,
-    ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
+    ExclusiveStartKey: next ? JSON.parse(next) : undefined,
   });
 
   const res = await apes.send(cmd);

@@ -1,4 +1,4 @@
-import type { Program } from "@better-giving/endowment";
+import type { IProgram } from "@better-giving/endowment";
 import { Link } from "@remix-run/react";
 import type { LinksFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
@@ -16,7 +16,7 @@ export { loader, action } from "./api";
 export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 export default function ProgramEditor() {
-  const program = useCachedLoaderData<Program>();
+  const program = useCachedLoaderData<IProgram>();
   return (
     <>
       <Link

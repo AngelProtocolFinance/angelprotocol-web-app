@@ -1,4 +1,4 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import type { NewFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useLoaderData } from "@remix-run/react";
@@ -15,7 +15,7 @@ import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 export default function CreateFund() {
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state !== "idle";
-  const endow = useLoaderData<Endow | null>();
+  const endow = useLoaderData<INpo | null>();
   const {
     register,
     control,

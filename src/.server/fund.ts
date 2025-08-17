@@ -1,4 +1,4 @@
-import type * as endowDb from "@better-giving/endowment/db";
+import type { INpoDb } from "@better-giving/endowment";
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import { type SlugEnvGsi, fundGsi } from "@better-giving/fundraiser/db";
 import type * as db from "@better-giving/fundraiser/db";
@@ -13,6 +13,7 @@ import {
   type QueryCommandInput,
   UpdateCommand,
   ap,
+  npodb,
 } from "./aws/db";
 import { env } from "./env";
 
@@ -48,10 +49,7 @@ export const getFund = async (
   }
 
   /// GET ALL MEMBER DETAILS ///
-  type Endow = Pick<
-    endowDb.Endow.NonKeyAttributes,
-    "id" | "name" | "card_img" | "image" | "logo"
-  >;
+  type Endow = Pick<INpoDb, "id" | "name" | "card_img" | "image" | "logo">;
   const fundMemberNames: AttrNames<Endow> = {
     "#card_img": "card_img",
     "#id": "id",
@@ -62,12 +60,7 @@ export const getFund = async (
   const batchGet = new BatchGetCommand({
     RequestItems: {
       [tables.endowments_v3]: {
-        Keys: fund.members.map((endowId) => {
-          return {
-            PK: `Endow#${endowId}`,
-            SK: env,
-          } as endowDb.Endow.Keys;
-        }),
+        Keys: fund.members.map((id) => npodb.key_npo(id)),
         ProjectionExpression: Object.keys(fundMemberNames).join(", "),
         ExpressionAttributeNames: fundMemberNames,
       },

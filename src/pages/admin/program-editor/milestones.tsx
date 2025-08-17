@@ -1,4 +1,4 @@
-import type { Milestone as TMilestone } from "@better-giving/endowment";
+import type { IMilestone } from "@better-giving/endowment";
 import { useFetcher } from "@remix-run/react";
 import { Info } from "components/status";
 import { Plus } from "lucide-react";
@@ -6,7 +6,7 @@ import Milestone from "./milestone";
 
 type Props = {
   programId: string;
-  milestones: TMilestone[];
+  milestones: IMilestone[];
 };
 
 export default function Milestones({ programId, milestones }: Props) {

@@ -1,52 +1,57 @@
+import {
+  $int_gte1,
+  milestone_id,
+  milestone_update,
+  program_id,
+  program_update,
+} from "@better-giving/endowment/schema";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
-import { getProgram } from "api/get/program";
-
 import type { ActionData } from "types/action";
+import { parse } from "valibot";
+import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
-export const loader: LoaderFunction = async ({ params }) =>
-  getProgram(params.id, params.programId);
+export const loader: LoaderFunction = async ({ params }) => {
+  const npo_id = parse($int_gte1, params.id);
+  const pid = parse(program_id, params.programId);
+  const prog = await npodb.npo_program(pid, npo_id);
+  if (!prog) return { status: 404 };
+  return prog;
+};
 export const action: ActionFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
-  const basePath = `${ver(1)}/endowments/${adm.id}/programs/${adm.params.programId}`;
+  const pid = parse(program_id, adm.params.programId);
 
   const { intent, ...p } = await adm.req.json();
 
   if (intent === "add-milestone") {
-    const res = await ap.post(`${basePath}/milestones`, {
-      headers: { authorization: adm.idToken },
-      json: {
-        title: `Milestone ${p["next-milestone-num"]}`,
-        description: "milestone description",
-        date: new Date().toISOString(),
-      },
+    await npodb.prog_milestone_put(pid, {
+      title: `Milestone ${p["next-milestone-num"]}`,
+      description: "milestone description",
+      date: new Date().toISOString(),
     });
-    return { ok: res.ok };
+    return { ok: true };
   }
 
   if (intent === "delete-milestone") {
-    const res = await ap.delete(`${basePath}/milestones/${p["milestone-id"]}`, {
-      headers: { authorization: adm.idToken },
-    });
-    return { ok: res.ok };
+    const mid = parse(milestone_id, p["milestone-id"]);
+    await npodb.prog_milestone_delete(pid, mid);
+    return { ok: true };
   }
 
   if (intent === "edit-milestone") {
     const { "milestone-id": id, ...rest } = p;
-    const res = await ap.patch(`${basePath}/milestones/${id}`, {
-      json: rest,
-      headers: { authorization: adm.idToken },
-    });
-    return { ok: res.ok };
+    const mid = parse(milestone_id, id);
+    const upd8 = parse(milestone_update, rest);
+    await npodb.prog_milestone_update(pid, mid, upd8);
+    return { ok: true };
   }
+
   //edit program
-  await ap.patch(basePath, {
-    headers: { authorization: adm.idToken },
-    json: p,
-  });
+  const upd8 = parse(program_update, p);
+  await npodb.npo_prog_update(adm.id, pid, upd8);
 
   return { __ok: "Program updated" } satisfies ActionData;
 };

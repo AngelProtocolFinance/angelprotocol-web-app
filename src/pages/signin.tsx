@@ -12,6 +12,7 @@ import Image from "components/image";
 import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
+import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
@@ -64,10 +65,9 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user } = await cognito.retrieve(request);
-  const from = new URL(request.url);
-  const redirect_to = from.searchParams.get("redirect");
-  if (user) return redirect(redirect_to || appRoutes.marketplace);
-  return redirect_to || "/";
+  const { redirect: to } = search(request);
+  if (user) return redirect(to || appRoutes.marketplace);
+  return to || "/";
 };
 
 export const meta: MetaFunction = () =>

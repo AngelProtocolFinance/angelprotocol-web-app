@@ -1,23 +1,26 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import type { FundItem } from "@better-giving/fundraiser";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { getEndow } from "api/get/endow";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
+import { npodb } from ".server/aws/db";
 import { getFundsNpoMemberOf } from ".server/funds";
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   user: UserV2;
   funds: FundItem[];
-  endow: Endow;
+  endow: INpo;
 }
 
 export const loader: LoaderFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
-  const endow = await getEndow(adm.id);
+
+  const endow = await npodb.npo(adm.id);
+  if (!endow) return { status: 404 };
+
   const funds = await getFundsNpoMemberOf(endow.id, {
     npoProfileFeatured: false,
   });

@@ -1,8 +1,8 @@
-import type { Program as IProgram } from "@better-giving/endowment";
+import type { IProgramDb } from "@better-giving/endowment";
 import { Info } from "components/status";
 import { Program } from "./program";
 
-export default function List({ programs }: { programs: IProgram[] }) {
+export default function List({ programs }: { programs: IProgramDb[] }) {
   return (
     <div className="@container grid gap-3 p-4 @lg:p-8 border border-gray-l3 rounded-sm bg-white dark:bg-blue-d6">
       {programs.length === 0 ? (

@@ -1,4 +1,4 @@
-import type { Allocation } from "@better-giving/endowment";
+import type { IAllocation } from "@better-giving/endowment";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Field, Label, Switch } from "@headlessui/react";
 import { useFetcher, useNavigate } from "@remix-run/react";
@@ -28,9 +28,9 @@ export default function AllocationEdit() {
   );
 }
 
-function Content(props: Allocation) {
+function Content(props: IAllocation) {
   const fetcher = useFetcher();
-  const [alloc, setAlloc] = useState<Allocation>(props);
+  const [alloc, setAlloc] = useState<IAllocation>(props);
   const [isCustom, setIsCustom] = useState(
     allocationOptions.every((opt) => opt.value !== toAllocOptValue(props))
   );

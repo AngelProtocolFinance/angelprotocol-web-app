@@ -20,3 +20,28 @@ class Resp {
 }
 
 export const resp = new Resp();
+
+type R = { [k: string]: string | undefined };
+
+export function search<T extends { [k: string]: string }>(
+  search: URLSearchParams
+): T;
+export function search<T extends R>(request: Request): T;
+export function search<T extends R>(url: URL): T;
+export function search<T extends R>(search: URLSearchParams): T;
+export function search<T extends R>(url_str: string): T;
+export function search<T extends R>(
+  input: Request | URLSearchParams | URL | string
+): T {
+  let x: URLSearchParams;
+  if (input instanceof URLSearchParams) {
+    x = input;
+  } else if (input instanceof Request) {
+    x = new URL(input.url).searchParams;
+  } else if (input instanceof URL) {
+    x = input.searchParams;
+  } else {
+    x = new URL(input).searchParams;
+  }
+  return Object.fromEntries(x.entries()) as T;
+}

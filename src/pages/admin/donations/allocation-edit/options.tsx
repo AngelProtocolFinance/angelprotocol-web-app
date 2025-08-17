@@ -1,10 +1,10 @@
-import type { Allocation } from "@better-giving/endowment";
+import type { IAllocation } from "@better-giving/endowment";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { allocationOptions, toAlloc, toAllocOptValue } from "./common";
 
 interface Props {
-  value: Allocation;
-  onChange: (val: Allocation) => void;
+  value: IAllocation;
+  onChange: (val: IAllocation) => void;
 }
 export function AllocationOptions(props: Props) {
   return (

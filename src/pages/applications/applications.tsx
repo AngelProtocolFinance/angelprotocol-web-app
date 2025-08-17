@@ -22,7 +22,6 @@ export default function Applications() {
             item.id.toLowerCase().includes(query.toLowerCase())
         )}
         {...props}
-        loading={loading}
       />
     ),
     page1,
