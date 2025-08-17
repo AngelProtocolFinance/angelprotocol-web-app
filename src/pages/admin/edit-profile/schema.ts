@@ -1,7 +1,8 @@
 import {
   $,
   $req,
-  endow_designation,
+  https_url,
+  org_designation,
   reg_number,
   slug,
   social_media_urls,
@@ -40,7 +41,7 @@ export const schema = v.object({
   slug,
   registration_number: reg_number,
   name: $req,
-  endow_designation,
+  endow_designation: org_designation,
   overview: richTextContent({ maxChars: MAX_CHARS, required: true }),
   tagline: v.pipe($req, v.maxLength(140, "max length is 140 chars")),
   image: imgOutput({ required: true }),

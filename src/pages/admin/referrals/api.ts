@@ -2,9 +2,8 @@ import type { IBapp } from "@better-giving/banking-applications";
 import type { LoaderFunction } from "@vercel/remix";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { config } from "./config";
-import { bappdb } from ".server/aws/db";
+import { bappdb, npodb } from ".server/aws/db";
 import { getEarnings } from ".server/donations";
-import { getNpo } from ".server/npo";
 import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -23,7 +22,7 @@ export const loader: LoaderFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
-  const endow = await getNpo(adm.id);
+  const endow = await npodb.npo(adm.id);
   if (!endow) throw `npo:${adm.id} not found`;
 
   if (!endow.referral_id) throw `@dev: referral_id not found for npo:${adm.id}`;

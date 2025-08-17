@@ -12,7 +12,7 @@ import { Header } from "./header";
 import SidebarHeader from "./sidebar-header";
 import type { LoaderData } from "./types";
 import { cognito, toAuth } from ".server/auth";
-import { getNpo } from ".server/npo";
+import { npodb } from ".server/aws/db";
 
 export const meta: MetaFunction = ({ data }) => {
   const d = data as LoaderData;
@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const id = parse($int_gte1, params.id);
 
-  const npo = await getNpo(id, [
+  const npo = await npodb.npo(id, [
     "logo",
     "name",
     "allocation",

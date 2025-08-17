@@ -4,11 +4,11 @@ import {
   redirect,
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { getEndow } from "api/get/endow";
 import { parseWithValibot } from "conform-to-valibot";
 import type { UserV2 } from "types/auth";
 import type { EndowAdmin } from "types/npo";
 import { schema } from "./schema";
+import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
@@ -47,7 +47,8 @@ export const addAction: ActionFunction = async (x) => {
   const payload = parseWithValibot(fv, { schema: schema([]) });
   if (payload.status !== "success") return payload.reply();
 
-  const endow = await getEndow(adm.id, ["name"]);
+  const endow = await npodb.npo(adm.id, ["name"]);
+  if (!endow) return { status: 404 };
 
   await ap.post(`${ver(2)}/endowments/${adm.id}/admins`, {
     headers: { authorization: adm.idToken },
