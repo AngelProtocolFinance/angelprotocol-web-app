@@ -6,12 +6,13 @@ import {
   redirect,
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { getEndow } from "api/get/endow";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles } from "components/rich-text";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { search } from "helpers/https";
 import { isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
+import { npodb } from ".server/aws/db";
 
 export { ErrorBoundary } from "components/error";
 export { default } from "./create-fund";
@@ -22,10 +23,9 @@ export const links: LinksFunction = () => [
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
-  const url = new URL(request.url);
-  const npoId = url.searchParams.get("npo");
-  const endow = npoId ? await getEndow(npoId) : null;
-  return endow;
+  const { npo: id } = search(request);
+  const npo = id ? await npodb.npo(+id) : null;
+  return npo;
 };
 
 export const action: ActionFunction = async ({ request }) => {

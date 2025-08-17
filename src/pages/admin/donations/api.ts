@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@vercel/remix";
+import { search } from "helpers/https";
 import type { Donation } from "types/donations";
 import { endowUpdate } from "../endow-update-action";
 import { get_donations } from ".server/donations";
@@ -13,13 +14,12 @@ export const loader: LoaderFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
-  const from = new URL(adm.req.url);
-  const pageNum = from.searchParams.get("page") ?? "1";
+  const { page: pn = "1" } = search(adm.req);
 
   const page = await get_donations({
     asker: adm.id,
     status: "final",
-    page: +pageNum,
+    page: +pn,
   });
 
   return page;

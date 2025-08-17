@@ -1,4 +1,4 @@
-import type { EndowsPage } from "@better-giving/endowment";
+import type { INposPage } from "@better-giving/endowment";
 import type { NP } from "@better-giving/nowpayments/types";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
@@ -8,7 +8,7 @@ export const handlers = [
     return HttpResponse.json();
   }),
   http.get("api/npos", () => {
-    const data: EndowsPage = {
+    const data: INposPage = {
       items: [],
       pages: 1,
       page: 1,

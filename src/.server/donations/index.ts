@@ -102,7 +102,7 @@ export const get_donations = async (
 
 export const getEarnings = async (
   referrer: string,
-  nextKey: string | null,
+  next?: string,
   limit = 10
 ): Promise<EarningsPage> => {
   const command = new QueryCommand({
@@ -117,7 +117,7 @@ export const getEarnings = async (
     },
     Limit: limit,
     ScanIndexForward: false,
-    ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
+    ExclusiveStartKey: next ? JSON.parse(next) : undefined,
   });
 
   const result = await apes.send(command);

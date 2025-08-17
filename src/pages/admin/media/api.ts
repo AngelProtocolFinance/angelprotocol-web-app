@@ -7,6 +7,7 @@ import {
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { parseWithValibot } from "conform-to-valibot";
+import { search } from "helpers/https";
 import { parse } from "valibot";
 import { schema } from "./video-editor";
 import { npodb } from ".server/aws/db";
@@ -17,8 +18,7 @@ export const featuredMedia: LoaderFunction = async ({ params }) => {
   return npodb.npo_media(endowId, { featured: true, type: "video", limit: 3 });
 };
 export const allVideos: LoaderFunction = async ({ request, params }) => {
-  const url = new URL(request.url);
-  const next = url.searchParams.get("nextPageKey") ?? undefined;
+  const { nextPageKey: next } = search(request);
   const endowId = parse($int_gte1, params.id);
   const page = await npodb.npo_media(endowId, {
     type: "video",

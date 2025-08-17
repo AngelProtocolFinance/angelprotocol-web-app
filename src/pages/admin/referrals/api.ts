@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async (x) => {
   const [pendings, referreds, earnings, p, pltd] = await Promise.all([
     pendingEarnings(endow.referral_id),
     referredBy(endow.referral_id),
-    getEarnings(endow.referral_id, null, 4),
+    getEarnings(endow.referral_id, undefined, 4),
     bappdb.npo_default_bapp(endow.id),
     paidOutLtd(endow.referral_id),
   ]);

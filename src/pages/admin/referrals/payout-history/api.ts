@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@vercel/remix";
+import { search } from "helpers/https";
 import type { PayoutsPage } from "types/referrals";
 import { npodb } from ".server/aws/db";
 import { paidOut } from ".server/referrals";
@@ -15,8 +16,7 @@ export const loader: LoaderFunction = async (args) => {
 
   if (!x.referral_id) throw `@dev: referral_id not found for npo:${adm.id}`;
 
-  const url = new URL(adm.req.url);
-  const nextKey = url.searchParams.get("nextKey");
+  const { nextKey } = search(args.request);
 
   const page = await paidOut(x.referral_id, nextKey, 8);
 

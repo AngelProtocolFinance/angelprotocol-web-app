@@ -1,6 +1,6 @@
-import { $int_gte1, segment } from "@better-giving/endowment/schema";
+import { $int_gte1, segment } from "@better-giving/schemas";
 import { safeParse, union } from "valibot";
-import { getNpo } from ".server/npo";
+import { npodb } from ".server/aws/db";
 
 export const npoId = async (
   idOrSlugParam: string | undefined
@@ -10,7 +10,7 @@ export const npoId = async (
 
   if (typeof id.output === "number") return id.output;
 
-  const npo = await getNpo(id.output, ["id"]);
+  const npo = await npodb.npo(id.output, ["id"]);
   if (!npo) throw new Response(null, { status: 404 });
   return npo.id;
 };

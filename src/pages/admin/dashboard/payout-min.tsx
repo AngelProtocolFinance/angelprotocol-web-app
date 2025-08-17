@@ -4,6 +4,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useNavigate, useSearchParams } from "@remix-run/react";
 import { Field } from "components/form";
+import { search } from "helpers/https";
 import { endowUpdate } from "pages/admin/endow-update-action";
 import { useForm } from "react-hook-form";
 import * as v from "valibot";
@@ -24,9 +25,8 @@ export const amount = v.pipe(
 
 export default function PayoutMin() {
   const [params] = useSearchParams();
+  const { min = min_payout_amount } = search(params);
   const navigate = useNavigate();
-
-  const min = +(params.get("min") ?? `${min_payout_amount}`);
 
   return (
     <Dialog
@@ -37,7 +37,7 @@ export default function PayoutMin() {
       className="relative z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
-      <Content prev={min} />
+      <Content prev={+min} />
     </Dialog>
   );
 }

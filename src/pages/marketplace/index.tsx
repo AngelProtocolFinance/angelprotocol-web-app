@@ -3,6 +3,7 @@ import { Outlet, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
+import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
 import type { EndowCardsPage } from "types/npo";
@@ -16,11 +17,7 @@ import { getNpos } from ".server/npos";
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
-  const url = new URL(request.url);
-  const params = safeParse(
-    endowsQueryParams,
-    Object.fromEntries(url.searchParams)
-  );
+  const params = safeParse(endowsQueryParams, search(request));
 
   if (params.issues) {
     return { status: 400, body: params.issues[0].message };

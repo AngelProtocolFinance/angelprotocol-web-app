@@ -1,11 +1,12 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
-import { getEndow } from "api/get/endow";
 import type { EndowmentSettingsAttributes } from "types/npo";
 import { endowUpdate } from "../endow-update-action";
+import { npodb } from ".server/aws/db";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData
-  extends Pick<Endow, "id" | EndowmentSettingsAttributes> {}
+  extends Pick<INpo, "id" | EndowmentSettingsAttributes> {}
 
 const fields: EndowmentSettingsAttributes[] = [
   "receiptMsg",
@@ -14,8 +15,14 @@ const fields: EndowmentSettingsAttributes[] = [
   "donateMethods",
   "target",
 ];
-export const loader: LoaderFunction = async ({ params }) =>
-  getEndow(params.id, fields);
+export const loader: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+
+  const n = await npodb.npo(adm.id, fields);
+  if (!n) return { status: 404 };
+  return { ...n, id: adm.id } satisfies LoaderData;
+};
 
 export const action: ActionFunction = endowUpdate({
   success: "Settings updated",

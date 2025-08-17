@@ -1,4 +1,4 @@
-import type { Milestone as TMilestone } from "@better-giving/endowment";
+import type { IMilestone } from "@better-giving/endowment";
 import Image from "components/image";
 import { RichText } from "components/rich-text";
 import { Info } from "components/status";
@@ -6,7 +6,7 @@ import Container from "../common/container";
 
 type Props = {
   classes?: string;
-  milestones: TMilestone[];
+  milestones: IMilestone[];
 };
 
 export default function Milestones({ classes = "", milestones }: Props) {
@@ -29,7 +29,7 @@ export default function Milestones({ classes = "", milestones }: Props) {
   );
 }
 
-function Milestone(m: TMilestone) {
+function Milestone(m: IMilestone) {
   const isComplete = new Date() >= new Date(m.date);
 
   return (

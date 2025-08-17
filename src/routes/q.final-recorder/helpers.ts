@@ -3,7 +3,7 @@ import type {
   DMKey,
   DonationMessage,
 } from "@better-giving/donation/donation-message";
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
 import * as ref_db from "@better-giving/referrals/db";
 import type { Environment } from "@better-giving/types/list";
@@ -57,7 +57,7 @@ interface Commission {
 
 export const commission_fn = (
   tx: { tip: number; fee: number; id: string },
-  endow: Endow
+  endow: INpo
 ): Commission | null => {
   if (!endow.referrer || !endow.referrer_expiry) return null;
   const is_expired = new Date(endow.referrer_expiry) < new Date();

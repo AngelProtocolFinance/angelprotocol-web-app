@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
+import { search } from "helpers/https";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
 import { Table } from "./table";
@@ -13,14 +14,13 @@ interface LoaderData extends INpoSettlementsPage {}
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async (x) => {
-  const s = new URL(x.request.url).searchParams;
-  const next = s.get("next");
+  const { next } = search(x.request);
 
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
   return podb.npo_settlements(adm.id.toString(), {
-    next: next || undefined,
+    next,
     limit: 5,
   });
 };

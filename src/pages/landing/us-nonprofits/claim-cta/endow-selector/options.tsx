@@ -1,4 +1,4 @@
-import type { EndowsPage } from "@better-giving/endowment";
+import type { INposPage } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import Image from "components/image";
 import QueryLoader from "components/query-loader";
@@ -13,7 +13,7 @@ const fields = ["id", "name", "card_img", "registration_number"] as const;
 type Field = (typeof fields)[number];
 
 const fetcher = async (path: string) =>
-  fetch(path).then<EndowsPage<Field>>((res) => res.json());
+  fetch(path).then<INposPage<Field>>((res) => res.json());
 
 export function Options({ searchText }: Props) {
   const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 200);

@@ -1,14 +1,13 @@
 import { npo_series_opts } from "@better-giving/nav-history/schemas";
 import type { LoaderFunction } from "@vercel/remix";
-import { resp } from "helpers/https";
+import { resp, search } from "helpers/https";
 import type { INpoMetrics } from "types/npo-sf-metrics";
 import { parse } from "valibot";
 import { navdb } from ".server/aws/db";
-import { $earch, admin_checks, is_resp } from ".server/utils";
+import { admin_checks, is_resp } from ".server/utils";
 
 export const loader: LoaderFunction = async (x) => {
-  const s = $earch(x.request);
-  const opts = parse(npo_series_opts, s);
+  const opts = parse(npo_series_opts, search(x.request));
 
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;

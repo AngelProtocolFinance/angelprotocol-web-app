@@ -48,7 +48,7 @@ export const pendingEarnings = async (id: string): Promise<PendingEarnings> => {
 
 export async function paidOut(
   id: string,
-  nextKey: string | null,
+  next?: string,
   limit = 10
 ): Promise<PayoutsPage> {
   const cmd = new QueryCommand({
@@ -57,7 +57,7 @@ export async function paidOut(
     ExpressionAttributeValues: { ":pk": `Po#${id}` satisfies db.Payout["PK"] },
     ScanIndexForward: false,
     Limit: limit,
-    ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
+    ExclusiveStartKey: next ? JSON.parse(next) : undefined,
   });
 
   const res = await apes.send(cmd);

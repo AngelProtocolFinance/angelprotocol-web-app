@@ -1,8 +1,8 @@
 import type { IBalanceTxsPage } from "@better-giving/balance-txs";
 import type { LoaderFunction } from "@vercel/remix";
-import * as v from "valibot";
 import { baldb, btxdb, navdb } from ".server/aws/db";
 
+import { search } from "helpers/https";
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData extends IBalanceTxsPage {
@@ -11,20 +11,15 @@ export interface LoaderData extends IBalanceTxsPage {
 }
 
 export const loader: LoaderFunction = async (x) => {
-  const { searchParams: s } = new URL(x.request.url);
-  const key = v.parse(
-    v.nullable(v.pipe(v.string(), v.base64())),
-    s.get("next")
-  );
-
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
+  const { next } = search(x.request);
   const [{ lock_units }, ltd, btxs_page1] = await Promise.all([
     baldb.npo_balance(adm.id),
     navdb.ltd(),
     btxdb.owner_txs(adm.id.toString(), "lock", {
-      next: key ?? undefined,
+      next,
       limit: 10,
     }),
   ]);

@@ -1,4 +1,4 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import discordIcon from "assets/icons/social/discord.svg";
 import facebookIcon from "assets/icons/social/facebook.webp";
 import instagramIcon from "assets/icons/social/instagram.webp";
@@ -8,7 +8,7 @@ import xIcon from "assets/icons/social/x.webp";
 import youtubeIcon from "assets/icons/social/youtube.webp";
 import ExtLink from "components/ext-link";
 
-export default function Socials(props: Pick<Endow, "social_media_urls">) {
+export default function Socials(props: Pick<INpo, "social_media_urls">) {
   const { facebook, linkedin, twitter, discord, instagram, youtube, tiktok } =
     props.social_media_urls;
   return (

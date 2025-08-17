@@ -3,6 +3,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useSearchParams } from "@remix-run/react";
 import { Field, toYYYMMDD } from "components/form";
 import { DrawerIcon } from "components/icon";
+import { search } from "helpers/https";
 import { weeksAgo } from "helpers/weeks-ago";
 import { Filter as FilterIcon, XIcon } from "lucide-react";
 import { useRef } from "react";
@@ -18,8 +19,7 @@ export default function Filter({ classes = "", isDisabled }: Props) {
   const [params, setParams] = useSearchParams();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
-  const start = params.get("startDate");
-  const end = params.get("endDate");
+  const { startDate: s, endDate: e } = search(params);
 
   const {
     register,
@@ -31,8 +31,8 @@ export default function Filter({ classes = "", isDisabled }: Props) {
     resolver: valibotResolver(schema),
     defaultValues: {
       //set default value so empty can be tagged as invalid
-      start_date: toYYYMMDD(start ? new Date(start) : weeksAgo("now", 5)),
-      end_date: toYYYMMDD(end ? new Date(end) : new Date()),
+      start_date: toYYYMMDD(s ? new Date(s) : weeksAgo("now", 5)),
+      end_date: toYYYMMDD(e ? new Date(e) : new Date()),
     },
   });
 
