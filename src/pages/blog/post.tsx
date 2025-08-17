@@ -16,9 +16,7 @@ interface IPostDetailed extends IPost {
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const [post] = await wp
-    .get<IPostDetailed[]>(`posts?slug=${params.slug}`)
-    .json();
+  const [post] = await wp.get<IPost[]>(`posts?slug=${params.slug}`).json();
 
   if (!post) throw new Response("Not Found", { status: 404 });
 

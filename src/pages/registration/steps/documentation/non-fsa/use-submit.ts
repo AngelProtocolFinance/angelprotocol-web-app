@@ -26,7 +26,7 @@ export default function useSubmit({ props, initClaim, isDirty }: Args) {
     if (!initClaim && fv.ein !== props.doc?.ein) {
       const endow = await fetch(`/api/npos/ein/${fv.ein}`).then<
         INpoWithRegNum | undefined
-      >((r) => r.json());
+      >((r) => (r.status === 404 ? undefined : r.json()));
 
       if (endow) {
         if (endow.claimed ?? true) {

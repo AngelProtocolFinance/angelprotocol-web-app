@@ -23,7 +23,7 @@ export interface WidgetData {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const { id: sid, query = "" } = search(url);
-  const selectedId = v.parse(v.nullish($int_gte1), sid ?? params.id);
+  const selectedId = v.parse(v.optional($int_gte1), sid ?? params.id);
   const routeEndowId = v.parse(v.optional($int_gte1), params.id);
   const id = selectedId ?? routeEndowId;
 

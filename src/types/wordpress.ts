@@ -1,6 +1,6 @@
 /**https://developer.wordpress.org/rest-api/reference/ */
 
-export interface IHmtl {
+export interface IHtml {
   rendered: string;
 }
 
@@ -8,11 +8,11 @@ export interface IPost {
   id: number;
   date: string;
   slug: string;
-  title: IHmtl;
+  title: IHtml;
   author: number;
-  excerpt: IHmtl;
+  excerpt: IHtml;
   featured_media: number;
-  content: IHmtl;
+  content: IHtml;
 }
 
 export interface IPostsSearch {
@@ -28,7 +28,7 @@ export interface IPostsSearch {
    */
 }
 export interface IPostsPage {
-  posts: Post[];
+  posts: IPost[];
   pageNum: number;
   nextPageNum?: number;
 }
@@ -36,24 +36,6 @@ export interface IPostsPage {
 interface Html {
   rendered: string;
 }
-
-export type Post = {
-  id: number;
-  date: string;
-  slug: string;
-  title: Html;
-  author: number;
-  excerpt: Html;
-  featured_media: number;
-  content: Html;
-};
-
-/** custom type made from Post[] and response headers */
-export type PostPage = {
-  posts: Post[];
-  pageNum: number;
-  nextPageNum?: number;
-};
 
 export interface IMediaSize {
   file: string;
