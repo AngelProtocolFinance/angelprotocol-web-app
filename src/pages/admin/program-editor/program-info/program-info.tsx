@@ -1,4 +1,4 @@
-import type { Program } from "@better-giving/endowment";
+import type { IProgram } from "@better-giving/endowment";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, Form, Label } from "components/form";
 import Group from "components/group";
@@ -9,7 +9,7 @@ import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";
 import useSubmit from "./use-submit";
 
-export default function ProgramInfo(props: Program) {
+export default function ProgramInfo(props: IProgram) {
   const {
     register,
     handleSubmit,

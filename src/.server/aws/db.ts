@@ -15,6 +15,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb } from "@better-giving/balance-txs";
 import { BankingApplicationsDb } from "@better-giving/banking-applications";
+import { NpoDb } from "@better-giving/endowment";
 import { NavHistoryDB } from "@better-giving/nav-history";
 import { PayoutsDB } from "@better-giving/payouts";
 import {
@@ -53,3 +54,4 @@ export const podb = new PayoutsDB(apes, env);
 export const navdb = new NavHistoryDB(apes, env);
 export const baldb = new BalanceDb(apes, env);
 export const btxdb = new BalanceTxsDb(apes, env);
+export const npodb = new NpoDb(ap, env);

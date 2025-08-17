@@ -1,4 +1,4 @@
-import type { Allocation as IAllocation } from "@better-giving/endowment";
+import type { IAllocation } from "@better-giving/endowment";
 import { NavLink } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";

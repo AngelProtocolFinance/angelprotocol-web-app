@@ -1,4 +1,4 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
 import { Outlet } from "@remix-run/react";
 import type { MetaFunction } from "@vercel/remix";
@@ -13,7 +13,7 @@ export { profileLoader as loader } from "./profile-loader";
 
 export const meta: MetaFunction = ({ data }) => {
   if (!data) return [];
-  const d = data as Endow;
+  const d = data as INpo;
   return metas({
     title: `${d.name} - ${APP_NAME}`,
     description: d.tagline?.slice(0, 140),
@@ -24,7 +24,7 @@ export const meta: MetaFunction = ({ data }) => {
 };
 export { ErrorBoundary } from "components/error";
 export default function Profile() {
-  const data = useLoaderData() as Endow;
+  const data = useLoaderData() as INpo;
 
   return (
     <ProfileContext.Provider value={data}>

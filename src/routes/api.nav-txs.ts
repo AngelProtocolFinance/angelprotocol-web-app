@@ -1,14 +1,12 @@
 import { balance_txs_options } from "@better-giving/balance-txs";
 import type { LoaderFunction } from "@vercel/remix";
-import { resp } from "helpers/https";
+import { resp, search } from "helpers/https";
 import * as v from "valibot";
 import { cognito } from ".server/auth";
 import { btxdb } from ".server/aws/db";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { searchParams } = new URL(request.url);
-  const s = Object.fromEntries(searchParams.entries());
-  const opts = v.parse(balance_txs_options, s);
+  const opts = v.parse(balance_txs_options, search(request));
 
   const { user } = await cognito.retrieve(request);
   if (!user) return resp.status(401);

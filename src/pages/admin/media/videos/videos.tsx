@@ -1,4 +1,4 @@
-import type { MediaPage } from "@better-giving/endowment";
+import type { IMediaPage } from "@better-giving/endowment";
 import { NavLink, Outlet, useParams, useSearchParams } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import Breadcrumbs from "components/breadcrumbs";
@@ -16,7 +16,7 @@ export { clientLoader } from "api/cache";
 export default function Videos() {
   const [search] = useSearchParams();
   const params = useParams();
-  const page1 = useCachedLoaderData<MediaPage>();
+  const page1 = useCachedLoaderData<IMediaPage>();
   const { node } = use_paginator({
     page1,
     table: (p) => <List {...p} />,

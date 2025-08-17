@@ -9,7 +9,7 @@ import { posts } from "api/get/wp-posts";
 import Media from "components/media";
 import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
-import type { Wordpress } from "types/wordpress";
+import type { IPost, IPostsPage } from "types/wordpress";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
@@ -17,11 +17,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   const [items, total] = await posts(currPage);
   const itemsPerPage = 10;
 
-  const page: Wordpress.PostPage = {
+  const page: IPostsPage = {
     pageNum: currPage,
     posts: items,
     nextPageNum: currPage * itemsPerPage < total ? currPage + 1 : undefined,
-  } satisfies Wordpress.PostPage;
+  } satisfies IPostsPage;
   return page;
 };
 export const meta: MetaFunction = () =>
@@ -30,8 +30,8 @@ export const meta: MetaFunction = () =>
 export { ErrorBoundary } from "components/error";
 export default function Posts() {
   const [params] = useSearchParams();
-  const { data, state, load } = useFetcher<Wordpress.PostPage>();
-  const firstPage = useLoaderData() as Wordpress.PostPage;
+  const { data, state, load } = useFetcher<IPostsPage>();
+  const firstPage = useLoaderData() as IPostsPage;
   const [posts, setPosts] = useState(firstPage.posts);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function Posts() {
   );
 }
 
-const Cards = (props: { posts: Wordpress.Post[] }) =>
+const Cards = (props: { posts: IPost[] }) =>
   props.posts.map((post, _index) => (
     <NavLink
       key={post.slug}

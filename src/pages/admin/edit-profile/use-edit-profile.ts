@@ -1,5 +1,4 @@
 import { useFetcher } from "@remix-run/react";
-import { getEndow } from "api/get/endow";
 import type { IPromptV2 } from "components/prompt";
 import { errorPrompt } from "helpers/error-prompt";
 import { useActionResult } from "hooks/use-action-result";
@@ -26,9 +25,11 @@ export default function useEditProfile(df: DirtyFields) {
 
       if (df.slug) {
         if (fv.slug !== "") {
-          const result = await getEndow(fv.slug, ["id"], false);
-          //endow is found with update.slug
-          if (result.id) {
+          const npo = await fetch(`/api/npos/${fv.slug}?fields=id`).then((r) =>
+            r.status === 404 ? undefined : r.json()
+          );
+
+          if (npo?.id) {
             return setPrompt({
               type: "error",
               children: `Slug "${fv.slug}" is already taken`,

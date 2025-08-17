@@ -5,6 +5,7 @@ import {
 import { Popover, PopoverButton } from "@headlessui/react";
 import { useSearchParams } from "@remix-run/react";
 import { DrawerIcon } from "components/icon";
+import { search } from "helpers/https";
 import { FilterIcon } from "lucide-react";
 import { parse } from "valibot";
 import { Form } from "./form";
@@ -17,7 +18,7 @@ type Props = {
 
 export function Filter({ classes = "", isDisabled }: Props) {
   const [params, setParams] = useSearchParams();
-  const parsed = parse(queryParams, Object.fromEntries(params));
+  const parsed = parse(queryParams, search(params));
 
   async function onSubmit(fv: FV) {
     const copy = new URLSearchParams(params);

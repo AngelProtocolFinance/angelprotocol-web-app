@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@vercel/remix";
+import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { cognito, toAuth } from ".server/auth";
 import { bappdb } from ".server/aws/db";
@@ -11,11 +12,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (!user) return toAuth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
-  const source = new URL(request.url);
-
-  const { status, nextPageKey } = Object.fromEntries(
-    source.searchParams.entries()
-  );
+  const { status, nextPageKey } = search(request.url);
   const page = await bappdb.bapps({
     status: status as any,
     next: nextPageKey as any,

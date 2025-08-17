@@ -1,4 +1,3 @@
-import type { EndowCount } from "@better-giving/endowment/db";
 import type {
   ApplicationDbRecord,
   Key,
@@ -11,13 +10,11 @@ import {
   isRejected,
 } from "@better-giving/registration/models";
 import type { Step6 } from "@better-giving/registration/step";
-import { type Environment, tables } from "@better-giving/types/list";
+import { tables } from "@better-giving/types/list";
 import type { EndowAdmin } from "@better-giving/user/db";
-import {
-  type TransactWriteCommandInput,
-  UpdateCommand,
-  type UpdateCommandInput,
-  ap,
+import type {
+  TransactWriteCommandInput,
+  UpdateCommandInput,
 } from "../../aws/db";
 import { env } from "../../env";
 import { wise } from "../../sdks";
@@ -67,26 +64,6 @@ export async function bankingRecord(reg: ApplicationDbRecord, endowId: number) {
   };
 }
 
-export const dbUpdate = (fields: Record<string, any>) => {
-  const comps = Object.entries(fields).map(([k, v]) => ({
-    update: `#${k} = :${k}`,
-    name: [`#${k}`, k],
-    value: [`:${k}`, v],
-  }));
-
-  return {
-    UpdateExpression: `SET ${comps.map(({ update: u }) => u).join(",")}`,
-    ExpressionAttributeNames: comps.reduce(
-      (p, { name: [n, _n] }) => ({ ...p, [n]: _n }),
-      {}
-    ),
-    ExpressionAttributeValues: comps.reduce(
-      (p, { value: [v, _v] }) => ({ ...p, [v]: _v }),
-      {}
-    ),
-  };
-};
-
 type TxItems = NonNullable<TransactWriteCommandInput["TransactItems"]>;
 type TxType = NonNullable<TxItems[number]>;
 export const regUpdate = <T extends "tx" | "standalone">(
@@ -116,21 +93,4 @@ export const regUpdate = <T extends "tx" | "standalone">(
       ":gsi2SK": sks.gsi2,
     },
   };
-};
-
-export const nextEndowId = async (env: Environment): Promise<number> => {
-  const res = await ap.send(
-    new UpdateCommand({
-      TableName: tables.endowments_v3,
-      Key: { PK: "Count", SK: env } satisfies EndowCount.Keys,
-      UpdateExpression: "SET #count = #count + :one",
-      ExpressionAttributeNames: {
-        "#count": "count",
-      },
-
-      ExpressionAttributeValues: { ":one": 1 },
-      ReturnValues: "UPDATED_NEW",
-    })
-  );
-  return res.Attributes?.count ?? 1;
 };

@@ -1,11 +1,9 @@
 import { http, HttpResponse } from "msw";
-import type { Wordpress } from "types/wordpress";
+import type { IPost } from "types/wordpress";
 import { wp, wpUrl } from "../api";
 
-export const posts = async (
-  page: number
-): Promise<[Wordpress.Post[], number]> => {
-  const res = await wp.get<Wordpress.Post[]>("posts", {
+export const posts = async (page: number): Promise<[IPost[], number]> => {
+  const res = await wp.get<IPost[]>("posts", {
     searchParams: { page },
   });
   const total = +(res.headers.get("X-Wp-Total") ?? "0");
@@ -13,5 +11,5 @@ export const posts = async (
 };
 
 export const postsMock = http.get(wpUrl + "/posts", () =>
-  HttpResponse.json([] satisfies Wordpress.Post[])
+  HttpResponse.json([] satisfies IPost[])
 );

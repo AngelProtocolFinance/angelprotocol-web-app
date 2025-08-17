@@ -11,6 +11,7 @@ import { Page3 } from "./page3";
 import { Page4 } from "./page4";
 import { styles } from "./styles";
 
+import { search } from "helpers/https";
 import quicksand_bold from "./fonts/quicksand-bold.ttf";
 import quicksand_light from "./fonts/quicksand-light.ttf";
 import quicksand_medium from "./fonts/quicksand-medium.ttf";
@@ -30,7 +31,7 @@ Font.register({
 
 export default function PdfExport() {
   const [params] = useSearchParams();
-  const res = safeParse(ogInput, Object.fromEntries(params.entries()));
+  const res = safeParse(ogInput, search(params));
   const view = bgView(res.issues ? ogInputDefault : res.output);
   return (
     <ClientOnly>

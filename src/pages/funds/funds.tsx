@@ -4,6 +4,7 @@ import { NavLink, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { appRoutes } from "constants/routes";
+import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
 import debounce from "lodash/debounce";
@@ -17,11 +18,7 @@ import { getFunds } from ".server/funds";
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
-  const source = new URL(request.url);
-  const params = safeParse(
-    fundsParams,
-    Object.fromEntries(source.searchParams)
-  );
+  const params = safeParse(fundsParams, search(request));
   if (params.issues) {
     return { status: 400, body: params.issues[0].message };
   }

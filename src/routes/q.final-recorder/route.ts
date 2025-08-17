@@ -12,9 +12,8 @@ import { referral_commission_rate } from "./config";
 import { build_donation_msg, commission_fn } from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
 import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
-import { TransactWriteCommand, ap, apes } from ".server/aws/db";
+import { TransactWriteCommand, ap, apes, npodb } from ".server/aws/db";
 import { env } from ".server/env";
-import { getNpo } from ".server/npo";
 import { discordFiatMonitor, qstash_receiver } from ".server/sdks";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -117,7 +116,7 @@ export const action: ActionFunction = async ({ request }) => {
     if (num_members > 0) {
       let fund_net = 0;
       for (const member of tx.to.members) {
-        const endow = await getNpo(+member);
+        const endow = await npodb.npo(+member);
         if (!endow) {
           console.error(`Endowment ${member} not found!`);
           continue;
@@ -195,7 +194,7 @@ export const action: ActionFunction = async ({ request }) => {
         .catch(console.error);
       // to single endowment
     } else {
-      const endow = await getNpo(+tx.to.id);
+      const endow = await npodb.npo(+tx.to.id);
       if (!endow) {
         console.error(`Endowment ${tx.to.id} not found!`);
         return;

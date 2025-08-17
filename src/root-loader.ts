@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import { data, redirect } from "@remix-run/react";
 import type { LoaderFunctionArgs } from "@vercel/remix";
 import { addDays } from "date-fns";
+import { search } from "helpers/https";
 import type { DetailedUser } from "types/auth";
 import { cognito, oauth } from ".server/auth";
 import { reg_cookie } from ".server/cookie";
@@ -11,12 +12,10 @@ import { getUserNpos } from ".server/user-npos";
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   /** handle oauth if applicable */
   const url = new URL(request.url);
-  const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state");
+  const { code, state, referrer } = search(url);
   const cookie_header = request.headers.get("Cookie");
 
   /** HANDLE REFERRAL START */
-  const referrer = url.searchParams.get("referrer");
   const rc = await reg_cookie.parse(cookie_header).then((x) => x || {});
 
   const prev_referrer = rc.referrer;
