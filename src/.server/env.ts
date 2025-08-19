@@ -16,15 +16,11 @@ export const _var = (name: string): string => {
 
 export type Env = v.InferOutput<typeof envSchema>;
 export const env = _var("ENVIRONMENT") as Environment;
-export const cloudsearchNpoSearchEndpoint = v.parse(
-  urlSchema,
-  process.env.CLOUDSEARCH_NPO_SEARCH_ENDPOINT
-);
 
-export const cloudsearchFundsSearchEndpoint = v.parse(
-  urlSchema,
-  process.env.CLOUDSEARCH_FUNDS_SEARCH_ENDPOINT
-);
+export const typesense_envs = {
+  api_key: _var("TYPESENSE_API_KEY"),
+  endpoint: v.parse(urlSchema, _var("TYPESENSE_ENDPOINT")),
+};
 export const aws_access_key_id = _var("AWS_ACCESS_KEY_ID");
 export const aws_secret_access_key = _var("AWS_SECRET_ACCESS_KEY");
 export const apes_aws_access_key_id = _var("APES_AWS_ACCESS_KEY_ID");

@@ -5,11 +5,9 @@ import type {
   UnSdgNum,
 } from "@better-giving/endowment";
 import type * as cs from "@better-giving/endowment/cloudsearch";
-import type { ToDoc } from "@better-giving/types/cloudsearch";
 import type { Ensure } from "@better-giving/types/utils";
-import { cloudsearchNpoSearchEndpoint, env } from "./env";
+import { env, typesense_envs } from "./env";
 
-type EndowHit = ToDoc<cs.CloudsearchEndow>;
 type Endow = Ensure<Partial<cs.CloudsearchEndow>, "contributions_total">;
 const HITS_PER_PAGE = 20;
 
@@ -18,56 +16,41 @@ export async function getNpos(
 ): Promise<INposPage> {
   const { fields, query: q, page = 1, ...p } = params;
 
-  const filters = {
-    env: `env:'${env}'`,
-    published: `published:1`,
-    country: component(
-      p.countries,
-      (v) => `hq_country:'${v}' active_in_countries:'${v}'`
-    ),
-    designation: component(
-      p.endow_designation,
-      (v) => `endow_designation:'${v}'`
-    ),
-    kyc: component(p.kyc_only, (v) => `kyc_donors_only:${v ? 1 : 0}`),
-    fund: component(p.fund_opt_in, (v) => `fund_opt_in:${v ? 1 : 0}`),
-    sdgs: component(p.sdgs, (v) => `sdgs:${v}`),
-    claimed: component(p.claimed, (v) => `claimed:${v ? 1 : 0}`),
-  };
+  // Build filter conditions for Typesense
+  const filter_by = buildFilterBy(p);
 
-  const filterQuery = `(and ${Object.values(filters)
-    .filter(Boolean)
-    .join(" ")})`;
+  // Build search query
+  const q_text = buildSearchQuery(q);
 
-  const queryString = (() => {
-    if (!q || q === "") return "matchall";
-    // Escape single quotes in the query string
-    const safeQ = q.replace(/'/g, "\\'");
-    if (safeQ.length <= 2) return `(or name:'${safeQ}' tagline:'${safeQ}')`;
-    return `(or (prefix field=name '${safeQ}') (prefix field=tagline '${safeQ}') name:'${safeQ}' tagline:'${safeQ}' registration_number:'${safeQ}')`;
-  })();
+  // Construct Typesense search request
+  const search_params = new URLSearchParams({
+    q: q_text,
+    query_by: "name,tagline,registration_number",
+    filter_by,
+    sort_by: "claimed:desc,name:asc",
+    per_page: HITS_PER_PAGE.toString(),
+    page: page.toString(),
+  });
 
-  const startAt = (page - 1) * HITS_PER_PAGE;
-
-  // Construct search parameters
-  const endpoint = new URL(cloudsearchNpoSearchEndpoint);
-  endpoint.pathname = "/2013-01-01/search";
-  endpoint.searchParams.set("q", queryString);
-  endpoint.searchParams.set("q.parser", "structured");
-  endpoint.searchParams.set("fq", filterQuery);
-  endpoint.searchParams.set("sort", "claimed desc, name asc");
-  endpoint.searchParams.set("size", HITS_PER_PAGE.toString());
-  endpoint.searchParams.set("start", startAt.toString());
   if (fields?.length) {
-    endpoint.searchParams.set("return", fields.join(","));
+    search_params.set("include_fields", fields.join(","));
   }
 
-  const res = await fetch(endpoint);
+  // Make request to Typesense
+  const endpoint = new URL(typesense_envs.endpoint);
+  endpoint.pathname = `/collections/npos/documents/search`;
+  endpoint.search = search_params.toString();
+  const h = new Headers();
+  h.set("X-TYPESENSE-API-KEY", typesense_envs.api_key);
+  h.set("Content-Type", "application/json");
+
+  const res = await fetch(endpoint, { headers: h });
+
   if (!res.ok) throw res;
 
   const result = await res.json();
-  const hits = result.hits?.hit || [];
-  const found = result.hits?.found;
+  const hits = result.hits || [];
+  const found = result.found || 0;
 
   if (hits.length === 0 && !found) {
     return {
@@ -78,52 +61,121 @@ export async function getNpos(
   }
 
   return {
-    items: hits.map((hit: any) => processFields(hit.fields)),
+    items: hits.map((hit: any) => processFields(hit.document)),
     page,
-    pages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
+    pages: Math.ceil(found / HITS_PER_PAGE),
   };
 }
 
-const component = <T extends string | number | boolean>(
-  vals: T[] | undefined,
-  expression: (value: T) => string
-): string | null => {
-  if (!vals || vals.length === 0) return null;
+function buildFilterBy(
+  params: Omit<EndowsQueryParamsParsed, "fields" | "query" | "page">
+): string {
+  const filters: string[] = [`env:=${env}`, "published:=true"];
 
-  if (vals.length === 1) {
-    return `${expression(vals[0])}`;
+  // Country filter - search in both hq_country and active_in_countries
+  if (params.countries?.length) {
+    const country_filters = params.countries.map(
+      (country) => `hq_country:=${country} || active_in_countries:=${country}`
+    );
+    filters.push(`(${country_filters.join(" || ")})`);
   }
-  return `(or ${vals.map((v) => `${expression(v)}`).join(" ")})`;
-};
 
-const processFields = (f: EndowHit): EndowItem => {
-  const kv = kvFn(f);
+  // Designation filter
+  if (params.endow_designation?.length) {
+    const designation_filters = params.endow_designation.map(
+      (designation) => `endow_designation:=${designation}`
+    );
+    filters.push(`(${designation_filters.join(" || ")})`);
+  }
+
+  // KYC filter
+  if (params.kyc_only?.length) {
+    const kyc_filters = params.kyc_only.map((kyc) => `kyc_donors_only:=${kyc}`);
+    filters.push(`(${kyc_filters.join(" || ")})`);
+  }
+
+  // Fund opt-in filter
+  if (params.fund_opt_in?.length) {
+    const fund_filters = params.fund_opt_in.map(
+      (fund) => `fund_opt_in:=${fund}`
+    );
+    filters.push(`(${fund_filters.join(" || ")})`);
+  }
+
+  // SDGs filter
+  if (params.sdgs?.length) {
+    const sdg_filters = params.sdgs.map((sdg) => `sdgs:=${sdg}`);
+    filters.push(`(${sdg_filters.join(" || ")})`);
+  }
+
+  // Claimed filter
+  if (params.claimed?.length) {
+    const claimed_filters = params.claimed.map(
+      (claimed) => `claimed:=${claimed}`
+    );
+    filters.push(`(${claimed_filters.join(" || ")})`);
+  }
+
+  return filters.join(" && ");
+}
+
+function buildSearchQuery(query?: string): string {
+  if (!query || query === "") return "*";
+
+  // For short queries, search in name and tagline fields
+  if (query.length <= 2) {
+    return query;
+  }
+
+  // For longer queries, use prefix search and exact match
+  return query;
+}
+
+const processFields = (document: any): EndowItem => {
   const endow: Endow = {
-    ...kv("card_img", (v) => v),
-    ...kv("name", (v) => v),
-    ...kv("tagline", (v) => v),
-    ...kv("hq_country", (v) => v),
-    ...kv("sdgs", (v) => v.map((s) => Number.parseInt(s, 10)) as UnSdgNum[]),
-    ...kv("active_in_countries", (v) => v),
-    ...kv("endow_designation", (v) => v),
-    ...kv("registration_number", (v) => v),
-    ...kv("kyc_donors_only", (v) => v === "1"),
-    ...kv("claimed", (v) => v === "1"),
-    ...kv("env", (v) => v),
-    ...kv("id", (v) => Number.parseInt(v, 10)),
-    ...kv("published", (v) => v === "1"),
-    ...kv("fund_opt_in", (v) => v === "1"),
-    ...kv("contributions_count", (v) => Number.parseInt(v, 10)),
-    ...kv("target", (v) => v),
-    contributions_total: Number.parseFloat(f.contributions_total),
+    ...(document.card_img && { card_img: document.card_img }),
+    ...(document.name && { name: document.name }),
+    ...(document.tagline && { tagline: document.tagline }),
+    ...(document.hq_country && { hq_country: document.hq_country }),
+    ...(document.sdgs && {
+      sdgs: Array.isArray(document.sdgs)
+        ? (document.sdgs.map((s: any) =>
+            Number.parseInt(s.toString(), 10)
+          ) as UnSdgNum[])
+        : [],
+    }),
+    ...(document.active_in_countries && {
+      active_in_countries: document.active_in_countries,
+    }),
+    ...(document.endow_designation && {
+      endow_designation: document.endow_designation,
+    }),
+    ...(document.registration_number && {
+      registration_number: document.registration_number,
+    }),
+    ...(document.kyc_donors_only !== undefined && {
+      kyc_donors_only:
+        document.kyc_donors_only === "1" || document.kyc_donors_only === 1,
+    }),
+    ...(document.claimed !== undefined && {
+      claimed: document.claimed === "1" || document.claimed === 1,
+    }),
+    ...(document.env && { env: document.env }),
+    ...(document.id && { id: Number.parseInt(document.id.toString(), 10) }),
+    ...(document.published !== undefined && {
+      published: document.published === "1" || document.published === 1,
+    }),
+    ...(document.fund_opt_in !== undefined && {
+      fund_opt_in: document.fund_opt_in === "1" || document.fund_opt_in === 1,
+    }),
+    ...(document.contributions_count && {
+      contributions_count: Number.parseInt(
+        document.contributions_count.toString(),
+        10
+      ),
+    }),
+    ...(document.target && { target: document.target }),
+    contributions_total: Number.parseFloat(document.contributions_total || "0"),
   };
   return endow as EndowItem;
 };
-
-const kvFn =
-  <From extends EndowHit, To extends Endow>(from: From) =>
-  <Kto extends keyof Endow>(
-    key: Kto,
-    value: (v: NonNullable<From[Kto]>) => To[Kto]
-  ) =>
-    from[key] && { [key]: value(from[key]) };
