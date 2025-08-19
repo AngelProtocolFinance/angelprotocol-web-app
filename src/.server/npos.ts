@@ -6,7 +6,7 @@ import type {
 } from "@better-giving/endowment";
 import type * as cs from "@better-giving/endowment/cloudsearch";
 import type { Ensure } from "@better-giving/types/utils";
-import { env, typesense_envs } from "./env";
+import { typesense_envs } from "./env";
 
 type Endow = Ensure<Partial<cs.CloudsearchEndow>, "contributions_total">;
 const HITS_PER_PAGE = 20;
@@ -61,7 +61,7 @@ export async function getNpos(
   }
 
   return {
-    items: hits.map((hit: any) => processFields(hit.document)),
+    items: hits.map((x: any) => x.document),
     page,
     pages: Math.ceil(found / HITS_PER_PAGE),
   };
@@ -70,7 +70,7 @@ export async function getNpos(
 function buildFilterBy(
   params: Omit<EndowsQueryParamsParsed, "fields" | "query" | "page">
 ): string {
-  const filters: string[] = [`env:=${env}`, "published:=true"];
+  const filters: string[] = [`env:=${"production"}`, "published:=true"];
 
   // Country filter - search in both hq_country and active_in_countries
   if (params.countries?.length) {
