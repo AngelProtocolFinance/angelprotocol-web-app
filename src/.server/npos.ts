@@ -62,56 +62,32 @@ export async function getNpos(
   };
 }
 
+const f = <T extends any[]>(i: T | undefined, exp: (v: string) => string) => {
+  return (i || []).map(exp).join(" || ");
+};
+
 function buildFilterBy(
-  params: Omit<EndowsQueryParamsParsed, "fields" | "query" | "page">
+  params: Omit<EndowsQueryParamsParsed, "fields" | "page">
 ): string {
-  const filters: string[] = [`env:=${"production"}`, "published:=true"];
+  const f1 = [
+    `env:=${"production"}`,
+    "published:=true",
+    f(params.countries, (x) => `hq_country:=${x} || active_in_countries:=${x}`),
+    f(params.endow_designation, (x) => `endow_designation:=${x}`),
+    f(params.kyc_only, (x) => `kyc_donors_only:=${x}`),
+    f(params.fund_opt_in, (x) => `fund_opt_in:=${x}`),
+    f(params.sdgs, (x) => `sdgs:=${x}`),
+  ].filter(Boolean);
 
-  // Country filter - search in both hq_country and active_in_countries
-  if (params.countries?.length) {
-    const country_filters = params.countries.map(
-      (country) => `hq_country:=${country} || active_in_countries:=${country}`
-    );
-    filters.push(`(${country_filters.join(" || ")})`);
-  }
+  // when filtering, searching, also include unclaimed npos
+  const f2 = f1.concat(
+    f(
+      f1.length > 2 || params.query ? [true, false] : params.claimed,
+      (x) => `claimed:=${x}`
+    )
+  );
 
-  // Designation filter
-  if (params.endow_designation?.length) {
-    const designation_filters = params.endow_designation.map(
-      (designation) => `endow_designation:=${designation}`
-    );
-    filters.push(`(${designation_filters.join(" || ")})`);
-  }
-
-  // KYC filter
-  if (params.kyc_only?.length) {
-    const kyc_filters = params.kyc_only.map((kyc) => `kyc_donors_only:=${kyc}`);
-    filters.push(`(${kyc_filters.join(" || ")})`);
-  }
-
-  // Fund opt-in filter
-  if (params.fund_opt_in?.length) {
-    const fund_filters = params.fund_opt_in.map(
-      (fund) => `fund_opt_in:=${fund}`
-    );
-    filters.push(`(${fund_filters.join(" || ")})`);
-  }
-
-  // SDGs filter
-  if (params.sdgs?.length) {
-    const sdg_filters = params.sdgs.map((sdg) => `sdgs:=${sdg}`);
-    filters.push(`(${sdg_filters.join(" || ")})`);
-  }
-
-  // Claimed filter
-  if (params.claimed?.length) {
-    const claimed_filters = params.claimed.map(
-      (claimed) => `claimed:=${claimed}`
-    );
-    filters.push(`(${claimed_filters.join(" || ")})`);
-  }
-
-  return filters.join(" && ");
+  return f2.filter(Boolean).join(" && ");
 }
 
 function buildSearchQuery(query?: string): string {
