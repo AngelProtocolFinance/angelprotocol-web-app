@@ -1,14 +1,9 @@
 import type {
-  EndowItem,
   EndowsQueryParamsParsed,
   INposPage,
-  UnSdgNum,
 } from "@better-giving/endowment";
-import type * as cs from "@better-giving/endowment/cloudsearch";
-import type { Ensure } from "@better-giving/types/utils";
 import { typesense_envs } from "./env";
 
-type Endow = Ensure<Partial<cs.CloudsearchEndow>, "contributions_total">;
 const HITS_PER_PAGE = 20;
 
 export async function getNpos(
@@ -130,52 +125,3 @@ function buildSearchQuery(query?: string): string {
   // For longer queries, use prefix search and exact match
   return query;
 }
-
-const processFields = (document: any): EndowItem => {
-  const endow: Endow = {
-    ...(document.card_img && { card_img: document.card_img }),
-    ...(document.name && { name: document.name }),
-    ...(document.tagline && { tagline: document.tagline }),
-    ...(document.hq_country && { hq_country: document.hq_country }),
-    ...(document.sdgs && {
-      sdgs: Array.isArray(document.sdgs)
-        ? (document.sdgs.map((s: any) =>
-            Number.parseInt(s.toString(), 10)
-          ) as UnSdgNum[])
-        : [],
-    }),
-    ...(document.active_in_countries && {
-      active_in_countries: document.active_in_countries,
-    }),
-    ...(document.endow_designation && {
-      endow_designation: document.endow_designation,
-    }),
-    ...(document.registration_number && {
-      registration_number: document.registration_number,
-    }),
-    ...(document.kyc_donors_only !== undefined && {
-      kyc_donors_only:
-        document.kyc_donors_only === "1" || document.kyc_donors_only === 1,
-    }),
-    ...(document.claimed !== undefined && {
-      claimed: document.claimed === "1" || document.claimed === 1,
-    }),
-    ...(document.env && { env: document.env }),
-    ...(document.id && { id: Number.parseInt(document.id.toString(), 10) }),
-    ...(document.published !== undefined && {
-      published: document.published === "1" || document.published === 1,
-    }),
-    ...(document.fund_opt_in !== undefined && {
-      fund_opt_in: document.fund_opt_in === "1" || document.fund_opt_in === 1,
-    }),
-    ...(document.contributions_count && {
-      contributions_count: Number.parseInt(
-        document.contributions_count.toString(),
-        10
-      ),
-    }),
-    ...(document.target && { target: document.target }),
-    contributions_total: Number.parseFloat(document.contributions_total || "0"),
-  };
-  return endow as EndowItem;
-};
