@@ -2,7 +2,7 @@ import type {
   EndowsQueryParamsParsed,
   INposPage,
 } from "@better-giving/endowment";
-import { typesense_envs } from "./env";
+import { env, typesense_envs } from "./env";
 
 const HITS_PER_PAGE = 20;
 
@@ -70,7 +70,7 @@ function buildFilterBy(
   params: Omit<EndowsQueryParamsParsed, "fields" | "page">
 ): string {
   const f1 = [
-    `env:=${"production"}`,
+    `env:=${env}`,
     "published:=true",
     f(params.countries, (x) => `hq_country:=${x} || active_in_countries:=${x}`),
     f(params.endow_designation, (x) => `endow_designation:=${x}`),
