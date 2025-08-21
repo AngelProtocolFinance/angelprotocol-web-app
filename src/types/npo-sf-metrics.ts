@@ -1,5 +1,10 @@
-import type { ISeriesPoint } from "@better-giving/nav-history";
+export interface IPerfPoint {
+  date: string;
+  perf: number;
+  invested: number;
+}
+
 export interface INpoMetrics {
-  points: ISeriesPoint[];
-  twr: number;
+  points: IPerfPoint[];
+  total_return: number;
 }
