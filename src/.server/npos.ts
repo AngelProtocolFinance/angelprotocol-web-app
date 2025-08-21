@@ -19,10 +19,12 @@ export async function getNpos(
   const search_params = new URLSearchParams({
     q: q || "*",
     query_by: "name,tagline,registration_number",
+    query_by_weights: "3,2,1",
     filter_by,
-    sort_by: "claimed:desc,name:asc",
+    sort_by: q ? "_text_match:desc" : "claimed:desc,name:asc",
     per_page: HITS_PER_PAGE.toString(),
     page: page.toString(),
+    use_cache: "true",
   });
 
   if (fields?.length) {
