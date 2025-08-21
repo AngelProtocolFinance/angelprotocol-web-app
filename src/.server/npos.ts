@@ -13,13 +13,11 @@ export async function getNpos(
 
   // Build filter conditions for Typesense
   const filter_by = buildFilterBy(p);
-
   // Build search query
-  const q_text = buildSearchQuery(q);
 
   // Construct Typesense search request
   const search_params = new URLSearchParams({
-    q: q_text,
+    q: q || "*",
     query_by: "name,tagline,registration_number",
     filter_by,
     sort_by: "claimed:desc,name:asc",
@@ -88,16 +86,4 @@ function buildFilterBy(
   );
 
   return f2.filter(Boolean).join(" && ");
-}
-
-function buildSearchQuery(query?: string): string {
-  if (!query || query === "") return "*";
-
-  // For short queries, search in name and tagline fields
-  if (query.length <= 2) {
-    return query;
-  }
-
-  // For longer queries, use prefix search and exact match
-  return query;
 }
