@@ -1,23 +1,42 @@
 import { Modal } from "components/modal";
+import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import {
   Bar,
   CartesianGrid,
   ComposedChart,
+  Legend,
   Line,
   ResponsiveContainer,
   Tooltip,
+  type TooltipProps,
   XAxis,
   YAxis,
 } from "recharts";
 import type { INpoMetrics } from "types/npo-sf-metrics";
 
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-  });
+const date_fmt = (input: string): string => {
+  return format(new Date(input), "MM/dd");
+};
+
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<number, string>) => {
+  if (active && payload && payload.length && label) {
+    return (
+      <div className="bg-white rounded-sm p-2 shadow-lg text-xs grid gap-y-1">
+        <p className="font-medium">{date_fmt(label)}</p>
+        {payload.map((entry, index: number) => (
+          <p key={index} style={{ color: entry.color }}>
+            ${humanize(entry.value || 0)}
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return null;
 };
 
 export function SfPerChart(
@@ -61,7 +80,7 @@ export function SfPerChart(
           <XAxis
             className="text-xs"
             dataKey="date"
-            tickFormatter={formatDate}
+            tickFormatter={date_fmt}
             angle={-45}
             textAnchor="end"
             height={35}
@@ -73,42 +92,39 @@ export function SfPerChart(
             yAxisId="left"
             className="text-xs"
             domain={["dataMin", "dataMax"]}
-            tickFormatter={(v) => humanize(v, 2)}
-            label={{ value: "Units", angle: -90, position: "insideLeft" }}
+            tickFormatter={(v) => `$${humanize(v)}`}
           />
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            className="text-xs"
-            domain={["dataMin", "dataMax"]}
-            tickFormatter={(v) => humanize(v, 2)}
-            label={{ value: "NAVPU ($)", angle: 90, position: "insideRight" }}
-          />
-          <Tooltip
-            content={({ payload, active }) => {
-              if (active && payload && payload.length > 0) {
-                const data = payload[0].payload;
-                return (
-                  <div className="text-sm font-semibold text-gray-d4 pointer-events-none">
-                    ${humanize(data.value)}
-                  </div>
-                );
-              }
-              return null;
-            }}
+          <Tooltip content={<CustomTooltip />} />
+          <Legend
+            verticalAlign="top"
+            height={36}
+            iconType="line"
+            wrapperStyle={{ fontSize: "0.75rem" }}
+            payload={[
+              {
+                value: "Invested Capital",
+                type: "rect",
+                color: "var(--color-blue-l2)",
+              },
+              {
+                value: "Market Value",
+                type: "line",
+                color: "var(--color-green)",
+              },
+            ]}
           />
           <Bar
             yAxisId="left"
-            dataKey="units"
+            dataKey="invested"
             fill="var(--color-blue-l2)"
             opacity={0.6}
           />
           <Line
-            yAxisId="right"
+            yAxisId="left"
             type="monotone"
-            dataKey="price"
-            stroke="var(--color-blue-d1)"
-            dot={false}
+            dataKey="perf"
+            stroke="var(--color-green)"
+            // dot={false}
             strokeWidth={2}
           />
         </ComposedChart>

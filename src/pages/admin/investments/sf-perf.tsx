@@ -14,7 +14,7 @@ const fetcher = (path: string) =>
 
 export function SfPerf({ id, classes = "" }: Props) {
   const [expanded, expand] = useState(false);
-  const { data = { points: [], twr: 0 } } = useSWR(
+  const { data = { points: [], total_return: 0 } } = useSWR(
     `/api/npo/${id}/sf-metrics`,
     fetcher
   );
@@ -26,17 +26,21 @@ export function SfPerf({ id, classes = "" }: Props) {
         onClick={() => expand(true)}
         className={
           "text-xs font-semibold rounded-sm focus:outline-none  " +
-          (data.twr > 0 ? "text-green" : data.twr < 0 ? "text-red" : "")
+          (data.total_return > 0
+            ? "text-green"
+            : data.total_return < 0
+              ? "text-red"
+              : "")
         }
       >
-        {data.twr > 0 ? (
+        {data.total_return > 0 ? (
           <ArrowUp className="relative bottom-px inline mr-0.5" size={14} />
-        ) : data.twr < 0 ? (
+        ) : data.total_return < 0 ? (
           <ArrowDown className="relative bottom-px inline mr-0.5" size={14} />
         ) : (
           ""
         )}
-        {(data.twr * 100).toFixed(2)}%
+        {(data.total_return * 100).toFixed(2)}%
       </button>
       {expanded && (
         <SfPerChart {...data} open={expanded} onClose={() => expand(false)} />
