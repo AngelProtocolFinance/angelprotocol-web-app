@@ -1,3 +1,5 @@
+import type { IUserNpo } from "@better-giving/user";
+
 export type UserAttributes = {
   familyName: string;
   givenName: string;
@@ -6,8 +8,14 @@ export type UserAttributes = {
 };
 
 export type UserUpdate = Partial<UserAttributes>;
-export type EndowmentBookmark = {
-  endowId: number;
+
+export type INpoBookmark = {
+  id: number;
   name: string;
-  logo?: string; // old bookmarks do not have this field saved yet
+  logo?: string;
 };
+
+export interface IUserNpo2 extends IUserNpo {
+  name: string;
+  logo?: string;
+}

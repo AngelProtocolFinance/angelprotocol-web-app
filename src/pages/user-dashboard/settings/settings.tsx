@@ -5,7 +5,7 @@ export { loader, action } from "./api";
 export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 export default function Settings() {
-  const { user, userEndows } = useCachedLoaderData<SettingsData>();
+  const { user, user_npos } = useCachedLoaderData<SettingsData>();
   return (
     <div className="grid">
       <h2 className="text-3xl">Settings</h2>
@@ -15,7 +15,7 @@ export default function Settings() {
       </p>
       <EndowAlertForm
         user={user}
-        userEndows={userEndows}
+        user_npos={user_npos}
         classes="mt-4 justify-self-start"
       />
     </div>

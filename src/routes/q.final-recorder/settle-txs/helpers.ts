@@ -1,6 +1,6 @@
 import type { IBalanceUpdate } from "@better-giving/balance";
 import type { Donation } from "@better-giving/donation";
-import type { Keys } from "@better-giving/fundraiser/db";
+import type { FundDb } from "@better-giving/fundraiser";
 import { tables } from "@better-giving/types/list";
 import { UpdateCommand } from ".server/aws/db";
 
@@ -74,7 +74,9 @@ export const fund_contrib_update = (
 ): UpdateCommand => {
   return new UpdateCommand({
     TableName: tables.funds,
-    Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies Keys,
+    Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies ReturnType<
+      FundDb["key_fund"]
+    >,
     UpdateExpression: "SET #c = if_not_exists(#c, :zero) + :c",
     ExpressionAttributeNames: { "#c": "donation_total_usd" },
     ExpressionAttributeValues: { ":c": amount, ":zero": 0 },

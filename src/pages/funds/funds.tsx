@@ -1,5 +1,5 @@
-import type { FundsPage } from "@better-giving/fundraiser";
-import { fundsParams } from "@better-giving/fundraiser/schema";
+import type { IFundsPage } from "@better-giving/fundraiser";
+import { funds_search } from "@better-giving/fundraiser/schema";
 import { NavLink, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
@@ -14,15 +14,15 @@ import { safeParse } from "valibot";
 import { Cards } from "./cards";
 import Hero from "./hero";
 import hero from "./hero.webp?url";
-import { getFunds } from ".server/funds";
+import { get_funds } from ".server/funds";
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
-  const params = safeParse(fundsParams, search(request));
+  const params = safeParse(funds_search, search(request));
   if (params.issues) {
     return { status: 400, body: params.issues[0].message };
   }
-  const page = await getFunds(params.output);
+  const page = await get_funds(params.output);
   return page;
 };
 
@@ -36,7 +36,7 @@ export const meta: MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Funds() {
-  const page1 = useCachedLoaderData<FundsPage>();
+  const page1 = useCachedLoaderData<IFundsPage>();
   const [params] = useSearchParams();
   const { node, load } = use_paginator({
     id: "funds",

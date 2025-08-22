@@ -1,5 +1,5 @@
 import type { INpo } from "@better-giving/endowment";
-import type { NewFund } from "@better-giving/fundraiser";
+import type { IFundNew } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { Field, Form, Label } from "components/form";
@@ -65,7 +65,7 @@ export default function CreateFund() {
     <div className="w-full xl:container xl:mx-auto px-5">
       <Form
         onSubmit={handleSubmit((fv) => {
-          const fund: NewFund = {
+          const fund: IFundNew = {
             name: fv.name,
             description: fv.description.value,
             banner: fv.banner,
