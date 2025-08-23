@@ -11,9 +11,10 @@ import {
   ap,
   apes,
   npodb,
+  userdb,
 } from "../../aws/db";
 import { env } from "../../env";
-import { bankingRecord, endowAdmin, regUpdate } from "./helpers";
+import { bankingRecord, regUpdate } from "./helpers";
 import type { EndowContentFromReg } from "./types";
 
 // registrations/{id}/submit
@@ -63,7 +64,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
     const transactionCommand = new TransactWriteCommand({
       TransactItems: [
         { Put: await bankingRecord(reg, id) },
-        { Put: endowAdmin(reg.registrant_id, id) },
+        { Put: userdb.userxnpo_put_txi(id, reg.registrant_id) },
         { Update: regUpdate<"tx">(reg, { endowment_id: id }) },
         {
           Update: {
@@ -97,14 +98,9 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
   const transactionCommand = new TransactWriteCommand({
     TransactItems: [
       { Put: await bankingRecord(reg, newEndowID) },
-      { Put: endowAdmin(reg.registrant_id, newEndowID) },
+      { Put: userdb.userxnpo_put_txi(newEndowID, reg.registrant_id) },
       { Update: regUpdate<"tx">(reg, { endowment_id: newEndowID }) },
-      {
-        Put: {
-          TableName: NpoDb.name,
-          Item: npodb.npo_record(newEndow),
-        },
-      },
+      { Put: { TableName: NpoDb.table, Item: npodb.npo_record(newEndow) } },
     ],
   });
 

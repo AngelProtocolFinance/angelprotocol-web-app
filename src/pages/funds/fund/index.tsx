@@ -1,4 +1,4 @@
-import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
+import { MAX_EXPIRATION } from "@better-giving/fundraiser/schema";
 import { Link, NavLink } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
@@ -16,6 +16,7 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { unpack } from "helpers/unpack";
 import { ArrowLeft } from "lucide-react";
+import type { IFund } from "types/fund";
 import type { LoaderData } from "./api";
 import { Share } from "./share";
 import { Video } from "./video";
@@ -26,7 +27,7 @@ export const links: LinksFunction = () => [...richTextStyles];
 
 export const meta: MetaFunction = ({ data, location: l }) => {
   if (!data) return [];
-  const d = data as SingleFund;
+  const d = data as IFund;
   return metas({
     title: `${d.name} - ${APP_NAME}`,
     description: toText(d.description).slice(0, 140),
@@ -178,7 +179,7 @@ interface Classes {
   link?: string;
   target?: string;
 }
-interface IDonateSection extends SingleFund {
+interface IDonateSection extends IFund {
   classes?: Classes | string;
 }
 function DonateSection(props: IDonateSection) {

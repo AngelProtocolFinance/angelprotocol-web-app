@@ -240,7 +240,7 @@ const rmx = remix({
         r("fundraisers", "./pages/funds/funds.tsx");
         r("fundraisers/:fundId", "./pages/funds/fund/index.tsx");
         r("fundraisers/:fundId/edit", "./pages/funds/edit-fund/index.ts");
-        r("fundraisers/new", "./pages/funds/create-fund/index.ts");
+        r("fundraisers/new", "./pages/funds/create-fund/index.tsx");
         r("privacy-policy", "./pages/legal/privacy-policy.tsx");
         r("terms-of-use-npo", "./pages/legal/terms-nonprofits.tsx");
         r("terms-of-use", "./pages/legal/terms-donors.tsx");

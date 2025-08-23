@@ -3,7 +3,7 @@ import { ap, ver } from "api/api";
 import { parseWithValibot } from "conform-to-valibot";
 import { emailSubs } from "types/hubspot-subscription";
 import { cognito, toAuth } from ".server/auth";
-import { createBookmark, deleteBookmark } from ".server/user-bookmarks";
+import { userdb } from ".server/aws/db";
 
 export const action: ActionFunction = async ({ request }) => {
   const r = request.clone();
@@ -36,12 +36,18 @@ export const action: ActionFunction = async ({ request }) => {
     const endowId = data.get("endowId");
 
     if (action === "add") {
-      await createBookmark(user.email, Number.parseInt(endowId as string, 10));
+      await userdb.user_bookmark_put(
+        user.email,
+        Number.parseInt(endowId as string, 10)
+      );
       return action;
     }
 
     if (action === "delete") {
-      await deleteBookmark(user.email, Number.parseInt(endowId as string, 10));
+      await userdb.user_bookmark_del(
+        user.email,
+        Number.parseInt(endowId as string, 10)
+      );
       return action;
     }
   }

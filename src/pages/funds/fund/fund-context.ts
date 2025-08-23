@@ -1,9 +1,9 @@
-import type { SingleFund } from "@better-giving/fundraiser";
 import { createContext, useContext } from "react";
+import type { IFund } from "types/fund";
 
-export const FundContext = createContext<SingleFund>({} as SingleFund);
+export const FundContext = createContext<IFund>({} as IFund);
 
-export const useFundContext = (): SingleFund => {
+export const useFundContext = (): IFund => {
   const val = useContext(FundContext);
 
   if (Object.entries(val).length === 0) {

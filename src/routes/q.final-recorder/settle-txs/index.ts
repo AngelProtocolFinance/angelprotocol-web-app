@@ -1,6 +1,6 @@
 import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
-import { type TxItems, Txs } from "@better-giving/db/txs";
+import { type TxItems, Txs } from "@better-giving/db";
 import type { Donation } from "@better-giving/donation";
 import type { Allocation } from "@better-giving/donation/schema";
 import { NavHistoryDB } from "@better-giving/nav-history/db";

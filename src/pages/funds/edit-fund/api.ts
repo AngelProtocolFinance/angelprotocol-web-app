@@ -1,14 +1,15 @@
-import type { SingleFund } from "@better-giving/fundraiser";
-import { fundId, fundUpdate } from "@better-giving/fundraiser/schema";
+import { fund_id, fund_update } from "@better-giving/fundraiser/schema";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
+import type { IFund } from "types/fund";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
-import { closeFund, editFund, getFund } from ".server/fund";
+import { funddb } from ".server/aws/db";
+import { get_fund } from ".server/fund";
 
 export interface LoaderData {
-  fund: SingleFund;
+  fund: IFund;
   base_url: string;
   user: UserV2;
 }
@@ -16,9 +17,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const id = parse(fundId, params.fundId);
+  const id = parse(fund_id, params.fundId);
 
-  const fund = await getFund(id);
+  const fund = await get_fund(id);
   if (!fund) throw new Response(null, { status: 404 });
 
   if (
@@ -38,27 +39,28 @@ export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const id = parse(fundId, params.fundId);
+  const id = parse(fund_id, params.fundId);
 
   const { close = false, ...update } = await request.json();
 
   if (close) {
-    await closeFund(id);
+    await funddb.fund_close(id);
     return { __ok: "Fund closed" } satisfies ActionData;
   }
 
-  const parsed = parse(fundUpdate, update);
+  const parsed = parse(fund_update, update);
 
   // check if new slug is already taken
   if (parsed.slug) {
-    const res = await getFund(parsed.slug);
-    if (res && res.id)
+    const res = await funddb.fund(parsed.slug);
+    if (res) {
       return {
         __err: `Slug ${parsed.slug} is already taken`,
       } satisfies ActionData;
+    }
   }
 
-  await editFund(id, parsed);
+  await funddb.fund_update(id, parsed);
 
   return { __ok: "Fund updated" } satisfies ActionData;
 };

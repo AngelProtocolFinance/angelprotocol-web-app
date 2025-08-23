@@ -6,8 +6,7 @@ import { search } from "helpers/https";
 import type { DetailedUser } from "types/auth";
 import { cognito, oauth } from ".server/auth";
 import { reg_cookie } from ".server/cookie";
-import { getUserBookmarks } from ".server/user-bookmarks";
-import { getUserNpos } from ".server/user-npos";
+import { user_bookmarks, user_npos } from ".server/user";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   /** handle oauth if applicable */
@@ -56,8 +55,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const duser: DetailedUser = {
     ...user,
-    bookmarks: getUserBookmarks(user.email),
-    orgs: getUserNpos(user.email),
+    bookmarks: user_bookmarks(user.email),
+    orgs: user_npos(user.email),
   };
 
   return data(duser, { headers });
