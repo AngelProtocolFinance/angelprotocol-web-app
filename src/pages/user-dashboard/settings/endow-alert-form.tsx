@@ -48,7 +48,7 @@ export default function EndowAlertForm({ classes = "", user_npos }: Props) {
         banking: item.alert_pref?.banking ?? true,
         donation: item.alert_pref?.banking ?? true,
       })),
-      { encType: "application/json", method: "POST", action: "." }
+      { encType: "application/json", method: "POST" }
     );
   };
 

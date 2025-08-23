@@ -100,12 +100,7 @@ export const review = async (verdict: Verdict, reg: ApplicationDbRecord) => {
       { Put: await bankingRecord(reg, newEndowID) },
       { Put: userdb.userxnpo_put_txi(newEndowID, reg.registrant_id) },
       { Update: regUpdate<"tx">(reg, { endowment_id: newEndowID }) },
-      {
-        Put: {
-          TableName: NpoDb.name,
-          Item: npodb.npo_record(newEndow),
-        },
-      },
+      { Put: { TableName: NpoDb.table, Item: npodb.npo_record(newEndow) } },
     ],
   });
 

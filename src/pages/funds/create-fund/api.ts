@@ -122,8 +122,8 @@ export const action: ActionFunction = async ({ request }) => {
     ? undefined
     : { headers: { "Set-Cookie": refreshed.commit } };
 
-  if (payload.npo_owner) {
-    return redirect(`${appRoutes.admin}/${adminRoutes.funds}`, commit);
+  if (npoo) {
+    return redirect(`${appRoutes.admin}/${npoo}/${adminRoutes.funds}`, commit);
   }
   return redirect(`${appRoutes.user_dashboard}/funds`, commit);
 };
