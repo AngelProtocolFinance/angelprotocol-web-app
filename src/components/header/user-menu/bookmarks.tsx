@@ -18,7 +18,7 @@ export function Bookmarks({ classes = "", user }: Props) {
           {(bms) => (
             <>
               {bms.map((b) => (
-                <BookmarkLink key={b.endowId} {...b} />
+                <BookmarkLink key={b.id} {...b} />
               ))}
             </>
           )}

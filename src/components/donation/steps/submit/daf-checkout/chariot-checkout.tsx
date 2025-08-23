@@ -42,7 +42,7 @@ const chariot_donor = pick(donor, ["msg_to_npo", "public_msg", "is_public"]);
 interface ChariotDonor extends InferOutput<typeof chariot_donor> {}
 
 const schema = object({
-  is_with_msg_to_npo: boolean(),
+  is_with_msg_to_npo: optional(boolean()),
   ...chariot_donor.entries,
   with_tribute: optional(boolean()),
   with_tribute_notif: optional(boolean()),

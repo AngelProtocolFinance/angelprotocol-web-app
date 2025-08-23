@@ -11,29 +11,12 @@ import {
 } from "@better-giving/registration/models";
 import type { Step6 } from "@better-giving/registration/step";
 import { tables } from "@better-giving/types/list";
-import type { EndowAdmin } from "@better-giving/user/db";
 import type {
   TransactWriteCommandInput,
   UpdateCommandInput,
 } from "../../aws/db";
-import { env } from "../../env";
 import { wise } from "../../sdks";
 
-export function endowAdmin(email: string, endowId: number) {
-  const _mail = email.toLowerCase();
-  const user: EndowAdmin.DbRecord = {
-    PK: `Email#${_mail}`,
-    SK: `Endow#${env}#${endowId}`,
-    gsi1PK: `Endow#${endowId}`,
-    gsi1SK: `Email#${env}#${_mail}`,
-    email: _mail,
-    endowID: endowId,
-  };
-  return {
-    TableName: tables.usersV2,
-    Item: user,
-  };
-}
 export async function bankingRecord(reg: ApplicationDbRecord, endowId: number) {
   const account = await wise.v2Account(reg.banking.wise_recipient_id);
 

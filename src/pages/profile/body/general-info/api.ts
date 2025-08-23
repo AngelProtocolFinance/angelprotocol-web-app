@@ -4,7 +4,7 @@ import type { FundItem } from "@better-giving/fundraiser";
 import type { LoaderFunction } from "@vercel/remix";
 import { npoId } from "../common/npo-id";
 import { npodb } from ".server/aws/db";
-import { getFundsNpoMemberOf } from ".server/funds";
+import { get_funds_npo_memberof } from ".server/funds";
 
 export interface LoaderData {
   programs: IProgramDb[];
@@ -20,8 +20,8 @@ export const loader: LoaderFunction = async ({ params }) => {
   return {
     programs: await npodb.npo_programs(id),
     media: med_page.items,
-    funds: await getFundsNpoMemberOf(id, {
-      npoProfileFeatured: true,
+    funds: await get_funds_npo_memberof(id, {
+      npo_profile_featured: true,
     }),
   } satisfies LoaderData;
 };

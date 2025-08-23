@@ -1,18 +1,29 @@
 import type { INpo } from "@better-giving/endowment";
-import type { NewFund } from "@better-giving/fundraiser";
+import type { IFundNew } from "@better-giving/fundraiser/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useFetcher, useLoaderData } from "@remix-run/react";
+import type { LinksFunction } from "@vercel/remix";
 import { Field, Form, Label } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import { ControlledImgEditor as ImgEditor } from "components/img-editor";
-import { RichText } from "components/rich-text";
+import {
+  ControlledImgEditor as ImgEditor,
+  imgEditorStyles,
+} from "components/img-editor";
+import { RichText, richTextStyles } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { EndowmentSelector } from "./endowment-selector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 
-export default function CreateFund() {
+export { loader, action } from "./api";
+export { ErrorBoundary } from "components/error";
+export const links: LinksFunction = () => [
+  ...richTextStyles,
+  ...imgEditorStyles,
+];
+
+export default function Page() {
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state !== "idle";
   const endow = useLoaderData<INpo | null>();
@@ -65,7 +76,7 @@ export default function CreateFund() {
     <div className="w-full xl:container xl:mx-auto px-5">
       <Form
         onSubmit={handleSubmit((fv) => {
-          const fund: NewFund = {
+          const fund: IFundNew = {
             name: fv.name,
             description: fv.description.value,
             banner: fv.banner,

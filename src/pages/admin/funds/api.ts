@@ -5,7 +5,7 @@ import { ap, ver } from "api/api";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { npodb } from ".server/aws/db";
-import { getFundsNpoMemberOf } from ".server/funds";
+import { get_funds_npo_memberof } from ".server/funds";
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
@@ -21,8 +21,8 @@ export const loader: LoaderFunction = async (x) => {
   const endow = await npodb.npo(adm.id);
   if (!endow) return { status: 404 };
 
-  const funds = await getFundsNpoMemberOf(endow.id, {
-    npoProfileFeatured: false,
+  const funds = await get_funds_npo_memberof(endow.id, {
+    npo_profile_featured: false,
   });
   return { endow, funds, user: adm } satisfies LoaderData;
 };
