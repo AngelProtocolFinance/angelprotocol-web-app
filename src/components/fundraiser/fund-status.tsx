@@ -1,4 +1,4 @@
-import { MAX_EXPIRATION } from "@better-giving/fundraiser";
+import { MAX_EXPIRATION } from "@better-giving/fundraiser/schema";
 import { formatDistance } from "date-fns";
 import { unpack } from "helpers/unpack";
 

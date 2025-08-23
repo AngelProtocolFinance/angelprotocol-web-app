@@ -1,4 +1,4 @@
-import type { IFundsPage } from "@better-giving/fundraiser/interfaces";
+import type { IFundsPage } from "@better-giving/fundraiser";
 import { NavLink, useSearchParams } from "@remix-run/react";
 import type { MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";

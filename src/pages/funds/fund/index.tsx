@@ -1,4 +1,4 @@
-import { MAX_EXPIRATION } from "@better-giving/fundraiser";
+import { MAX_EXPIRATION } from "@better-giving/fundraiser/schema";
 import { Link, NavLink } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
