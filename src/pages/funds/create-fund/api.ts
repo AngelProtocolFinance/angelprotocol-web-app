@@ -3,12 +3,9 @@ import type { IFund, IFundSettings } from "@better-giving/fundraiser";
 import { fund_new } from "@better-giving/fundraiser/schema";
 import {
   type ActionFunction,
-  type LinksFunction,
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { imgEditorStyles } from "components/img-editor";
-import { richTextStyles } from "components/rich-text";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { search } from "helpers/https";
 import { isError } from "types/auth";
@@ -17,12 +14,6 @@ import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, funddb, npodb, userdb } from ".server/aws/db";
 import { env } from ".server/env";
 
-export { ErrorBoundary } from "components/error";
-export { default } from "./create-fund";
-export const links: LinksFunction = () => [
-  ...richTextStyles,
-  ...imgEditorStyles,
-];
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
