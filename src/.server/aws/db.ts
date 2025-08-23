@@ -66,4 +66,4 @@ export const baldb = new BalanceDb(apes, env);
 export const btxdb = new BalanceTxsDb(apes, env);
 export const npodb = new NpoDb(ap, env);
 export const userdb = new UserDb(ap, env);
-export const funddb = new FundDb(apes, env);
+export const funddb = new FundDb(ap, env);

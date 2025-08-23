@@ -44,7 +44,7 @@
     "@better-giving/db": "2.0.1",
     "@better-giving/donation": "3.0.0",
     "@better-giving/endowment":"4.0.17",
-    "@better-giving/fundraiser": "3.0.14",
+    "@better-giving/fundraiser": "3.0.16",
     "@better-giving/helpers": "1.1.11",
     "@better-giving/helpers-db": "1.1.4",
     "@better-giving/nav-history": "2.0.1",
