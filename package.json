@@ -55,7 +55,7 @@
     "@better-giving/registration": "3.0.0",
     "@better-giving/schemas": "2.0.0",
     "@better-giving/types": "1.1.8",
-    "@better-giving/user": "2.0.6",
+    "@better-giving/user": "2.0.7",
     "@better-giving/wise": "1.1.6",
     "@conform-to/dom": "1.2.2",
     "@conform-to/react": "1.2.2",

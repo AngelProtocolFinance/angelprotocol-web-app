@@ -5,6 +5,7 @@ import { useActionResult } from "hooks/use-action-result";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import type { UserV2 } from "types/auth";
 import type { IUserNpo2 } from "types/user";
+import type { INpoAlertPrefUpdate } from "./schema";
 
 interface Props {
   user: UserV2;
@@ -42,8 +43,8 @@ export default function EndowAlertForm({ classes = "", user_npos }: Props) {
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     fetcher.submit(
-      fv.items.map((item) => ({
-        endowId: item.id,
+      fv.items.map<INpoAlertPrefUpdate>((item) => ({
+        npo: item.id,
         banking: item.alert_pref?.banking ?? true,
         donation: item.alert_pref?.banking ?? true,
       })),
