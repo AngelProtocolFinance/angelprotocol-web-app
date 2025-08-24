@@ -50,14 +50,18 @@ export const build_donation_msg = ({
   };
 };
 
-export interface IReferrerLtd {
-  id: string;
-  total: number;
-  /** endow id */
-  npo: number;
+export interface ICommissionSource {
+  /** npo id */
+  id: number;
+  amnt: number;
 }
+export interface IReferrerLtdItem {
+  id: string;
+  source: ICommissionSource;
+}
+
 interface Commission {
-  ltd: IReferrerLtd;
+  ltd: IReferrerLtdItem;
   record: TxType["Put"];
   breakdown: Donation.ReferrerCommission;
 }
@@ -88,8 +92,12 @@ export const commission_fn = (
   };
   builder.put({ TableName: ref_db.name, Item: commission });
 
+  const source: ICommissionSource = {
+    id: endow.id,
+    amnt: commission.amount,
+  };
   return {
-    ltd: { id: endow.referrer, total: commission.amount, npo: endow.id },
+    ltd: { id: endow.referrer, source },
     record: { TableName: ref_db.name, Item: commission },
     breakdown: {
       from_tip: tx.tip,
@@ -98,23 +106,50 @@ export const commission_fn = (
   };
 };
 
-export const ltd_update = (ltd: IReferrerLtd): TxType["Update"] => {
+export const ltd_by_referrer = (items: IReferrerLtdItem[]) => {
+  return items.reduce(
+    (acc, curr) => {
+      acc[curr.id] ||= [];
+      acc[curr.id].push(curr.source);
+      return acc;
+    },
+    {} as Record<string, ICommissionSource[]>
+  );
+};
+
+export const referrer_ltd_update_txi = (
+  referrer: string,
+  sources: ICommissionSource[]
+): TxType["Update"] => {
+  const names: Record<string, string> = {
+    "#referrer": "referrer",
+  };
+  const values: Record<string, any> = {
+    ":zero": 0,
+    ":referrer": referrer,
+  };
+
+  // Create SET expressions for each source
+  const sets = sources.map((source, index) => {
+    const alias = `#amount${source.id}`;
+    const placeholder = `:amount${index}`;
+
+    names[alias] = `#${source.id}`;
+    values[placeholder] = source.amnt;
+
+    return `${alias} = if_not_exists(${alias}, :zero) + ${placeholder}`;
+  });
+
+  const exp = `SET ${sets.join(", ")}, #referrer = :referrer`;
+
   return {
     TableName: ref_db.name,
     Key: {
-      PK: `Ltd#${ltd.id}`,
-      SK: `Ltd#${ltd.id}`,
+      PK: `Ltd#${referrer}`,
+      SK: `Ltd#${referrer}`,
     } satisfies Pick<ref_db.Ltd, "PK" | "SK">,
-    UpdateExpression:
-      "SET #amount = if_not_exists(#amount, :zero) + :amount, #referrer = :referrer",
-    ExpressionAttributeNames: {
-      "#amount": `#${ltd.npo}`,
-      "#referrer": "referrer",
-    },
-    ExpressionAttributeValues: {
-      ":zero": 0,
-      ":amount": ltd.total,
-      ":referrer": ltd.id,
-    },
+    UpdateExpression: exp,
+    ExpressionAttributeNames: names,
+    ExpressionAttributeValues: values,
   };
 };

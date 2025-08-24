@@ -10,10 +10,11 @@ import { nanoid } from "nanoid";
 import type { FinalRecorderPayload } from "../types/final-recorder";
 import { referral_commission_rate } from "./config";
 import {
-  type IReferrerLtd,
+  type IReferrerLtdItem,
   build_donation_msg,
   commission_fn,
-  ltd_update,
+  ltd_by_referrer,
+  referrer_ltd_update_txi,
 } from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
 import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
@@ -120,7 +121,7 @@ export const action: ActionFunction = async ({ request }) => {
     const num_members = tx.to.members.length;
     if (num_members > 0) {
       let fund_net = 0;
-      const commission_ltds: IReferrerLtd[] = [];
+      const commission_ltds: IReferrerLtdItem[] = [];
       for (const member of tx.to.members) {
         const endow = await npodb.npo(+member);
         if (!endow) {
@@ -197,19 +198,9 @@ export const action: ActionFunction = async ({ request }) => {
         }
       }
       //commit ltds per referrer
-      const ltd_per_referrer = commission_ltds.reduce(
-        (acc, curr) => {
-          acc[curr.id] ||= { id: curr.id, total: 0, npo: curr.npo };
-          acc[curr.id].total += curr.total;
-          return acc;
-        },
-        {} as Record<string, IReferrerLtd>
-      );
 
-      console.log("ltd_per_referrer", ltd_per_referrer);
-
-      for (const r in ltd_per_referrer) {
-        builder.update(ltd_update(ltd_per_referrer[r]));
+      for (const [r, i] of Object.entries(ltd_by_referrer(commission_ltds))) {
+        builder.update(referrer_ltd_update_txi(r, i));
       }
 
       await ap
@@ -262,7 +253,7 @@ export const action: ActionFunction = async ({ request }) => {
         overrides.referrer = { id: c.ltd.id, commission: c.breakdown };
         builder.put(c.record);
         tip_tos.push(c.ltd.id);
-        builder.update(ltd_update(c.ltd));
+        builder.update(referrer_ltd_update_txi(c.ltd.id, [c.ltd.source]));
       }
       const _txs = await settle_txs(base, overrides);
       builder.append(_txs);
@@ -321,7 +312,6 @@ export const action: ActionFunction = async ({ request }) => {
     const tipTxs = await settle_txs(base, overrides);
     builder.append(tipTxs);
 
-    console.log(JSON.stringify(builder.txs, null, 2));
     const res = await apes.send(
       new TransactWriteCommand({ TransactItems: builder.txs })
     );
