@@ -86,7 +86,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         x.holders[o.endowId] += purchased_units;
       });
 
-      txs.append(navdb.log_txis(new_nav));
+      txs.put(navdb.log_put_txi(new_nav));
 
       const lock_tx: IBalanceTx = {
         id: nanoid(),

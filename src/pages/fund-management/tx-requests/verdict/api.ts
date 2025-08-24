@@ -76,7 +76,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     x.holders[tx.owner] -= tx.amount_units;
   });
 
-  txs.append(navdb.log_txis(new_nav));
+  txs.put(navdb.log_put_txi(new_nav));
 
   //transfer to savings
   if (tx.account_other === "liq") {

@@ -126,7 +126,7 @@ export const transfer_action =
         x.holders[adm.id] += units;
       });
 
-      txs.append(navdb.log_txis(nav_log));
+      txs.put(navdb.log_put_txi(nav_log));
       txs.update(bal_update);
     }
 
