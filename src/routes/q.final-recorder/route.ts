@@ -206,6 +206,8 @@ export const action: ActionFunction = async ({ request }) => {
         {} as Record<string, IReferrerLtd>
       );
 
+      console.log("ltd_per_referrer", ltd_per_referrer);
+
       for (const r in ltd_per_referrer) {
         builder.update(ltd_update(ltd_per_referrer[r]));
       }
@@ -319,6 +321,7 @@ export const action: ActionFunction = async ({ request }) => {
     const tipTxs = await settle_txs(base, overrides);
     builder.append(tipTxs);
 
+    console.log(JSON.stringify(builder.txs, null, 2));
     const res = await apes.send(
       new TransactWriteCommand({ TransactItems: builder.txs })
     );
