@@ -9,7 +9,12 @@ import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
 import type { FinalRecorderPayload } from "../types/final-recorder";
 import { referral_commission_rate } from "./config";
-import { build_donation_msg, commission_fn } from "./helpers";
+import {
+  type IReferrerLtd,
+  build_donation_msg,
+  commission_fn,
+  ltd_update,
+} from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
 import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
 import { TransactWriteCommand, ap, apes, npodb } from ".server/aws/db";
@@ -115,6 +120,7 @@ export const action: ActionFunction = async ({ request }) => {
     const num_members = tx.to.members.length;
     if (num_members > 0) {
       let fund_net = 0;
+      const commission_ltds: IReferrerLtd[] = [];
       for (const member of tx.to.members) {
         const endow = await npodb.npo(+member);
         if (!endow) {
@@ -164,9 +170,10 @@ export const action: ActionFunction = async ({ request }) => {
           endow
         );
         if (c) {
-          overrides.referrer = { id: c.to, commission: c.breakdown };
-          builder.append(c.txs);
-          tip_tos.push(c.to);
+          overrides.referrer = { id: c.ltd.id, commission: c.breakdown };
+          builder.put(c.record);
+          tip_tos.push(c.ltd.id);
+          commission_ltds.push(c.ltd);
         }
 
         const _txs = await settle_txs(base, overrides);
@@ -189,6 +196,20 @@ export const action: ActionFunction = async ({ request }) => {
           builder.put({ TableName: tables.donation_messages, Item: msg });
         }
       }
+      //commit ltds per referrer
+      const ltd_per_referrer = commission_ltds.reduce(
+        (acc, curr) => {
+          acc[curr.id] ||= { id: curr.id, total: 0, npo: curr.npo };
+          acc[curr.id].total += curr.total;
+          return acc;
+        },
+        {} as Record<string, IReferrerLtd>
+      );
+
+      for (const r in ltd_per_referrer) {
+        builder.update(ltd_update(ltd_per_referrer[r]));
+      }
+
       await ap
         .send(fund_contrib_update(fund_net, tx.to.id))
         .catch(console.error);
@@ -236,9 +257,10 @@ export const action: ActionFunction = async ({ request }) => {
         endow
       );
       if (c) {
-        overrides.referrer = { id: c.to, commission: c.breakdown };
-        builder.append(c.txs);
-        tip_tos.push(c.to);
+        overrides.referrer = { id: c.ltd.id, commission: c.breakdown };
+        builder.put(c.record);
+        tip_tos.push(c.ltd.id);
+        builder.update(ltd_update(c.ltd));
       }
       const _txs = await settle_txs(base, overrides);
       builder.append(_txs);
