@@ -2,7 +2,8 @@ import type {
   EndowsQueryParamsParsed,
   INposPage,
 } from "@better-giving/endowment";
-import { env, typesense_envs } from "./env";
+import { env } from "./env";
+import { typesense_npos } from "./sdks";
 
 const HITS_PER_PAGE = 20;
 
@@ -31,19 +32,13 @@ export async function getNpos(
     search_params.set("include_fields", fields.join(","));
   }
 
-  // Make request to Typesense
-  const endpoint = new URL(typesense_envs.endpoint);
-  endpoint.pathname = `/collections/npos/documents/search`;
-  endpoint.search = search_params.toString();
-  const h = new Headers();
-  h.set("X-TYPESENSE-API-KEY", typesense_envs.api_key);
-  h.set("Content-Type", "application/json");
-
-  const res = await fetch(endpoint, { headers: h });
+  const res = await typesense_npos.get("documents/search", {
+    searchParams: search_params,
+  });
 
   if (!res.ok) throw res;
 
-  const result = await res.json();
+  const result = await res.json<any>();
   const hits = result.hits || [];
   const found = result.found || 0;
 
