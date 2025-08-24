@@ -86,8 +86,7 @@ export const action: ActionFunction = async ({ request }) => {
     x.price_updated = timestamp;
   });
 
-  const nav_update_txis = navdb.update_txis(updated_nav);
-  txs.append(nav_update_txis);
+  txs.put(navdb.log_put_txi(updated_nav));
 
   const cmd = new TransactWriteCommand({
     TransactItems: txs.all,
