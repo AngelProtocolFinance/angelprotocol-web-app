@@ -1,9 +1,8 @@
 import { Txs } from "@better-giving/db";
-import {
-  type IComposition,
-  type IRebalanceLog,
-  type ITicker,
-  NavHistoryDB,
+import type {
+  IComposition,
+  IRebalanceLog,
+  ITicker,
 } from "@better-giving/nav-history";
 import {
   type ActionFunction,
@@ -73,10 +72,7 @@ export const action: ActionFunction = async ({ request }) => {
     date: timestamp,
   };
 
-  txs.put({
-    TableName: NavHistoryDB.table,
-    Item: navdb.rebalance_item(rebalance),
-  });
+  txs.put(navdb.rebalance_put_txi(rebalance));
 
   const updated_nav = produce(ltd, (x) => {
     x.reason = `rebalance: ${rebalance_id}`;
