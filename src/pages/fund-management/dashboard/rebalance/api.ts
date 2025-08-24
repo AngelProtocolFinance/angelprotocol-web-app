@@ -74,7 +74,7 @@ export const action: ActionFunction = async ({ request }) => {
   };
 
   txs.put({
-    TableName: NavHistoryDB.name,
+    TableName: NavHistoryDB.table,
     Item: navdb.rebalance_item(rebalance),
   });
 
