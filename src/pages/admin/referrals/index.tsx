@@ -28,8 +28,8 @@ export function ReferralsPage() {
         classes="mb-8"
         earnings={{
           items: earnings.items,
-          ...(earnings.nextKey && {
-            onViewMore: () => navigate("earnings"),
+          ...(earnings.next && {
+            load_next: () => navigate("earnings"),
           }),
         }}
         payout={payout}

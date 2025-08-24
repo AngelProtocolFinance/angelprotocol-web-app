@@ -1,38 +1,25 @@
-import {
-  Link,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
+import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Info } from "components/status";
+import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
-import { useEffect, useState } from "react";
 import type { LoaderData } from "./api";
 import { Table } from "./table";
 export { loader } from "./api";
 
 export default function Page() {
-  const page1 = useLoaderData<LoaderData>();
-  const { data, state, load } = useFetcher<LoaderData>(); //initially undefined
   const [params] = useSearchParams();
-  const [items, setItems] = useState(() => page1.items);
-
-  useEffect(() => {
-    setItems(page1.items);
-  }, [page1.items]);
-
-  useEffect(() => {
-    if (!data || state === "loading") return;
-    setItems((prev) => [...prev, ...(data.items || [])]);
-  }, [data, state]);
-
-  const nextKey = data ? data.nextKey : page1.nextKey;
-
-  function loadNext(key: string) {
-    const n = new URLSearchParams(params);
-    n.set("nextKey", key.toString());
-    load(`?${n.toString()}`);
-  }
+  const page1 = useLoaderData<LoaderData>();
+  const { node } = use_paginator({
+    table: (props) => <Table {...props} />,
+    empty: (x) => <Info {...x}>No payouts found</Info>,
+    page1,
+    classes: "mt-2",
+    gen_loader: (load, next) => () => {
+      const p = new URLSearchParams(params);
+      if (next) p.set("nextKey", next);
+      load(`?${p.toString()}`);
+    },
+  });
 
   return (
     <div>
@@ -43,11 +30,7 @@ export default function Page() {
         <ChevronLeft size={18} />
         <span>Back</span>
       </Link>
-      <Table
-        emptyEl={<Info classes="mt-2">No payouts found</Info>}
-        items={items}
-        onViewMore={nextKey ? () => loadNext(nextKey) : undefined}
-      />
+      {node}
     </div>
   );
 }

@@ -1,20 +1,21 @@
-import type { UserEndow } from "@better-giving/user";
 import { useFetcher } from "@remix-run/react";
 import { CheckField, Form } from "components/form";
 import { Info } from "components/status";
 import { useActionResult } from "hooks/use-action-result";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import type { UserV2 } from "types/auth";
+import type { IUserNpo2 } from "types/user";
+import type { INpoAlertPrefUpdate } from "./schema";
 
 interface Props {
   user: UserV2;
-  userEndows: UserEndow[];
+  user_npos: IUserNpo2[];
   classes?: string;
 }
 
-type FV = { items: UserEndow[] };
+type FV = { items: IUserNpo2[] };
 
-export default function EndowAlertForm({ classes = "", userEndows }: Props) {
+export default function EndowAlertForm({ classes = "", user_npos }: Props) {
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
 
@@ -26,28 +27,28 @@ export default function EndowAlertForm({ classes = "", userEndows }: Props) {
     formState: { isSubmitting, isDirty },
   } = useForm<FV>({
     values: {
-      items: userEndows.map((endow) => ({
+      items: user_npos.map((endow) => ({
         ...endow,
         //if preference is not specified, set to `true`
-        alertPref: endow.alertPref ?? { banking: true, donation: true },
+        alertPref: endow.alert_pref ?? { banking: true, donation: true },
       })),
     },
   });
 
   const { fields } = useFieldArray({ control, name: "items" });
 
-  if (userEndows.length === 0) {
+  if (user_npos.length === 0) {
     return <Info classes="mt-4">No organizations found</Info>;
   }
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     fetcher.submit(
-      fv.items.map((item) => ({
-        endowId: item.endowID,
-        banking: item.alertPref?.banking ?? true,
-        donation: item.alertPref?.banking ?? true,
+      fv.items.map<INpoAlertPrefUpdate>((item) => ({
+        npo: item.id,
+        banking: item.alert_pref?.banking ?? true,
+        donation: item.alert_pref?.banking ?? true,
       })),
-      { encType: "application/json", method: "POST", action: "." }
+      { encType: "application/json", method: "POST" }
     );
   };
 
@@ -71,19 +72,17 @@ export default function EndowAlertForm({ classes = "", userEndows }: Props) {
           key={field.id}
           className="grid grid-cols-subgrid col-span-3 divide-x divide-gray-l3"
         >
-          <div className="p-3">
-            {field.name ?? `Endowment: ${field.endowID}`}
-          </div>
+          <div className="p-3">{field.name ?? `Endowment: ${field.id}`}</div>
           {
             <CheckField
               classes="px-4"
-              {...register(`items.${idx}.alertPref.donation`)}
+              {...register(`items.${idx}.alert_pref.donation`)}
             />
           }
           {
             <CheckField
               classes="px-4"
-              {...register(`items.${idx}.alertPref.banking`)}
+              {...register(`items.${idx}.alert_pref.banking`)}
             />
           }
         </div>

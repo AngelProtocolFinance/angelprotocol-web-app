@@ -1,7 +1,4 @@
-import type {
-  MilestoneUpdate,
-  Milestone as TMilestone,
-} from "@better-giving/endowment";
+import type { IMilestone, IMilestoneUpdate } from "@better-giving/endowment";
 import {
   Disclosure,
   DisclosureButton,
@@ -17,7 +14,7 @@ import { useController, useForm } from "react-hook-form";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";
 
-type Props = TMilestone & { programId: string };
+type Props = IMilestone & { programId: string };
 export default function Milestone(props: Props) {
   const {
     register,
@@ -62,7 +59,7 @@ export default function Milestone(props: Props) {
         }
         disabled={isSubmitting}
         onSubmit={handleSubmit((fv) => {
-          const update: MilestoneUpdate = {
+          const update: IMilestoneUpdate = {
             description: fv.description.value,
             title: fv.title,
             date: new Date(fv.date).toISOString(),

@@ -5,6 +5,7 @@ import {
   redirect,
 } from "@vercel/remix";
 import { parseWithValibot } from "conform-to-valibot";
+import { search } from "helpers/https";
 import type { ActionData } from "types/action";
 import { isError } from "types/auth";
 import { parse } from "valibot";
@@ -13,8 +14,7 @@ import { type LoaderData, step } from "./types";
 import { cognito } from ".server/auth";
 
 export const loader: LoaderFunction = ({ request }) => {
-  const url = new URL(request.url);
-  const { redirect, ..._step } = Object.fromEntries(url.searchParams.entries());
+  const { redirect = "/", ..._step } = search(request);
   return {
     redirect,
     step: parse(step, _step),

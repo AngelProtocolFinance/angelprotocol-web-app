@@ -1,29 +1,25 @@
-import type { EndowUpdate } from "@better-giving/endowment";
-import {
-  endowIdParam,
-  endowUpdate as endowUpdateSchema,
-} from "@better-giving/endowment/schema";
+import type { INpoUpdate } from "@better-giving/endowment";
+import { npo_update } from "@better-giving/endowment/schema";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
-import { cognito, toAuth } from ".server/auth";
-import { editNpo, getNpo } from ".server/npo";
+import { npodb } from ".server/aws/db";
+import { admin_checks, is_resp } from ".server/utils";
 
 type Next = { success: string } | { redirect: string };
 
 export const endowUpdate =
   (next: Next): ActionFunction =>
-  async ({ params, request }) => {
-    const { user, headers } = await cognito.retrieve(request);
-    if (!user) return toAuth(request, headers);
-    const id = parse(endowIdParam, params.id);
+  async (args) => {
+    const adm = await admin_checks(args);
+    if (is_resp(adm)) return adm;
 
-    const update: EndowUpdate = await request.json();
-    const parsed = parse(endowUpdateSchema, update);
+    const update: INpoUpdate = await adm.req.json();
+    const parsed = parse(npo_update, update);
 
     // check if new slug is already taken
     if (parsed.slug) {
-      const res = await getNpo(parsed.slug);
+      const res = await npodb.npo(parsed.slug);
       if (res) {
         return {
           __err: `Slug ${parsed.slug} is already taken`,
@@ -31,7 +27,7 @@ export const endowUpdate =
       }
     }
 
-    await editNpo(id, parsed);
+    await npodb.npo_update(adm.id, parsed);
 
     if ("success" in next) {
       return { __ok: next.success } satisfies ActionData;

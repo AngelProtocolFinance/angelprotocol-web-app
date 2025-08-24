@@ -1,11 +1,11 @@
-import type { Program as TProgram } from "@better-giving/endowment";
+import type { IProgramDb } from "@better-giving/endowment";
 import { useFetcher } from "@remix-run/react";
 import { Link } from "@remix-run/react";
 import Image from "components/image";
 import LoaderRing from "components/loader-ring";
 import { adminRoutes } from "constants/routes";
 
-export function Program(props: TProgram) {
+export function Program(props: IProgramDb) {
   const fetcher = useFetcher();
 
   const isDeleting = fetcher.state !== "idle";

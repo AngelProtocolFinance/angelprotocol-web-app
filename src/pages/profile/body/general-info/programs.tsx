@@ -1,9 +1,9 @@
-import type { Program as TProgram } from "@better-giving/endowment";
+import type { IProgramDb } from "@better-giving/endowment";
 import { Link } from "@remix-run/react";
 import Image from "components/image";
 import { RichText } from "components/rich-text";
 
-export default function Programs({ programs }: { programs: TProgram[] }) {
+export default function Programs({ programs }: { programs: IProgramDb[] }) {
   return (
     <div className="w-full h-full px-8 py-10 grid sm:grid-cols-[repeat(auto-fill,minmax(373px,1fr))] gap-8">
       {programs.map((p) => (
@@ -13,7 +13,7 @@ export default function Programs({ programs }: { programs: TProgram[] }) {
   );
 }
 
-function Program(props: TProgram) {
+function Program(props: IProgramDb) {
   return (
     <div className="border border-gray-l3 rounded-sm relative group overflow-hidden">
       <Link

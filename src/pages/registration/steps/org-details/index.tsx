@@ -1,5 +1,5 @@
 import type { Update } from "@better-giving/registration/update";
-import { type OrgDesignation, orgDesignations } from "@better-giving/schemas";
+import { type OrgDesignation, org_designations } from "@better-giving/schemas";
 import {
   NavLink,
   useFetcher,
@@ -94,7 +94,7 @@ export default function Form() {
         required
         label="Nonprofit Designation"
         classes={{ options: "text-sm", container: "mt-4" }}
-        options={orgDesignations as any}
+        options={org_designations as any}
         option_disp={(v) => v}
         error={errors.designation?.message}
       />

@@ -1,25 +1,18 @@
-import type { Endow } from "@better-giving/endowment";
+import { $int_gte1 } from "@better-giving/schemas";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
 import { Footer } from "components/footer";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
-import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import { linkGroups } from "./constants";
 import { Header } from "./header";
 import SidebarHeader from "./sidebar-header";
+import type { LoaderData } from "./types";
 import { cognito, toAuth } from ".server/auth";
-import { getNpo } from ".server/npo";
-
-interface LoaderData {
-  id: number;
-  user: UserV2;
-  endow: Pick<Endow, "logo" | "name">;
-}
+import { npodb } from ".server/aws/db";
 
 export const meta: MetaFunction = ({ data }) => {
   const d = data as LoaderData;
@@ -32,9 +25,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const id = parse(plusInt, params.id);
+  const id = parse($int_gte1, params.id);
 
-  const npo = await getNpo(id, ["name", "logo"]);
+  const npo = await npodb.npo(id, [
+    "logo",
+    "name",
+    "allocation",
+    "payout_minimum",
+  ]);
   if (!npo) return new Response("Not found", { status: 404 });
 
   return {

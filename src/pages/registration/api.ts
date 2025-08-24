@@ -5,15 +5,16 @@ import {
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { getEndowWithEin } from "api/get/endow-with-ein";
 import { appRoutes } from "constants/routes";
+import { search } from "helpers/https";
 import { parse } from "valibot";
 import { steps } from "./routes";
 import { cognito, toAuth } from ".server/auth";
+import { npodb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
 import { env } from ".server/env";
 import { createRegistration } from ".server/registration/create-reg";
-import { isClaimed } from ".server/registration/helpers";
+import { is_claimed } from ".server/registration/helpers";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
@@ -25,14 +26,13 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const url = new URL(request.url);
   const cookie = await reg_cookie
     .parse(request.headers.get("Cookie"))
     .then((x) => x || {});
 
-  const ein = url.searchParams.get("claim");
-  const referrer = url.searchParams.get("referrer");
-  const endow = ein ? await getEndowWithEin(ein) : null;
+  const { claim: ein, referrer } = search(request);
+
+  const endow = ein ? await npodb.npo_with_regnum(ein) : null;
   const claim = endow
     ? ({
         id: endow.id,
@@ -63,7 +63,7 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
     throw new Response("Unauthorized", { status: 403 });
   }
 
-  if (init.claim && (await isClaimed(init.claim.ein, env))) {
+  if (init.claim && (await is_claimed(init.claim.ein))) {
     throw new Response(`to-claim:${init.claim.id} is already claimed`, {
       status: 400,
     });

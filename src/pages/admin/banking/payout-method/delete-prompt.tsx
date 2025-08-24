@@ -5,6 +5,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
+import { search } from "helpers/https";
 import { CircleAlert, X } from "lucide-react";
 
 type Props = {
@@ -16,8 +17,9 @@ export { deleteAction as action } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
 export default function DeletePrompt() {
   const [params] = useSearchParams();
-  const isDefault = params.get("default") === "true";
-  const isWithHeir = params.get("with_heir") === "true";
+  const { default: d, with_heir } = search(params);
+  const isDefault = d === "true";
+  const isWithHeir = with_heir === "true";
   const navigate = useNavigate();
   return (
     <Dialog

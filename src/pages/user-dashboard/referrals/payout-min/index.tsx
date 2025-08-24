@@ -13,6 +13,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "@remix-run/react";
+import { search } from "helpers/https";
 import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { config } from "../config";
@@ -29,8 +30,7 @@ export default function Form() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { pay_min = "50" } = useLoaderData() as LoaderData;
-
-  const min = +(params.get("min") ?? pay_min ?? "50");
+  const { min = pay_min } = search(params);
 
   return (
     <Dialog
@@ -41,7 +41,7 @@ export default function Form() {
       className="relative z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
-      <Content prev={min} />
+      <Content prev={+min} />
     </Dialog>
   );
 }

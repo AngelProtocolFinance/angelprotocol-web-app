@@ -1,4 +1,4 @@
-import type { Endow, EndowDesignation } from "@better-giving/endowment";
+import type { EndowDesignation, INpo } from "@better-giving/endowment";
 import {
   Church,
   Heart,
@@ -20,7 +20,7 @@ const icons: {
 
 export default function EndowDesignationTag({
   endow_designation,
-}: Pick<Endow, "endow_designation">) {
+}: Pick<INpo, "endow_designation">) {
   if (endow_designation === "Other") return null;
   const Ico = icons[endow_designation];
 

@@ -3,7 +3,7 @@ import { Arrow, Content, Tooltip } from "components/tooltip";
 import { Heart } from "lucide-react";
 import { Suspense } from "react";
 import type { DetailedUser, UserV2 } from "types/auth";
-import type { EndowmentBookmark } from "types/user";
+import type { INpoBookmark } from "types/user";
 
 type Props = {
   classes?: string;
@@ -46,7 +46,7 @@ interface IBookmarkBtn {
   /** user endow */
   endowId: number;
   user: UserV2;
-  bookmarks: EndowmentBookmark[];
+  bookmarks: INpoBookmark[];
   classes?: string;
 }
 
@@ -54,7 +54,7 @@ function BookmarkBtn({ bookmarks, classes = "", endowId }: IBookmarkBtn) {
   const fetcher = useFetcher({ key: `bookmark-${endowId}` });
   const isBookmarked = fetcher.data
     ? fetcher.data === "add"
-    : bookmarks.some((bm) => bm.endowId === endowId);
+    : bookmarks.some((bm) => bm.id === endowId);
 
   return (
     <fetcher.Form action="/" method="POST" className="contents">

@@ -1,5 +1,5 @@
+import { $int_gte1 } from "@better-giving/schemas";
 import type { LoaderFunctionArgs } from "@remix-run/node";
-import { plusInt } from "api/schema/endow-id";
 import { parse } from "valibot";
 import { cognito } from ".server/auth";
 import { generateZapierApiKey } from ".server/npo-integrations";
@@ -10,7 +10,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     return new Response(null, { status: 401 });
   }
 
-  const id = parse(plusInt, params.id);
+  const id = parse($int_gte1, params.id);
   const apiKey = await generateZapierApiKey(id);
   return new Response(apiKey);
 }

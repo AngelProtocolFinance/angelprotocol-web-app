@@ -1,6 +1,5 @@
-import type { UserEndow } from "@better-giving/user";
 import * as v from "valibot";
-import type { EndowmentBookmark } from "./user";
+import type { INpoBookmark, IUserNpo2 } from "./user";
 
 export type AuthenticatedUser = {
   token: string;
@@ -54,9 +53,9 @@ export const isError = (data: any): data is AuthError => {
 
 export interface DetailedUser extends UserV2 {
   /** deferred: detailed userV2.endowments */
-  orgs: Promise<UserEndow[]>;
+  orgs: Promise<IUserNpo2[]>;
   /** deferred  */
-  bookmarks: Promise<EndowmentBookmark[]>;
+  bookmarks: Promise<INpoBookmark[]>;
 }
 
 const str = v.pipe(v.string("required"), v.trim(), v.nonEmpty("required"));

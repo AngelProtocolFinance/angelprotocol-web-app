@@ -1,15 +1,23 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
+import { $int_gte1 } from "@better-giving/schemas";
 import type { LoaderFunction } from "@vercel/remix";
-import { getEndow } from "api/get/endow";
+import { parse } from "valibot";
 import { endowUpdate } from "../endow-update-action";
+import { npodb } from ".server/aws/db";
 
-export interface LoaderData extends Endow {
+export interface LoaderData extends INpo {
   base_url: string;
 }
 
-export const loader: LoaderFunction = async ({ params, request }) =>
-  getEndow(params.id).then((d) => ({
-    ...d,
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const id = parse($int_gte1, params.id);
+  const npo = await npodb.npo(id);
+  if (!npo) return { status: 404 };
+
+  return {
+    ...npo,
     base_url: new URL(request.url).origin,
-  }));
+  } satisfies LoaderData;
+};
+
 export const action = endowUpdate({ success: "Profile updated" });

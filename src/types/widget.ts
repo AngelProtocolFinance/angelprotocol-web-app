@@ -1,8 +1,8 @@
 import {
-  donateMethodId,
+  donate_method_id,
   increment,
-  incrementLabel,
-  incrementVal,
+  increment_label,
+  increment_val,
 } from "@better-giving/endowment/schema";
 import * as v from "valibot";
 import { donateMethod } from "./components";
@@ -54,7 +54,7 @@ export const widgetUrlSearchParams = v.object({
     v.pipe(
       str, //csv of method ids
       v.transform((x) => x.split(",")),
-      v.everyItem((x) => v.safeParse(donateMethodId, x).success)
+      v.everyItem((x) => v.safeParse(donate_method_id, x).success)
     )
   ),
   title: v.optional(title),
@@ -67,7 +67,7 @@ export const widgetUrlSearchParams = v.object({
     v.pipe(
       str, //csv of increments e.g. 40, 100, 500
       v.transform((x) => x.split(",")),
-      v.everyItem((x) => v.safeParse(incrementVal, x).success)
+      v.everyItem((x) => v.safeParse(increment_val, x).success)
     )
   ),
   descriptions: v.optional(
@@ -77,7 +77,7 @@ export const widgetUrlSearchParams = v.object({
       v.transform((x) => x.split(",")),
       // bring back commas replaced in snippet generation
       v.mapItems((x) => x.replace(/_/g, ",")),
-      v.everyItem((x) => v.safeParse(incrementLabel, x).success)
+      v.everyItem((x) => v.safeParse(increment_label, x).success)
     )
   ),
 });

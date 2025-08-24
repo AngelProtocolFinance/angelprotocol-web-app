@@ -1,4 +1,4 @@
-import type { ProgramUpdate } from "@better-giving/endowment";
+import type { IProgramUpdate } from "@better-giving/endowment";
 import { useFetcher } from "@remix-run/react";
 import { useActionResult } from "hooks/use-action-result";
 import type { FieldNamesMarkedBoolean } from "react-hook-form";
@@ -12,7 +12,7 @@ export default function useSubmit(
   useActionResult(fetcher.data);
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    const update: ProgramUpdate = {};
+    const update: IProgramUpdate = {};
     if (df.image) update.banner = fv.image;
     if (df.description) update.description = fv.description.value;
     if (df.title) update.title = fv.title;

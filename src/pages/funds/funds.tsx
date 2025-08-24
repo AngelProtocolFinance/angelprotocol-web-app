@@ -1,33 +1,20 @@
-import type { FundsPage } from "@better-giving/fundraiser";
-import { fundsParams } from "@better-giving/fundraiser/schema";
-import { NavLink, useFetcher, useSearchParams } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
+import type { IFundsPage } from "@better-giving/fundraiser";
+import { NavLink, useSearchParams } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
+import { use_paginator } from "hooks/use-paginator";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
-import { safeParse } from "valibot";
-import Cards from "./cards";
+
+import { Cards } from "./cards";
 import Hero from "./hero";
 import hero from "./hero.webp?url";
-import { getFunds } from ".server/funds";
 
 export { clientLoader } from "api/cache";
-export const loader: LoaderFunction = async ({ request }) => {
-  const source = new URL(request.url);
-  const params = safeParse(
-    fundsParams,
-    Object.fromEntries(source.searchParams)
-  );
-  if (params.issues) {
-    return { status: 400, body: params.issues[0].message };
-  }
-  const page = await getFunds(params.output);
-  return page;
-};
-
+export { loader } from "./funds-api";
 export const meta: MetaFunction = () =>
   metas({
     image: hero,
@@ -38,9 +25,20 @@ export const meta: MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Funds() {
-  const page1 = useCachedLoaderData<FundsPage>();
-  const { load } = useFetcher<FundsPage>({ key: "funds" }); //initially undefined
+  const page1 = useCachedLoaderData<IFundsPage>();
   const [params] = useSearchParams();
+  const { node, load } = use_paginator({
+    id: "funds",
+    page1,
+    table: (x) => <Cards {...x} />,
+    classes: "mt-4",
+    gen_loader: (l, next) => () => {
+      const p = new URLSearchParams(params);
+      if (next) p.set("page", next.toString());
+      l(`?${p.toString()}`);
+    },
+  });
+
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const n = new URLSearchParams(params);
     n.set("query", e.target.value);
@@ -75,7 +73,7 @@ export default function Funds() {
           </NavLink>
         </div>
 
-        <Cards page1={page1} classes="mt-4" />
+        {node}
       </div>
     </div>
   );

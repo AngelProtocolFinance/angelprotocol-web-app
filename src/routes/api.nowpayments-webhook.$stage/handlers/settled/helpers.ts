@@ -1,5 +1,5 @@
 import type { Donation } from "@better-giving/donation";
-import type { Endow, Environment } from "@better-giving/endowment/db";
+import type { Environment, INpo } from "@better-giving/endowment";
 import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
 import * as ref_db from "@better-giving/referrals/db";
 
@@ -13,7 +13,7 @@ export const referral_commission_rate = 0.3;
 
 export const commissionFn = (
   tx: { tip: number; fee: number; id: string },
-  endow: Endow.DbRecord,
+  endow: INpo,
   env: Environment
 ): Commission | null => {
   if (!endow.referrer || !endow.referrer_expiry) return null;

@@ -1,14 +1,11 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
 import type { LoaderFunction } from "@vercel/remix";
+import { search } from "helpers/https";
 import { safeParse } from "valibot";
 import { getNpos } from ".server/npos";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const url = new URL(request.url);
-  const params = safeParse(
-    endowsQueryParams,
-    Object.fromEntries(url.searchParams)
-  );
+  const params = safeParse(endowsQueryParams, search(request));
 
   if (params.issues) {
     return new Response(params.issues[0].message, { status: 400 });
