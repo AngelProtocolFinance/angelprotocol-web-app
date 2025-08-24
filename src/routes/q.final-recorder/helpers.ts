@@ -1,10 +1,11 @@
+import type { TxType } from "@better-giving/db";
 import type { Donation } from "@better-giving/donation";
 import type {
   DMKey,
   DonationMessage,
 } from "@better-giving/donation/donation-message";
 import type { INpo } from "@better-giving/endowment";
-import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
+import { TxBuilder } from "@better-giving/helpers-db";
 import * as ref_db from "@better-giving/referrals/db";
 import type { Environment } from "@better-giving/types/list";
 import { nanoid } from "nanoid";
@@ -49,9 +50,15 @@ export const build_donation_msg = ({
   };
 };
 
+export interface IReferrerLtd {
+  id: string;
+  total: number;
+  /** endow id */
+  npo: number;
+}
 interface Commission {
-  txs: TxItems;
-  to: string;
+  ltd: IReferrerLtd;
+  record: TxType["Put"];
   breakdown: Donation.ReferrerCommission;
 }
 
@@ -81,31 +88,33 @@ export const commission_fn = (
   };
   builder.put({ TableName: ref_db.name, Item: commission });
 
-  builder.update({
+  return {
+    ltd: { id: endow.referrer, total: commission.amount, npo: endow.id },
+    record: { TableName: ref_db.name, Item: commission },
+    breakdown: {
+      from_tip: tx.tip,
+      from_fee: tx.fee,
+    },
+  };
+};
+
+export const ltd_update = (ltd: IReferrerLtd): TxType["Update"] => {
+  return {
     TableName: ref_db.name,
     Key: {
-      PK: `Ltd#${endow.referrer}`,
-      SK: `Ltd#${endow.referrer}`,
+      PK: `Ltd#${ltd.id}`,
+      SK: `Ltd#${ltd.id}`,
     } satisfies Pick<ref_db.Ltd, "PK" | "SK">,
     UpdateExpression:
       "SET #amount = if_not_exists(#amount, :zero) + :amount, #referrer = :referrer",
     ExpressionAttributeNames: {
-      "#amount": `#${endow.id}`,
+      "#amount": `#${ltd.npo}`,
       "#referrer": "referrer",
     },
     ExpressionAttributeValues: {
       ":zero": 0,
-      ":amount": tx.tip + tx.fee,
-      ":referrer": endow.referrer,
-    },
-  });
-
-  return {
-    to: endow.referrer,
-    txs: builder.txs,
-    breakdown: {
-      from_tip: tx.tip,
-      from_fee: tx.fee,
+      ":amount": ltd.total,
+      ":referrer": ltd.id,
     },
   };
 };
