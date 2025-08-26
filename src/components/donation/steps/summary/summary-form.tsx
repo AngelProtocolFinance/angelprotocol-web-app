@@ -16,7 +16,7 @@ import { TributeFields } from "../common/tribute-fields";
 import { type Mode, type Tribute, tribute } from "../types";
 
 const schema = object({
-  is_with_msg_to_npo: boolean(),
+  is_with_msg_to_npo: optional(boolean()),
   ...donor.entries,
   with_tribute: boolean(),
   with_tribute_notif: optional(boolean()),

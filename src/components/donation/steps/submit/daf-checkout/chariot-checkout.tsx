@@ -2,7 +2,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
 import { ErrorBoundaryClass } from "components/error";
-import { CheckField, Field, Form } from "components/form";
+import { CheckField, Form } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -17,7 +17,6 @@ import {
   donor_address,
   donor_msg_to_npo_max_length,
   donor_public_msg_max_length,
-  from_msg_max_length,
   tribute,
 } from "types/donation-intent";
 import {
@@ -42,7 +41,7 @@ const chariot_donor = pick(donor, ["msg_to_npo", "public_msg", "is_public"]);
 interface ChariotDonor extends InferOutput<typeof chariot_donor> {}
 
 const schema = object({
-  is_with_msg_to_npo: boolean(),
+  is_with_msg_to_npo: optional(boolean()),
   ...chariot_donor.entries,
   with_tribute: optional(boolean()),
   with_tribute_notif: optional(boolean()),
@@ -234,82 +233,6 @@ export function ChariotCheckout(props: DafCheckoutStep) {
             }}
             custom_msg={custom_msg}
           />
-          <CheckField
-            {...register("with_tribute")}
-            classes="col-span-full mt-4"
-          >
-            Dedicate my donation
-          </CheckField>
-
-          {with_tribute && (
-            <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
-              <Field
-                {...register("tribute.full_name")}
-                label="Honoree's name"
-                placeholder="e.g. Jane Doe"
-                classes={{
-                  container: "w-full [&_input]:bg-white",
-                  input: "field-input-donate",
-                }}
-                required
-                error={errors.tribute?.full_name?.message}
-              />
-              <CheckField
-                {...register("with_tribute_notif")}
-                classes="col-span-full mt-3 text-sm"
-              >
-                Notify someone about this tribute
-              </CheckField>
-
-              {with_tribute_notif && (
-                <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
-                  <Field
-                    {...register("tribute.notif.to_fullname")}
-                    label="Recipient name"
-                    placeholder="e.g. Jane Doe"
-                    classes={{
-                      container: "[&_label]:text-sm [&_input]:text-sm",
-                      input: "field-input-donate",
-                    }}
-                    required
-                    error={errors.tribute?.notif?.to_fullname?.message}
-                  />
-                  <Field
-                    {...register("tribute.notif.to_email")}
-                    label="Email address"
-                    placeholder="e.g. janedoe@better.giving"
-                    classes={{
-                      container: "[&_label]:text-sm [&_input]:text-sm",
-                      input: "field-input-donate",
-                    }}
-                    required
-                    error={errors.tribute?.notif?.to_email?.message}
-                  />
-                  <Field
-                    {...register("tribute.notif.from_msg")}
-                    rows={2}
-                    type="textarea"
-                    label="Custom message"
-                    placeholder="Message to recipient"
-                    classes={{
-                      container: "[&_label]:text-sm [&_textarea]:text-sm",
-                      input: "field-input-donate",
-                    }}
-                    required={false}
-                    error={errors.tribute?.notif?.from_msg?.message}
-                  />
-                  <p
-                    data-exceed={
-                      errors.tribute?.notif?.from_msg?.type === "max"
-                    }
-                    className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red"
-                  >
-                    {custom_msg?.length}/{from_msg_max_length}
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
         </Form>
         <ChariotConnect
           theme="LightBlueTheme"
