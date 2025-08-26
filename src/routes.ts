@@ -1,227 +1,216 @@
 import { flatRoutes } from "@remix-run/fs-routes";
 import type { RouteConfig } from "@remix-run/route-config";
-import { index, layout, route } from "@remix-run/route-config";
+import { index, layout, route as r } from "@remix-run/route-config";
+
+class Path {
+  private value: string;
+  constructor(path: string) {
+    this.value = path;
+  }
+  $(path: string) {
+    return new Path(this.value + "/" + path);
+  }
+  get _() {
+    return this.value;
+  }
+}
+
+const pages = new Path("./pages");
+const donate_fund = pages.$("donate-fund");
+const landing = pages.$("landing");
+const widget = pages.$("widget");
+const admin = pages.$("admin");
+const user = pages.$("user-dashboard");
+const layouts = new Path("./layout");
+const components = new Path("./components");
+const sign_up = pages.$("sign-up");
+const info = pages.$("informational");
+const blog = pages.$("blog");
+const marketplace = pages.$("marketplace");
+const profile = pages.$("profile");
+const funds = pages.$("funds");
+const legal = pages.$("legal");
+const reg = pages.$("registration");
+const bank_apps = pages.$("banking-applications");
+const bank_app = pages.$("banking-application");
+const reg_apps = pages.$("applications");
+const reg_app = pages.$("application");
+const donation_calculator = pages.$("donation-calculator");
+const donate_widget = pages.$("donate-widget");
 
 export default [
   ...(await flatRoutes({ rootDirectory: "fs-routes" })),
 
   index("./pages/home/home.tsx"),
-
-  route("donate/:id", "./pages/donate/index.tsx"),
-  route("donate-fund/:fundId", "./pages/donate-fund/redirect.ts"),
-  route("fundraisers/:fundId/donate", "./pages/donate-fund/index.tsx"),
-  route("donate-thanks", "./pages/donate-thanks.tsx"),
-  route("referral-program", "./pages/landing/referrals/index.tsx"),
-  route("nonprofits/:slug", "./pages/landing/ntee/index.tsx"),
-  route("see-what-youre-losing", "./pages/landing/don-calculator/index.tsx"),
-  route(
+  r("donate/:id", pages.$("donate/index.tsx")._),
+  r("donate-fund/:fundId", donate_fund.$("redirect.ts")._),
+  r("fundraisers/:fundId/donate", donate_fund.$("index.tsx")._),
+  r("donate-thanks", pages.$("donate-thanks.tsx")._),
+  r("referral-program", landing.$("referrals/index.tsx")._),
+  r("nonprofits/:slug", landing.$("ntee/index.tsx")._),
+  r("see-what-youre-losing", landing.$("don-calculator/index.tsx")._),
+  r(
     "simplify-fundraising-maximize-impact",
-    "./pages/landing/us-nonprofits/index.tsx",
+    landing.$("us-nonprofits/index.tsx")._,
     { id: "page-a" }
   ),
-  route(
+  r(
     "simplify-fundraising-maximize-impacts",
-    "./pages/landing/us-nonprofits/index.tsx",
+    landing.$("us-nonprofits/index.tsx")._,
     { id: "page-a2" }
   ),
-  route(
+  r(
     "the-smart-move-to-make-for-accepting-crypto-donations",
-    "./pages/landing/tgb-attack/index.tsx"
+    landing.$("tgb-attack/index.tsx")._
   ),
 
-  route("form-builder", "./pages/widget/form-builder-layout.tsx", [
-    index("./pages/widget/index.ts", { id: "public-form-builder" }),
+  r("form-builder", widget.$("form-builder-layout.tsx")._, [
+    index(widget.$("index.ts")._, { id: "public-form-builder" }),
   ]),
 
-  route("admin/:id", "./pages/admin/layout.tsx", [
-    index("./pages/admin/redirect.ts"),
-    route("donations", "./pages/admin/donations/donations.tsx"),
-    route("programs", "./pages/admin/programs/programs.tsx"),
-    route("funds", "./pages/admin/funds/funds.tsx"),
-    route("integrations", "./pages/admin/integrations/index.tsx"),
-    route(
+  r("admin/:id", admin.$("layout.tsx")._, [
+    index(admin.$("redirect.ts")._),
+    r("donations", admin.$("donations/donations.tsx")._),
+    r("programs", admin.$("programs/programs.tsx")._),
+    r("funds", admin.$("funds/funds.tsx")._),
+    r("integrations", admin.$("integrations/index.tsx")._),
+    r(
       "program-editor/:programId",
-      "./pages/admin/program-editor/program-editor.tsx"
+      admin.$("program-editor/program-editor.tsx")._
     ),
-    route(
-      "members",
-      "./pages/admin/members/members.tsx",
-      { id: "endow-admins" },
-      [route("add", "./pages/admin/members/add-form.tsx")]
-    ),
-    route("settings", "./pages/admin/settings/form.tsx"),
-    route("edit-profile", "./pages/admin/edit-profile/index.tsx"),
-    route("banking", "./pages/admin/banking/payout-methods/payout-methods.tsx"),
-    route("banking/new", "./pages/admin/banking/banking.tsx"),
-    route(
-      "banking/:bankId",
-      "./pages/admin/banking/payout-method/payout-method.tsx",
-      [route("delete", "./pages/admin/banking/payout-method/delete-prompt.tsx")]
-    ),
-    route("form-builder", "./pages/widget/index.ts", {
+    r("members", admin.$("members/members.tsx")._, { id: "endow-admins" }, [
+      r("add", admin.$("members/add-form.tsx")._),
+    ]),
+    r("settings", admin.$("settings/form.tsx")._),
+    r("edit-profile", admin.$("edit-profile/index.tsx")._),
+    r("banking", admin.$("banking/payout-methods/payout-methods.tsx")._),
+    r("banking/new", admin.$("banking/banking.tsx")._),
+    r("banking/:bankId", admin.$("banking/payout-method/payout-method.tsx")._, [
+      r("delete", admin.$("banking/payout-method/delete-prompt.tsx")._),
+    ]),
+    r("form-builder", widget.$("index.ts")._, {
       id: "admin-form-builder",
     }),
-    route("media", "./pages/admin/media/media.tsx", [
-      route("new", "./pages/admin/media/video-new.ts", { id: "media-new" }),
-      route(":mediaId", "./pages/admin/media/video-edit.ts", {
+    r("media", admin.$("media/media.tsx")._, [
+      r("new", admin.$("media/video-new.ts")._, { id: "media-new" }),
+      r(":mediaId", admin.$("media/video-edit.ts")._, {
         id: "media-edit",
       }),
     ]),
-    route("media/videos", "./pages/admin/media/videos/videos.tsx", [
-      route("new", "./pages/admin/media/video-new.ts", { id: "videos-new" }),
-      route(":mediaId", "./pages/admin/media/video-edit.ts", {
+    r("media/videos", admin.$("media/videos/videos.tsx")._, [
+      r("new", admin.$("media/video-new.ts")._, { id: "videos-new" }),
+      r(":mediaId", admin.$("media/video-edit.ts")._, {
         id: "videos-edit",
       }),
     ]),
-    route(
-      "dashboard",
-      "./pages/admin/dashboard/dashboard.tsx",
-      { id: "dashboard" },
-      [
-        route("edit-alloc", "./pages/admin/dashboard/schedule/edit.tsx"),
-        route("move-funds", "./pages/admin/dashboard/move-fund-form.tsx"),
-      ]
-    ),
-    route("referrals", "./pages/admin/referrals/index.tsx"),
-    route(
-      "referrals/earnings",
-      "./pages/admin/referrals/earnings-history/index.tsx"
-    ),
-    route(
-      "referrals/payouts",
-      "./pages/admin/referrals/payout-history/index.tsx"
-    ),
+    r("dashboard", admin.$("dashboard/dashboard.tsx")._, { id: "dashboard" }, [
+      r("edit-alloc", admin.$("dashboard/schedule/edit.tsx")._),
+      r("move-funds", admin.$("dashboard/move-fund-form.tsx")._),
+    ]),
+    r("referrals", admin.$("referrals/index.tsx")._),
+    r("referrals/earnings", admin.$("referrals/earnings-history/index.tsx")._),
+    r("referrals/payouts", admin.$("referrals/payout-history/index.tsx")._),
   ]),
 
-  route("dashboard", "./pages/user-dashboard/layout.tsx", [
-    index("./pages/user-dashboard/index-route.ts"),
-    route("edit-profile", "./pages/user-dashboard/edit-profile/index.ts"),
-    route("settings", "./pages/user-dashboard/settings/settings.tsx"),
-    route("donations", "./pages/user-dashboard/donations/index.tsx", [
-      route(":id", "./components/kyc-form/index.tsx"),
+  r("dashboard", user.$("layout.tsx")._, [
+    index(user.$("index-route.ts")._),
+    r("edit-profile", user.$("edit-profile/index.ts")._),
+    r("settings", user.$("settings/settings.tsx")._),
+    r("donations", user.$("donations/index.tsx")._, [
+      r(":id", components.$("kyc-form/index.tsx")._),
     ]),
-    route("subscriptions", "./pages/user-dashboard/subscriptions/index.tsx", [
-      route(
-        "cancel/:sub_id",
-        "./pages/user-dashboard/subscriptions/cancel/index.tsx"
-      ),
+    r("subscriptions", user.$("subscriptions/index.tsx")._, [
+      r("cancel/:sub_id", user.$("subscriptions/cancel/index.tsx")._),
     ]),
-    route("funds", "./pages/user-dashboard/funds/funds.tsx"),
-    route("referrals", "./pages/user-dashboard/referrals/index.tsx", [
-      route(
-        "payout-min",
-        "./pages/user-dashboard/referrals/payout-min/index.tsx"
-      ),
-      route("w-form", "./pages/user-dashboard/referrals/w-forms/index.tsx"),
-      route(
-        "w-form-signed",
-        "./pages/user-dashboard/referrals/w-form-signed/index.tsx"
-      ),
+    r("funds", user.$("funds/funds.tsx")._),
+    r("referrals", user.$("referrals/index.tsx")._, [
+      r("payout-min", user.$("referrals/payout-min/index.tsx")._),
+      r("w-form", user.$("referrals/w-forms/index.tsx")._),
+      r("w-form-signed", user.$("referrals/w-form-signed/index.tsx")._),
     ]),
-    route(
-      "referrals/payout",
-      "./pages/user-dashboard/referrals/payout/index.tsx"
-    ),
-    route(
-      "referrals/earnings",
-      "./pages/user-dashboard/referrals/earnings-history/index.tsx"
-    ),
-    route(
-      "referrals/payouts",
-      "./pages/user-dashboard/referrals/payout-history/index.tsx"
-    ),
+    r("referrals/payout", user.$("referrals/payout/index.tsx")._),
+    r("referrals/earnings", user.$("referrals/earnings-history/index.tsx")._),
+    r("referrals/payouts", user.$("referrals/payout-history/index.tsx")._),
   ]),
 
-  layout("./layout/app/layout.tsx", [
-    route("login", "./pages/signin.tsx"),
-    route("signup", "./pages/sign-up/layout.tsx", [
-      index("./pages/sign-up/signup-form/signup-form.tsx"),
-      route("confirm", "./pages/sign-up/confirm-form/confirm-form.tsx"),
-      route("success", "./pages/sign-up/success.tsx"),
+  layout(layouts.$("app/layout.tsx")._, [
+    r("login", pages.$("signin.tsx")._),
+    r("signup", sign_up.$("layout.tsx")._, [
+      index(sign_up.$("signup-form/signup-form.tsx")._),
+      r("confirm", sign_up.$("confirm-form/confirm-form.tsx")._),
+      r("success", sign_up.$("success.tsx")._),
     ]),
-    route("login/reset", "./pages/reset-password/reset-password.tsx"),
-    route("logout", "./pages/logout.ts"),
-    route("nonprofit", "./pages/informational/nonprofit-info/index.ts"),
-    route("donor", "./pages/informational/donor-info/index.ts"),
-    route("wp-plugin", "./pages/informational/wp-plugin.tsx"),
-    route(
-      "zapier-integration",
-      "./pages/informational/zapier-integration/index.tsx"
-    ),
-    route("about-us", "./pages/informational/about/index.tsx"),
-    route("blog", "./pages/blog/posts.tsx"),
-    route("blog/:slug", "./pages/blog/post.tsx"),
-    route("marketplace", "./pages/marketplace/index.tsx", [
-      route("filter", "./pages/marketplace/filter/index.ts"),
+    r("login/reset", pages.$("reset-password/reset-password.tsx")._),
+    r("logout", pages.$("logout.ts")._),
+    r("nonprofit", info.$("nonprofit-info/index.ts")._),
+    r("donor", info.$("donor-info/index.ts")._),
+    r("wp-plugin", info.$("wp-plugin.tsx")._),
+    r("zapier-integration", info.$("zapier-integration/index.tsx")._),
+    r("about-us", info.$("about/index.tsx")._),
+    r("blog", blog.$("posts.tsx")._),
+    r("blog/:slug", blog.$("post.tsx")._),
+    r("marketplace", marketplace.$("index.tsx")._, [
+      r("filter", marketplace.$("filter/index.ts")._),
     ]),
-    route("marketplace/:id", "./pages/profile/profile.tsx", [
-      layout("./pages/profile/body/body.tsx", [
-        index("./pages/profile/body/general-info/index.ts"),
-        route("program/:programId", "./pages/profile/body/program/index.ts"),
+    r("marketplace/:id", profile.$("profile.tsx")._, [
+      layout(profile.$("body/body.tsx")._, [
+        index(profile.$("body/general-info/index.ts")._),
+        r("program/:programId", profile.$("body/program/index.ts")._),
       ]),
     ]),
-    route("profile/:id", "./pages/profile/profile-redirect.ts"),
-    route("funds/*", "./pages/funds/redirect.ts"),
-    route("fundraisers", "./pages/funds/funds.tsx"),
-    route("fundraisers/:fundId", "./pages/funds/fund/index.tsx"),
-    route("fundraisers/:fundId/edit", "./pages/funds/edit-fund/index.ts"),
-    route("fundraisers/new", "./pages/funds/create-fund/index.ts"),
-    route("privacy-policy", "./pages/legal/privacy-policy.tsx"),
-    route("terms-of-use", "./pages/legal/terms-donors.tsx"),
-    route("terms-of-use-npo", "./pages/legal/terms-nonprofits.tsx"),
-    route("terms-of-use-referrals", "./pages/legal/terms-referrals.tsx"),
-    route("banking-applications", "./pages/banking-applications/index.ts"),
-    route(
-      "banking-applications/:id",
-      "./pages/banking-application/banking-application.tsx",
-      [
-        route("approve", "./pages/banking-application/verdict-approve.tsx"),
-        route("reject", "./pages/banking-application/verdict-reject.tsx"),
-        route("success", "./pages/banking-application/success-prompt.tsx"),
-      ]
-    ),
-    route("register", "./pages/registration/layout.tsx", [
-      index("./pages/registration/sign-up/index.ts"),
-      route("success", "./pages/registration/success.tsx"),
-      route("welcome", "./pages/registration/welcome.tsx"),
-      route("resume", "./pages/registration/resume/form.tsx"),
-      route(
-        ":regId",
-        "./pages/registration/steps/layout.ts",
-        { id: "reg$Id" },
-        [
-          route("sign-result", "./pages/registration/signing-result/index.ts"),
-          layout("./pages/registration/steps/steps-layout.tsx", [
-            index("./pages/registration/steps/steps-index.ts"),
-            route("1", "./pages/registration/steps/contact-details/index.tsx"),
-            route("2", "./pages/registration/steps/org-details/index.tsx"),
-            route("3", "./pages/registration/steps/fsa-inquiry/index.ts"),
-            route("4", "./pages/registration/steps/documentation/index.ts", [
-              route("fsa", "./pages/registration/data/fsa-action.ts"),
-            ]),
-            route("5", "./pages/registration/steps/banking/index.ts"),
-            route("6", "./pages/registration/steps/dashboard/index.tsx"),
+    r("profile/:id", profile.$("profile-redirect.ts")._),
+    r("funds/*", funds.$("redirect.ts")._),
+    r("fundraisers", funds.$("funds.tsx")._),
+    r("fundraisers/:fundId", funds.$("fund/index.tsx")._),
+    r("fundraisers/:fundId/edit", funds.$("edit-fund/index.ts")._),
+    r("fundraisers/new", funds.$("create-fund/index.ts")._),
+    r("privacy-policy", legal.$("privacy-policy.tsx")._),
+    r("terms-of-use", legal.$("terms-donors.tsx")._),
+    r("terms-of-use-npo", legal.$("terms-nonprofits.tsx")._),
+    r("terms-of-use-referrals", legal.$("terms-referrals.tsx")._),
+    r("banking-applications", bank_apps.$("index.ts")._),
+    r("banking-applications/:id", bank_app.$("banking-application.tsx")._, [
+      r("approve", bank_app.$("verdict-approve.tsx")._),
+      r("reject", bank_app.$("verdict-reject.tsx")._),
+      r("success", bank_app.$("success-prompt.tsx")._),
+    ]),
+    r("register", reg.$("layout.tsx")._, [
+      index(reg.$("sign-up/index.ts")._),
+      r("success", reg.$("success.tsx")._),
+      r("welcome", reg.$("welcome.tsx")._),
+      r("resume", reg.$("resume/form.tsx")._),
+      r(":regId", reg.$("steps/layout.ts")._, { id: "reg$Id" }, [
+        r("sign-result", reg.$("signing-result/index.ts")._),
+        layout(reg.$("steps/steps-layout.tsx")._, [
+          index(reg.$("steps/steps-index.ts")._),
+          r("1", reg.$("steps/contact-details/index.tsx")._),
+          r("2", reg.$("steps/org-details/index.tsx")._),
+          r("3", reg.$("steps/fsa-inquiry/index.ts")._),
+          r("4", reg.$("steps/documentation/index.ts")._, [
+            r("fsa", reg.$("data/fsa-action.ts")._),
           ]),
-        ]
-      ),
+          r("5", reg.$("steps/banking/index.ts")._),
+          r("6", reg.$("steps/dashboard/index.tsx")._),
+        ]),
+      ]),
     ]),
-    route("applications", "./pages/applications/index.ts"),
-    route("applications/:id", "./pages/application/application.tsx", [
-      route(":verdict", "./pages/application/review-route.tsx"),
-      route("success", "./pages/application/success-prompt.tsx"),
+    r("applications", reg_apps.$("index.ts")._),
+    r("applications/:id", reg_app.$("application.tsx")._, [
+      r(":verdict", reg_app.$("review-route.tsx")._),
+      r("success", reg_app.$("success-prompt.tsx")._),
     ]),
-    route("donation-calculator", "./pages/donation-calculator/index.tsx"),
+    r("donation-calculator", donation_calculator.$("index.tsx")._),
   ]),
 
-  route("donate-widget", "./pages/donate-widget/widget-context.tsx", [
-    route(":id", "./pages/donate-widget/index.ts"),
-    route("donate-thanks", "./pages/donate-thanks.tsx", {
+  r("donate-widget", donate_widget.$("widget-context.tsx")._, [
+    r(":id", donate_widget.$("index.ts")._),
+    r("donate-thanks", pages.$("donate-thanks.tsx")._, {
       id: "widget-donate-thanks",
     }),
   ]),
 
-  route(
+  r(
     "donation-calculator-export",
-    "./pages/donation-calculator/pdf-export/index.tsx"
+    donation_calculator.$("pdf-export/index.tsx")._
   ),
 ] satisfies RouteConfig;
