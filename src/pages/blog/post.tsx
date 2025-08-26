@@ -3,14 +3,10 @@ import Media from "components/media";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
-import {
-  Link,
-  type LoaderFunction,
-  type MetaFunction,
-  useLoaderData,
-} from "react-router";
+import { Link } from "react-router";
 import useSWR from "swr/immutable";
 import type { Wordpress } from "types/wordpress";
+import type { Route } from "./+types/post";
 
 const containerStyle = "w-full px-5 max-w-4xl mx-auto pb-4";
 
@@ -19,7 +15,7 @@ interface IPost extends Wordpress.Post {
   authorName: string;
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: Route.LoaderArgs) => {
   const [post] = await wp
     .get<Wordpress.Post[]>(`posts?slug=${params.slug}`)
     .json();
@@ -32,16 +28,14 @@ export const loader: LoaderFunction = async ({ params }) => {
   return { ...post, media: m, authorName: a.name } satisfies IPost;
 };
 
-export const meta: MetaFunction = ({ data }: any) => {
-  if (!data) return [];
-  return metas({ title: data.slug });
+export const meta: Route.MetaFunction = ({ loaderData: d }) => {
+  if (!d) return [];
+  return metas({ title: d.slug });
 };
 
 export { ErrorBoundary } from "components/error";
 
-export default function Post() {
-  const post = useLoaderData() as IPost;
-
+export default function Post({ loaderData: post }: Route.ComponentProps) {
   return (
     <div className={containerStyle}>
       <Link

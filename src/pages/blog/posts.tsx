@@ -3,16 +3,15 @@ import Media from "components/media";
 import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
 import {
-  type LoaderFunction,
-  type MetaFunction,
   NavLink,
   useFetcher,
   useLoaderData,
   useSearchParams,
 } from "react-router";
 import type { Wordpress } from "types/wordpress";
+import type { Route } from "./+types/posts";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const url = new URL(request.url);
   const currPage = +(url.searchParams.get("page") ?? "1");
   const [items, total] = await posts(currPage);
@@ -25,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   } satisfies Wordpress.PostPage;
   return page;
 };
-export const meta: MetaFunction = () =>
+export const meta: Route.MetaFunction = () =>
   metas({ title: "Blog - Better Giving", description: "Checkout the latest" });
 
 export { ErrorBoundary } from "components/error";
