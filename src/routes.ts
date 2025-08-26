@@ -1,6 +1,6 @@
-import { flatRoutes } from "@remix-run/fs-routes";
-import type { RouteConfig } from "@remix-run/route-config";
-import { index, layout, route as r } from "@remix-run/route-config";
+import type { RouteConfig } from "@react-router/dev/routes";
+import { index, layout, route as r } from "@react-router/dev/routes";
+import { flatRoutes } from "@react-router/fs-routes";
 
 class Path {
   private value: string;

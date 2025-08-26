@@ -1,7 +1,7 @@
-import { Link } from "@remix-run/react";
 import banner from "assets/images/bg-banner.webp";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 const Hero = ({ classes = "" }) => {
   return (

@@ -1,6 +1,6 @@
 import { type FsaPayload, signer } from "@better-giving/registration/fsa";
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { regRoutes } from "constants/routes";
+import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { gen_fsa_signing_url } from ".server/registration/gen-fsa-signing-url";

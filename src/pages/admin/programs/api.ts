@@ -1,8 +1,8 @@
 import type { NewProgram, Program } from "@better-giving/endowment";
-import { type LoaderFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getPrograms } from "api/get/programs";
 import { adminRoutes } from "constants/routes";
+import { type LoaderFunction, redirect } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData {

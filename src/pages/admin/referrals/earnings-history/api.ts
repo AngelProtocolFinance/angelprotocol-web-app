@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
+import type { LoaderFunction } from "react-router";
 import type { EarningsPage } from "types/referrals";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";

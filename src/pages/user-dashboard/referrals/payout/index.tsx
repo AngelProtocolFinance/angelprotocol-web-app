@@ -1,8 +1,8 @@
-import { Link, useFetcher } from "@remix-run/react";
 import { BankDetails } from "components/bank-details";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import { Link, useFetcher } from "react-router";
 import FormButtons from "./form-buttons";
 
 export { action } from "./api";

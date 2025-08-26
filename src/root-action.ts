@@ -1,6 +1,6 @@
-import type { ActionFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { parseWithValibot } from "conform-to-valibot";
+import type { ActionFunction } from "react-router";
 import { emailSubs } from "types/hubspot-subscription";
 import { cognito, toAuth } from ".server/auth";
 import { createBookmark, deleteBookmark } from ".server/user-bookmarks";

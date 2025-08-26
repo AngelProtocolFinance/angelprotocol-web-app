@@ -1,7 +1,7 @@
 import tokenMap from "@better-giving/assets/tokens/map";
 import type { OnHoldDonation } from "@better-giving/donation";
 import { tables } from "@better-giving/types/list";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import type { Payment } from "types/crypto";
 import {
   integer,

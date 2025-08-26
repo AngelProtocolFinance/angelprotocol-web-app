@@ -1,5 +1,3 @@
-import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
 import BookmarkBtn from "components/bookmark-btn";
 import Breadcrumbs from "components/breadcrumbs";
 import ExtLink from "components/ext-link";
@@ -8,6 +6,12 @@ import VerifiedIcon from "components/verified-icon";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
+import {
+  type LoaderFunction,
+  NavLink,
+  Outlet,
+  useLoaderData,
+} from "react-router";
 import type { EndowmentBalances } from "types/npo-balance";
 import { useProfileContext } from "../profile-context";
 import { npoId } from "./common/npo-id";

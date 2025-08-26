@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import Copier from "components/copier";
 import ExtLink from "components/ext-link";
 import { HeaderButton } from "components/header-button";
@@ -9,6 +8,7 @@ import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { maskAddress } from "helpers/mask-address";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
+import { Link } from "react-router";
 import type { Donation } from "types/donations";
 import { donationMethod, lastHeaderName } from "./common";
 import LoadMoreBtn from "./load-more-btn";

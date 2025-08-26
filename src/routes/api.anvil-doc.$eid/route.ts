@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { anvil } from ".server/sdks";
 
 export const loader: LoaderFunction = async ({ params: { eid } }) => {

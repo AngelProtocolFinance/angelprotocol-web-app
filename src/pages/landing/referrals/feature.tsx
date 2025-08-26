@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import {
   ArrowRight,
@@ -7,6 +6,7 @@ import {
   SproutIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { Link } from "react-router";
 
 interface IListItem {
   title: string;

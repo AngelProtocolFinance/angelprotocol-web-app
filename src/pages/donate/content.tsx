@@ -1,5 +1,3 @@
-import { Link } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import type { DonateData } from "api/donate-loader";
 import flying_character from "assets/images/flying-character.webp";
 import { Steps } from "components/donation";
@@ -8,11 +6,12 @@ import { DappLogo } from "components/image";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
+import { Link, useLoaderData } from "react-router";
 import FAQ from "./faq";
 import OrgCard from "./org-card";
 
 export default function Content() {
-  const { endow } = useCachedLoaderData<DonateData>();
+  const { endow } = useLoaderData<DonateData>();
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">

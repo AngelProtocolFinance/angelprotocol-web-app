@@ -1,6 +1,6 @@
-import { Navigate, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { regRoutes } from "constants/routes";
 import { useActionResult } from "hooks/use-action-result";
+import { Navigate, Outlet, useFetcher, useLoaderData } from "react-router";
 import type { ActionData, Ok } from "types/action";
 import { stepLoader } from "../../data/step-loader";
 import type { RegStep6 } from "../../types";

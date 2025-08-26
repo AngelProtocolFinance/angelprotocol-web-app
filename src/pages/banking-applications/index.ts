@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
+import type { LoaderFunction } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 import { bank_applications } from ".server/banking-applications";
 

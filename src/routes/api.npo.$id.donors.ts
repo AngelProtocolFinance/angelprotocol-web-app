@@ -1,7 +1,7 @@
 // import { cognito } from ".server/auth";
 import { fundId } from "@better-giving/fundraiser/schema";
-import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { npoDonors } from ".server/npo-donors";
 

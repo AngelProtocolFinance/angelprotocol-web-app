@@ -1,7 +1,7 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import { fundId } from "@better-giving/fundraiser/schema";
-import type { LoaderFunction } from "@vercel/remix";
 import { segment } from "api/schema/segment";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse, union } from "valibot";
 import { cognito } from ".server/auth";

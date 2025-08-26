@@ -1,6 +1,6 @@
 import { new_bank as schema } from "@better-giving/banking-applications/schema";
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { adminRoutes } from "constants/routes";
+import { type ActionFunction, redirect } from "react-router";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { new_bank } from ".server/banking-applications";

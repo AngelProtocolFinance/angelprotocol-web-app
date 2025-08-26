@@ -1,7 +1,7 @@
-import { Link } from "@remix-run/react";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { CheckIcon } from "lucide-react";
+import { Link } from "react-router";
 
 const features = [
   "🎯 Zero platform fees - forever",

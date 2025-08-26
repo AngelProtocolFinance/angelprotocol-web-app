@@ -1,5 +1,4 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
 import { ErrorBoundaryClass } from "components/error";
 import { CheckField, Form } from "components/form";
@@ -11,6 +10,7 @@ import { Eraser, PenToolIcon } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import type { DonationIntent } from "types/donation-intent";
 import {
   donor,

@@ -1,6 +1,6 @@
 import type { UserFund } from "@better-giving/user";
-import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
+import type { LoaderFunction } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData {

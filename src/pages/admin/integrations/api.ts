@@ -1,5 +1,5 @@
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import { parse } from "valibot";
 import { env } from ".server/env";
 import {

@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import type { RegStep3 } from "../../types";
 import { NotTaxExempt } from "./not-tax-exempt";
 import { PossiblyTaxExempt } from "./possibly-tax-exempt";

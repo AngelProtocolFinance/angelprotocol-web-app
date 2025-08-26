@@ -8,12 +8,12 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useFetcher } from "@remix-run/react";
 import { Field, Form, Label, toYYYMMDD } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
+import { useFetcher } from "react-router";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";
 

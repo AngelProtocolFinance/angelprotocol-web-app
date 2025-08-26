@@ -1,13 +1,13 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Link, useFetcher, useLoaderData } from "@remix-run/react";
+import { Field } from "components/form";
+import { Separator } from "components/separator";
+import { parseWithValibot } from "conform-to-valibot";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
-import { Field } from "components/form";
-import { Separator } from "components/separator";
-import { parseWithValibot } from "conform-to-valibot";
+} from "react-router";
+import { Link, useFetcher, useLoaderData } from "react-router";
 import { getRegState } from "../data/step-loader";
 import { schema } from "./types";
 import { cognito, toAuth } from ".server/auth";

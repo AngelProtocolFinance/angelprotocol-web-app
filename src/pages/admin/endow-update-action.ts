@@ -3,7 +3,7 @@ import {
   endowIdParam,
   endowUpdate as endowUpdateSchema,
 } from "@better-giving/endowment/schema";
-import { type ActionFunction, redirect } from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";

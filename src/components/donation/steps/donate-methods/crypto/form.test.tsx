@@ -14,8 +14,8 @@ vi.mock("../../context", () => ({
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
 
-vi.mock("@remix-run/react", async () => {
-  const actual = await vi.importActual("@remix-run/react");
+vi.mock("react-router", async () => {
+  const actual = await vi.importActual("react-router");
   return {
     ...actual,
     useLoaderData: () => testDonateData,

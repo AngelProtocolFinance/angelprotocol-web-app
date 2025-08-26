@@ -1,7 +1,6 @@
-import { NavLink } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { Plus } from "lucide-react";
+import { NavLink, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import Table from "./table";
 
@@ -9,7 +8,7 @@ export { loader } from "./api";
 
 export { ErrorBoundary } from "components/error";
 export default function PayoutMethods() {
-  const { methods } = useCachedLoaderData<LoaderData>();
+  const { methods } = useLoaderData<LoaderData>();
 
   return (
     <div>

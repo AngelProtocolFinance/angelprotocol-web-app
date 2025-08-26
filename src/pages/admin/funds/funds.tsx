@@ -1,20 +1,18 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { Link } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
+import { Link, useLoaderData } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { LoaderData } from "./api";
 import { FundItem } from "./fund-item";
 
 type CreatorType = "others" | "ours";
 export { action, loader } from "./api";
-export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 export default function Funds() {
-  const { funds, endow, user } = useCachedLoaderData<LoaderData>();
+  const { funds, endow, user } = useLoaderData<LoaderData>();
   const [creatorType, setCreatorType] = useState<CreatorType>("ours");
 
   return (

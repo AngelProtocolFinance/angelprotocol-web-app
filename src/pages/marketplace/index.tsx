@@ -1,8 +1,11 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
-import { Outlet } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { metas } from "helpers/seo";
+import {
+  type LoaderFunction,
+  type MetaFunction,
+  Outlet,
+  useLoaderData,
+} from "react-router";
 import type { EndowCardsPage } from "types/npo";
 import { safeParse } from "valibot";
 import ActiveFilters from "./active-filters";
@@ -12,7 +15,6 @@ import hero from "./hero.webp?url";
 import Toolbar from "./toolbar";
 import { getNpos } from ".server/npos";
 
-export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const params = safeParse(
@@ -38,7 +40,7 @@ export const meta: MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Marketplace() {
-  const page1 = useCachedLoaderData<EndowCardsPage>();
+  const page1 = useLoaderData<EndowCardsPage>();
   return (
     <div className="w-full grid content-start pb-16">
       <Hero classes="grid isolate mt-8 xl:container xl:mx-auto px-5" />

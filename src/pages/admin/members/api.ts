@@ -1,11 +1,11 @@
+import { ap, ver } from "api/api";
+import { getEndow } from "api/get/endow";
+import { parseWithValibot } from "conform-to-valibot";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
-import { ap, ver } from "api/api";
-import { getEndow } from "api/get/endow";
-import { parseWithValibot } from "conform-to-valibot";
+} from "react-router";
 import type { UserV2 } from "types/auth";
 import type { EndowAdmin } from "types/npo";
 import { schema } from "./schema";

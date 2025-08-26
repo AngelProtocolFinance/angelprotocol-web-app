@@ -1,7 +1,7 @@
-import type { MetaFunction } from "@vercel/remix";
 import type { DonateData } from "api/donate-loader";
 import { BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
+import type { MetaFunction } from "react-router";
 
 export { default } from "./donate-widget";
 export { ErrorBoundary } from "components/error";

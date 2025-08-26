@@ -1,8 +1,8 @@
-import { createRemixStub } from "@remix-run/testing";
 import type { Stripe, StripeError } from "@stripe/stripe-js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode, useEffect } from "react";
+import { createRoutesStub } from "react-router";
 import { fiatDonationIntentCreationErrorHandler } from "services/api/mock";
 import { mswServer } from "setup-tests";
 import { describe, expect, test, vi } from "vitest";
@@ -43,7 +43,7 @@ vi.mock("@stripe/react-stripe-js", () => ({
 }));
 
 const stb = (node: ReactNode) =>
-  createRemixStub([{ path: "/", Component: () => node }]);
+  createRoutesStub([{ path: "/", Component: () => node }]);
 
 const state: StripeCheckoutStep = {
   init: {

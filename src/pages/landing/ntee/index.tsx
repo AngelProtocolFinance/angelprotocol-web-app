@@ -1,8 +1,11 @@
-import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { DappLogo } from "components/image";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
+import {
+  type LoaderFunction,
+  type MetaFunction,
+  useLoaderData,
+} from "react-router";
 import { animal_rescue } from "./contexts/animal-rescue";
 import { arts_culture } from "./contexts/arts-culture";
 import { civil_rights } from "./contexts/civil-rights";

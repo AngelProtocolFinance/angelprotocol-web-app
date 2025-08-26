@@ -1,5 +1,5 @@
-import type { MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
+import type { MetaFunction } from "react-router";
 
 export const meta: MetaFunction = () =>
   metas({ title: "Referral Program Terms of Use" });

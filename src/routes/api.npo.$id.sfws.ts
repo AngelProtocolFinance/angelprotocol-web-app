@@ -1,5 +1,5 @@
 import { endowIdParam } from "@better-giving/endowment/schema";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { cognito } from ".server/auth";
 import { npoSfws } from ".server/npo-sfws";

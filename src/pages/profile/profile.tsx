@@ -1,12 +1,10 @@
 import type { Endow } from "@better-giving/endowment";
-import { useLoaderData } from "@remix-run/react";
-import { Outlet } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/image";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
+import { type MetaFunction, Outlet, useLoaderData } from "react-router";
 import ProfileContext from "./profile-context";
 
 export { profileLoader as loader } from "./profile-loader";

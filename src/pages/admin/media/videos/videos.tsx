@@ -1,9 +1,8 @@
 import type { MediaPage } from "@better-giving/endowment";
-import { NavLink, Outlet, useParams } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import Breadcrumbs from "components/breadcrumbs";
 import { appRoutes } from "constants/routes";
 import { Plus } from "lucide-react";
+import { NavLink, Outlet, useLoaderData, useParams } from "react-router";
 import { List } from "./list";
 
 export { ErrorBoundary } from "components/error";
@@ -11,10 +10,9 @@ export {
   allVideos as loader,
   videosAction as action,
 } from "../api";
-export { clientLoader } from "api/cache";
 export default function Videos() {
   const params = useParams();
-  const page1 = useCachedLoaderData<MediaPage>();
+  const page1 = useLoaderData<MediaPage>();
   return (
     <div className="grid content-start @container">
       <Breadcrumbs

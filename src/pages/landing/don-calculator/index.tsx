@@ -1,9 +1,8 @@
-import { Link } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
+import { Link, type MetaFunction } from "react-router";
 import { Top } from "./top";
 export const meta: MetaFunction = () =>
   metas({

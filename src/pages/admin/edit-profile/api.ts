@@ -1,6 +1,6 @@
 import type { Endow } from "@better-giving/endowment";
-import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
+import type { LoaderFunction } from "react-router";
 import { endowUpdate } from "../endow-update-action";
 
 export interface LoaderData extends Endow {

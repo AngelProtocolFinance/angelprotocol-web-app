@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import type { EndowCardsPage } from "types/npo";
 export type { EndowmentCard } from "types/npo";
 import { ap, ver } from "api/api";

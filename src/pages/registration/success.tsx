@@ -1,9 +1,8 @@
 import type { Submission } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
-import { Navigate, useLocation } from "@remix-run/react";
-import { Link } from "@remix-run/react";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
+import { Link, Navigate, useLocation } from "react-router";
 
 export default function Success({ classes = "" }: { classes?: string }) {
   const reg = useLocation().state as CompleteReg | undefined;

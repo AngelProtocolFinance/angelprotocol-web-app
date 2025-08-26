@@ -1,4 +1,4 @@
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import { isResponse, validateApiKey } from "./helpers/validate-api-key";
 import { get_donations } from ".server/donations";
 import {

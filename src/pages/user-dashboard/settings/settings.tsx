@@ -1,11 +1,10 @@
-import { useCachedLoaderData } from "api/cache";
+import { useLoaderData } from "react-router";
 import type { SettingsData } from "./api";
 import EndowAlertForm from "./endow-alert-form";
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 export default function Settings() {
-  const { user, userEndows } = useCachedLoaderData<SettingsData>();
+  const { user, userEndows } = useLoaderData<SettingsData>();
   return (
     <div className="grid">
       <h2 className="text-3xl">Settings</h2>

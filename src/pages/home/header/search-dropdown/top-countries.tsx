@@ -1,8 +1,8 @@
-import { NavLink } from "@remix-run/react";
 import { apes } from "api/api";
 import ContentLoader from "components/content-loader";
 import QueryLoader from "components/query-loader";
 import { appRoutes } from "constants/routes";
+import { NavLink } from "react-router";
 import useSWR from "swr/immutable";
 
 const fetcher = (path: string) => apes.get<string[]>(path).json();

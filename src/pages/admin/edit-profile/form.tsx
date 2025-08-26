@@ -1,6 +1,5 @@
 import type { EndowDesignation } from "@better-giving/endowment";
 import type { OrgDesignation } from "@better-giving/schemas";
-import { Outlet } from "@remix-run/react";
 import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
 import { Form as F, Field, Label, UrlInput } from "components/form";
@@ -16,6 +15,7 @@ import { ControlledToggle as Toggle } from "components/toggle";
 import { countries, country_names } from "constants/countries";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { Outlet } from "react-router";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
 import Slug from "./slug";

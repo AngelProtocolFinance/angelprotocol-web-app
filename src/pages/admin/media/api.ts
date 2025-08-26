@@ -1,12 +1,12 @@
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  redirect,
+} from "react-router";
 import { parse } from "valibot";
 import { schema } from "./video-editor";
 import { cognito, toAuth } from ".server/auth";

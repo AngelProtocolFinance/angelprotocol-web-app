@@ -1,13 +1,11 @@
-import type { LinksFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles, toContent } from "components/rich-text";
+import { type LinksFunction, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import Form from "./form";
 import type { FV } from "./schema";
 
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
 export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
@@ -17,7 +15,7 @@ const sans_https = (x: string | undefined) => x && x.replace(/^https:\/\//, "");
 
 export { ErrorBoundary } from "components/error";
 export default function EditProfile() {
-  const endow = useCachedLoaderData<LoaderData>();
+  const endow = useLoaderData<LoaderData>();
   const defaults: FV = {
     name: endow.name,
     published: !!endow.published,

@@ -1,5 +1,5 @@
-import { Outlet } from "@remix-run/react";
 import { metas } from "helpers/seo";
+import { Outlet } from "react-router";
 
 export const meta = () => metas({ title: "Sign Up - Better Giving" });
 

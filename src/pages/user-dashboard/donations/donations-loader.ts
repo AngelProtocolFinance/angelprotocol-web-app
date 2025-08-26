@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import { type DonationsPage, donations_query_params } from "types/donations";
 import { parse } from "valibot";

@@ -1,14 +1,9 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  Link,
-  useFetcher,
-  useNavigate,
-  useSearchParams,
-} from "@remix-run/react";
 import { Field } from "components/form";
 import { X } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { Link, useFetcher, useNavigate, useSearchParams } from "react-router";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
 export { action } from "./api";

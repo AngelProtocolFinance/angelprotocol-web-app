@@ -2,7 +2,6 @@ import {
   type Status as TStatus,
   isIrs501c3,
 } from "@better-giving/registration/models";
-import { NavLink } from "@remix-run/react";
 import { HeaderButton } from "components/header-button";
 import { Info } from "components/status";
 import TableSection, { Cells } from "components/table-section";
@@ -10,6 +9,7 @@ import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import useSort from "hooks/use-sort";
 import { Folder } from "lucide-react";
+import { NavLink } from "react-router";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";
 
