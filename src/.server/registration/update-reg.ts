@@ -161,7 +161,7 @@ export async function updateRegistration(
       : !!prev.docs.fsa_signed_doc_url && !!prev.docs.fsa_signing_url)
   ) {
     const { type, ...val } = update;
-    const account = await wise.v2Account(val.wise_recipient_id);
+    const account = await wise.v2_account(val.wise_recipient_id);
 
     const banking: BankWithDetails = {
       ...val,

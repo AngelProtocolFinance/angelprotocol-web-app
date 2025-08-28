@@ -20,7 +20,7 @@ export interface LoaderData {
 }
 
 function payout(id: number) {
-  return wise.v2Account(id);
+  return wise.v2_account(id);
 }
 
 export const loader: LoaderFunction = async ({ request }) => {

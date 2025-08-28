@@ -4,11 +4,6 @@ import type {
   INposPage,
 } from "@better-giving/endowment";
 import type { Except } from "type-fest";
-export interface EndowAdmin {
-  email: string;
-  familyName?: string;
-  givenName?: string;
-}
 /** from CloudSearch index instead of DB */
 
 export interface EndowCardsPage

@@ -5,7 +5,6 @@ import {
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { ap, ver } from "api/api";
 import { parseWithValibot } from "conform-to-valibot";
 import { search } from "helpers/https";
 import { parse } from "valibot";
@@ -58,23 +57,24 @@ export const newAction: ActionFunction = async (x) => {
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
-  await ap.post(`${ver(1)}/endowments/${adm.id}/media`, {
-    headers: { authorization: adm.idToken },
-    body: payload.value.url,
-  });
+  await npodb.npo_med_put(adm.id, payload.value.url);
+
   return redirect("..");
 };
 
 export const editAction: ActionFunction = async (x) => {
+  const mid = parse(media_ksuid, x.params.mediaId);
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
   const fv = await adm.req.formData();
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
-  await ap.patch(`${ver(1)}/endowments/${adm.id}/media/${adm.params.mediaId}`, {
-    headers: { authorization: adm.idToken },
-    json: { url: payload.value.url },
+  const m = await npodb.npo_med(adm.id, mid);
+  if (!m) return { status: 404 };
+
+  await npodb.npo_med_update(adm.id, m, {
+    url: payload.value.url,
   });
 
   return redirect("..");

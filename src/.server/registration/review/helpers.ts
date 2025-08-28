@@ -18,7 +18,7 @@ import type {
 import { wise } from "../../sdks";
 
 export async function bankingRecord(reg: ApplicationDbRecord, endowId: number) {
-  const account = await wise.v2Account(reg.banking.wise_recipient_id);
+  const account = await wise.v2_account(reg.banking.wise_recipient_id);
 
   const DEFAULT_PRIORITY_NUM = 3;
   const dateCreated = new Date().toISOString();

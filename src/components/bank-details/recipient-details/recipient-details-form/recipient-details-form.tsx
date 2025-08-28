@@ -19,7 +19,7 @@ import type {
 import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
 import { use_requirements } from "../use-requirements";
-import { createRecipient } from "./create-recipient";
+import { create_recipient } from "./create-recipient";
 
 type Props = {
   fields: Group[];
@@ -102,7 +102,7 @@ export default function RecipientDetailsForm({
         try {
           const { accountHolderName, bankStatement, ...details } = fv;
 
-          const res = await createRecipient({
+          const res = await create_recipient({
             accountHolderName,
             currency,
             ownedByCustomer: false,

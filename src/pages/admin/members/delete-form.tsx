@@ -2,25 +2,29 @@ import { useFetcher } from "@remix-run/react";
 import { LoaderCircle, Minus } from "lucide-react";
 import { toast } from "sonner";
 
-export function DeleteForm({ email }: { email: string }) {
-  async function handleRemove(toRemove: string) {
-    if (toRemove === email) {
-      return toast.error("Can't delete self");
-    }
-    if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
-    fetcher.submit(
-      { toRemove },
-      { action: ".", method: "POST", encType: "application/json" }
-    );
-  }
+interface Props {
+  user: string;
+  to_remove: string;
+}
 
-  const fetcher = useFetcher({ key: `admin-${email}` });
+export function DeleteForm({ user, to_remove }: Props) {
+  const fetcher = useFetcher({ key: `admin-${to_remove}` });
 
   return (
     <fetcher.Form method="POST" className="relative">
       <button
         disabled={fetcher.state !== "idle"}
-        onClick={() => handleRemove(email)}
+        onClick={() => {
+          if (to_remove === user) {
+            return toast.error("Can't delete self");
+          }
+          if (!window.confirm(`Are you sure you want to remove ${to_remove}?`))
+            return;
+          fetcher.submit(
+            { to_remove },
+            { action: ".", method: "POST", encType: "application/json" }
+          );
+        }}
         type="button"
         className=" disabled:text-gray hover:text-red active:text-red absolute-center"
       >

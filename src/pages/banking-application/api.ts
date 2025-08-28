@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const x = await bappdb.bapp(bankId.toString());
   if (!x) return { status: 404 };
 
-  const y = await wise.v2Account(bankId);
+  const y = await wise.v2_account(bankId);
   return { ba: x, ...y } satisfies LoaderData;
 };
 
