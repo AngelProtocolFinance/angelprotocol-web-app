@@ -51,6 +51,11 @@ export const stripeEnvs = {
   webhookSecret: _var("STRIPE_WEBHOOK_SECRET"),
 };
 
+export const wise_envs = {
+  api_token: _var("WISE_API_TOKEN"),
+  profile_id: _var("WISE_PROFILE_ID"),
+  api_url: _var("WISE_API_URL"),
+};
 export const wiseApiToken = _var("WISE_API_TOKEN");
 
 export const chariot_envs = {

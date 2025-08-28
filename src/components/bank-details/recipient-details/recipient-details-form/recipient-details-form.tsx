@@ -1,5 +1,4 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { wise } from "api/api";
 import {
   FileDropzone,
   type FileOutput,
@@ -19,7 +18,7 @@ import type {
 } from "types/bank-details";
 import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
-import { useRequirements } from "../use-requirements";
+import { use_requirements } from "../use-requirements";
 import { createRecipient } from "./create-recipient";
 
 type Props = {
@@ -60,8 +59,8 @@ export default function RecipientDetailsForm({
     getFieldState,
   } = useForm<FV>({ disabled, shouldUnregister: true });
 
-  const [prompt, setPrompt] = useState<IPromptV2>();
-  const { updateRequirements } = useRequirements(
+  const [prompt, set_prompt] = useState<IPromptV2>();
+  const { update_requirements } = use_requirements(
     !amount ? null : { amount, currency }
   );
 
@@ -81,7 +80,7 @@ export default function RecipientDetailsForm({
     // the following is expected to throw for example when the country code
     // is not yet set (all initial values are empty strings); the error is
     // logged in the browser console, but we can ignore it.
-    await updateRequirements({
+    await update_requirements({
       quoteId,
       amount,
       currency,
@@ -128,7 +127,7 @@ export default function RecipientDetailsForm({
           const validations = _errs.filter((err) => err.code === "NOT_VALID");
 
           if (validations.length === 0) {
-            return setPrompt({
+            return set_prompt({
               type: "error",
               children: _errs[0].message,
             });
@@ -146,7 +145,7 @@ export default function RecipientDetailsForm({
           }, 50);
         } catch (err) {
           const prmpt = errorPrompt(err, { context: "validating" });
-          setPrompt(prmpt);
+          set_prompt(prmpt);
         }
       })}
       className="grid gap-5 text-gray-d4"
@@ -277,10 +276,9 @@ export default function RecipientDetailsForm({
                         try {
                           const { params, url } = f.validationAsync!;
                           const path = new URL(url).pathname;
-                          const res = await wise.get(path.slice(1), {
-                            throwHttpErrors: false,
-                            searchParams: { [params[0].key]: v },
-                          });
+                          const res = await fetch(
+                            `/api/wise/${path.slice(1)}?${params[0].key}=${v}`
+                          );
 
                           return res.ok || "invalid";
                         } catch (err) {
@@ -362,7 +360,7 @@ export default function RecipientDetailsForm({
         disabled={disabled || bankStatement.value === "loading"}
         isSubmitting={isSubmitting}
       />
-      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
     </Form>
   );
 }
