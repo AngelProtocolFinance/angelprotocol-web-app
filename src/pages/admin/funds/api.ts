@@ -1,10 +1,12 @@
+import { UpdateBuilder } from "@better-giving/db";
 import type { INpo } from "@better-giving/endowment";
-import type { FundItem } from "@better-giving/fundraiser";
+import { FundDb, type FundItem } from "@better-giving/fundraiser";
+import { fund_id } from "@better-giving/fundraiser/schema";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
-import { npodb } from ".server/aws/db";
+import { parse } from "valibot";
+import { UpdateCommand, funddb, npodb } from ".server/aws/db";
 import { get_funds_npo_memberof } from ".server/funds";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -32,10 +34,30 @@ export const action: ActionFunction = async (x) => {
   if (is_resp(adm)) return adm;
 
   const fv = await adm.req.formData();
-  await ap.post(
-    `${ver(8)}/endowments/${adm.id}/funds/${fv.get("fund_id")}/opt-out`,
-    { headers: { authorization: adm.idToken } }
-  );
+  const fid = parse(fund_id, fv.get("fund_id"));
+
+  const fund = await funddb.fund(fid);
+  if (!fund) return { status: 404 };
+  const idx_in_members = fund.members.indexOf(adm.id);
+  if (idx_in_members === -1) {
+    return { status: 400, statusText: `${adm.id} not member of this fund` };
+  }
+
+  const upd8 = new UpdateBuilder();
+  upd8.remove(`members[${idx_in_members}]`);
+  const is_last_member = fund.members.length === 1;
+  if (is_last_member) {
+    upd8.set("active", false);
+  }
+
+  const cmd = new UpdateCommand({
+    TableName: FundDb.table,
+    Key: funddb.key_fund(fund.id),
+    ...upd8.collect(),
+  });
+
+  await funddb.client.send(cmd);
+
   return {
     __ok: "You have successfully opted out of this fund. Changes will take effect shortly.",
   } satisfies ActionData;
