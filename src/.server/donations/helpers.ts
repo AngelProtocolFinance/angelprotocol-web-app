@@ -52,7 +52,7 @@ export function to_items(records: DBRecord[], asker: string | number) {
       recipient_name: r.charityName,
       program_id: r.programId,
       program_name: r.programName,
-      date: r.transactionDate,
+      date: askerIsDonor(asker) ? r.transactionDate : r.donationFinalTxDate,
       payment_method: r.paymentMethod,
       symbol: r.denomination,
       init_amount: r.amount,
