@@ -45,7 +45,9 @@ export function to_items(records: DBRecord[], asker: string | number) {
     };
 
     const raw: Donation.ItemInput = {
-      id: r.transactionId,
+      id: askerIsDonor(asker)
+        ? r.transactionId
+        : r.donationFinalTxHash || r.transactionId,
       donor_id: r.email || r.kycEmail || "",
       donor_details: donor,
       recipient_id: r.endowmentId,
