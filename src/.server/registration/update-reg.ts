@@ -4,7 +4,8 @@ import { type BankWithDetails, isDone } from "@better-giving/registration/step";
 import type { Update } from "@better-giving/registration/update";
 import { wise } from "../sdks";
 import { getReg } from "./get-reg";
-import { getUsEndow, putItem } from "./helpers";
+import { putItem } from "./helpers";
+import { npodb } from ".server/aws/db";
 
 export async function updateRegistration(
   regId: string,
@@ -132,7 +133,7 @@ export async function updateRegistration(
 
   if (update.type === "docs" && isDone.fsaInq(prev) && prev.irs501c3) {
     const { type, ...val } = update;
-    const endow = await getUsEndow(val.ein, prev.env);
+    const endow = await npodb.npo_with_regnum(val.ein);
 
     if (endow && (endow.claimed ?? true)) {
       return [400, `ein:${val.ein} already claimed`];
@@ -160,7 +161,7 @@ export async function updateRegistration(
       : !!prev.docs.fsa_signed_doc_url && !!prev.docs.fsa_signing_url)
   ) {
     const { type, ...val } = update;
-    const account = await wise.v2Account(val.wise_recipient_id);
+    const account = await wise.v2_account(val.wise_recipient_id);
 
     const banking: BankWithDetails = {
       ...val,

@@ -1,5 +1,6 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { DONATION_INCREMENTS } from "constants/common";
+import { search } from "helpers/https";
 import {
   type Increment,
   type WidgetConfig,
@@ -21,7 +22,7 @@ export default function parseConfig(
 ): Parsed | { error: string } {
   const { issues, output: config } = safeParse(
     widgetUrlSearchParams,
-    Object.fromEntries(searchParams.entries())
+    search(searchParams)
   );
 
   if (issues) {

@@ -1,8 +1,8 @@
+import type { INpoWithRegNum } from "@better-giving/endowment";
 import type { EndowClaim } from "@better-giving/registration/models";
 import type { Update } from "@better-giving/registration/update";
 import { useFetcher } from "@remix-run/react";
 import { useNavigate } from "@remix-run/react";
-import { getEndowWithEin } from "api/get/endow-with-ein";
 import type { SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { steps } from "../../../routes";
@@ -24,7 +24,9 @@ export default function useSubmit({ props, initClaim, isDirty }: Args) {
     }
 
     if (!initClaim && fv.ein !== props.doc?.ein) {
-      const endow = await getEndowWithEin(fv.ein);
+      const endow = await fetch(`/api/npos/ein/${fv.ein}`).then<
+        INpoWithRegNum | undefined
+      >((r) => (r.status === 404 ? undefined : r.json()));
 
       if (endow) {
         if (endow.claimed ?? true) {

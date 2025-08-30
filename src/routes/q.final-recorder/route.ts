@@ -5,16 +5,21 @@ import { TxBuilder } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
 import type { ActionFunction } from "@vercel/remix";
 import { default_allocation } from "constants/common";
+import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
-import { resp } from "routes/helpers/resp";
 import type { FinalRecorderPayload } from "../types/final-recorder";
 import { referral_commission_rate } from "./config";
-import { build_donation_msg, commission_fn } from "./helpers";
+import {
+  type IReferrerLtdItem,
+  build_donation_msg,
+  commission_fn,
+  ltd_by_referrer,
+  referrer_ltd_update_txi,
+} from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
 import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
-import { TransactWriteCommand, ap, apes } from ".server/aws/db";
+import { TransactWriteCommand, ap, apes, npodb } from ".server/aws/db";
 import { env } from ".server/env";
-import { getNpo } from ".server/npo";
 import { discordFiatMonitor, qstash_receiver } from ".server/sdks";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -116,8 +121,9 @@ export const action: ActionFunction = async ({ request }) => {
     const num_members = tx.to.members.length;
     if (num_members > 0) {
       let fund_net = 0;
+      const commission_ltds: IReferrerLtdItem[] = [];
       for (const member of tx.to.members) {
-        const endow = await getNpo(+member);
+        const endow = await npodb.npo(+member);
         if (!endow) {
           console.error(`Endowment ${member} not found!`);
           continue;
@@ -165,12 +171,13 @@ export const action: ActionFunction = async ({ request }) => {
           endow
         );
         if (c) {
-          overrides.referrer = { id: c.to, commission: c.breakdown };
-          builder.append(c.txs);
-          tip_tos.push(c.to);
+          overrides.referrer = { id: c.ltd.id, commission: c.breakdown };
+          builder.put(c.record);
+          tip_tos.push(c.ltd.id);
+          commission_ltds.push(c.ltd);
         }
 
-        const _txs = settle_txs(base, overrides);
+        const _txs = await settle_txs(base, overrides);
         builder.append(_txs);
         //use net as it reflects fee allowance add-back
         fund_net += processed.net;
@@ -190,12 +197,18 @@ export const action: ActionFunction = async ({ request }) => {
           builder.put({ TableName: tables.donation_messages, Item: msg });
         }
       }
+      //commit ltds per referrer
+
+      for (const [r, i] of Object.entries(ltd_by_referrer(commission_ltds))) {
+        builder.update(referrer_ltd_update_txi(r, i));
+      }
+
       await ap
         .send(fund_contrib_update(fund_net, tx.to.id))
         .catch(console.error);
       // to single endowment
     } else {
-      const endow = await getNpo(+tx.to.id);
+      const endow = await npodb.npo(+tx.to.id);
       if (!endow) {
         console.error(`Endowment ${tx.to.id} not found!`);
         return;
@@ -237,11 +250,12 @@ export const action: ActionFunction = async ({ request }) => {
         endow
       );
       if (c) {
-        overrides.referrer = { id: c.to, commission: c.breakdown };
-        builder.append(c.txs);
-        tip_tos.push(c.to);
+        overrides.referrer = { id: c.ltd.id, commission: c.breakdown };
+        builder.put(c.record);
+        tip_tos.push(c.ltd.id);
+        builder.update(referrer_ltd_update_txi(c.ltd.id, [c.ltd.source]));
       }
-      const _txs = settle_txs(base, overrides);
+      const _txs = await settle_txs(base, overrides);
       builder.append(_txs);
     }
 
@@ -295,7 +309,7 @@ export const action: ActionFunction = async ({ request }) => {
       };
       overrides.net -= tip_commission;
     }
-    const tipTxs = settle_txs(base, overrides);
+    const tipTxs = await settle_txs(base, overrides);
     builder.append(tipTxs);
 
     const res = await apes.send(

@@ -1,34 +1,43 @@
-import type { Allocation } from "@better-giving/endowment";
+import type { IBapp } from "@better-giving/banking-applications";
+import type { INpoPayoutsPage } from "@better-giving/payouts";
 import type { LoaderFunction } from "@vercel/remix";
-import { getEndow } from "api/get/endow";
-import { plusInt } from "api/schema/endow-id";
-import { default_allocation } from "constants/common";
-import type { EndowmentBalances } from "types/npo-balance";
-import * as v from "valibot";
+import { CronExpressionParser } from "cron-parser";
 import { endowUpdate } from "../endow-update-action";
-import { cognito, toAuth } from ".server/auth";
-import { npoBalances } from ".server/npo-balances";
-
-const getAllocation = (id: number) =>
-  getEndow(id, ["allocation"]).then<Allocation>(
-    (data) => data.allocation ?? default_allocation
-  );
+import { baldb, bappdb, navdb, podb } from ".server/aws/db";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface DashboardData {
   id: number;
-  alloc: Allocation;
-  bal: EndowmentBalances;
+  bal_liq: number;
+  bal_lock: number;
+  bal_cash: number;
+  /** compute in server save client bundle */
+  recent_payouts: INpoPayoutsPage;
+  next_payout: string;
+  pm?: IBapp;
 }
 
 export const endowUpdateAction = endowUpdate({ redirect: "." });
-export const dashboardData: LoaderFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+export const loader: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
 
-  const id = v.parse(plusInt, params.id);
+  const interval = CronExpressionParser.parse("0 0 */3 * *"); //every 3 days
+
+  const [ltd, bal, recent_payouts, pm] = await Promise.all([
+    navdb.ltd(),
+    baldb.npo_balance(adm.id),
+    podb.npo_payouts(adm.id.toString(), { status: "pending", limit: 3 }),
+    bappdb.npo_default_bapp(adm.id),
+  ]);
+
   return {
-    id,
-    alloc: await getAllocation(id),
-    bal: await npoBalances(id),
+    id: adm.id,
+    bal_liq: bal.liq,
+    bal_lock: bal.lock_units * ltd.price,
+    bal_cash: bal.cash,
+    recent_payouts,
+    next_payout: interval.next().toString(),
+    pm,
   } satisfies DashboardData;
 };

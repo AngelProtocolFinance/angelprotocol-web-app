@@ -1,4 +1,4 @@
-import type { IItem } from "@better-giving/banking-applications";
+import type { IBapp } from "@better-giving/banking-applications";
 import { Link, Outlet } from "@remix-run/react";
 import { Info } from "components/status";
 import { endOfMonth, format, formatDistance } from "date-fns";
@@ -15,7 +15,7 @@ interface Props {
   classes?: string;
   earnings: IEarningsHistory;
   pendings: PendingEarnings;
-  payout?: IItem;
+  payout?: IBapp;
   payout_ltd: number;
   payout_min?: number;
 }
@@ -80,7 +80,7 @@ export function Earnings({
               <p className="text-sm text-gray">Default Payout Method</p>
 
               <Link to="../banking" className="text-blue hover:text-blue-d1">
-                {payout.bankSummary}
+                {payout.bank_summary}
               </Link>
             </div>
           ) : (

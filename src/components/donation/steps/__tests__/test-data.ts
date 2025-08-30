@@ -1,11 +1,11 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import { Outlet } from "@remix-run/react";
 import { createRemixStub } from "@remix-run/testing";
 import type { DonateData } from "api/donate-loader";
 import type { ReactNode } from "react";
 import type { UserV2 } from "types/auth";
 
-const endow: Endow = {
+const endow: INpo = {
   id: 1,
   registration_number: "E001",
   name: "Global Education Fund",

@@ -57,6 +57,6 @@ export async function getRegs(params: QueryParams): Promise<Page> {
       org_name: i.contact.org_name,
       hq_country: i.org.hq_country,
     })),
-    nextPageKey: nextKeyBase64(res.LastEvaluatedKey),
+    next: nextKeyBase64(res.LastEvaluatedKey),
   };
 }

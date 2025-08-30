@@ -55,8 +55,7 @@ function Loaded({ admins, classes = "", user }: LoadedProps) {
             type="td"
             cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <DeleteForm email={user.email} />
-
+            <DeleteForm user={user.email} to_remove={member.email} />
             <>{member.email}</>
             <>{member.givenName ?? "-"}</>
             <>{member.familyName ?? "-"}</>

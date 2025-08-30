@@ -1,4 +1,4 @@
-import type { Program as IProgram } from "@better-giving/endowment";
+import type { IProgram } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
 import { RichText } from "components/rich-text";
 import { toUsd } from "helpers/to-usd";

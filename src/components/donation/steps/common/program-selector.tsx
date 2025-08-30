@@ -1,10 +1,10 @@
+import type { IProgramDb } from "@better-giving/endowment/schema";
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { getPrograms } from "api/get/programs";
 import { unpack } from "helpers/unpack";
 import { X } from "lucide-react";
 import useSWR from "swr/immutable";
@@ -87,10 +87,12 @@ export function ProgramSelector({
   );
 }
 
+const fetcher = (path: string) =>
+  fetch(path).then<IProgramDb[]>((res) => res.json());
 function Options({ endowId }: { endowId: number }) {
   const { data, isLoading, error } = useSWR(
-    ["programs", endowId.toString()],
-    ([, page]) => getPrograms(page)
+    `/api/npo/${endowId}/programs`,
+    fetcher
   );
 
   if (isLoading) return <span data-loading />;

@@ -1,18 +1,13 @@
 import type {
-  Endow,
   EndowDesignation,
-  EndowsPage,
+  INpo,
+  INposPage,
 } from "@better-giving/endowment";
 import type { Except } from "type-fest";
-export interface EndowAdmin {
-  email: string;
-  familyName?: string;
-  givenName?: string;
-}
 /** from CloudSearch index instead of DB */
 
 export interface EndowCardsPage
-  extends EndowsPage<
+  extends INposPage<
     | "id"
     | "card_img"
     | "name"
@@ -30,9 +25,9 @@ export interface EndowCardsPage
   // "kyc_donors_only"
 }
 export interface EndowOptionsPage
-  extends EndowsPage<"id" | "name" | "registration_number"> {}
+  extends INposPage<"id" | "name" | "registration_number"> {}
 export interface EndowFundMembersOptionsPage
-  extends EndowsPage<"id" | "name" | "card_img" | "registration_number"> {}
+  extends INposPage<"id" | "name" | "card_img" | "registration_number"> {}
 
 export type EndowmentCard = EndowCardsPage["items"][number];
 export type EndowmentOption = EndowOptionsPage["items"][number];
@@ -40,7 +35,7 @@ export type EndowmentFundMemberOption =
   EndowFundMembersOptionsPage["items"][number];
 
 export type EndowmentSettingsAttributes = keyof Pick<
-  Endow,
+  INpo,
   | "receiptMsg"
   | "hide_bg_tip"
   | "progDonationsAllowed"
@@ -52,7 +47,7 @@ export type EndowmentSettingsAttributes = keyof Pick<
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Required<Endow>,
+  Required<INpo>,
   | "endow_designation"
   | "fiscal_sponsored"
   | "claimed"
@@ -64,10 +59,10 @@ export type EndowmentProfileUpdate = Except<
 };
 
 export type EndowmentSettingsUpdate = Pick<
-  Required<Endow>,
+  Required<INpo>,
   EndowmentSettingsAttributes
 >;
-export type EndowmentAllocationUpdate = Pick<Required<Endow>, "allocation">;
+export type EndowmentAllocationUpdate = Pick<Required<INpo>, "allocation">;
 
 export type MilestoneDelete = {
   endowId: number;

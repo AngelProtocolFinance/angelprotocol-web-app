@@ -6,7 +6,7 @@ const toBase64 = (key: Record<string, any> | undefined) =>
 
 export const npoDonors = async (
   recipient_id: string /** uuid or number id */,
-  nextKey: string | null
+  next?: string
 ) => {
   const cmd = new QueryCommand({
     TableName: "donation_messages",
@@ -19,8 +19,8 @@ export const npoDonors = async (
     ExpressionAttributeValues: {
       ":pk": `Recipient#${recipient_id}#${env}`,
     },
-    ExclusiveStartKey: nextKey
-      ? JSON.parse(Buffer.from(nextKey, "base64").toString())
+    ExclusiveStartKey: next
+      ? JSON.parse(Buffer.from(next, "base64").toString())
       : undefined,
   });
 

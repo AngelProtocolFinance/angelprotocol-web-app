@@ -1,11 +1,11 @@
-import type { Endow } from "@better-giving/endowment";
-import { incrementLabelMaxChars } from "@better-giving/endowment/schema";
+import type { INpo } from "@better-giving/endowment";
+import { increment_label_max_chars } from "@better-giving/endowment/schema";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/donate-methods";
 import { ProgramSelector } from "components/donation";
 import { CheckField, Field, Form } from "components/form";
-import Increments from "components/increments";
+import { Increments } from "components/increments";
 import { DollarSign } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 import {
@@ -20,7 +20,7 @@ import type { FormValues } from "./types";
 
 type Props = {
   classes?: string;
-  endow?: Endow;
+  endow?: INpo;
   config: WidgetConfig;
   setConfig: Dispatch<SetStateAction<WidgetConfig>>;
 };
@@ -203,7 +203,7 @@ export default function Configurer({
                   data-error={!!errors.increments?.[idx]?.label?.message}
                   className="mt-1 text-left text-xs data-[error='true']:text-red"
                 >
-                  {incs[idx].label.length}/{incrementLabelMaxChars}
+                  {incs[idx].label.length}/{increment_label_max_chars}
                 </p>
               </HuiField>
             </>

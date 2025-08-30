@@ -1,4 +1,4 @@
-import { resp } from "./resp";
+import { resp } from "helpers/https";
 import {
   type ApiKeyPayload,
   decodeApiKey,

@@ -1,9 +1,9 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import { type DonationRecipient, Steps } from "components/donation";
 import type { Parsed } from "./parse-config";
 
 type Props = {
-  profile: Endow;
+  profile: INpo;
   config: Parsed;
   classes?: string;
 };

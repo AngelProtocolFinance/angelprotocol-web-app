@@ -1,7 +1,7 @@
 import type { EmailSQS } from "@better-giving/types/email-sqs";
 import { type Environment, tables } from "@better-giving/types/list";
 
-import type { Endow } from "@better-giving/endowment/db";
+import type { INpo } from "@better-giving/endowment";
 import { GetCommand, ap } from ".server/aws/db";
 import { SendEmailCommand, ses } from ".server/aws/ses";
 
@@ -33,7 +33,5 @@ export async function getEndow(endowId: number, environment: Environment) {
       SK: environment,
     },
   });
-  return ap
-    .send(command)
-    .then<Endow.DbRecord | undefined>((data) => data.Item as any);
+  return ap.send(command).then<INpo | undefined>((data) => data.Item as any);
 }

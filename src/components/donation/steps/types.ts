@@ -1,5 +1,5 @@
 import type { DonateMethodId } from "@better-giving/endowment";
-import { plusInt } from "api/schema/endow-id";
+import { $int_gte1 } from "@better-giving/schemas";
 import type { OptionType, TokenWithDetails } from "types/components";
 import { db_currency } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
@@ -21,7 +21,7 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
 
 const uuid = v.pipe(v.string(), v.trim(), v.uuid());
 export const recipientId = v.pipe(
-  v.union([uuid, plusInt]),
+  v.union([uuid, $int_gte1]),
   v.transform((x) => x.toString())
 );
 export const donationRecipient = v.object({

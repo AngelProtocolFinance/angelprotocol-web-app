@@ -1,4 +1,4 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import { laira } from "assets/laira/laira";
 import { type DonationState, Steps, initDetails } from "components/donation";
 import Image from "components/image/image";
@@ -9,7 +9,7 @@ import type { WidgetConfig } from "types/widget";
 type Props = {
   classes?: string;
   config: WidgetConfig;
-  endow?: Endow;
+  endow?: INpo;
 };
 export default function Preview({ classes = "", config, endow }: Props) {
   if (!endow) {

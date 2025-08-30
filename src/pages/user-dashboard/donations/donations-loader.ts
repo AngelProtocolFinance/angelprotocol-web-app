@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@vercel/remix";
+import { search } from "helpers/https";
 import type { UserV2 } from "types/auth";
 import { type DonationsPage, donations_query_params } from "types/donations";
 import { parse } from "valibot";
@@ -10,12 +11,9 @@ export interface DonationsData extends DonationsPage {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const from = new URL(request.url);
-
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
-
-  const raw = Object.fromEntries(from.searchParams.entries());
+  const raw = search(request);
   const params = parse(donations_query_params, { ...raw, asker: user.email });
   const page = await get_donations(params);
 

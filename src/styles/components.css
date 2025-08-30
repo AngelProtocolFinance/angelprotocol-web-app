@@ -101,7 +101,7 @@
   .btn-amber,
   .btn-red {
     &:disabled {
-      background-color: var(--color-gray);
+      background-color: var(--color-gray-l2);
     }
   }
   a.btn-amber,
@@ -109,10 +109,10 @@
   a.btn-blue,
   a.btn-red {
     &[aria-disabled="true"] {
-      background-color: var(--color-gray);
+      background-color: var(--color-gray-l2);
     }
     &.pending {
-      background-color: var(--color-gray);
+      background-color: var(--color-gray-l2);
       pointer-events: none;
     }
   }

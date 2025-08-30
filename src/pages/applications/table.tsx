@@ -1,33 +1,31 @@
+import type { ApplicationItem } from "@better-giving/registration/approval";
 import {
   type Status as TStatus,
   isIrs501c3,
 } from "@better-giving/registration/models";
 import { NavLink } from "@remix-run/react";
 import { HeaderButton } from "components/header-button";
-import { Info } from "components/status";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import useSort from "hooks/use-sort";
 import { Folder } from "lucide-react";
+import type { IPaginator } from "types/components";
 import LoadMoreBtn from "./load-more-btn";
-import type { TableProps } from "./types";
 
-export default function Table({
-  applications,
+interface Props extends IPaginator<ApplicationItem> {}
+
+export function Table({
+  items,
   classes = "",
   disabled,
-  isLoading,
-  loadMore,
-  nextPageKey,
-}: TableProps) {
+  loading,
+  load_next,
+}: Props) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
-    applications,
+    items,
     "updated_at"
   );
-  if (applications.length === 0) {
-    return <Info classes={classes}>No applications found</Info>;
-  }
 
   return (
     <table
@@ -90,7 +88,7 @@ export default function Table({
               key={row.id}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
-                nextPageKey ? "" : "first:rounded-bl last:rounded-br"
+                load_next ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <span className="text-xs font-bold upppercase">
@@ -115,16 +113,16 @@ export default function Table({
             </Cells>
           ))
           .concat(
-            nextPageKey ? (
+            load_next ? (
               <td
                 colSpan={9}
                 key="load-more-btn"
                 className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
-                  onLoadMore={() => loadMore(nextPageKey)}
+                  onLoadMore={load_next}
                   disabled={disabled}
-                  isLoading={isLoading}
+                  isLoading={loading}
                 />
               </td>
             ) : (
