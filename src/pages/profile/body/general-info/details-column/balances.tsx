@@ -1,5 +1,5 @@
-import { useOutletContext } from "@remix-run/react";
 import { toUsd } from "helpers/to-usd";
+import { useOutletContext } from "react-router";
 import type { EndowmentBalances } from "types/npo-balance";
 
 export default function Balances() {

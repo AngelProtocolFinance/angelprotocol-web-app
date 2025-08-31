@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import {
   ClockIcon,
@@ -7,6 +6,7 @@ import {
   type LucideIcon,
   TriangleAlertIcon,
 } from "lucide-react";
+import { Link } from "react-router";
 
 interface Props {
   classes?: string;

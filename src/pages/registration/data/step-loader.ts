@@ -1,6 +1,6 @@
 import type { Reg } from "@better-giving/registration/step";
-import { type LoaderFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
+import { type LoaderFunction, redirect } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse, pipe, string, uuid } from "valibot";
 import type { Reg$IdData, RegStep } from "../types";

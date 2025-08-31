@@ -1,4 +1,4 @@
-import { useSearchParams } from "@remix-run/react";
+import { useSearchParams } from "react-router";
 import { ogInput, ogInputDefault } from "types/donation-calculator";
 import { safeParse } from "valibot";
 import { bgView } from "../bg-view";

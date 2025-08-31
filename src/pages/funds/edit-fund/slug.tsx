@@ -1,7 +1,6 @@
-import { Link } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
+import { Link, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 
 const genLink = (slug: string, base_url: string) =>
@@ -13,7 +12,7 @@ interface Props {
   slugField: ReactNode;
 }
 export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
-  const { base_url } = useCachedLoaderData() as LoaderData;
+  const { base_url } = useLoaderData() as LoaderData;
   const link = initSlug && genLink(initSlug, base_url);
 
   return (

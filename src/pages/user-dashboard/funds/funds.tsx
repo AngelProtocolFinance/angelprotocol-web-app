@@ -1,16 +1,14 @@
-import { Link } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
+import { Link, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import { Fund } from "./fund";
 
 export { userFunds as loader } from "./api";
 export { ErrorBoundary } from "components/error";
-export { clientLoader } from "api/cache";
 
 export default function Funds() {
-  const { funds } = useCachedLoaderData<LoaderData>();
+  const { funds } = useLoaderData<LoaderData>();
 
   const items =
     funds.length === 0 ? (

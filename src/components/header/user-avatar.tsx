@@ -1,6 +1,6 @@
-import { NavLink } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { CircleUserRound } from "lucide-react";
+import { NavLink } from "react-router";
 
 interface Props {
   avatar: string | undefined;

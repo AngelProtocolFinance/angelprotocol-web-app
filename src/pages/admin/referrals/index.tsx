@@ -1,9 +1,7 @@
-import { useNavigate } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "react-router";
 import type { LoaderData } from "./api";
 import { Earnings } from "./earnings";
 export { loader } from "./api";
-export { clientLoader } from "api/cache";
-import { useCachedLoaderData } from "api/cache";
 import { Explainer, Hub, Nonprofits, ReferralId } from "components/referrals";
 
 export function ReferralsPage() {
@@ -17,7 +15,7 @@ export function ReferralsPage() {
     payout,
     payout_min,
     payout_ltd,
-  } = useCachedLoaderData() as LoaderData;
+  } = useLoaderData() as LoaderData;
   return (
     <div className="">
       <Explainer classes="mb-4" />

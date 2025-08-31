@@ -1,8 +1,8 @@
 import type { Allocation } from "@better-giving/endowment";
-import { useFetcher } from "@remix-run/react";
 import { Arrow, Content } from "components/tooltip";
 import { humanize } from "helpers/decimal";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
+import { useFetcher } from "react-router";
 import type { BalanceMovement, EndowmentBalances } from "types/npo-balance";
 import Figure from "./figure";
 import { LiqActions } from "./liq-actions";

@@ -1,7 +1,7 @@
-import { Link } from "@remix-run/react";
 import Image from "components/image";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router";
 import type { PageContext } from "./types";
 
 interface Props extends PageContext {

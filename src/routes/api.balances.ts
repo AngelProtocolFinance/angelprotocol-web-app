@@ -1,5 +1,5 @@
 import { tables } from "@better-giving/types/list";
-import { type LoaderFunction, data } from "@vercel/remix";
+import { type LoaderFunction, data } from "react-router";
 import { cognito } from ".server/auth";
 import { QueryCommand, apes } from ".server/aws/db";
 import { env } from ".server/env";

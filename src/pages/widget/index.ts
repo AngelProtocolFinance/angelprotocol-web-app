@@ -1,6 +1,6 @@
-import type { MetaFunction } from "@vercel/remix";
 import { BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
+import type { MetaFunction } from "react-router";
 import type { WidgetData } from "./loader";
 
 export { default } from "./widget";

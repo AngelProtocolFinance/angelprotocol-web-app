@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 
 interface SitemapUrl {
   url: string;

@@ -1,5 +1,5 @@
 import crypto from "node:crypto";
-import type { ActionFunction } from "@vercel/remix";
+import type { ActionFunction } from "react-router";
 import { delete_order, get_order } from "routes/helpers/onhold";
 import { type Settled, to_final } from "../helpers/donation";
 import { resp } from "../helpers/resp";

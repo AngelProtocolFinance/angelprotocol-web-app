@@ -1,12 +1,7 @@
-import {
-  Link,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
 import { Info } from "components/status";
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link, useFetcher, useLoaderData, useSearchParams } from "react-router";
 import type { LoaderData } from "./api";
 import { Table } from "./table";
 export { loader } from "./api";

@@ -1,6 +1,6 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { Link, useNavigate, useSearchParams } from "@remix-run/react";
 import { X } from "lucide-react";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import Categories from "./categories";
 import Countries from "./countries";
 import Designations from "./designations";

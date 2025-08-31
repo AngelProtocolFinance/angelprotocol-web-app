@@ -1,8 +1,8 @@
-import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { Folder } from "lucide-react";
+import { NavLink } from "react-router";
 import type { BankingApplicationStatus } from "types/applications";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";

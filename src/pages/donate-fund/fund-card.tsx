@@ -1,8 +1,8 @@
-import { Link } from "@remix-run/react";
 import Image from "components/image";
 import { toText } from "components/rich-text";
 import { Target } from "components/target";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router";
 
 type Props = {
   id: string;

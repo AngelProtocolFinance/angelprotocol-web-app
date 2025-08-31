@@ -1,12 +1,9 @@
-import { useNavigate } from "@remix-run/react";
 import type { LoaderData } from "./api";
 import { Earnings } from "./earnings";
 export { loader } from "./api";
-export { clientLoader } from "api/cache";
-import type { MetaFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { Explainer, Hub, Nonprofits, ReferralId } from "components/referrals";
 import { metas } from "helpers/seo";
+import { type MetaFunction, useLoaderData, useNavigate } from "react-router";
 
 export const meta: MetaFunction = () => {
   return metas({
@@ -26,7 +23,7 @@ export function ReferralsPage() {
     payout,
     payout_min,
     payout_ltd,
-  } = useCachedLoaderData() as LoaderData;
+  } = useLoaderData() as LoaderData;
   return (
     <div className="">
       <Explainer classes="mb-4" />

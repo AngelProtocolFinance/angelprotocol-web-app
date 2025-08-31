@@ -1,9 +1,8 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import type { Update } from "@better-giving/registration/update";
-import { useFetcher } from "@remix-run/react";
-import { useNavigate } from "@remix-run/react";
 import { getEndowWithEin } from "api/get/endow-with-ein";
 import type { SubmitHandler } from "react-hook-form";
+import { useFetcher, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { steps } from "../../../routes";
 import type { FV, Props } from "./types";

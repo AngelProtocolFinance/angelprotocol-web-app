@@ -1,8 +1,8 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
-import { useSearchParams } from "@remix-run/react";
 import { DrawerIcon } from "components/icon";
 import debounce from "lodash/debounce";
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 import type { EndowmentOption } from "types/npo";
 import Options from "./options";
 

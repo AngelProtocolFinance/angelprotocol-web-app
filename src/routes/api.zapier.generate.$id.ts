@@ -1,5 +1,5 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
 import { plusInt } from "api/schema/endow-id";
+import type { LoaderFunctionArgs } from "react-router";
 import { parse } from "valibot";
 import { cognito } from ".server/auth";
 import { generateZapierApiKey } from ".server/npo-integrations";

@@ -1,8 +1,8 @@
-import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import type { ReactNode } from "react";
+import { Link } from "react-router";
 import type { Earning } from "types/referrals";
 
 export interface Props {

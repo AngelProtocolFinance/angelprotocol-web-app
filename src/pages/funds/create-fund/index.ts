@@ -1,15 +1,15 @@
 import type { NewFund } from "@better-giving/fundraiser";
-import {
-  type ActionFunction,
-  type LinksFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles } from "components/rich-text";
 import { adminRoutes, appRoutes } from "constants/routes";
+import {
+  type ActionFunction,
+  type LinksFunction,
+  type LoaderFunction,
+  redirect,
+} from "react-router";
 import { isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
 

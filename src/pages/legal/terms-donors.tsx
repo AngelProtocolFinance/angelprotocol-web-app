@@ -1,8 +1,8 @@
-import { Link } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import type { PropsWithChildren } from "react";
+import type {} from "react-router";
+import { Link, type MetaFunction } from "react-router";
 const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>
 );

@@ -1,5 +1,5 @@
-import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router";
 
 interface Props {
   classes?: string;

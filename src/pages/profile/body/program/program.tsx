@@ -1,7 +1,7 @@
 import type { Program as IProgram } from "@better-giving/endowment";
-import { useLoaderData } from "@remix-run/react";
 import { RichText } from "components/rich-text";
 import { toUsd } from "helpers/to-usd";
+import { useLoaderData } from "react-router";
 import Container from "../common/container";
 import Milestones from "./milestones";
 

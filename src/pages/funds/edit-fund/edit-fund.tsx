@@ -1,5 +1,5 @@
-import { useLoaderData } from "@remix-run/react";
 import { CircleAlert } from "lucide-react";
+import { useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import { Form } from "./form";
 

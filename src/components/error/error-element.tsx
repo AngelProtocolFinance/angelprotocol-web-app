@@ -1,7 +1,7 @@
-import { NavLink, isRouteErrorResponse, useRouteError } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { CircleAlert } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { NavLink, isRouteErrorResponse, useRouteError } from "react-router";
 import { DefaultFallback } from "./default-fallback";
 
 export function ErrorElement() {

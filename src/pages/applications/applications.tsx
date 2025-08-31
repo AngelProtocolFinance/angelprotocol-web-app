@@ -1,7 +1,7 @@
 import type { Page } from "@better-giving/registration/approval";
-import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import { Filter } from "./filter";
 import Table from "./table";
 

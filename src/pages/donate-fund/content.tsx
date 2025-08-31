@@ -1,4 +1,3 @@
-import { Link, useLoaderData } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import { Steps } from "components/donation";
 import ExtLink from "components/ext-link";
@@ -7,6 +6,7 @@ import { Info } from "components/status";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
+import { Link, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import FAQ from "./faq";
 import { FundCard } from "./fund-card";

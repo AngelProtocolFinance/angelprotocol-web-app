@@ -1,5 +1,5 @@
-import { NavLink } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
+import { NavLink } from "react-router";
 import { useProfileContext } from "../profile-context";
 
 export default function DonateButton({

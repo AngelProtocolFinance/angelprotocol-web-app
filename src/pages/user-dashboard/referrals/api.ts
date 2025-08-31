@@ -1,5 +1,5 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
-import { type LoaderFunction, data } from "@vercel/remix";
+import { type LoaderFunction, data } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { cognito, toAuth } from ".server/auth";

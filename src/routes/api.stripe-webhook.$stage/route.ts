@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@vercel/remix";
+import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
 import { resp } from "../helpers/resp";
 import {

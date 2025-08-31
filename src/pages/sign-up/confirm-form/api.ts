@@ -1,11 +1,11 @@
+import { parseWithValibot } from "conform-to-valibot";
+import { appRoutes } from "constants/routes";
 import {
   type ActionFunction,
   type LoaderFunction,
   data,
   redirect,
-} from "@vercel/remix";
-import { parseWithValibot } from "conform-to-valibot";
-import { appRoutes } from "constants/routes";
+} from "react-router";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
 import { cognito } from ".server/auth";

@@ -1,6 +1,6 @@
 import { type IItem, priority_nums } from "@better-giving/banking-applications";
-import type { LoaderFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
+import type { LoaderFunction } from "react-router";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { parse } from "valibot";
 import { config } from "./config";

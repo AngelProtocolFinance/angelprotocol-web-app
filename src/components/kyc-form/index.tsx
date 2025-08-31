@@ -1,4 +1,4 @@
-import { type ActionFunction, redirect } from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { kycSchema } from "./schema";
 import { cognito, toAuth } from ".server/auth";

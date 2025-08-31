@@ -1,10 +1,14 @@
-import { Link, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { wp } from "api/api";
 import Media from "components/media";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
+import {
+  Link,
+  type LoaderFunction,
+  type MetaFunction,
+  useLoaderData,
+} from "react-router";
 import useSWR from "swr/immutable";
 import type { Wordpress } from "types/wordpress";
 

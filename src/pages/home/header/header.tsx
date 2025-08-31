@@ -1,5 +1,3 @@
-import { useLocation } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import {
   AuthBtns,
   AuthLinks,
@@ -10,6 +8,7 @@ import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { useState } from "react";
+import { useLoaderData, useLocation } from "react-router";
 import type { EndowCardsPage } from "types/npo";
 import SearchDropdown from "./search-dropdown";
 import SearchField from "./search-field";
@@ -18,7 +17,7 @@ type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const user = useRootData();
-  const firstPage = useCachedLoaderData() as EndowCardsPage;
+  const firstPage = useLoaderData() as EndowCardsPage;
   const [query, setQuery] = useState("");
   const { pathname: p, search: s } = useLocation();
   const to = authRoutes.includes(p) ? undefined : p + s;

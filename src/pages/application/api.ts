@@ -1,7 +1,7 @@
 import type { Application as IApplication } from "@better-giving/registration/approval";
 import { sansKeys } from "@better-giving/registration/db";
 import { regId } from "@better-giving/registration/models";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";

@@ -4,10 +4,10 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { NavLink } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { ChevronDown, CornerDownRight, MenuIcon } from "lucide-react";
 import type { ReactNode } from "react";
+import { NavLink } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { UserMenu } from "../user-menu";
 import { styler } from "./common";

@@ -1,12 +1,15 @@
 import type { Endow } from "@better-giving/endowment";
-import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { plusInt } from "api/schema/endow-id";
 import { Footer } from "components/footer";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
+import {
+  type LoaderFunction,
+  type MetaFunction,
+  useLoaderData,
+} from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import { linkGroups } from "./constants";

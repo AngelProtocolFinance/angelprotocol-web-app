@@ -1,7 +1,6 @@
 import { Buffer } from "node:buffer";
-import { data, redirect } from "@remix-run/react";
-import type { LoaderFunctionArgs } from "@vercel/remix";
 import { addDays } from "date-fns";
+import { type LoaderFunctionArgs, data, redirect } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { cognito, oauth } from ".server/auth";
 import { reg_cookie } from ".server/cookie";

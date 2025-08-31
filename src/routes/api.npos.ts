@@ -1,5 +1,5 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { safeParse } from "valibot";
 import { getNpos } from ".server/npos";
 

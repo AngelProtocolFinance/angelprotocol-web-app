@@ -1,14 +1,11 @@
+import { useLoaderData } from "react-router";
+import type { LoaderData } from "./api";
 import { Display } from "./display";
 import { Form } from "./form";
 
-import { useCachedLoaderData } from "api/cache";
-import type { LoaderData } from "./api";
-
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
-
 export default function Integrations() {
-  const { apiKey } = useCachedLoaderData<LoaderData>();
+  const { apiKey } = useLoaderData<LoaderData>();
   return (
     <div className="grid content-start @container">
       <h3 className="text-[2rem] mb-2">Integrations</h3>

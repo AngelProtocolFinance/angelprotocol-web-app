@@ -1,6 +1,6 @@
 import type { UserEndow } from "@better-giving/user";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { cognito, toAuth } from ".server/auth";

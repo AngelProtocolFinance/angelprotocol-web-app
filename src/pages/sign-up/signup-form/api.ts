@@ -1,6 +1,6 @@
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
+import { type ActionFunction, redirect } from "react-router";
 import { isError, signUp } from "types/auth";
 import { cognito, oauth } from ".server/auth";
 

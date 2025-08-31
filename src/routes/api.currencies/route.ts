@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { resp } from "../helpers/resp";
 import { cognito } from ".server/auth";
 import { get_db_currencies } from ".server/currency";

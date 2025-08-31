@@ -1,6 +1,6 @@
 import { regId } from "@better-giving/registration/models";
 import { type Update, update } from "@better-giving/registration/update";
-import { type ActionFunction, redirect } from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { updateRegistration } from ".server/registration/update-reg";

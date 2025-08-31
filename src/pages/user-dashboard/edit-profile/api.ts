@@ -1,4 +1,4 @@
-import { type ActionFunction, type LoaderFunction, data } from "@vercel/remix";
+import { type ActionFunction, type LoaderFunction, data } from "react-router";
 import type { ActionData } from "types/action";
 import { type UserV2, isError } from "types/auth";
 import type { UserCurrencies } from "types/currency";

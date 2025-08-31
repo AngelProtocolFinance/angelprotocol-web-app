@@ -1,15 +1,14 @@
-import { useCachedLoaderData } from "api/cache";
 import { RmxForm, useRmxForm } from "components/form";
+import { useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import List from "./list";
 
-export { clientLoader } from "api/cache";
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
 
 export default function Programs() {
   const { nav } = useRmxForm();
-  const { programs } = useCachedLoaderData<LoaderData>();
+  const { programs } = useLoaderData<LoaderData>();
 
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">

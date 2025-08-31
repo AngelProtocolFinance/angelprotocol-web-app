@@ -2,7 +2,7 @@ import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
+} from "react-router";
 import { type UserV2, isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
 

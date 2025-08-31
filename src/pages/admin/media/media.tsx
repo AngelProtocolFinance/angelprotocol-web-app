@@ -1,7 +1,6 @@
 import type { MediaPage } from "@better-giving/endowment";
-import { NavLink, Outlet } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { Plus } from "lucide-react";
+import { NavLink, Outlet, useLoaderData } from "react-router";
 import FeaturedVideos from "./featured-videos";
 
 export {
@@ -9,11 +8,9 @@ export {
   videosAction as action,
 } from "./api";
 
-export { clientLoader } from "api/cache";
-
 export { ErrorBoundary } from "components/error";
 export default function Media() {
-  const featuredPage = useCachedLoaderData<MediaPage>();
+  const featuredPage = useLoaderData<MediaPage>();
 
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">

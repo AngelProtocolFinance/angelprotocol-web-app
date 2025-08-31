@@ -1,4 +1,4 @@
-import { NavLink } from "@remix-run/react";
+import { NavLink } from "react-router";
 import type { BalanceMovement } from "types/npo-balance";
 
 interface Props {

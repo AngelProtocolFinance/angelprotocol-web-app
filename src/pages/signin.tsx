@@ -1,10 +1,4 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Link, data, redirect, useLoaderData } from "@remix-run/react";
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@vercel/remix";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ext-link";
 import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
@@ -15,6 +9,12 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "react-router";
+import { Link, data, redirect, useLoaderData } from "react-router";
 import type { ActionData } from "types/action";
 import { isError, signIn } from "types/auth";
 import { cognito, oauth } from ".server/auth";

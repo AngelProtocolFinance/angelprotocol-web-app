@@ -1,6 +1,6 @@
-import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 export function Bottom({ classes = "" }) {
   return (

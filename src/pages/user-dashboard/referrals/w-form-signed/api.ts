@@ -1,4 +1,4 @@
-import { type LoaderFunction, data } from "@vercel/remix";
+import { type LoaderFunction, data } from "react-router";
 import { type UserV2, isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
 import type { Stored } from ".server/auth/session";

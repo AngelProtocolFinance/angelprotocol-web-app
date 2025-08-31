@@ -1,5 +1,5 @@
-import { NavLink } from "@remix-run/react";
 import type { RegStep } from "pages/registration/types";
+import { NavLink } from "react-router";
 
 type TStep = Exclude<RegStep, 6>; // exclude summary step
 type Props = {

@@ -1,5 +1,5 @@
-import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router";
 import SubscriptionForm from "./subscription-form";
 
 export default function Newsletter({ classes = "" }) {

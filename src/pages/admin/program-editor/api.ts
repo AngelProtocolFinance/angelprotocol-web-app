@@ -1,6 +1,6 @@
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 
 import type { ActionData } from "types/action";

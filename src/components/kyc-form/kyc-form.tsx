@@ -1,5 +1,5 @@
-import { useNavigate } from "@remix-run/react";
 import { Modal } from "components/modal";
+import { useNavigate } from "react-router";
 import { Form } from "./form";
 import type { FV } from "./schema";
 

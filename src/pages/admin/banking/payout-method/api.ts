@@ -1,11 +1,11 @@
 import { type IItem, to_item } from "@better-giving/banking-applications";
 import type { V2RecipientAccount } from "@better-giving/wise";
+import { plusInt } from "api/schema/endow-id";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
+} from "react-router";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";

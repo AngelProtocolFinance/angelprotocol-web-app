@@ -1,6 +1,6 @@
-import { useNavigation } from "@remix-run/react";
 import np from "nprogress";
 import { useEffect } from "react";
+import { useNavigation } from "react-router";
 
 export const useNProgress = () => {
   const { state } = useNavigation();

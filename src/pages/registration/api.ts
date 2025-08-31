@@ -1,12 +1,12 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import { type NewReg, newReg } from "@better-giving/registration/update";
+import { getEndowWithEin } from "api/get/endow-with-ein";
+import { appRoutes } from "constants/routes";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
-import { getEndowWithEin } from "api/get/endow-with-ein";
-import { appRoutes } from "constants/routes";
+} from "react-router";
 import { parse } from "valibot";
 import { steps } from "./routes";
 import { cognito, toAuth } from ".server/auth";

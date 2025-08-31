@@ -1,5 +1,5 @@
 import { endowIdParam, segment } from "@better-giving/endowment/schema";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { safeParse, union } from "valibot";
 import { getNpo } from ".server/npo";
 

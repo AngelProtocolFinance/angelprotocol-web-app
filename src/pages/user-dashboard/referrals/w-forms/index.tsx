@@ -1,6 +1,6 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { useLoaderData, useNavigate } from "@remix-run/react";
 import ExtLink from "components/ext-link";
+import { useLoaderData, useNavigate } from "react-router";
 import type { LoaderData } from "./api";
 
 export { action, loader } from "./api";

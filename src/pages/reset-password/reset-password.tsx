@@ -1,7 +1,6 @@
-import { useLoaderData } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
+import { type MetaFunction, useLoaderData } from "react-router";
 import InitForm from "./init-form";
 import SetPasswordForm from "./set-password-form";
 import Success from "./success";

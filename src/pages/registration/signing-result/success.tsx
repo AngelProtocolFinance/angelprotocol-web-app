@@ -1,6 +1,6 @@
-import { Link, useNavigation, useRouteLoaderData } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
+import { Link, useNavigation, useRouteLoaderData } from "react-router";
 import { nextStep } from "../routes";
 import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";

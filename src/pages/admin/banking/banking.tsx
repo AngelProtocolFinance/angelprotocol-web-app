@@ -1,10 +1,10 @@
-import { Link, useFetcher, useParams } from "@remix-run/react";
 import { BankDetails, type OnSubmit } from "components/bank-details";
 import Group from "components/group";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { errorPrompt } from "helpers/error-prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import { Link, useFetcher, useParams } from "react-router";
 import FormButtons from "./form-buttons";
 
 export { action } from "./api";

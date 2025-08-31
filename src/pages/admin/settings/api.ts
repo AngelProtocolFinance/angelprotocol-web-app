@@ -1,6 +1,6 @@
 import type { Endow } from "@better-giving/endowment";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import type { EndowmentSettingsAttributes } from "types/npo";
 import { endowUpdate } from "../endow-update-action";
 

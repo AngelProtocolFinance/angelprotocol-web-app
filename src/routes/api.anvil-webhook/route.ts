@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@vercel/remix";
+import type { ActionFunction } from "react-router";
 import { etch_complete } from "./etch-complete";
 import type { WebhookPayload } from "./types";
 import { anvil_envs } from ".server/env";

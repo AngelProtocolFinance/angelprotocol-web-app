@@ -1,2 +1,2 @@
-import { redirect } from "@vercel/remix";
+import { redirect } from "react-router";
 export const loader = () => redirect("dashboard");

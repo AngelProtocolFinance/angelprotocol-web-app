@@ -1,9 +1,9 @@
 import type { Allocation } from "@better-giving/endowment";
-import { NavLink } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { humanize } from "helpers/decimal";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
+import { NavLink } from "react-router";
 import { allocationOptions, toAllocOptValue } from "./common";
 
 interface Props {

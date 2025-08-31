@@ -1,8 +1,8 @@
-import { useLocation } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
+import { useLocation } from "react-router";
 
 export function Top({ className = "" }) {
   const location = useLocation();

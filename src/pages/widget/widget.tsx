@@ -1,8 +1,8 @@
-import { useLoaderData } from "@remix-run/react";
 import { fill } from "components/donate-methods";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
 import { useState } from "react";
+import { useLoaderData } from "react-router";
 import type { WidgetConfig } from "types/widget";
 import Configurer from "./configurer";
 import type { WidgetData } from "./loader";

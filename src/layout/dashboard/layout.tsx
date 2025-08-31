@@ -1,5 +1,5 @@
-import { Outlet } from "@remix-run/react";
 import type { ReactNode } from "react";
+import { Outlet } from "react-router";
 import Sidebar, { SidebarOpener } from "./sidebar";
 import type { LinkGroup } from "./sidebar/types";
 

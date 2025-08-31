@@ -1,5 +1,5 @@
-import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
+import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
 import { Toaster } from "sonner";
 import { useConsent } from "./use-consent";
 import { useNProgress } from "./use-nprogress";

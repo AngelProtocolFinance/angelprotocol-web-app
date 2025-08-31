@@ -1,5 +1,5 @@
 import { put } from "@vercel/blob";
-import { type ActionFunction, data } from "@vercel/remix";
+import { type ActionFunction, data } from "react-router";
 import { nonEmpty, parse, pipe, string } from "valibot";
 
 export const action: ActionFunction = async ({ request }) => {

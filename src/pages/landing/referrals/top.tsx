@@ -1,9 +1,9 @@
-import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 export function Top({ classes = "" }) {
   return (

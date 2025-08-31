@@ -1,4 +1,4 @@
-import { useSearchParams } from "@remix-run/react";
+import { useSearchParams } from "react-router";
 import ErrorPage from "./error-page";
 import Success from "./success";
 import { type QueryParams, isSuccess } from "./types";

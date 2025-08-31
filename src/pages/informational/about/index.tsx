@@ -1,5 +1,5 @@
-import type { MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
+import type { MetaFunction } from "react-router";
 import { BottomCta } from "./bottom-cta";
 import { Hero } from "./hero";
 import { Manifesto } from "./manifesto";

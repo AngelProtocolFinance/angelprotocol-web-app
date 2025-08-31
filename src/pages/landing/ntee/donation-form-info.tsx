@@ -1,8 +1,8 @@
-import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import { StepsCarousel } from "components/donation";
 import Image from "components/image";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router";
 
 type TListItem = {
   title: string;

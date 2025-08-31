@@ -1,5 +1,5 @@
 import type { Endow } from "@better-giving/endowment";
-import { type LoaderFunction, data } from "@vercel/remix";
+import { type LoaderFunction, data } from "react-router";
 import type { EndowmentBalances } from "types/npo-balance";
 import * as v from "valibot";
 import { plusInt } from "./schema/endow-id";

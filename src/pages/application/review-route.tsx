@@ -1,7 +1,7 @@
 import { verdict as verdictSchema } from "@better-giving/registration/approval";
 import { regId as regIdSchema } from "@better-giving/registration/models";
 import { isDone } from "@better-giving/registration/step";
-import { type ActionFunction, redirect } from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { getReg } from ".server/registration/get-reg";

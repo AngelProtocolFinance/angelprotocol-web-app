@@ -1,8 +1,7 @@
 import type { Endow } from "@better-giving/endowment";
-import { Outlet } from "@remix-run/react";
-import { createRemixStub } from "@remix-run/testing";
 import type { DonateData } from "api/donate-loader";
 import type { ReactNode } from "react";
+import { Outlet, createRoutesStub } from "react-router";
 import type { UserV2 } from "types/auth";
 
 const endow: Endow = {
@@ -35,12 +34,13 @@ interface Data {
 }
 export const stb = (node: ReactNode, data?: Data) => {
   const { root = null, ldr = testDonateData } = data || {};
-  return createRemixStub([
+  return createRoutesStub([
     {
       path: "/",
       id: "root",
       loader: () => Promise.resolve(root),
       children: [{ Component: () => node, index: true, loader: () => ldr }],
+      // @ts-expect-error: `matches` won't align between test code and app code
       Component: Outlet,
     },
   ]);

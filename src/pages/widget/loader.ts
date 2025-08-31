@@ -1,7 +1,7 @@
 import type { Endow } from "@better-giving/endowment";
-import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
+import type { LoaderFunction } from "react-router";
 import type { EndowmentOption } from "types/npo";
 import * as v from "valibot";
 import { getNpos } from ".server/npos";

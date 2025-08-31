@@ -1,4 +1,4 @@
-import { type LoaderFunction, redirect } from "@vercel/remix";
+import { type LoaderFunction, redirect } from "react-router";
 import { cognito } from ".server/auth";
 
 export const loader: LoaderFunction = async ({

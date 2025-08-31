@@ -1,15 +1,14 @@
-import { useFetcher } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { CurrencySelector } from "components/currency-selector";
 import { Field, Form, Label } from "components/form";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { useActionResult } from "hooks/use-action-result";
+import { useFetcher, useLoaderData } from "react-router";
 import type { ActionData } from "types/action";
 import type { LoaderData } from "./api";
 import { avatarSpec, useRhf } from "./use-rhf";
 
 export default function Component() {
-  const data = useCachedLoaderData<LoaderData>();
+  const data = useLoaderData<LoaderData>();
   const fetcher = useFetcher<ActionData>();
   useActionResult(fetcher.data);
   const rhf = useRhf(data);

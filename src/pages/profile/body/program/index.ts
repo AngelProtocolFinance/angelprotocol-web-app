@@ -1,6 +1,6 @@
-import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 import { getProgram } from "api/get/program";
 import { richTextStyles } from "components/rich-text";
+import type { LinksFunction, LoaderFunction } from "react-router";
 import { npoId } from "../common/npo-id";
 export { default } from "./program";
 export { ErrorBoundary } from "components/error";

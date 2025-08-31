@@ -1,4 +1,4 @@
-import { redirect } from "@vercel/remix";
+import { redirect } from "react-router";
 
 export const toAuth = (req: Request, headers?: Headers) => {
   const from = new URL(req.url);
