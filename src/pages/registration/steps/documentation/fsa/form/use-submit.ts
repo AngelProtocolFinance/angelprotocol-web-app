@@ -1,9 +1,8 @@
-import type { FsaPayload } from "@better-giving/registration/fsa";
-import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
+import type { IFsaSignerDocs } from "@better-giving/reg";
+import { useFetcher, useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { steps } from "../../../../routes";
-import type { RegStep4 } from "../../../../types";
 import type { FV } from "../schema";
 import type { Props } from "../types";
 
@@ -11,10 +10,6 @@ export default function useSubmit({
   doc,
   isDirty,
 }: Props & { isDirty: boolean }) {
-  const {
-    data: { contact, init, org },
-  } = useLoaderData() as RegStep4;
-
   const fetcher = useFetcher();
 
   //use separate state to show redirection
@@ -34,33 +29,15 @@ export default function useSubmit({
       window.location.href = doc.fsa_signing_url;
     }
 
-    const signer: FsaPayload["signer"] = {
-      id: init.id,
-      email: init.registrant_id,
-      first_name: contact.first_name,
-      last_name: contact.last_name,
-      role:
-        contact.org_role === "other"
-          ? (contact.other_role ?? "")
-          : contact.org_role,
-      docs: {
-        org_name: contact.org_name,
-        hq_country: org.hq_country,
-        registration_number: fv.registration_number,
-        proof_of_identity: {
-          publicUrl: fv.proof_of_identity,
-          name: fv.proof_of_identity,
-        },
-        proof_of_reg: {
-          publicUrl: fv.proof_of_reg,
-          name: fv.proof_of_reg,
-        },
-        legal_entity_type: fv.legal_entity_type,
-        project_description: fv.project_description,
-      },
+    const docs: IFsaSignerDocs = {
+      registration_number: fv.registration_number,
+      $r_proof_of_identity: fv.proof_of_identity,
+      $o_proof_of_reg: fv.proof_of_reg,
+      $o_legal_entity_type: fv.legal_entity_type,
+      $o_project_description: fv.project_description,
     };
 
-    fetcher.submit(signer, {
+    fetcher.submit(docs, {
       encType: "application/json",
       method: "POST",
       action: "fsa",
