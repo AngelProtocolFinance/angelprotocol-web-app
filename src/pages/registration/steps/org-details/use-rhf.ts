@@ -1,34 +1,22 @@
-import type { Init, Org } from "@better-giving/registration/models";
+import type { IReg } from "@better-giving/reg";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useController, useForm } from "react-hook-form";
 import { type FV, schema } from "./schema";
 
-function to_form(org: Org): FV {
-  return {
-    //level 1
-    website: org.website,
-    hq_country: org.hq_country,
-    designation: org.designation,
-    //general
-    active_in_countries: org.active_in_countries ?? [],
-  };
-}
-export const use_rhf = (org: Org | undefined, init: Init) => {
+export const use_rhf = (reg: IReg) => {
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
-    defaultValues: org
-      ? to_form(org)
-      : {
-          website: "",
-          hq_country: init.claim ? "United States" : "",
-          designation: "" as any,
-          active_in_countries: [],
-        },
+    defaultValues: {
+      website: reg.o_website,
+      hq_country: reg.o_hq_country ?? "", // opt init display
+      designation: reg.o_designation ?? ("" as any), // opt init display
+      active_in_countries: reg.o_active_in_countries ?? [],
+    },
   });
 
   const { field: designation } = useController({
@@ -52,5 +40,6 @@ export const use_rhf = (org: Org | undefined, init: Init) => {
     designation,
     hq_country,
     countries,
+    dirtyFields,
   };
 };

@@ -5,8 +5,8 @@ class Resp {
       headers: { "Content-Type": "application/json" },
     });
   }
-  status(status: number): Response {
-    return new Response(null, { status });
+  status(status: number, text?: string): Response {
+    return new Response(null, { status, statusText: text });
   }
   txt(x: string, status = 200): Response {
     return new Response(x, {

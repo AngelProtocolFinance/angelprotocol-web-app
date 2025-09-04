@@ -1,4 +1,4 @@
-import { Progress } from "@better-giving/reg";
+import { Progress } from "@better-giving/reg/progress";
 import { reg_id } from "@better-giving/reg/schema";
 import { type LoaderFunction, redirect } from "@vercel/remix";
 import { parse } from "valibot";
@@ -29,7 +29,7 @@ export const step_loader =
     if (!reg) return { status: 404 };
     const r = new Progress(reg);
 
-    if (this_step > r.step + 1) {
+    if (this_step > r.step) {
       return redirect(`../${r.step}`);
     }
 

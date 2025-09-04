@@ -1,4 +1,5 @@
-import type { Update } from "@better-giving/registration/update";
+import type { IReg, IRegUpdate } from "@better-giving/reg";
+import { Progress } from "@better-giving/reg/progress";
 import { type OrgDesignation, org_designations } from "@better-giving/schemas";
 import {
   NavLink,
@@ -19,24 +20,21 @@ import {
 } from "constants/countries";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import type { SubmitHandler } from "react-hook-form";
-import { stepLoader } from "../../data/step-loader";
+import { step_loader } from "../../data/step-loader";
 import { steps } from "../../routes";
-import { nextStep } from "../../routes";
-import type { RegStep2 } from "../../types";
-import { updateAction } from "../update-action";
+import { next_step } from "../../routes";
+import { update_action } from "../update-action";
 import type { FV } from "./schema";
 import { use_rhf } from "./use-rhf";
 export { ErrorBoundary } from "components/error";
-export const loader = stepLoader(2);
-export const action = updateAction(nextStep[2]);
 
-export default function Form() {
+export const loader = step_loader(2);
+export const action = update_action(next_step[2]);
+
+export default function Page() {
   const fetcher = useFetcher();
   const navigate = useNavigate();
-  const state = useLoaderData() as RegStep2;
-  const {
-    data: { init, org },
-  } = state;
+  const reg = useLoaderData() as IReg;
 
   const {
     register,
@@ -46,22 +44,24 @@ export default function Form() {
     designation,
     hq_country,
     countries,
-  } = use_rhf(org, init);
+    dirtyFields: df,
+  } = use_rhf(reg);
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && org) {
-      return navigate(`../${steps.fsaInquiry}`);
+    if (!isDirty && new Progress(reg).step2) {
+      return navigate(`../${steps.fsa_inq}`);
     }
 
-    const update: Update = {
-      type: "org",
-      //payload
-      website: fv.website,
-      hq_country: fv.hq_country,
-      // required in schema
-      designation: fv.designation,
-      active_in_countries: fv.active_in_countries,
+    const update: IRegUpdate = {
+      update_type: "org",
+      status: "01",
     };
+
+    if (df.website) update.o_website = fv.website;
+    if (df.hq_country) update.o_hq_country = fv.hq_country;
+    if (df.designation) update.o_designation = fv.designation;
+    if (df.active_in_countries)
+      update.o_active_in_countries = fv.active_in_countries;
 
     fetcher.submit(update, {
       method: "PATCH",
@@ -69,8 +69,6 @@ export default function Form() {
       encType: "application/json",
     });
   };
-
-  // const { submit, isSubmitting } = useSubmit(data.org);
 
   return (
     <form className="w-full" onSubmit={handleSubmit(submit)}>
@@ -107,7 +105,7 @@ export default function Form() {
         required
         label="In what country is your organization registered in?"
         //endowment claims are US-based and shoudn't be changed by claimer
-        disabled={!!init.claim}
+        disabled={!!reg.claim_init}
         placeholder="Select a country"
         classes={{
           container: "mt-6 mb-2",

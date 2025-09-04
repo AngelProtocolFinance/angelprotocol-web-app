@@ -1,3 +1,4 @@
+import { Progress } from "@better-giving/reg/progress";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import {
@@ -8,9 +9,9 @@ import {
 import { Field } from "components/form";
 import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
-import { getRegState } from "../data/step-loader";
 import { schema } from "./types";
 import { cognito, toAuth } from ".server/auth";
+import { regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -30,15 +31,16 @@ export const action: ActionFunction = async ({ request }) => {
   const parsed = parseWithValibot(fv, { schema });
   if (parsed.status !== "success") return parsed.reply();
 
-  const { data, step } = await getRegState(parsed.value.reference, user);
+  const reg = await regdb.reg(parsed.value.reference);
+  if (!reg) return { status: 404 };
 
   /** set existing reference user inputs */
   const rc = await reg_cookie
     .parse(request.headers.get("Cookie"))
     .then((x) => x || {});
-  rc.reference = data.init.id;
+  rc.reference = reg.id;
 
-  return redirect(`../${data.init.id}/${step}`, {
+  return redirect(`../${reg.id}/${new Progress(reg).step}`, {
     headers: {
       "Set-Cookie": await reg_cookie.serialize(rc),
     },

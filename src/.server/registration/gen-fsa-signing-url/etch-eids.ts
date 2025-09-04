@@ -44,7 +44,7 @@ export const etch_eids = async (
     dateYear: format(now, "y"), //calendar year
     dateFull: format(now, "PP"), //e.g. Apr 29, 1453
     orgName: signer.org_name,
-    orgLegalEntity: signer.docs.$o_legal_entity_type,
+    orgLegalEntity: signer.docs.o_legal_entity_type,
     orgHq: signer.org_hq_country,
     granteeTitle: signer.role,
     granteeName: {
@@ -52,7 +52,7 @@ export const etch_eids = async (
       mi: "",
       lastName: signer.last_name,
     },
-    projectDescription: signer.docs.$o_project_description,
+    projectDescription: signer.docs.o_project_description,
   };
 
   const res = await anvil.createEtchPacket({

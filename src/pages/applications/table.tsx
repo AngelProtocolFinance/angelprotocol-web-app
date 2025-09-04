@@ -1,8 +1,4 @@
-import type { ApplicationItem } from "@better-giving/registration/approval";
-import {
-  type Status as TStatus,
-  isIrs501c3,
-} from "@better-giving/registration/models";
+import type { IRegItem, TStatus } from "@better-giving/reg";
 import { NavLink } from "@remix-run/react";
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
@@ -13,7 +9,7 @@ import { Folder } from "lucide-react";
 import type { IPaginator } from "types/components";
 import LoadMoreBtn from "./load-more-btn";
 
-interface Props extends IPaginator<ApplicationItem> {}
+interface Props extends IPaginator<IRegItem> {}
 
 export function Table({
   items,
@@ -41,7 +37,7 @@ export function Table({
         >
           <td className="w-4">type</td>
           <HeaderButton
-            onClick={handleHeaderClick("org_name")}
+            onClick={handleHeaderClick("o_name")}
             _activeSortKey={sortKey}
             _sortKey="OrganizationName"
             _sortDirection={sortDirection}
@@ -57,7 +53,7 @@ export function Table({
             Date Submitted
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("hq_country")}
+            onClick={handleHeaderClick("o_hq_country")}
             _activeSortKey={sortKey}
             _sortKey="HqCountry"
             _sortDirection={sortDirection}
@@ -92,11 +88,11 @@ export function Table({
               }`}
             >
               <span className="text-xs font-bold upppercase">
-                {isIrs501c3(row.docs) && row.docs.claim ? "Claim" : "New"}
+                {row.claim ? "Claim" : "New"}
               </span>
-              <>{row.org_name}</>
+              <>{row.o_name}</>
               <>{toPP(row.updated_at)}</>
-              <>{row.hq_country}</>
+              <>{row.o_hq_country}</>
               <td className="text-center">
                 <Status status={row.status} />
               </td>

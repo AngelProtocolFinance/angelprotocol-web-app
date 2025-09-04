@@ -1,15 +1,14 @@
-import type { Init } from "@better-giving/registration/models";
-import type { Update } from "@better-giving/registration/update";
+import type { IRegUpdate } from "@better-giving/reg";
 import { NavLink, useFetcher, useNavigate } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { APP_NAME } from "constants/env";
 import { steps } from "../../routes";
 
-interface Props extends Init {
+interface Props {
   country: string;
-  isFsaPrev?: boolean;
+  is_fsa_prev?: boolean;
 }
-export function NotTaxExempt({ country, isFsaPrev }: Props) {
+export function NotTaxExempt({ country, is_fsa_prev }: Props) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
   const isLoading = fetcher.state !== "idle";
@@ -30,27 +29,23 @@ export function NotTaxExempt({ country, isFsaPrev }: Props) {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <NavLink
           aria-disabled={isLoading}
-          to={`../${steps.orgDetails}`}
+          to={`../${steps.org_details}`}
           className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back
         </NavLink>
         <button
           onClick={async () => {
-            if (isFsaPrev) {
+            if (is_fsa_prev) {
               return navigate(`../${steps.docs}`);
             }
-
             fetcher.submit(
               {
-                type: "fsa-inq",
-                irs501c3: false,
-              } satisfies Update,
-              {
-                action: ".",
-                method: "PATCH",
-                encType: "application/json",
-              }
+                update_type: "fsa-inq",
+                status: "01",
+                o_type: "other",
+              } satisfies IRegUpdate,
+              { method: "PATCH", encType: "application/json" }
             );
           }}
           disabled={isLoading}

@@ -1,18 +1,16 @@
-import type { Update } from "@better-giving/registration/update";
+import type { IRegUpdate } from "@better-giving/reg";
 import { useFetcher } from "@remix-run/react";
 import type { OnSubmit } from "components/bank-details";
 
 export default function useSubmit() {
   const fetcher = useFetcher();
 
-  const submit: OnSubmit = async (recipient, bankStatementUrl) => {
-    const update: Update = {
-      type: "banking",
-      bank_statement: {
-        name: bankStatementUrl,
-        publicUrl: bankStatementUrl,
-      },
-      wise_recipient_id: recipient.id,
+  const submit: OnSubmit = async (recipient, bank_statement) => {
+    const update: IRegUpdate = {
+      update_type: "banking",
+      status: "01",
+      o_bank_statement: bank_statement,
+      o_bank_id: recipient.id.toString(),
     };
     fetcher.submit(update, {
       method: "PATCH",

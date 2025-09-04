@@ -15,10 +15,11 @@ export const etch_complete = async (
   if (!prev) throw `reg not found for ${id}`;
 
   const upd8: IRegUpdate = {
-    $o_type: "other",
-    $o_fsa_signed_doc_url: `${base_url}/api/anvil-doc/${documentGroup.eid}`,
+    status: "01",
+    o_type: "other",
+    o_fsa_signed_doc_url: `${base_url}/api/anvil-doc/${documentGroup.eid}`,
     update_type: "docs",
   };
 
-  return regdb.reg_update(id, prev, upd8);
+  return regdb.reg_update(id, upd8);
 };

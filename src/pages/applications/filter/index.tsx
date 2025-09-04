@@ -1,7 +1,5 @@
-import {
-  type QueryParams,
-  queryParams,
-} from "@better-giving/registration/approval";
+import type { IRegsSearch } from "@better-giving/reg";
+import { regs_search } from "@better-giving/reg/schema";
 import { Popover, PopoverButton } from "@headlessui/react";
 import { useSearchParams } from "@remix-run/react";
 import { DrawerIcon } from "components/icon";
@@ -18,14 +16,14 @@ type Props = {
 
 export function Filter({ classes = "", isDisabled }: Props) {
   const [params, setParams] = useSearchParams();
-  const parsed = parse(queryParams, search(params));
+  const parsed = parse(regs_search, search(params));
 
   async function onSubmit(fv: FV) {
     const copy = new URLSearchParams(params);
     copy.set("status", fv.status);
     copy.set("country", fv.country);
-    if (fv.start_date) copy.set("startDate", fv.start_date);
-    if (fv.end_date) copy.set("endDate", fv.end_date);
+    if (fv.start_date) copy.set("start_date", fv.start_date);
+    if (fv.end_date) copy.set("end_date", fv.end_date);
     setParams(copy);
   }
 
@@ -49,7 +47,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
       <Form
         params={parsed}
         onSubmit={onSubmit}
-        onReset={() => setParams({ status: "02" } satisfies QueryParams)}
+        onReset={() => setParams({ status: "02" } satisfies IRegsSearch)}
         classes="max-lg:fixed max-lg:inset-x-0 max-lg:top-0 lg:mt-1 absolute top-full z-20"
       />
     </Popover>

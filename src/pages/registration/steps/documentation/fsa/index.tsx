@@ -1,45 +1,53 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Link } from "@remix-run/react";
+import type { IFsaSignerDocs } from "@better-giving/reg";
+import { Link, useFetcher, useNavigate } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { FileDropzone } from "components/file-dropzone";
 import { Field, Form as Frm, Label } from "components/form";
 import { LoadText } from "components/load-text";
 import { SquareArrowOutUpRight } from "lucide-react";
-import { useController, useForm } from "react-hook-form";
-import { steps } from "../../../../routes";
-import { type FV, fileSpec, schema } from "../schema";
-import type { Props } from "../types";
-import useSubmit from "./use-submit";
+import { useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { steps } from "../../../routes";
+import { type FV, type Props, fileSpec } from "./types";
+import { use_rhf } from "./use-rhf";
 
-export default function Form(props: Props) {
-  const init: FV = {
-    proof_of_identity: props.doc?.proof_of_identity.publicUrl ?? "",
-    registration_number: props.doc?.registration_number ?? "",
-    proof_of_reg: props.doc?.proof_of_reg.publicUrl ?? "",
-    legal_entity_type: props.doc?.legal_entity_type ?? "",
-    project_description: props.doc?.project_description ?? "",
+export function FsaForm(props: Props) {
+  const { poi, por, isDirty, handleSubmit, errors, register } = use_rhf(props);
+  const is_uploading = poi.value === "loading" || por.value === "loading";
+
+  const fetcher = useFetcher();
+  const [is_redirecting, set_is_redirecting] = useState(false);
+  const is_submitting = fetcher.state !== "idle";
+
+  //use separate state to show redirection
+  const navigate = useNavigate();
+
+  const submit: SubmitHandler<FV> = async (fv) => {
+    //signed agreement and user didn't change any documents
+    if (!isDirty && props?.fsa_signed_url) {
+      return navigate(`../${steps.banking}`);
+    }
+
+    //existing url and user doesn't change any documents
+    if (!isDirty && props?.fsa_signing_url) {
+      set_is_redirecting(true);
+      window.location.href = props.fsa_signing_url;
+    }
+
+    const docs: IFsaSignerDocs = {
+      o_registration_number: fv.registration_number,
+      r_proof_of_identity: fv.proof_of_identity,
+      o_proof_of_reg: fv.proof_of_reg,
+      o_legal_entity_type: fv.legal_entity_type,
+      o_project_description: fv.project_description,
+    };
+
+    fetcher.submit(docs, {
+      encType: "application/json",
+      method: "POST",
+      action: "fsa",
+    });
   };
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isDirty },
-    register,
-  } = useForm<FV>({
-    resolver: valibotResolver(schema),
-    defaultValues: init,
-  });
-
-  const { field: poi } = useController({ control, name: "proof_of_identity" });
-  const { field: por } = useController({ control, name: "proof_of_reg" });
-
-  const isUploading = poi.value === "loading" || por.value === "loading";
-
-  const { submit, isRedirecting, isSubmitting } = useSubmit({
-    ...props,
-    isDirty,
-  });
-
   return (
     <Frm className="w-full" onSubmit={handleSubmit(submit)}>
       <h4 className="text-center sm:text-left">Government issued ID</h4>
@@ -99,9 +107,9 @@ export default function Form(props: Props) {
         error={errors.project_description?.message}
       />
 
-      {props.doc?.fsa_signed_doc_url ? (
+      {props?.fsa_signed_url ? (
         <ExtLink
-          href={props.doc.fsa_signed_doc_url}
+          href={props.fsa_signed_url}
           className="text-sm text-blue hover:text-blue-l2 flex items-center gap-2"
         >
           <SquareArrowOutUpRight size={20} />
@@ -111,22 +119,22 @@ export default function Form(props: Props) {
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
-          aria-disabled={isSubmitting || isRedirecting}
-          to={`../${steps.fsaInquiry}`}
+          aria-disabled={is_submitting || is_redirecting}
+          to={`../${steps.fsa_inq}`}
           className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back
         </Link>
         <button
-          disabled={isSubmitting || isRedirecting || isUploading}
+          disabled={is_submitting || is_redirecting || is_uploading}
           type="submit"
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText
-            isLoading={isSubmitting || isRedirecting}
-            text={isSubmitting ? "Submitting.." : "Redirecting.."}
+            isLoading={is_submitting || is_redirecting}
+            text={is_submitting ? "Submitting.." : "Redirecting.."}
           >
-            {props.doc?.fsa_signed_doc_url ? "Continue" : "Sign"}
+            {props.fsa_signed_url ? "Continue" : "Sign"}
           </LoadText>
         </button>
       </div>

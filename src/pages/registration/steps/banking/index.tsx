@@ -4,16 +4,24 @@ import ExtLink from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
 import { steps } from "../../routes";
-import type { RegStep5 } from "../../types";
 import FormButtons from "./form-buttons";
 import useSubmit from "./use-submit";
 
+import type { IReg } from "@better-giving/reg";
+import { step_loader } from "../../data/step-loader";
+import { next_step } from "../../routes";
+import { update_action } from "../update-action";
+
+export { ErrorBoundary } from "components/error";
+export const loader = step_loader(5);
+export const action = update_action(next_step[5]);
+
 export default function Banking() {
-  const { data } = useLoaderData() as RegStep5;
-  const [isChanging, setIsChanging] = useState(false);
+  const reg = useLoaderData() as IReg;
+  const [is_changing, set_is_changing] = useState(false);
   const { submit, isLoading } = useSubmit();
 
-  if (data.banking && !isChanging) {
+  if (reg.o_bank_id && !is_changing) {
     return (
       <div className="flex flex-col items-start max-sm:items-center">
         <h2 className="text-center sm:text-left text-xl mb-2">
@@ -22,10 +30,10 @@ export default function Banking() {
 
         <p className="mt-6 mb-1">
           <span className="uppercase text-sm font-semibold">account id: </span>
-          <span className="text-gray ">{data.banking.wise_recipient_id}</span>
+          <span className="text-gray ">{reg.o_bank_id}</span>
         </p>
         <ExtLink
-          href={data.banking.bank_statement.publicUrl}
+          href={reg.o_bank_statement}
           className="flex items-center gap-2 text-blue hover:text-blue-d1"
         >
           <SquareArrowOutUpRight size={16} />
@@ -34,7 +42,7 @@ export default function Banking() {
         <button
           className="btn btn-red px-2 py-1 rounded-sm text-xs mt-2 mb-8"
           type="button"
-          onClick={() => setIsChanging(true)}
+          onClick={() => set_is_changing(true)}
         >
           change
         </button>
@@ -59,17 +67,17 @@ export default function Banking() {
 
   return (
     <div className="flex flex-col items-start max-sm:items-center">
-      {isChanging && (
+      {is_changing && (
         <button
           className="btn btn-blue px-2 py-1 rounded-sm text-xs mt-2 mb-4"
           type="button"
-          onClick={() => setIsChanging(false)}
+          onClick={() => set_is_changing(false)}
         >
           cancel
         </button>
       )}
       <h2 className="text-center sm:text-left text-xl mb-4">
-        {isChanging ? "Update" : "Setup"} your banking details
+        {is_changing ? "Update" : "Setup"} your banking details
       </h2>
       <BankDetails
         verified

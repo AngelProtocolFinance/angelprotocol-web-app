@@ -1,4 +1,6 @@
-import { type IFsaSigner, type IRegUpdate, Progress } from "@better-giving/reg";
+import type { IFsaSigner, IRegUpdate } from "@better-giving/reg";
+import { Progress } from "@better-giving/reg/progress";
+
 import {
   type IFsaSignerDocs,
   fsa_signer_docs_or_eid,
@@ -39,17 +41,17 @@ export const action: ActionFunction = async ({ request, params }) => {
     from.search = "";
 
     const docs: IFsaSignerDocs = {
-      $o_registration_number: r.o_registration_number,
-      $o_legal_entity_type: r.o_legal_entity_type,
-      $o_project_description: r.o_project_description,
-      $o_proof_of_reg: r.o_website,
-      $r_proof_of_identity: r.r_proof_of_identity,
+      o_registration_number: r.o_registration_number,
+      o_legal_entity_type: r.o_legal_entity_type,
+      o_project_description: r.o_project_description,
+      o_proof_of_reg: r.o_website,
+      r_proof_of_identity: r.r_proof_of_identity,
     };
 
     const signer: IFsaSigner = {
       first_name: r.r_first_name,
       last_name: r.r_last_name,
-      email: reg.$r_id,
+      email: reg.r_id,
       role:
         r.r_org_role === "other" ? (r.r_org_role_other ?? "") : r.r_org_role,
       org_name: r.o_name,
@@ -73,7 +75,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const signer: IFsaSigner = {
     first_name: r.r_first_name,
     last_name: r.r_last_name,
-    email: reg.$r_id,
+    email: reg.r_id,
     role: r.r_org_role === "other" ? (r.r_org_role_other ?? "") : r.r_org_role,
     org_hq_country: r.o_hq_country,
     org_name: r.o_name,
@@ -83,9 +85,10 @@ export const action: ActionFunction = async ({ request, params }) => {
   // update db with new docs
   const update: IRegUpdate = {
     update_type: "docs",
+    status: "01",
     ...docs_or_eid,
   };
-  await regdb.reg_update(rid, reg, update);
+  await regdb.reg_update(rid, update);
 
   const url = await gen_fsa_signing_url(rid, signer, from.toString());
   return redirect(url);

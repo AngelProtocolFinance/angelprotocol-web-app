@@ -1,14 +1,11 @@
-import {
-  type Submission,
-  isRejected,
-} from "@better-giving/registration/models";
+import type { TStatus } from "@better-giving/reg";
 import { Link, useFetcher } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { CircleAlert, Hourglass } from "lucide-react";
 import { steps } from "pages/registration/routes";
 
 type Props = {
-  status?: Exclude<Submission, { endowment_id: any }>;
+  status?: TStatus;
   classes?: string;
 };
 
@@ -39,7 +36,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
     );
   }
 
-  if (isRejected(status)) {
+  if (status === "04") {
     return (
       <fetcher.Form
         method="POST"
@@ -62,7 +59,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
     );
   }
 
-  if (status === "in-review") {
+  if (status === "02") {
     return (
       <div
         className={`max-sm:grid justify-items-center gap-2 text-gray dark:text-gray ${classes}`}

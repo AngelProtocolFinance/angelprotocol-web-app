@@ -1,5 +1,5 @@
-import type { EndowClaim } from "@better-giving/registration/models";
-import { type NewReg, newReg } from "@better-giving/registration/update";
+import type { INpoClaim, IRegNew } from "@better-giving/reg";
+import { reg_new } from "@better-giving/reg/schema";
 import {
   type ActionFunction,
   type LoaderFunction,
@@ -10,10 +10,8 @@ import { search } from "helpers/https";
 import { parse } from "valibot";
 import { steps } from "./routes";
 import { cognito, toAuth } from ".server/auth";
-import { npodb } from ".server/aws/db";
+import { npodb, regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
-import { env } from ".server/env";
-import { createRegistration } from ".server/registration/create-reg";
 import { is_claimed } from ".server/registration/helpers";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -22,7 +20,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return user;
 };
 
-export const newApplicationAction: ActionFunction = async ({ request }) => {
+export const new_application: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
@@ -38,39 +36,38 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
         id: endow.id,
         ein: endow.registration_number,
         name: endow.name,
-      } satisfies EndowClaim)
+      } satisfies INpoClaim)
     : null;
 
-  const payload: NewReg = {
-    registrant_id: user.email,
+  const payload: IRegNew = {
+    r_id: user.email,
   };
 
-  if (claim) payload.claim = claim;
+  if (claim) payload.claim_init = claim;
 
   // user is registering via fresh referral link
-  if (referrer) payload.referrer = referrer;
+  if (referrer) payload.referrer_init = referrer;
 
   /* user is registering on his own,
    * but he may have discovered the platform via previous referral
    */
   if (!referrer && cookie.referrer) {
-    payload.referrer = cookie.referrer;
+    payload.referrer_init = cookie.referrer;
   }
 
-  const init = parse(newReg, payload);
+  const parsed = parse(reg_new, payload);
 
-  if (user.email !== init.registrant_id && !user.groups.includes("ap-admin")) {
+  if (user.email !== parsed.r_id && !user.groups.includes("ap-admin")) {
     throw new Response("Unauthorized", { status: 403 });
   }
 
-  if (init.claim && (await is_claimed(init.claim.ein))) {
-    throw new Response(`to-claim:${init.claim.id} is already claimed`, {
+  if (parsed.claim_init && (await is_claimed(parsed.claim_init.ein))) {
+    throw new Response(`to-claim:${parsed.claim_init.ein} is already claimed`, {
       status: 400,
     });
   }
 
-  const id = await createRegistration(init, env);
-
+  const id = await regdb.reg_put(parsed);
   cookie.reference = id;
 
   return redirect(`${appRoutes.register}/${id}/${steps.contact}`, {
