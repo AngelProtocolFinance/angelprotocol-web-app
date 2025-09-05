@@ -1,3 +1,4 @@
+import { Progress } from "@better-giving/reg/progress";
 import { reg_id, reg_update } from "@better-giving/reg/schema";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { resp } from "helpers/https";
@@ -21,6 +22,9 @@ export const update_action =
       throw resp.status(401);
     }
     await regdb.reg_update(rid, upd8);
+
+    const prog = new Progress(reg);
+    if (prog.step === 6) return redirect(`../${6}`);
 
     return redirect(`../${next}`);
   };

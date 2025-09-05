@@ -8,7 +8,6 @@ import { Form, Label } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { Select } from "components/selector/select";
 import { errorPrompt } from "helpers/error-prompt";
-import { logger } from "helpers/logger";
 import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
 import type {
@@ -282,7 +281,7 @@ export default function RecipientDetailsForm({
 
                           return res.ok || "invalid";
                         } catch (err) {
-                          logger.error(err);
+                          console.error(err);
                           return "Validation of banking details failed unexpectedly";
                         }
                       }

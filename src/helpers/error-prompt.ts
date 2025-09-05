@@ -1,5 +1,4 @@
 import { EMAIL_SUPPORT } from "constants/env";
-import { logger } from "helpers/logger";
 import type { ReactNode } from "react";
 
 type Generic = {
@@ -25,7 +24,7 @@ function parseError(error: unknown): string | undefined {
 }
 
 export const errorPrompt = (error: unknown, display?: DisplayType) => {
-  logger.error(error);
+  console.error(error);
   const disp = display || {};
   return {
     type: "error" as const,

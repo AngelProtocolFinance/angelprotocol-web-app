@@ -4,6 +4,6 @@ export async function create_recipient(payload: CreateRecipientRequest) {
   return fetch(`/api/wise/v1/accounts`, {
     method: "POST",
     body: JSON.stringify(payload),
-    headers: { "Content-Type": "application/json" },
-  }).then((r) => r.json());
+    headers: { "content-type": "application/json" },
+  });
 }

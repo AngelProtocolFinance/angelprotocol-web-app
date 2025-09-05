@@ -1,13 +1,12 @@
-import { NavLink, useLoaderData } from "@remix-run/react";
-import { BankDetails } from "components/bank-details";
+import { NavLink, useFetcher, useLoaderData } from "@remix-run/react";
+import { BankDetails, type OnSubmit } from "components/bank-details";
 import ExtLink from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
 import { steps } from "../../routes";
 import FormButtons from "./form-buttons";
-import useSubmit from "./use-submit";
 
-import type { IReg } from "@better-giving/reg";
+import type { IReg, IRegUpdate } from "@better-giving/reg";
 import { step_loader } from "../../data/step-loader";
 import { next_step } from "../../routes";
 import { update_action } from "../update-action";
@@ -19,7 +18,21 @@ export const action = update_action(next_step[5]);
 export default function Banking() {
   const reg = useLoaderData() as IReg;
   const [is_changing, set_is_changing] = useState(false);
-  const { submit, isLoading } = useSubmit();
+  const fetcher = useFetcher();
+
+  const submit: OnSubmit = async (recipient, bank_statement) => {
+    const update: IRegUpdate = {
+      update_type: "banking",
+      status: "01",
+      o_bank_statement: bank_statement,
+      o_bank_id: recipient.id.toString(),
+    };
+    fetcher.submit(update, {
+      method: "PATCH",
+      action: ".",
+      encType: "application/json",
+    });
+  };
 
   if (reg.o_bank_id && !is_changing) {
     return (
@@ -83,7 +96,7 @@ export default function Banking() {
         verified
         FormButtons={FormButtons}
         onSubmit={submit}
-        isLoading={isLoading}
+        isLoading={fetcher.state !== "idle"}
       />
     </div>
   );
