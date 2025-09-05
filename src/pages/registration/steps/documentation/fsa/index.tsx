@@ -24,14 +24,14 @@ export function FsaForm(props: Props) {
 
   const submit: SubmitHandler<FV> = async (fv) => {
     //signed agreement and user didn't change any documents
-    if (!isDirty && props?.fsa_signed_url) {
+    if (!isDirty && props?.o_fsa_signed_doc_url) {
       return navigate(`../${steps.banking}`);
     }
 
     //existing url and user doesn't change any documents
-    if (!isDirty && props?.fsa_signing_url) {
+    if (!isDirty && props?.o_fsa_signing_url) {
       set_is_redirecting(true);
-      window.location.href = props.fsa_signing_url;
+      window.location.href = props.o_fsa_signing_url;
     }
 
     const docs: IFsaSignerDocs = {
@@ -107,9 +107,9 @@ export function FsaForm(props: Props) {
         error={errors.project_description?.message}
       />
 
-      {props?.fsa_signed_url ? (
+      {props?.o_fsa_signed_doc_url ? (
         <ExtLink
-          href={props.fsa_signed_url}
+          href={props.o_fsa_signed_doc_url}
           className="text-sm text-blue hover:text-blue-l2 flex items-center gap-2"
         >
           <SquareArrowOutUpRight size={20} />
@@ -134,7 +134,7 @@ export function FsaForm(props: Props) {
             isLoading={is_submitting || is_redirecting}
             text={is_submitting ? "Submitting.." : "Redirecting.."}
           >
-            {props.fsa_signed_url ? "Continue" : "Sign"}
+            {props.o_fsa_signed_doc_url ? "Continue" : "Sign"}
           </LoadText>
         </button>
       </div>

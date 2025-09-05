@@ -78,8 +78,8 @@ importers:
         specifier: 1.0.7
         version: 1.0.7(@better-giving/types@1.1.8)
       '@better-giving/reg':
-        specifier: 1.0.35
-        version: 1.0.35(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.6(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.1(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.7.3))
+        specifier: 1.0.36
+        version: 1.0.36(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.6(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.1(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.7.3))
       '@better-giving/schemas':
         specifier: 2.0.1
         version: 2.0.1(valibot@0.42.0(typescript@5.7.3))
@@ -764,8 +764,8 @@ packages:
     peerDependencies:
       '@better-giving/types': 1.1.8
 
-  '@better-giving/reg@1.0.35':
-    resolution: {integrity: sha512-AerWBRIo6Hm/IAfcTBaKcsRrod7s9sa02nhfpmo/NvoIyV2hZtJUOvGfPREeR61T2n8iYrABRCzrWCmpM155rQ==}
+  '@better-giving/reg@1.0.36':
+    resolution: {integrity: sha512-GL/YiLxbi5mdcnJ9BkHQp1tZTHFRWwOrFA2JGEsIiTaVZks8z95WhwlOgPZ/4NZbeD9CfXjDB+iw8eAiJSpZkg==}
     peerDependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0
       '@better-giving/db': 2.0.6
@@ -6145,7 +6145,7 @@ snapshots:
     dependencies:
       '@better-giving/types': 1.1.8
 
-  '@better-giving/reg@1.0.35(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.6(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.1(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.7.3))':
+  '@better-giving/reg@1.0.36(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.6(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.1(valibot@0.42.0(typescript@5.7.3)))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
       '@better-giving/db': 2.0.6(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)

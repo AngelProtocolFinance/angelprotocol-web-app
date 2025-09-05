@@ -15,7 +15,7 @@ import { regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const cookieHeader = request.headers.get("Cookie");
+  const cookieHeader = request.headers.get("cookie");
   const { user, headers } = await cognito.retrieve(cookieHeader);
   if (!user) return toAuth(request, headers);
 

@@ -12,7 +12,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   /** handle oauth if applicable */
   const url = new URL(request.url);
   const { code, state, referrer } = search(url);
-  const cookie_header = request.headers.get("Cookie");
+  const cookie_header = request.headers.get("cookie");
 
   /** HANDLE REFERRAL START */
   const rc = await reg_cookie.parse(cookie_header).then((x) => x || {});

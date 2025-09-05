@@ -6,7 +6,7 @@ class Resp {
     });
   }
   status(status: number, text?: string): Response {
-    return new Response(null, { status, statusText: text });
+    return new Response(text, { status, statusText: text });
   }
   txt(x: string, status = 200): Response {
     return new Response(x, {

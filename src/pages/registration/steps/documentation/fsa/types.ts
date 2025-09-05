@@ -6,8 +6,8 @@ import { alphanumeric } from "schemas/string";
 import * as v from "valibot";
 
 export interface Props extends Partial<IFsaSignerDocs> {
-  fsa_signed_url?: string;
-  fsa_signing_url?: string;
+  o_fsa_signed_doc_url?: string;
+  o_fsa_signing_url?: string;
 }
 
 export const fileSpec: FileSpec = {

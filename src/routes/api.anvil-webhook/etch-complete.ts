@@ -21,5 +21,6 @@ export const etch_complete = async (
     update_type: "docs",
   };
 
-  return regdb.reg_update(id, upd8);
+  const res = await regdb.reg_update(id, upd8);
+  return res.o_fsa_signed_doc_url;
 };

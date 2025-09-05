@@ -25,7 +25,7 @@ export const new_application: ActionFunction = async ({ request }) => {
   if (!user) return toAuth(request, headers);
 
   const cookie = await reg_cookie
-    .parse(request.headers.get("Cookie"))
+    .parse(request.headers.get("cookie"))
     .then((x) => x || {});
 
   const { claim: ein, referrer } = search(request);
