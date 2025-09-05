@@ -11,6 +11,7 @@ import { errorPrompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
 import type {
+  CreateRecipientRequest,
   Group,
   V1RecipientAccount,
   ValidationContent,
@@ -18,7 +19,6 @@ import type {
 import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
 import { use_requirements } from "../use-requirements";
-import { create_recipient } from "./create-recipient";
 
 type Props = {
   fields: Group[];
@@ -101,13 +101,19 @@ export default function RecipientDetailsForm({
         try {
           const { accountHolderName, bankStatement, ...details } = fv;
 
-          const res = await create_recipient({
+          const payload: CreateRecipientRequest = {
             accountHolderName,
             currency,
             ownedByCustomer: false,
             profile: "{{profileId}}",
             type,
             details,
+          };
+
+          const res = await fetch(`/api/wise/v1/accounts`, {
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: { "content-type": "application/json" },
           });
 
           if (res.ok) {
