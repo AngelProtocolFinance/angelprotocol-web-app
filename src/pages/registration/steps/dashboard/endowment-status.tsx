@@ -12,7 +12,7 @@ type Props = {
 export default function EndowmentStatus({ status, classes = "" }: Props) {
   const fetcher = useFetcher({ key: "reg-sub" });
   const isSubmitting = fetcher.state !== "idle";
-  if (!status) {
+  if (!status || status === "01") {
     return (
       <fetcher.Form
         method="POST"

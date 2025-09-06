@@ -28,7 +28,6 @@ export const submit_action: ActionFunction = async ({ request, params }) => {
   });
   //reset previous review
   b.remove("status_rejected_reason" satisfies keyof IReg);
-
   await regdb.reg_update(r.id, b);
 
   return {
