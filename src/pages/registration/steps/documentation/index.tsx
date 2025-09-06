@@ -18,5 +18,5 @@ export default function Page() {
     return <FsaForm {...reg} />;
   }
 
-  return <NonFsaForm ein={reg.o_registration_number} reg_id={reg.id} />;
+  return <NonFsaForm claim={reg.claim} ein={reg.o_ein} reg_id={reg.id} />;
 }

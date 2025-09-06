@@ -1,5 +1,5 @@
 import type { IReg } from "@better-giving/reg";
-import { Navigate, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
+import { Outlet, redirect, useFetcher, useLoaderData } from "@remix-run/react";
 import { regRoutes } from "constants/routes";
 import { useActionResult } from "hooks/use-action-result";
 import type { ActionData, Ok } from "types/action";
@@ -9,7 +9,13 @@ import Step from "./step";
 
 export { submit_action as action } from "./submit-action";
 export { ErrorBoundary } from "components/error";
-export const loader = step_loader(6);
+export const loader = step_loader(6, (reg) => {
+  if (reg.status === "03") {
+    return redirect(
+      `../../${regRoutes.success}?name=${reg.o_name}&id=${reg.status_approved_npo_id}`
+    );
+  }
+});
 
 export default function Dashboard() {
   const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });
@@ -17,10 +23,6 @@ export default function Dashboard() {
   const reg = useLoaderData() as IReg;
 
   const is_steps_disabled = fetcher.state !== "idle" || reg.status === "02";
-
-  if (reg.status && reg.status === "03") {
-    return <Navigate to={`../../${regRoutes.success}`} state={reg} />;
-  }
 
   return (
     <div className="grid">

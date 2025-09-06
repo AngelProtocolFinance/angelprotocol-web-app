@@ -36,7 +36,7 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
   const ecfr: EndowContentFromReg = {
     active_in_countries: r.o_activity_countries ?? [],
     endow_designation: r.o_designation,
-    fiscal_sponsored: r.o_type === "501c3",
+    fiscal_sponsored: r.o_type === "other",
     hq_country: r.o_hq_country,
     kyc_donors_only: true,
     name: r.o_name,
@@ -76,15 +76,11 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
     txs.put(userdb.userxnpo_put_txi(id, r.r_id));
     txs.update(
       regdb.reg_update_txi(r.id, {
-        status: "04",
+        status: "03",
         status_approved_npo_id: id,
       })
     );
-    txs.update({
-      TableName: NpoDb.name,
-      Key: npodb.key_npo(id),
-      ...npodb.npo_update_comps(ecfr),
-    });
+    txs.update(npodb.npo_update_txi(id, ecfr));
 
     const tx_cmd = new TransactWriteCommand({ TransactItems: txs.all });
     await npodb.client.send(tx_cmd);
@@ -92,11 +88,11 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
   }
 
   ///////////// APPROVAL OF NEW ENDOWMENT /////////////
-  const newEndowID = await npodb.npo_count_inc();
+  const npo_id = await npodb.npo_count_inc();
   const wacc = await wise.v2_account(+r.o_bank_id);
   const bank_new: IApplication = {
     wiseRecipientID: r.o_bank_id,
-    endowmentID: newEndowID,
+    endowmentID: npo_id,
     bankStatementFile: {
       publicUrl: r.o_bank_statement,
       name: r.o_bank_statement,
@@ -106,22 +102,22 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
   };
 
   //init balances first: if endow creation fails, would simply override prev id
-  await baldb.balance_put(newEndowID);
+  await baldb.balance_put(npo_id);
 
   const newEndow: INpo = {
     ...ecfr,
     env,
-    id: newEndowID,
+    id: npo_id,
     social_media_urls: {},
     sdgs: [],
   };
   const txs = new Txs();
   txs.put(bappdb.bapp_put_txi(bank_new, "approved"));
-  txs.put(userdb.userxnpo_put_txi(newEndowID, r.r_id));
+  txs.put(userdb.userxnpo_put_txi(npo_id, r.r_id));
   txs.update(
     regdb.reg_update_txi(r.id, {
-      status: "04",
-      status_approved_npo_id: newEndowID,
+      status: "03",
+      status_approved_npo_id: npo_id,
     })
   );
   txs.put({ TableName: NpoDb.table, Item: npodb.npo_record(newEndow) });
@@ -129,5 +125,5 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
   const tx_cmd = new TransactWriteCommand({ TransactItems: txs.all });
   await npodb.client.send(tx_cmd);
 
-  return newEndowID;
+  return npo_id;
 };

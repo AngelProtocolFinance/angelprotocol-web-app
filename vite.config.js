@@ -290,7 +290,7 @@ const rmx = remix({
         // no robots
         r("applications", "./pages/applications/index.ts");
         // no robots
-        r("applications/:id", "./pages/application/application.tsx", () => {
+        r("applications/:id", "./pages/application/index.tsx", () => {
           r(":verdict", "./pages/application/review-route.tsx");
           r("success", "./pages/application/success-prompt.tsx");
         });

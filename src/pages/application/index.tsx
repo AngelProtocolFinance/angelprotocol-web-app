@@ -15,7 +15,7 @@ export const meta: MetaFunction = ({ data }) => {
 export { loader } from "./api";
 export { ErrorBoundary } from "components/error";
 
-export function Application() {
+export default function Page() {
   const { reg, user, wacc } = useLoaderData() as LoaderData;
 
   if (!user.groups.includes("ap-admin")) {

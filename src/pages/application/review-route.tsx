@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const id = parse(reg_id, params.id);
   const verdict = parse(schema, {
-    verdict: params.verdict,
+    type: params.verdict,
     reason: fv.reason ?? "",
   });
 
