@@ -16,10 +16,10 @@ export function use_rhf(reg: IReg) {
       r_last_name: reg.r_last_name,
       r_contact_number: reg.r_contact_number,
       r_org_role: reg.r_org_role,
-      r_org_role_other: reg.r_org_role_other,
+      r_org_role_other: reg.r_org_role === "other" ? reg.r_org_role : "",
       rm: reg.rm,
-      rm_other: reg.rm_other,
-      rm_referral_code: reg.rm_referral_code,
+      rm_other: reg.rm === "other" ? reg.rm : "",
+      rm_referral_code: reg.rm === "referral" ? reg.rm_referral_code : "",
       o_name: reg.o_name,
     },
   });

@@ -45,3 +45,6 @@ export function search<T extends R>(
   }
   return Object.fromEntries(x.entries()) as T;
 }
+
+export const sans_https = (x: string | undefined) =>
+  x && x.replace(/^https:\/\//, "");
