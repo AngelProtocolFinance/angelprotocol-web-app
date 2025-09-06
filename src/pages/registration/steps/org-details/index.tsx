@@ -1,4 +1,4 @@
-import type { IReg, IRegUpdate } from "@better-giving/reg";
+import type { IReg, TRegUpdate } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
 import { type OrgDesignation, org_designations } from "@better-giving/schemas";
 import {
@@ -52,20 +52,18 @@ export default function Page() {
       return navigate(`../${steps.fsa_inq}`);
     }
 
-    const update: IRegUpdate = {
+    const update: TRegUpdate = {
       update_type: "org",
-      status: "01",
     };
 
-    if (df.website) update.o_website = fv.website;
-    if (df.hq_country) update.o_hq_country = fv.hq_country;
-    if (df.designation) update.o_designation = fv.designation;
-    if (df.active_in_countries)
-      update.o_active_in_countries = fv.active_in_countries;
+    if (df.o_website) update.o_website = fv.o_website;
+    if (df.o_hq_country) update.o_hq_country = fv.o_hq_country;
+    if (df.o_designation) update.o_designation = fv.o_designation;
+    if (df.o_active_in_countries)
+      update.o_active_in_countries = fv.o_active_in_countries;
 
     fetcher.submit(update, {
       method: "PATCH",
-      action: ".",
       encType: "application/json",
     });
   };
@@ -77,12 +75,12 @@ export default function Page() {
       </h2>
 
       <UrlInput
-        {...register("website")}
+        {...register("o_website")}
         label="Website of your organization"
         required
         classes={{ container: "mb-6 mt-4" }}
         placeholder="yourwebsite.com"
-        error={errors.website?.message}
+        error={errors.o_website?.message}
       />
 
       <Select<OrgDesignation>
@@ -94,18 +92,18 @@ export default function Page() {
         classes={{ options: "text-sm", container: "mt-4" }}
         options={org_designations as any}
         option_disp={(v) => v}
-        error={errors.designation?.message}
+        error={errors.o_designation?.message}
       />
 
       <Combo
         ref={hq_country.ref}
-        error={errors.hq_country?.message}
+        error={errors.o_hq_country?.message}
         value={hq_country.value}
         onChange={hq_country.onChange}
         required
         label="In what country is your organization registered in?"
         //endowment claims are US-based and shoudn't be changed by claimer
-        disabled={!!reg.claim_init}
+        disabled={!!reg.claim}
         placeholder="Select a country"
         classes={{
           container: "mt-6 mb-2",
@@ -139,13 +137,13 @@ export default function Page() {
       </Label>
       <MultiCombo
         searchable
-        values={countries.value}
+        values={countries.value ?? []}
         on_change={countries.onChange}
         on_reset={() => countries.onChange([])}
         classes={{ options: "text-sm" }}
         options={cnames}
         option_disp={(c) => c}
-        error={errors.active_in_countries?.message}
+        error={errors.o_active_in_countries?.message}
         ref={countries.ref}
       />
 

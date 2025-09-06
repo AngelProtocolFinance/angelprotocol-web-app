@@ -12,24 +12,24 @@ export const use_rhf = (reg: IReg) => {
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     defaultValues: {
-      website: reg.o_website,
-      hq_country: reg.o_hq_country ?? "", // opt init display
-      designation: reg.o_designation ?? ("" as any), // opt init display
-      active_in_countries: reg.o_active_in_countries ?? [],
+      o_website: reg.o_website,
+      o_hq_country: reg.o_hq_country ?? "", // opt init display
+      o_designation: reg.o_designation ?? ("" as any), // opt init display
+      o_active_in_countries: reg.o_active_in_countries ?? [],
     },
   });
 
   const { field: designation } = useController({
     control,
-    name: "designation",
+    name: "o_designation",
   });
   const { field: hq_country } = useController({
     control,
-    name: "hq_country",
+    name: "o_hq_country",
   });
   const { field: countries } = useController({
     control,
-    name: "active_in_countries",
+    name: "o_active_in_countries",
   });
 
   return {

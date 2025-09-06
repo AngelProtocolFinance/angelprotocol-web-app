@@ -5,12 +5,11 @@ import { LoadText } from "components/load-text";
 import { Select } from "components/selector/select";
 import type { SubmitHandler } from "react-hook-form";
 import { steps } from "../../routes";
-import { useUser } from "../../user";
 import { referral_methods, roles } from "./constants";
 import type { FV } from "./schema";
 import { use_rhf } from "./use-rhf";
 
-import type { IReg, IRegUpdate, TRole } from "@better-giving/reg";
+import type { IReg, TRegUpdate, TRole } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
 import { step_loader } from "../../data/step-loader";
 import { next_step } from "../../routes";
@@ -23,7 +22,6 @@ export const action = update_action(next_step[1]);
 export default function Form({ classes = "" }: { classes?: string }) {
   const fetcher = useFetcher();
   const reg = useLoaderData() as IReg;
-  const user = useUser();
   const {
     register,
     errors,
@@ -32,7 +30,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     isDirty,
     handleSubmit,
     dirtyFields: df,
-  } = use_rhf(reg, user.email);
+  } = use_rhf(reg);
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
@@ -40,8 +38,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       return navigate(`../${steps.org_details}`); // go to latest step
     }
 
-    const upd8: IRegUpdate = {
-      status: "01",
+    const upd8: TRegUpdate = {
       update_type: "contact",
     };
 
@@ -50,7 +47,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     if (df.r_contact_number) upd8.r_contact_number = fv.r_contact_number;
     if (df.r_org_role) upd8.r_org_role = fv.r_org_role;
     if (df.r_org_role_other) upd8.r_org_role_other = fv.r_org_role_other;
-    if (df.org_name) upd8.o_name = fv.org_name;
+    if (df.o_name) upd8.o_name = fv.o_name;
     if (df.rm) upd8.rm = fv.rm;
     if (df.rm_other) upd8.rm_other = fv.rm_other;
     if (df.rm_referral_code) upd8.rm_referral_code = fv.rm_referral_code;
@@ -105,10 +102,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
       <Field
         required
+        defaultValue={reg.r_id}
         label="E-mail address"
-        {...register("r_email")}
         disabled
-        error={errors.r_email?.message}
         classes={{ container: "mt-4" }}
       />
 
@@ -116,9 +112,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Field
         required
         label="Organization name"
-        {...register("org_name")}
+        {...register("o_name")}
         placeholder="Organization name"
-        error={errors.org_name?.message}
+        error={errors.o_name?.message}
         classes={{ container: "mb-4" }}
       />
       <Select<TRole>

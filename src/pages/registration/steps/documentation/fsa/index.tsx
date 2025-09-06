@@ -1,4 +1,4 @@
-import type { IFsaSignerDocs } from "@better-giving/reg";
+import type { IFsaDocs } from "@better-giving/reg";
 import { Link, useFetcher, useNavigate } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { FileDropzone } from "components/file-dropzone";
@@ -34,12 +34,12 @@ export function FsaForm(props: Props) {
       window.location.href = props.o_fsa_signing_url;
     }
 
-    const docs: IFsaSignerDocs = {
-      o_registration_number: fv.registration_number,
+    const docs: IFsaDocs = {
+      o_registration_number: fv.o_registration_number,
       r_proof_of_identity: fv.proof_of_identity,
       o_proof_of_reg: fv.proof_of_reg,
-      o_legal_entity_type: fv.legal_entity_type,
-      o_project_description: fv.project_description,
+      o_legal_entity_type: fv.o_legal_entity_type,
+      o_project_description: fv.o_project_description,
     };
 
     fetcher.submit(docs, {
@@ -66,12 +66,12 @@ export function FsaForm(props: Props) {
       />
 
       <Field
-        {...register("registration_number")}
+        {...register("o_registration_number")}
         label="Registration number (numbers and letters only)"
         required
         classes={{ container: "mb-6 mt-10", label: "font-semibold" }}
         placeholder="e.g. xxxxxxxxxxxx"
-        error={errors.registration_number?.message}
+        error={errors.o_registration_number?.message}
       />
 
       <FileDropzone
@@ -88,23 +88,23 @@ export function FsaForm(props: Props) {
       />
 
       <Field
-        {...register("legal_entity_type")}
+        {...register("o_legal_entity_type")}
         label="What type of legal entity is your organization registered as? This can
         usually be found in your registration/organizing document"
         required
         classes={{ container: "mb-2 mt-10" }}
         placeholder="e.g. Nonprofit Organization"
-        error={errors.legal_entity_type?.message}
+        error={errors.o_legal_entity_type?.message}
       />
 
       <Field
-        {...register("project_description")}
+        {...register("o_project_description")}
         type="textarea"
         label="Please provide a description of your organization's charitable activities as well as your charitable mission."
         required
         classes={{ container: "mb-6 mt-10" }}
         placeholder=""
-        error={errors.project_description?.message}
+        error={errors.o_project_description?.message}
       />
 
       {props?.o_fsa_signed_doc_url ? (

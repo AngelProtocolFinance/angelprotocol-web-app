@@ -8,11 +8,10 @@ import Reference from "./reference";
 
 export default function Layout() {
   const { reg, user } = useRouteLoaderData("reg$Id") as Reg$IdData;
-  const claim = reg.claim || reg.claim_init;
 
   return (
     <div className="w-full md:w-[90%] max-w-[62.5rem] [&]:has-data-[claim='true']:pt-0 pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l3 rounded-none md:rounded-lg bg-white dark:bg-blue-d6">
-      {claim && (
+      {reg.claim && (
         <div
           data-claim
           className="bg-blue-l4 col-span-full md:mb-8 rounded-t p-2 text-gray text-sm"
@@ -20,11 +19,11 @@ export default function Layout() {
           Claiming{" "}
           <ExtLink
             className="font-bold text-gray-d4 hover:underline"
-            href={`${appRoutes.marketplace}/${claim.id}`}
+            href={`${appRoutes.marketplace}/${reg.claim.id}`}
           >
-            {claim.name}
+            {reg.claim.name}
           </ExtLink>
-          , EIN: <span className="font-bold text-gray-d4">{claim.ein}</span>
+          , EIN: <span className="font-bold text-gray-d4">{reg.claim.ein}</span>
         </div>
       )}
       <ProgressIndicator

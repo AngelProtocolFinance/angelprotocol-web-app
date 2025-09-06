@@ -16,7 +16,7 @@ export default function Page() {
   const {
     o_hq_country: hq = "ensured in loader",
     o_type,
-    claim_init,
+    claim,
   } = useLoaderData() as IReg;
 
   const possibly_tax_exempt = country_white_list.includes(hq);
@@ -27,7 +27,7 @@ export default function Page() {
 
   return (
     <PossiblyTaxExempt
-      is_501c3_init={claim_init != null}
+      is_501c3_init={claim != null}
       is_501c3_prev={o_type === "501c3"}
     />
   );

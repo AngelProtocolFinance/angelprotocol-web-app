@@ -1,5 +1,5 @@
 import type { INpoWithRegNum } from "@better-giving/endowment";
-import type { IRegUpdate } from "@better-giving/reg";
+import type { TRegUpdate } from "@better-giving/reg";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { NavLink, useFetcher, useNavigate } from "@remix-run/react";
 import { Field, Form } from "components/form";
@@ -16,7 +16,7 @@ export function NonFsaForm(props: Props) {
     formState: { errors, isDirty, isSubmitting },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
-    defaultValues: { ein: props.ein ?? "" },
+    defaultValues: { o_ein: props.ein ?? "" },
   });
 
   const fetcher = useFetcher();
@@ -27,30 +27,26 @@ export function NonFsaForm(props: Props) {
       return navigate(`../${steps.banking}`);
     }
 
-    const upd8: IRegUpdate = {
-      update_type: "docs",
-      status: "01",
-      o_registration_number: fv.ein,
-    };
+    const upd8: TRegUpdate = { update_type: "ein", o_ein: fv.o_ein };
 
-    if (fv.ein !== props.ein) {
-      const endow = await fetch(`/api/npos/ein/${fv.ein}`).then<
+    if (fv.o_ein !== props.ein) {
+      const endow = await fetch(`/api/npos/ein/${fv.o_ein}`).then<
         INpoWithRegNum | undefined
       >((r) => (r.status === 404 ? undefined : r.json()));
 
       if (endow) {
         if (endow.claimed ?? true) {
           return toast.info(
-            `Nonprofit: ${endow.name} with EIN: ${fv.ein} already exists on our app. You must speak with an existing user of your NPO Account's members in order to be invited on as a member.`
+            `Nonprofit: ${endow.name} with EIN: ${fv.o_ein} already exists on our app. You must speak with an existing user of your NPO Account's members in order to be invited on as a member.`
           );
         }
 
-        const convertToClaimNotif = `Nonprofit: ${endow.name} with EIN: ${fv.ein} already exists on our app. Would you like to claim this organization instead?`;
+        const convertToClaimNotif = `Nonprofit: ${endow.name} with EIN: ${fv.o_ein} already exists on our app. Would you like to claim this organization instead?`;
         if (!window.confirm(convertToClaimNotif)) return;
 
         upd8.claim = {
           id: endow.id,
-          ein: fv.ein,
+          ein: fv.o_ein,
           name: endow.name,
         };
       }
@@ -70,14 +66,14 @@ export function NonFsaForm(props: Props) {
       onSubmit={handleSubmit(submit)}
     >
       <Field
-        {...register("ein")}
+        {...register("o_ein")}
         /** claimer should not change EIN */
         disabled={!!props.claim}
         label="EIN# (numbers and letters only)"
         required
         classes={{ container: "mb-6 mt-1" }}
         placeholder="e.g. xxxxxxxxxxxx"
-        error={errors.ein?.message}
+        error={errors.o_ein?.message}
       />
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">

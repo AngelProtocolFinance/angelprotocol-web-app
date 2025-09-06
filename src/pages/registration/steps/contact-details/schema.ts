@@ -1,31 +1,8 @@
-import { org_role, referral_method } from "@better-giving/reg/schema";
-import { $, $req } from "@better-giving/schemas";
-import {
-  type InferOutput,
-  type Prettify,
-  email,
-  forward,
-  object,
-  optional,
-  partialCheck,
-  pipe,
-} from "valibot";
-
-const schema_raw = object({
-  r_first_name: $req,
-  r_last_name: $req,
-  r_contact_number: optional($),
-  r_email: pipe($, email()),
-  r_org_role: org_role,
-  r_org_role_other: optional($),
-  org_name: $req,
-  rm: referral_method,
-  rm_other: optional($),
-  rm_referral_code: optional($),
-});
+import { _update_contact_fv } from "@better-giving/reg/schema";
+import { type InferOutput, forward, partialCheck, pipe } from "valibot";
 
 export const schema = pipe(
-  schema_raw, // referral method - referral
+  _update_contact_fv, // referral method - referral
   forward(
     partialCheck(
       [["rm"], ["rm_referral_code"]],
@@ -54,4 +31,4 @@ export const schema = pipe(
   )
 );
 
-export interface FV extends Prettify<InferOutput<typeof schema_raw>> {}
+export interface FV extends InferOutput<typeof _update_contact_fv> {}

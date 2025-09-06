@@ -6,7 +6,7 @@ import { useState } from "react";
 import { steps } from "../../routes";
 import FormButtons from "./form-buttons";
 
-import type { IReg, IRegUpdate } from "@better-giving/reg";
+import type { IReg, TRegUpdate } from "@better-giving/reg";
 import { step_loader } from "../../data/step-loader";
 import { next_step } from "../../routes";
 import { update_action } from "../update-action";
@@ -21,15 +21,13 @@ export default function Banking() {
   const fetcher = useFetcher();
 
   const submit: OnSubmit = async (recipient, bank_statement) => {
-    const update: IRegUpdate = {
+    const update: TRegUpdate = {
       update_type: "banking",
-      status: "01",
       o_bank_statement: bank_statement,
       o_bank_id: recipient.id.toString(),
     };
     fetcher.submit(update, {
       method: "PATCH",
-      action: ".",
       encType: "application/json",
     });
   };

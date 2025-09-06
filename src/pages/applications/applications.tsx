@@ -1,4 +1,4 @@
-import type { IRegItem, IRegsPage } from "@better-giving/reg";
+import type { IReg, IRegsPage } from "@better-giving/reg";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
 import { Search } from "lucide-react";
@@ -10,12 +10,12 @@ export default function Applications() {
   const [params] = useSearchParams();
   const page1 = useLoaderData() as IRegsPage;
   const [query, setQuery] = useState("");
-  const { node, loading } = use_paginator<IRegItem>({
+  const { node, loading } = use_paginator<IReg>({
     table: ({ items, ...props }) => (
       <Table
         items={items.filter(
           (item) =>
-            item.o_name.toLowerCase().includes(query.toLowerCase()) ||
+            item.o_name?.toLowerCase().includes(query.toLowerCase()) ||
             item.id.toLowerCase().includes(query.toLowerCase())
         )}
         {...props}

@@ -1,4 +1,3 @@
-import type { IRegUpdate } from "@better-giving/reg";
 import { signer_fn } from "./helpers";
 import type { EtchPacket } from "./types";
 import { regdb } from ".server/aws/db";
@@ -14,13 +13,9 @@ export const etch_complete = async (
   const prev = await regdb.reg(id);
   if (!prev) throw `reg not found for ${id}`;
 
-  const upd8: IRegUpdate = {
-    status: "01",
-    o_type: "other",
+  const res = await regdb.reg_update(id, {
     o_fsa_signed_doc_url: `${base_url}/api/anvil-doc/${documentGroup.eid}`,
-    update_type: "docs",
-  };
-
-  const res = await regdb.reg_update(id, upd8);
+    status: "01",
+  });
   return res.o_fsa_signed_doc_url;
 };

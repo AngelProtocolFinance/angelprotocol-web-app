@@ -43,16 +43,16 @@ export const new_application: ActionFunction = async ({ request }) => {
     r_id: user.email,
   };
 
-  if (claim) payload.claim_init = claim;
+  if (claim) payload.claim = claim;
 
   // user is registering via fresh referral link
-  if (referrer) payload.referrer_init = referrer;
+  if (referrer) payload.referrer = referrer;
 
   /* user is registering on his own,
    * but he may have discovered the platform via previous referral
    */
   if (!referrer && cookie.referrer) {
-    payload.referrer_init = cookie.referrer;
+    payload.referrer = cookie.referrer;
   }
 
   const parsed = parse(reg_new, payload);
@@ -61,8 +61,8 @@ export const new_application: ActionFunction = async ({ request }) => {
     throw new Response("Unauthorized", { status: 403 });
   }
 
-  if (parsed.claim_init && (await is_claimed(parsed.claim_init.ein))) {
-    throw new Response(`to-claim:${parsed.claim_init.ein} is already claimed`, {
+  if (parsed.claim && (await is_claimed(parsed.claim.ein))) {
+    throw new Response(`to-claim:${parsed.claim.ein} is already claimed`, {
       status: 400,
     });
   }

@@ -1,6 +1,6 @@
-import type { INpoClaim } from "@better-giving/reg";
-import { $req } from "@better-giving/schemas";
-import { type InferOutput, object, pipe, regex } from "valibot";
+import type { INpoClaim, update_ein_fv } from "@better-giving/reg/schema";
+export { update_ein_fv as schema } from "@better-giving/reg/schema";
+import type { InferOutput } from "valibot";
 
 export type Props = {
   reg_id: string;
@@ -8,11 +8,4 @@ export type Props = {
   claim?: INpoClaim;
 };
 
-export const schema = object({
-  ein: pipe(
-    $req,
-    regex(/^[0-9a-zA-Z]{9,12}$/, "must only contain numbers and letters")
-  ),
-});
-
-export interface FV extends InferOutput<typeof schema> {}
+export interface FV extends InferOutput<typeof update_ein_fv> {}

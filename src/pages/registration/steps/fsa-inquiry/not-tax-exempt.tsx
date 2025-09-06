@@ -1,4 +1,4 @@
-import type { IRegUpdate } from "@better-giving/reg";
+import type { TRegUpdate } from "@better-giving/reg";
 import { NavLink, useFetcher, useNavigate } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { APP_NAME } from "constants/env";
@@ -36,15 +36,9 @@ export function NotTaxExempt({ country, is_fsa_prev }: Props) {
         </NavLink>
         <button
           onClick={async () => {
-            if (is_fsa_prev) {
-              return navigate(`../${steps.docs}`);
-            }
+            if (is_fsa_prev) return navigate(`../${steps.docs}`);
             fetcher.submit(
-              {
-                update_type: "fsa-inq",
-                status: "01",
-                o_type: "other",
-              } satisfies IRegUpdate,
+              { update_type: "org_type", o_type: "other" } satisfies TRegUpdate,
               { method: "PATCH", encType: "application/json" }
             );
           }}

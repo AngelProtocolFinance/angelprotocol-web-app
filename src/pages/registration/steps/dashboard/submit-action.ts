@@ -1,5 +1,5 @@
 import { Progress } from "@better-giving/reg/progress";
-import { reg_id } from "@better-giving/reg/schema";
+import { type IReg, reg_id } from "@better-giving/reg/schema";
 import type { ActionFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import type { ActionData } from "types/action";
@@ -23,12 +23,13 @@ export const submit_action: ActionFunction = async ({ request, params }) => {
     throw resp.status(403);
   }
 
-  await regdb.reg_update(r.id, {
-    update_type: "submit",
+  const b = regdb.reg_update_build({
     status: "02",
-    //reset previous review
-    status_rejected_reason: null as any,
   });
+  //reset previous review
+  b.remove("status_rejected_reason" satisfies keyof IReg);
+
+  await regdb.reg_update(r.id, b);
 
   return {
     __ok: "Your application has been submitted. We will get back to you soon!",

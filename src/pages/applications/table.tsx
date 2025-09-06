@@ -1,4 +1,4 @@
-import type { IRegItem, TStatus } from "@better-giving/reg";
+import type { IReg, TStatus } from "@better-giving/reg";
 import { NavLink } from "@remix-run/react";
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
@@ -9,7 +9,7 @@ import { Folder } from "lucide-react";
 import type { IPaginator } from "types/components";
 import LoadMoreBtn from "./load-more-btn";
 
-interface Props extends IPaginator<IRegItem> {}
+interface Props extends IPaginator<IReg> {}
 
 export function Table({
   items,

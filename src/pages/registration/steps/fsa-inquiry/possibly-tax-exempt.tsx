@@ -1,4 +1,4 @@
-import type { IRegUpdate } from "@better-giving/reg";
+import type { TRegUpdate } from "@better-giving/reg";
 import { NavLink, useFetcher, useNavigate } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { useForm } from "react-hook-form";
@@ -35,10 +35,9 @@ export function PossiblyTaxExempt({ is_501c3_prev, is_501c3_init }: Props) {
 
         fetcher.submit(
           {
-            update_type: "fsa-inq",
-            status: "01",
+            update_type: "org_type",
             o_type: fv.irs501c3 === "yes" ? "501c3" : "other",
-          } satisfies IRegUpdate,
+          } satisfies TRegUpdate,
           { method: "PATCH", encType: "application/json" }
         );
       })}

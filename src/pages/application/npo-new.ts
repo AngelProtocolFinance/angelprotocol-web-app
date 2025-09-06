@@ -40,7 +40,8 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
     hq_country: r.o_hq_country,
     kyc_donors_only: true,
     name: r.o_name,
-    registration_number: r.o_registration_number,
+    registration_number:
+      r.o_type === "501c3" ? r.o_ein : r.o_registration_number,
     url: r.o_website,
     claimed: true,
     referral_id: rid,
@@ -75,7 +76,6 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
     txs.put(userdb.userxnpo_put_txi(id, r.r_id));
     txs.update(
       regdb.reg_update_txi(r.id, {
-        update_type: "submit",
         status: "04",
         status_approved_npo_id: id,
       })
@@ -120,7 +120,6 @@ export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
   txs.put(userdb.userxnpo_put_txi(newEndowID, r.r_id));
   txs.update(
     regdb.reg_update_txi(r.id, {
-      update_type: "submit",
       status: "04",
       status_approved_npo_id: newEndowID,
     })

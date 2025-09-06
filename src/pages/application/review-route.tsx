@@ -44,7 +44,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (verdict.type === "rejected") {
     await regdb.reg_update(id, {
-      update_type: "submit",
       status: "04",
       status_rejected_reason: verdict.reason,
     });

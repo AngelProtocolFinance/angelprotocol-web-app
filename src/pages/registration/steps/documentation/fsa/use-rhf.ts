@@ -5,10 +5,10 @@ import { type FV, type Props, schema } from "./types";
 export const use_rhf = (props: Props) => {
   const init: FV = {
     proof_of_identity: props.r_proof_of_identity ?? "",
-    registration_number: props.o_registration_number ?? "",
     proof_of_reg: props.o_proof_of_reg ?? "",
-    legal_entity_type: props.o_legal_entity_type ?? "",
-    project_description: props.o_project_description ?? "",
+    o_registration_number: props.o_registration_number ?? "",
+    o_legal_entity_type: props.o_legal_entity_type ?? "",
+    o_project_description: props.o_project_description ?? "",
   };
 
   const {

@@ -1,9 +1,9 @@
-import type { IFsaSigner, IRegUpdate } from "@better-giving/reg";
+import type { IFsaSigner } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
 
 import {
-  type IFsaSignerDocs,
-  fsa_signer_docs_or_eid,
+  type IFsaDocs,
+  fsa_docs_or_signer,
   reg_id,
 } from "@better-giving/reg/schema";
 import { type ActionFunction, redirect } from "@vercel/remix";
@@ -26,21 +26,21 @@ export const action: ActionFunction = async ({ request, params }) => {
       : // sign-result page
         await request.formData().then((fv) => fv.get("signer_eid")?.toString());
 
-  const docs_or_eid = parse(fsa_signer_docs_or_eid, payload);
+  const docs_or_eid = parse(fsa_docs_or_signer, payload);
 
   // re-generate from existing signer
   if (typeof docs_or_eid === "string") {
     const rid = await reg_id_from_signer_eid(docs_or_eid);
     const reg = await regdb.reg(rid);
     if (!reg) throw `registration not found: ${rid}`;
-    const r = new Progress(reg).step4_fsa;
+    const r = new Progress(reg).step4_fsa_docs;
     if (!r) throw `registration: ${rid} doesn't contain fsa docs`;
 
     const from = new URL(request.url);
     from.pathname = `register/${rid}/${regRoutes.sign_result}`;
     from.search = "";
 
-    const docs: IFsaSignerDocs = {
+    const docs: IFsaDocs = {
       o_registration_number: r.o_registration_number,
       o_legal_entity_type: r.o_legal_entity_type,
       o_project_description: r.o_project_description,
@@ -59,6 +59,9 @@ export const action: ActionFunction = async ({ request, params }) => {
       docs,
     };
     const url = await gen_fsa_signing_url(rid, signer, from.toString());
+
+    await regdb.reg_update(rid, { status: "01", o_fsa_signing_url: url });
+
     return redirect(url);
   }
 
@@ -82,14 +85,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     docs: docs_or_eid,
   };
 
-  // update db with new docs
-  const update: IRegUpdate = {
-    update_type: "docs",
-    status: "01",
-    ...docs_or_eid,
-  };
-  await regdb.reg_update(rid, update);
-
   const url = await gen_fsa_signing_url(rid, signer, from.toString());
+
+  await regdb.reg_update(rid, {
+    ...docs_or_eid,
+    status: "01",
+    o_fsa_signing_url: url,
+  });
+
   return redirect(url);
 };

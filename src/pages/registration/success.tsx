@@ -1,11 +1,11 @@
-import type { IRegComplete } from "@better-giving/reg";
+import type { IReg } from "@better-giving/reg";
 import { Navigate, useLocation } from "@remix-run/react";
 import { Link } from "@remix-run/react";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
 
 export default function Success({ classes = "" }: { classes?: string }) {
-  const reg = useLocation().state as IRegComplete | undefined;
+  const reg = useLocation().state as IReg | undefined;
 
   if (!reg || !reg.status_approved_npo_id) {
     return <Navigate to={".."} />;
