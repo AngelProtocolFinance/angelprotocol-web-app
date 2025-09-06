@@ -1,7 +1,8 @@
+import { Progress } from "@better-giving/reg/progress";
 import { Link, useNavigation, useRouteLoaderData } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
-import { nextStep } from "../routes";
+import { next_step } from "../routes";
 import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";
 
@@ -10,6 +11,7 @@ export default function Success({
 }: SignerCompleteQueryParams) {
   const navigation = useNavigation();
   const { reg } = useRouteLoaderData("reg$Id") as Reg$IdData;
+  const step = new Progress(reg).step;
 
   const isLoading = navigation.state === "loading";
 
@@ -31,7 +33,7 @@ export default function Success({
       <Link
         aria-disabled={isLoading}
         className="w-full max-w-[26.25rem] btn btn-blue text-sm mt-4"
-        to={`${appRoutes.register}/${reg.data.init.id}/${nextStep[reg.step]}`}
+        to={`${appRoutes.register}/${reg.id}/${next_step[step]}`}
       >
         {isLoading ? "Loading..." : "Continue"}
       </Link>

@@ -273,15 +273,15 @@ const rmx = remix({
                 });
                 r("1", "./pages/registration/steps/contact-details/index.tsx");
                 r("2", "./pages/registration/steps/org-details/index.tsx");
-                r("3", "./pages/registration/steps/fsa-inquiry/index.ts");
+                r("3", "./pages/registration/steps/fsa-inquiry/index.tsx");
                 r(
                   "4",
-                  "./pages/registration/steps/documentation/index.ts",
+                  "./pages/registration/steps/documentation/index.tsx",
                   () => {
                     r("fsa", "./pages/registration/data/fsa-action.ts");
                   }
                 );
-                r("5", "./pages/registration/steps/banking/index.ts");
+                r("5", "./pages/registration/steps/banking/index.tsx");
                 r("6", "./pages/registration/steps/dashboard/index.tsx");
               });
             }

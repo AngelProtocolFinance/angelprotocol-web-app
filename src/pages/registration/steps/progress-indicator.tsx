@@ -1,3 +1,4 @@
+import type { Progress } from "@better-giving/reg";
 import { useLocation } from "@remix-run/react";
 import { DrawerIcon } from "components/icon";
 import { idParamToNum } from "helpers/id-param-to-num";
@@ -5,14 +6,13 @@ import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/use-handle-screen-resize";
 import { type PropsWithChildren, useState } from "react";
-import type { RegStep } from "../types";
 
 type Props = {
-  step: RegStep;
+  step: Progress["step"];
   classes?: string;
 };
 
-export default function ProgressIndicator({ step, classes = "" }: Props) {
+export function ProgressIndicator({ step, classes = "" }: Props) {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
   const currPath = idParamToNum(paths.at(-1));

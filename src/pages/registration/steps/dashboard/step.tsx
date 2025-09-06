@@ -1,7 +1,7 @@
+import type { Progress } from "@better-giving/reg";
 import { NavLink } from "@remix-run/react";
-import type { RegStep } from "pages/registration/types";
 
-type TStep = Exclude<RegStep, 6>; // exclude summary step
+type TStep = Exclude<Progress["step"], 6>; // exclude summary step
 type Props = {
   disabled: boolean;
   num: TStep;

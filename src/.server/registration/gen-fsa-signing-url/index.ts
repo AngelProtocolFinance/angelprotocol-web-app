@@ -1,30 +1,17 @@
-import type { FsaPayload } from "@better-giving/registration/fsa";
+import type { IFsaSigner } from "@better-giving/reg";
 import { anvil } from "../../sdks";
 import { etch_eids } from "./etch-eids";
-import { fsa_signer } from "./fsa-signer";
-import { save_docs } from "./save-docs";
 
 export const gen_fsa_signing_url = async (
-  payload: FsaPayload
+  reg_id: string,
+  signer: IFsaSigner,
+  redirect_url: string
 ): Promise<string> => {
-  const signer =
-    typeof payload.signer === "string"
-      ? await fsa_signer(payload.signer)
-      : payload.signer;
-
-  const eids = await etch_eids(
-    typeof payload.signer === "string"
-      ? await fsa_signer(payload.signer)
-      : payload.signer,
-    payload.redirectUrl
-  );
-
+  const eids = await etch_eids(reg_id, signer, redirect_url);
   const etch = await anvil.generateEtchSignUrl({
-    variables: { signerEid: eids.signer, clientUserId: signer.id },
+    variables: { signerEid: eids.signer, clientUserId: reg_id },
   });
 
-  if (!etch.url) throw `Etch URL not generated for signer ${signer.id}`;
-
-  const url = await save_docs(signer.id, signer.docs, etch.url);
-  return url;
+  if (!etch.url) throw `Etch URL not generated for signer ${reg_id}`;
+  return etch.url;
 };

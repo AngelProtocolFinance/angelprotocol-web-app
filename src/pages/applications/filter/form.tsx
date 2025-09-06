@@ -1,4 +1,4 @@
-import type { QueryParams } from "@better-giving/registration/approval";
+import type { IRegsSearchObj } from "@better-giving/reg";
 import { PopoverButton, PopoverPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Combo } from "components/combo";
@@ -15,7 +15,7 @@ import { type FV, schema } from "./schema";
 type Props = {
   onSubmit: (data: FV) => void;
   onReset: () => void;
-  params: QueryParams;
+  params: IRegsSearchObj;
   classes?: string;
 };
 
@@ -36,10 +36,12 @@ export const Form: FC<Props> = ({
     values: {
       //set default value so empty can be tagged as invalid
       start_date: toYYYMMDD(
-        params.startDate ? new Date(params.startDate) : subWeeks(new Date(), 1)
+        params.start_date
+          ? new Date(params.start_date)
+          : subWeeks(new Date(), 1)
       ),
       end_date: toYYYMMDD(
-        params.endDate ? new Date(params.endDate) : new Date()
+        params.end_date ? new Date(params.end_date) : new Date()
       ),
       country: params.country ?? "",
       status: params.status ?? "",

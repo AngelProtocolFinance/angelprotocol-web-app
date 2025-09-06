@@ -1,9 +1,11 @@
-import type { TaxDeductibleDocs } from "@better-giving/registration/models";
-export {
-  taxDeductibleDocs as schema,
-  type TaxDeductibleDocs as FV,
-} from "@better-giving/registration/models";
+import type { INpoClaim, update_ein_fv } from "@better-giving/reg/schema";
+export { update_ein_fv as schema } from "@better-giving/reg/schema";
+import type { InferOutput } from "valibot";
 
 export type Props = {
-  doc: TaxDeductibleDocs | undefined;
+  reg_id: string;
+  ein: string | undefined;
+  claim?: INpoClaim;
 };
+
+export interface FV extends InferOutput<typeof update_ein_fv> {}

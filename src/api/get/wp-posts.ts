@@ -6,7 +6,7 @@ export const posts = async (page: number): Promise<[IPost[], number]> => {
   const res = await wp.get<IPost[]>("posts", {
     searchParams: { page },
   });
-  const total = +(res.headers.get("X-Wp-Total") ?? "0");
+  const total = +(res.headers.get("x-wp-total") ?? "0");
   return [await res.json(), total] as const;
 };
 

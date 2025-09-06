@@ -8,15 +8,15 @@ import Loaded from "./loaded";
 export const meta: MetaFunction = ({ data }) => {
   if (!data) return [];
   return metas({
-    title: `Application Review - ${(data as LoaderData).application.contact.org_name}`,
+    title: `Application Review - ${(data as LoaderData).reg.o_name}`,
   });
 };
 
 export { loader } from "./api";
 export { ErrorBoundary } from "components/error";
 
-export default function Application() {
-  const { application, user } = useLoaderData() as LoaderData;
+export function Application() {
+  const { reg, user, wacc } = useLoaderData() as LoaderData;
 
   if (!user.groups.includes("ap-admin")) {
     return (
@@ -32,7 +32,7 @@ export default function Application() {
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Details
       </h1>
-      <Loaded {...application} />
+      <Loaded {...reg} bank={wacc} />
     </div>
   );
 }
