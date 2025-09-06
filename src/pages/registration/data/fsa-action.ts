@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const rid = await reg_id_from_signer_eid(docs_or_eid);
     const reg = await regdb.reg(rid);
     if (!reg) throw `registration not found: ${rid}`;
-    const r = new Progress(reg).step4_fsa_docs;
+    const r = new Progress(reg).docs_fsa;
     if (!r) throw `registration: ${rid} doesn't contain fsa docs`;
 
     const from = new URL(request.url);
@@ -68,7 +68,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const rid = parse(reg_id, params.regId);
   const reg = await regdb.reg(rid);
   if (!reg) throw `registration not found: ${rid}`;
-  const r = new Progress(reg).step3;
+  const r = new Progress(reg).org_type;
   if (!r) throw `registration not ready for FSA signing: ${rid}`;
 
   const from = new URL(request.url);

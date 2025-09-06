@@ -34,7 +34,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && new Progress(reg).step1) {
+    if (!isDirty && new Progress(reg).contact) {
       return navigate(`../${steps.org_details}`); // go to latest step
     }
 

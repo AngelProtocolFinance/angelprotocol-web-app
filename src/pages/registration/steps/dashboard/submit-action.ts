@@ -16,7 +16,7 @@ export const submit_action: ActionFunction = async ({ request, params }) => {
 
   if (!reg) throw resp.status(404, `reg:${id} not found`);
 
-  const r = new Progress(reg).step5;
+  const r = new Progress(reg).banking;
   if (!r) throw `Registration not ready for submission`;
 
   if (user.email !== r.r_id && !user.groups.includes("ap-admin")) {

@@ -48,7 +48,7 @@ export default function Page() {
   } = use_rhf(reg);
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && new Progress(reg).step2) {
+    if (!isDirty && new Progress(reg).org) {
       return navigate(`../${steps.fsa_inq}`);
     }
 

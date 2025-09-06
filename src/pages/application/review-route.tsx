@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const reg = await regdb.reg(id);
   if (!reg) throw new Response("Registration not found", { status: 404 });
 
-  const r = new Progress(reg).step5; // no need to look at fsa
+  const r = new Progress(reg).banking; // no need to look at fsa
   if (!r) throw `registration has incomplete steps`;
 
   if (reg.status !== "02") {

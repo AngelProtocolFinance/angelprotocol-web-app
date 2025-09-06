@@ -30,7 +30,7 @@ export const update_action =
     //resets
     type K = keyof IRegUpdateDb;
     const prog = new Progress(reg);
-    const done_fsa_url = prog.step4_fsa_url;
+    const done_fsa_url = prog.fsa_url;
 
     const contact_changed =
       upd8.update_type === "contact" &&
@@ -51,8 +51,8 @@ export const update_action =
       !US.test(upd8.o_hq_country || "") &&
       US.test(reg.o_hq_country || "");
 
-    const done_o_type = prog.step3;
-    const done_ein = prog.step4;
+    const done_o_type = prog.org_type;
+    const done_ein = prog.docs_ein;
     const done = done_o_type || done_ein;
     if (done && done.o_type === "501c3" && country_changed_from_US) {
       b.remove("o_type" satisfies K);

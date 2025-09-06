@@ -31,7 +31,7 @@ export type EndowContentFromReg = Pick<
   | "referral_id"
 >;
 
-export const npo_new = async (r: NonNullable<Progress["step5"]>) => {
+export const npo_new = async (r: NonNullable<Progress["banking"]>) => {
   const rid = referral_id("NPO");
   const ecfr: EndowContentFromReg = {
     active_in_countries: r.o_activity_countries ?? [],
