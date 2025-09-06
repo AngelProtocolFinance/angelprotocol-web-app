@@ -36,6 +36,10 @@ export const step_loader =
 
     const r = new Progress(reg);
 
+    if (r.submitted) {
+      return redirect(`../${r.step}`);
+    }
+
     if (this_step > r.step) {
       return redirect(`../${r.step}`);
     }

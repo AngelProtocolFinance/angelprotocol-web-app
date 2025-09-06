@@ -22,6 +22,11 @@ export const update_action =
     const reg = await regdb.reg(rid);
     if (!reg) throw resp.status(404, `reg:${rid} not found`);
 
+    // approved
+    if (reg.status === "03") {
+      throw resp.status(400, `reg:${rid} already approved`);
+    }
+
     if (reg.r_id !== user.email && !user.groups.includes("ap-admin")) {
       throw resp.status(401);
     }
