@@ -1,6 +1,5 @@
 import type { IReg } from "@better-giving/reg";
-import { Outlet, redirect, useFetcher, useLoaderData } from "@remix-run/react";
-import { regRoutes } from "constants/routes";
+import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { useActionResult } from "hooks/use-action-result";
 import type { ActionData, Ok } from "types/action";
 import { step_loader } from "../../data/step-loader";
@@ -9,13 +8,7 @@ import Step from "./step";
 
 export { submit_action as action } from "./submit-action";
 export { ErrorBoundary } from "components/error";
-export const loader = step_loader(6, (reg) => {
-  if (reg.status === "03") {
-    return redirect(
-      `../../${regRoutes.success}?name=${reg.o_name}&id=${reg.status_approved_npo_id}`
-    );
-  }
-});
+export const loader = step_loader(6);
 
 export default function Dashboard() {
   const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });

@@ -53,7 +53,6 @@ export default function Form({ classes = "" }: { classes?: string }) {
     if (df.rm_referral_code) upd8.rm_referral_code = fv.rm_referral_code;
 
     fetcher.submit(upd8, {
-      action: ".",
       method: "PATCH",
       encType: "application/json",
     });

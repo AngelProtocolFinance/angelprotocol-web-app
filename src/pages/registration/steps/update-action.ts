@@ -50,11 +50,10 @@ export const update_action =
       b.remove("o_fsa_signed_doc_url" satisfies K);
     }
 
-    const US = /united states/i;
     const country_changed_from_US =
       upd8.update_type === "org" &&
-      !US.test(upd8.o_hq_country || "") &&
-      US.test(reg.o_hq_country || "");
+      changed(reg.o_hq_country, upd8.o_hq_country) &&
+      upd8.o_hq_country !== "United States";
 
     const done_o_type = prog.org_type;
     const done_ein = prog.docs_ein;
