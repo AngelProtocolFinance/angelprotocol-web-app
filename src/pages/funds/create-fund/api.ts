@@ -120,7 +120,7 @@ export const action: ActionFunction = async ({ request }) => {
   const refreshed = await cognito.refresh(session);
   const commit = isError(refreshed)
     ? undefined
-    : { headers: { "Set-Cookie": refreshed.commit } };
+    : { headers: { "set-cookie": refreshed.commit } };
 
   if (npoo) {
     return redirect(`${appRoutes.admin}/${npoo}/${adminRoutes.funds}`, commit);

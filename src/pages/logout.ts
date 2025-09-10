@@ -10,6 +10,6 @@ export const action: ActionFunction = async ({ request }) => {
   const res = await cognito.signOut(session);
   if (isError(res)) return redirect(appRoutes.marketplace, { status: 500 });
   return redirect(appRoutes.marketplace, {
-    headers: { "Set-Cookie": res },
+    headers: { "set-cookie": res },
   });
 };

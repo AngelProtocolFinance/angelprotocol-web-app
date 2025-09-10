@@ -71,6 +71,6 @@ export const new_application: ActionFunction = async ({ request }) => {
   cookie.reference = id;
 
   return redirect(`${appRoutes.register}/${id}/${steps.contact}`, {
-    headers: { "Set-Cookie": await reg_cookie.serialize(cookie) },
+    headers: { "set-cookie": await reg_cookie.serialize(cookie) },
   });
 };

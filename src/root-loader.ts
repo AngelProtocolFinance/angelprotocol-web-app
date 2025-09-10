@@ -44,13 +44,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     //redirect to requestor
     const redirectTo = Buffer.from(state, "base64").toString();
     const headers = new Headers();
-    headers.append("Set-Cookie", res);
-    headers.append("Set-Cookie", rc_commit);
+    headers.append("set-cookie", res);
+    headers.append("set-cookie", rc_commit);
     return redirect(redirectTo, { headers });
   }
 
   const { user, headers } = await cognito.retrieve(cookie_header);
-  headers?.append("Set-Cookie", rc_commit);
+  headers?.append("set-cookie", rc_commit);
   if (!user) return data(null, { headers });
 
   const duser: DetailedUser = {

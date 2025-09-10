@@ -21,10 +21,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   return data(x, {
     headers: {
       ...(refreshed_user && {
-        "Set-Cookie": refreshed_user.commit,
+        "set-cookie": refreshed_user.commit,
       }),
-      "X-Remix-Revalidate": "1",
-      "Cache-Control": "no-cache",
+      "x-remix-revalidate": "1",
+      "cache-control": "no-cache",
     },
   });
 };

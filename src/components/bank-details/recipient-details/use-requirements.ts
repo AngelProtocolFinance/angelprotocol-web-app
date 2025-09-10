@@ -33,7 +33,7 @@ const requirements: Fetcher<RequirementsOutput, Input | null> = async (
 
   const quote = await fetch(`/api/wise/v3/profiles/{{profileId}}/quotes`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "content-type": "application/json" },
     body: JSON.stringify(quote_payload),
   }).then<Quote>((res) => {
     return res.json();
@@ -41,7 +41,7 @@ const requirements: Fetcher<RequirementsOutput, Input | null> = async (
 
   const requirements = await fetch(
     `/api/wise/v1/quotes/${quote.id}/account-requirements`,
-    { headers: { "Accept-Minor-Version": "1" } }
+    { headers: { "accept-minor-version": "1" } }
   ).then<AccountRequirements[]>((res) => res.json());
 
   return { requirements, quoteId: quote.id };
@@ -55,8 +55,8 @@ export function use_requirements(args: Input | null) {
       `/api/wise/v1/quotes/${payload.quoteId}/account-requirements`,
       {
         headers: {
-          "Accept-Minor-Version": "1",
-          "Content-Type": "application/json",
+          "accept-minor-version": "1",
+          "content-type": "application/json",
         },
         body: JSON.stringify(payload.request),
         method: "POST",
@@ -66,7 +66,7 @@ export function use_requirements(args: Input | null) {
     if (!res.ok) return;
 
     req.mutate(
-      { quoteId: payload.quoteId, requirements: reqs },
+      { quoteId: payload.quoteId, requirements: await res.json() },
       { revalidate: false }
     );
   }

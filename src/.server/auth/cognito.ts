@@ -71,7 +71,7 @@ class Storage extends Util {
       return { user: null, session, headers: h };
 
     if (token_expiry < new Date().toISOString()) {
-      h.append("Set-Cookie", await commitSession(session));
+      h.append("set-cookie", await commitSession(session));
       this.unset(session);
       return { user: null, headers: h, session };
     }

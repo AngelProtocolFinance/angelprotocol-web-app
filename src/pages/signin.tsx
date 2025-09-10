@@ -56,7 +56,7 @@ export const action: ActionFunction = async ({ request }) => {
       return payload.reply({ fieldErrors: { password: [res.message] } });
     }
 
-    return redirect(redirect_to, { headers: { "Set-Cookie": res } });
+    return redirect(redirect_to, { headers: { "set-cookie": res } });
   } catch (err) {
     console.error(err);
     return data<ActionData<any>>({ __error: "Unknown error occured" }, 500);

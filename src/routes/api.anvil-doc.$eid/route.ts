@@ -11,8 +11,8 @@ export const loader: LoaderFunction = async ({ params: { eid } }) => {
   return new Response(data, {
     status: statusCode,
     headers: {
-      "Content-Type": "application/zip",
-      "Content-Disposition": `attachment; filename="bettergiving-fs-ga.zip"`,
+      "content-type": "application/zip",
+      "content-disposition": `attachment; filename="bettergiving-fs-ga.zip"`,
     },
   });
 };

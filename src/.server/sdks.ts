@@ -44,8 +44,8 @@ export const anvil = new Anvil({
 const typesense = ky.create({
   prefixUrl: typesense_envs.endpoint,
   headers: {
-    "X-TYPESENSE-API-KEY": typesense_envs.api_key,
-    "Content-Type": "application/json",
+    "x-typesense-api-key": typesense_envs.api_key,
+    "content-type": "application/json",
   },
   throwHttpErrors: false,
 });

@@ -2,7 +2,7 @@ class Resp {
   json(x: object, status = 200) {
     return new Response(JSON.stringify(x), {
       status,
-      headers: { "Content-Type": "application/json" },
+      headers: { "content-type": "application/json" },
     });
   }
   status(status: number, text?: string): Response {
@@ -11,7 +11,7 @@ class Resp {
   txt(x: string, status = 200): Response {
     return new Response(x, {
       status,
-      headers: { "Content-Type": "text/plain" },
+      headers: { "content-type": "text/plain" },
     });
   }
   err(status: number, x: string): Response {

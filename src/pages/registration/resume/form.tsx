@@ -36,13 +36,13 @@ export const action: ActionFunction = async ({ request }) => {
 
   /** set existing reference user inputs */
   const rc = await reg_cookie
-    .parse(request.headers.get("Cookie"))
+    .parse(request.headers.get("cookie"))
     .then((x) => x || {});
   rc.reference = reg.id;
 
   return redirect(`../${reg.id}/${new Progress(reg).step}`, {
     headers: {
-      "Set-Cookie": await reg_cookie.serialize(rc),
+      "set-cookie": await reg_cookie.serialize(rc),
     },
   });
 };

@@ -21,8 +21,8 @@ Sitemap: ${base_url}/sitemap.xml
   return new Response(robotText.trim(), {
     status: 200,
     headers: {
-      "Content-Type": "text/plain",
-      "Cache-Control": "public, max-age=86400",
+      "content-type": "text/plain",
+      "cache-control": "public, max-age=86400",
     },
   });
 };

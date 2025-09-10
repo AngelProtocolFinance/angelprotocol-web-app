@@ -47,8 +47,8 @@ ${staticUrls
   return new Response(sitemap.trim(), {
     status: 200,
     headers: {
-      "Content-Type": "application/xml",
-      "Cache-Control": "public, max-age=3600",
+      "content-type": "application/xml",
+      "cache-control": "public, max-age=3600",
     },
   });
 };
