@@ -14,7 +14,7 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
     query_by: "name,tagline,registration_number",
     query_by_weights: "3,2,1",
     filter_by: filters,
-    sort_by: q ? "_text_match:desc,claimed:desc" : "claimed:desc,name:asc",
+    sort_by: q ? "claimed:desc,_text_match:desc" : "claimed:desc,name:asc",
     per_page: HITS_PER_PAGE.toString(),
     page: page.toString(),
     use_cache: "true",
