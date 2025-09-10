@@ -1,4 +1,4 @@
-import type { Signer } from "@better-giving/registration/fsa";
+import type { IFsaSigner } from "@better-giving/reg";
 import { format } from "date-fns";
 import { anvil_envs, env } from ".server/env";
 import { anvil } from ".server/sdks";
@@ -8,10 +8,14 @@ interface Eids {
   signer: string;
 }
 
-export const etch_eids = async (signer: Signer, redirect_url: string) => {
+export const etch_eids = async (
+  reg_id: string,
+  signer: IFsaSigner,
+  redirect_url: string
+) => {
   const FILE_ALIAS = "ap-agreement";
   const signer_data = {
-    id: signer.id,
+    id: reg_id,
     name: signer.first_name + " " + signer.last_name,
     email: signer.email,
     signerType: "embedded",
@@ -39,16 +43,16 @@ export const etch_eids = async (signer: Signer, redirect_url: string) => {
     dateMonth: format(now, "LLLL"), // month name
     dateYear: format(now, "y"), //calendar year
     dateFull: format(now, "PP"), //e.g. Apr 29, 1453
-    orgName: signer.docs.org_name,
-    orgLegalEntity: signer.docs.legal_entity_type,
-    orgHq: signer.docs.hq_country,
+    orgName: signer.org_name,
+    orgLegalEntity: signer.docs.o_legal_entity_type,
+    orgHq: signer.org_hq_country,
     granteeTitle: signer.role,
     granteeName: {
       firstName: signer.first_name,
       mi: "",
       lastName: signer.last_name,
     },
-    projectDescription: signer.docs.project_description,
+    projectDescription: signer.docs.o_project_description,
   };
 
   const res = await anvil.createEtchPacket({

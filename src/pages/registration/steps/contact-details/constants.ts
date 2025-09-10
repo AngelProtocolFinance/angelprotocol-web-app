@@ -1,7 +1,6 @@
-import type { ReferralMethod, Role } from "@better-giving/registration/models";
+import type { TReferralMethod, TRole } from "@better-giving/reg";
 
-export const roles: { [key in Role]: string } = {
-  "": "",
+export const roles: { [key in TRole]: string } = {
   "executive-director": "Executive Director",
   president: "Chairperson / President",
   "vice-president": "Vice-chairperson / Vice president",
@@ -16,8 +15,7 @@ export const roles: { [key in Role]: string } = {
   communications: "Communications",
   other: "Other",
 };
-export const referral_methods: { [key in ReferralMethod]: string } = {
-  "": "",
+export const referral_methods: { [key in TReferralMethod]: string } = {
   "better-giving-alliance": "Better.Giving Website",
   discord: "Discord",
   facebook: "Facebook",

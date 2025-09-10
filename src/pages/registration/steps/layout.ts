@@ -1,1 +1,1 @@
-export { regLoader as loader } from "../data/step-loader";
+export { reg_loader as loader } from "../data/step-loader";

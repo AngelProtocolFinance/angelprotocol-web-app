@@ -1,13 +1,13 @@
-import type { Application } from "@better-giving/registration/approval";
-import { isIrs501c3, isRejected } from "@better-giving/registration/models";
+import type { IReg } from "@better-giving/reg";
 import { NavLink, Outlet } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
+import type { V2RecipientAccount } from "types/bank-details";
 import Container from "./container";
 
-export default function Loaded(props: Application) {
+export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
   const prevVerdict =
     props.status === "03"
       ? "approved"
@@ -15,11 +15,11 @@ export default function Loaded(props: Application) {
         ? "rejected"
         : null;
 
-  const claim = isIrs501c3(props.docs) ? props.docs.claim : null;
+  const claim = props.claim;
 
   return (
     <>
-      <h3 className="text-lg">{props.contact.org_name}</h3>
+      <h3 className="text-lg">{props.o_name}</h3>
       {claim && (
         <ExtLink
           className="-mt-7 justify-self-start text-sm rounded-sm text-blue-d1 hover:underline"
@@ -37,22 +37,21 @@ export default function Loaded(props: Application) {
           {prevVerdict === "approved" ? "Approved" : "Rejected"}
         </div>
       )}
-      {typeof props.submission === "object" &&
-        "endowment_id" in props.submission && (
-          <NavLink
-            className="text-blue-d1 [&:is(.pending)]:text-gray hover:underline block -mt-6 text-sm"
-            to={appRoutes.marketplace + `/${props.submission.endowment_id}`}
-          >
-            Endowment ID: {props.submission.endowment_id}
-          </NavLink>
-        )}
-      {isRejected(props.submission) && (
+      {props.status_approved_npo_id && (
+        <NavLink
+          className="text-blue-d1 [&:is(.pending)]:text-gray hover:underline block -mt-6 text-sm"
+          to={appRoutes.marketplace + `/${props.status_approved_npo_id}`}
+        >
+          Endowment ID: {props.status_approved_npo_id}
+        </NavLink>
+      )}
+      {props.status_rejected_reason && (
         <div className="flex max-sm:flex-col gap-x-4">
           <span className="text-sm font-semibold uppercase">
             Rejection reason:
           </span>
           <span className="uppercase text-sm">
-            {props.submission.rejection}
+            {props.status_rejected_reason}
           </span>
         </div>
       )}
@@ -69,44 +68,43 @@ export default function Loaded(props: Application) {
 
       <Container title="nonprofit application">
         <div className="grid sm:grid-cols-[auto_auto_1fr]">
-          {!isIrs501c3(props.docs) ? (
-            <Row label="Registration No.">{props.docs.registration_number}</Row>
-          ) : (
-            <Row label="EIN">{props.docs.ein}</Row>
-          )}
-          <Row label="HQ Country">{props.org.hq_country}</Row>
+          <Row label={props.o_type === "501c3" ? "EIN" : "Registration No."}>
+            {props.o_registration_number}
+          </Row>
+          <Row label="HQ Country">{props.o_hq_country}</Row>
           <Row label="Countries active in">
-            {props.org.active_in_countries?.join(", ") ?? "N/A"}
+            {props.o_active_in_countries?.join(", ") ?? "N/A"}
           </Row>
           <Row label="Contact name">
-            {props.contact.first_name + " " + props.contact.last_name}
+            {props.r_first_name + " " + props.r_last_name}
           </Row>
-          <Row label="Contact email">{props.registrant_id}</Row>
-          {!isIrs501c3(props.docs) && (
-            <>
-              <Row label="Contact national ID">
-                <DocLink url={props.docs.proof_of_identity.publicUrl} />
-              </Row>
-              <Row label="Nonprofit registration doc">
-                <DocLink url={props.docs.proof_of_reg.publicUrl} />
-              </Row>
-              <Row label="Fiscal sponsorship agreement">
-                <DocLink url={props.docs.fsa_signed_doc_url ?? ""} />
-              </Row>
-            </>
+          <Row label="Contact email">{props.r_id}</Row>
+          {props.r_proof_of_identity && (
+            <Row label="Contact national ID">
+              <DocLink url={props.r_proof_of_identity} />
+            </Row>
+          )}
+          {props.o_proof_of_reg && (
+            <Row label="Nonprofit registration doc">
+              <DocLink url={props.o_proof_of_reg} />
+            </Row>
+          )}
+          {props.o_fsa_signed_doc_url && (
+            <Row label="Fiscal sponsorship agreement">
+              <DocLink url={props.o_fsa_signed_doc_url} />
+            </Row>
           )}
         </div>
       </Container>
       <Container title="Banking details">
         <dl className="grid sm:grid-cols-[auto_auto_1fr]">
-          <Row label="Account holder name">{props.banking.accountName}</Row>
-          {props.banking.fields.map((f) => (
+          {props.bank.displayFields.map((f) => (
             <Row key={f.label} label={f.label}>
               {f.value}
             </Row>
           ))}
           <Row label="Bank statement document">
-            <DocLink url={props.banking.bank_statement.publicUrl} />
+            <DocLink url={props.o_bank_statement ?? "N/A"} />
           </Row>
         </dl>
       </Container>
@@ -119,7 +117,7 @@ export default function Loaded(props: Application) {
         </NavLink>
         <NavLink
           aria-disabled={!!prevVerdict}
-          to={`rejected?org_name=${props.contact.org_name}`}
+          to={`rejected?org_name=${props.o_name}`}
           type="button"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-red"
           preventScrollReset
@@ -128,7 +126,7 @@ export default function Loaded(props: Application) {
         </NavLink>
         <NavLink
           aria-disabled={!!prevVerdict}
-          to={`approved?org_name=${props.contact.org_name}`}
+          to={`approved?org_name=${props.o_name}`}
           type="button"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-green"
           preventScrollReset

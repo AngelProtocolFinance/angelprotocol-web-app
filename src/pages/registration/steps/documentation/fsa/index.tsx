@@ -1,45 +1,53 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Link } from "@remix-run/react";
+import type { IFsaDocs } from "@better-giving/reg";
+import { Link, useFetcher, useNavigate } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { FileDropzone } from "components/file-dropzone";
 import { Field, Form as Frm, Label } from "components/form";
 import { LoadText } from "components/load-text";
 import { SquareArrowOutUpRight } from "lucide-react";
-import { useController, useForm } from "react-hook-form";
-import { steps } from "../../../../routes";
-import { type FV, fileSpec, schema } from "../schema";
-import type { Props } from "../types";
-import useSubmit from "./use-submit";
+import { useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
+import { steps } from "../../../routes";
+import { type FV, type Props, fileSpec } from "./types";
+import { use_rhf } from "./use-rhf";
 
-export default function Form(props: Props) {
-  const init: FV = {
-    proof_of_identity: props.doc?.proof_of_identity.publicUrl ?? "",
-    registration_number: props.doc?.registration_number ?? "",
-    proof_of_reg: props.doc?.proof_of_reg.publicUrl ?? "",
-    legal_entity_type: props.doc?.legal_entity_type ?? "",
-    project_description: props.doc?.project_description ?? "",
+export function FsaForm(props: Props) {
+  const { poi, por, isDirty, handleSubmit, errors, register } = use_rhf(props);
+  const is_uploading = poi.value === "loading" || por.value === "loading";
+
+  const fetcher = useFetcher();
+  const [is_redirecting, set_is_redirecting] = useState(false);
+  const is_submitting = fetcher.state !== "idle";
+
+  //use separate state to show redirection
+  const navigate = useNavigate();
+
+  const submit: SubmitHandler<FV> = async (fv) => {
+    //signed agreement and user didn't change any documents
+    if (!isDirty && props?.o_fsa_signed_doc_url) {
+      return navigate(`../${steps.banking}`);
+    }
+
+    //existing url and user doesn't change any documents
+    if (!isDirty && props?.o_fsa_signing_url) {
+      set_is_redirecting(true);
+      window.location.href = props.o_fsa_signing_url;
+    }
+
+    const docs: IFsaDocs = {
+      o_registration_number: fv.o_registration_number,
+      r_proof_of_identity: fv.proof_of_identity,
+      o_proof_of_reg: fv.proof_of_reg,
+      o_legal_entity_type: fv.o_legal_entity_type,
+      o_project_description: fv.o_project_description,
+    };
+
+    fetcher.submit(docs, {
+      encType: "application/json",
+      method: "POST",
+      action: "fsa",
+    });
   };
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isDirty },
-    register,
-  } = useForm<FV>({
-    resolver: valibotResolver(schema),
-    defaultValues: init,
-  });
-
-  const { field: poi } = useController({ control, name: "proof_of_identity" });
-  const { field: por } = useController({ control, name: "proof_of_reg" });
-
-  const isUploading = poi.value === "loading" || por.value === "loading";
-
-  const { submit, isRedirecting, isSubmitting } = useSubmit({
-    ...props,
-    isDirty,
-  });
-
   return (
     <Frm className="w-full" onSubmit={handleSubmit(submit)}>
       <h4 className="text-center sm:text-left">Government issued ID</h4>
@@ -58,12 +66,12 @@ export default function Form(props: Props) {
       />
 
       <Field
-        {...register("registration_number")}
+        {...register("o_registration_number")}
         label="Registration number (numbers and letters only)"
         required
         classes={{ container: "mb-6 mt-10", label: "font-semibold" }}
         placeholder="e.g. xxxxxxxxxxxx"
-        error={errors.registration_number?.message}
+        error={errors.o_registration_number?.message}
       />
 
       <FileDropzone
@@ -80,28 +88,28 @@ export default function Form(props: Props) {
       />
 
       <Field
-        {...register("legal_entity_type")}
+        {...register("o_legal_entity_type")}
         label="What type of legal entity is your organization registered as? This can
         usually be found in your registration/organizing document"
         required
         classes={{ container: "mb-2 mt-10" }}
         placeholder="e.g. Nonprofit Organization"
-        error={errors.legal_entity_type?.message}
+        error={errors.o_legal_entity_type?.message}
       />
 
       <Field
-        {...register("project_description")}
+        {...register("o_project_description")}
         type="textarea"
         label="Please provide a description of your organization's charitable activities as well as your charitable mission."
         required
         classes={{ container: "mb-6 mt-10" }}
         placeholder=""
-        error={errors.project_description?.message}
+        error={errors.o_project_description?.message}
       />
 
-      {props.doc?.fsa_signed_doc_url ? (
+      {props?.o_fsa_signed_doc_url ? (
         <ExtLink
-          href={props.doc.fsa_signed_doc_url}
+          href={props.o_fsa_signed_doc_url}
           className="text-sm text-blue hover:text-blue-l2 flex items-center gap-2"
         >
           <SquareArrowOutUpRight size={20} />
@@ -111,22 +119,22 @@ export default function Form(props: Props) {
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
-          aria-disabled={isSubmitting || isRedirecting}
-          to={`../${steps.fsaInquiry}`}
+          aria-disabled={is_submitting || is_redirecting}
+          to={`../${steps.fsa_inq}`}
           className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back
         </Link>
         <button
-          disabled={isSubmitting || isRedirecting || isUploading}
+          disabled={is_submitting || is_redirecting || is_uploading}
           type="submit"
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText
-            isLoading={isSubmitting || isRedirecting}
-            text={isSubmitting ? "Submitting.." : "Redirecting.."}
+            isLoading={is_submitting || is_redirecting}
+            text={is_submitting ? "Submitting.." : "Redirecting.."}
           >
-            {props.doc?.fsa_signed_doc_url ? "Continue" : "Sign"}
+            {props.o_fsa_signed_doc_url ? "Continue" : "Sign"}
           </LoadText>
         </button>
       </div>

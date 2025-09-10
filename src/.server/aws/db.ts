@@ -22,6 +22,7 @@ import { NpoDb } from "@better-giving/endowment";
 import { FundDb } from "@better-giving/fundraiser";
 import { NavHistoryDB } from "@better-giving/nav-history";
 import { PayoutsDB } from "@better-giving/payouts";
+import { RegDb } from "@better-giving/reg";
 import { UserDb } from "@better-giving/user";
 import {
   apes_aws_access_key_id,
@@ -67,3 +68,4 @@ export const btxdb = new BalanceTxsDb(apes, env);
 export const npodb = new NpoDb(ap, env);
 export const userdb = new UserDb(ap, env);
 export const funddb = new FundDb(ap, env);
+export const regdb = new RegDb(ap, env);

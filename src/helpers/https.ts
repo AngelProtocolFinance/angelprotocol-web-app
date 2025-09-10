@@ -5,8 +5,8 @@ class Resp {
       headers: { "Content-Type": "application/json" },
     });
   }
-  status(status: number): Response {
-    return new Response(null, { status });
+  status(status: number, text?: string): Response {
+    return new Response(text, { status, statusText: text });
   }
   txt(x: string, status = 200): Response {
     return new Response(x, {
@@ -45,3 +45,6 @@ export function search<T extends R>(
   }
   return Object.fromEntries(x.entries()) as T;
 }
+
+export const sans_https = (x: string | undefined) =>
+  x && x.replace(/^https:\/\//, "");

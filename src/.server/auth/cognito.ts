@@ -58,7 +58,7 @@ class Storage extends Util {
     const cookieHeader =
       typeof request === "string" || !request
         ? request
-        : request.headers.get("Cookie");
+        : request.headers.get("cookie");
 
     const session = await getSession(cookieHeader);
     const token_id = session.get("token_id");
