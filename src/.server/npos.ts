@@ -43,7 +43,10 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
   }
 
   return {
-    items: hits.map((x: any) => x.document),
+    items: hits.map((x: any) => {
+      const { id, ...rest } = x.document;
+      return { id: id.split("-")[1], ...rest };
+    }),
     page,
     pages: Math.ceil(found / HITS_PER_PAGE),
   };
