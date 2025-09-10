@@ -1,15 +1,14 @@
 import { NavLink } from "@remix-run/react";
-import { apes } from "api/api";
 import ContentLoader from "components/content-loader";
 import QueryLoader from "components/query-loader";
 import { appRoutes } from "constants/routes";
 import useSWR from "swr/immutable";
 
-const fetcher = (path: string) => apes.get<string[]>(path).json();
+const fetcher = (path: string) => fetch(path).then<string[]>((x) => x.json());
 
 export function TopCountries() {
   const { data, isLoading, error, isValidating } = useSWR(
-    "top-countries",
+    "api/top-countries",
     fetcher
   );
   return (

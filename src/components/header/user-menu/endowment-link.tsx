@@ -1,26 +1,18 @@
-import type { UserEndow } from "@better-giving/user";
 import { MenuItem } from "@headlessui/react";
 import { NavLink } from "@remix-run/react";
 import Image from "components/image";
 import { appRoutes } from "constants/routes";
-import type { EndowmentBookmark } from "types/user";
+import type { INpoBookmark, IUserNpo2 } from "types/user";
 import ContentLoader from "../../content-loader";
 
-interface IBookmarkLink extends EndowmentBookmark {}
-export function BookmarkLink({ endowId, ...endow }: IBookmarkLink) {
-  return (
-    <_Link {...endow} id={endowId} to={`${appRoutes.marketplace}/${endowId}`} />
-  );
+interface IBookmarkLink extends INpoBookmark {}
+export function BookmarkLink({ id, ...endow }: IBookmarkLink) {
+  return <_Link {...endow} id={id} to={`${appRoutes.marketplace}/${id}`} />;
 }
 
-export function EndowmentLink({ endowID, logo, name }: UserEndow) {
+export function EndowmentLink({ id, logo, name }: IUserNpo2) {
   return (
-    <_Link
-      id={endowID}
-      logo={logo}
-      name={name}
-      to={`${appRoutes.admin}/${endowID}`}
-    />
+    <_Link id={id} logo={logo} name={name} to={`${appRoutes.admin}/${id}`} />
   );
 }
 

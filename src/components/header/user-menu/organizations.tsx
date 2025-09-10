@@ -25,7 +25,7 @@ export function Organizations({ user, classes = "" }: Props) {
           {(loaded) => (
             <>
               {loaded.map((org) => (
-                <EndowmentLink key={org.endowID} {...org} />
+                <EndowmentLink key={org.id} {...org} />
               ))}
             </>
           )}

@@ -4,11 +4,11 @@ import { DrawerIcon } from "components/icon";
 import { FilterIcon, XIcon } from "lucide-react";
 import { useRef } from "react";
 import { useController, useForm } from "react-hook-form";
-import type { BankingApplicationsQueryParams } from "types/applications";
 import { status } from "./constants";
 
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Select } from "components/selector/select";
+import type { BankingApplicationsQueryParams } from "types/applications";
 import * as v from "valibot";
 
 type Props = {

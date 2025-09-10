@@ -1,9 +1,9 @@
-import type { Endow } from "@better-giving/endowment";
+import type { INpo } from "@better-giving/endowment";
 import { createContext, useContext } from "react";
 
-const ProfileContext = createContext<Endow>({} as Endow);
+const ProfileContext = createContext<INpo>({} as INpo);
 
-export const useProfileContext = (): Endow => {
+export const useProfileContext = (): INpo => {
   const val = useContext(ProfileContext);
 
   if (Object.entries(val).length === 0) {

@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "@vercel/remix";
-import { resp } from "../helpers/resp";
+import { resp } from "helpers/https";
 import { cognito } from ".server/auth";
 import { get_db_currencies } from ".server/currency";
 

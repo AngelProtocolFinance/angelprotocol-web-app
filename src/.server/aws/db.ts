@@ -1,4 +1,7 @@
-import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  type TranslateConfig,
+} from "@aws-sdk/lib-dynamodb";
 export {
   GetCommand,
   BatchGetCommand,
@@ -12,14 +15,28 @@ export {
   type QueryCommandInput,
 } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { BalanceDb } from "@better-giving/balance";
+import { BalanceTxsDb } from "@better-giving/balance-txs";
+import { BankingApplicationsDb } from "@better-giving/banking-applications";
+import { NpoDb } from "@better-giving/endowment";
+import { FundDb } from "@better-giving/fundraiser";
+import { NavHistoryDB } from "@better-giving/nav-history";
+import { PayoutsDB } from "@better-giving/payouts";
+import { UserDb } from "@better-giving/user";
 import {
   apes_aws_access_key_id,
   apes_aws_secret_access_key,
   aws_access_key_id,
   aws_region,
   aws_secret_access_key,
+  env,
 } from "../env";
 
+const config: TranslateConfig = {
+  marshallOptions: {
+    removeUndefinedValues: true,
+  },
+};
 export const ap = DynamoDBDocumentClient.from(
   new DynamoDBClient({
     region: aws_region,
@@ -28,7 +45,7 @@ export const ap = DynamoDBDocumentClient.from(
       secretAccessKey: aws_secret_access_key,
     },
   }),
-  { marshallOptions: { removeUndefinedValues: true } }
+  config
 );
 
 export const apes = DynamoDBDocumentClient.from(
@@ -39,5 +56,14 @@ export const apes = DynamoDBDocumentClient.from(
       secretAccessKey: apes_aws_secret_access_key,
     },
   }),
-  { marshallOptions: { removeUndefinedValues: true } }
+  config
 );
+
+export const bappdb = new BankingApplicationsDb(ap, env);
+export const podb = new PayoutsDB(apes, env);
+export const navdb = new NavHistoryDB(apes, env);
+export const baldb = new BalanceDb(apes, env);
+export const btxdb = new BalanceTxsDb(apes, env);
+export const npodb = new NpoDb(ap, env);
+export const userdb = new UserDb(ap, env);
+export const funddb = new FundDb(ap, env);

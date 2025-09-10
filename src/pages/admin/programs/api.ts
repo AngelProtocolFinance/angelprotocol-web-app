@@ -1,42 +1,40 @@
-import type { NewProgram, Program } from "@better-giving/endowment";
+import type { IProgramDb } from "@better-giving/endowment";
+import { program_id } from "@better-giving/endowment/schema";
 import { type LoaderFunction, redirect } from "@vercel/remix";
-import { ap, ver } from "api/api";
-import { getPrograms } from "api/get/programs";
 import { adminRoutes } from "constants/routes";
-import { cognito, toAuth } from ".server/auth";
+import { parse } from "valibot";
+import { npodb } from ".server/aws/db";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
-  programs: Program[];
+  programs: IProgramDb[];
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const programs = await getPrograms(params.id);
+export const loader: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+
+  const programs = await npodb.npo_programs(adm.id);
   return { programs } satisfies LoaderData;
 };
 
-export const action: LoaderFunction = async ({ request, params }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+export const action: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
 
-  if (request.method === "DELETE") {
-    const progId = await request.formData().then((f) => f.get("programId"));
-    await ap.delete(`${ver(2)}/endowments/${params.id}/programs/${progId}`, {
-      headers: { authorization: user.idToken },
-    });
-
+  if (adm.req.method === "DELETE") {
+    const fv = await adm.req.formData();
+    const pid = parse(program_id, fv.get("programId"));
+    await npodb.npo_prog_del(adm.id, pid);
     return { ok: true };
   }
 
-  const { id } = await ap
-    .post<{ id: string }>(`${ver(1)}/endowments/${params.id}/programs`, {
-      headers: { authorization: user.idToken },
-      json: {
-        title: "New Program",
-        description: "Program description",
-        milestones: [],
-      } satisfies NewProgram,
-    })
-    .json();
+  //new program
+  const id = await npodb.npo_program_put(adm.id, {
+    title: "New Program",
+    description: "Program description",
+    milestones: [],
+  });
 
   return redirect(`../${adminRoutes.program_editor}/${id}`);
 };

@@ -53,7 +53,7 @@ export const Form: FC<Props> = ({
     <PopoverPanel
       as="form"
       onSubmit={handleSubmit(onSubmit, (err) => {
-        console.log(err);
+        console.error(err);
       })}
       onReset={(e) => {
         e.preventDefault();

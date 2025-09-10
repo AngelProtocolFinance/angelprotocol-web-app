@@ -1,26 +1,25 @@
-import type { Endow } from "@better-giving/endowment";
+import type { IPrettyBalance } from "@better-giving/balance";
+import type { INpo } from "@better-giving/endowment";
+import { $int_gte1 } from "@better-giving/schemas";
 import { type LoaderFunction, data } from "@vercel/remix";
-import type { EndowmentBalances } from "types/npo-balance";
 import * as v from "valibot";
-import { plusInt } from "./schema/endow-id";
-import { getNpo } from ".server/npo";
-import { npoBalances } from ".server/npo-balances";
+import { baldb, npodb } from ".server/aws/db";
 
 export interface DonateData {
   id: number;
-  endow: Endow;
+  endow: INpo;
   /** need to await */
-  balance: Promise<EndowmentBalances>;
+  balance: Promise<IPrettyBalance>;
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const id = v.parse(plusInt, params.id);
-  const endow = await getNpo(id);
+  const id = v.parse($int_gte1, params.id);
+  const endow = await npodb.npo(id);
   if (!endow) throw new Response(null, { status: 404 });
 
   return data({
     id,
     endow,
-    balance: npoBalances(id),
+    balance: baldb.npo_balance(id),
   } satisfies DonateData);
 };

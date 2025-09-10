@@ -1,12 +1,15 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
-import { Outlet } from "@remix-run/react";
+import { Outlet, useSearchParams } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
+import { Info } from "components/status";
+import { search } from "helpers/https";
 import { metas } from "helpers/seo";
+import { use_paginator } from "hooks/use-paginator";
 import type { EndowCardsPage } from "types/npo";
 import { safeParse } from "valibot";
 import ActiveFilters from "./active-filters";
-import Cards from "./cards";
+import { Cards } from "./cards";
 import Hero from "./hero";
 import hero from "./hero.webp?url";
 import Toolbar from "./toolbar";
@@ -14,11 +17,7 @@ import { getNpos } from ".server/npos";
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
-  const url = new URL(request.url);
-  const params = safeParse(
-    endowsQueryParams,
-    Object.fromEntries(url.searchParams)
-  );
+  const params = safeParse(endowsQueryParams, search(request));
 
   if (params.issues) {
     return { status: 400, body: params.issues[0].message };
@@ -38,14 +37,26 @@ export const meta: MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Marketplace() {
-  const page1 = useCachedLoaderData<EndowCardsPage>();
+  const [params] = useSearchParams();
+  const page1 = useCachedLoaderData() as EndowCardsPage;
+  const { node } = use_paginator({
+    id: "marketplace",
+    page1,
+    table: (props) => <Cards {...props} />,
+    empty: (x) => <Info {...x}>No organisations found</Info>,
+    gen_loader: (load, next) => () => {
+      const p = new URLSearchParams(params);
+      if (next) p.set("page", next.toString());
+      load(`?${p.toString()}`);
+    },
+  });
   return (
     <div className="w-full grid content-start pb-16">
       <Hero classes="grid isolate mt-8 xl:container xl:mx-auto px-5" />
       <div className="grid gap-y-4 content-start xl:container xl:mx-auto px-5 min-h-screen">
         <Toolbar classes="mt-10" />
         <ActiveFilters />
-        <Cards page1={page1} />
+        {node}
       </div>
       <Outlet />
     </div>

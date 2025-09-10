@@ -1,10 +1,11 @@
+import type { TxType } from "@better-giving/db";
 import type { Donation } from "@better-giving/donation";
 import type {
   DMKey,
   DonationMessage,
 } from "@better-giving/donation/donation-message";
-import type { Endow } from "@better-giving/endowment";
-import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
+import type { INpo } from "@better-giving/endowment";
+import { TxBuilder } from "@better-giving/helpers-db";
 import * as ref_db from "@better-giving/referrals/db";
 import type { Environment } from "@better-giving/types/list";
 import { nanoid } from "nanoid";
@@ -49,15 +50,25 @@ export const build_donation_msg = ({
   };
 };
 
+export interface ICommissionSource {
+  /** npo id */
+  id: number;
+  amnt: number;
+}
+export interface IReferrerLtdItem {
+  id: string;
+  source: ICommissionSource;
+}
+
 interface Commission {
-  txs: TxItems;
-  to: string;
+  ltd: IReferrerLtdItem;
+  record: TxType["Put"];
   breakdown: Donation.ReferrerCommission;
 }
 
 export const commission_fn = (
   tx: { tip: number; fee: number; id: string },
-  endow: Endow
+  endow: INpo
 ): Commission | null => {
   if (!endow.referrer || !endow.referrer_expiry) return null;
   const is_expired = new Date(endow.referrer_expiry) < new Date();
@@ -81,31 +92,64 @@ export const commission_fn = (
   };
   builder.put({ TableName: ref_db.name, Item: commission });
 
-  builder.update({
-    TableName: ref_db.name,
-    Key: {
-      PK: `Ltd#${endow.referrer}`,
-      SK: `Ltd#${endow.referrer}`,
-    } satisfies Pick<ref_db.Ltd, "PK" | "SK">,
-    UpdateExpression:
-      "SET #amount = if_not_exists(#amount, :zero) + :amount, #referrer = :referrer",
-    ExpressionAttributeNames: {
-      "#amount": `#${endow.id}`,
-      "#referrer": "referrer",
-    },
-    ExpressionAttributeValues: {
-      ":zero": 0,
-      ":amount": tx.tip + tx.fee,
-      ":referrer": endow.referrer,
-    },
-  });
-
+  const source: ICommissionSource = {
+    id: endow.id,
+    amnt: commission.amount,
+  };
   return {
-    to: endow.referrer,
-    txs: builder.txs,
+    ltd: { id: endow.referrer, source },
+    record: { TableName: ref_db.name, Item: commission },
     breakdown: {
       from_tip: tx.tip,
       from_fee: tx.fee,
     },
+  };
+};
+
+export const ltd_by_referrer = (items: IReferrerLtdItem[]) => {
+  return items.reduce(
+    (acc, curr) => {
+      acc[curr.id] ||= [];
+      acc[curr.id].push(curr.source);
+      return acc;
+    },
+    {} as Record<string, ICommissionSource[]>
+  );
+};
+
+export const referrer_ltd_update_txi = (
+  referrer: string,
+  sources: ICommissionSource[]
+): TxType["Update"] => {
+  const names: Record<string, string> = {
+    "#referrer": "referrer",
+  };
+  const values: Record<string, any> = {
+    ":zero": 0,
+    ":referrer": referrer,
+  };
+
+  // Create SET expressions for each source
+  const sets = sources.map((source, index) => {
+    const alias = `#amount${source.id}`;
+    const placeholder = `:amount${index}`;
+
+    names[alias] = `#${source.id}`;
+    values[placeholder] = source.amnt;
+
+    return `${alias} = if_not_exists(${alias}, :zero) + ${placeholder}`;
+  });
+
+  const exp = `SET ${sets.join(", ")}, #referrer = :referrer`;
+
+  return {
+    TableName: ref_db.name,
+    Key: {
+      PK: `Ltd#${referrer}`,
+      SK: `Ltd#${referrer}`,
+    } satisfies Pick<ref_db.Ltd, "PK" | "SK">,
+    UpdateExpression: exp,
+    ExpressionAttributeNames: names,
+    ExpressionAttributeValues: values,
   };
 };

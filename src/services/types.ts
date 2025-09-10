@@ -1,5 +1,3 @@
-import type { BankingApplication } from "types/applications";
-import type { V2RecipientAccount } from "types/bank-details";
 import type {
   EndowmentAllocationUpdate,
   EndowmentProfileUpdate,
@@ -11,5 +9,3 @@ export type EndowmentUpdate = Partial<
 >;
 
 export type ProgramDeleteMsg = { id: number; program_id: string };
-
-export type BankingApplicationDetails = BankingApplication & V2RecipientAccount;

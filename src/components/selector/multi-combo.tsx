@@ -17,7 +17,7 @@ import {
 } from "react";
 
 import { styles } from "./constants";
-import FocusableInput from "./focusable-input";
+import { FocusableInput } from "./focusable-input";
 import type { BaseProps } from "./types";
 
 export interface Props<T extends string> extends BaseProps {

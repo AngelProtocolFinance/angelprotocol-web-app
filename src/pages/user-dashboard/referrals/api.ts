@@ -20,7 +20,7 @@ export interface LoaderData {
 }
 
 function payout(id: number) {
-  return wise.v2Account(id);
+  return wise.v2_account(id);
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const [pendings, referreds, earnings, p, pltd] = await Promise.all([
     pendingEarnings(user.referral_id),
     referredBy(user.referral_id),
-    getEarnings(user.referral_id, null, 4),
+    getEarnings(user.referral_id, undefined, 4),
     user.pay_id ? payout(+user.pay_id) : undefined,
     paidOutLtd(user.referral_id),
   ]);

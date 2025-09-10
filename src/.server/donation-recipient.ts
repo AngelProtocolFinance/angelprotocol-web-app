@@ -1,9 +1,6 @@
 import type { Allocation } from "@better-giving/donation/schema";
-import type { DbRecord, Keys } from "@better-giving/fundraiser/db";
-import { tables } from "@better-giving/types/list";
 import { default_allocation } from "constants/common";
-import { GetCommand, ap } from "./aws/db";
-import { getNpo } from "./npo";
+import { funddb, npodb } from "./aws/db";
 
 export interface Recipient {
   npo: {
@@ -30,7 +27,7 @@ export interface Recipient {
 export async function get_recipient(id: string | number) {
   //recipient is endowment
   if (typeof id === "number") {
-    const npo = await getNpo(id);
+    const npo = await npodb.npo(id);
     if (!npo) return undefined;
     const recipient: Recipient = {
       npo: { id },
@@ -46,30 +43,18 @@ export async function get_recipient(id: string | number) {
     return recipient;
   }
 
-  //recipient is fund
-  const command = new GetCommand({
-    TableName: tables.funds,
-    Key: {
-      PK: `Fund#${id}`,
-      SK: `Fund#${id}`,
-    } satisfies Keys,
+  return funddb.fund(id).then((data) => {
+    if (!data) return undefined;
+    const recipient: Recipient = {
+      npo: { id: 0 },
+      fund: { id, members: data.members },
+      name: data.name,
+      claimed: false,
+      fiscal_sponsored: false,
+      hide_bg_tip: data.settings.hide_bg_tip,
+      receiptMsg: "",
+      allocation: default_allocation,
+    };
+    return recipient;
   });
-
-  return ap
-    .send(command)
-    .then<DbRecord | undefined>((res) => res.Item as any)
-    .then((data) => {
-      if (!data) return undefined;
-      const recipient: Recipient = {
-        npo: { id: 0 },
-        fund: { id, members: data.members },
-        name: data.name,
-        claimed: false,
-        fiscal_sponsored: false,
-        hide_bg_tip: data.settings.hide_bg_tip,
-        receiptMsg: "",
-        allocation: default_allocation,
-      };
-      return recipient;
-    });
 }

@@ -1,12 +1,10 @@
-import { ap, ver } from "api/api";
 import useSWR from "swr/immutable";
 import type { WiseCurrency } from "types/bank-details";
 import type { QueryState, WiseCurrencyOption } from "types/components";
 
-async function getCurencies(path: string) {
-  return ap
-    .get<WiseCurrency[]>(path)
-    .json()
+async function get_currencies(path: string) {
+  return fetch(path)
+    .then<WiseCurrency[]>((res) => res.json())
     .then((data) =>
       data.map<WiseCurrencyOption>((r) => ({
         rate: null,
@@ -16,10 +14,10 @@ async function getCurencies(path: string) {
     );
 }
 
-export function useCurrencies(): QueryState<WiseCurrencyOption[]> {
+export function use_currencies(): QueryState<WiseCurrencyOption[]> {
   const { data, isLoading, isValidating, error } = useSWR(
-    `${ver(1)}/wise-proxy/v1/currencies`,
-    getCurencies
+    `/api/wise/v1/currencies`,
+    get_currencies
   );
   return { data, isLoading, isFetching: isValidating, isError: !!error, error };
 }

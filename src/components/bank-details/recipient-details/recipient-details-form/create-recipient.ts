@@ -1,9 +1,9 @@
-import { ap, ver } from "api/api";
 import type { CreateRecipientRequest } from "types/bank-details";
 
-export function createRecipient(payload: CreateRecipientRequest) {
-  return ap.post(`${ver(1)}/wise-proxy/v1/accounts`, {
-    json: payload,
-    throwHttpErrors: false,
-  });
+export async function create_recipient(payload: CreateRecipientRequest) {
+  return fetch(`/api/wise/v1/accounts`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" },
+  }).then((r) => r.json());
 }

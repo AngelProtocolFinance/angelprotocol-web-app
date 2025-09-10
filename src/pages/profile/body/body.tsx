@@ -1,3 +1,4 @@
+import type { IPrettyBalance } from "@better-giving/balance";
 import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import BookmarkBtn from "components/bookmark-btn";
@@ -8,20 +9,19 @@ import VerifiedIcon from "components/verified-icon";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
-import type { EndowmentBalances } from "types/npo-balance";
 import { useProfileContext } from "../profile-context";
 import { npoId } from "./common/npo-id";
-import { npoBalances } from ".server/npo-balances";
+import { baldb } from ".server/aws/db";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = await npoId(params.id);
   if (typeof id !== "number") return id;
-  return npoBalances(id);
+  return baldb.npo_balance(id);
 };
 
 export default function Body() {
   const p = useProfileContext();
-  const bal = useLoaderData() as EndowmentBalances;
+  const bal = useLoaderData() as IPrettyBalance;
   const user = useRootData();
 
   return (
@@ -39,10 +39,10 @@ export default function Body() {
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
-          {bal.totalContributions != null && p.target && (
+          {p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.totalContributions}
+              progress={bal.ltd}
               target={toTarget(p.target)}
             />
           )}

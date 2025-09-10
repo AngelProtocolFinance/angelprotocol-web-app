@@ -1,27 +1,21 @@
 import type { LoaderFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
+import { search } from "helpers/https";
 import type { EarningsPage } from "types/referrals";
-import { parse } from "valibot";
-import { cognito, toAuth } from ".server/auth";
+import { npodb } from ".server/aws/db";
 import { getEarnings } from ".server/donations";
-import { getNpo } from ".server/npo";
+import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData extends EarningsPage {}
 
-export const loader: LoaderFunction = async ({ request, params }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+export const loader: LoaderFunction = async (args) => {
+  const { nextKey } = search(args.request);
+  const adm = await admin_checks(args);
+  if (is_resp(adm)) return adm;
 
-  const id = parse(plusInt, params.id);
-  if (!user.endowments.includes(id)) return { status: 403 };
-
-  const x = await getNpo(id, ["referral_id"]);
+  const x = await npodb.npo(adm.id, ["referral_id"]);
   if (!x) return { status: 404 };
 
-  if (!x.referral_id) throw `@dev: referral_id not found for npo:${id}`;
-
-  const url = new URL(request.url);
-  const nextKey = url.searchParams.get("nextKey");
+  if (!x.referral_id) throw `@dev: referral_id not found for npo:${adm.id}`;
 
   const page = await getEarnings(x.referral_id, nextKey, 8);
 

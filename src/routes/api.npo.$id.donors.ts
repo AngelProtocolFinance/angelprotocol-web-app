@@ -1,26 +1,18 @@
-// import { cognito } from ".server/auth";
-import { fundId } from "@better-giving/fundraiser/schema";
+import { fund_id } from "@better-giving/fundraiser/schema";
+import { $int_gte1 } from "@better-giving/schemas";
 import type { LoaderFunction } from "@vercel/remix";
-import { plusInt } from "api/schema/endow-id";
+import { search } from "helpers/https";
 import * as v from "valibot";
 import { npoDonors } from ".server/npo-donors";
 
-const schema = v.union([fundId, plusInt]);
+const schema = v.union([fund_id, $int_gte1]);
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const { searchParams: s } = new URL(request.url);
   const id = v.parse(schema, params.id);
-  const key = v.parse(
-    v.nullable(v.pipe(v.string(), v.base64())),
-    s.get("nextKey")
-  );
 
-  // const { user } = await cognito.retrieve(request);
-  // if (!user) return new Response(null, { status: 401 });
-  // if (!user.endowments.includes(id) && !user.groups.includes("ap-admin")) {
-  //   return new Response(null, { status: 403 });
+  const { nextKey } = search(request);
 
-  const page = await npoDonors(id.toString(), key);
+  const page = await npoDonors(id.toString(), nextKey);
   return new Response(JSON.stringify(page), {
     headers: { "content-type": "application/json" },
   });

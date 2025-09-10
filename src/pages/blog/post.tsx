@@ -6,26 +6,24 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
 import useSWR from "swr/immutable";
-import type { Wordpress } from "types/wordpress";
+import type { IMedia, IPost, IUser } from "types/wordpress";
 
 const containerStyle = "w-full px-5 max-w-4xl mx-auto pb-4";
 
-interface IPost extends Wordpress.Post {
-  media: Wordpress.Media;
+interface IPostDetailed extends IPost {
+  media: IMedia;
   authorName: string;
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const [post] = await wp
-    .get<Wordpress.Post[]>(`posts?slug=${params.slug}`)
-    .json();
+  const [post] = await wp.get<IPost[]>(`posts?slug=${params.slug}`).json();
 
   if (!post) throw new Response("Not Found", { status: 404 });
 
-  const media = wp.get<Wordpress.Media>(`media/${post.featured_media}`).json();
-  const author = wp.get<Wordpress.User>(`users/${post.author}`).json();
+  const media = wp.get<IMedia>(`media/${post.featured_media}`).json();
+  const author = wp.get<IUser>(`users/${post.author}`).json();
   const [m, a] = await Promise.all([media, author]);
-  return { ...post, media: m, authorName: a.name } satisfies IPost;
+  return { ...post, media: m, authorName: a.name } satisfies IPostDetailed;
 };
 
 export const meta: MetaFunction = ({ data }: any) => {
@@ -88,7 +86,7 @@ function Loaded(post: IPost) {
 
 function Author(props: { id: number }) {
   const { data } = useSWR(`users/${props.id}`, (path) =>
-    wp.get<Wordpress.User>(path).json()
+    wp.get<IUser>(path).json()
   );
   return data && <p className="text-gray text-sm">Author: {data.name}</p>;
 }

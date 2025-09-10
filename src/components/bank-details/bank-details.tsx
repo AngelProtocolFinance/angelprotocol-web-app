@@ -8,7 +8,7 @@ import type { WiseCurrencyOption } from "types/components";
 import { CurrencySelector } from "../currency-selector";
 import RecipientDetails from "./recipient-details";
 import type { IFormButtons, OnSubmit } from "./types";
-import { useCurrencies } from "./use-currencies";
+import { use_currencies } from "./use-currencies";
 
 /**
  * Denominated in USD
@@ -29,7 +29,7 @@ export function BankDetails({
   isLoading,
   verified,
 }: Props) {
-  const currencies = useCurrencies();
+  const currencies = use_currencies();
   const [isSubmitting, setSubmitting] = useState(false);
   const [currency, setCurrency] = useState<WiseCurrencyOption>({
     code: "USD",

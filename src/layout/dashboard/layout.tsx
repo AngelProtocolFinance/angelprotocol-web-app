@@ -15,7 +15,7 @@ export default function Layout({
   rootRoute,
 }: DashboardLayoutProps) {
   return (
-    <div className="grid max-md:content-start md:grid-cols-[auto_1fr]">
+    <div className="grid max-md:content-start md:grid-cols-[auto_1fr] border-b border-gray-l3">
       <SidebarOpener
         className="md:hidden"
         linkGroups={linkGroups}
@@ -27,7 +27,7 @@ export default function Layout({
         sidebarHeader={sidebarHeader}
       />
       {/** views */}
-      <div className="px-6 py-8 md:p-10 @container">
+      <div className="px-6 py-8 md:p-10 @container min-h-screen">
         <Outlet />
       </div>
     </div>

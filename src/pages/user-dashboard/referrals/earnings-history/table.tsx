@@ -2,22 +2,11 @@ import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import type { ReactNode } from "react";
+import type { IPaginator } from "types/components";
 import type { Earning } from "types/referrals";
 
-export interface Props {
-  items: Earning[];
-  onViewMore?: () => void;
-  emptyEl?: ReactNode;
-  classes?: string;
-}
-export function EarningsHistory({
-  items,
-  classes = "",
-  onViewMore,
-  emptyEl = null,
-}: Props) {
-  if (items.length === 0) return emptyEl;
+export interface Props extends IPaginator<Earning> {}
+export function EarningsHistory({ items, classes = "", load_next }: Props) {
   return (
     <div className={`${classes} overflow-x-auto`}>
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
@@ -51,11 +40,11 @@ export function EarningsHistory({
           ))}
         </tbody>
         <tfoot>
-          {onViewMore && (
+          {load_next && (
             <tr>
               <td colSpan={3}>
                 <button
-                  onClick={onViewMore}
+                  onClick={load_next}
                   type="button"
                   className="text-sm text-blue hover:text-blue-d1"
                 >

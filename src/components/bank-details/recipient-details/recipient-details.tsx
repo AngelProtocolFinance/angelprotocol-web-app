@@ -4,7 +4,7 @@ import { Info, LoadingStatus } from "components/status";
 import { memo, useState } from "react";
 import type { IFormButtons, OnSubmit } from "../types";
 import RecipientDetailsForm from "./recipient-details-form";
-import { useRequirements } from "./use-requirements";
+import { use_requirements } from "./use-requirements";
 
 type Props = {
   disabled: boolean;
@@ -23,7 +23,7 @@ function RecipientDetails({
   onSubmit,
   verified,
 }: Props) {
-  const { req } = useRequirements(!amount ? null : { amount, currency });
+  const { req } = use_requirements(!amount ? null : { amount, currency });
   const { data, isLoading, isValidating, error } = req;
   const requirements = data?.requirements || [];
   const [selectedIdx, setSelectedIdx] = useState(0);

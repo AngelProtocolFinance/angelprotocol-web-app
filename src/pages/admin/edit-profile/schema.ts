@@ -1,11 +1,12 @@
 import {
+  $,
+  $req,
   https_url,
+  org_designation,
   reg_number,
   slug,
   social_media_urls,
-  str,
 } from "@better-giving/endowment/schema";
-import { orgDesignation } from "@better-giving/schemas";
 import { type ImgSpec, imgOutput } from "components/img-editor";
 import { richTextContent } from "types/components";
 import type { ImageMIMEType } from "types/lists";
@@ -36,24 +37,22 @@ export const bannerSpec: ImgSpec = {
   maxSize: 4e6,
 };
 
-const requiredStr = v.pipe(str, v.nonEmpty("required"));
-
 export const schema = v.object({
   slug,
   registration_number: reg_number,
-  name: requiredStr,
-  endow_designation: orgDesignation,
+  name: $req,
+  endow_designation: org_designation,
   overview: richTextContent({ maxChars: MAX_CHARS, required: true }),
-  tagline: v.pipe(requiredStr, v.maxLength(140, "max length is 140 chars")),
+  tagline: v.pipe($req, v.maxLength(140, "max length is 140 chars")),
   image: imgOutput({ required: true }),
   logo: imgOutput({ required: true }),
   card_img: imgOutput({ required: true }),
-  hq_country: requiredStr,
-  active_in_countries: v.array(str),
-  street_address: v.optional(str),
+  hq_country: $req,
+  active_in_countries: v.array($),
+  street_address: v.optional($),
   social_media_urls: social_media_urls,
   url: v.optional(https_url(false)),
-  sdgs: v.pipe(v.array(str), v.minLength(1, "required")),
+  sdgs: v.pipe(v.array($), v.minLength(1, "required")),
   published: v.boolean(),
 });
 

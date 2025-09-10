@@ -1,4 +1,4 @@
-import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
+import type { IFundUpdate } from "@better-giving/fundraiser";
 import { useFetcher } from "@remix-run/react";
 import { Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
@@ -6,6 +6,7 @@ import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { useActionResult } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";
+import type { IFund } from "types/fund";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
@@ -17,11 +18,7 @@ interface Props {
   initSlug?: string;
 }
 
-export function Form({
-  classes = "",
-  initSlug = "",
-  ...props
-}: SingleFund & Props) {
+export function Form({ classes = "", initSlug = "", ...props }: IFund & Props) {
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
   const { dirtyFields: df, ...rhf } = useRhf(props);
@@ -33,7 +30,7 @@ export function Form({
 
   const onSubmit: SubmitHandler<FV> = async ({ target, ...fv }) => {
     /// BUILD UPDATE ///
-    const update: FundUpdate = {};
+    const update: IFundUpdate = {};
 
     if (df.banner) update.banner = fv.banner;
     if (df.logo) update.logo = fv.logo;

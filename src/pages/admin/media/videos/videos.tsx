@@ -1,10 +1,11 @@
-import type { MediaPage } from "@better-giving/endowment";
-import { NavLink, Outlet, useParams } from "@remix-run/react";
+import type { IMediaPage } from "@better-giving/endowment";
+import { NavLink, Outlet, useParams, useSearchParams } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import Breadcrumbs from "components/breadcrumbs";
 import { appRoutes } from "constants/routes";
+import { use_paginator } from "hooks/use-paginator";
 import { Plus } from "lucide-react";
-import { List } from "./list";
+import { List, NoVideo } from "./list";
 
 export { ErrorBoundary } from "components/error";
 export {
@@ -13,8 +14,20 @@ export {
 } from "../api";
 export { clientLoader } from "api/cache";
 export default function Videos() {
+  const [search] = useSearchParams();
   const params = useParams();
-  const page1 = useCachedLoaderData<MediaPage>();
+  const page1 = useCachedLoaderData<IMediaPage>();
+  const { node } = use_paginator({
+    page1,
+    table: (p) => <List {...p} />,
+    empty: (c) => <NoVideo {...c} />,
+    classes: "mt-6",
+    gen_loader: (load, next) => () => {
+      const p = new URLSearchParams(search);
+      if (next) p.set("nextPageKey", next);
+      load(`?${p.toString()}`);
+    },
+  });
   return (
     <div className="grid content-start @container">
       <Breadcrumbs
@@ -38,7 +51,7 @@ export default function Videos() {
           <span>add video</span>
         </NavLink>
       </div>
-      <List classes="mt-6" page1={page1} />
+      {node}
       <Outlet data-video-editor />
     </div>
   );

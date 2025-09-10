@@ -93,15 +93,16 @@ export const get_donations = async (
   const start = (page - 1) * limit;
   const end = Math.min(page * limit, numItems);
 
+  const next_num = end === numItems ? undefined : page + 1;
   return {
     items: to_sorted(items, "desc", "date").slice(start, end),
-    next_page: end === numItems ? undefined : page + 1,
+    next: next_num?.toString(),
   };
 };
 
 export const getEarnings = async (
   referrer: string,
-  nextKey: string | null,
+  next?: string,
   limit = 10
 ): Promise<EarningsPage> => {
   const command = new QueryCommand({
@@ -116,7 +117,7 @@ export const getEarnings = async (
     },
     Limit: limit,
     ScanIndexForward: false,
-    ExclusiveStartKey: nextKey ? JSON.parse(nextKey) : undefined,
+    ExclusiveStartKey: next ? JSON.parse(next) : undefined,
   });
 
   const result = await apes.send(command);
@@ -138,6 +139,6 @@ export const getEarnings = async (
       },
       status: x.referrer_commission?.transfer_id ? "paid" : "pending",
     })),
-    nextKey: nextPageKey,
+    next: nextPageKey,
   };
 };

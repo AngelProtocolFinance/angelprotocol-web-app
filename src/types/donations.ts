@@ -1,4 +1,5 @@
-import { plusInt } from "api/schema/endow-id";
+import { $int_gte1, allocation } from "@better-giving/endowment/schema";
+import type { IPageKeyed } from "@better-giving/types/api";
 import * as v from "valibot";
 // import Joi from "joi";
 
@@ -41,10 +42,10 @@ const date = v.pipe(v.string(), v.isoTimestamp());
 
 export const donations_query_params = v.pipe(
   v.object({
-    asker: v.union([email, plusInt]),
+    asker: v.union([email, $int_gte1]),
     status: v.optional(donation_status),
-    page: v.optional(plusInt),
-    limit: v.optional(plusInt),
+    page: v.optional($int_gte1),
+    limit: v.optional($int_gte1),
     symbol: v.optional(v.pipe(v.string(), v.minLength(3))),
     recipient_name: v.optional(v.string()),
     via_id: v.optional(via_id),
@@ -113,6 +114,7 @@ export const donation_item = v.object({
   via_id: v.fallback(via_id, "staging"),
   via_name: v.optional(v.string(), "Unknown"),
   payment_id: v.optional(v.union([int, uuid])),
+  allocation: v.optional(allocation),
 });
 
 export namespace Donation {
@@ -134,4 +136,4 @@ export interface DonationsQueryParams
   extends v.InferInput<typeof donations_query_params> {}
 export interface DonationsQueryParamsParsed
   extends v.InferOutput<typeof donations_query_params> {}
-export type DonationsPage = { items: Donation.Item[]; next_page?: number };
+export interface DonationsPage extends IPageKeyed<Donation.Item> {}

@@ -1,4 +1,3 @@
-import { wise } from "api/api";
 import type { Fetcher } from "swr";
 import useSWR from "swr/immutable";
 import type {
@@ -26,40 +25,43 @@ interface ReqUpdateInput {
 const requirements: Fetcher<RequirementsOutput, Input | null> = async (
   input
 ) => {
-  const quotePayload = {
+  const quote_payload = {
     sourceCurrency: "USD",
     targetCurrency: input.currency,
     sourceAmount: input.amount,
   };
 
-  const quote = await wise
-    .post<Quote>(`v3/profiles/{{profileId}}/quotes`, {
-      json: quotePayload,
-    })
-    .json();
+  const quote = await fetch(`/api/wise/v3/profiles/{{profileId}}/quotes`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(quote_payload),
+  }).then<Quote>((res) => {
+    return res.json();
+  });
 
-  const requirements = await wise
-    .get<AccountRequirements[]>(`v1/quotes/${quote.id}/account-requirements`, {
-      headers: { "Accept-Minor-Version": "1" },
-    })
-    .json();
+  const requirements = await fetch(
+    `/api/wise/v1/quotes/${quote.id}/account-requirements`,
+    { headers: { "Accept-Minor-Version": "1" } }
+  ).then<AccountRequirements[]>((res) => res.json());
 
   return { requirements, quoteId: quote.id };
 };
 
-export function useRequirements(args: Input | null) {
+export function use_requirements(args: Input | null) {
   const req = useSWR(args, requirements);
 
-  async function updateRequirements(payload: ReqUpdateInput) {
-    const reqs = await wise
-      .post<AccountRequirements[]>(
-        `v1/quotes/${payload.quoteId}/account-requirements`,
-        {
-          headers: { "Accept-Minor-Version": "1" },
-          json: payload.request,
-        }
-      )
-      .json();
+  async function update_requirements(payload: ReqUpdateInput) {
+    const reqs = await fetch(
+      `/api/wise/v1/quotes/${payload.quoteId}/account-requirements`,
+      {
+        headers: {
+          "Accept-Minor-Version": "1",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload.request),
+        method: "POST",
+      }
+    ).then<AccountRequirements[]>((res) => res.json());
 
     req.mutate(
       { quoteId: payload.quoteId, requirements: reqs },
@@ -67,5 +69,5 @@ export function useRequirements(args: Input | null) {
     );
   }
 
-  return { req, updateRequirements };
+  return { req, update_requirements };
 }

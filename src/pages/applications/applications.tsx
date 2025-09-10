@@ -1,35 +1,36 @@
-import type { Page } from "@better-giving/registration/approval";
-import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
+import type {
+  ApplicationItem,
+  Page,
+} from "@better-giving/registration/approval";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { use_paginator } from "hooks/use-paginator";
 import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Filter } from "./filter";
-import Table from "./table";
+import { Table } from "./table";
 
 export default function Applications() {
   const [params] = useSearchParams();
-  const page1 = useLoaderData<Page>();
-  const { load, data, state } = useFetcher<Page>({
-    key: "applications",
-  });
-  const [items, setItems] = useState(page1.items);
+  const page1 = useLoaderData() as Page;
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    setItems(page1.items);
-  }, [page1.items]);
-
-  useEffect(() => {
-    if (state === "loading" || !data) return;
-    setItems((prev) => [...prev, ...data.items]);
-  }, [data, state]);
-
-  const nextPage = data ? data.nextPageKey : page1.nextPageKey;
-
-  function loadNextPage(key: string) {
-    const copy = new URLSearchParams(params);
-    copy.set("nextPageKey", key);
-    load(`?${copy.toString()}`);
-  }
+  const { node, loading } = use_paginator<ApplicationItem>({
+    table: ({ items, ...props }) => (
+      <Table
+        items={items.filter(
+          (item) =>
+            item.org_name.toLowerCase().includes(query.toLowerCase()) ||
+            item.id.toLowerCase().includes(query.toLowerCase())
+        )}
+        {...props}
+      />
+    ),
+    page1,
+    gen_loader: (load, next) => () => {
+      const copy = new URLSearchParams(params);
+      if (next) copy.set("nextPageKey", next);
+      load(`?${copy.toString()}`);
+    },
+  });
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative xl:container xl:mx-auto px-5 py-20">
@@ -42,7 +43,7 @@ export default function Applications() {
           className="text-gray-d4 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
-          disabled={state === "loading"}
+          disabled={loading}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="p-3 pl-10 placeholder:text-gray dark:placeholder:text-gray bg-transparent w-full outline-hidden disabled:bg-gray-l3 dark:disabled:bg-gray-d3"
@@ -51,23 +52,11 @@ export default function Applications() {
         />
       </div>
       <Filter
-        isDisabled={state === "loading"}
+        isDisabled={loading}
         classes="max-lg:col-span-full max-lg:w-full"
       />
 
-      <div className="grid col-span-full overflow-x-auto">
-        <Table
-          applications={
-            items.filter(({ org_name, id }) =>
-              (org_name + id).toLowerCase().includes(query.toLowerCase())
-            ) as any
-          }
-          nextPageKey={nextPage}
-          loadMore={loadNextPage}
-          disabled={state === "loading"}
-          isLoading={state === "loading"}
-        />
-      </div>
+      <div className="grid col-span-full overflow-x-auto">{node}</div>
     </div>
   );
 }

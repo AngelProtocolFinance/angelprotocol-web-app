@@ -1,4 +1,4 @@
-import type { MediaPage } from "@better-giving/endowment";
+import type { IMediaPage } from "@better-giving/endowment";
 import { NavLink, Outlet } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import { Plus } from "lucide-react";
@@ -13,7 +13,7 @@ export { clientLoader } from "api/cache";
 
 export { ErrorBoundary } from "components/error";
 export default function Media() {
-  const featuredPage = useCachedLoaderData<MediaPage>();
+  const featuredPage = useCachedLoaderData<IMediaPage>();
 
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">

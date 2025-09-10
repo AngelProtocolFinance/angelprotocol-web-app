@@ -1,9 +1,9 @@
-import type { Program } from "@better-giving/endowment";
+import type { IProgram } from "@better-giving/endowment";
 import { ver } from "api/api";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
 
-export const mockPrograms: Program[] = [
+export const mockPrograms: IProgram[] = [
   {
     id: "program-1",
     title: "Program 1",

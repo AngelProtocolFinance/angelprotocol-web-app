@@ -2,21 +2,19 @@ import { Buffer } from "node:buffer";
 import { data, redirect } from "@remix-run/react";
 import type { LoaderFunctionArgs } from "@vercel/remix";
 import { addDays } from "date-fns";
+import { search } from "helpers/https";
 import type { DetailedUser } from "types/auth";
 import { cognito, oauth } from ".server/auth";
 import { reg_cookie } from ".server/cookie";
-import { getUserBookmarks } from ".server/user-bookmarks";
-import { getUserNpos } from ".server/user-npos";
+import { user_bookmarks, user_npos } from ".server/user";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   /** handle oauth if applicable */
   const url = new URL(request.url);
-  const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state");
+  const { code, state, referrer } = search(url);
   const cookie_header = request.headers.get("Cookie");
 
   /** HANDLE REFERRAL START */
-  const referrer = url.searchParams.get("referrer");
   const rc = await reg_cookie.parse(cookie_header).then((x) => x || {});
 
   const prev_referrer = rc.referrer;
@@ -57,8 +55,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const duser: DetailedUser = {
     ...user,
-    bookmarks: getUserBookmarks(user.email),
-    orgs: getUserNpos(user.email),
+    bookmarks: user_bookmarks(user.email),
+    orgs: user_npos(user.email),
   };
 
   return data(duser, { headers });

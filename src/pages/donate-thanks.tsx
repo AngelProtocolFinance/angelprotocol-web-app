@@ -13,6 +13,7 @@ import Image from "components/image";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
+import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { type InferOutput, partial, safeParse } from "valibot";
 
@@ -21,11 +22,7 @@ interface DonationRecipientParam
   extends InferOutput<typeof donation_recipient_params> {}
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const url = new URL(request.url);
-  const recipient = safeParse(
-    partial(donationRecipient),
-    Object.fromEntries(url.searchParams.entries())
-  );
+  const recipient = safeParse(partial(donationRecipient), search(request));
   if (recipient.issues) return null;
   return recipient.output;
 };

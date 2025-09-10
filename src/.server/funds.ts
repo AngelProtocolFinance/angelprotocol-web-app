@@ -1,7 +1,7 @@
 import type {
-  FundsEndowMemberOfParams,
-  FundsPage,
-  FundsParams,
+  IFundsNpoMemberOfSearchObj,
+  IFundsPage,
+  IFundsSearchObj,
 } from "@better-giving/fundraiser";
 import type * as cs from "@better-giving/fundraiser/cloudsearch";
 import type { ToDoc } from "@better-giving/types/cloudsearch";
@@ -11,10 +11,10 @@ const HITS_PER_PAGE = 25;
 
 type FundHit = ToDoc<cs.CloudsearchFund>;
 
-export const getFunds = async ({
+export const get_funds = async ({
   query = "",
   page = 1,
-}: FundsParams): Promise<FundsPage> => {
+}: IFundsSearchObj): Promise<IFundsPage> => {
   const filters = [`env:'${env}'`, "active:1", "featured:1"];
   const q = (() => {
     if (!query) {
@@ -48,29 +48,29 @@ export const getFunds = async ({
     return {
       items: [],
       page: 1,
-      numPages: 1,
+      pages: 1,
     };
   }
 
   return {
     items: hits.map((hit: any) => hitToItem(hit.fields)),
     page,
-    numPages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
+    pages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
   };
 };
 
-export const getFundsNpoMemberOf = async (
+export const get_funds_npo_memberof = async (
   endowId: number,
-  params: FundsEndowMemberOfParams
+  params: IFundsNpoMemberOfSearchObj
 ) => {
   const _filters = [`env:'${env}'`].concat(
-    params.npoProfileFeatured ? ["active:1"] : []
+    params.npo_profile_featured ? ["active:1"] : []
   );
 
   const { c, m, ...rest } = {
     c: `creator_id:'${endowId}'`,
     m: `members:'${endowId}'`,
-    ...(params.npoProfileFeatured && {
+    ...(params.npo_profile_featured && {
       expiry: `expiration:['${new Date().toISOString()}',}`,
       onlyMember: `members_csv:'${endowId}'`,
     }),

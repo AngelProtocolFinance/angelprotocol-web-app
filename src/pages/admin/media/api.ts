@@ -1,82 +1,80 @@
+import { media_ksuid } from "@better-giving/endowment/schema";
+import { $int_gte1 } from "@better-giving/schemas";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { ap, ver } from "api/api";
-import { getMedia } from "api/get/media";
-import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
+import { search } from "helpers/https";
 import { parse } from "valibot";
 import { schema } from "./video-editor";
-import { cognito, toAuth } from ".server/auth";
+import { npodb } from ".server/aws/db";
+import { admin_checks, is_resp } from ".server/utils";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
-  const endowId = parse(plusInt, params.id);
-  return getMedia(endowId, { featured: true, type: "video", limit: 3 });
+  const endowId = parse($int_gte1, params.id);
+  return npodb.npo_media(endowId, { featured: true, type: "video", limit: 3 });
 };
 export const allVideos: LoaderFunction = async ({ request, params }) => {
-  const url = new URL(request.url);
-  const nextPageKey = url.searchParams.get("nextPageKey") ?? undefined;
-  const endowId = parse(plusInt, params.id);
-  return getMedia(endowId, {
+  const { nextPageKey: next } = search(request);
+  const endowId = parse($int_gte1, params.id);
+  const page = await npodb.npo_media(endowId, {
     type: "video",
-    limit: 10,
-    nextPageKey: nextPageKey,
+    limit: 5,
+    next,
   });
+  return page;
 };
 
-export const videosAction: LoaderFunction = async ({ params, request }) => {
-  const endowId = parse(plusInt, params.id);
+export const videosAction: LoaderFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
 
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const fv = await request.formData();
+  const fv = await adm.req.formData();
   const intent = fv.get("intent") as "feature" | "delete";
   const featured = fv.get("featured") === "1";
-  const mediaId = fv.get("mediaId");
+  const mid = parse(media_ksuid, fv.get("mediaId"));
 
-  const path = `${ver(1)}/endowments/${endowId}/media/${mediaId}`;
-  const res =
-    intent === "feature"
-      ? await ap.patch(path, {
-          headers: { authorization: user.idToken },
-          json: { featured: !featured },
-        })
-      : await ap.delete(path, {
-          headers: { authorization: user.idToken },
-        });
+  const prev = await npodb.npo_med(adm.id, mid);
+  if (!prev) return { status: 404 };
 
-  return { ok: res.ok };
+  if (intent === "feature") {
+    await npodb.npo_med_update(adm.id, prev, {
+      featured: !featured,
+    });
+    return { ok: true };
+  }
+
+  await npodb.npo_med_delete(adm.id, prev.id);
+  return { ok: true };
 };
 
-export const newAction: ActionFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const fv = await request.formData();
+export const newAction: ActionFunction = async (x) => {
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+  const fv = await adm.req.formData();
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
-  await ap.post(`${ver(1)}/endowments/${params.id}/media`, {
-    headers: { authorization: user.idToken },
-    body: payload.value.url,
-  });
+  await npodb.npo_med_put(adm.id, payload.value.url);
+
   return redirect("..");
 };
 
-export const editAction: ActionFunction = async ({ params, request }) => {
-  const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
-
-  const fv = await request.formData();
+export const editAction: ActionFunction = async (x) => {
+  const mid = parse(media_ksuid, x.params.mediaId);
+  const adm = await admin_checks(x);
+  if (is_resp(adm)) return adm;
+  const fv = await adm.req.formData();
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
-  await ap.patch(`${ver(1)}/endowments/${params.id}/media/${params.mediaId}`, {
-    headers: { authorization: user.idToken },
-    json: { url: payload.value.url },
+  const m = await npodb.npo_med(adm.id, mid);
+  if (!m) return { status: 404 };
+
+  await npodb.npo_med_update(adm.id, m, {
+    url: payload.value.url,
   });
 
   return redirect("..");

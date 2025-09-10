@@ -1,7 +1,7 @@
-import type { EndowUpdate } from "@better-giving/endowment";
+import type { INpoUpdate } from "@better-giving/endowment";
 import {
   MAX_RECEIPT_MSG_CHAR,
-  incrementLabelMaxChars,
+  increment_label_max_chars,
 } from "@better-giving/endowment/schema";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
@@ -11,7 +11,7 @@ import { useCachedLoaderData } from "api/cache";
 import { DonateMethods, fill } from "components/donate-methods";
 import { CheckField, Form as F, Field } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import Increments from "components/increments";
+import { Increments } from "components/increments";
 import { BG_ID } from "constants/common";
 import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
@@ -89,7 +89,7 @@ export default function Form() {
               "BG donation flow should not show BG tip screen"
             );
           }
-          const update: EndowUpdate = {
+          const update: INpoUpdate = {
             ...fv,
             fund_opt_in: fundOptIn,
             target: toTarget(fvTarget),
@@ -238,7 +238,7 @@ export default function Form() {
                 data-error={!!errors.increments?.[idx]?.label?.message}
                 className="mt-1 text-left text-xs data-[error='true']:text-red"
               >
-                {incs[idx].label.length}/{incrementLabelMaxChars}
+                {incs[idx].label.length}/{increment_label_max_chars}
               </p>
             </HuiField>
           </>

@@ -6,6 +6,7 @@ import {
 } from "@vercel/remix";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
+import { search } from "helpers/https";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
 import { cognito } from ".server/auth";
@@ -16,9 +17,9 @@ export const loader: LoaderFunction = async ({
   const { user } = await cognito.retrieve(request);
   if (user) return redirect(appRoutes.marketplace);
 
-  const url = new URL(request.url);
-  const email = url.searchParams.get("email");
+  const { email } = search(request);
   if (!email) return redirect(appRoutes.signup);
+
   return email;
 };
 

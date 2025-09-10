@@ -1,7 +1,7 @@
-import type { Endow } from "@better-giving/endowment/db";
+import type { INpoDb } from "@better-giving/endowment";
 
 export type EndowContentFromReg = Pick<
-  Endow.DbRecord,
+  INpoDb,
   | "active_in_countries"
   | "endow_designation"
   | "fiscal_sponsored"
@@ -13,9 +13,5 @@ export type EndowContentFromReg = Pick<
   | "claimed"
   | "referrer"
   | "referrer_expiry"
-  | "gsi1PK"
-  | "gsi1SK"
-  | "gsi2PK"
-  | "gsi2SK"
   | "referral_id"
 >;
