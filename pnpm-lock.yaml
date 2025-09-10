@@ -29,9 +29,6 @@ importers:
       '@better-giving/balance':
         specifier: 2.0.5
         version: 2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)
-      '@better-giving/balance-tx':
-        specifier: 1.1.8
-        version: 1.1.8(@better-giving/types@1.1.8)
       '@better-giving/balance-txs':
         specifier: 2.0.5
         version: 2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.7.3))
@@ -68,9 +65,6 @@ importers:
       '@better-giving/nowpayments':
         specifier: 1.1.2
         version: 1.1.2
-      '@better-giving/payout':
-        specifier: 1.1.4
-        version: 1.1.4
       '@better-giving/payouts':
         specifier: 2.0.5
         version: 2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)
@@ -656,11 +650,6 @@ packages:
   '@better-giving/assets@1.0.33':
     resolution: {integrity: sha512-Ck0YlJERMG1D16IS6i/p6vd/sZDONU5YL+H7W5c3PlS3ay74yXEeeeZjvlgORyuyWbtHm8vAZJYtBBX9B1wcmg==}
 
-  '@better-giving/balance-tx@1.1.8':
-    resolution: {integrity: sha512-2hqz8rwj0+HVc0SCrCkF+0Otlnhn1QF5dsK/1sdbv65mOhOajWkPkVrjYJ9GOjODBwIsUTpw3HUfBDINrtJWqw==}
-    peerDependencies:
-      '@better-giving/types': 1.1.8
-
   '@better-giving/balance-txs@2.0.5':
     resolution: {integrity: sha512-9K6oeNminNM2CNFShhwnHLTKxNXmAAo9ex6v00rw0sABR2jZ3W9YqiYt8NL2e6gi1T+HkLTJZphPhWqFzg0rIw==}
     peerDependencies:
@@ -748,9 +737,6 @@ packages:
 
   '@better-giving/nowpayments@1.1.2':
     resolution: {integrity: sha512-sBx7YxseKKwG4DqHOx67tL9tXhw3rrQduzvQmJmzW17n5onLW/+OtHkSUktTPurL7+GqbJ4NWeqaKJSLuCNueA==}
-
-  '@better-giving/payout@1.1.4':
-    resolution: {integrity: sha512-CHYK6rioqPU9kQu3Wd/hQ0bMTCZg0Qep6EGqp7uUZorBY8LJO3x4rni8UDDVqUxOmQ/OjWsyk/UATrGCgDifWw==}
 
   '@better-giving/payouts@2.0.5':
     resolution: {integrity: sha512-0It6go3vIsdPWextXubzP8OnvuuE6w0QJDujO/jO7AJLd/MfJSqFjvUKmL/woGQm3fJcB2I+msG8vE+RbtvTAg==}
@@ -6051,10 +6037,6 @@ snapshots:
 
   '@better-giving/assets@1.0.33': {}
 
-  '@better-giving/balance-tx@1.1.8(@better-giving/types@1.1.8)':
-    dependencies:
-      '@better-giving/types': 1.1.8
-
   '@better-giving/balance-txs@2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.7.3))':
     dependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
@@ -6130,8 +6112,6 @@ snapshots:
       valibot: 0.42.0(typescript@5.7.3)
 
   '@better-giving/nowpayments@1.1.2': {}
-
-  '@better-giving/payout@1.1.4': {}
 
   '@better-giving/payouts@2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.5(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)':
     dependencies:
