@@ -1,27 +1,19 @@
-import type {
-  EndowsQueryParamsParsed,
-  INposPage,
-} from "@better-giving/endowment";
+import type { INposPage, INposSearchObj } from "@better-giving/endowment";
 import { env } from "./env";
 import { typesense_npos } from "./sdks";
 
 const HITS_PER_PAGE = 20;
 
-export async function getNpos(
-  params: EndowsQueryParamsParsed
-): Promise<INposPage> {
+export async function get_npos(params: INposSearchObj): Promise<INposPage> {
   const { fields, query: q, page = 1, ...p } = params;
 
-  // Build filter conditions for Typesense
-  const filter_by = buildFilterBy(p);
-  // Build search query
+  const filters = filters_fn(p);
 
-  // Construct Typesense search request
   const search_params = new URLSearchParams({
     q: q || "*",
     query_by: "name,tagline,registration_number",
     query_by_weights: "3,2,1",
-    filter_by,
+    filter_by: filters,
     sort_by: q ? "_text_match:desc" : "claimed:desc,name:asc",
     per_page: HITS_PER_PAGE.toString(),
     page: page.toString(),
@@ -61,9 +53,7 @@ const f = <T extends any[]>(i: T | undefined, exp: (v: string) => string) => {
   return (i || []).map(exp).join(" || ");
 };
 
-function buildFilterBy(
-  params: Omit<EndowsQueryParamsParsed, "fields" | "page">
-): string {
+function filters_fn(params: Omit<INposSearchObj, "fields" | "page">): string {
   const f1 = [
     `env:=${env}`,
     "published:=true",

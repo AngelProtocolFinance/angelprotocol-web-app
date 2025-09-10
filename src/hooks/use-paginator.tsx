@@ -53,6 +53,7 @@ export function use_paginator<I>({
       return emt?.({ classes: c }) || <Info classes={c}>No records found</Info>;
     }
     return t({
+      classes: c,
       items: is,
       load_next: n ? gl(l, n) : undefined,
       disabled: s !== "idle",

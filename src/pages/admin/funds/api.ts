@@ -1,6 +1,6 @@
 import { UpdateBuilder } from "@better-giving/db";
 import type { INpo } from "@better-giving/endowment";
-import { FundDb, type FundItem } from "@better-giving/fundraiser";
+import { FundDb, type IFundItem } from "@better-giving/fundraiser";
 import { fund_id } from "@better-giving/fundraiser/schema";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import type { ActionData } from "types/action";
@@ -12,7 +12,7 @@ import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   user: UserV2;
-  funds: FundItem[];
+  funds: IFundItem[];
   endow: INpo;
 }
 

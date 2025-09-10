@@ -1,17 +1,14 @@
-import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
+import { npos_search } from "@better-giving/endowment/schema";
 import type { LoaderFunction } from "@vercel/remix";
-import { search } from "helpers/https";
+import { resp, search } from "helpers/https";
 import { safeParse } from "valibot";
-import { getNpos } from ".server/npos";
+import { get_npos } from ".server/npos";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const params = safeParse(endowsQueryParams, search(request));
+  const params = safeParse(npos_search, search(request));
+  if (params.issues) return resp.err(400, params.issues[0].message);
 
-  if (params.issues) {
-    return new Response(params.issues[0].message, { status: 400 });
-  }
-  const page = await getNpos(params.output);
-  return new Response(JSON.stringify(page), {
-    headers: { "Content-Type": "application/json" },
-  });
+  const page = await get_npos(params.output);
+
+  return resp.json(page);
 };

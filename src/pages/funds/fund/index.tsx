@@ -1,4 +1,4 @@
-import { MAX_EXPIRATION } from "@better-giving/fundraiser/schema";
+import { MAX_EXPIRATION_ISO } from "@better-giving/fundraiser/schema";
 import { Link, NavLink } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
@@ -41,7 +41,7 @@ export default function Fund() {
   const { url, ...fund } = useCachedLoaderData() as LoaderData;
 
   const status = statusFn(
-    fund.expiration ?? MAX_EXPIRATION,
+    fund.expiration ?? MAX_EXPIRATION_ISO,
     fund.active,
     fund.donation_total_usd
   );
@@ -197,7 +197,7 @@ function DonateSection(props: IDonateSection) {
       <NavLink
         aria-disabled={
           !statusFn(
-            props.expiration ?? MAX_EXPIRATION,
+            props.expiration ?? MAX_EXPIRATION_ISO,
             props.active,
             props.donation_total_usd
           ).active

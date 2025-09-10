@@ -1,4 +1,4 @@
-import { MAX_EXPIRATION } from "@better-giving/fundraiser/schema";
+import { MAX_EXPIRATION_ISO } from "@better-giving/fundraiser/schema";
 import { formatDistance } from "date-fns";
 import { unpack } from "helpers/unpack";
 
@@ -14,7 +14,7 @@ export const status = (
 ): IStatus => {
   if (!active) return { active: false, text: "closed" };
 
-  if (!expiry || expiry === MAX_EXPIRATION) return { active: true };
+  if (!expiry || expiry === MAX_EXPIRATION_ISO) return { active: true };
 
   const now = new Date();
   if (now.toISOString() > expiry)

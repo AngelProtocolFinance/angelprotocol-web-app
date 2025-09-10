@@ -1,6 +1,6 @@
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
-import { getNpos } from ".server/npos";
+import { get_npos } from ".server/npos";
 
 export { default } from "./donor-info";
 
@@ -12,6 +12,6 @@ export const meta: MetaFunction = () =>
   });
 
 export const loader: LoaderFunction = async () => {
-  const page = await getNpos({ page: 1, claimed: [true], query: "" });
+  const page = await get_npos({ page: 1, claimed: [true], query: "" });
   return page;
 };

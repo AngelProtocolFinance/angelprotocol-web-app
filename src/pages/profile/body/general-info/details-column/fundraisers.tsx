@@ -1,4 +1,4 @@
-import type { FundItem } from "@better-giving/fundraiser";
+import type { IFundItem } from "@better-giving/fundraiser";
 import { Link, NavLink, useLoaderData } from "@remix-run/react";
 import { toText } from "components/rich-text";
 import { Target, toTarget } from "components/target";
@@ -26,7 +26,7 @@ export function Fundraisers({ classes = "" }: Props) {
   );
 }
 
-function Fund(props: FundItem) {
+function Fund(props: IFundItem) {
   return (
     <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 py-2">
       <img
