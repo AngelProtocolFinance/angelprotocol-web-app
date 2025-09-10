@@ -51,7 +51,7 @@ export function use_requirements(args: Input | null) {
   const req = useSWR(args, requirements);
 
   async function update_requirements(payload: ReqUpdateInput) {
-    const reqs = await fetch(
+    const res = await fetch(
       `/api/wise/v1/quotes/${payload.quoteId}/account-requirements`,
       {
         headers: {
@@ -61,7 +61,9 @@ export function use_requirements(args: Input | null) {
         body: JSON.stringify(payload.request),
         method: "POST",
       }
-    ).then<AccountRequirements[]>((res) => res.json());
+    );
+
+    if (!res.ok) return;
 
     req.mutate(
       { quoteId: payload.quoteId, requirements: reqs },
