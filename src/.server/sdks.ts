@@ -4,6 +4,7 @@ import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
 import { Client, Receiver } from "@upstash/qstash";
+import ky from "ky";
 import Stripe from "stripe";
 import {
   anvil_envs,
@@ -13,6 +14,7 @@ import {
   npEnvs,
   qtash_envs,
   stripeEnvs,
+  typesense_envs,
   wiseApiToken,
 } from "./env";
 
@@ -38,3 +40,19 @@ export const qstash_receiver = new Receiver({
 export const anvil = new Anvil({
   apiKey: anvil_envs.api_key,
 });
+
+const typesense = ky.create({
+  prefixUrl: typesense_envs.endpoint,
+  headers: {
+    "X-TYPESENSE-API-KEY": typesense_envs.api_key,
+    "Content-Type": "application/json",
+  },
+  throwHttpErrors: false,
+});
+
+export const typesense_funds = typesense.extend((x) => ({
+  prefixUrl: `${x.prefixUrl}/collections/funds`,
+}));
+export const typesense_npos = typesense.extend((x) => ({
+  prefixUrl: `${x.prefixUrl}/collections/npos`,
+}));

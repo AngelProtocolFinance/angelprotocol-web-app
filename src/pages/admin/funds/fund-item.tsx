@@ -1,13 +1,14 @@
-import type { FundItem as TFundItem } from "@better-giving/fundraiser";
+import type { IFundItem } from "@better-giving/fundraiser";
 import { Link, NavLink, useFetcher } from "@remix-run/react";
 import { FundCreator, FundStatus, statusFn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
+import { fromUnixTime } from "date-fns";
 import { useActionResult } from "hooks/use-action-result";
 import { LoaderCircle, Split } from "lucide-react";
 import type { ActionData } from "types/action";
 
-interface Props extends TFundItem {
+interface Props extends IFundItem {
   isSelf: boolean;
   isEditor: boolean;
 }
@@ -15,7 +16,7 @@ export const FundItem = (props: Props) => {
   const fetcher = useFetcher<ActionData>({ key: `fund-${props.id}` });
   useActionResult(fetcher.data);
   const status = statusFn(
-    props.expiration,
+    fromUnixTime(props.expiration).toISOString(),
     props.active,
     props.donation_total_usd
   );

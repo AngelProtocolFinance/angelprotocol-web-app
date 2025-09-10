@@ -1,4 +1,4 @@
-import type { FundItem } from "@better-giving/fundraiser";
+import type { IFundItem } from "@better-giving/fundraiser";
 import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/image";
@@ -18,7 +18,7 @@ export default function Card({
   verified,
   donation_total_usd,
   target,
-}: FundItem) {
+}: IFundItem) {
   return (
     <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none grid grid-rows-subgrid row-span-4">
       <NavLink

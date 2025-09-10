@@ -1,4 +1,4 @@
-import type { FundItem as TFundItem } from "@better-giving/fundraiser";
+import type { IFundItem } from "@better-giving/fundraiser";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { Link } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
@@ -57,7 +57,7 @@ export default function Funds() {
 interface IItems {
   endowId: number;
   creatorType: CreatorType;
-  funds: TFundItem[];
+  funds: IFundItem[];
   user: UserV2;
 }
 function items({ funds, creatorType, endowId, user }: IItems) {

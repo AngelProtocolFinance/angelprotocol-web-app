@@ -1,4 +1,4 @@
-import type { EndowsQueryParams } from "@better-giving/endowment";
+import type { INposSearch } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import Image from "components/image";
 import { ErrorStatus, Info, LoadingStatus } from "components/status";
@@ -16,7 +16,7 @@ const fetcher = async ({
   query = "",
   page = "1",
   fund_opt_in = "true",
-}: EndowsQueryParams) => {
+}: INposSearch) => {
   const search = new URLSearchParams({
     query,
     page,

@@ -1,11 +1,8 @@
-import type {
-  EndowsQueryParams,
-  EndowsQueryParamsParsed,
-} from "@better-giving/endowment";
+import type { INposSearch, INposSearchObj } from "@better-giving/endowment";
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
 import * as v from "valibot";
 
-export const toRaw = (p: EndowsQueryParamsParsed): URLSearchParams => {
+export const toRaw = (p: INposSearchObj): URLSearchParams => {
   const params = new URLSearchParams();
   for (const [k, v] of Object.entries(toFlat(p))) {
     if (v) params.set(k, v as any);
@@ -13,8 +10,8 @@ export const toRaw = (p: EndowsQueryParamsParsed): URLSearchParams => {
   return params;
 };
 
-export const toFlat = (p: EndowsQueryParamsParsed): EndowsQueryParams => {
-  const raw: EndowsQueryParams = {
+export const toFlat = (p: INposSearchObj): INposSearch => {
+  const raw: INposSearch = {
     page: p.page?.toString(),
     query: p.query,
     sdgs: p.sdgs?.join(","),
@@ -26,7 +23,7 @@ export const toFlat = (p: EndowsQueryParamsParsed): EndowsQueryParams => {
   return raw;
 };
 
-export const toParsed = (raw: URLSearchParams): EndowsQueryParamsParsed => {
+export const toParsed = (raw: URLSearchParams): INposSearchObj => {
   const obj: any = {};
   for (const [k, v] of raw.entries()) {
     obj[k] = v;

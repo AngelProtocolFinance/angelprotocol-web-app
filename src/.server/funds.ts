@@ -3,48 +3,53 @@ import type {
   IFundsPage,
   IFundsSearchObj,
 } from "@better-giving/fundraiser";
-import type * as cs from "@better-giving/fundraiser/cloudsearch";
-import type { ToDoc } from "@better-giving/types/cloudsearch";
-import { cloudsearchFundsSearchEndpoint, env } from "./env";
+import { env } from "./env";
+import { typesense_funds } from "./sdks";
 
 const HITS_PER_PAGE = 25;
 
-type FundHit = ToDoc<cs.CloudsearchFund>;
+const now_fn = () => Math.floor(Date.now() / 1000);
 
 export const get_funds = async ({
   query = "",
   page = 1,
 }: IFundsSearchObj): Promise<IFundsPage> => {
-  const filters = [`env:'${env}'`, "active:1", "featured:1"];
-  const q = (() => {
-    if (!query) {
-      return `expiration:['${new Date().toISOString()}',}`;
-    }
-    // Escape single quotes in the query string
-    const safeQ = query.replace(/'/g, "\\'");
-    return `(and (or name:'${safeQ}' description:'${safeQ}') expiration:['${new Date().toISOString()}',})`;
-  })();
+  const filters = [
+    `env:=${env}`,
+    "active:=true",
+    "featured:=true",
+    `expiration:>=${now_fn()}`,
+  ].join(" && ");
 
-  const startAt = (page - 1) * HITS_PER_PAGE;
+  // Build search query - if no query, search all with date filter
+  const q = query || "*";
+  // Construct Typesense search request
+  const search_params = new URLSearchParams({
+    q,
+    filter_by: filters,
+    sort_by: query ? "_text_match:desc,name:asc" : "name:asc",
+    per_page: HITS_PER_PAGE.toString(),
+    page: page.toString(),
+  });
 
-  // Construct search parameters
-  const endpoint = new URL(cloudsearchFundsSearchEndpoint);
-  endpoint.pathname = "/2013-01-01/search";
-  endpoint.searchParams.set("q", q);
-  endpoint.searchParams.set("q.parser", "structured");
-  endpoint.searchParams.set("fq", `(and ${filters.join(" ")})`);
-  endpoint.searchParams.set("sort", "name asc");
-  endpoint.searchParams.set("size", HITS_PER_PAGE.toString());
-  endpoint.searchParams.set("start", startAt.toString());
+  if (query) {
+    search_params.set("query_by", "name,description,creator_name");
+    search_params.set("query_by_weights", "3,2,1");
+  }
 
-  const res = await fetch(endpoint);
+  // Make request to Typesense
+
+  const res = await typesense_funds.get("documents/search", {
+    searchParams: search_params,
+  });
+
   if (!res.ok) throw res;
 
-  const result = await res.json();
-  const hits = result.hits?.hit || [];
-  const found = result.hits?.found;
+  const result: any = await res.json();
+  const hits = result.hits || [];
+  const found = result.found || 0;
 
-  if (hits.length === 0) {
+  if (hits.length === 0 && !found) {
     return {
       items: [],
       page: 1,
@@ -53,9 +58,9 @@ export const get_funds = async ({
   }
 
   return {
-    items: hits.map((hit: any) => hitToItem(hit.fields)),
+    items: hits.map((hit: any) => hit.document),
     page,
-    pages: Math.ceil((found ?? 1) / HITS_PER_PAGE),
+    pages: Math.ceil(found / HITS_PER_PAGE),
   };
 };
 
@@ -63,59 +68,46 @@ export const get_funds_npo_memberof = async (
   endowId: number,
   params: IFundsNpoMemberOfSearchObj
 ) => {
-  const _filters = [`env:'${env}'`].concat(
-    params.npo_profile_featured ? ["active:1"] : []
-  );
+  // Build filter conditions
+  const filters = [
+    `env:=${env}`,
+    `(creator_id:=${endowId} || members:=${endowId})`,
+  ];
 
-  const { c, m, ...rest } = {
-    c: `creator_id:'${endowId}'`,
-    m: `members:'${endowId}'`,
-    ...(params.npo_profile_featured && {
-      expiry: `expiration:['${new Date().toISOString()}',}`,
-      onlyMember: `members_csv:'${endowId}'`,
-    }),
-  };
-  const q = `(and (or ${c} ${m}) ${Object.values(rest)
-    .filter((f) => f)
-    .join(" ")})`;
+  // Add featured filter if requested
+  if (params.npo_profile_featured) {
+    filters.push("active:=true");
+    // Add expiration filter - funds that haven't expired
+    filters.push(`expiration:>=${now_fn()}`);
+    // Add "only member" filter - equivalent to members_csv in CloudSearch
+    filters.push(`members_csv:=${endowId}`);
+  }
 
-  const endpoint = new URL(cloudsearchFundsSearchEndpoint);
-  endpoint.pathname = "/2013-01-01/search";
-  endpoint.searchParams.set("q", q);
-  endpoint.searchParams.set("q.parser", "structured");
-  endpoint.searchParams.set("fq", `(and ${_filters.join(" ")})`);
-  endpoint.searchParams.set("sort", "active desc, expiration desc");
-  endpoint.searchParams.set("size", HITS_PER_PAGE.toString());
-  endpoint.searchParams.set("start", "0");
+  const filter_by = filters.join(" && ");
 
-  const res = await fetch(endpoint);
+  // Sort by active status first, then expiration
+  const sort_by = "active:desc,expiration:desc";
+
+  const search_params = new URLSearchParams({
+    q: "*",
+    filter_by,
+    sort_by,
+    per_page: HITS_PER_PAGE.toString(),
+    page: "1",
+    use_cache: "true",
+  });
+
+  // Make request to Typesense
+  const res = await typesense_funds.get("documents/search", {
+    searchParams: search_params,
+  });
+
   if (!res.ok) throw res;
 
-  const result = await res.json();
+  const result: any = await res.json();
+  const hits = result.hits || [];
 
-  const hits = result.hits?.hit || [];
   if (hits.length === 0) return [];
 
-  return hits.map((hit: any) => hitToItem(hit.fields));
-};
-
-export const hitToItem = (hit: FundHit) => {
-  const item: cs.CloudsearchFund = {
-    id: hit.id,
-    name: hit.name,
-    description: hit.description,
-    env: hit.env,
-    logo: hit.logo,
-    banner: hit.banner,
-    featured: hit.featured === "1",
-    active: hit.active === "1",
-    verified: hit.verified === "1",
-    donation_total_usd: Number.parseFloat(hit.donation_total_usd),
-    expiration: hit.expiration,
-    members: (hit.members || []).map((m) => Number.parseInt(m, 10)),
-    target: hit.target,
-    creator_id: hit.creator_id,
-    creator_name: hit.creator_name,
-  };
-  return item;
+  return hits.map((hit: any) => hit.document);
 };

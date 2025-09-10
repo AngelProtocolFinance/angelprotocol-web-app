@@ -5,7 +5,7 @@ import { search } from "helpers/https";
 import type { EndowmentOption } from "types/npo";
 import * as v from "valibot";
 import { npodb } from ".server/aws/db";
-import { getNpos } from ".server/npos";
+import { get_npos } from ".server/npos";
 
 export interface WidgetData {
   base_url: string;
@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const routeEndowId = v.parse(v.optional($int_gte1), params.id);
   const id = selectedId ?? routeEndowId;
 
-  const endowsPage = getNpos({
+  const page1 = get_npos({
     query,
     page: 1,
     fields: ["id", "name"],
@@ -36,6 +36,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return {
     base_url: url.origin,
     endow: id ? await npodb.npo(id) : undefined,
-    endows: await endowsPage.then((page) => page.items),
+    endows: await page1.then((page) => page.items),
   } satisfies WidgetData;
 };

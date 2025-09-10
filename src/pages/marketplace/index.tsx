@@ -13,7 +13,7 @@ import { Cards } from "./cards";
 import Hero from "./hero";
 import hero from "./hero.webp?url";
 import Toolbar from "./toolbar";
-import { getNpos } from ".server/npos";
+import { get_npos } from ".server/npos";
 
 export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
@@ -23,7 +23,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     return { status: 400, body: params.issues[0].message };
   }
 
-  const page = await getNpos(params.output);
+  const page = await get_npos(params.output);
   return page;
 };
 
