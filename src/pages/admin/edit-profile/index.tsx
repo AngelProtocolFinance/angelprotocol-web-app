@@ -2,6 +2,7 @@ import type { LinksFunction } from "@vercel/remix";
 import { useCachedLoaderData } from "api/cache";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles, toContent } from "components/rich-text";
+import { sans_https } from "helpers/https";
 import type { LoaderData } from "./api";
 import Form from "./form";
 import type { FV } from "./schema";
@@ -12,8 +13,6 @@ export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
-
-const sans_https = (x: string | undefined) => x && x.replace(/^https:\/\//, "");
 
 export { ErrorBoundary } from "components/error";
 export default function EditProfile() {

@@ -1,47 +1,36 @@
-import type { Init, Org } from "@better-giving/registration/models";
+import type { IReg } from "@better-giving/reg";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { sans_https } from "helpers/https";
 import { useController, useForm } from "react-hook-form";
 import { type FV, schema } from "./schema";
 
-function to_form(org: Org): FV {
-  return {
-    //level 1
-    website: org.website,
-    hq_country: org.hq_country,
-    designation: org.designation,
-    //general
-    active_in_countries: org.active_in_countries ?? [],
-  };
-}
-export const use_rhf = (org: Org | undefined, init: Init) => {
+export const use_rhf = (reg: IReg) => {
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
-    defaultValues: org
-      ? to_form(org)
-      : {
-          website: "",
-          hq_country: init.claim ? "United States" : "",
-          designation: "" as any,
-          active_in_countries: [],
-        },
+    defaultValues: {
+      o_website: sans_https(reg.o_website),
+      o_hq_country: reg.o_hq_country ?? "", // opt init display
+      o_designation: reg.o_designation ?? ("" as any), // opt init display
+      o_active_in_countries: reg.o_active_in_countries ?? [],
+    },
   });
 
   const { field: designation } = useController({
     control,
-    name: "designation",
+    name: "o_designation",
   });
   const { field: hq_country } = useController({
     control,
-    name: "hq_country",
+    name: "o_hq_country",
   });
   const { field: countries } = useController({
     control,
-    name: "active_in_countries",
+    name: "o_active_in_countries",
   });
 
   return {
@@ -52,5 +41,6 @@ export const use_rhf = (org: Org | undefined, init: Init) => {
     designation,
     hq_country,
     countries,
+    dirtyFields,
   };
 };

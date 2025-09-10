@@ -1,4 +1,5 @@
-import type { Update } from "@better-giving/registration/update";
+import type { IReg, TRegUpdate } from "@better-giving/reg";
+import { Progress } from "@better-giving/reg/progress";
 import { type OrgDesignation, org_designations } from "@better-giving/schemas";
 import {
   NavLink,
@@ -19,24 +20,21 @@ import {
 } from "constants/countries";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import type { SubmitHandler } from "react-hook-form";
-import { stepLoader } from "../../data/step-loader";
+import { step_loader } from "../../data/step-loader";
 import { steps } from "../../routes";
-import { nextStep } from "../../routes";
-import type { RegStep2 } from "../../types";
-import { updateAction } from "../update-action";
+import { next_step } from "../../routes";
+import { update_action } from "../update-action";
 import type { FV } from "./schema";
 import { use_rhf } from "./use-rhf";
 export { ErrorBoundary } from "components/error";
-export const loader = stepLoader(2);
-export const action = updateAction(nextStep[2]);
 
-export default function Form() {
+export const loader = step_loader(2);
+export const action = update_action(next_step[2]);
+
+export default function Page() {
   const fetcher = useFetcher();
   const navigate = useNavigate();
-  const state = useLoaderData() as RegStep2;
-  const {
-    data: { init, org },
-  } = state;
+  const reg = useLoaderData() as IReg;
 
   const {
     register,
@@ -46,31 +44,29 @@ export default function Form() {
     designation,
     hq_country,
     countries,
-  } = use_rhf(org, init);
+    dirtyFields: df,
+  } = use_rhf(reg);
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && org) {
-      return navigate(`../${steps.fsaInquiry}`);
+    if (!isDirty && new Progress(reg).org) {
+      return navigate(`../${steps.fsa_inq}`);
     }
 
-    const update: Update = {
-      type: "org",
-      //payload
-      website: fv.website,
-      hq_country: fv.hq_country,
-      // required in schema
-      designation: fv.designation,
-      active_in_countries: fv.active_in_countries,
+    const update: TRegUpdate = {
+      update_type: "org",
     };
+
+    if (df.o_website) update.o_website = fv.o_website;
+    if (df.o_hq_country) update.o_hq_country = fv.o_hq_country;
+    if (df.o_designation) update.o_designation = fv.o_designation;
+    if (df.o_active_in_countries)
+      update.o_active_in_countries = fv.o_active_in_countries;
 
     fetcher.submit(update, {
       method: "PATCH",
-      action: ".",
       encType: "application/json",
     });
   };
-
-  // const { submit, isSubmitting } = useSubmit(data.org);
 
   return (
     <form className="w-full" onSubmit={handleSubmit(submit)}>
@@ -79,12 +75,12 @@ export default function Form() {
       </h2>
 
       <UrlInput
-        {...register("website")}
+        {...register("o_website")}
         label="Website of your organization"
         required
         classes={{ container: "mb-6 mt-4" }}
         placeholder="yourwebsite.com"
-        error={errors.website?.message}
+        error={errors.o_website?.message}
       />
 
       <Select<OrgDesignation>
@@ -96,18 +92,18 @@ export default function Form() {
         classes={{ options: "text-sm", container: "mt-4" }}
         options={org_designations as any}
         option_disp={(v) => v}
-        error={errors.designation?.message}
+        error={errors.o_designation?.message}
       />
 
       <Combo
         ref={hq_country.ref}
-        error={errors.hq_country?.message}
+        error={errors.o_hq_country?.message}
         value={hq_country.value}
         onChange={hq_country.onChange}
         required
         label="In what country is your organization registered in?"
         //endowment claims are US-based and shoudn't be changed by claimer
-        disabled={!!init.claim}
+        disabled={!!reg.claim}
         placeholder="Select a country"
         classes={{
           container: "mt-6 mb-2",
@@ -141,13 +137,13 @@ export default function Form() {
       </Label>
       <MultiCombo
         searchable
-        values={countries.value}
+        values={countries.value ?? []}
         on_change={countries.onChange}
         on_reset={() => countries.onChange([])}
         classes={{ options: "text-sm" }}
         options={cnames}
         option_disp={(c) => c}
-        error={errors.active_in_countries?.message}
+        error={errors.o_active_in_countries?.message}
         ref={countries.ref}
       />
 

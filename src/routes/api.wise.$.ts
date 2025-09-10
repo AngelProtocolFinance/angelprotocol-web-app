@@ -2,9 +2,6 @@ import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import { wise_envs } from ".server/env";
 
-const CONTENT_TYPE = "Content-Type";
-const MINOR_VERSION = "Accept-Minor-Version";
-
 export const loader: LoaderFunction = ({ request, params }) => {
   return handle_request(request, params);
 };
@@ -34,12 +31,11 @@ async function handle_request(
     const body = await request.text();
     const payload = body?.replace(/"{{profileId}}"/g, wise_envs.profile_id);
 
-    const minor_version = request.headers.get(MINOR_VERSION.toLowerCase());
-    const content_type = request.headers.get(CONTENT_TYPE.toLowerCase());
-    const h = new Headers();
-    h.set("Authorization", `Bearer ${wise_envs.api_token}`);
-    if (minor_version) h.set(MINOR_VERSION, minor_version);
-    if (content_type) h.set(CONTENT_TYPE, content_type);
+    const h = copy_headers(request.headers, [
+      "accept-minor-version",
+      "content-type",
+    ]);
+    h.set("authorization", `Bearer ${wise_envs.api_token}`);
 
     const res = await fetch(`${wise_envs.api_url}/${path}${url.search || ""}`, {
       method: METHOD,
@@ -54,3 +50,12 @@ async function handle_request(
     return resp.status(500);
   }
 }
+
+export const copy_headers = (source: Headers, names: string[]) => {
+  const h = new Headers();
+  for (const n of names) {
+    const v = source.get(n);
+    if (v) h.set(n, v);
+  }
+  return h;
+};

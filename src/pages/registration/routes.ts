@@ -1,17 +1,17 @@
-import type { RegStep } from "./types";
+import type { Progress } from "@better-giving/reg";
 
 export const steps = {
   contact: "1",
-  orgDetails: "2",
-  fsaInquiry: "3",
+  org_details: "2",
+  fsa_inq: "3",
   docs: "4",
   banking: "5",
   summary: "6",
 };
 
-export const nextStep: { [K in RegStep]: string } = {
-  1: steps.orgDetails,
-  2: steps.fsaInquiry,
+export const next_step: { [K in Progress["step"]]: string } = {
+  1: steps.org_details,
+  2: steps.fsa_inq,
   3: steps.docs,
   4: steps.banking,
   5: steps.summary,

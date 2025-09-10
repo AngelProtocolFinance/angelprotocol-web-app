@@ -1,28 +1,23 @@
-import type { Init } from "@better-giving/registration/models";
-import type { Update } from "@better-giving/registration/update";
+import type { TRegUpdate } from "@better-giving/reg";
 import { NavLink, useFetcher, useNavigate } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { useForm } from "react-hook-form";
 import { steps } from "../../routes";
 import type { FV } from "./types";
 
-interface Props extends Init {
-  irs501c3Prev?: boolean;
+interface Props {
+  is_501c3_prev?: boolean;
+  is_501c3_init?: boolean;
 }
 
-export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
+export function PossiblyTaxExempt({ is_501c3_prev, is_501c3_init }: Props) {
   const {
     handleSubmit,
     register,
     formState: { isDirty },
   } = useForm<FV>({
     defaultValues: {
-      irs501c3:
-        irs501c3Prev ||
-        /** US-based unclaimed endowments are authorized by default */
-        init.claim
-          ? "yes"
-          : "no",
+      irs501c3: is_501c3_prev || is_501c3_init ? "yes" : "no",
     },
   });
 
@@ -30,23 +25,20 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
   const isLoading = fetcher.state !== "idle";
   const navigate = useNavigate();
 
-  //orgs to claim are irs501c3 tax exempt
-  const optionsDisabled = !!init.claim;
-
   return (
     <form
       className="w-full"
       onSubmit={handleSubmit(async (fv) => {
-        if (!isDirty && irs501c3Prev !== undefined) {
+        if (!isDirty && is_501c3_prev != null) {
           return navigate(`../${steps.docs}`);
         }
 
         fetcher.submit(
           {
-            type: "fsa-inq",
-            irs501c3: fv.irs501c3 === "yes",
-          } satisfies Update,
-          { action: ".", method: "PATCH", encType: "application/json" }
+            update_type: "org_type",
+            o_type: fv.irs501c3 === "yes" ? "501c3" : "other",
+          } satisfies TRegUpdate,
+          { method: "PATCH", encType: "application/json" }
         );
       })}
     >
@@ -62,7 +54,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
             type="radio"
             {...register("irs501c3")}
             value={"yes" satisfies FV["irs501c3"]}
-            disabled={optionsDisabled}
+            disabled={is_501c3_init}
           />
         </div>
         <div className="flex items-center gap-1">
@@ -72,7 +64,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
             type="radio"
             {...register("irs501c3")}
             value={"no" satisfies FV["irs501c3"]}
-            disabled={optionsDisabled}
+            disabled={is_501c3_init}
           />
         </div>
       </div>
@@ -80,7 +72,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <NavLink
           aria-disabled={isLoading}
-          to={`../${steps.orgDetails}`}
+          to={`../${steps.org_details}`}
           className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back

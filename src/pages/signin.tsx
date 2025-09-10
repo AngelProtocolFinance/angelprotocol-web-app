@@ -41,7 +41,7 @@ export const action: ActionFunction = async ({ request }) => {
     const res = await cognito.initiate(
       payload.value.email.toLowerCase(),
       payload.value.password,
-      request.headers.get("Cookie")
+      request.headers.get("cookie")
     );
 
     if (isError(res)) {
