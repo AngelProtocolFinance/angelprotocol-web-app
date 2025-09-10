@@ -44,7 +44,7 @@ export const Form: FC<Props> = ({
         params.end_date ? new Date(params.end_date) : new Date()
       ),
       country: params.country ?? "",
-      status: params.status ?? "",
+      status: params.status || "02",
     },
   });
 
