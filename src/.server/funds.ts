@@ -3,18 +3,14 @@ import type {
   IFundsPage,
   IFundsSearchObj,
 } from "@better-giving/fundraiser";
-import type * as cs from "@better-giving/fundraiser/cloudsearch";
-import type { ToDoc } from "@better-giving/types/cloudsearch";
 import { env } from "./env";
 import { typesense_funds } from "./sdks";
 
 const HITS_PER_PAGE = 25;
 
-type FundHit = ToDoc<cs.CloudsearchFund>;
-
 const now_fn = () => Math.floor(Date.now() / 1000);
 
-export const getFunds = async ({
+export const get_funds = async ({
   query = "",
   page = 1,
 }: IFundsSearchObj): Promise<IFundsPage> => {
@@ -49,11 +45,7 @@ export const getFunds = async ({
 
   if (!res.ok) throw res;
 
-  const result = (await res.json()) as {
-    hits?: Array<{ document: FundHit }>;
-    found?: number;
-  };
-  console.log({ result });
+  const result: any = await res.json();
   const hits = result.hits || [];
   const found = result.found || 0;
 
@@ -112,9 +104,7 @@ export const get_funds_npo_memberof = async (
 
   if (!res.ok) throw res;
 
-  const result = (await res.json()) as {
-    hits?: Array<{ document: FundHit }>;
-  };
+  const result: any = await res.json();
   const hits = result.hits || [];
 
   if (hits.length === 0) return [];
