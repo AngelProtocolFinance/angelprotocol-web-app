@@ -1,10 +1,10 @@
-import { Link } from "@remix-run/react";
 import Copier from "components/copier";
 import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
+import { Link } from "react-router";
 import type { Donation } from "types/donations";
 import { AmountFlow } from "./amount-flow";
 

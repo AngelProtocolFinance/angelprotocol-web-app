@@ -1,10 +1,10 @@
-import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { Footer } from "components/footer";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
+import { useLoaderData } from "react-router";
+import type { LoaderFunction, MetaFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import { linkGroups } from "./constants";
 import { Header } from "./header";

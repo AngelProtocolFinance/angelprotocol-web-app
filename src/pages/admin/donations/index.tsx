@@ -1,16 +1,15 @@
-import { Outlet, useSearchParams } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { use_paginator } from "hooks/use-paginator";
+import { Outlet, useLoaderData, useSearchParams } from "react-router";
 import { use_admin_data } from "../use-admin-data";
 import { Allocation } from "./allocation";
 import type { LoaderData } from "./api";
 import DonationsTable from "./donations-table";
 export { ErrorBoundary } from "components/error";
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
+
 export default function Donations() {
   const [search] = useSearchParams();
-  const page1 = useCachedLoaderData() as LoaderData;
+  const page1 = useLoaderData() as LoaderData;
   const { node } = use_paginator({
     table: (props) => <DonationsTable {...props} />,
     page1,

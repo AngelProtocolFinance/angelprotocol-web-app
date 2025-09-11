@@ -1,8 +1,8 @@
-import { Link } from "@remix-run/react";
 import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import { Link } from "react-router";
 import type { Referred } from "types/referrals";
 
 interface Props {

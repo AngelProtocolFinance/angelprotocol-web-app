@@ -1,6 +1,6 @@
 import { MenuItem } from "@headlessui/react";
-import { NavLink } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
+import { NavLink } from "react-router";
 import { styles } from "./common";
 
 interface Props {

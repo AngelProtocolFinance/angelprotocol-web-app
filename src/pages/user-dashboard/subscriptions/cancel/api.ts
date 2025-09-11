@@ -1,4 +1,4 @@
-import { type ActionFunction, redirect } from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 import { stripe } from ".server/sdks";
 

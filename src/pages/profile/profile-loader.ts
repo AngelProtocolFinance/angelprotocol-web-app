@@ -1,5 +1,5 @@
 import { $int_gte1, segment } from "@better-giving/schemas";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { safeParse, union } from "valibot";
 import { npodb } from ".server/aws/db";
 

@@ -1,7 +1,7 @@
 import type { IBapp } from "@better-giving/banking-applications";
 import type { INpoPayoutsPage } from "@better-giving/payouts";
-import type { LoaderFunction } from "@vercel/remix";
 import { CronExpressionParser } from "cron-parser";
+import type { LoaderFunction } from "react-router";
 import { endowUpdate } from "../endow-update-action";
 import { baldb, bappdb, navdb, podb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";

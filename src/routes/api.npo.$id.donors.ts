@@ -1,7 +1,7 @@
 import { fund_id } from "@better-giving/fundraiser/schema";
 import { $int_gte1 } from "@better-giving/schemas";
-import type { LoaderFunction } from "@vercel/remix";
 import { search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { npoDonors } from ".server/npo-donors";
 

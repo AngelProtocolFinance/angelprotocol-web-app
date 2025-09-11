@@ -1,4 +1,3 @@
-import { useLocation } from "@remix-run/react";
 import {
   AuthBtns,
   AuthLinks,
@@ -8,6 +7,7 @@ import {
 import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
+import { useLocation } from "react-router";
 
 type Props = { classes?: string };
 

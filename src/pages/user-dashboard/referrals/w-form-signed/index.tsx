@@ -1,11 +1,6 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import {
-  Link,
-  useLoaderData,
-  useNavigate,
-  useNavigation,
-} from "@remix-run/react";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
+import { Link, useLoaderData, useNavigate, useNavigation } from "react-router";
 import type { LoaderData } from "./api";
 
 export { loader } from "./api";

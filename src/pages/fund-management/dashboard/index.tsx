@@ -1,6 +1,6 @@
-import { NavLink, Outlet, useNavigate } from "@remix-run/react";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import { NavLink, Outlet, useLoaderData, useNavigate } from "react-router";
 import {
   Cell,
   Legend,
@@ -13,13 +13,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { useCachedLoaderData } from "remix-client-cache";
 import type { LoaderData } from "./api";
 import { ticker_colors } from "./common";
 import { HistoryTable } from "./history-table";
 
 export { loader } from "./api";
-export { clientLoader } from "api/cache";
 
 function top_holders_fn(holders: Record<string, number>) {
   return Object.entries(holders)
@@ -29,7 +27,7 @@ function top_holders_fn(holders: Record<string, number>) {
 
 export default function Page() {
   const navigate = useNavigate();
-  const { ltd, logs, recent_logs } = useCachedLoaderData() as LoaderData;
+  const { ltd, logs, recent_logs } = useLoaderData() as LoaderData;
   const pie_data = Object.values(ltd.composition)
     .map((x) => ({
       ...x,

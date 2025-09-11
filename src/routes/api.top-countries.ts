@@ -1,6 +1,6 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { getISOWeek } from "date-fns";
 import { resp } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import { QueryCommand, apes } from ".server/aws/db";
 import { env } from ".server/env";
 

@@ -1,5 +1,5 @@
 import type { StripeDonation } from "@better-giving/donation";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import type Stripe from "stripe";
 import { cognito, toAuth } from ".server/auth";
 import { stripe } from ".server/sdks";

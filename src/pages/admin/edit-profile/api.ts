@@ -1,6 +1,6 @@
 import type { INpo } from "@better-giving/endowment";
 import { $int_gte1 } from "@better-giving/schemas";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { parse } from "valibot";
 import { endowUpdate } from "../endow-update-action";
 import { npodb } from ".server/aws/db";

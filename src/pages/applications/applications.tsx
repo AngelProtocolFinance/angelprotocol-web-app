@@ -1,8 +1,8 @@
 import type { IReg, IRegsPage } from "@better-giving/reg";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useLoaderData, useSearchParams } from "react-router";
 import { Filter } from "./filter";
 import { Table } from "./table";
 

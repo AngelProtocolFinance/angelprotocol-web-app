@@ -1,4 +1,4 @@
-import type { LinkDescriptor } from "@vercel/remix";
+import type { LinkDescriptor } from "react-router";
 
 import quill from "quill/dist/quill.snow.css?url";
 import rt from "./richtext.css?url";

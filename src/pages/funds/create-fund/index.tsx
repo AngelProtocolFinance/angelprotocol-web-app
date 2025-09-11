@@ -1,8 +1,6 @@
 import type { INpo } from "@better-giving/endowment";
 import type { IFundNew } from "@better-giving/fundraiser/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useFetcher, useLoaderData } from "@remix-run/react";
-import type { LinksFunction } from "@vercel/remix";
 import { Field, Form, Label } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import {
@@ -11,6 +9,7 @@ import {
 } from "components/img-editor";
 import { RichText, richTextStyles } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
+import { type LinksFunction, useFetcher, useLoaderData } from "react-router";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { EndowmentSelector } from "./endowment-selector";

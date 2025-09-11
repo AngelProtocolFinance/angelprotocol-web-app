@@ -1,5 +1,5 @@
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { appRoutes } from "constants/routes";
+import { type ActionFunction, redirect } from "react-router";
 import { isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
 

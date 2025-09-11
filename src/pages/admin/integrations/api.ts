@@ -1,5 +1,5 @@
 import { $int_gte1 } from "@better-giving/schemas";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import { parse } from "valibot";
 import { env } from ".server/env";
 import {

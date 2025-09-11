@@ -1,7 +1,7 @@
 import { npo_search } from "@better-giving/endowment/schema";
 import { $int_gte1, segment } from "@better-giving/schemas";
-import type { LoaderFunction } from "@vercel/remix";
 import { resp, search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { npodb } from ".server/aws/db";
 

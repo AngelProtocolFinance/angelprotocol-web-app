@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import type { PayoutsPage } from "types/referrals";
 import { cognito, toAuth } from ".server/auth";
 import { paidOut } from ".server/referrals";

@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import { podb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 

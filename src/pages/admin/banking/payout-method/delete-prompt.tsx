@@ -1,12 +1,12 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { search } from "helpers/https";
+import { CircleAlert, X } from "lucide-react";
 import {
   NavLink,
   useFetcher,
   useNavigate,
   useSearchParams,
-} from "@remix-run/react";
-import { search } from "helpers/https";
-import { CircleAlert, X } from "lucide-react";
+} from "react-router";
 
 type Props = {
   isDefault: boolean;

@@ -1,12 +1,6 @@
 import type { IReg, TRegUpdate } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
 import { type OrgDesignation, org_designations } from "@better-giving/schemas";
-import {
-  NavLink,
-  useFetcher,
-  useLoaderData,
-  useNavigate,
-} from "@remix-run/react";
 import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
 import { Label, UrlInput } from "components/form";
@@ -20,6 +14,7 @@ import {
 } from "constants/countries";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import type { SubmitHandler } from "react-hook-form";
+import { NavLink, useFetcher, useLoaderData, useNavigate } from "react-router";
 import { step_loader } from "../../data/step-loader";
 import { steps } from "../../routes";
 import { next_step } from "../../routes";

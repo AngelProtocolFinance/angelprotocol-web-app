@@ -1,7 +1,7 @@
-// import { useLoaderData } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { benefits } from "content/benefits";
 import { metas } from "helpers/seo";
+// import { useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "react-router";
 // import type { EndowmentCard } from "types/aws";
 import Benefits from "../../@sections/benefits";
 // import HeroBottom from "../../@sections/HeroBottom";

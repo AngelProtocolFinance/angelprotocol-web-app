@@ -1,5 +1,5 @@
 import type { IReg } from "@better-giving/reg";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import { NotTaxExempt } from "./not-tax-exempt";
 import { PossiblyTaxExempt } from "./possibly-tax-exempt";
 

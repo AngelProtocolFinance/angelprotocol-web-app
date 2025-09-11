@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { env, npEnvs } from ".server/env";
 
 export const loader: LoaderFunction = async ({ request, params }) => {

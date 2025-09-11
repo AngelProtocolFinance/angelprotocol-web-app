@@ -1,7 +1,7 @@
 import type { TRegUpdate } from "@better-giving/reg";
-import { NavLink, useFetcher, useNavigate } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { useForm } from "react-hook-form";
+import { NavLink, useFetcher, useNavigate } from "react-router";
 import { steps } from "../../routes";
 import type { FV } from "./types";
 

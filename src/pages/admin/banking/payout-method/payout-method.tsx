@@ -1,20 +1,18 @@
 import { priority_nums } from "@better-giving/banking-applications/schema";
-import { NavLink, Outlet, useFetcher } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import ExtLink from "components/ext-link";
 import { useActionResult } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
+import { NavLink, Outlet, useFetcher, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 
-export { clientLoader } from "api/cache";
 export {
   loader,
   prioritizeAction as action,
 } from "./api";
 export { ErrorBoundary } from "components/error";
 export default function PayoutMethod() {
-  const d = useCachedLoaderData() as LoaderData;
+  const d = useLoaderData() as LoaderData;
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
 

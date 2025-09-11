@@ -1,13 +1,13 @@
 import { Txs } from "@better-giving/db";
 import type { IFund, IFundSettings } from "@better-giving/fundraiser";
 import { fund_new } from "@better-giving/fundraiser/schema";
+import { adminRoutes, appRoutes } from "constants/routes";
+import { search } from "helpers/https";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
-import { adminRoutes, appRoutes } from "constants/routes";
-import { search } from "helpers/https";
+} from "react-router";
 import { isError } from "types/auth";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";

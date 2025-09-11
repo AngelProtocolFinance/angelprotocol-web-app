@@ -1,19 +1,17 @@
-import { Link, Outlet } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { toUsd } from "helpers/to-usd";
+import { Link, Outlet, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import { Status } from "./status";
 
 export { loader } from "./api";
-export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 
 export default function Page() {
-  const { subs } = useCachedLoaderData<LoaderData>();
+  const { subs } = useLoaderData<LoaderData>();
 
   const rows = subs.map((s) => {
     const can_cancel = s.status === "active" || s.status === "trialing";

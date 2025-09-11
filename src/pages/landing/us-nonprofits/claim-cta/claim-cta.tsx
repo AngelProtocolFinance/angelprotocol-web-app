@@ -1,6 +1,6 @@
-import { Link } from "@remix-run/react";
 import { appRoutes, regRoutes } from "constants/routes";
 import { useState } from "react";
+import { Link } from "react-router";
 import type { EndowmentOption } from "types/npo";
 import { EndowSelector } from "./endow-selector";
 

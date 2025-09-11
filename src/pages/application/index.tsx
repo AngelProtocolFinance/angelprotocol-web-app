@@ -1,7 +1,6 @@
-import { useLoaderData } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
 import { CircleAlert } from "lucide-react";
+import { type MetaFunction, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import Loaded from "./loaded";
 

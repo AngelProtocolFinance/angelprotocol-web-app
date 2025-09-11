@@ -1,7 +1,6 @@
-import { Outlet } from "@remix-run/react";
-import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
 import nProgressStyles from "nprogress/nprogress.css?url";
+import { type LinksFunction, type MetaFunction, Outlet } from "react-router";
 import ccbase from "vanilla-cookieconsent/dist/cookieconsent.css?url";
 import laira from "./assets/images/flying-character.webp";
 import cc from "./cookie-consent.css?url";

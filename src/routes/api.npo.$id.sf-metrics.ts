@@ -1,7 +1,7 @@
 import type { ISeriesPoint } from "@better-giving/nav-history";
 import { npo_series_opts } from "@better-giving/nav-history/schemas";
-import type { LoaderFunction } from "@vercel/remix";
 import { resp, search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import type { INpoMetrics, IPerfPoint } from "types/npo-sf-metrics";
 import { parse } from "valibot";
 import { navdb } from ".server/aws/db";

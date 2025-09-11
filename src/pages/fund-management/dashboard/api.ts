@@ -1,6 +1,6 @@
 import type { ILog, IPage } from "@better-giving/nav-history";
-import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 import { navdb } from ".server/aws/db";
 

@@ -1,10 +1,8 @@
-import { useFetcher } from "@remix-run/react";
-import { useCachedLoaderData } from "remix-client-cache";
+import { useFetcher, useLoaderData } from "react-router";
 import { TransferForm } from "../shared/transfer-form";
 import { transfer_action } from "../shared/transfer-form/transfer-action";
 import type { LoaderData } from "../shared/transfer-form/transfer-loader";
 
-export { clientLoader } from "api/cache";
 export { transfer_loader as loader } from "../shared/transfer-form/transfer-loader";
 export const action = transfer_action({
   liq: "../../savings",
@@ -12,7 +10,7 @@ export const action = transfer_action({
 });
 
 export default function Page() {
-  const data = useCachedLoaderData() as LoaderData;
+  const data = useLoaderData() as LoaderData;
   const fetcher = useFetcher();
   return (
     <TransferForm

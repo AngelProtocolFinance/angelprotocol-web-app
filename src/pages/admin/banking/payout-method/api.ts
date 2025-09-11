@@ -5,7 +5,7 @@ import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
+} from "react-router";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
 import { bappdb } from ".server/aws/db";

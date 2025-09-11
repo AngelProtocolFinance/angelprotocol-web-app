@@ -1,7 +1,7 @@
 import type { IPrettyBalance } from "@better-giving/balance";
 import type { INpo } from "@better-giving/endowment";
 import { $int_gte1 } from "@better-giving/schemas";
-import { type LoaderFunction, data } from "@vercel/remix";
+import { type LoaderFunction, data } from "react-router";
 import * as v from "valibot";
 import { baldb, npodb } from ".server/aws/db";
 

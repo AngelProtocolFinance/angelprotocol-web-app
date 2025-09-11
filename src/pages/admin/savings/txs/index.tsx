@@ -1,6 +1,6 @@
 import type { IBalanceTxsPage } from "@better-giving/balance-txs";
-import { useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
+import { useSearchParams } from "react-router";
 import { Table } from "./table";
 
 interface Props {

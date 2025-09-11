@@ -1,4 +1,3 @@
-import { Link } from "@remix-run/react";
 import Copier from "components/copier";
 import ExtLink from "components/ext-link";
 import { HeaderButton } from "components/header-button";
@@ -9,6 +8,7 @@ import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
 import useSort from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
+import { Link } from "react-router";
 import type { IPaginator } from "types/components";
 import type { Donation } from "types/donations";
 import { donationMethod, lastHeaderName } from "./common";

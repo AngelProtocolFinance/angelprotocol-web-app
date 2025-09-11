@@ -1,4 +1,4 @@
-import { useSearchParams } from "@remix-run/react";
+import { useSearchParams } from "react-router";
 import { toParsed, toRaw } from "../helpers";
 import { type FilterOption, FlatFilter } from "./common";
 

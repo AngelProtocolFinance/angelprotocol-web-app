@@ -1,7 +1,7 @@
 import { Progress } from "@better-giving/reg/progress";
 import { type IReg, reg_id } from "@better-giving/reg/schema";
-import type { ActionFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { ActionFunction } from "react-router";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";

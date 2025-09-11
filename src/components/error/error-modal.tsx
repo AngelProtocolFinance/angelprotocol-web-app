@@ -1,5 +1,5 @@
-import { useRouteError } from "@remix-run/react";
 import { useEffect } from "react";
+import { useRouteError } from "react-router";
 import { Modal } from "../modal";
 import { DefaultFallback } from "./default-fallback";
 

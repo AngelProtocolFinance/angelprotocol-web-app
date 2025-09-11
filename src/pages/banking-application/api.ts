@@ -1,13 +1,16 @@
 import { update } from "@better-giving/banking-applications/schema";
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { parseWithValibot } from "conform-to-valibot";
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  redirect,
+} from "react-router";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
 
 import type { IBapp } from "@better-giving/banking-applications";
 import { $int_gte1 } from "@better-giving/schemas";
 import type { V2RecipientAccount } from "@better-giving/wise";
-import type { LoaderFunction } from "@vercel/remix";
 import { parse } from "valibot";
 import { bappdb } from ".server/aws/db";
 import { wise } from ".server/sdks";

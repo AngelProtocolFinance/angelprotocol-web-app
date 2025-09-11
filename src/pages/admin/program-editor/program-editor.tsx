@@ -1,11 +1,9 @@
 import type { IProgram } from "@better-giving/endowment";
-import { Link } from "@remix-run/react";
-import type { LinksFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles } from "components/rich-text";
 import { adminRoutes } from "constants/routes";
 import { ChevronLeft } from "lucide-react";
+import { Link, type LinksFunction, useLoaderData } from "react-router";
 import Form from "./form";
 
 export const links: LinksFunction = () => [
@@ -13,10 +11,9 @@ export const links: LinksFunction = () => [
   ...imgEditorStyles,
 ];
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 export default function ProgramEditor() {
-  const program = useCachedLoaderData<IProgram>();
+  const program = useLoaderData<IProgram>();
   return (
     <>
       <Link

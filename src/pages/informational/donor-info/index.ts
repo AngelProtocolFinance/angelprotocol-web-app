@@ -1,5 +1,5 @@
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
+import type { LoaderFunction, MetaFunction } from "react-router";
 import { get_npos } from ".server/npos";
 
 export { default } from "./donor-info";

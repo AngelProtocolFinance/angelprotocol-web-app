@@ -1,7 +1,7 @@
 import { Progress } from "@better-giving/reg/progress";
 import { reg_id } from "@better-giving/reg/schema";
 import { $ } from "@better-giving/schemas";
-import { type ActionFunction, redirect } from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import { literal, object, parse, variant } from "valibot";
 import { npo_new } from "./npo-new";
 import { cognito, toAuth } from ".server/auth";

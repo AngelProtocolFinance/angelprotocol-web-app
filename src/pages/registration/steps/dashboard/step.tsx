@@ -1,5 +1,5 @@
 import type { Progress } from "@better-giving/reg";
-import { NavLink } from "@remix-run/react";
+import { NavLink } from "react-router";
 
 type TStep = Exclude<Progress["step"], 6>; // exclude summary step
 type Props = {

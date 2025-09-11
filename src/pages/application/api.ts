@@ -1,7 +1,7 @@
 import type { IReg } from "@better-giving/reg";
 import { reg_id } from "@better-giving/reg/schema";
 import type { V2RecipientAccount } from "@better-giving/wise";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";

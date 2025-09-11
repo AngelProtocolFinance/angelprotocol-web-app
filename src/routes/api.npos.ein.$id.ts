@@ -1,6 +1,6 @@
 import { reg_number } from "@better-giving/endowment/schema";
-import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { npodb } from ".server/aws/db";
 

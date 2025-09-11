@@ -1,6 +1,6 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
+import type { LoaderFunction } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 import { bappdb } from ".server/aws/db";
 

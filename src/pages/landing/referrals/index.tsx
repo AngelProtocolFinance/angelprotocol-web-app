@@ -1,10 +1,10 @@
-import { Link } from "@remix-run/react";
 import { Footer } from "components/footer";
 import { NavDropdown, UserAvatar } from "components/header";
 import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { useRootData } from "hooks/use-root-data";
+import { Link } from "react-router";
 import { Bottom } from "./bottom";
 import { Faq } from "./faq";
 import { Feature } from "./feature";

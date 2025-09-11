@@ -1,7 +1,7 @@
 import type { ILog, IPage } from "@better-giving/nav-history";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeftIcon } from "lucide-react";
+import { Link, useLoaderData, useSearchParams } from "react-router";
 import { HistoryTable } from "../history-table";
 export { loader } from "./api";
 

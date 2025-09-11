@@ -6,8 +6,6 @@ import {
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Outlet, useFetcher } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { DonateMethods, fill } from "components/donate-methods";
 import { CheckField, Form as F, Field } from "components/form";
 import { GoalSelector } from "components/goal-selector";
@@ -16,6 +14,7 @@ import { BG_ID } from "constants/common";
 import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
+import { Outlet, useFetcher, useLoaderData } from "react-router";
 import { toast } from "sonner";
 import type { ActionData } from "types/action";
 import type { LoaderData } from "./api";
@@ -23,10 +22,9 @@ import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 export default function Form() {
-  const endow = useCachedLoaderData<LoaderData>();
+  const endow = useLoaderData<LoaderData>();
 
   const fetcher = useFetcher<ActionData>();
   useActionResult(fetcher.data);

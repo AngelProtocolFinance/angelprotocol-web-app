@@ -1,7 +1,7 @@
 import type { IProgramDb } from "@better-giving/endowment";
 import { program_id } from "@better-giving/endowment/schema";
-import { type LoaderFunction, redirect } from "@vercel/remix";
 import { adminRoutes } from "constants/routes";
+import { type LoaderFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";

@@ -1,11 +1,14 @@
 import { $int_gte1 } from "@better-giving/schemas";
-import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { Footer } from "components/footer";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
+import {
+  type LoaderFunction,
+  type MetaFunction,
+  useLoaderData,
+} from "react-router";
 import { parse } from "valibot";
 import { linkGroups } from "./constants";
 import { Header } from "./header";

@@ -1,6 +1,6 @@
 import { $int_gte1 } from "@better-giving/schemas";
-import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import { parse } from "valibot";
 import { npodb } from ".server/aws/db";
 

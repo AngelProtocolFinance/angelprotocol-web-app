@@ -1,12 +1,12 @@
 import type { INpoClaim, IRegNew } from "@better-giving/reg";
 import { reg_new } from "@better-giving/reg/schema";
+import { appRoutes } from "constants/routes";
+import { search } from "helpers/https";
 import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@vercel/remix";
-import { appRoutes } from "constants/routes";
-import { search } from "helpers/https";
+} from "react-router";
 import { parse } from "valibot";
 import { steps } from "./routes";
 import { cognito, toAuth } from ".server/auth";

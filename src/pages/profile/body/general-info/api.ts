@@ -1,7 +1,7 @@
 import type { IMedia } from "@better-giving/endowment";
 import type { IProgramDb } from "@better-giving/endowment";
 import type { IFundItem } from "@better-giving/fundraiser";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { npoId } from "../common/npo-id";
 import { npodb } from ".server/aws/db";
 import { get_funds_npo_memberof } from ".server/funds";

@@ -1,5 +1,5 @@
-import { Link } from "@remix-run/react";
 import Image from "components/image";
+import { Link } from "react-router";
 import img4 from "./diamond-logo.png";
 import img5 from "./laira-holding-folder.png";
 import img1 from "./laptop.png";

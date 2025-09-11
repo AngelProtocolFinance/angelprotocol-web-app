@@ -1,4 +1,3 @@
-import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import BookmarkBtn from "components/bookmark-btn";
 import Image from "components/image";
@@ -8,6 +7,7 @@ import VerifiedIcon from "components/verified-icon";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
+import { NavLink } from "react-router";
 import type { EndowmentCard } from "types/npo";
 
 const PLACEHOLDER_TAGLINE = " ";

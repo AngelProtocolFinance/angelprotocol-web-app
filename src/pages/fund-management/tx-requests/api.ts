@@ -1,6 +1,6 @@
 import { balance_txs_options } from "@better-giving/balance-txs";
-import type { LoaderFunction } from "@vercel/remix";
 import { resp, search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { cognito } from ".server/auth";
 import { btxdb } from ".server/aws/db";

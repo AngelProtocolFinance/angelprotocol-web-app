@@ -1,12 +1,12 @@
-import { Link, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { wp } from "api/api";
 import Media from "components/media";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
+import { Link, type LoaderFunctionArgs } from "react-router";
 import useSWR from "swr/immutable";
 import type { IMedia, IPost, IUser } from "types/wordpress";
+import type { Route } from "./+types/post";
 
 const containerStyle = "w-full px-5 max-w-4xl mx-auto pb-4";
 
@@ -15,7 +15,7 @@ interface IPostDetailed extends IPost {
   authorName: string;
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const [post] = await wp.get<IPost[]>(`posts?slug=${params.slug}`).json();
 
   if (!post) throw new Response("Not Found", { status: 404 });
@@ -26,16 +26,14 @@ export const loader: LoaderFunction = async ({ params }) => {
   return { ...post, media: m, authorName: a.name } satisfies IPostDetailed;
 };
 
-export const meta: MetaFunction = ({ data }: any) => {
-  if (!data) return [];
-  return metas({ title: data.slug });
+export const meta: Route.MetaFunction = ({ loaderData: d }) => {
+  if (!d) return [];
+  return metas({ title: d.slug });
 };
 
 export { ErrorBoundary } from "components/error";
 
-export default function Post() {
-  const post = useLoaderData() as IPost;
-
+export default function Post({ loaderData: post }: Route.ComponentProps) {
   return (
     <div className={containerStyle}>
       <Link

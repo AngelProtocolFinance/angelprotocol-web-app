@@ -1,11 +1,15 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
-import { Outlet, useSearchParams } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
+import {
+  type LoaderFunction,
+  type MetaFunction,
+  Outlet,
+  useLoaderData,
+  useSearchParams,
+} from "react-router";
 import type { EndowCardsPage } from "types/npo";
 import { safeParse } from "valibot";
 import ActiveFilters from "./active-filters";
@@ -15,7 +19,6 @@ import hero from "./hero.webp?url";
 import Toolbar from "./toolbar";
 import { get_npos } from ".server/npos";
 
-export { clientLoader } from "api/cache";
 export const loader: LoaderFunction = async ({ request }) => {
   const params = safeParse(endowsQueryParams, search(request));
 
@@ -38,7 +41,7 @@ export const meta: MetaFunction = () =>
 export { ErrorBoundary } from "components/error";
 export default function Marketplace() {
   const [params] = useSearchParams();
-  const page1 = useCachedLoaderData() as EndowCardsPage;
+  const page1 = useLoaderData() as EndowCardsPage;
   const { node } = use_paginator({
     id: "marketplace",
     page1,

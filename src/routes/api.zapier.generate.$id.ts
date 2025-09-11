@@ -1,5 +1,5 @@
 import { $int_gte1 } from "@better-giving/schemas";
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "react-router";
 import { parse } from "valibot";
 import { cognito } from ".server/auth";
 import { generateZapierApiKey } from ".server/npo-integrations";

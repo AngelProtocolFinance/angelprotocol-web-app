@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { cognito } from ".server/auth";
 import { navdb } from ".server/aws/db";

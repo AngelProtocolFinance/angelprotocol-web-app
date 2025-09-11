@@ -1,5 +1,5 @@
 import type { IBapp } from "@better-giving/banking-applications";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { bappdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 

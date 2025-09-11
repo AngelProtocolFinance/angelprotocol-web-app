@@ -1,10 +1,3 @@
-import {
-  Link,
-  NavLink,
-  useLoaderData,
-  useOutletContext,
-} from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import char from "assets/images/celebrating-character.webp";
 import { laira } from "assets/laira/laira";
 import { Share, donationRecipient, isFund } from "components/donation";
@@ -15,6 +8,14 @@ import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
+import {
+  Link,
+  type LoaderFunction,
+  type MetaFunction,
+  NavLink,
+  useLoaderData,
+  useOutletContext,
+} from "react-router";
 import { type InferOutput, partial, safeParse } from "valibot";
 
 const donation_recipient_params = partial(donationRecipient);

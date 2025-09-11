@@ -1,11 +1,11 @@
 import type { Progress } from "@better-giving/reg";
-import { useLocation } from "@remix-run/react";
 import { DrawerIcon } from "components/icon";
 import { idParamToNum } from "helpers/id-param-to-num";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/use-handle-screen-resize";
 import { type PropsWithChildren, useState } from "react";
+import { useLocation } from "react-router";
 
 type Props = {
   step: Progress["step"];

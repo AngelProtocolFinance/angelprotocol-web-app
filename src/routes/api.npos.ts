@@ -1,6 +1,6 @@
 import { npos_search } from "@better-giving/endowment/schema";
-import type { LoaderFunction } from "@vercel/remix";
 import { resp, search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import { safeParse } from "valibot";
 import { get_npos } from ".server/npos";
 

@@ -1,6 +1,6 @@
 import { fund_id } from "@better-giving/fundraiser/schema";
-import type { LoaderFunction } from "@vercel/remix";
 import { segment } from "api/schema/segment";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { IFund } from "types/fund";
 import { parse, union } from "valibot";

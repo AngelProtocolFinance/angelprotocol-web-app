@@ -1,7 +1,7 @@
 import { Progress } from "@better-giving/reg/progress";
-import { Link, useNavigation, useRouteLoaderData } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
+import { Link, useNavigation, useRouteLoaderData } from "react-router";
 import { next_step } from "../routes";
 import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";

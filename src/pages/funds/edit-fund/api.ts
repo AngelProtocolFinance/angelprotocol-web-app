@@ -1,5 +1,5 @@
 import { fund_id, fund_update } from "@better-giving/fundraiser/schema";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import type { IFund } from "types/fund";

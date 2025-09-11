@@ -1,5 +1,5 @@
 export { loader } from "./loader";
-import { Outlet } from "@remix-run/react";
+import { Outlet } from "react-router";
 
 export default function FormBuilderLayout() {
   return (

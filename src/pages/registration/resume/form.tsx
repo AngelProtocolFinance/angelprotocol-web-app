@@ -1,14 +1,16 @@
 import { Progress } from "@better-giving/reg/progress";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Link, useFetcher, useLoaderData } from "@remix-run/react";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
 import { Field } from "components/form";
 import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
+import {
+  type ActionFunction,
+  Link,
+  type LoaderFunction,
+  redirect,
+  useFetcher,
+  useLoaderData,
+} from "react-router";
 import { schema } from "./types";
 import { cognito, toAuth } from ".server/auth";
 import { regdb } from ".server/aws/db";

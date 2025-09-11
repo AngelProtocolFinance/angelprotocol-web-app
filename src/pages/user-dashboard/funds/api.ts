@@ -1,5 +1,5 @@
 import type { IFund } from "@better-giving/fundraiser";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { cognito, toAuth } from ".server/auth";
 import { funddb, userdb } from ".server/aws/db";
 

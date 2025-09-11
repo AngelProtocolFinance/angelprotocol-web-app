@@ -1,8 +1,8 @@
-import { NavLink, useFetcher, useLoaderData } from "@remix-run/react";
 import { BankDetails, type OnSubmit } from "components/bank-details";
 import ExtLink from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
+import { NavLink, useFetcher, useLoaderData } from "react-router";
 import { steps } from "../../routes";
 import FormButtons from "./form-buttons";
 

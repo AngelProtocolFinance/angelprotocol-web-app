@@ -1,5 +1,5 @@
-import type { ActionFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
 import {
   handle_intent_failed,

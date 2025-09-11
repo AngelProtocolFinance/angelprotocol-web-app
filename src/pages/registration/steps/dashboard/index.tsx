@@ -1,6 +1,6 @@
 import type { IReg } from "@better-giving/reg";
-import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { useActionResult } from "hooks/use-action-result";
+import { Outlet, useFetcher, useLoaderData } from "react-router";
 import type { ActionData, Ok } from "types/action";
 import { step_loader } from "../../data/step-loader";
 import EndowmentStatus from "./endowment-status";

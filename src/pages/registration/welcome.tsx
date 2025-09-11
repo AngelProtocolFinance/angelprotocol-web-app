@@ -1,7 +1,7 @@
-import { Form, useNavigation } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
+import { Form, useNavigation } from "react-router";
 export { new_application as action } from "./api";
 export { ErrorBoundary } from "components/error";
 export default function Welcome() {

@@ -1,10 +1,9 @@
-import { Link } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { laira } from "assets/laira/laira";
 import Image from "components/image";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
 import { useState } from "react";
+import { Link, type MetaFunction } from "react-router";
 import {
   type OgInput,
   type OgInputParams,

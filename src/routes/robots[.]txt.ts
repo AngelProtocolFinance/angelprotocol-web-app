@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const base_url = new URL(request.url).origin;

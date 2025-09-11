@@ -1,6 +1,6 @@
 import { program_id } from "@better-giving/endowment/schema";
-import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 import { richTextStyles } from "components/rich-text";
+import type { LinksFunction, LoaderFunction } from "react-router";
 import { parse } from "valibot";
 import { npoId } from "../common/npo-id";
 import { npodb } from ".server/aws/db";

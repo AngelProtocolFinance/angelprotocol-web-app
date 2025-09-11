@@ -2,7 +2,7 @@ import { UpdateBuilder } from "@better-giving/db";
 import type { INpo } from "@better-giving/endowment";
 import { FundDb, type IFundItem } from "@better-giving/fundraiser";
 import { fund_id } from "@better-giving/fundraiser/schema";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";

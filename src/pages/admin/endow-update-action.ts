@@ -1,6 +1,6 @@
 import type { INpoUpdate } from "@better-giving/endowment";
 import { npo_update } from "@better-giving/endowment/schema";
-import { type ActionFunction, redirect } from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
 import { npodb } from ".server/aws/db";

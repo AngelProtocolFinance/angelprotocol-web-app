@@ -5,7 +5,7 @@ import {
   program_id,
   program_update,
 } from "@better-giving/endowment/schema";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
 import { npodb } from ".server/aws/db";

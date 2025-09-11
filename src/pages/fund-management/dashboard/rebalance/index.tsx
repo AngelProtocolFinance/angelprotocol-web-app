@@ -1,7 +1,7 @@
 import type { ILog } from "@better-giving/nav-history";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { Link, useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import { Link, useFetcher, useLoaderData, useNavigate } from "react-router";
 import { RebalanceForm } from "./form";
 import { Review } from "./review";
 import type { State } from "./types";

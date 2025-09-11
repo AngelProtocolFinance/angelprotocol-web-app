@@ -1,5 +1,5 @@
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import { wise_envs } from ".server/env";
 
 export const loader: LoaderFunction = ({ request, params }) => {

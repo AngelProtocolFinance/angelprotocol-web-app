@@ -3,10 +3,10 @@ import type { Donation, OnHoldDonation } from "@better-giving/donation";
 import { partition } from "@better-giving/helpers";
 import { TxBuilder } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
-import type { ActionFunction } from "@vercel/remix";
 import { default_allocation } from "constants/common";
 import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
+import type { ActionFunction } from "react-router";
 import type { FinalRecorderPayload } from "../types/final-recorder";
 import { referral_commission_rate } from "./config";
 import {

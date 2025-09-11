@@ -1,5 +1,5 @@
 import type { IBapp } from "@better-giving/banking-applications";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { config } from "./config";
 import { bappdb, npodb } from ".server/aws/db";

@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import type { Donation } from "types/donations";
 import { endowUpdate } from "../endow-update-action";
 import { get_donations } from ".server/donations";

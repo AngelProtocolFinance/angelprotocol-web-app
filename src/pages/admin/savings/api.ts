@@ -1,5 +1,5 @@
 import type { IBalanceTxsPage } from "@better-giving/balance-txs";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 import { baldb, btxdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";

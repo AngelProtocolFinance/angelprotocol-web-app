@@ -1,6 +1,6 @@
 import type { IBappsPage } from "@better-giving/banking-applications";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
+import { useLoaderData, useSearchParams } from "react-router";
 import Filter from "./filter";
 import { Table } from "./table";
 

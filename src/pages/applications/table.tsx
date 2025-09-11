@@ -1,11 +1,11 @@
 import type { IReg, TStatus } from "@better-giving/reg";
-import { NavLink } from "@remix-run/react";
 import { HeaderButton } from "components/header-button";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import useSort from "hooks/use-sort";
 import { Folder } from "lucide-react";
+import { NavLink } from "react-router";
 import type { IPaginator } from "types/components";
 import LoadMoreBtn from "./load-more-btn";
 

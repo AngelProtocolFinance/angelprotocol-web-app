@@ -7,14 +7,14 @@ import {
   Label,
 } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { search } from "helpers/https";
+import { useForm } from "react-hook-form";
 import {
   useFetcher,
   useLoaderData,
   useNavigate,
   useSearchParams,
-} from "@remix-run/react";
-import { search } from "helpers/https";
-import { useForm } from "react-hook-form";
+} from "react-router";
 import { schema, stringNumber } from "schemas/shape";
 import { config } from "../config";
 import type { LoaderData } from "./api";

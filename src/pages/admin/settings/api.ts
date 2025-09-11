@@ -1,5 +1,5 @@
 import type { INpo } from "@better-giving/endowment";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import type { EndowmentSettingsAttributes } from "types/npo";
 import { endowUpdate } from "../endow-update-action";
 import { npodb } from ".server/aws/db";

@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction } from "react-router";
 import { baldb, navdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 

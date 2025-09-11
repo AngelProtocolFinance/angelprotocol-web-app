@@ -1,7 +1,7 @@
 import { Progress } from "@better-giving/reg/progress";
 import { reg_id } from "@better-giving/reg/schema";
-import { type LoaderFunction, redirect } from "@vercel/remix";
 import { regRoutes } from "constants/routes";
+import { type LoaderFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import type { Reg$IdData } from "../types";
 import { cognito, toAuth } from ".server/auth";

@@ -1,6 +1,6 @@
 import type { IPrettyBalance } from "@better-giving/balance";
-import { useOutletContext } from "@remix-run/react";
 import { toUsd } from "helpers/to-usd";
+import { useOutletContext } from "react-router";
 
 export default function Balances() {
   const bal = useOutletContext() as IPrettyBalance;

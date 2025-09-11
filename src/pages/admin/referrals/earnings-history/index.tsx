@@ -1,7 +1,7 @@
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Info } from "components/status";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
+import { Link, useLoaderData, useSearchParams } from "react-router";
 import type { LoaderData } from "./api";
 import { EarningsHistory } from "./table";
 export { loader } from "./api";

@@ -1,7 +1,6 @@
-import { Outlet, useLoaderData } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
+import { type MetaFunction, Outlet, useLoaderData } from "react-router";
 export { loader } from "./api";
 
 export const meta: MetaFunction = ({ location: l }) =>

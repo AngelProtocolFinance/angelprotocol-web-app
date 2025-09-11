@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import type { NP } from "@better-giving/nowpayments/types";
-import type { ActionFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
+import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
 import { handleConfirming } from "./handlers/confirming";
 import { handleExpired } from "./handlers/expired";

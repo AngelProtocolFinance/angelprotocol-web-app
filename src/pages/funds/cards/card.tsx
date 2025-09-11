@@ -1,5 +1,4 @@
 import type { IFundItem } from "@better-giving/fundraiser";
-import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/image";
 import { toText } from "components/rich-text";
@@ -8,6 +7,7 @@ import { Target, toTarget } from "components/target";
 import VerifiedIcon from "components/verified-icon";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { NavLink } from "react-router";
 
 export default function Card({
   name,

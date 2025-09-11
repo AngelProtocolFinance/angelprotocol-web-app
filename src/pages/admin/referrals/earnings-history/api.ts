@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { search } from "helpers/https";
+import type { LoaderFunction } from "react-router";
 import type { EarningsPage } from "types/referrals";
 import { npodb } from ".server/aws/db";
 import { getEarnings } from ".server/donations";
