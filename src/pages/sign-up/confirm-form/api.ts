@@ -3,7 +3,7 @@ import { appRoutes } from "constants/routes";
 import { search } from "helpers/https";
 import {
   type ActionFunction,
-  type LoaderFunction,
+  type LoaderFunctionArgs,
   data,
   redirect,
 } from "react-router";
@@ -11,9 +11,7 @@ import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
 import { cognito } from ".server/auth";
 
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<Response | unknown> => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user } = await cognito.retrieve(request);
   if (user) return redirect(appRoutes.marketplace);
 

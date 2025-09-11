@@ -1,24 +1,25 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types/home";
 import { Animation } from "./animation";
 import Benefits from "./benefits";
 import Blogs from "./blogs";
 import { BottomCta } from "./bottom-cta";
 import Brands from "./brands";
 import { Feature1 } from "./feature1";
-import Header from "./header";
+import { Header } from "./header";
 import Hero from "./hero";
 import Testimonials from "./testimonials";
 // import { Video } from "./video";
-// import { useLoaderData } from "@remix-run/react";
-// import type { EndowsPage } from "@better-giving/endowment";
 export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export default CacheRoute(Home);
 
-export default function Home() {
-  // const page1 = useLoaderData() as EndowsPage;
+function Home({ loaderData: page1 }: Route.ComponentProps) {
   return (
     <div className="grid pb-4">
-      <Header classes="sticky z-40 top-[-1px] mt-8 px-4" />
+      <Header page1={page1} classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
       {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
 

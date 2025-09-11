@@ -1,18 +1,21 @@
-import type { LoaderData } from "./api";
-import { Earnings } from "./earnings";
-export { loader } from "./api";
 import { Explainer, Hub, Nonprofits, ReferralId } from "components/referrals";
 import { metas } from "helpers/seo";
-import { type MetaFunction, useLoaderData, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
+import { Earnings } from "./earnings";
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
   return metas({
     title: "My Referrals",
     description: "Track your referrals and earnings on Better Giving.",
   });
 };
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export default CacheRoute(Page);
 
-export function ReferralsPage() {
+function Page({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
   const {
     base_url,
@@ -23,7 +26,7 @@ export function ReferralsPage() {
     payout,
     payout_min,
     payout_ltd,
-  } = useLoaderData() as LoaderData;
+  } = loaderData;
   return (
     <div className="">
       <Explainer classes="mb-4" />
@@ -52,5 +55,3 @@ export function ReferralsPage() {
     </div>
   );
 }
-
-export default ReferralsPage;

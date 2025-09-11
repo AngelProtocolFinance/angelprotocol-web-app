@@ -1,13 +1,19 @@
-import type { IProgram } from "@better-giving/endowment";
 import { RichText } from "components/rich-text";
 import { toUsd } from "helpers/to-usd";
-import { useLoaderData } from "react-router";
 import Container from "../common/container";
 import Milestones from "./milestones";
 
-export default function Program() {
-  const prog = useLoaderData() as IProgram;
+import { richTextStyles } from "components/rich-text";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 
+export { ErrorBoundary } from "components/error";
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export const links: Route.LinksFunction = () => [...richTextStyles];
+
+export default CacheRoute(Page);
+function Page({ loaderData: prog }: Route.ComponentProps) {
   return (
     <div className="order-4 lg:col-span-2 w-full h-full grid items-start grid-rows-[auto_auto] gap-8 lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
       <Container title={prog.title} expanded>

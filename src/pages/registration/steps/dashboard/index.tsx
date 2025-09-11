@@ -1,19 +1,21 @@
-import type { IReg } from "@better-giving/reg";
 import { useActionResult } from "hooks/use-action-result";
-import { Outlet, useFetcher, useLoaderData } from "react-router";
+import { Outlet, useFetcher } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { ActionData, Ok } from "types/action";
 import { step_loader } from "../../data/step-loader";
+import type { Route } from "./+types";
 import EndowmentStatus from "./endowment-status";
 import Step from "./step";
 
 export { submit_action as action } from "./submit-action";
 export { ErrorBoundary } from "components/error";
 export const loader = step_loader(6);
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export default function Dashboard() {
+export default CacheRoute(Page);
+function Page({ loaderData: reg }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });
   useActionResult(fetcher.data);
-  const reg = useLoaderData() as IReg;
 
   const is_steps_disabled = fetcher.state !== "idle" || reg.status === "02";
 

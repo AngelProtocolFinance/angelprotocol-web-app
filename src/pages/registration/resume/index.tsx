@@ -3,20 +3,14 @@ import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Field } from "components/form";
 import { Separator } from "components/separator";
 import { parseWithValibot } from "conform-to-valibot";
-import {
-  type ActionFunction,
-  Link,
-  type LoaderFunction,
-  redirect,
-  useFetcher,
-  useLoaderData,
-} from "react-router";
+import { Link, redirect, useFetcher } from "react-router";
+import type { Route } from "./+types";
 import { schema } from "./types";
 import { cognito, toAuth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const cookieHeader = request.headers.get("cookie");
   const { user, headers } = await cognito.retrieve(cookieHeader);
   if (!user) return toAuth(request, headers);
@@ -24,8 +18,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const rc = await reg_cookie.parse(cookieHeader).then((x) => x || {});
   return rc.reference || null;
 };
-
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
@@ -50,8 +43,8 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export { ErrorBoundary } from "components/error";
-export default function Form({ classes = "" }: { classes?: string }) {
-  const prev = useLoaderData();
+
+export default function Page({ loaderData: prev }: Route.ComponentProps) {
   const fetcher = useFetcher();
   const [form, fields] = useForm({
     shouldRevalidate: "onSubmit",
@@ -64,7 +57,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     <fetcher.Form
       method="POST"
       {...getFormProps(form)}
-      className={`${classes} grid px-5 w-full max-w-2xl`}
+      className="grid px-5 w-full max-w-2xl"
     >
       <h3 className="text-3xl text-center">Resume registration</h3>
       <p className="text-center mt-2 text-gray dark:text-gray-l1 text-lg">

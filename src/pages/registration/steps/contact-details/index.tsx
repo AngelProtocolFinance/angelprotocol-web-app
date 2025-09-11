@@ -2,26 +2,28 @@ import { Field } from "components/form";
 import { LoadText } from "components/load-text";
 import { Select } from "components/selector/select";
 import type { SubmitHandler } from "react-hook-form";
-// import { Field, Input, Label } from "@headlessui/react";
-import { useFetcher, useLoaderData, useNavigate } from "react-router";
+import { useFetcher, useNavigate } from "react-router";
 import { steps } from "../../routes";
 import { referral_methods, roles } from "./constants";
 import type { FV } from "./schema";
 import { use_rhf } from "./use-rhf";
 
-import type { IReg, TRegUpdate, TRole } from "@better-giving/reg";
+import type { TRegUpdate, TRole } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { step_loader } from "../../data/step-loader";
 import { next_step } from "../../routes";
 import { update_action } from "../update-action";
+import type { Route } from "./+types";
 
 export { ErrorBoundary } from "components/error";
 export const loader = step_loader(1);
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export const action = update_action(next_step[1]);
 
-export default function Form({ classes = "" }: { classes?: string }) {
+export default CacheRoute(Page);
+function Page({ loaderData: reg }: Route.ComponentProps) {
   const fetcher = useFetcher();
-  const reg = useLoaderData() as IReg;
   const {
     register,
     errors,
@@ -60,8 +62,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
   return (
     <form
-      // disabled={isSubmitting}
-      className={`w-full bg-white dark:bg-blue-d6 ${classes}`}
+      className="w-full bg-white dark:bg-blue-d6"
       onSubmit={handleSubmit(submit)}
     >
       <h2 className="text-center sm:text-left text-xl mb-2">

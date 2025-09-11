@@ -3,16 +3,17 @@ import { Input } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { useActionResult } from "hooks/use-action-result";
 import useCounter from "hooks/use-counter";
-import { useFetcher, useLoaderData } from "react-router";
+import { useFetcher } from "react-router";
 import { signUpConfirm } from "types/auth";
+import type { Route } from "./+types";
 import type { ActionData } from "./types";
 
 const MAX_TIME = 30;
 
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
-export default function ConfirmForm() {
-  const email = useLoaderData() as string;
+
+export default function Page({ loaderData: email }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionData>();
   const { counter, resetCounter } = useCounter(MAX_TIME);
   const formErr = useActionResult(fetcher.data, {

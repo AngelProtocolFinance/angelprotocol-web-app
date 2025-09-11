@@ -18,7 +18,7 @@ export default CacheRoute(Page);
 
 const containerClass = "xl:container xl:mx-auto px-5 mt-8 grid content-start";
 function Page({ loaderData }: Route.ComponentProps) {
-  const { fund, user } = loaderData;
+  const { fund, user, base_url } = loaderData;
 
   if (
     !user.funds.includes(fund.id) &&
@@ -42,5 +42,12 @@ function Page({ loaderData }: Route.ComponentProps) {
     );
   }
 
-  return <Form {...fund} classes={containerClass} initSlug={fund.slug} />;
+  return (
+    <Form
+      {...fund}
+      classes={containerClass}
+      base_url={base_url}
+      init_slug={fund.slug}
+    />
+  );
 }

@@ -1,4 +1,3 @@
-import type { IPrettyBalance } from "@better-giving/balance";
 import BookmarkBtn from "components/bookmark-btn";
 import Breadcrumbs from "components/breadcrumbs";
 import ExtLink from "components/ext-link";
@@ -7,25 +6,23 @@ import VerifiedIcon from "components/verified-icon";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
-import {
-  type LoaderFunction,
-  NavLink,
-  Outlet,
-  useLoaderData,
-} from "react-router";
+import { NavLink, Outlet } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { useProfileContext } from "../profile-context";
+import type { Route } from "./+types/body";
 import { npoId } from "./common/npo-id";
 import { baldb } from ".server/aws/db";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: Route.LoaderArgs) => {
   const id = await npoId(params.id);
   if (typeof id !== "number") return id;
   return baldb.npo_balance(id);
 };
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export default CacheRoute(Page);
 
-export default function Body() {
+function Page({ loaderData: bal }: Route.ComponentProps) {
   const p = useProfileContext();
-  const bal = useLoaderData() as IPrettyBalance;
   const user = useRootData();
 
   return (

@@ -173,7 +173,7 @@ export default [
     r("login", pages.$("signin.tsx")._),
     r("signup", sign_up.$("layout.tsx")._, [
       index(sign_up.$("signup-form/signup-form.tsx")._),
-      r("confirm", sign_up.$("confirm-form/confirm-form.tsx")._),
+      r("confirm", sign_up.$("confirm-form/index.tsx")._),
       r("success", sign_up.$("success.tsx")._),
     ]),
     r("login/reset", pages.$("reset-password/reset-password.tsx")._),
@@ -191,7 +191,7 @@ export default [
     r("marketplace/:id", profile.$("profile.tsx")._, [
       layout(profile.$("body/body.tsx")._, [
         index(profile.$("body/general-info/index.ts")._),
-        r("program/:programId", profile.$("body/program/index.ts")._),
+        r("program/:programId", profile.$("body/program/index.tsx")._),
       ]),
     ]),
     r("profile/:id", profile.$("profile-redirect.ts")._),
@@ -214,7 +214,7 @@ export default [
       index(reg.$("sign-up/index.ts")._),
       r("success", reg.$("success.tsx")._),
       r("welcome", reg.$("welcome.tsx")._),
-      r("resume", reg.$("resume/form.tsx")._),
+      r("resume", reg.$("resume/index.tsx")._),
       r(":regId", reg.$("steps/layout.ts")._, { id: "reg$Id" }, [
         r("sign-result", reg.$("signing-result/index.ts")._),
         layout(reg.$("steps/steps-layout.tsx")._, [

@@ -1,5 +1,5 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
-import { type LoaderFunction, data } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { cognito, toAuth } from ".server/auth";
@@ -23,7 +23,7 @@ function payout(id: number) {
   return wise.v2_account(id);
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     paidOutLtd(user.referral_id),
   ]);
 
-  return data({
+  return {
     user,
     base_url: new URL(request.url).origin,
     referreds,
@@ -45,5 +45,5 @@ export const loader: LoaderFunction = async ({ request }) => {
     payout_min: user.pay_min ? +user.pay_min : undefined,
     payout_ltd: pltd,
     w_form: user.w_form,
-  } satisfies LoaderData);
+  } satisfies LoaderData;
 };

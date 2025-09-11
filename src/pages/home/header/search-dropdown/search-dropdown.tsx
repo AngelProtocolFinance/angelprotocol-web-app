@@ -9,15 +9,11 @@ import { TopCountries } from "./top-countries";
 
 interface Props {
   query: string;
-  initPage: EndowCardsPage;
+  page1: EndowCardsPage;
   classes?: string;
 }
 
-export default function SearchDropdown({
-  classes = "",
-  initPage,
-  query,
-}: Props) {
+export default function SearchDropdown({ classes = "", page1, query }: Props) {
   const { data, state } = useFetcher<EndowCardsPage>({ key: "home" });
 
   return (
@@ -55,7 +51,7 @@ export default function SearchDropdown({
         </>
       ) : (
         <SearchResult
-          {...(data || initPage)}
+          {...(data || page1)}
           isLoading={state !== "idle"}
           query={query}
         />
