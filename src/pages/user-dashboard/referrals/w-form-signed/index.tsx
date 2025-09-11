@@ -1,15 +1,14 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
-import { Link, useLoaderData, useNavigate, useNavigation } from "react-router";
+import { Link, useNavigate, useNavigation } from "react-router";
+import type { Route } from "./+types";
 import type { LoaderData } from "./api";
 
 export { loader } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
 
-export default function Form() {
+export default function Page({ loaderData: data }: Route.ComponentProps) {
   const navigate = useNavigate();
-  const data = useLoaderData() as LoaderData;
-
   return (
     <Dialog
       open={true}

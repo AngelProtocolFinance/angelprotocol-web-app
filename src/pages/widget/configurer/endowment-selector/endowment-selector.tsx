@@ -4,19 +4,22 @@ import debounce from "lodash/debounce";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import type { EndowmentOption } from "types/npo";
-import Options from "./options";
+import { Options } from "./options";
 
 interface Props {
   endow?: EndowmentOption;
+  endows: EndowmentOption[];
   isLoading?: boolean;
 }
 
-export function EndowmentSelector({ endow, isLoading }: Props) {
+export function EndowmentSelector({ endow, endows, isLoading }: Props) {
   const [params, setParams] = useSearchParams();
-  const [searchText, setSearchText] = useState("");
+  const [search, set_search] = useState("");
 
-  function handleSearchTextChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearchText(event.target.value);
+  function handle_search_txt_change(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    set_search(event.target.value);
   }
 
   return (
@@ -35,7 +38,7 @@ export function EndowmentSelector({ endow, isLoading }: Props) {
     >
       <ComboboxInput
         placeholder="Search for an organization..."
-        onChange={debounce(handleSearchTextChange, 500)}
+        onChange={debounce(handle_search_txt_change, 500)}
         displayValue={(value?: EndowmentOption) =>
           value?.name ?? "Select an organization"
         }
@@ -46,7 +49,7 @@ export function EndowmentSelector({ endow, isLoading }: Props) {
         {({ open }) => <DrawerIcon isOpen={open} size={20} />}
       </ComboboxButton>
 
-      <Options searchText={searchText} />
+      <Options search_text={search} init_opts={endows} />
     </Combobox>
   );
 }

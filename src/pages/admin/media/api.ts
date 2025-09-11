@@ -4,7 +4,6 @@ import { parseWithValibot } from "conform-to-valibot";
 import { search } from "helpers/https";
 import {
   type ActionFunction,
-  type LoaderFunction,
   type LoaderFunctionArgs,
   redirect,
 } from "react-router";
@@ -28,7 +27,7 @@ export const all_videos = async ({ request, params }: LoaderFunctionArgs) => {
   return page;
 };
 
-export const videos_action: LoaderFunction = async (x) => {
+export const videos_action: ActionFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

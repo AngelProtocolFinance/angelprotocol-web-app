@@ -9,15 +9,10 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { search } from "helpers/https";
 import { useForm } from "react-hook-form";
-import {
-  useFetcher,
-  useLoaderData,
-  useNavigate,
-  useSearchParams,
-} from "react-router";
+import { useFetcher, useNavigate, useSearchParams } from "react-router";
 import { schema, stringNumber } from "schemas/shape";
 import { config } from "../config";
-import type { LoaderData } from "./api";
+import type { Route } from "./+types";
 
 interface IContent {
   prev: number;
@@ -26,10 +21,10 @@ interface IContent {
 export { action, loader } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
 
-export default function Form() {
+export default function Page({ loaderData: user }: Route.ComponentProps) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { pay_min = "50" } = useLoaderData() as LoaderData;
+  const { pay_min = "50" } = user;
   const { min = pay_min } = search(params);
 
   return (

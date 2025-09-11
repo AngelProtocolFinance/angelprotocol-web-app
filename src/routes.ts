@@ -62,7 +62,7 @@ export default [
   ),
 
   r("form-builder", widget.$("form-builder-layout.tsx")._, [
-    index(widget.$("index.ts")._, { id: "public-form-builder" }),
+    index(widget.$("index.tsx")._, { id: "public-form-builder" }),
   ]),
 
   r("admin/:id", admin.$("layout.tsx")._, [
@@ -84,7 +84,7 @@ export default [
     r("banking/:bankId", admin.$("banking/payout-method/payout-method.tsx")._, [
       r("delete", admin.$("banking/payout-method/delete-prompt.tsx")._),
     ]),
-    r("form-builder", widget.$("index.ts")._, {
+    r("form-builder", widget.$("index.tsx")._, {
       id: "admin-form-builder",
     }),
     r("media", admin.$("media/media.tsx")._, [

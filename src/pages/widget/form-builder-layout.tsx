@@ -1,4 +1,4 @@
-export { loader } from "./loader";
+export { loader } from "./api";
 import { Outlet } from "react-router";
 
 export default function FormBuilderLayout() {

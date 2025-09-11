@@ -1,9 +1,9 @@
 import type { INpo } from "@better-giving/endowment";
 import { $int_gte1 } from "@better-giving/schemas";
 import { search } from "helpers/https";
-import type { LoaderFunction } from "react-router";
 import type { EndowmentOption } from "types/npo";
 import * as v from "valibot";
+import type { Route } from "./+types";
 import { npodb } from ".server/aws/db";
 import { get_npos } from ".server/npos";
 
@@ -20,12 +20,12 @@ export interface WidgetData {
  * admin/:id/widget-config
  * /widget-config
  */
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const url = new URL(request.url);
   const { id: sid, query = "" } = search(url);
-  const selectedId = v.parse(v.optional($int_gte1), sid ?? params.id);
-  const routeEndowId = v.parse(v.optional($int_gte1), params.id);
-  const id = selectedId ?? routeEndowId;
+  const selected_id = v.parse(v.optional($int_gte1), sid ?? params.id);
+  const route_npo_id = v.parse(v.optional($int_gte1), params.id);
+  const id = selected_id ?? route_npo_id;
 
   const page1 = get_npos({
     query,

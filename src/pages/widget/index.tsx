@@ -2,15 +2,30 @@ import { fill } from "components/donate-methods";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
 import { useState } from "react";
-import { useLoaderData } from "react-router";
 import type { WidgetConfig } from "types/widget";
 import Configurer from "./configurer";
-import type { WidgetData } from "./loader";
 import Preview from "./preview";
 import Snippet from "./snippet";
 
-export default function Widget() {
-  const { endow, base_url } = useLoaderData<WidgetData>();
+import { BASE_URL } from "constants/env";
+import { metas } from "helpers/seo";
+import type { Route } from "./+types";
+
+export { loader } from "./api";
+export { ErrorBoundary } from "components/error";
+export const meta: Route.MetaFunction = ({ loaderData: d, location: loc }) => {
+  if (!d) return [];
+  return metas({
+    title: `Donation Form Configuration${d.endow?.id ? ` for nonprofit ${d.endow?.id}` : ""}`,
+    description: d.endow?.tagline?.slice(0, 140),
+    name: d.endow?.name,
+    image: d.endow?.logo,
+    url: `${BASE_URL}${loc.pathname}`,
+  });
+};
+
+export default function Widget({ loaderData }: Route.ComponentProps) {
+  const { endow, base_url, endows } = loaderData;
 
   const _methods = endow?.donateMethods;
   const filled = fill(
@@ -42,7 +57,12 @@ export default function Widget() {
         website and you're ready to go!
       </p>
       <div className="w-full">
-        <Configurer config={state} setConfig={setState} endow={endow} />
+        <Configurer
+          config={state}
+          setConfig={setState}
+          endow={endow}
+          endows={endows}
+        />
         <Snippet
           base_url={base_url}
           config={state}

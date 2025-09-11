@@ -1,14 +1,14 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import ExtLink from "components/ext-link";
-import { useLoaderData, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import type { Route } from "./+types";
 import type { LoaderData } from "./api";
 
 export { action, loader } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
 
-export default function Form() {
+export default function Page({ loaderData: data }: Route.ComponentProps) {
   const navigate = useNavigate();
-  const data = useLoaderData() as LoaderData;
 
   return (
     <Dialog

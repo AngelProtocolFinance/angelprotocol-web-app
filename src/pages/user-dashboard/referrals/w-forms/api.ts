@@ -1,6 +1,6 @@
 import {
   type ActionFunction,
-  type LoaderFunction,
+  type LoaderFunctionArgs,
   redirect,
 } from "react-router";
 import { isError } from "types/auth";
@@ -14,7 +14,7 @@ export interface LoaderData {
 
 const anvil_form_url = (forge_slug: string) =>
   `https://app.useanvil.com/weld/${anvil_envs.org_slug}/${forge_slug}${env === "staging" ? `?test=true` : ""}`;
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
