@@ -1,6 +1,5 @@
 import type { RouteConfig } from "@react-router/dev/routes";
 import { index, layout, route as r } from "@react-router/dev/routes";
-import { flatRoutes } from "@react-router/fs-routes";
 
 class Path {
   private value: string;
@@ -39,8 +38,6 @@ const donation_calculator = pages.$("donation-calculator");
 const donate_widget = pages.$("donate-widget");
 
 export default [
-  ...(await flatRoutes({ rootDirectory: "fs-routes" })),
-
   index("./pages/home/home.tsx"),
   r("donate/:id", pages.$("donate/index.tsx")._),
   r("donate-fund/:fundId", donate_fund.$("redirect.ts")._),
@@ -255,4 +252,37 @@ export default [
     "donation-calculator-export",
     donation_calculator.$("pdf-export/index.tsx")._
   ),
+
+  r("api/anvil-doc/:eid", "./routes/anvil-doc/index.ts"),
+  r("api/anvil-webhook", "./routes/anvil-webhook/index.ts"),
+  r("api/balances/liq", "./routes/balances-liq.ts"),
+  r("api/balances", "./routes/balances.ts"),
+  r("api/chariot-webhook", "./routes/chariot-webhook/index.ts"),
+  r("api/crypto-intents/:id", "./routes/crypto-intents.ts"),
+  r("api/currencies", "./routes/currencies/index.ts"),
+  r("api/donation-intents/:type", "./routes/donation-intents/index.ts"),
+  r("api/file-upload", "./routes/file-upload.ts"),
+  r("api/nav-txs", "./routes/nav-txs.ts"),
+  r("api/nowpayments-webhook/:stage", "./routes/nowpayments-webhook/index.ts"),
+  r("api/nowpayments/*", "./routes/nowpayments.ts"),
+  r("api/npo/:id/donors", "./routes/npo-donors.ts"),
+  r("api/npo/:id/payouts", "./routes/npo-payouts.ts"),
+  r("api/npo/:id/programs", "./routes/npo-programs.ts"),
+  r("api/npo/:id/sf-metrics", "./routes/npo-sf-metrics.ts"),
+  r("api/npos/:id", "./routes/npos-by-id.ts"),
+  r("api/npos/ein/:id", "./routes/npos-ein.ts"),
+  r("api/npos", "./routes/npos.ts"),
+  r("api/stripe-webhook/:stage", "./routes/stripe-webhook/index.ts"),
+  r("api/top-countries", "./routes/top-countries.ts"),
+  r("api/wise/*", "./routes/wise.ts"),
+  r("api/zapier/generate/:id", "./routes/zapier-generate.ts"),
+  r("api/zapier/me", "./routes/zapier-me.ts"),
+  r(
+    "api/zapier/triggers/new-donation",
+    "./routes/zapier-triggers-new-donation.ts"
+  ),
+  r("q/final-recorder", "./routes/final-recorder/index.ts"),
+  r("utils/calendar", "./routes/calendar.tsx"),
+  r("robots.txt", "./routes/robots.ts"),
+  r("sitemap.xml", "./routes/sitemap.ts"),
 ] satisfies RouteConfig;

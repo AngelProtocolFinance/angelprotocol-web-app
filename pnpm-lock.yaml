@@ -245,6 +245,9 @@ importers:
       recharts:
         specifier: 2.15.2
         version: 2.15.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      remix-client-cache:
+        specifier: 3.0.0
+        version: 3.0.0(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       remix-utils:
         specifier: 8.1.0
         version: 8.1.0(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(zod@3.24.2)
@@ -276,12 +279,6 @@ importers:
       '@react-router/dev':
         specifier: 7.8.2
         version: 7.8.2(@types/node@18.18.13)(lightningcss@1.29.1)(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1))
-      '@react-router/fs-routes':
-        specifier: 7.8.2
-        version: 7.8.2(@react-router/dev@7.8.2(@types/node@18.18.13)(lightningcss@1.29.1)(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)))(typescript@5.7.3)
-      '@react-router/remix-routes-option-adapter':
-        specifier: 7.8.2
-        version: 7.8.2(@react-router/dev@7.8.2(@types/node@18.18.13)(lightningcss@1.29.1)(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)))(typescript@5.7.3)
       '@tailwindcss/typography':
         specifier: 0.5.15
         version: 0.5.15(tailwindcss@4.0.0)
@@ -1612,31 +1609,11 @@ packages:
       wrangler:
         optional: true
 
-  '@react-router/fs-routes@7.8.2':
-    resolution: {integrity: sha512-lNIbSIoLum2Pv6ftUuf8GjlnE9+IlCnBfyHsdxKQ5cZSIkan3bFNUzg5Q5KUCZGpfUGftCkn9vYMWiZhduSooQ==}
-    engines: {node: '>=20.0.0'}
-    peerDependencies:
-      '@react-router/dev': ^7.8.2
-      typescript: ^5.1.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   '@react-router/node@7.8.2':
     resolution: {integrity: sha512-FNepNg4Aya6V0ZxD/+uObtqxtMXcsBGa0ax9PznUh5qr8g4M6Xo9IN+soLb1tghz6iS/F9djFyhJ/lDkF77dEw==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react-router: 7.8.2
-      typescript: ^5.1.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
-  '@react-router/remix-routes-option-adapter@7.8.2':
-    resolution: {integrity: sha512-0h7p0F0E0dpnhg5MP4AiEJOINH9yNRm58kIyoBgHnmQmjho6I++dx6Reho9MaH2VaiW/ChK0+34LwdbPGaMaQw==}
-    engines: {node: '>=20.0.0'}
-    peerDependencies:
-      '@react-router/dev': ^7.8.2
       typescript: ^5.1.0
     peerDependenciesMeta:
       typescript:
@@ -3501,6 +3478,13 @@ packages:
 
   regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
+
+  remix-client-cache@3.0.0:
+    resolution: {integrity: sha512-lSQIBbCVtuHtPfNy+iU3xLbklB7BmtmQLoEhP/ZSTNm4HLelp8UIPEqcIpNM53goVyuFf11fyrjj+lUSXafd2A==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+      react-dom: ^18.2.0 || ^19.0.0
+      react-router: ^7.0.0
 
   remix-utils@8.1.0:
     resolution: {integrity: sha512-k44K4FOPyMv6QQ+yaQrCrXdnzkKE1b86ZUODAK5fvmWsmi7ntZAAA+Ods+nzNAxFEAPDTreCzl7cGWnxWd6ibw==}
@@ -5744,23 +5728,10 @@ snapshots:
       - supports-color
       - terser
 
-  '@react-router/fs-routes@7.8.2(@react-router/dev@7.8.2(@types/node@18.18.13)(lightningcss@1.29.1)(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)))(typescript@5.7.3)':
-    dependencies:
-      '@react-router/dev': 7.8.2(@types/node@18.18.13)(lightningcss@1.29.1)(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1))
-      minimatch: 9.0.5
-    optionalDependencies:
-      typescript: 5.7.3
-
   '@react-router/node@7.8.2(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(typescript@5.7.3)':
     dependencies:
       '@mjackson/node-fetch-server': 0.2.0
       react-router: 7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-    optionalDependencies:
-      typescript: 5.7.3
-
-  '@react-router/remix-routes-option-adapter@7.8.2(@react-router/dev@7.8.2(@types/node@18.18.13)(lightningcss@1.29.1)(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1)))(typescript@5.7.3)':
-    dependencies:
-      '@react-router/dev': 7.8.2(@types/node@18.18.13)(lightningcss@1.29.1)(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(typescript@5.7.3)(vite@5.2.0(@types/node@18.18.13)(lightningcss@1.29.1))
     optionalDependencies:
       typescript: 5.7.3
 
@@ -7562,6 +7533,12 @@ snapshots:
       strip-indent: 3.0.0
 
   regenerator-runtime@0.14.1: {}
+
+  remix-client-cache@3.0.0(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-router: 7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
   remix-utils@8.1.0(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(zod@3.24.2):
     dependencies:

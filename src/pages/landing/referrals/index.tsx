@@ -4,18 +4,19 @@ import { DappLogo } from "components/image";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { useRootData } from "hooks/use-root-data";
-import { Link } from "react-router";
+import { Link, type MetaFunction } from "react-router";
 import { Bottom } from "./bottom";
 import { Faq } from "./faq";
 import { Feature } from "./feature";
 import { Feature2 } from "./feature-2";
 import { Top } from "./top";
 
-export const meta = metas({
-  title: "Referral Program | Better Giving",
-  description:
-    "Support nonprofits and earn rewards by sharing Better Giving. Join our referral program to make an impact, earn effortlessly, and grow a community of changemakers. Sign up for your unique link and start sharing today!",
-});
+export const meta: MetaFunction = () =>
+  metas({
+    title: "Referral Program | Better Giving",
+    description:
+      "Support nonprofits and earn rewards by sharing Better Giving. Join our referral program to make an impact, earn effortlessly, and grow a community of changemakers. Sign up for your unique link and start sharing today!",
+  });
 
 export default function Referrals() {
   const user = useRootData();
