@@ -245,7 +245,7 @@ export default [
   ]),
 
   r("donate-widget", donate_widget.$("widget-context.tsx")._, [
-    r(":id", donate_widget.$("index.ts")._),
+    r(":id", donate_widget.$("index.tsx")._),
     r("donate-thanks", pages.$("donate-thanks.tsx")._, {
       id: "widget-donate-thanks",
     }),

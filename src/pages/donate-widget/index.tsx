@@ -1,12 +1,29 @@
-import type { DonateData } from "api/donate-loader";
 import { ErrorStatus } from "components/status";
+import { BASE_URL } from "constants/env";
+import { metas } from "helpers/seo";
 import { useEffect } from "react";
-import { useLoaderData, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
+import type { Route } from "./+types";
 import Content from "./content";
 import parseConfig from "./parse-config";
 
-export default function DonateWidget() {
-  const { endow } = useLoaderData() as DonateData;
+export { ErrorBoundary } from "components/error";
+export { loader } from "api/donate-loader";
+
+export const meta: Route.MetaFunction = ({ loaderData: d, location: l }) => {
+  if (!d) return [];
+  const { endow } = d;
+  return metas({
+    title: `Donate to ${endow.name}`,
+    description: endow.tagline?.slice(0, 140),
+    name: endow.name,
+    image: endow.image || endow.logo,
+    url: `${BASE_URL}/${l.pathname}`,
+  });
+};
+
+export default function Page({ loaderData }: Route.ComponentProps) {
+  const { endow } = loaderData;
   const [searchParams] = useSearchParams();
 
   /** Hide the Intercom chatbot */
