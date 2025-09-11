@@ -1,5 +1,5 @@
 import type { IBalanceTxsPage } from "@better-giving/balance-txs";
-import type { LoaderFunction } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { baldb, btxdb, navdb } from ".server/aws/db";
 
 import { search } from "helpers/https";
@@ -10,7 +10,7 @@ export interface LoaderData extends IBalanceTxsPage {
   bal_lock: number;
 }
 
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: LoaderFunctionArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

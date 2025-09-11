@@ -1,14 +1,23 @@
-import type { IReg, IRegsPage } from "@better-giving/reg";
+import type { IReg } from "@better-giving/reg";
+import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { useLoaderData, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { Filter } from "./filter";
 import { Table } from "./table";
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export default function Applications() {
+export { ErrorBoundary } from "components/error";
+export const meta: Route.MetaFunction = () =>
+  metas({ title: "Applications Review - Dashboard" });
+
+export default CacheRoute(Applications);
+function Applications({ loaderData: page1 }: Route.ComponentProps) {
   const [params] = useSearchParams();
-  const page1 = useLoaderData() as IRegsPage;
   const [query, setQuery] = useState("");
   const { node, loading } = use_paginator<IReg>({
     table: ({ items, ...props }) => (

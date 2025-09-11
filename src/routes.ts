@@ -233,7 +233,7 @@ export default [
         ]),
       ]),
     ]),
-    r("applications", reg_apps.$("index.ts")._),
+    r("applications", reg_apps.$("index.tsx")._),
     r("applications/:id", reg_app.$("index.tsx")._, [
       r(":verdict", reg_app.$("review-route.tsx")._),
       r("success", reg_app.$("success-prompt.tsx")._),

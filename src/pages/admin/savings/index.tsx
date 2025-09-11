@@ -5,14 +5,17 @@ import {
   ArrowLeftRightIcon,
   CircleHelp,
 } from "lucide-react";
-import { NavLink, Outlet, useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+import { NavLink, Outlet } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { Txs } from "./txs";
 
 export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export default CacheRoute(Page);
 
-export default function Page() {
-  const { bal_liq, ...btxs_page1 } = useLoaderData() as LoaderData;
+function Page({ loaderData }: Route.ComponentProps) {
+  const { bal_liq, ...btxs_page1 } = loaderData;
   return (
     <div className="@container w-full max-w-4xl grid content-start">
       <div className="font-bold text-2xl mb-4 flex items-baseline gap-x-2">

@@ -1,10 +1,14 @@
-import { useLoaderData, useNavigate } from "react-router";
-import type { LoaderData } from "./api";
-import { Earnings } from "./earnings";
-export { loader } from "./api";
 import { Explainer, Hub, Nonprofits, ReferralId } from "components/referrals";
+import { useNavigate } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
+import { Earnings } from "./earnings";
 
-export function ReferralsPage() {
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export default CacheRoute(Page);
+
+function Page({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
   const {
     id,
@@ -15,7 +19,7 @@ export function ReferralsPage() {
     payout,
     payout_min,
     payout_ltd,
-  } = useLoaderData() as LoaderData;
+  } = loaderData;
   return (
     <div className="">
       <Explainer classes="mb-4" />
@@ -39,5 +43,3 @@ export function ReferralsPage() {
     </div>
   );
 }
-
-export default ReferralsPage;

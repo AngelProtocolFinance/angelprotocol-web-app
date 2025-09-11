@@ -1,5 +1,5 @@
 import type { IBalanceTxsPage } from "@better-giving/balance-txs";
-import type { LoaderFunction } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import * as v from "valibot";
 import { baldb, btxdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
@@ -8,7 +8,7 @@ export interface LoaderData extends IBalanceTxsPage {
   bal_liq: number;
 }
 
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: LoaderFunctionArgs) => {
   const { searchParams: s } = new URL(x.request.url);
   const key = v.parse(
     v.nullable(v.pipe(v.string(), v.base64())),
