@@ -13,6 +13,7 @@ import Testimonials from "./testimonials";
 // import { useLoaderData } from "@remix-run/react";
 // import type { EndowsPage } from "@better-giving/endowment";
 export { loader } from "./api";
+
 export default function Home() {
   // const page1 = useLoaderData() as EndowsPage;
   return (

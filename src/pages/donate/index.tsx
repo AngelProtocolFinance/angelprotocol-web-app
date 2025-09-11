@@ -8,10 +8,13 @@ import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { metas } from "helpers/seo";
 import { Link } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import FAQ from "./faq";
 import OrgCard from "./org-card";
 export { loader } from "api/donate-loader";
 import type { Route } from "./+types";
+
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   if (!d) return [];
@@ -24,8 +27,8 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
     url: `${BASE_URL}/donate/${endow.id}`,
   });
 };
-
-export default function Page({ loaderData }: Route.ComponentProps) {
+export default CacheRoute(Page);
+function Page({ loaderData }: Route.ComponentProps) {
   const { endow, balance } = loaderData;
   return (
     <div className="w-full bg-[#F6F7F8]">

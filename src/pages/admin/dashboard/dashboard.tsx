@@ -1,12 +1,17 @@
-import { Outlet, useLoaderData } from "react-router";
+import { Outlet } from "react-router";
+import {
+  createClientLoaderCache,
+  useCachedLoaderData,
+} from "remix-client-cache";
 import type { DashboardData } from "./api";
 import { Loaded } from "./loaded";
 
 export { loader, endowUpdateAction as action } from "./api";
+export const clientLoader = createClientLoaderCache();
 
 export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const data = useLoaderData<DashboardData>();
+  const data = useCachedLoaderData<DashboardData>();
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">

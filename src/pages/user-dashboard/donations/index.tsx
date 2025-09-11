@@ -4,7 +4,11 @@ import { replaceWithEmptyString as fill } from "helpers/replace-with-empty-strin
 import { use_paginator } from "hooks/use-paginator";
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { Outlet, useLoaderData, useSearchParams } from "react-router";
+import { Outlet, useSearchParams } from "react-router";
+import {
+  createClientLoaderCache,
+  useCachedLoaderData,
+} from "remix-client-cache";
 import type { Donation } from "types/donations";
 import type { DonationsData } from "./donations-loader";
 import Filter from "./filter";
@@ -13,12 +17,14 @@ import StatusTabs from "./status-tabs";
 import { Table } from "./table";
 
 export { loader } from "./donations-loader";
+
+export const clientLoader = createClientLoaderCache();
 export { ErrorBoundary } from "components/error";
 
 export default function Donations() {
   const [params, setParams] = useSearchParams();
   const status = (params.get("status") ?? "final") as Donation.Status;
-  const { user, ...page1 } = useLoaderData() as DonationsData;
+  const { user, ...page1 } = useCachedLoaderData() as DonationsData;
   const { node, loading, items } = use_paginator({
     table: (props) => <Table {...props} status={status} />,
     classes: "mt-2",

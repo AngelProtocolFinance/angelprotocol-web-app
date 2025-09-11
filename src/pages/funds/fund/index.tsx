@@ -18,14 +18,20 @@ import {
   type LinksFunction,
   type MetaFunction,
   NavLink,
-  useLoaderData,
 } from "react-router";
+import {
+  createClientLoaderCache,
+  useCachedLoaderData,
+} from "remix-client-cache";
 import type { IFund } from "types/fund";
 import type { LoaderData } from "./api";
 import { Share } from "./share";
 import { Video } from "./video";
 
 export { loader } from "./api";
+
+export const clientLoader = createClientLoaderCache();
+
 export const links: LinksFunction = () => [...richTextStyles];
 
 export const meta: MetaFunction = ({ data, location: l }) => {
@@ -41,7 +47,7 @@ export const meta: MetaFunction = ({ data, location: l }) => {
 };
 export { ErrorBoundary } from "components/error";
 export default function Fund() {
-  const { url, ...fund } = useLoaderData() as LoaderData;
+  const { url, ...fund } = useCachedLoaderData() as LoaderData;
 
   const status = statusFn(
     fund.expiration ?? MAX_EXPIRATION_ISO,

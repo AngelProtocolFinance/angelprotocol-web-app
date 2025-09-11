@@ -5,18 +5,19 @@ import { use_paginator } from "hooks/use-paginator";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
+import { type MetaFunction, NavLink, useSearchParams } from "react-router";
 import {
-  type MetaFunction,
-  NavLink,
-  useLoaderData,
-  useSearchParams,
-} from "react-router";
+  createClientLoaderCache,
+  useCachedLoaderData,
+} from "remix-client-cache";
 
 import { Cards } from "./cards";
 import Hero from "./hero";
 import hero from "./hero.webp?url";
 
 export { loader } from "./funds-api";
+
+export const clientLoader = createClientLoaderCache();
 export const meta: MetaFunction = () =>
   metas({
     image: hero,
@@ -27,8 +28,8 @@ export const meta: MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Funds() {
-  const page1 = useLoaderData<IFundsPage>();
   const [params] = useSearchParams();
+  const page1 = useCachedLoaderData<IFundsPage>();
   const { node, load } = use_paginator({
     id: "funds",
     page1,

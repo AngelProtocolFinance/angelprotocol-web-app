@@ -7,9 +7,12 @@ import {
   type LoaderFunction,
   type MetaFunction,
   Outlet,
-  useLoaderData,
   useSearchParams,
 } from "react-router";
+import {
+  createClientLoaderCache,
+  useCachedLoaderData,
+} from "remix-client-cache";
 import type { EndowCardsPage } from "types/npo";
 import { safeParse } from "valibot";
 import ActiveFilters from "./active-filters";
@@ -30,6 +33,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   return page;
 };
 
+export const clientLoader = createClientLoaderCache();
+
 export const meta: MetaFunction = () =>
   metas({
     title: "Marketplace",
@@ -39,9 +44,9 @@ export const meta: MetaFunction = () =>
   });
 
 export { ErrorBoundary } from "components/error";
-export default function Marketplace() {
+function Marketplace() {
   const [params] = useSearchParams();
-  const page1 = useLoaderData() as EndowCardsPage;
+  const page1 = useCachedLoaderData() as EndowCardsPage;
   const { node } = use_paginator({
     id: "marketplace",
     page1,
@@ -65,3 +70,5 @@ export default function Marketplace() {
     </div>
   );
 }
+
+export default Marketplace;
