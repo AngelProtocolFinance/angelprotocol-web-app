@@ -1,26 +1,22 @@
-import type { IMediaPage } from "@better-giving/endowment";
 import Breadcrumbs from "components/breadcrumbs";
 import { appRoutes } from "constants/routes";
 import { use_paginator } from "hooks/use-paginator";
 import { Plus } from "lucide-react";
-import {
-  NavLink,
-  Outlet,
-  useLoaderData,
-  useParams,
-  useSearchParams,
-} from "react-router";
+import { NavLink, Outlet, useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types/videos";
 import { List, NoVideo } from "./list";
 
-export { ErrorBoundary } from "components/error";
 export {
-  allVideos as loader,
-  videosAction as action,
+  all_videos as loader,
+  videos_action as action,
 } from "../api";
-export default function Videos() {
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export { ErrorBoundary } from "components/error";
+export default CacheRoute(Page);
+
+function Page({ loaderData: page1, params }: Route.ComponentProps) {
   const [search] = useSearchParams();
-  const params = useParams();
-  const page1 = useLoaderData<IMediaPage>();
   const { node } = use_paginator({
     page1,
     table: (p) => <List {...p} />,

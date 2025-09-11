@@ -1,11 +1,24 @@
 import { CircleAlert } from "lucide-react";
-import { useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+
 import { Form } from "./form";
 
+import { imgEditorStyles } from "components/img-editor";
+import { richTextStyles } from "components/rich-text";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
+
+export { ErrorBoundary } from "components/error";
+export { loader, action } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export const links: Route.LinksFunction = () => [
+  ...richTextStyles,
+  ...imgEditorStyles,
+];
+export default CacheRoute(Page);
+
 const containerClass = "xl:container xl:mx-auto px-5 mt-8 grid content-start";
-export default function EditFund() {
-  const { fund, user } = useLoaderData() as LoaderData;
+function Page({ loaderData }: Route.ComponentProps) {
+  const { fund, user } = loaderData;
 
   if (
     !user.funds.includes(fund.id) &&

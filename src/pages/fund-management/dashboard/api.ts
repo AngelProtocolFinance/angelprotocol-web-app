@@ -1,6 +1,6 @@
 import type { ILog, IPage } from "@better-giving/nav-history";
 import { resp } from "helpers/https";
-import type { LoaderFunction } from "react-router";
+import type { Route } from "./+types";
 import { cognito, toAuth } from ".server/auth";
 import { navdb } from ".server/aws/db";
 
@@ -10,7 +10,7 @@ export interface LoaderData {
   recent_logs: IPage<ILog>;
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   if (!user.groups.includes("ap-admin")) throw resp.status(403);
@@ -23,9 +23,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     }),
   ]);
 
-  return resp.json({
+  return {
     ltd,
     logs: logs.items,
     recent_logs,
-  } satisfies LoaderData);
+  } satisfies LoaderData;
 };

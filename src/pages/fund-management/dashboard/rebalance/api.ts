@@ -4,27 +4,25 @@ import type {
   IRebalanceLog,
   ITicker,
 } from "@better-giving/nav-history";
+import { resp } from "helpers/https";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "react-router";
+import { redirect } from "react-router";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { prices_fn, to_bals } from "./helpers";
 import { fv as schema, ticker_nets } from "./types";
 import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, navdb } from ".server/aws/db";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
-  if (!user.groups.includes("ap-admin")) return { status: 403 };
+  if (!user.groups.includes("ap-admin")) return resp.status(403);
   return navdb.ltd();
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };

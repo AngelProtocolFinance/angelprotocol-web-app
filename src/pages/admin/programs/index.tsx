@@ -1,14 +1,15 @@
 import { RmxForm, useRmxForm } from "components/form";
-import { useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import List from "./list";
 
 export { loader, action } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
+export default CacheRoute(Page);
 
-export default function Programs() {
+function Page({ loaderData: { programs } }: Route.ComponentProps) {
   const { nav } = useRmxForm();
-  const { programs } = useLoaderData<LoaderData>();
 
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">

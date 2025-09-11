@@ -7,7 +7,7 @@ import { isFormErr } from "types/action";
 import type { LoaderData } from "./api";
 import { schema } from "./schema";
 
-export { addAction as action } from "./api";
+export { add_action as action } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
 export default function AddForm() {
   const navigate = useNavigate();

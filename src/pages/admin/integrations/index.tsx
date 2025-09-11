@@ -1,11 +1,10 @@
-import { useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+import type { Route } from "./+types";
 import { Display } from "./display";
 import { Form } from "./form";
 
 export { loader, action } from "./api";
-export default function Integrations() {
-  const { apiKey } = useLoaderData<LoaderData>();
+
+export default function Page({ loaderData: { apiKey } }: Route.ComponentProps) {
   return (
     <div className="grid content-start @container">
       <h3 className="text-[2rem] mb-2">Integrations</h3>

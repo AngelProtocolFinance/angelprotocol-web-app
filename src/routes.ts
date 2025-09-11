@@ -70,13 +70,10 @@ export default [
     r("donations", admin.$("donations/index.tsx")._, [
       r("edit-alloc", admin.$("donations/allocation-edit/index.tsx")._),
     ]),
-    r("programs", admin.$("programs/programs.tsx")._),
+    r("programs", admin.$("programs/index.tsx")._),
     r("funds", admin.$("funds/index.tsx")._),
     r("integrations", admin.$("integrations/index.tsx")._),
-    r(
-      "program-editor/:programId",
-      admin.$("program-editor/program-editor.tsx")._
-    ),
+    r("program-editor/:programId", admin.$("program-editor/index.tsx")._),
     r("members", admin.$("members/members.tsx")._, { id: "endow-admins" }, [
       r("add", admin.$("members/add-form.tsx")._),
     ]),
@@ -201,7 +198,7 @@ export default [
     r("funds/*", funds.$("redirect.ts")._),
     r("fundraisers", funds.$("funds.tsx")._),
     r("fundraisers/:fundId", funds.$("fund/index.tsx")._),
-    r("fundraisers/:fundId/edit", funds.$("edit-fund/index.ts")._),
+    r("fundraisers/:fundId/edit", funds.$("edit-fund/index.tsx")._),
     r("fundraisers/new", funds.$("create-fund/index.tsx")._),
     r("privacy-policy", legal.$("privacy-policy.tsx")._),
     r("terms-of-use-npo", legal.$("terms-nonprofits.tsx")._),

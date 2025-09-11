@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { NavLink, Outlet, useLoaderData, useNavigate } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
 import {
   Cell,
   Legend,
@@ -13,21 +13,23 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import type { LoaderData } from "./api";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { ticker_colors } from "./common";
 import { HistoryTable } from "./history-table";
 
 export { loader } from "./api";
-
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 function top_holders_fn(holders: Record<string, number>) {
   return Object.entries(holders)
     .sort((a, b) => b[1] - a[1])
     .slice(0, 10);
 }
 
-export default function Page() {
+export default CacheRoute(Page);
+function Page({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
-  const { ltd, logs, recent_logs } = useLoaderData() as LoaderData;
+  const { ltd, logs, recent_logs } = loaderData;
   const pie_data = Object.values(ltd.composition)
     .map((x) => ({
       ...x,

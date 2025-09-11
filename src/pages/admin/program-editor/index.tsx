@@ -1,19 +1,22 @@
-import type { IProgram } from "@better-giving/endowment";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles } from "components/rich-text";
 import { adminRoutes } from "constants/routes";
 import { ChevronLeft } from "lucide-react";
-import { Link, type LinksFunction, useLoaderData } from "react-router";
+import { Link } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import Form from "./form";
 
-export const links: LinksFunction = () => [
+export const links: Route.LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
 export { loader, action } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
-export default function ProgramEditor() {
-  const program = useLoaderData<IProgram>();
+export default CacheRoute(Page);
+
+function Page({ loaderData: program }: Route.ComponentProps) {
   return (
     <>
       <Link
