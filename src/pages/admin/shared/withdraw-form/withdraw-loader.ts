@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { baldb, navdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -8,7 +8,7 @@ export interface LoaderData {
   bal_liq: number;
 }
 
-export const withdraw_loader: LoaderFunction = async (x) => {
+export const withdraw_loader = async (x: LoaderFunctionArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

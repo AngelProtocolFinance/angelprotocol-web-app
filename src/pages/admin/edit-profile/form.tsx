@@ -18,7 +18,7 @@ import { unsdgs } from "constants/unsdgs";
 import { Outlet } from "react-router";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
-import Slug from "./slug";
+import { Slug } from "./slug";
 import useEditProfile from "./use-edit-profile";
 import useRhf from "./use-rhf";
 
@@ -34,9 +34,10 @@ interface Props {
   initSlug?: string;
   init: FV;
   id: number;
+  base_url: string;
 }
 
-export default function Form({ initSlug = "", init, id }: Props) {
+export default function Form({ initSlug = "", init, id, base_url }: Props) {
   const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
   const { onSubmit, state, prompt, setPrompt } = useEditProfile(dirtyFields);
   const isUploading = [
@@ -167,6 +168,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
         />
 
         <Slug
+          base_url={base_url}
           initSlug={initSlug}
           newSlug={rhf.slug}
           slugField={
