@@ -4,20 +4,19 @@ import flying_character from "assets/images/flying-character.webp";
 import Image from "components/image";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
-import { type MetaFunction, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import {
   createClientLoaderCache,
   useCachedLoaderData,
 } from "remix-client-cache";
+import type { Route } from "./+types/profile";
 import ProfileContext from "./profile-context";
 
-export { profileLoader as loader } from "./profile-loader";
+export { profile_loader as loader } from "./profile-loader";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export const clientLoader = createClientLoaderCache();
-
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return [];
-  const d = data as INpo;
+export const meta: Route.MetaFunction = ({ loaderData: d }) => {
+  if (!d) return [];
   return metas({
     title: `${d.name} - ${APP_NAME}`,
     description: d.tagline?.slice(0, 140),

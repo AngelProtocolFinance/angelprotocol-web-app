@@ -1,8 +1,8 @@
 import { search } from "helpers/https";
-import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import { type DonationsPage, donations_query_params } from "types/donations";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { cognito, toAuth } from ".server/auth";
 import { get_donations } from ".server/donations";
 
@@ -10,7 +10,7 @@ export interface DonationsData extends DonationsPage {
   user: UserV2;
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   const raw = search(request);

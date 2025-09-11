@@ -1,20 +1,12 @@
-import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
+import { npos_search } from "@better-giving/endowment/schema";
 import { Info } from "components/status";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
-import {
-  type LoaderFunction,
-  type MetaFunction,
-  Outlet,
-  useSearchParams,
-} from "react-router";
-import {
-  createClientLoaderCache,
-  useCachedLoaderData,
-} from "remix-client-cache";
-import type { EndowCardsPage } from "types/npo";
-import { safeParse } from "valibot";
+import { Outlet, useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import { parse } from "valibot";
+import type { Route } from "./+types";
 import ActiveFilters from "./active-filters";
 import { Cards } from "./cards";
 import Hero from "./hero";
@@ -22,20 +14,15 @@ import hero from "./hero.webp?url";
 import Toolbar from "./toolbar";
 import { get_npos } from ".server/npos";
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const params = safeParse(endowsQueryParams, search(request));
-
-  if (params.issues) {
-    return { status: 400, body: params.issues[0].message };
-  }
-
-  const page = await get_npos(params.output);
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const params = parse(npos_search, search(request));
+  const page = await get_npos(params);
   return page;
 };
 
-export const clientLoader = createClientLoaderCache();
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export const meta: MetaFunction = () =>
+export const meta: Route.MetaFunction = () =>
   metas({
     title: "Marketplace",
     description:
@@ -44,9 +31,9 @@ export const meta: MetaFunction = () =>
   });
 
 export { ErrorBoundary } from "components/error";
-function Marketplace() {
+export default CacheRoute(Page);
+function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [params] = useSearchParams();
-  const page1 = useCachedLoaderData() as EndowCardsPage;
   const { node } = use_paginator({
     id: "marketplace",
     page1,
@@ -70,5 +57,3 @@ function Marketplace() {
     </div>
   );
 }
-
-export default Marketplace;

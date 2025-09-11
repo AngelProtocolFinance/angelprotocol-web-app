@@ -1,8 +1,8 @@
 import { fund_id } from "@better-giving/fundraiser/schema";
 import { segment } from "api/schema/segment";
-import type { LoaderFunction } from "react-router";
 import type { IFund } from "types/fund";
 import { parse, union } from "valibot";
+import type { Route } from "./+types";
 import { get_fund } from ".server/fund";
 
 export interface LoaderData extends IFund {
@@ -11,7 +11,7 @@ export interface LoaderData extends IFund {
 
 const schema = union([fund_id, segment]);
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const url = new URL(request.url);
   const id = parse(schema, params.fundId);
   const fund = await get_fund(id);
