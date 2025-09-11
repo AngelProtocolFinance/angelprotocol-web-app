@@ -13,7 +13,7 @@ type Props = {
   isWithHeir: boolean;
 };
 
-export { deleteAction as action } from "./api";
+export { delete_action as action } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
 export default function DeletePrompt() {
   const [params] = useSearchParams();

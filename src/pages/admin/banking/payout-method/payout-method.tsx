@@ -3,16 +3,17 @@ import ExtLink from "components/ext-link";
 import { useActionResult } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { NavLink, Outlet, useFetcher, useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+import { NavLink, Outlet, useFetcher } from "react-router";
+import type { Route } from "./+types/payout-method";
 
 export {
   loader,
-  prioritizeAction as action,
+  prioritize_action as action,
 } from "./api";
+
 export { ErrorBoundary } from "components/error";
-export default function PayoutMethod() {
-  const d = useLoaderData() as LoaderData;
+
+export default function Page({ loaderData: d }: Route.ComponentProps) {
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
 
