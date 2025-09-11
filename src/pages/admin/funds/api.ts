@@ -2,10 +2,11 @@ import { UpdateBuilder } from "@better-giving/db";
 import type { INpo } from "@better-giving/endowment";
 import { FundDb, type IFundItem } from "@better-giving/fundraiser";
 import { fund_id } from "@better-giving/fundraiser/schema";
-import type { ActionFunction, LoaderFunction } from "react-router";
+import { resp } from "helpers/https";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { UpdateCommand, funddb, npodb } from ".server/aws/db";
 import { get_funds_npo_memberof } from ".server/funds";
 import { admin_checks, is_resp } from ".server/utils";
@@ -16,12 +17,12 @@ export interface LoaderData {
   endow: INpo;
 }
 
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: Route.LoaderArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
   const endow = await npodb.npo(adm.id);
-  if (!endow) return { status: 404 };
+  if (!endow) return resp.status(404);
 
   const funds = await get_funds_npo_memberof(endow.id, {
     npo_profile_featured: false,
@@ -29,7 +30,7 @@ export const loader: LoaderFunction = async (x) => {
   return { endow, funds, user: adm } satisfies LoaderData;
 };
 
-export const action: ActionFunction = async (x) => {
+export const action = async (x: Route.ActionArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

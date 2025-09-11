@@ -3,16 +3,20 @@ import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
-import { Link, useLoaderData } from "react-router";
+import { Link } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { UserV2 } from "types/auth";
-import type { LoaderData } from "./api";
+import type { Route } from "./+types";
 import { FundItem } from "./fund-item";
 
 type CreatorType = "others" | "ours";
 export { action, loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
-export default function Funds() {
-  const { funds, endow, user } = useLoaderData<LoaderData>();
+export default CacheRoute(Page);
+
+function Page({ loaderData }: Route.ComponentProps) {
+  const { funds, endow, user } = loaderData;
   const [creatorType, setCreatorType] = useState<CreatorType>("ours");
 
   return (

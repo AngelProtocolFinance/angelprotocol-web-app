@@ -3,31 +3,23 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
-import { useLoaderData } from "react-router";
-import type { LoaderFunction, MetaFunction } from "react-router";
-import type { UserV2 } from "types/auth";
+import type { Route } from "./+types/layout";
 import { linkGroups } from "./constants";
 import { Header } from "./header";
 import { cognito, toAuth } from ".server/auth";
 
-interface LoaderData {
-  user: UserV2;
-}
+export const meta: Route.MetaFunction = () =>
+  metas({ title: "Fund Management" });
 
-export const meta: MetaFunction = () => metas({ title: "Fund Management" });
-
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  return {
-    user,
-  } satisfies LoaderData;
+  return user;
 };
 
-export default function AdminLayout() {
-  const data = useLoaderData() as LoaderData;
-  if (!data.user.groups.includes("ap-admin")) {
+export default function Page({ loaderData: user }: Route.ComponentProps) {
+  if (!user.groups.includes("ap-admin")) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">
         <CircleAlert size={80} className="text-red" />

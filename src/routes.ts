@@ -71,7 +71,7 @@ export default [
       r("edit-alloc", admin.$("donations/allocation-edit/index.tsx")._),
     ]),
     r("programs", admin.$("programs/programs.tsx")._),
-    r("funds", admin.$("funds/funds.tsx")._),
+    r("funds", admin.$("funds/index.tsx")._),
     r("integrations", admin.$("integrations/index.tsx")._),
     r(
       "program-editor/:programId",
@@ -82,7 +82,7 @@ export default [
     ]),
     r("settings", admin.$("settings/form.tsx")._),
     r("edit-profile", admin.$("edit-profile/index.tsx")._),
-    r("banking", admin.$("banking/payout-methods/payout-methods.tsx")._),
+    r("banking", admin.$("banking/payout-methods/index.tsx")._),
     r("banking/new", admin.$("banking/banking.tsx")._),
     r("banking/:bankId", admin.$("banking/payout-method/payout-method.tsx")._, [
       r("delete", admin.$("banking/payout-method/delete-prompt.tsx")._),
@@ -207,8 +207,8 @@ export default [
     r("terms-of-use-npo", legal.$("terms-nonprofits.tsx")._),
     r("terms-of-use", legal.$("terms-donors.tsx")._),
     r("terms-of-use-referrals", legal.$("terms-referrals.tsx")._),
-    r("banking-applications", bank_apps.$("index.ts")._),
-    r("banking-applications/:id", bank_app.$("banking-application.tsx")._, [
+    r("banking-applications", bank_apps.$("index.tsx")._),
+    r("banking-applications/:id", bank_app.$("index.tsx")._, [
       r("approve", bank_app.$("verdict-approve.tsx")._),
       r("reject", bank_app.$("verdict-reject.tsx")._),
       r("success", bank_app.$("success-prompt.tsx")._),

@@ -1,12 +1,19 @@
-import type { IBappsPage } from "@better-giving/banking-applications";
+import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
-import { useLoaderData, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import Filter from "./filter";
 import { Table } from "./table";
 
-export default function BankingApplications() {
+export { ErrorBoundary } from "components/error";
+export { loader } from "./api";
+export const clientLaoder = createClientLoaderCache<Route.ClientLoaderArgs>();
+export const meta = () => metas({ title: "Banking Applications" });
+
+export default CacheRoute(Page);
+function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [params, setParams] = useSearchParams();
-  const page1 = useLoaderData() as IBappsPage;
 
   const { node, loading } = use_paginator({
     table: (x) => <Table {...x} />,

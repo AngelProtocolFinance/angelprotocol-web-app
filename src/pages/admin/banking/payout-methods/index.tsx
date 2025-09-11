@@ -1,14 +1,17 @@
 import { Info } from "components/status";
 import { Plus } from "lucide-react";
-import { NavLink, useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+import { NavLink } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import Table from "./table";
 
 export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
 export { ErrorBoundary } from "components/error";
-export default function PayoutMethods() {
-  const { methods } = useLoaderData<LoaderData>();
+export default CacheRoute(Page);
+function Page({ loaderData }: Route.ComponentProps) {
+  const { methods } = loaderData;
 
   return (
     <div>
