@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import { testDonateData } from "../../__tests__/test-data";
 import { USD_CODE } from "../../common/constants";
 import type { DafDonationDetails, Init } from "../../types";
 import Form from "./form";
@@ -13,18 +12,8 @@ vi.mock("../../context", () => ({
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
 
-const mockLoader = vi.hoisted(() => vi.fn());
-vi.mock("react-router", async () => {
-  const actual = await vi.importActual("react-router");
-  return {
-    ...actual,
-    useLoaderData: mockLoader,
-  };
-});
-
 describe("DAF form test", () => {
   test("initial state: blank", async () => {
-    mockLoader.mockReturnValue(testDonateData);
     const init: Init = {
       source: "bg-marketplace",
       config: null,
@@ -44,7 +33,6 @@ describe("DAF form test", () => {
 
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("");
-    mockLoader.mockReset();
   });
 
   test("initial blank state: program donations now allowed", () => {
@@ -65,7 +53,6 @@ describe("DAF form test", () => {
   });
 
   test("initial state: persisted and submittable", async () => {
-    mockLoader.mockReturnValue(testDonateData);
     const init: Init = {
       source: "bg-marketplace",
       config: null,
@@ -86,7 +73,6 @@ describe("DAF form test", () => {
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();
     mockedSetState.mockReset();
-    mockLoader.mockReset();
   });
   test("user encounters validation errors and corrects them", async () => {
     const init: Init = {
