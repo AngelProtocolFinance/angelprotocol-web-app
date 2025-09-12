@@ -1,5 +1,5 @@
-import { NavLink, useSearchParams } from "@remix-run/react";
 import { FilterIcon } from "lucide-react";
+import { NavLink, useSearchParams } from "react-router";
 import Search from "./search";
 
 // import Sorter from "./Sorter";

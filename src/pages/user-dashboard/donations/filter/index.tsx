@@ -1,6 +1,5 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useSearchParams } from "@remix-run/react";
 import { Field, toYYYMMDD } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { search } from "helpers/https";
@@ -8,6 +7,7 @@ import { weeksAgo } from "helpers/weeks-ago";
 import { Filter as FilterIcon, XIcon } from "lucide-react";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "react-router";
 import { type FV, schema } from "./schema";
 
 type Props = {

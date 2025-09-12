@@ -1,5 +1,5 @@
 import type { IBapp } from "@better-giving/banking-applications";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunctionArgs } from "react-router";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
 import { config } from "./config";
 import { bappdb, npodb } from ".server/aws/db";
@@ -18,7 +18,7 @@ export interface LoaderData {
   base_url: string;
 }
 
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: LoaderFunctionArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

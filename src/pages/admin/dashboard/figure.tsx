@@ -1,7 +1,7 @@
-import { NavLink } from "@remix-run/react";
 import { Tooltip } from "components/tooltip";
 import { ArrowRightIcon, CircleHelp } from "lucide-react";
 import type { ReactNode } from "react";
+import { NavLink } from "react-router";
 
 type Props = {
   title: string;

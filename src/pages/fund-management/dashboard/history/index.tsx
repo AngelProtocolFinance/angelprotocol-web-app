@@ -1,13 +1,16 @@
-import type { ILog, IPage } from "@better-giving/nav-history";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeftIcon } from "lucide-react";
+import { Link, useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { HistoryTable } from "../history-table";
-export { loader } from "./api";
+import type { Route } from "./+types";
 
-export default function Page() {
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+
+export default CacheRoute(Page);
+function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [search] = useSearchParams();
-  const page1 = useLoaderData() as IPage<ILog>;
   const { node } = use_paginator({
     table: (x) => <HistoryTable {...x} />,
     page1,

@@ -1,6 +1,4 @@
 import type { IProgram } from "@better-giving/endowment";
-import { ver } from "api/api";
-import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
 
 export const mockPrograms: IProgram[] = [
@@ -19,7 +17,7 @@ export const mockPrograms: IProgram[] = [
 ];
 
 export const handlers = [
-  http.get(`${APIs.aws}/${ver(1)}/endowments/:endowId/programs`, () => {
+  http.get(`api/npo/:id/programs`, () => {
     return HttpResponse.json(mockPrograms);
   }),
 ];

@@ -6,7 +6,7 @@ import {
   forwardRef,
 } from "react";
 
-import { Label } from ".";
+import { Label } from "./label";
 import type { Classes } from "./types";
 
 type El = HTMLInputElement;

@@ -1,7 +1,7 @@
 import { MenuItem } from "@headlessui/react";
-import { NavLink } from "@remix-run/react";
 import Image from "components/image";
 import { appRoutes } from "constants/routes";
+import { NavLink } from "react-router";
 import type { INpoBookmark, IUserNpo2 } from "types/user";
 import ContentLoader from "../../content-loader";
 

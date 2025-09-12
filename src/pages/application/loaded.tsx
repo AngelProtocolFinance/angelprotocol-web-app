@@ -1,9 +1,9 @@
 import type { IReg } from "@better-giving/reg";
-import { NavLink, Outlet } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
+import { NavLink, Outlet } from "react-router";
 import type { V2RecipientAccount } from "types/bank-details";
 import Container from "./container";
 

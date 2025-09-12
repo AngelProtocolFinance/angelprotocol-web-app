@@ -1,9 +1,8 @@
 import type { IProgramDb } from "@better-giving/endowment";
-import { useFetcher } from "@remix-run/react";
-import { Link } from "@remix-run/react";
 import Image from "components/image";
 import LoaderRing from "components/loader-ring";
 import { adminRoutes } from "constants/routes";
+import { Link, useFetcher } from "react-router";
 
 export function Program(props: IProgramDb) {
   const fetcher = useFetcher();

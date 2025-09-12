@@ -1,14 +1,10 @@
+import type { Route } from "./+types";
 import { Display } from "./display";
 import { Form } from "./form";
 
-import { useCachedLoaderData } from "api/cache";
-import type { LoaderData } from "./api";
-
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
 
-export default function Integrations() {
-  const { apiKey } = useCachedLoaderData<LoaderData>();
+export default function Page({ loaderData: { apiKey } }: Route.ComponentProps) {
   return (
     <div className="grid content-start @container">
       <h3 className="text-[2rem] mb-2">Integrations</h3>

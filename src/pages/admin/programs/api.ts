@@ -1,8 +1,9 @@
 import type { IProgramDb } from "@better-giving/endowment";
 import { program_id } from "@better-giving/endowment/schema";
-import { type LoaderFunction, redirect } from "@vercel/remix";
 import { adminRoutes } from "constants/routes";
+import { redirect } from "react-router";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -10,7 +11,7 @@ export interface LoaderData {
   programs: IProgramDb[];
 }
 
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: Route.LoaderArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
@@ -18,7 +19,7 @@ export const loader: LoaderFunction = async (x) => {
   return { programs } satisfies LoaderData;
 };
 
-export const action: LoaderFunction = async (x) => {
+export const action = async (x: Route.ActionArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

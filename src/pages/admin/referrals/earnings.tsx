@@ -1,9 +1,9 @@
 import type { IBapp } from "@better-giving/banking-applications";
-import { Link, Outlet } from "@remix-run/react";
 import { Info } from "components/status";
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ArrowRightIcon, HistoryIcon } from "lucide-react";
+import { Link, Outlet } from "react-router";
 import type { PendingEarnings } from "types/referrals";
 import { config } from "./config";
 import {

@@ -2,11 +2,11 @@ import type { INpoUpdate } from "@better-giving/endowment";
 import { min_payout_amount } from "@better-giving/endowment/schema";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useFetcher, useNavigate, useSearchParams } from "@remix-run/react";
 import { Field } from "components/form";
 import { search } from "helpers/https";
 import { endowUpdate } from "pages/admin/endow-update-action";
 import { useForm } from "react-hook-form";
+import { useFetcher, useNavigate, useSearchParams } from "react-router";
 import * as v from "valibot";
 
 interface IContent {

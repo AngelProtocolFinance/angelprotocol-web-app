@@ -14,6 +14,7 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
+import type { EndowmentOption } from "types/npo";
 import { type WidgetConfig, widgetConfig } from "types/widget";
 import { EndowmentSelector } from "./endowment-selector";
 import type { FormValues } from "./types";
@@ -21,6 +22,7 @@ import type { FormValues } from "./types";
 type Props = {
   classes?: string;
   endow?: INpo;
+  endows: EndowmentOption[];
   config: WidgetConfig;
   setConfig: Dispatch<SetStateAction<WidgetConfig>>;
 };
@@ -29,6 +31,7 @@ export default function Configurer({
   classes = "",
   config,
   endow,
+  endows,
   setConfig,
 }: Props) {
   const {
@@ -86,7 +89,7 @@ export default function Configurer({
         <label className="mt-2 mb-2 font-medium text-base">
           Nonprofit name:
         </label>
-        <EndowmentSelector endow={endow} />
+        <EndowmentSelector endow={endow} endows={endows} />
 
         {endow && (endow?.progDonationsAllowed ?? true) && (
           <ProgramSelector

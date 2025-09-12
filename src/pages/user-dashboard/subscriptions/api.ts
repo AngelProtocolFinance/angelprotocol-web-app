@@ -1,6 +1,6 @@
 import type { StripeDonation } from "@better-giving/donation";
-import type { LoaderFunction } from "@vercel/remix";
 import type Stripe from "stripe";
+import type { Route } from "./+types";
 import { cognito, toAuth } from ".server/auth";
 import { stripe } from ".server/sdks";
 
@@ -18,7 +18,7 @@ export interface LoaderData {
   subs: SubsItem[];
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 

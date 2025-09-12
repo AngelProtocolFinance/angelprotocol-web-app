@@ -1,20 +1,20 @@
 import { Txs } from "@better-giving/db";
 import type { IFund, IFundSettings } from "@better-giving/fundraiser";
 import { fund_new } from "@better-giving/fundraiser/schema";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { search } from "helpers/https";
+import {
+  type ActionFunction,
+  type LoaderFunctionArgs,
+  redirect,
+} from "react-router";
 import { isError } from "types/auth";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, funddb, npodb, userdb } from ".server/aws/db";
 import { env } from ".server/env";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   const { npo: id } = search(request);

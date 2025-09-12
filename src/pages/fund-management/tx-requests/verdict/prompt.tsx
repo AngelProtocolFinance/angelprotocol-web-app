@@ -1,7 +1,7 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { Link, useFetcher, useNavigate } from "@remix-run/react";
 import { ChevronRight, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
+import { Link, useFetcher, useNavigate } from "react-router";
 import type { ActionData } from "types/action";
 
 type Props = {

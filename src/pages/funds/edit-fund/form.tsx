@@ -1,24 +1,30 @@
 import type { IFundUpdate } from "@better-giving/fundraiser";
-import { useFetcher } from "@remix-run/react";
 import { Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { useActionResult } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";
+import { useFetcher } from "react-router";
 import type { IFund } from "types/fund";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
-import Slug from "./slug";
+import { Slug } from "./slug";
 import { useRhf } from "./use-rhf";
 
 interface Props {
   classes?: string;
-  initSlug?: string;
+  init_slug?: string;
+  base_url: string;
 }
 
-export function Form({ classes = "", initSlug = "", ...props }: IFund & Props) {
+export function Form({
+  classes = "",
+  init_slug = "",
+  base_url,
+  ...props
+}: IFund & Props) {
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
   const { dirtyFields: df, ...rhf } = useRhf(props);
@@ -89,9 +95,10 @@ export function Form({ classes = "", initSlug = "", ...props }: IFund & Props) {
         }
       />
       <Slug
-        initSlug={initSlug}
-        newSlug={rhf.slug}
-        slugField={
+        base_url={base_url}
+        slug_init={init_slug}
+        slug_new={rhf.slug}
+        slug_field={
           <Field
             {...rhf.register("slug")}
             label="Custom Fundraiser URL"

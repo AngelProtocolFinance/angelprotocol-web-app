@@ -1,13 +1,17 @@
 import { update } from "@better-giving/banking-applications/schema";
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { parseWithValibot } from "conform-to-valibot";
+import {
+  type ActionFunction,
+  type LoaderFunctionArgs,
+  redirect,
+} from "react-router";
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
 
 import type { IBapp } from "@better-giving/banking-applications";
 import { $int_gte1 } from "@better-giving/schemas";
 import type { V2RecipientAccount } from "@better-giving/wise";
-import type { LoaderFunction } from "@vercel/remix";
+import { resp } from "helpers/https";
 import { parse } from "valibot";
 import { bappdb } from ".server/aws/db";
 import { wise } from ".server/sdks";
@@ -16,15 +20,15 @@ export interface LoaderData extends V2RecipientAccount {
   ba: IBapp;
 }
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const bankId = parse($int_gte1, params.id);
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  if (!user.groups.includes("ap-admin")) return { status: 403 };
+  if (!user.groups.includes("ap-admin")) throw resp.status(403);
 
   const x = await bappdb.bapp(bankId.toString());
-  if (!x) return { status: 404 };
+  if (!x) throw resp.status(404);
 
   const y = await wise.v2_account(bankId);
   return { ba: x, ...y } satisfies LoaderData;

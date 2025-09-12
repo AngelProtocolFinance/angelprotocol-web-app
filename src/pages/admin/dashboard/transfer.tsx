@@ -1,18 +1,18 @@
-import { useFetcher } from "@remix-run/react";
-import { useCachedLoaderData } from "remix-client-cache";
+import { useFetcher } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { TransferForm } from "../shared/transfer-form";
 import { transfer_action } from "../shared/transfer-form/transfer-action";
-import type { LoaderData } from "../shared/transfer-form/transfer-loader";
+import type { Route } from "./+types/transfer";
 
-export { clientLoader } from "api/cache";
 export { withdraw_loader as loader } from "../shared/withdraw-form/withdraw-loader";
 export const action = transfer_action({
   liq: "..",
   lock: "..",
 });
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export default CacheRoute(Page);
 
-export default function Page() {
-  const data = useCachedLoaderData() as LoaderData;
+function Page({ loaderData: data }: Route.ComponentProps) {
   const fetcher = useFetcher();
   return (
     <TransferForm

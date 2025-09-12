@@ -1,23 +1,19 @@
-import { Link, NavLink, useFetcher } from "@remix-run/react";
 import { randomLaira } from "assets/laira/laira";
 import Image from "components/image";
 import { Info, LoadingStatus } from "components/status";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";
+import { Link, NavLink, useFetcher } from "react-router";
 import type { EndowCardsPage } from "types/npo";
 import { TopCountries } from "./top-countries";
 
 interface Props {
   query: string;
-  initPage: EndowCardsPage;
+  page1: EndowCardsPage;
   classes?: string;
 }
 
-export default function SearchDropdown({
-  classes = "",
-  initPage,
-  query,
-}: Props) {
+export default function SearchDropdown({ classes = "", page1, query }: Props) {
   const { data, state } = useFetcher<EndowCardsPage>({ key: "home" });
 
   return (
@@ -55,7 +51,7 @@ export default function SearchDropdown({
         </>
       ) : (
         <SearchResult
-          {...(data || initPage)}
+          {...(data || page1)}
           isLoading={state !== "idle"}
           query={query}
         />

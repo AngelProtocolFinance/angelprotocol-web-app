@@ -1,24 +1,27 @@
-import { Link } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
-import type { LoaderData } from "./api";
+import { Link } from "react-router";
 
-const genLink = (slug: string, base_url: string) =>
+const get_link = (slug: string, base_url: string) =>
   `${base_url}${appRoutes.funds}/${slug}`;
 
 interface Props {
-  initSlug?: string;
-  newSlug: string;
-  slugField: ReactNode;
+  slug_init?: string;
+  slug_new: string;
+  slug_field: ReactNode;
+  base_url: string;
 }
-export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
-  const { base_url } = useCachedLoaderData() as LoaderData;
-  const link = initSlug && genLink(initSlug, base_url);
+export function Slug({
+  slug_init = "",
+  slug_new,
+  slug_field,
+  base_url,
+}: Props) {
+  const link = slug_init && get_link(slug_init, base_url);
 
   return (
     <div className="mt-4 mb-1">
-      {slugField}
+      {slug_field}
       {link && (
         <div className="text-sm italic mt-1">
           <span>Current URL:</span>{" "}
@@ -36,7 +39,7 @@ export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
       </p>
 
       <p className="text-xs sm:text-sm text-gray italic mt-2">
-        Example: {genLink(newSlug || "myFundraiser", base_url)}
+        Example: {get_link(slug_new || "myFundraiser", base_url)}
       </p>
     </div>
   );

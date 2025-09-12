@@ -1,8 +1,8 @@
 import type { IRegUpdateDb } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
 import { reg_id, reg_update } from "@better-giving/reg/schema";
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { resp } from "helpers/https";
+import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { regdb } from ".server/aws/db";

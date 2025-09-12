@@ -1,8 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mockPrograms } from "services/aws/programs/mock";
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { testDonateData } from "../../__tests__/test-data";
+import { describe, expect, test, vi } from "vitest";
 import type { Init, StocksDonationDetails } from "../../types";
 import Form from "./form";
 
@@ -12,21 +11,6 @@ vi.mock("../../context", () => ({
     .fn()
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
-const mockLoader = vi.hoisted(() => vi.fn());
-vi.mock("@remix-run/react", async () => {
-  const actual = await vi.importActual("@remix-run/react");
-  return {
-    ...actual,
-    useLoaderData: mockLoader,
-  };
-});
-
-beforeEach(() => {
-  mockLoader.mockReturnValue(testDonateData);
-});
-afterEach(() => {
-  mockLoader.mockReset();
-});
 
 describe("stocks form test", () => {
   test("initial state: blank", async () => {

@@ -1,7 +1,7 @@
-import { NavLink } from "@remix-run/react";
 import ContentLoader from "components/content-loader";
 import Media from "components/media";
 import { appRoutes } from "constants/routes";
+import { NavLink } from "react-router";
 import type { IPost } from "types/wordpress";
 
 const BlogCard = (props: IPost) => {
@@ -12,7 +12,6 @@ const BlogCard = (props: IPost) => {
         id={props.featured_media}
         classes="rounded-t-[18px] object-fill object-center h-44"
       />
-
       <h3
         className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2 px-6"
         //biome-ignore lint: trusted html

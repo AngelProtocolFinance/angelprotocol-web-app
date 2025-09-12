@@ -1,19 +1,19 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { search } from "helpers/https";
+import { CircleAlert, X } from "lucide-react";
 import {
   NavLink,
   useFetcher,
   useNavigate,
   useSearchParams,
-} from "@remix-run/react";
-import { search } from "helpers/https";
-import { CircleAlert, X } from "lucide-react";
+} from "react-router";
 
 type Props = {
   isDefault: boolean;
   isWithHeir: boolean;
 };
 
-export { deleteAction as action } from "./api";
+export { delete_action as action } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
 export default function DeletePrompt() {
   const [params] = useSearchParams();

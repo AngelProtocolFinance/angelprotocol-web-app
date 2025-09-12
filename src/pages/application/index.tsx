@@ -1,22 +1,23 @@
-import { useLoaderData } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
 import { CircleAlert } from "lucide-react";
-import type { LoaderData } from "./api";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import Loaded from "./loaded";
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return [];
+export const meta: Route.MetaFunction = ({ loaderData: d }) => {
+  if (!d) return [];
   return metas({
-    title: `Application Review - ${(data as LoaderData).reg.o_name}`,
+    title: `Application Review - ${d.reg.o_name}`,
   });
 };
 
 export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
 
-export default function Page() {
-  const { reg, user, wacc } = useLoaderData() as LoaderData;
+export default CacheRoute(Page);
+function Page({ loaderData }: Route.ComponentProps) {
+  const { reg, user, wacc } = loaderData;
 
   if (!user.groups.includes("ap-admin")) {
     return (

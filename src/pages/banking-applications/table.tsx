@@ -1,9 +1,9 @@
 import type { TStatus } from "@better-giving/banking-applications";
-import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { Folder } from "lucide-react";
+import { NavLink } from "react-router";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";
 

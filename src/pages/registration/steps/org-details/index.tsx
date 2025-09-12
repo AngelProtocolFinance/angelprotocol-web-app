@@ -1,12 +1,6 @@
-import type { IReg, TRegUpdate } from "@better-giving/reg";
+import type { TRegUpdate } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
 import { type OrgDesignation, org_designations } from "@better-giving/schemas";
-import {
-  NavLink,
-  useFetcher,
-  useLoaderData,
-  useNavigate,
-} from "@remix-run/react";
 import { Combo } from "components/combo";
 import ExtLink from "components/ext-link";
 import { Label, UrlInput } from "components/form";
@@ -20,21 +14,24 @@ import {
 } from "constants/countries";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import type { SubmitHandler } from "react-hook-form";
+import { NavLink, useFetcher, useNavigate } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { step_loader } from "../../data/step-loader";
 import { steps } from "../../routes";
 import { next_step } from "../../routes";
 import { update_action } from "../update-action";
+import type { Route } from "./+types";
 import type { FV } from "./schema";
 import { use_rhf } from "./use-rhf";
 export { ErrorBoundary } from "components/error";
 
 export const loader = step_loader(2);
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export const action = update_action(next_step[2]);
-
-export default function Page() {
+export default CacheRoute(Page);
+function Page({ loaderData: reg }: Route.ComponentProps) {
   const fetcher = useFetcher();
   const navigate = useNavigate();
-  const reg = useLoaderData() as IReg;
 
   const {
     register,

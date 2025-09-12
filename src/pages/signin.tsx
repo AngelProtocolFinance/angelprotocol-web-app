@@ -1,10 +1,4 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Link, data, redirect, useLoaderData } from "@remix-run/react";
-import type {
-  ActionFunction,
-  LoaderFunction,
-  MetaFunction,
-} from "@vercel/remix";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ext-link";
 import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
@@ -16,11 +10,13 @@ import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
+import { Link, data, redirect } from "react-router";
 import type { ActionData } from "types/action";
 import { isError, signIn } from "types/auth";
+import type { Route } from "./+types/signin";
 import { cognito, oauth } from ".server/auth";
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: Route.ActionArgs) => {
   try {
     const from = new URL(request.url);
     const redirect_to =
@@ -63,21 +59,20 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user } = await cognito.retrieve(request);
   const { redirect: to } = search(request);
   if (user) return redirect(to || appRoutes.marketplace);
   return to || "/";
 };
 
-export const meta: MetaFunction = () =>
+export const meta: Route.MetaFunction = () =>
   metas({ title: "Login - Better Giving" });
 
 export { ErrorBoundary } from "components/error";
-export default function Signin() {
+export default function Page({ loaderData: to }: Route.ComponentProps) {
   const { nav, data } = useRmxForm();
   const formErr = useActionResult(data);
-  const to = useLoaderData<string>();
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",

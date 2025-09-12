@@ -1,22 +1,22 @@
 import { media_ksuid } from "@better-giving/endowment/schema";
 import { $int_gte1 } from "@better-giving/schemas";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
 import { parseWithValibot } from "conform-to-valibot";
 import { search } from "helpers/https";
+import {
+  type ActionFunction,
+  type LoaderFunctionArgs,
+  redirect,
+} from "react-router";
 import { parse } from "valibot";
 import { schema } from "./video-editor";
 import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
-export const featuredMedia: LoaderFunction = async ({ params }) => {
+export const featured_media = async ({ params }: LoaderFunctionArgs) => {
   const endowId = parse($int_gte1, params.id);
   return npodb.npo_media(endowId, { featured: true, type: "video", limit: 3 });
 };
-export const allVideos: LoaderFunction = async ({ request, params }) => {
+export const all_videos = async ({ request, params }: LoaderFunctionArgs) => {
   const { nextPageKey: next } = search(request);
   const endowId = parse($int_gte1, params.id);
   const page = await npodb.npo_media(endowId, {
@@ -27,7 +27,7 @@ export const allVideos: LoaderFunction = async ({ request, params }) => {
   return page;
 };
 
-export const videosAction: LoaderFunction = async (x) => {
+export const videos_action: ActionFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
@@ -50,7 +50,7 @@ export const videosAction: LoaderFunction = async (x) => {
   return { ok: true };
 };
 
-export const newAction: ActionFunction = async (x) => {
+export const new_action: ActionFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
   const fv = await adm.req.formData();
@@ -62,7 +62,7 @@ export const newAction: ActionFunction = async (x) => {
   return redirect("..");
 };
 
-export const editAction: ActionFunction = async (x) => {
+export const edit_action: ActionFunction = async (x) => {
   const mid = parse(media_ksuid, x.params.mediaId);
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;

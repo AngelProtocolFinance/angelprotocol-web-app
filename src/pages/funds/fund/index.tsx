@@ -1,7 +1,4 @@
 import { MAX_EXPIRATION_ISO } from "@better-giving/fundraiser/schema";
-import { Link, NavLink } from "@remix-run/react";
-import type { LinksFunction, MetaFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import { DonorMsgs } from "components/donor-msgs";
@@ -16,18 +13,20 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { unpack } from "helpers/unpack";
 import { ArrowLeft } from "lucide-react";
+import { Link, NavLink } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { IFund } from "types/fund";
-import type { LoaderData } from "./api";
+import type { Route } from "./+types";
 import { Share } from "./share";
 import { Video } from "./video";
 
 export { loader } from "./api";
-export { clientLoader } from "api/cache";
-export const links: LinksFunction = () => [...richTextStyles];
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export const meta: MetaFunction = ({ data, location: l }) => {
-  if (!data) return [];
-  const d = data as IFund;
+export const links: Route.LinksFunction = () => [...richTextStyles];
+
+export const meta: Route.MetaFunction = ({ loaderData: d, location: l }) => {
+  if (!d) return [];
   return metas({
     title: `${d.name} - ${APP_NAME}`,
     description: toText(d.description).slice(0, 140),
@@ -37,8 +36,10 @@ export const meta: MetaFunction = ({ data, location: l }) => {
   });
 };
 export { ErrorBoundary } from "components/error";
-export default function Fund() {
-  const { url, ...fund } = useCachedLoaderData() as LoaderData;
+export default CacheRoute(Fund);
+
+function Fund({ loaderData }: Route.ComponentProps) {
+  const { url, ...fund } = loaderData;
 
   const status = statusFn(
     fund.expiration ?? MAX_EXPIRATION_ISO,

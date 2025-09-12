@@ -1,14 +1,17 @@
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Info } from "components/status";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
-import type { LoaderData } from "./api";
+import { Link, useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { Table } from "./table";
-export { loader } from "./api";
 
-export default function Page() {
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+
+export default CacheRoute(Page);
+function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [params] = useSearchParams();
-  const page1 = useLoaderData<LoaderData>();
   const { node } = use_paginator({
     table: (props) => <Table {...props} />,
     empty: (props) => <Info {...props}>No payouts found</Info>,

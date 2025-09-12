@@ -1,8 +1,8 @@
 import type { TStatus } from "@better-giving/reg";
-import { Link, useFetcher } from "@remix-run/react";
 import { LoadText } from "components/load-text";
 import { CircleAlert, Hourglass } from "lucide-react";
 import { steps } from "pages/registration/routes";
+import { Link, useFetcher } from "react-router";
 
 type Props = {
   status?: TStatus;

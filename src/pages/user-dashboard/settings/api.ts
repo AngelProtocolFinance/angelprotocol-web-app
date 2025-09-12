@@ -1,9 +1,10 @@
 import { Txs as Txis } from "@better-giving/db";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type { ActionFunction } from "react-router";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
 import type { IUserNpo2 } from "types/user";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { alert_prefs } from "./schema";
 import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, userdb } from ".server/aws/db";
@@ -14,7 +15,7 @@ export interface SettingsData {
   user_npos: IUserNpo2[];
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 

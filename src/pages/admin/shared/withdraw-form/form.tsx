@@ -1,5 +1,5 @@
 import { Dialog, DialogBackdrop } from "@headlessui/react";
-import { useNavigate } from "@remix-run/react";
+import { useNavigate } from "react-router";
 import { Panel } from "./panel";
 import type { Props } from "./types";
 

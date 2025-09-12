@@ -1,20 +1,19 @@
-import type { IMediaPage } from "@better-giving/endowment";
-import { NavLink, Outlet } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { Plus } from "lucide-react";
+import { NavLink, Outlet } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types/media";
 import FeaturedVideos from "./featured-videos";
 
 export {
-  featuredMedia as loader,
-  videosAction as action,
+  featured_media as loader,
+  videos_action as action,
 } from "./api";
-
-export { clientLoader } from "api/cache";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
 export { ErrorBoundary } from "components/error";
-export default function Media() {
-  const featuredPage = useCachedLoaderData<IMediaPage>();
+export default CacheRoute(Media);
 
+function Media({ loaderData: featured_page }: Route.ComponentProps) {
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
       <h3 className="text-[2rem]">Media</h3>
@@ -27,7 +26,7 @@ export default function Media() {
           </NavLink>
         </div>
         <h5 className="text-lg mt-10">Featured videos</h5>
-        <FeaturedVideos items={featuredPage.items} classes="mt-4" />
+        <FeaturedVideos items={featured_page.items} classes="mt-4" />
         <NavLink
           to="videos"
           className="btn-outline btn text-sm py-3 rounded-sm mt-4"

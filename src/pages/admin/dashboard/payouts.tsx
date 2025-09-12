@@ -1,19 +1,15 @@
-import type { INpoPayoutsPage } from "@better-giving/payouts";
-import { Link, useSearchParams } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/status";
 import { search } from "helpers/https";
 import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
+import { Link, useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types/payouts";
 import { PayoutsTable } from "./common/payouts-table";
 import { podb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
-interface LoaderData extends INpoPayoutsPage {}
-
-export { clientLoader } from "api/cache";
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: Route.LoaderArgs) => {
   const { next } = search(x.request);
 
   const adm = await admin_checks(x);
@@ -24,9 +20,10 @@ export const loader: LoaderFunction = async (x) => {
     limit: 5,
   });
 };
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export default function Page() {
-  const page1 = useCachedLoaderData() as LoaderData;
+export default CacheRoute(Page);
+function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [search] = useSearchParams();
   const { node } = use_paginator({
     page1,

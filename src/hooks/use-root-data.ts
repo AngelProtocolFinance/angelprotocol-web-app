@@ -1,4 +1,4 @@
-import { useRouteLoaderData } from "@remix-run/react";
+import { useRouteLoaderData } from "react-router";
 import type { DetailedUser } from "types/auth";
 
 export const useRootData = () => {

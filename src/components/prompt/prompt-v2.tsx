@@ -1,6 +1,6 @@
-import { useNavigate } from "@remix-run/react";
 import { X } from "lucide-react";
 import type { PropsWithChildren } from "react";
+import { useNavigate } from "react-router";
 import { Modal } from "../modal";
 import { PromptIcon } from "./prompt-icon";
 export interface Props extends PropsWithChildren {

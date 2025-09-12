@@ -1,24 +1,25 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Info, LoadingStatus } from "components/status";
 import { useEffect } from "react";
-import type { WidgetData } from "../../loader";
+import { useFetcher, useSearchParams } from "react-router";
+import type { EndowmentOption } from "types/npo";
+import type { WidgetData } from "../../api";
 
 type Props = {
-  searchText: string;
+  search_text: string;
+  init_opts: EndowmentOption[];
 };
 
-export default function Options({ searchText }: Props) {
+export function Options({ search_text, init_opts }: Props) {
   const params = useSearchParams()[0].toString();
-  const { endows: initEndows } = useLoaderData() as WidgetData;
   const fetcher = useFetcher<WidgetData>();
 
   //biome-ignore lint: no need for other deps
   useEffect(() => {
     const copy = new URLSearchParams(params);
-    copy.set("query", searchText);
+    copy.set("query", search_text);
     fetcher.load(`?${copy.toString()}`);
-  }, [searchText, params]);
+  }, [search_text, params]);
 
   const opts = ((fr) => {
     if (fr.state === "loading") {
@@ -29,9 +30,9 @@ export default function Options({ searchText }: Props) {
       );
     }
 
-    const endows = fr.data?.endows || initEndows;
+    const endows = fr.data?.endows || init_opts;
     if (endows.length === 0) {
-      return <Info classes="w-full text-sm p-2">{searchText} not found</Info>;
+      return <Info classes="w-full text-sm p-2">{search_text} not found</Info>;
     }
 
     return endows.map((endow) => (

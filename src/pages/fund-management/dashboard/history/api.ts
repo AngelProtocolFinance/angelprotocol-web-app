@@ -1,10 +1,10 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { resp } from "helpers/https";
 import * as v from "valibot";
+import type { Route } from "./+types";
 import { cognito } from ".server/auth";
 import { navdb } from ".server/aws/db";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { searchParams: s } = new URL(request.url);
 
   const key = v.parse(
@@ -22,5 +22,5 @@ export const loader: LoaderFunction = async ({ request }) => {
     next: key ?? undefined,
   });
 
-  return resp.json(page);
+  return page;
 };

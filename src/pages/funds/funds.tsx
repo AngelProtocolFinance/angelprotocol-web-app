@@ -1,21 +1,21 @@
-import type { IFundsPage } from "@better-giving/fundraiser";
-import { NavLink, useSearchParams } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
+import { NavLink, useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 
+import type { Route } from "./+types/funds";
 import { Cards } from "./cards";
 import Hero from "./hero";
 import hero from "./hero.webp?url";
 
-export { clientLoader } from "api/cache";
 export { loader } from "./funds-api";
-export const meta: MetaFunction = () =>
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+
+export const meta: Route.MetaFunction = () =>
   metas({
     image: hero,
     title: "Fundraisers",
@@ -24,8 +24,8 @@ export const meta: MetaFunction = () =>
   });
 
 export { ErrorBoundary } from "components/error";
-export default function Funds() {
-  const page1 = useCachedLoaderData<IFundsPage>();
+export default CacheRoute(Funds);
+function Funds({ loaderData: page1 }: Route.ComponentProps) {
   const [params] = useSearchParams();
   const { node, load } = use_paginator({
     id: "funds",

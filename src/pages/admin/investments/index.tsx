@@ -1,5 +1,3 @@
-import { NavLink, Outlet } from "@remix-run/react";
-import { useCachedLoaderData } from "api/cache";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { humanize } from "helpers/decimal";
 import {
@@ -7,15 +5,18 @@ import {
   ArrowLeftRightIcon,
   CircleHelp,
 } from "lucide-react";
-import type { LoaderData } from "./api";
+import { NavLink, Outlet } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { SfPerf } from "./sf-perf";
 import { Txs } from "./txs";
 
 export { loader } from "./api";
-export { clientLoader } from "api/cache";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export default function Page() {
-  const { bal_lock, id, ...btxs_page1 } = useCachedLoaderData() as LoaderData;
+export default CacheRoute(Page);
+function Page({ loaderData }: Route.ComponentProps) {
+  const { bal_lock, id, ...btxs_page1 } = loaderData;
   return (
     <div className="@container w-full max-w-4xl grid content-start">
       <div className="font-bold text-2xl mb-4 flex items-baseline gap-x-2">

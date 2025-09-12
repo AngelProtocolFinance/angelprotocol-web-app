@@ -1,5 +1,5 @@
 import type { IBapp } from "@better-giving/banking-applications";
-import type { LoaderFunction } from "@vercel/remix";
+import type { Route } from "./+types";
 import { bappdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -7,7 +7,7 @@ export interface LoaderData {
   methods: IBapp[];
 }
 
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: Route.LoaderArgs) => {
   const admn = await admin_checks(x);
   if (is_resp(admn)) return admn;
 

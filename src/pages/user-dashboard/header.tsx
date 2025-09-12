@@ -1,6 +1,6 @@
-import { useLocation } from "@remix-run/react";
 import { DappLogo } from "components/image";
 import { authRoutes } from "constants/routes";
+import { useLocation } from "react-router";
 
 import {
   AuthBtns,

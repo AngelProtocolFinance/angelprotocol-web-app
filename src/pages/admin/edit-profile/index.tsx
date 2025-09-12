@@ -1,22 +1,22 @@
-import type { LinksFunction } from "@vercel/remix";
-import { useCachedLoaderData } from "api/cache";
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles, toContent } from "components/rich-text";
 import { sans_https } from "helpers/https";
-import type { LoaderData } from "./api";
+import type { LinksFunction } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import Form from "./form";
 import type { FV } from "./schema";
 
 export { loader, action } from "./api";
-export { clientLoader } from "api/cache";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
 
 export { ErrorBoundary } from "components/error";
-export default function EditProfile() {
-  const endow = useCachedLoaderData<LoaderData>();
+export default CacheRoute(Page);
+function Page({ loaderData: endow }: Route.ComponentProps) {
   const defaults: FV = {
     name: endow.name,
     published: !!endow.published,
@@ -44,5 +44,12 @@ export default function EditProfile() {
     overview: toContent(endow.overview),
   };
 
-  return <Form initSlug={endow.slug} init={defaults} id={endow.id} />;
+  return (
+    <Form
+      initSlug={endow.slug}
+      init={defaults}
+      id={endow.id}
+      base_url={endow.base_url}
+    />
+  );
 }

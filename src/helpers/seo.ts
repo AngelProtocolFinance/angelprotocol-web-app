@@ -1,5 +1,5 @@
-import type { MetaDescriptor } from "@remix-run/react";
 import { APP_NAME, BASE_URL, SEO_IMAGE } from "constants/env";
+import type { MetaDescriptor } from "react-router";
 
 interface Meta {
   title?: string;

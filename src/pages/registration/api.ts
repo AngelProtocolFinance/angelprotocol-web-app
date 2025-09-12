@@ -1,20 +1,17 @@
 import type { INpoClaim, IRegNew } from "@better-giving/reg";
 import { reg_new } from "@better-giving/reg/schema";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
 import { appRoutes } from "constants/routes";
 import { search } from "helpers/https";
+import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
+import type { Route } from "./+types/layout";
 import { steps } from "./routes";
 import { cognito, toAuth } from ".server/auth";
 import { npodb, regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
 import { is_claimed } from ".server/registration/helpers";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   return user;

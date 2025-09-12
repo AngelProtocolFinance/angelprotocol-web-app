@@ -1,12 +1,11 @@
 import { $int_gte1 } from "@better-giving/schemas";
-import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { Footer } from "components/footer";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
 import { parse } from "valibot";
+import type { Route } from "./+types/layout";
 import { linkGroups } from "./constants";
 import { Header } from "./header";
 import SidebarHeader from "./sidebar-header";
@@ -14,14 +13,13 @@ import type { LoaderData } from "./types";
 import { cognito, toAuth } from ".server/auth";
 import { npodb } from ".server/aws/db";
 
-export const meta: MetaFunction = ({ data }) => {
-  const d = data as LoaderData;
+export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   return metas({
     title: `Dashboard - ${d.endow.name}`,
   });
 };
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
@@ -42,8 +40,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   } satisfies LoaderData;
 };
 
-export default function AdminLayout() {
-  const data = useLoaderData() as LoaderData;
+export default function AdminLayout({
+  loaderData: data,
+}: Route.ComponentProps) {
   if (
     !data.user.endowments.includes(data.id) &&
     !data.user.groups.includes("ap-admin")

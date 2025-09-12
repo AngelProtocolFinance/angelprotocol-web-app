@@ -1,8 +1,8 @@
-import { Await, Link, useLoaderData } from "@remix-run/react";
 import type { DonateData } from "api/donate-loader";
 import Image from "components/image";
 import { type TTarget, Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
+import { Await, Link } from "react-router";
 
 type Props = {
   id: number;
@@ -11,9 +11,9 @@ type Props = {
   tagline?: string;
   target?: TTarget;
   classes?: string;
+  balance: DonateData["balance"];
 };
-export default function OrgCard({ classes = "", ...props }: Props) {
-  const { balance } = useLoaderData() as DonateData;
+export default function OrgCard({ classes = "", balance, ...props }: Props) {
   return (
     <div
       className={`grid @-xl/org-card:grid-cols-[3fr_2fr] gap-x-4 gap-y-6 p-4 md:bg-white rounded-lg md:border border-gray-l3 ${classes}`}

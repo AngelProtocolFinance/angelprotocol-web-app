@@ -1,9 +1,9 @@
-import { useFetcher } from "@remix-run/react";
 import type { IPromptV2 } from "components/prompt";
 import { errorPrompt } from "helpers/error-prompt";
 import { useActionResult } from "hooks/use-action-result";
 import { useState } from "react";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
+import { useFetcher } from "react-router";
 import type { UNSDG_NUMS } from "types/lists";
 import type { EndowmentProfileUpdate } from "types/npo";
 import type { FV } from "./schema";

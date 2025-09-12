@@ -1,5 +1,4 @@
 import { min_payout_amount } from "@better-giving/endowment/schema";
-import { Link, NavLink, useNavigate } from "@remix-run/react";
 import { Info } from "components/status";
 import { Arrow, Content } from "components/tooltip";
 import { format, formatDistance } from "date-fns";
@@ -11,6 +10,7 @@ import {
   HistoryIcon,
   PencilIcon,
 } from "lucide-react";
+import { Link, NavLink, useNavigate } from "react-router";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
 import { PayoutsTable } from "./common/payouts-table";

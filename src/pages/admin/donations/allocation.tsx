@@ -1,8 +1,8 @@
 import type { IAllocation } from "@better-giving/endowment";
-import { NavLink } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
+import { NavLink } from "react-router";
 
 interface Props {
   allocation: IAllocation;

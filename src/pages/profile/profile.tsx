@@ -1,19 +1,22 @@
 import type { INpo } from "@better-giving/endowment";
-import { useLoaderData } from "@remix-run/react";
-import { Outlet } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/image";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
+import { Outlet } from "react-router";
+import {
+  createClientLoaderCache,
+  useCachedLoaderData,
+} from "remix-client-cache";
+import type { Route } from "./+types/profile";
 import ProfileContext from "./profile-context";
 
-export { profileLoader as loader } from "./profile-loader";
+export { profile_loader as loader } from "./profile-loader";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return [];
-  const d = data as INpo;
+export const meta: Route.MetaFunction = ({ loaderData: d }) => {
+  if (!d) return [];
   return metas({
     title: `${d.name} - ${APP_NAME}`,
     description: d.tagline?.slice(0, 140),
@@ -24,7 +27,7 @@ export const meta: MetaFunction = ({ data }) => {
 };
 export { ErrorBoundary } from "components/error";
 export default function Profile() {
-  const data = useLoaderData() as INpo;
+  const data = useCachedLoaderData() as INpo;
 
   return (
     <ProfileContext.Provider value={data}>

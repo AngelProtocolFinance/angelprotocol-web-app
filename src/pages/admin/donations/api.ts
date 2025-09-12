@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { search } from "helpers/https";
+import type { LoaderFunctionArgs } from "react-router";
 import type { Donation } from "types/donations";
 import { endowUpdate } from "../endow-update-action";
 import { get_donations } from ".server/donations";
@@ -10,7 +10,7 @@ export interface LoaderData {
   next?: string;
 }
 
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: LoaderFunctionArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

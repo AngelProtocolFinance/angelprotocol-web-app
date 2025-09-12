@@ -5,20 +5,22 @@ import {
   program_id,
   program_update,
 } from "@better-giving/endowment/schema";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import { resp } from "helpers/https";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: Route.LoaderArgs) => {
   const npo_id = parse($int_gte1, params.id);
   const pid = parse(program_id, params.programId);
   const prog = await npodb.npo_program(pid, npo_id);
-  if (!prog) return { status: 404 };
+  if (!prog) throw resp.status(404);
   return prog;
 };
-export const action: ActionFunction = async (x) => {
+
+export const action = async (x: Route.ActionArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

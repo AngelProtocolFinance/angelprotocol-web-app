@@ -1,15 +1,18 @@
 import type { ILog } from "@better-giving/nav-history";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { Link, useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
 import { useState } from "react";
+import { Link, useFetcher, useNavigate } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { RebalanceForm } from "./form";
 import { Review } from "./review";
 import type { State } from "./types";
 export { loader, action } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export default function Page() {
+export default CacheRoute(Page);
+function Page({ loaderData: data }: Route.ComponentProps) {
   const navigate = useNavigate();
-  const data = useLoaderData() as ILog;
   return (
     <Dialog
       open={true}

@@ -1,4 +1,4 @@
-import { type LoaderFunction, data } from "@vercel/remix";
+import { type LoaderFunctionArgs, data } from "react-router";
 import { type UserV2, isError } from "types/auth";
 import { cognito, toAuth } from ".server/auth";
 import type { Stored } from ".server/auth/session";
@@ -8,7 +8,7 @@ export interface LoaderData {
   doc_eid: string;
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers, session } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   const q = new URL(request.url).searchParams;

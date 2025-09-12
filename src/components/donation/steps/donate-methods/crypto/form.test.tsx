@@ -3,7 +3,6 @@ import userEvent from "@testing-library/user-event";
 import { mockTokens } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
-import { testDonateData } from "../../__tests__/test-data";
 import type { CryptoFormStep, Init } from "../../types";
 import Form from "./form";
 
@@ -13,14 +12,6 @@ vi.mock("../../context", () => ({
     .fn()
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
-
-vi.mock("@remix-run/react", async () => {
-  const actual = await vi.importActual("@remix-run/react");
-  return {
-    ...actual,
-    useLoaderData: () => testDonateData,
-  };
-});
 
 describe("Crypto form: initial load", () => {
   afterAll(() => {

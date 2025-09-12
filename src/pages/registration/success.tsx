@@ -1,6 +1,6 @@
-import { Link, useSearchParams } from "@remix-run/react";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
+import { Link, useSearchParams } from "react-router";
 
 export default function Success({ classes = "" }: { classes?: string }) {
   const [params] = useSearchParams();

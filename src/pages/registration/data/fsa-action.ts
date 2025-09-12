@@ -6,8 +6,8 @@ import {
   fsa_docs_or_signer,
   reg_id,
 } from "@better-giving/reg/schema";
-import { type ActionFunction, redirect } from "@vercel/remix";
 import { regRoutes } from "constants/routes";
+import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { cognito, toAuth } from ".server/auth";
 import { regdb } from ".server/aws/db";

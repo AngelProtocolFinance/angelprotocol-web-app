@@ -1,7 +1,7 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { Route } from "./+types/home";
 import { get_npos } from ".server/npos";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const source = new URL(request.url);
   const page1 = await get_npos({
     query: source.searchParams.get("query") ?? "",

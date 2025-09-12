@@ -1,14 +1,11 @@
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "@vercel/remix";
+import { type ActionFunction, redirect } from "react-router";
 import { type UserV2, isError } from "types/auth";
+import type { Route } from "./+types";
 import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData extends UserV2 {}
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 

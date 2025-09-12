@@ -1,8 +1,7 @@
-import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { DappLogo } from "components/image";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
+import type { Route } from "./+types";
 import { animal_rescue } from "./contexts/animal-rescue";
 import { arts_culture } from "./contexts/arts-culture";
 import { civil_rights } from "./contexts/civil-rights";
@@ -57,7 +56,7 @@ const page_context: Record<string, PageContext> = {
   // "membership-organizations": {},
 };
 
-export const meta: MetaFunction = ({ params: { slug = "" } }) => {
+export const meta: Route.MetaFunction = ({ params: { slug = "" } }) => {
   const ctx = page_context[slug];
   return metas({
     title: `${ctx.meta_title} | ${APP_NAME}`,
@@ -66,17 +65,13 @@ export const meta: MetaFunction = ({ params: { slug = "" } }) => {
   });
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const { slug = "" } = params;
-  const ctx = page_context[slug];
-  if (!ctx) {
-    throw new Response("Not Found", { status: 404 });
-  }
+export const loader = async ({ params }: Route.LoaderArgs) => {
+  const ctx = page_context[params.slug];
+  if (!ctx) throw new Response("Not Found", { status: 404 });
   return ctx;
 };
 
-export default function Page() {
-  const ctx = useLoaderData<PageContext>();
+export default function Page({ loaderData: ctx }: Route.ComponentProps) {
   return (
     <main className="w-full grid content-start @container">
       <div

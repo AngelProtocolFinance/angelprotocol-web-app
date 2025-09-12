@@ -1,8 +1,8 @@
 import type { IBapp } from "@better-giving/banking-applications";
 import type { INpoPayoutsPage } from "@better-giving/payouts";
-import type { LoaderFunction } from "@vercel/remix";
 import { CronExpressionParser } from "cron-parser";
 import { endowUpdate } from "../endow-update-action";
+import type { Route } from "./+types/dashboard";
 import { baldb, bappdb, navdb, podb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -18,7 +18,7 @@ export interface DashboardData {
 }
 
 export const endowUpdateAction = endowUpdate({ redirect: "." });
-export const loader: LoaderFunction = async (x) => {
+export const loader = async (x: Route.LoaderArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 

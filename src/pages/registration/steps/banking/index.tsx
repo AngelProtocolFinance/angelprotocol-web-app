@@ -1,22 +1,25 @@
-import { NavLink, useFetcher, useLoaderData } from "@remix-run/react";
 import { BankDetails, type OnSubmit } from "components/bank-details";
 import ExtLink from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
+import { NavLink, useFetcher } from "react-router";
 import { steps } from "../../routes";
 import FormButtons from "./form-buttons";
 
-import type { IReg, TRegUpdate } from "@better-giving/reg";
+import type { TRegUpdate } from "@better-giving/reg";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { step_loader } from "../../data/step-loader";
 import { next_step } from "../../routes";
 import { update_action } from "../update-action";
+import type { Route } from "./+types";
 
 export { ErrorBoundary } from "components/error";
 export const loader = step_loader(5);
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export const action = update_action(next_step[5]);
+export default CacheRoute(Page);
 
-export default function Banking() {
-  const reg = useLoaderData() as IReg;
+function Page({ loaderData: reg }: Route.ComponentProps) {
   const [is_changing, set_is_changing] = useState(false);
   const fetcher = useFetcher();
 

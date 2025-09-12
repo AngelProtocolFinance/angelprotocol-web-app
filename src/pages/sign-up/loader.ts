@@ -1,9 +1,7 @@
-import { type LoaderFunction, redirect } from "@vercel/remix";
+import { type LoaderFunctionArgs, redirect } from "react-router";
 import { cognito } from ".server/auth";
 
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<Response | unknown> => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   const from = new URL(request.url);
   const redirect_to = from.searchParams.get("redirect");

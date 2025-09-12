@@ -1,9 +1,9 @@
 import type { IReg } from "@better-giving/reg";
 import { reg_id } from "@better-giving/reg/schema";
 import type { V2RecipientAccount } from "@better-giving/wise";
-import type { LoaderFunction } from "@vercel/remix";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { cognito, toAuth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 import { wise } from ".server/sdks";
@@ -14,7 +14,7 @@ export interface LoaderData {
   wacc: V2RecipientAccount;
 }
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const loader = async ({ params, request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 

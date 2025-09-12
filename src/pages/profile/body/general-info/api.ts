@@ -1,8 +1,8 @@
 import type { IMedia } from "@better-giving/endowment";
 import type { IProgramDb } from "@better-giving/endowment";
 import type { IFundItem } from "@better-giving/fundraiser";
-import type { LoaderFunction } from "@vercel/remix";
 import { npoId } from "../common/npo-id";
+import type { Route } from "./+types";
 import { npodb } from ".server/aws/db";
 import { get_funds_npo_memberof } from ".server/funds";
 
@@ -12,7 +12,7 @@ export interface LoaderData {
   funds: IFundItem[];
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: Route.LoaderArgs) => {
   const id = await npoId(params.id);
   if (typeof id !== "number") return id;
   const med_page = await npodb.npo_media(id, { type: "video", featured: true });

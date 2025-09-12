@@ -1,7 +1,7 @@
 import type { IPageKeyed, IPageNumbered } from "@better-giving/types/api";
-import { useFetcher } from "@remix-run/react";
 import { Info } from "components/status";
 import { type ReactNode, useEffect, useState } from "react";
+import { useFetcher } from "react-router";
 import type { IPaginator } from "types/components";
 
 type Page<T> = IPageKeyed<T> | IPageNumbered<T>;

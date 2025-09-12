@@ -1,9 +1,9 @@
 import type { IAllocation } from "@better-giving/endowment";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Field, Label, Switch } from "@headlessui/react";
-import { useFetcher, useNavigate } from "@remix-run/react";
 import { use_admin_data } from "pages/admin/use-admin-data";
 import { useState } from "react";
+import { useFetcher, useNavigate } from "react-router";
 import type { EndowmentUpdate } from "services/types";
 import { allocationOptions, toAllocOptValue } from "./common";
 import { AllocationOptions } from "./options";

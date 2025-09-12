@@ -1,5 +1,4 @@
 import { Disclosure, DisclosureButton } from "@headlessui/react";
-import { Link } from "@remix-run/react";
 import ExtLink from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { APP_NAME } from "constants/env";
@@ -12,6 +11,7 @@ import {
   MessageCircleQuestionIcon as QuestionMarkCircleIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 export function Explainer({ classes = "" }) {
   const [isMobile, setIsMobile] = useState(true);

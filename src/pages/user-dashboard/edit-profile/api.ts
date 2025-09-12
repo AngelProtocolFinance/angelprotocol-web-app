@@ -1,7 +1,8 @@
-import { type ActionFunction, type LoaderFunction, data } from "@vercel/remix";
+import { type ActionFunction, data } from "react-router";
 import type { ActionData } from "types/action";
 import { type UserV2, isError } from "types/auth";
 import type { UserCurrencies } from "types/currency";
+import type { Route } from "./+types";
 import { cognito, toAuth } from ".server/auth";
 import { get_db_currencies } from ".server/currency";
 
@@ -9,7 +10,7 @@ export interface LoaderData extends UserCurrencies {
   user: UserV2;
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   const currencies = await get_db_currencies(user.currency);
