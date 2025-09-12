@@ -221,7 +221,7 @@ export const useConsent = () => {
       await load(
         "https://js.sentry-cdn.com/4da0ddd9b67e4801af699469048265f8.min.js"
       );
-      await load("./scripts/sentry-init.js");
+      await load("/scripts/sentry-init.js");
 
       if (cc.acceptedCategory(cat.tracking)) {
         await load("/scripts/twitter-conversion-tracking.js");
