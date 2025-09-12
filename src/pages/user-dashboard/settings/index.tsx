@@ -1,10 +1,13 @@
-import { useLoaderData } from "react-router";
-import type { SettingsData } from "./api";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import EndowAlertForm from "./endow-alert-form";
-export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
-export default function Settings() {
-  const { user, user_npos } = useLoaderData<SettingsData>();
+import type { Route } from "./+types";
+
+export { loader, action } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export default CacheRoute(Page);
+function Page({ loaderData }: Route.ComponentProps) {
+  const { user, user_npos } = loaderData;
   return (
     <div className="grid">
       <h2 className="text-3xl">Settings</h2>

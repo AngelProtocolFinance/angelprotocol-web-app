@@ -3,16 +3,17 @@ import { appRoutes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { toUsd } from "helpers/to-usd";
-import { Link, Outlet, useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+import { Link, Outlet } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { Status } from "./status";
 
-export { loader } from "./api";
 export { ErrorBoundary } from "components/error";
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export default function Page() {
-  const { subs } = useLoaderData<LoaderData>();
-
+export default CacheRoute(Page);
+function Page({ loaderData: { subs } }: Route.ComponentProps) {
   const rows = subs.map((s) => {
     const can_cancel = s.status === "active" || s.status === "trialing";
 

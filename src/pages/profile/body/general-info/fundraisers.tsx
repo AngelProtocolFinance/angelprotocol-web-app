@@ -2,18 +2,14 @@ import type { IFundItem } from "@better-giving/fundraiser";
 import { toText } from "components/rich-text";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link, NavLink, useLoaderData } from "react-router";
-import type { LoaderData } from "../api";
+import { Link, NavLink } from "react-router";
 
 interface Props {
   classes?: string;
+  funds: IFundItem[];
 }
 /** fundraisers that `endowId` is the only member of (not an index fund)  */
-export function Fundraisers({ classes = "" }: Props) {
-  const { funds } = useLoaderData<LoaderData>();
-
-  if (funds.length === 0) return null;
-
+export function Fundraisers({ classes = "", funds }: Props) {
   return (
     <div className={`${classes} p-8 border border-gray-l3 rounded-sm`}>
       <h3 className="mb-4 border-b border-gray-l3 pb-2">Fundraisers</h3>

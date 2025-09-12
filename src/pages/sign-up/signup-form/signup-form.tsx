@@ -10,14 +10,10 @@ import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import {
-  Link,
-  type MetaDescriptor,
-  type MetaFunction,
-  useLoaderData,
-} from "react-router";
+import { Link, type MetaDescriptor } from "react-router";
 import type { ActionData } from "types/action";
 import { signUp } from "types/auth";
+import type { Route } from "./+types/signup-form";
 
 export { action } from "./api";
 export { loader } from "../loader";
@@ -74,13 +70,12 @@ const get_context = (to: string): Context => {
   return context.fallback;
 };
 
-export const meta: MetaFunction = ({ data: to }) => {
+export const meta: Route.MetaFunction = ({ loaderData: to }) => {
   const ctx = get_context(to as string);
   return ctx?.meta || [{ title: "Sign Up - Better Giving" }];
 };
 
-export default function SignupForm() {
-  const to = useLoaderData<string>();
+export default function SignupForm({ loaderData: to }: Route.ComponentProps) {
   const ctx = get_context(to);
   const terms_0 = ctx.terms[0];
   const terms_1 = ctx.terms[1];

@@ -2,13 +2,20 @@ import { CurrencySelector } from "components/currency-selector";
 import { Field, Form, Label } from "components/form";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { useActionResult } from "hooks/use-action-result";
-import { useFetcher, useLoaderData } from "react-router";
+import { useFetcher } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { ActionData } from "types/action";
-import type { LoaderData } from "./api";
+import type { Route } from "./+types";
 import { avatarSpec, useRhf } from "./use-rhf";
 
-export default function Component() {
-  const data = useLoaderData<LoaderData>();
+export { action, loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+import { imgEditorStyles } from "components/img-editor";
+export const links: Route.LinksFunction = () => [...imgEditorStyles];
+export { ErrorBoundary } from "components/error";
+
+export default CacheRoute(Page);
+function Page({ loaderData: data }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionData>();
   useActionResult(fetcher.data);
   const rhf = useRhf(data);

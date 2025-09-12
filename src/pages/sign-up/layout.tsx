@@ -1,7 +1,8 @@
 import { metas } from "helpers/seo";
-import { Outlet } from "react-router";
+import { type MetaFunction, Outlet } from "react-router";
 
-export const meta = () => metas({ title: "Sign Up - Better Giving" });
+export const meta: MetaFunction = () =>
+  metas({ title: "Sign Up - Better Giving" });
 
 export default function Layout() {
   return (

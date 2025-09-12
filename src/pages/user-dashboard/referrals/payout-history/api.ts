@@ -1,12 +1,12 @@
 import { search } from "helpers/https";
-import type { LoaderFunction } from "react-router";
 import type { PayoutsPage } from "types/referrals";
+import type { Route } from "./+types";
 import { cognito, toAuth } from ".server/auth";
 import { paidOut } from ".server/referrals";
 
 export interface LoaderData extends PayoutsPage {}
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 

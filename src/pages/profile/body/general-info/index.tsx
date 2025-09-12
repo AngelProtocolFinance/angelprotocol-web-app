@@ -1,16 +1,24 @@
 import { DonorMsgs } from "components/donor-msgs";
 import { RichText } from "components/rich-text";
-import { useLoaderData } from "react-router";
+import { richTextStyles } from "components/rich-text";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { useProfileContext } from "../../profile-context";
 import Container from "../common/container";
-import type { LoaderData } from "./api";
-import DetailsColumn from "./details-column";
+import type { Route } from "./+types";
+import { DetailsColumn } from "./details-column";
+import { Fundraisers } from "./fundraisers";
 import Media from "./media";
 import Programs from "./programs";
 
-export default function GeneralInfo() {
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export { ErrorBoundary } from "components/error";
+export const links: Route.LinksFunction = () => [...richTextStyles];
+
+export default CacheRoute(Page);
+function Page({ loaderData }: Route.ComponentProps) {
   const profile = useProfileContext();
-  const { programs, media } = useLoaderData<LoaderData>();
+  const { programs, media, funds } = loaderData;
 
   return (
     <div className="order-4 lg:col-span-2 grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
@@ -33,7 +41,12 @@ export default function GeneralInfo() {
         ) : null}
         <DonorMsgs id={profile.id.toString()} />
       </div>
-      <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
+      <DetailsColumn
+        classes="self-start lg:sticky lg:top-[5.5rem]"
+        fundraisers={
+          funds.length > 0 ? <Fundraisers classes="mt-4" funds={funds} /> : null
+        }
+      />
     </div>
   );
 }

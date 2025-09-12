@@ -1,5 +1,5 @@
 import type { IFund } from "@better-giving/fundraiser";
-import type { LoaderFunction } from "react-router";
+import type { Route } from "./+types/funds";
 import { cognito, toAuth } from ".server/auth";
 import { funddb, userdb } from ".server/aws/db";
 
@@ -7,7 +7,7 @@ export interface LoaderData {
   funds: IFund[];
 }
 
-export const userFunds: LoaderFunction = async ({ request }) => {
+export const user_funds = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 

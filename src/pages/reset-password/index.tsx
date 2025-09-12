@@ -1,19 +1,18 @@
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
-import { type MetaFunction, useLoaderData } from "react-router";
+import type { Route } from "./+types";
 import InitForm from "./init-form";
 import SetPasswordForm from "./set-password-form";
 import Success from "./success";
-import type { LoaderData } from "./types";
 
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
 
-export const meta: MetaFunction = () =>
+export const meta: Route.MetaFunction = () =>
   metas({ title: `Reset Password - ${APP_NAME}` });
 
-export default function ResetPassword() {
-  const { redirect, step } = useLoaderData<LoaderData>();
+export default function Page({ loaderData }: Route.ComponentProps) {
+  const { redirect, step } = loaderData;
 
   const content = (() => {
     if (step.type === "init") {

@@ -1,15 +1,16 @@
 import { Info } from "components/status";
 import { appRoutes } from "constants/routes";
-import { Link, useLoaderData } from "react-router";
-import type { LoaderData } from "./api";
+import { Link } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types/funds";
 import { Fund } from "./fund";
 
-export { userFunds as loader } from "./api";
+export { user_funds as loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
 
-export default function Funds() {
-  const { funds } = useLoaderData<LoaderData>();
-
+export default CacheRoute(Page);
+function Page({ loaderData: { funds } }: Route.ComponentProps) {
   const items =
     funds.length === 0 ? (
       <Info>You currently don't have any fundraisers</Info>

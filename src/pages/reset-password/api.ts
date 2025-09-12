@@ -1,19 +1,15 @@
 import { parseWithValibot } from "conform-to-valibot";
 import { search } from "helpers/https";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  data,
-  redirect,
-} from "react-router";
+import { type ActionFunction, data, redirect } from "react-router";
 import type { ActionData } from "types/action";
 import { isError } from "types/auth";
 import { parse } from "valibot";
+import type { Route } from "./+types";
 import { emailSchema, passwordSchema } from "./schema";
 import { type LoaderData, step } from "./types";
 import { cognito } from ".server/auth";
 
-export const loader: LoaderFunction = ({ request }) => {
+export const loader = ({ request }: Route.LoaderArgs) => {
   const { redirect = "/", ..._step } = search(request);
   return {
     redirect,

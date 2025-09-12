@@ -1,4 +1,5 @@
 import type {
+  IFundItem,
   IFundsNpoMemberOfSearchObj,
   IFundsPage,
   IFundsSearchObj,
@@ -67,7 +68,7 @@ export const get_funds = async ({
 export const get_funds_npo_memberof = async (
   endowId: number,
   params: IFundsNpoMemberOfSearchObj
-) => {
+): Promise<IFundItem[]> => {
   // Build filter conditions
   const filters = [
     `env:=${env}`,
@@ -105,7 +106,7 @@ export const get_funds_npo_memberof = async (
   if (!res.ok) throw res;
 
   const result: any = await res.json();
-  const hits = result.hits || [];
+  const hits: { document: IFundItem }[] = result.hits || [];
 
   if (hits.length === 0) return [];
 

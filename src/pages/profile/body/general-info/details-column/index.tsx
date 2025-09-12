@@ -1,20 +1,24 @@
 import type { IPrettyBalance } from "@better-giving/balance";
 import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { NavLink, useOutletContext } from "react-router";
 import { useProfileContext } from "../../../profile-context";
-import { Fundraisers } from "./fundraisers";
 import Socials from "./socials";
 import Tags from "./tags";
 
-export default function DetailsColumn({ className = "" }) {
+interface Props {
+  fundraisers?: ReactNode;
+  classes?: string;
+}
+
+export function DetailsColumn({ classes = "", fundraisers }: Props) {
   const p = useProfileContext();
   const bal = useOutletContext() as IPrettyBalance;
   const { active_in_countries = [] } = p;
   return (
     <div className="flex flex-col gap-6 w-full">
-      <div className={`${className} w-full lg:w-96`}>
+      <div className={`${classes} w-full lg:w-96`}>
         <div className="flex flex-col gap-8 w-full p-8 border border-gray-l3 rounded-sm">
           {p.registration_number && (
             <Detail title="registration no.">{p.registration_number}</Detail>
@@ -54,7 +58,7 @@ export default function DetailsColumn({ className = "" }) {
             Claim this organization
           </NavLink>
         )}
-        <Fundraisers classes="mt-4" />
+        {fundraisers}
       </div>
     </div>
   );

@@ -150,8 +150,8 @@ export default [
 
   r("dashboard", user.$("layout.tsx")._, [
     index(user.$("index-route.ts")._),
-    r("edit-profile", user.$("edit-profile/index.ts")._),
-    r("settings", user.$("settings/settings.tsx")._),
+    r("edit-profile", user.$("edit-profile/index.tsx")._),
+    r("settings", user.$("settings/index.tsx")._),
     r("donations", user.$("donations/index.tsx")._, [
       r(":id", components.$("kyc-form/index.tsx")._),
     ]),
@@ -176,7 +176,7 @@ export default [
       r("confirm", sign_up.$("confirm-form/index.tsx")._),
       r("success", sign_up.$("success.tsx")._),
     ]),
-    r("login/reset", pages.$("reset-password/reset-password.tsx")._),
+    r("login/reset", pages.$("reset-password/index.tsx")._),
     r("logout", pages.$("logout.ts")._),
     r("nonprofit", info.$("nonprofit-info/index.ts")._),
     r("donor", info.$("donor-info/index.ts")._),
@@ -190,7 +190,7 @@ export default [
     ]),
     r("marketplace/:id", profile.$("profile.tsx")._, [
       layout(profile.$("body/body.tsx")._, [
-        index(profile.$("body/general-info/index.ts")._),
+        index(profile.$("body/general-info/index.tsx")._),
         r("program/:programId", profile.$("body/program/index.tsx")._),
       ]),
     ]),
