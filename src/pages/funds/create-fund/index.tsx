@@ -1,4 +1,3 @@
-import type { INpo } from "@better-giving/endowment";
 import type { IFundNew } from "@better-giving/fundraiser/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, Form, Label } from "components/form";
@@ -9,23 +8,26 @@ import {
 } from "components/img-editor";
 import { RichText, richTextStyles } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import { type LinksFunction, useFetcher, useLoaderData } from "react-router";
+import { type LinksFunction, useFetcher } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
+import type { Route } from "./+types";
 import { EndowmentSelector } from "./endowment-selector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 
 export { loader, action } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
 export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
 
-export default function Page() {
+export default CacheRoute(Page);
+function Page({ loaderData: endow }: Route.ComponentProps) {
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state !== "idle";
-  const endow = useLoaderData<INpo | null>();
   const {
     register,
     control,

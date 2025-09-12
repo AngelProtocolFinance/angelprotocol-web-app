@@ -14,18 +14,20 @@ import { BG_ID } from "constants/common";
 import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import { Outlet, useFetcher, useLoaderData } from "react-router";
+import { Outlet, useFetcher } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { toast } from "sonner";
 import type { ActionData } from "types/action";
-import type { LoaderData } from "./api";
+import type { Route } from "./+types";
 import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
 export { loader, action } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
-export default function Form() {
-  const endow = useLoaderData<LoaderData>();
+export default CacheRoute(Page);
 
+function Page({ loaderData: endow }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionData>();
   useActionResult(fetcher.data);
 

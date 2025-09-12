@@ -1,12 +1,16 @@
-import type { IBalanceTxsPage, TStatus } from "@better-giving/balance-txs";
+import type { TStatus } from "@better-giving/balance-txs";
 import { Select } from "components/selector";
 import { use_paginator } from "hooks/use-paginator";
-import { Outlet, useLoaderData, useSearchParams } from "react-router";
+import { Outlet, useSearchParams } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { Table } from "./table";
-export { loader } from "./api";
 
-export default function Page() {
-  const page1 = useLoaderData<IBalanceTxsPage>();
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+
+export default CacheRoute(Page);
+function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [search, set_search] = useSearchParams();
   const status = (search.get("status") ?? "pending") as TStatus;
   const { node } = use_paginator({

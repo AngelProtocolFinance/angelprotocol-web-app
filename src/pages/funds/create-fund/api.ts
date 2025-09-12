@@ -5,7 +5,7 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { search } from "helpers/https";
 import {
   type ActionFunction,
-  type LoaderFunction,
+  type LoaderFunctionArgs,
   redirect,
 } from "react-router";
 import { isError } from "types/auth";
@@ -14,7 +14,7 @@ import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, funddb, npodb, userdb } from ".server/aws/db";
 import { env } from ".server/env";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   const { npo: id } = search(request);

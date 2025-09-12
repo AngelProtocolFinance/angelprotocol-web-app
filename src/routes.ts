@@ -77,7 +77,7 @@ export default [
     r("members", admin.$("members/members.tsx")._, { id: "endow-admins" }, [
       r("add", admin.$("members/add-form.tsx")._),
     ]),
-    r("settings", admin.$("settings/form.tsx")._),
+    r("settings", admin.$("settings/index.tsx")._),
     r("edit-profile", admin.$("edit-profile/index.tsx")._),
     r("banking", admin.$("banking/payout-methods/index.tsx")._),
     r("banking/new", admin.$("banking/banking.tsx")._),
