@@ -5,11 +5,11 @@ import { USD_CODE } from "../../common/constants";
 import type { DafDonationDetails, Init } from "../../types";
 import Form from "./form";
 
-const mockedSetState = vi.hoisted(() => vi.fn());
+const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
-  useDonationState: vi
+  use_donation_state: vi
     .fn()
-    .mockReturnValue({ state: {}, setState: mockedSetState }),
+    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
 }));
 
 describe("DAF form test", () => {
@@ -71,8 +71,8 @@ describe("DAF form test", () => {
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
-    expect(mockedSetState).toHaveBeenCalledOnce();
-    mockedSetState.mockReset();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
+    mocked_set_state.mockReset();
   });
   test("user encounters validation errors and corrects them", async () => {
     const init: Init = {
@@ -95,6 +95,6 @@ describe("DAF form test", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amountInput, "50");
     await userEvent.click(continueBtn);
-    expect(mockedSetState).toHaveBeenCalledOnce();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
   });
 });

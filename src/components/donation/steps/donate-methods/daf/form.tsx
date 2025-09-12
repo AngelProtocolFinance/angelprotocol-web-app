@@ -2,33 +2,33 @@ import { CurrencySelector } from "components/currency-selector";
 import { Form as FormContainer } from "components/form";
 import { MaskedInput } from "components/form";
 import { currency } from "components/form/masks";
-import { usdOption } from "../../common/constants";
+import { usd_option } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
 import { ProgramSelector } from "../../common/program-selector";
-import { useDonationState } from "../../context";
-import { nextFormState } from "../helpers";
+import { use_donation_state } from "../../context";
+import { next_form_state } from "../helpers";
 import type { Props } from "./types";
-import { useRhf } from "./use-rhf";
+import { use_rhf } from "./use-rhf";
 
 export default function Form(props: Props) {
-  const { setState } = useDonationState();
-  const rhf = useRhf(props);
+  const { set_state } = use_donation_state();
+  const rhf = use_rhf(props);
 
   return (
     <FormContainer
       disabled={rhf.isSubmitting}
       onSubmit={rhf.handleSubmit((fv) =>
-        setState((prev) => nextFormState(prev, { ...fv, method: "daf" }))
+        set_state((prev) => next_form_state(prev, { ...fv, method: "daf" }))
       )}
       className="grid gap-4"
     >
       <CurrencySelector
-        currencies={[usdOption]}
+        currencies={[usd_option]}
         label="Currency"
         // only one currency available, so can't change it
         onChange={() => {}}
-        value={usdOption}
+        value={usd_option}
         classes={{
           label: "font-heading font-semibold text-base",
           input: "field-input-donate",
@@ -55,9 +55,9 @@ export default function Form(props: Props) {
       />
 
       <Incrementers
-        onIncrement={rhf.onIncrement}
-        code={usdOption.code}
-        rate={usdOption.rate}
+        on_increment={rhf.on_increment}
+        code={usd_option.code}
+        rate={usd_option.rate}
         increments={props.init.config?.increments}
         classes="mb-4"
         precision={0}

@@ -1,11 +1,11 @@
-import { useDonationState } from "./context";
+import { use_donation_state } from "./context";
 import DonateMethods from "./donate-methods";
 import Submit from "./submit";
 import Summary from "./summary";
 import Tip from "./tip";
 
 export default function CurrentStep() {
-  const { state } = useDonationState();
+  const { state } = use_donation_state();
 
   switch (state.step) {
     case "donate-form":

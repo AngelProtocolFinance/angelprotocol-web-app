@@ -8,31 +8,31 @@ import { USD_CODE } from "../../common/constants";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
 import { ProgramSelector } from "../../common/program-selector";
-import { useDonationState } from "../../context";
-import { nextFormState } from "../helpers";
+import { use_donation_state } from "../../context";
+import { next_form_state } from "../helpers";
 import Frequency from "./frequency";
 import type { Props } from "./types";
-import { useRhf } from "./use-rhf";
+import { use_rhf } from "./use-rhf";
 
 export default function Form(props: Props) {
   const currency = useSWR("/api/currencies", (path) =>
     fetch(path).then((res) => res.json())
   );
-  const { setState } = useDonationState();
-  const rhf = useRhf(props);
+  const { set_state } = use_donation_state();
+  const rhf = use_rhf(props);
 
-  const userCurrency = currency.data?.pref;
+  const user_currency = currency.data?.pref;
   //biome-ignore lint:
   useEffect(() => {
-    if (userCurrency && !props.details?.currency) {
-      rhf.currency.onChange(userCurrency);
+    if (user_currency && !props.details?.currency) {
+      rhf.currency.onChange(user_currency);
     }
-  }, [userCurrency]);
+  }, [user_currency]);
 
   return (
     <FormContainer
       onSubmit={rhf.handleSubmit((fv) => {
-        setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }));
+        set_state((prev) => next_form_state(prev, { ...fv, method: "stripe" }));
       })}
       className="grid gap-4"
     >
@@ -77,7 +77,7 @@ export default function Form(props: Props) {
       />
       {rhf.currency.value.rate && (
         <Incrementers
-          onIncrement={rhf.onIncrement}
+          on_increment={rhf.on_increment}
           code={rhf.currency.value.code}
           rate={rhf.currency.value.rate}
           increments={props.init.config?.increments}

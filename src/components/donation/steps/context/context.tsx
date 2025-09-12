@@ -12,7 +12,7 @@ type StateSetter = (
 
 type State = {
   state: DonationState;
-  setState: StateSetter;
+  set_state: StateSetter;
 };
 
 const INIT = "__INIT";
@@ -23,17 +23,19 @@ export default function Context({
 }: PropsWithChildren<DonationState>) {
   const [state, set] = useState<DonationState>(initState);
 
-  const setState: StateSetter = (newState) =>
+  const set_state: StateSetter = (new_state) =>
     set((prev) =>
-      typeof newState === "function" ? newState(prev) : { ...prev, ...newState }
+      typeof new_state === "function"
+        ? new_state(prev)
+        : { ...prev, ...new_state }
     );
 
   return (
-    <context.Provider value={{ state, setState }}>{children}</context.Provider>
+    <context.Provider value={{ state, set_state }}>{children}</context.Provider>
   );
 }
 
-export function useDonationState(): State {
+export function use_donation_state(): State {
   const val: any = useContext(context);
   if (val === INIT) {
     throw "useDonationState can only be used in components inside Donation context";

@@ -1,18 +1,18 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 import BackBtn from "../common/back-btn";
-import { useDonationState } from "../context";
+import { use_donation_state } from "../context";
 import type { StockCheckoutStep } from "../types";
 import { DonationTerms } from "./donation-terms";
 
 export default function Stocks(props: StockCheckoutStep) {
-  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
-  const { setState } = useDonationState();
+  const profile_url = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
+  const { set_state } = use_donation_state();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
       <BackBtn
         type="button"
-        onClick={() => setState({ ...props, step: "summary" })}
+        onClick={() => set_state({ ...props, step: "summary" })}
       />
       <p className="mt-4 text-center text-gray uppercase">Donation pending</p>
       <p className="mt-4 text-center">
@@ -22,7 +22,7 @@ export default function Stocks(props: StockCheckoutStep) {
       <div className="grid rounded-sm bg-gray-l4 dark:bg-gray-d3 p-3 text-sm leading-relaxed mt-6">
         <p>
           Please transfer [&nbsp;
-          {props.details.numShares + (props.tip?.value ?? 0)}
+          {props.details.num_shares + (props.tip?.value ?? 0)}
           &nbsp;] share(s) of [&nbsp;{props.details.symbol}&nbsp;] to:
         </p>
         <p>Deliver to: Fidelity Investments</p>
@@ -31,7 +31,7 @@ export default function Stocks(props: StockCheckoutStep) {
         <p>Account name: Altruistic Partners Empowering Society, Inc</p>
         <p>
           Reference: [Internal Ref#, if needed] {props.init.recipient.name} (
-          {profileUrl})
+          {profile_url})
         </p>
       </div>
       <p className="text-sm mt-3 mb-1">
@@ -54,10 +54,10 @@ export default function Stocks(props: StockCheckoutStep) {
         information.
       </p>
       <a
-        href={emailLink(
+        href={email_link(
           props.init.recipient.name,
-          profileUrl,
-          +props.details.numShares,
+          profile_url,
+          +props.details.num_shares,
           props.details.symbol
         )}
         className="btn btn btn-blue bg-(--accent-primary) enabled:hover:bg-(--accent-primary) rounded-full px-4 py-2 justify-self-end mt-2 text-xs font-normal"
@@ -73,29 +73,29 @@ export default function Stocks(props: StockCheckoutStep) {
 }
 
 const NEW_LINE = "%0D%0A";
-const emailLink = (
-  charityName: string,
-  profileUrl: string,
-  numberOfShares: number,
-  stockSymbol: string
+const email_link = (
+  charity_name: string,
+  profile_url: string,
+  number_of_shares: number,
+  stock_symbol: string
 ) => `
 mailto:${"[ Your broker's email ]"}
   ?cc=${EMAIL_SUPPORT}
-  &subject=Stock donation to Better Giving supporting ${charityName}
+  &subject=Stock donation to Better Giving supporting ${charity_name}
   &body=
 Hi,${NEW_LINE}
 ${NEW_LINE}
-I would like to donate stock to support ${charityName} (${profileUrl}). 
+I would like to donate stock to support ${charity_name} (${profile_url}). 
 I have CCed Better Giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, 
 please ask them if you have any technical questions.${NEW_LINE}
 ${NEW_LINE}
-Please transfer ${numberOfShares || "[NUMBER_OF_SHARES]"} shares of ${
-  stockSymbol || "[STOCK_SYMBOL]"
+Please transfer ${number_of_shares || "[NUMBER_OF_SHARES]"} shares of ${
+  stock_symbol || "[STOCK_SYMBOL]"
 } to:${NEW_LINE}
 Deliver to: Fidelity Investments${NEW_LINE}
 DTC number: 0226${NEW_LINE}
 Account number: Z40390069${NEW_LINE}
 Account name: Altruistic Partners Empowering Society, Inc${NEW_LINE}
-Reference: [INTERNAL REF#, if needed] ${charityName} (${profileUrl})${NEW_LINE}
+Reference: [INTERNAL REF#, if needed] ${charity_name} (${profile_url})${NEW_LINE}
 ${NEW_LINE}
 Thank you.`;

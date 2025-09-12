@@ -1,6 +1,6 @@
 import char from "assets/images/celebrating-character.webp";
 import { laira } from "assets/laira/laira";
-import { Share, donationRecipient, isFund } from "components/donation";
+import { Share, donation_recipient, is_fund } from "components/donation";
 import ExtLink from "components/ext-link";
 import Image from "components/image";
 import { BASE_URL } from "constants/env";
@@ -18,7 +18,7 @@ import { partial, safeParse } from "valibot";
 import type { Route } from "./+types/donate-thanks";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const recipient = safeParse(partial(donationRecipient), search(request));
+  const recipient = safeParse(partial(donation_recipient), search(request));
   if (recipient.issues) return null;
   return recipient.output;
 };
@@ -26,7 +26,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   const donate_url =
     d && d.id
-      ? isFund(d.id)
+      ? is_fund(d.id)
         ? `${BASE_URL}${appRoutes.funds}/${d.id}/donate`
         : `${BASE_URL}${appRoutes.donate}/${d.id}`
       : undefined;
@@ -34,7 +34,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   return metas({
     title: `Donation to ${d?.name ?? "a Nonprofit"}`,
     image: laira.gift,
-    description: `I just donated to ${d?.name ?? "a nonprofit"} on Better Giving! ${d && d.id && isFund(d.id) ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
+    description: `I just donated to ${d?.name ?? "a nonprofit"} on Better Giving! ${d && d.id && is_fund(d.id) ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
     url: donate_url,
   });
 };

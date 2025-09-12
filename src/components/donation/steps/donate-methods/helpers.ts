@@ -1,4 +1,4 @@
-import { summaryData } from "../common/constants";
+import { summary_data } from "../common/constants";
 import type { DonationDetails, DonationState } from "../types";
 
 const tokenId = (details: DonationDetails) => {
@@ -12,7 +12,7 @@ const tokenId = (details: DonationDetails) => {
   }
 };
 
-export const nextFormState = (
+export const next_form_state = (
   prev: DonationState,
   details: DonationDetails
 ): DonationState => {
@@ -23,7 +23,7 @@ export const nextFormState = (
     return prev.tip;
   })();
 
-  const toPersist: DonationState =
+  const to_persist: DonationState =
     prev.details?.method === details.method
       ? { ...prev, ...("tip" in prev ? { tip: newTip } : {}) }
       : //reset if of different method
@@ -32,11 +32,11 @@ export const nextFormState = (
   if (prev.init.recipient.hide_bg_tip) {
     // donor info is retrieved from donor's DAF account
     if (details?.method === "daf") {
-      return { ...toPersist, ...summaryData(prev), details, step: "submit" };
+      return { ...to_persist, ...summary_data(prev), details, step: "submit" };
     }
 
-    return { ...toPersist, details, step: "summary" };
+    return { ...to_persist, details, step: "summary" };
   }
 
-  return { ...toPersist, details, step: "tip" };
+  return { ...to_persist, details, step: "tip" };
 };

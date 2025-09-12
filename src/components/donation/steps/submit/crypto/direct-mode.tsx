@@ -25,7 +25,7 @@ const fetcher = async (intent: DonationIntent) =>
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
-  const { details, init, tip, donor, feeAllowance, tribute } = donation;
+  const { details, init, tip, donor, fee_allowance, tribute } = donation;
 
   const intent: DonationIntent = {
     frequency: "one-time",
@@ -33,7 +33,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       amount: +details.token.amount,
       currency: details.token.code,
       tip: tip?.value ?? 0,
-      fee_allowance: feeAllowance,
+      fee_allowance: fee_allowance,
     },
     via_id: details.token.network,
     via_name: chains[details.token.network].name,
@@ -53,7 +53,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
   const { data, isLoading, error, isValidating } = useSWR(intent, fetcher);
 
   const totalDisplayAmount = roundToCents(
-    +details.token.amount + (tip?.value ?? 0) + feeAllowance,
+    +details.token.amount + (tip?.value ?? 0) + fee_allowance,
     details.token.rate,
     details.token.precision
   );

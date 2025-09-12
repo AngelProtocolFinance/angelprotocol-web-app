@@ -8,9 +8,11 @@ import { stb } from "../../__tests__/test-data";
 import type { Init, StripeDonationDetails } from "../../types";
 import Form from "./form";
 
-const mockSetState = vi.hoisted(() => vi.fn());
+const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
-  useDonationState: vi.fn(() => ({ setState: mockSetState, state: {} })),
+  use_donation_state: vi
+    .fn()
+    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
 }));
 
 const init: Init = {
@@ -80,8 +82,8 @@ describe("Stripe form test", () => {
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
 
-    expect(mockSetState).toHaveBeenCalledOnce();
-    mockSetState.mockReset();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
+    mocked_set_state.mockReset();
   });
 
   test("user corrects validation errors", async () => {
@@ -93,7 +95,7 @@ describe("Stripe form test", () => {
       name: /continue/i,
     });
     await userEvent.click(continueBtn);
-    expect(mockSetState).not.toHaveBeenCalled();
+    expect(mocked_set_state).not.toHaveBeenCalled();
 
     //frequency selector errors out and corrected
     expect(
@@ -106,7 +108,7 @@ describe("Stripe form test", () => {
 
     //user submits again
     await userEvent.click(continueBtn);
-    expect(mockSetState).not.toHaveBeenCalled();
+    expect(mocked_set_state).not.toHaveBeenCalled();
 
     expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
@@ -123,8 +125,8 @@ describe("Stripe form test", () => {
     expect(screen.queryByText(/please enter an amount/i)).toBeNull();
 
     await userEvent.click(continueBtn);
-    expect(mockSetState).toHaveBeenCalledOnce();
-    mockSetState.mockReset();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
+    mocked_set_state.mockReset();
   });
 
   test("incrementers", async () => {

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import type { UserV2 } from "types/auth";
 import { describe, expect, test, vi } from "vitest";
 import { stb } from "../__tests__/test-data";
-import { initTokenOption } from "../common/constants";
+import { init_token_option } from "../common/constants";
 import type {
   CryptoDonationDetails,
   Donor,
@@ -12,10 +12,12 @@ import type {
 import Summary from "./summary";
 
 vi.mock("../context", () => ({
-  useDonationState: vi.fn().mockReturnValue({ state: {}, setState: vi.fn() }),
+  use_donation_state: vi
+    .fn()
+    .mockReturnValue({ state: {}, set_state: vi.fn() }),
 }));
 
-const oneTimeStripeDetails: StripeDonationDetails = {
+const one_time_stripe_details: StripeDonationDetails = {
   method: "stripe",
   frequency: "one-time",
   amount: "100.00",
@@ -38,10 +40,10 @@ const props: SummaryStep = {
     recipient: { id: "1", name: "Example Charity", members: [] },
     config: null,
   },
-  details: oneTimeStripeDetails,
+  details: one_time_stripe_details,
 };
 
-const coverFeeCheckboxLabel =
+const cover_fee_checkbox_label =
   /cover payment processing fees for your donation \( example charity receives the full amount \)/i;
 
 describe("summary step", () => {
@@ -65,7 +67,7 @@ describe("summary step", () => {
   });
 
   const subsStripeDetails: StripeDonationDetails = {
-    ...oneTimeStripeDetails,
+    ...one_time_stripe_details,
     frequency: "recurring",
   };
   test("total amount text - subscription", async () => {
@@ -77,13 +79,13 @@ describe("summary step", () => {
   });
 
   test("if fee allowance is previously set, cover fee checkbox must be checked", async () => {
-    const Stub = stb(<Summary {...props} feeAllowance={2} />);
+    const Stub = stb(<Summary {...props} fee_allowance={2} />);
     render(<Stub />);
 
-    const coverFeeCheckbox = await screen.findByLabelText(
-      coverFeeCheckboxLabel
+    const cover_fee_checkbox = await screen.findByLabelText(
+      cover_fee_checkbox_label
     );
-    expect(coverFeeCheckbox).toBeChecked();
+    expect(cover_fee_checkbox).toBeChecked();
 
     //processing fee row is not shown in summary step
     expect(screen.queryByRole("term", { name: /fee allowance/i })).toBeNull();
@@ -92,10 +94,10 @@ describe("summary step", () => {
     const Stub = stb(<Summary {...props} />);
     render(<Stub />);
 
-    const coverFeeCheckbox = await screen.findByLabelText(
-      coverFeeCheckboxLabel
+    const cover_fee_checkbox = await screen.findByLabelText(
+      cover_fee_checkbox_label
     );
-    expect(coverFeeCheckbox).not.toBeChecked();
+    expect(cover_fee_checkbox).not.toBeChecked();
   });
 
   test("only amount row and total row", async () => {
@@ -133,18 +135,18 @@ describe("summary step", () => {
     expect(totalTerm.nextSibling).toHaveTextContent(/\$117/i);
   });
 
-  const cryptoDetails: CryptoDonationDetails = {
+  const crypto_details: CryptoDonationDetails = {
     method: "crypto",
-    token: { ...initTokenOption, amount: "100", cg_id: "wagmi" },
+    token: { ...init_token_option, amount: "100", cg_id: "wagmi" },
     program: props.details.program,
   };
   test("crypto amount + dollar amount", async () => {
-    const Stub = stb(<Summary {...props} details={cryptoDetails} />);
+    const Stub = stb(<Summary {...props} details={crypto_details} />);
     render(<Stub />);
 
-    const donationTerm = await screen.findByRole("term", { name: /amount/i });
-    expect(donationTerm).toBeInTheDocument();
-    expect(donationTerm.nextSibling).toHaveTextContent("100.00 ($100.00)");
+    const donation_term = await screen.findByRole("term", { name: /amount/i });
+    expect(donation_term).toBeInTheDocument();
+    expect(donation_term.nextSibling).toHaveTextContent("100.00 ($100.00)");
   });
 
   const user: Partial<UserV2> = {
@@ -157,25 +159,25 @@ describe("summary step", () => {
     const Stub = stb(<Summary {...props} />, { root: user });
     render(<Stub />);
 
-    const firstNameInput = await screen.findByLabelText(/your name/i);
-    const lastNameInput = screen.getByPlaceholderText(/last name/i);
-    const emailInput = screen.getByLabelText(/your email/i);
+    const first_name_input = await screen.findByLabelText(/your name/i);
+    const last_name_input = screen.getByPlaceholderText(/last name/i);
+    const email_input = screen.getByLabelText(/your email/i);
 
-    expect(firstNameInput).toHaveDisplayValue("first");
-    expect(lastNameInput).toHaveDisplayValue("last");
-    expect(emailInput).toHaveDisplayValue("first@last.mail");
+    expect(first_name_input).toHaveDisplayValue("first");
+    expect(last_name_input).toHaveDisplayValue("last");
+    expect(email_input).toHaveDisplayValue("first@last.mail");
   });
 
   test("previously set donor information is always used", async () => {
     const Stub = stb(<Summary {...props} donor={donor} />);
     render(<Stub />);
 
-    const firstNameInput = await screen.findByLabelText(/your name/i);
-    const lastNameInput = screen.getByPlaceholderText(/last name/i);
-    const emailInput = screen.getByLabelText(/your email/i);
+    const first_name_input = await screen.findByLabelText(/your name/i);
+    const last_name_input = screen.getByPlaceholderText(/last name/i);
+    const email_input = screen.getByLabelText(/your email/i);
 
-    expect(firstNameInput).toHaveDisplayValue("John");
-    expect(lastNameInput).toHaveDisplayValue("Doe");
-    expect(emailInput).toHaveDisplayValue("john@doe.com");
+    expect(first_name_input).toHaveDisplayValue("John");
+    expect(last_name_input).toHaveDisplayValue("Doe");
+    expect(email_input).toHaveDisplayValue("john@doe.com");
   });
 });

@@ -8,7 +8,7 @@ interface Props {
   rate: number;
   precision?: number;
   code: string;
-  onIncrement: OnIncrement;
+  on_increment: OnIncrement;
   increments?: Increment[];
   classes?: string;
 }
@@ -37,7 +37,7 @@ function Incrementer({
   rate,
   inc,
   code,
-  onIncrement,
+  on_increment,
   precision = 2,
 }: IIncrementer) {
   const value = rate * inc.value;
@@ -46,7 +46,7 @@ function Incrementer({
       data-testid="incrementer"
       type="button"
       className="grid group/incrementer has-data-label:grid-rows-subgrid gap-y-1 row-span-2 rounded-lg p-2 bg-(--accent-primary)"
-      onClick={() => onIncrement(value)}
+      onClick={() => on_increment(value)}
     >
       <span className="text-left text-sm font-medium text-white group-active/incrementer:translate-x-1">
         +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}

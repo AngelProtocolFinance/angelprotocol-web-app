@@ -1,8 +1,8 @@
 import { PROCESSING_RATES } from "constants/common";
-import { min_fee_allowance } from "helpers/donation";
+import { min_fee_allowance as fn } from "helpers/donation";
 import type { DonationDetails } from "../types";
 
-export const minFeeAllowance = (
+export const min_fee_allowance = (
   details: DonationDetails,
   tip: number
 ): number => {
@@ -27,5 +27,5 @@ export const minFeeAllowance = (
   })();
 
   if (details.method === "stocks") return 0;
-  return min_fee_allowance(amnt + tip, rate, flat);
+  return fn(amnt + tip, rate, flat);
 };

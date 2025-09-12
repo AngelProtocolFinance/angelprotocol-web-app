@@ -4,32 +4,32 @@ import { logoUrl } from "constants/common";
 import Image from "../../../../image";
 import Summary from "../../common/summary";
 import { token } from "../../common/token";
-import { useDonationState } from "../../context";
+import { use_donation_state } from "../../context";
 import type { CryptoSubmitStep } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import DirectMode from "./direct-mode";
 
 export default function Crypto(props: CryptoSubmitStep) {
-  const { setState } = useDonationState();
-  const { details, tip, feeAllowance } = props;
+  const { set_state } = use_donation_state();
+  const { details, tip, fee_allowance } = props;
   const Amount = token(details.token.rate, details.token.precision);
 
   return (
     <Summary
       classes="grid content-start p-4 @md/steps:p-8"
-      onBack={() => setState({ ...props, step: "summary" })}
+      on_back={() => set_state({ ...props, step: "summary" })}
       Amount={Amount}
       amount={+details.token.amount}
-      feeAllowance={feeAllowance}
+      fee_allowance={fee_allowance}
       tip={
         tip
           ? {
               value: tip.value,
-              charityName: props.init.recipient.name,
+              charity_name: props.init.recipient.name,
             }
           : undefined
       }
-      preSplitContent={
+      pre_split_content={
         <>
           <dl className="text-gray py-3 flex items-center justify-between border-b border-gray-l3">
             <dt className="mr-auto">Currency</dt>

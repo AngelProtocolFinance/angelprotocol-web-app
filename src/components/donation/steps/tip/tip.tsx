@@ -9,9 +9,9 @@ import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import BackBtn from "../common/back-btn";
-import { summaryData } from "../common/constants";
+import { summary_data } from "../common/constants";
 import ContinueBtn from "../common/continue-btn";
-import { useDonationState } from "../context";
+import { use_donation_state } from "../context";
 import type { TipFormat, TipStep } from "../types";
 
 const DEFAULT_PCT = "0.17";
@@ -38,7 +38,7 @@ const shape = schema<FV>({
 
 export default function Tip(props: TipStep) {
   const { details, tip: persistedTip } = props;
-  const { setState } = useDonationState();
+  const { set_state } = use_donation_state();
 
   const [symbol, amount, rate = 1, decimals = 2] = (() => {
     switch (details.method) {
@@ -47,7 +47,7 @@ export default function Tip(props: TipStep) {
       case "daf":
         return ["usd", +details.amount];
       case "stocks":
-        return [details.symbol, +details.numShares];
+        return [details.symbol, +details.num_shares];
       case "crypto":
         const { symbol, amount, rate, precision } = details.token;
         return [symbol, +amount, rate, precision];
@@ -90,9 +90,9 @@ export default function Tip(props: TipStep) {
       onSubmit={handleSubmit((fv) => {
         // go straight to summary: donor info is retrieved from donor's DAF account
         if (props.details.method === "daf") {
-          return setState({
+          return set_state({
             ...props,
-            ...summaryData(props),
+            ...summary_data(props),
             step: "submit",
             tip: {
               value: Number(fv.tip.amount),
@@ -101,7 +101,7 @@ export default function Tip(props: TipStep) {
           });
         }
 
-        setState({
+        set_state({
           ...props,
           step: "summary",
           tip: {
@@ -114,7 +114,7 @@ export default function Tip(props: TipStep) {
     >
       <BackBtn
         type="button"
-        onClick={() => setState({ ...props, step: "donate-form" })}
+        onClick={() => set_state({ ...props, step: "donate-form" })}
       />
       <h4 className="mt-4 text-lg">
         One-Time Donation to{" "}

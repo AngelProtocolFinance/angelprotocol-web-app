@@ -6,7 +6,7 @@ import useSWR from "swr/immutable";
 import type { DonationIntent } from "types/donation-intent";
 import { currency } from "../../common/currency";
 import Summary from "../../common/summary";
-import { useDonationState } from "../../context";
+import { use_donation_state } from "../../context";
 import type { StripeCheckoutStep } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import Loader from "../loader";
@@ -20,18 +20,18 @@ const fetcher = async (intent: DonationIntent) =>
     .then<{ clientSecret: string }>((res) => res.json())
     .then((x) => x.clientSecret);
 
-const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
+const stripe_promise = loadStripe(PUBLIC_STRIPE_KEY);
 
-export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { init, details, tip, donor, tribute, feeAllowance } = props;
-  const { setState } = useDonationState();
+export function StripeCheckout(props: StripeCheckoutStep) {
+  const { init, details, tip, donor, tribute, fee_allowance } = props;
+  const { set_state } = use_donation_state();
 
   const intent: DonationIntent = {
     frequency: details.frequency,
     amount: {
       amount: +details.amount,
       tip: tip?.value ?? 0,
-      fee_allowance: feeAllowance,
+      fee_allowance: fee_allowance,
       currency: details.currency.code,
     },
     recipient: init.recipient.id,
@@ -54,16 +54,16 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
   return (
     <Summary
       classes="grid content-start p-4 @md/steps:p-8"
-      onBack={() => setState({ ...props, step: "summary" })}
+      on_back={() => set_state({ ...props, step: "summary" })}
       Amount={currency(details.currency)}
       amount={+details.amount}
-      feeAllowance={feeAllowance}
+      fee_allowance={fee_allowance}
       frequency={details.frequency}
       tip={
         props.tip
           ? {
               value: props.tip.value,
-              charityName: init.recipient.name,
+              charity_name: init.recipient.name,
             }
           : undefined
       }
@@ -87,14 +87,14 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
               appearance: {
                 theme: "flat",
                 variables: {
-                  colorPrimary: init.config?.accentPrimary,
+                  colorPrimary: init.config?.accent_primary,
                   fontFamily: "Quicksand, sans-serif",
                   borderRadius: "8px",
                   gridRowSpacing: "20px",
                 },
               },
             }}
-            stripe={stripePromise}
+            stripe={stripe_promise}
           >
             <Checkout {...props} />
           </Elements>

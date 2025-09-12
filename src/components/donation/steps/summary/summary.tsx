@@ -1,17 +1,17 @@
 import { useRootData } from "hooks/use-root-data";
 import { currency } from "../common/currency";
-import { minFeeAllowance } from "../common/min-fee-allowance";
+import { min_fee_allowance } from "../common/min-fee-allowance";
 import SummaryContainer from "../common/summary";
 import { token } from "../common/token";
-import { useDonationState } from "../context";
+import { use_donation_state } from "../context";
 import type { SummaryStep } from "../types";
 import SummaryForm from "./summary-form";
 
 export default function Summary(props: SummaryStep) {
   const user = useRootData();
-  const { details, donor, tribute, tip, init, feeAllowance } = props;
+  const { details, donor, tribute, tip, init, fee_allowance } = props;
 
-  const { setState } = useDonationState();
+  const { set_state } = use_donation_state();
 
   const [amount, Amount] = (() => {
     switch (details.method) {
@@ -23,8 +23,8 @@ export default function Summary(props: SummaryStep) {
       }
       //stocks skips summary (straight to submit), as donor info is not saved in DB
       case "stocks": {
-        const { numShares, symbol } = details;
-        return [+numShares, currency({ code: symbol, rate: 0, min: 0 })];
+        const { num_shares, symbol } = details;
+        return [+num_shares, currency({ code: symbol, rate: 0, min: 0 })];
       }
       default:
         return [+details.amount, currency(details.currency)];
@@ -33,24 +33,24 @@ export default function Summary(props: SummaryStep) {
 
   return (
     <SummaryContainer
-      // feeAllowance : don't show fee allowance as it's being set in this step
+      // fee_allowance : don't show fee allowance as it's being set in this step
       program={details.program}
       frequency={details.method === "stripe" ? details.frequency : "one-time"}
       classes="grid content-start p-4 @md/steps:p-8"
       Amount={Amount}
       amount={amount}
-      onBack={() => {
+      on_back={() => {
         if (init.recipient.hide_bg_tip) {
-          return setState({ ...props, step: "donate-form" });
+          return set_state({ ...props, step: "donate-form" });
         }
 
-        return setState({ ...props, step: "tip" });
+        return set_state({ ...props, step: "tip" });
       }}
       tip={
         tip
           ? {
               value: tip.value,
-              charityName: init.recipient.name,
+              charity_name: init.recipient.name,
             }
           : undefined
       }
@@ -58,7 +58,7 @@ export default function Summary(props: SummaryStep) {
       <SummaryForm
         method={details.method}
         mode={init.mode}
-        coverFee={!!feeAllowance}
+        coverFee={!!fee_allowance}
         recipientName={init.recipient.name}
         recipientMembers={init.recipient.members}
         donor={
@@ -79,13 +79,13 @@ export default function Summary(props: SummaryStep) {
           cover_fee: fv_cover_fee,
           ...donor
         }) => {
-          setState({
+          set_state({
             ...props,
             step: "submit",
             donor,
             tribute,
-            feeAllowance: fv_cover_fee
-              ? minFeeAllowance(details, tip?.value ?? 0)
+            fee_allowance: fv_cover_fee
+              ? min_fee_allowance(details, tip?.value ?? 0)
               : 0,
           });
         }}

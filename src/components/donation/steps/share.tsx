@@ -8,7 +8,7 @@ import { X } from "lucide-react";
 import { useCallback, useState } from "react";
 import ExtLink from "../../ext-link";
 import { Modal } from "../../modal";
-import { type DonationRecipient, isFund } from "./types";
+import { type DonationRecipient, is_fund } from "./types";
 
 interface SocialMedia {
   id: "x" | "telegram" | "linkedin" | "fb";
@@ -119,7 +119,7 @@ function Prompt({ recipient, open, setOpen, ...social }: IPrompt) {
       >
         I just donated to <span className="font-bold">{recipient.name}</span> on{" "}
         <span className="font-bold">@BetterDotGiving</span>!{" "}
-        {isFund(recipient.id)
+        {is_fund(recipient.id)
           ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?"
           : "They can choose to use my gift today, or save and invest it for sustainable growth"}
         . When you give today, you give forever.
@@ -146,7 +146,7 @@ function generateShareLink(
   type: SocialMedia["id"],
   recipient: Recipient
 ) {
-  const donateUrl = isFund(recipient.id)
+  const donateUrl = is_fund(recipient.id)
     ? `${BASE_URL}/${appRoutes.funds}/${recipient.id}/donate`
     : `${BASE_URL}/${appRoutes.donate}/${recipient.id}`;
 

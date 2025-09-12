@@ -8,13 +8,13 @@ import { mswServer } from "setup-tests";
 import { describe, expect, test, vi } from "vitest";
 import { DEFAULT_PROGRAM } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
-import Checkout from "./stripe-checkout";
+import { StripeCheckout as Checkout } from "./stripe-checkout";
 
-const mockedSetState = vi.hoisted(() => vi.fn());
+const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
-  useDonationState: vi
+  use_donation_state: vi
     .fn()
-    .mockReturnValue({ state: {}, setState: mockedSetState }),
+    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
 }));
 
 const confirmPaymentMock = vi.hoisted(() => vi.fn());
@@ -67,7 +67,7 @@ const state: StripeCheckoutStep = {
     last_name: "last",
     email: "donor@gmail.com",
   },
-  feeAllowance: 10,
+  fee_allowance: 10,
 };
 
 describe("stripe checkout", () => {
@@ -86,7 +86,7 @@ describe("stripe checkout", () => {
   });
 
   test("stripe loading", async () => {
-    render(<Checkout {...state} feeAllowance={5} /** reset cache */ />);
+    render(<Checkout {...state} fee_allowance={5} /** reset cache */ />);
 
     //getting client secret from proxy
     expect(screen.getByText(/loading payment form../i)).toBeInTheDocument();
@@ -104,7 +104,7 @@ describe("stripe checkout", () => {
   });
 
   test("card error", async () => {
-    const Stub = stb(<Checkout {...state} feeAllowance={5} />);
+    const Stub = stb(<Checkout {...state} fee_allowance={5} />);
     render(<Stub />);
     const donateBtn = await screen.findByRole("button", {
       name: /donate now/i,
@@ -126,7 +126,7 @@ describe("stripe checkout", () => {
   });
 
   test("unexpected error", async () => {
-    const Stub = stb(<Checkout {...state} feeAllowance={5} />);
+    const Stub = stb(<Checkout {...state} fee_allowance={5} />);
     render(<Stub />);
     const donateBtn = await screen.findByRole("button", {
       name: /donate now/i,

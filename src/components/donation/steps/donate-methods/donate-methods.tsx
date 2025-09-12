@@ -39,9 +39,9 @@ const methods: {
     panel: Crypto,
   },
 };
-const allMethodIds: DonateMethodId[] = ["stripe", "daf", "stocks", "crypto"];
+const all_method_ids: DonateMethodId[] = ["stripe", "daf", "stocks", "crypto"];
 
-const tabClasses = (selected: boolean) =>
+const tab_classes = (selected: boolean) =>
   `${
     selected
       ? "font-medium bg-(--accent-secondary) text-gray-d4"
@@ -50,16 +50,16 @@ const tabClasses = (selected: boolean) =>
 
 export default function DonateMethods(props: FormStep) {
   const { details, step, init } = props;
-  const methodIds = init.config?.methodIds;
+  const method_ids = init.config?.method_ids;
 
   const tabs =
-    methodIds?.concat(
-      methodIds.includes("daf") && !methodIds.includes("stripe")
+    method_ids?.concat(
+      method_ids.includes("daf") && !method_ids.includes("stripe")
         ? ["stripe"]
         : []
-    ) || allMethodIds;
+    ) || all_method_ids;
 
-  const tabIdxFound = tabs.findIndex((t) => t === details?.method);
+  const tab_idx_found = tabs.findIndex((t) => t === details?.method);
 
   return (
     <TabGroup
@@ -67,14 +67,14 @@ export default function DonateMethods(props: FormStep) {
       manual
       as="div"
       className="grid @-xl/steps:grid-cols-[auto_1fr]"
-      defaultIndex={tabIdxFound === -1 ? 0 : tabIdxFound}
+      defaultIndex={tab_idx_found === -1 ? 0 : tab_idx_found}
     >
       <Label className="p-4 pb-0 col-span-full @xl/steps:hidden font-bold">
         Payment method
       </Label>
       <TabList className="grid @md/steps:grid-cols-2 gap-2 @xl/steps:gap-0 p-4 @xl/steps:p-0 @-xl/steps:grid-cols-[auto_1fr] @[42rem]/steps:min-w-48 content-start @xl/steps:divide-y @xl/steps:divide-white @xl/steps:border-r border-gray-l3">
         {tabs.map((tab) => (
-          <Tab key={tab} className={({ selected }) => tabClasses(selected)}>
+          <Tab key={tab} className={({ selected }) => tab_classes(selected)}>
             {methods[tab].icon}
             <span className="text-left">{methods[tab].name}</span>
           </Tab>

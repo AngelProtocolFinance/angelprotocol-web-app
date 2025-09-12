@@ -14,15 +14,15 @@ type Classes =
 
 type Props = {
   amount: number;
-  tip?: { value: number; charityName: string };
-  feeAllowance?: number;
+  tip?: { value: number; charity_name: string };
+  fee_allowance?: number;
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
-  onBack(): void;
+  on_back(): void;
   frequency?: Frequency;
   classes?: Classes;
   children?: ReactNode;
-  preSplitContent?: ReactNode;
+  pre_split_content?: ReactNode;
   program?: OptionType<string>;
 };
 
@@ -37,12 +37,12 @@ export default function Summary({
 
   return (
     <div className={container}>
-      <BackBtn type="button" onClick={props.onBack} />
+      <BackBtn type="button" onClick={props.on_back} />
       <h4 className="flex items-center text-lg gap-2 my-4">
         <ListCheck size={20} />
         <span className="font-semibold">Your donation summary</span>
       </h4>
-      {props.preSplitContent}
+      {props.pre_split_content}
 
       <dl
         className={`text-gray grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l3 divide-y divide-gray-l3 ${splitClass}`}
@@ -56,7 +56,7 @@ export default function Summary({
           <dt aria-label="amount" className="mr-auto text-gray-d4">
             <span>
               {props.tip && tipValue > 0
-                ? `Donation for ${props.tip.charityName}`
+                ? `Donation for ${props.tip.charity_name}`
                 : "Total donation"}
             </span>
           </dt>
@@ -72,12 +72,12 @@ export default function Summary({
           </div>
         )}
 
-        {props.feeAllowance ? (
+        {props.fee_allowance ? (
           <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
             <dt className="mr-auto" aria-label="fee allowance">
               Covered Payment Processing Fees
             </dt>
-            <Amount classes="text-sm" amount={props.feeAllowance} />
+            <Amount classes="text-sm" amount={props.fee_allowance} />
           </div>
         ) : null}
 
@@ -86,7 +86,7 @@ export default function Summary({
             Total {frequency === "recurring" ? "monthly " : ""}charge
           </dt>
           <Amount
-            amount={props.amount + tipValue + (props.feeAllowance ?? 0)}
+            amount={props.amount + tipValue + (props.fee_allowance ?? 0)}
           />
         </div>
       </dl>

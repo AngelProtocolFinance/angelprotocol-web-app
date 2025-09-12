@@ -6,11 +6,11 @@ import { afterAll, describe, expect, test, vi } from "vitest";
 import type { CryptoFormStep, Init } from "../../types";
 import Form from "./form";
 
-const mockedSetState = vi.hoisted(() => vi.fn());
+const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
-  useDonationState: vi
+  use_donation_state: vi
     .fn()
-    .mockReturnValue({ state: {}, setState: mockedSetState }),
+    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
 }));
 
 describe("Crypto form: initial load", () => {
@@ -92,8 +92,8 @@ describe("Crypto form: initial load", () => {
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
-    expect(mockedSetState).toHaveBeenCalledOnce();
-    mockedSetState.mockReset();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
+    mocked_set_state.mockReset();
   });
 
   test("submitting empty form should show validation messages and focus first field: amount input", async () => {
@@ -181,6 +181,6 @@ describe("Crypto form: initial load", () => {
     //user should be able to submit now
     await userEvent.click(continueBtn);
     //second click now
-    expect(mockedSetState).toHaveBeenCalledOnce();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
   });
 });

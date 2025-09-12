@@ -5,11 +5,11 @@ import { describe, expect, test, vi } from "vitest";
 import type { Init, StocksDonationDetails } from "../../types";
 import Form from "./form";
 
-const mockedSetState = vi.hoisted(() => vi.fn());
+const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
-  useDonationState: vi
+  use_donation_state: vi
     .fn()
-    .mockReturnValue({ state: {}, setState: mockedSetState }),
+    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
 }));
 
 describe("stocks form test", () => {
@@ -58,7 +58,7 @@ describe("stocks form test", () => {
     const details: StocksDonationDetails = {
       method: "stocks",
       symbol: "BG",
-      numShares: "10",
+      num_shares: "10",
       program: { value: mockPrograms[1].id, label: mockPrograms[1].title },
     };
     render(<Form init={init} step="donate-form" details={details} />);
@@ -72,8 +72,8 @@ describe("stocks form test", () => {
     expect(selectedProgram).toBeInTheDocument();
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
-    expect(mockedSetState).toHaveBeenCalledOnce();
-    mockedSetState.mockReset();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
+    mocked_set_state.mockReset();
   });
   test("user encounters validation errors and corrects them", async () => {
     const init: Init = {
@@ -118,6 +118,6 @@ describe("stocks form test", () => {
     await userEvent.type(qtyInput, "10");
 
     await userEvent.click(continueBtn);
-    expect(mockedSetState).toHaveBeenCalledOnce();
+    expect(mocked_set_state).toHaveBeenCalledOnce();
   });
 });

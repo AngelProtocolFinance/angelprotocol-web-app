@@ -5,16 +5,16 @@ import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import ContinueBtn from "../../common/continue-btn";
 import { ProgramSelector } from "../../common/program-selector";
-import { useDonationState } from "../../context";
+import { use_donation_state } from "../../context";
 import type { StockFormStep, StocksDonationDetails } from "../../types";
-import { nextFormState } from "../helpers";
+import { next_form_state } from "../helpers";
 
 type FV = Omit<StocksDonationDetails, "method" | "numShares"> & {
   numShares: string;
 };
 
 export default function Form(props: StockFormStep) {
-  const { setState } = useDonationState();
+  const { set_state } = use_donation_state();
   const {
     register,
     control,
@@ -24,18 +24,18 @@ export default function Form(props: StockFormStep) {
     defaultValues: props.details
       ? {
           symbol: props.details.symbol,
-          numShares: props.details.numShares.toString(),
+          num_shares: props.details.num_shares.toString(),
           program: props.details.program,
         }
       : {
           symbol: "",
-          numShares: "",
+          num_shares: "",
           program: { label: "", value: "" },
         },
     resolver: yupResolver(
       schema<FV>({
         symbol: requiredString.trim(),
-        numShares: stringNumber(
+        num_shares: stringNumber(
           (s) => s.required("required"),
           (n) => n.positive("must be greater than 0")
         ),
@@ -53,8 +53,8 @@ export default function Form(props: StockFormStep) {
     <FormContainer
       className="grid"
       onSubmit={handleSubmit((fv) =>
-        setState((prev) =>
-          nextFormState(prev, {
+        set_state((prev) =>
+          next_form_state(prev, {
             ...fv,
             method: "stocks",
           })
@@ -75,8 +75,8 @@ export default function Form(props: StockFormStep) {
 
       <Field
         required
-        {...register("numShares")}
-        error={errors.numShares?.message}
+        {...register("num_shares")}
+        error={errors.num_shares?.message}
         label="Number of shares you are donating"
         placeholder="Enter quantity"
         classes={{

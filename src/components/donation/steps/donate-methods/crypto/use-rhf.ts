@@ -3,18 +3,18 @@ import { centsDecimals, roundDown } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
 import { object } from "yup";
-import { initTokenOption } from "../../common/constants";
+import { init_token_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import type { CryptoFormStep } from "../../types";
 import type { DonateValues as DV } from "./types";
 
 const initial: DV = {
   program: { label: "", value: "" },
-  token: initTokenOption,
+  token: init_token_option,
 };
 
 type Props = CryptoFormStep;
-export function useRhf(props: Props) {
+export function use_rhf(props: Props) {
   const {
     reset,
     setValue,
@@ -43,7 +43,7 @@ export function useRhf(props: Props) {
     name: "token",
   });
 
-  const onIncrement: OnIncrement = (inc) => {
+  const on_increment: OnIncrement = (inc) => {
     const token = getValues("token");
     const amnt = Number(token.amount);
     if (Number.isNaN(amnt)) return trigger("token", { shouldFocus: true });
@@ -59,7 +59,7 @@ export function useRhf(props: Props) {
     setValue,
     handleSubmit,
     token,
-    onIncrement,
+    on_increment,
     errors: {
       token: errors.token?.amount?.message || errors.token?.id?.message,
     },

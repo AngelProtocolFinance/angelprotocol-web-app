@@ -1,1 +1,1 @@
-export { default } from "./stripe-checkout";
+export { StripeCheckout } from "./stripe-checkout";

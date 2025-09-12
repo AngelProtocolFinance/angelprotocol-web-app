@@ -1,6 +1,6 @@
 import type { INpo } from "@better-giving/endowment";
 import { laira } from "assets/laira/laira";
-import { type DonationState, Steps, initDetails } from "components/donation";
+import { type DonationState, Steps, init_details } from "components/donation";
 import Image from "components/image/image";
 import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
@@ -36,11 +36,11 @@ export default function Preview({ classes = "", config, endow }: Props) {
       },
       config: {
         ...restConfig,
-        methodIds: methods.filter((m) => !m.disabled).map((m) => m.id),
+        method_ids: methods.filter((m) => !m.disabled).map((m) => m.id),
         increments: increments.map((i) => ({ ...i, value: +i.value })),
       },
     },
-    details: initDetails(methods.at(0)?.id ?? "stripe", restConfig.program),
+    details: init_details(methods.at(0)?.id ?? "stripe", restConfig.program),
   };
 
   return (

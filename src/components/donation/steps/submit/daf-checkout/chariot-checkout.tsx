@@ -28,10 +28,10 @@ import {
   safeParse,
 } from "valibot";
 import { currency } from "../../common/currency";
-import { minFeeAllowance } from "../../common/min-fee-allowance";
+import { min_fee_allowance } from "../../common/min-fee-allowance";
 import Summary from "../../common/summary";
 import { TributeFields } from "../../common/tribute-fields";
-import { useDonationState } from "../../context";
+import { use_donation_state } from "../../context";
 import type { DafCheckoutStep, Tribute } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { type AdjustedAmounts, toPlatformValues } from "./to-platform-values";
@@ -74,7 +74,7 @@ interface GrantMetaData extends FV {
 }
 
 export function ChariotCheckout(props: DafCheckoutStep) {
-  const { setState } = useDonationState();
+  const { set_state } = use_donation_state();
   const [prompt, setPrompt] = useState<IPromptV2>();
   const [grantState, setGrantState] = useState<"pending">();
   const navigate = useNavigate();
@@ -86,7 +86,11 @@ export function ChariotCheckout(props: DafCheckoutStep) {
     trigger,
     getValues,
   } = useForm<FV>({
-    defaultValues: default_fv(!!props.feeAllowance, props.tribute, props.donor),
+    defaultValues: default_fv(
+      !!props.fee_allowance,
+      props.tribute,
+      props.donor
+    ),
     resolver: valibotResolver(schema),
     shouldUnregister: true,
   });
@@ -107,31 +111,31 @@ export function ChariotCheckout(props: DafCheckoutStep) {
   const is_with_msg_to_npo = watch("is_with_msg_to_npo");
   const msg_to_npo = watch("msg_to_npo");
 
-  const newFeeAllowance = fv_cover_fee
-    ? minFeeAllowance(props.details, props.tip?.value ?? 0)
+  const new_fee_allowance = fv_cover_fee
+    ? min_fee_allowance(props.details, props.tip?.value ?? 0)
     : 0;
 
   return (
     <Summary
       program={props.details.program}
       classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
-      onBack={async () => {
+      on_back={async () => {
         const { init } = props;
         //summary is skipped for chariot, also skip when going back
         if (init.recipient.hide_bg_tip) {
-          return setState({ ...props, step: "donate-form" });
+          return set_state({ ...props, step: "donate-form" });
         }
-        return setState({ ...props, step: "tip" });
+        return set_state({ ...props, step: "tip" });
       }}
       Amount={currency(props.details.currency)}
       amount={adjusted?.amount || +props.details.amount}
-      feeAllowance={adjusted?.feeAllowance || newFeeAllowance}
+      fee_allowance={adjusted?.feeAllowance || new_fee_allowance}
       frequency="one-time"
       tip={
         props.tip
           ? {
               value: adjusted?.tip || props.tip.value,
-              charityName: props.init.recipient.name,
+              charity_name: props.init.recipient.name,
             }
           : undefined
       }
@@ -245,7 +249,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
 
             //always use recent values
             const _tip = adjusted?.tip || (props.tip?.value ?? 0);
-            const _fee = adjusted?.feeAllowance || newFeeAllowance;
+            const _fee = adjusted?.feeAllowance || new_fee_allowance;
             const _amount = adjusted?.amount || +props.details.amount;
             const _total = _fee + _tip + _amount;
 

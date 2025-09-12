@@ -3,20 +3,20 @@ import TokenField from "../../../../token-field";
 import ContinueBtn from "../../common/continue-btn";
 import Incrementers from "../../common/incrementers";
 import { ProgramSelector } from "../../common/program-selector";
-import { useDonationState } from "../../context";
+import { use_donation_state } from "../../context";
 import type { CryptoFormStep } from "../../types";
-import { nextFormState } from "../helpers";
+import { next_form_state } from "../helpers";
 import type { DonateValues } from "./types";
-import { useRhf } from "./useRhf";
+import { use_rhf } from "./use-rhf";
 
 export default function Form(props: CryptoFormStep) {
-  const { setState } = useDonationState();
+  const { set_state } = use_donation_state();
 
-  const { handleSubmit, reset, program, token, errors, onIncrement } =
-    useRhf(props);
+  const { handleSubmit, reset, program, token, errors, on_increment } =
+    use_rhf(props);
 
   function submit(fv: DonateValues) {
-    setState((prev) => nextFormState(prev, { ...fv, method: "crypto" }));
+    set_state((prev) => next_form_state(prev, { ...fv, method: "crypto" }));
     reset();
   }
 
@@ -41,7 +41,7 @@ export default function Form(props: CryptoFormStep) {
 
       {token.value.id && token.value.rate && (
         <Incrementers
-          onIncrement={onIncrement}
+          on_increment={on_increment}
           code={token.value.symbol}
           rate={token.value.rate}
           precision={token.value.precision}

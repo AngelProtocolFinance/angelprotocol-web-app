@@ -67,7 +67,7 @@ function Page({ loaderData }: Route.ComponentProps) {
               members: [],
             }}
             config={{
-              methodIds: endow.donateMethods,
+              method_ids: endow.donateMethods,
               increments: endow.increments?.map((i) => ({
                 ...i,
                 value: +i.value,

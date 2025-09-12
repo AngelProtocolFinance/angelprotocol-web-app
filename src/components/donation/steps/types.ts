@@ -20,22 +20,22 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
 > & { [key in U]?: T[key] };
 
 const uuid = v.pipe(v.string(), v.trim(), v.uuid());
-export const recipientId = v.pipe(
+export const recipient_id = v.pipe(
   v.union([uuid, $int_gte1]),
   v.transform((x) => x.toString())
 );
-export const donationRecipient = v.object({
-  id: v.fallback(recipientId, "1"),
+export const donation_recipient = v.object({
+  id: v.fallback(recipient_id, "1"),
   name: v.fallback(v.pipe(v.string(), v.nonEmpty()), "Better Giving"),
   /** int-str array */
   members: v.array(v.string()),
   hide_bg_tip: v.optional(v.boolean()),
   progDonationsAllowed: v.optional(v.boolean()),
 });
-export const isFund = (recipient: string) => v.UUID_REGEX.test(recipient); //is uuid
+export const is_fund = (recipient: string) => v.UUID_REGEX.test(recipient); //is uuid
 
 export interface DonationRecipient
-  extends v.InferOutput<typeof donationRecipient> {}
+  extends v.InferOutput<typeof donation_recipient> {}
 
 export const program_opt = v.object({
   label: v.string(),
@@ -103,7 +103,7 @@ export interface StripeDonationDetails
 export type StocksDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "stocks">;
   symbol: string;
-  numShares: string;
+  num_shares: string;
 };
 
 export const daf_donation_details = v.pipe(
@@ -136,11 +136,11 @@ export type Mode = "live" | "preview";
 
 export type Config = {
   /** donation tabs follows the list order */
-  methodIds?: DonateMethodId[];
+  method_ids?: DonateMethodId[];
   /** hex color without alpha */
-  accentPrimary?: string;
+  accent_primary?: string;
   /** hex color without alpha */
-  accentSecondary?: string;
+  accent_secondary?: string;
   increments?: Increment[];
 };
 
@@ -174,11 +174,11 @@ export type SummaryStep = {
   step: "summary";
   donor?: Donor;
   tribute?: Tribute;
-  feeAllowance?: number;
+  fee_allowance?: number;
 } & From<TipStep, "tip">;
 
 export type FinishedSummaryData = Required<
-  Pick<SummaryStep, "donor" | "feeAllowance">
+  Pick<SummaryStep, "donor" | "fee_allowance">
 > & { tribute?: Tribute };
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {

@@ -68,7 +68,7 @@ function Page({ loaderData: { fund } }: Route.ComponentProps) {
                 members: fund.members.map((x) => x.id.toString()),
                 progDonationsAllowed: false,
               }}
-              config={{ methodIds: fund.settings.donateMethods }}
+              config={{ method_ids: fund.settings.donateMethods }}
               className="md:border border-gray-l3 rounded-lg row-start-2"
             />
           )}

@@ -16,7 +16,7 @@ export const DEFAULT_PROGRAM: OptionType<""> = {
   value: "",
 };
 
-export const initTokenOption: TokenWithDetails = {
+export const init_token_option: TokenWithDetails = {
   precision: 6,
   min: 0,
   code: "",
@@ -32,9 +32,9 @@ export const initTokenOption: TokenWithDetails = {
 };
 
 export const USD_CODE = "usd";
-export const usdOption: DBCurrency = { code: USD_CODE, min: 1, rate: 1 };
+export const usd_option: DBCurrency = { code: USD_CODE, min: 1, rate: 1 };
 
-export const initDetails = (
+export const init_details = (
   methodId: DonateMethodId,
   programIdOrOption?: string | OptionType<string>
 ): DonationDetails => {
@@ -51,17 +51,17 @@ export const initDetails = (
     case "crypto": {
       return {
         method: "crypto",
-        token: initTokenOption,
+        token: init_token_option,
         program,
       };
     }
     case "daf": {
-      return { method: "daf", amount: "", currency: usdOption, program };
+      return { method: "daf", amount: "", currency: usd_option, program };
     }
     case "stocks": {
       return {
         method: "stocks",
-        numShares: "",
+        num_shares: "",
         program,
         symbol: "",
       };
@@ -70,7 +70,7 @@ export const initDetails = (
       return {
         method: "stripe",
         amount: "",
-        currency: usdOption,
+        currency: usd_option,
         frequency: "recurring",
         program,
       };
@@ -84,18 +84,18 @@ export const init_tribute_notif: Tribute["notif"] = {
   from_msg: "",
 };
 
-export const summaryData = (state: DonationState): FinishedSummaryData => {
+export const summary_data = (state: DonationState): FinishedSummaryData => {
   if ("donor" in state) {
-    if (state.donor && state.tribute && state.feeAllowance) {
+    if (state.donor && state.tribute && state.fee_allowance) {
       return {
         donor: state.donor,
         tribute: state.tribute,
-        feeAllowance: state.feeAllowance,
+        fee_allowance: state.fee_allowance,
       };
     }
   }
   return {
-    feeAllowance: 0,
+    fee_allowance: 0,
     donor: {
       title: "",
       first_name: "",
