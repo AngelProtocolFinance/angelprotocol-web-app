@@ -11,7 +11,7 @@ type Props = {
   config: WidgetConfig;
   endow?: INpo;
 };
-export default function Preview({ classes = "", config, endow }: Props) {
+export function Preview({ classes = "", config, endow }: Props) {
   if (!endow) {
     return (
       <Container classes={classes} {...config}>

@@ -10,12 +10,7 @@ type Props = {
   endow?: INpo;
   base_url: string;
 };
-export default function Snippet({
-  classes = "",
-  config,
-  endow,
-  base_url,
-}: Props) {
+export function Snippet({ classes = "", config, endow, base_url }: Props) {
   const widgetURL = widgetURLfn(config, base_url, endow?.id);
   const iframeURL = endow?.id
     ? /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
