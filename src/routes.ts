@@ -65,7 +65,7 @@ export default [
     index(widget.$("index.tsx")._, { id: "public-form-builder" }),
   ]),
 
-  r("admin/:id", admin.$("layout.tsx")._, [
+  r("admin/:id", admin.$("layout.tsx")._, { id: "admin" }, [
     index(admin.$("redirect.ts")._),
     r("donations", admin.$("donations/index.tsx")._, [
       r("edit-alloc", admin.$("donations/allocation-edit/index.tsx")._),

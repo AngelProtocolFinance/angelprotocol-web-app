@@ -1,6 +1,6 @@
 import type { IAllocation } from "@better-giving/endowment";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { allocationOptions, toAlloc, toAllocOptValue } from "./common";
+import { alloc_opts, to_alloc, to_alloc_opt_value } from "./common";
 
 interface Props {
   value: IAllocation;
@@ -9,11 +9,11 @@ interface Props {
 export function AllocationOptions(props: Props) {
   return (
     <RadioGroup
-      value={toAllocOptValue(props.value)}
-      onChange={(v) => props.onChange(toAlloc(v))}
+      value={to_alloc_opt_value(props.value)}
+      onChange={(v) => props.onChange(to_alloc(v))}
       className="grid grid-cols-[auto_1fr] gap-y-2"
     >
-      {allocationOptions.map((option) => (
+      {alloc_opts.map((option) => (
         <Field
           key={option.value}
           className="grid grid-cols-subgrid col-span-full items-center group"
