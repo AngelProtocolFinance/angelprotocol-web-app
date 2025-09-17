@@ -10,7 +10,7 @@ import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { type Increments, bal_deltas_fn } from "./helpers";
 import type { Base, Overrides, Uniques } from "./types";
-import { apes } from ".server/aws/db";
+import { apes, podb } from ".server/aws/db";
 export type { Base, Overrides, Uniques } from "./types";
 export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   const timestamp = new Date().toISOString();
@@ -104,10 +104,10 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         account_other_bal_begin: net_alloc.lock,
         account_other_bal_end: 0,
       };
-      const lock_tx_tx_item = baltxs_db.new_tx_item(lock_tx);
+      const lock_tx_record = baltxs_db.tx_record(lock_tx);
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: lock_tx_tx_item,
+        Item: lock_tx_record,
       });
     }
 
@@ -128,10 +128,10 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         account_other_bal_begin: net_alloc.liq,
         account_other_bal_end: 0,
       };
-      const liq_tx_tx_item = baltxs_db.new_tx_item(lock_tx);
+      const liq_tx_record = baltxs_db.tx_record(lock_tx);
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: liq_tx_tx_item,
+        Item: liq_tx_record,
       });
     }
   }
@@ -153,8 +153,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
 
   //create payout-v2
   if (net_alloc.cash > 0) {
-    const payout_db = new PayoutsDB(apes, base.network);
-    const por = payout_db.payout_record({
+    const por = podb.payout_record({
       id: nanoid(),
       source_id: o.txId,
       recipient_id: o.endowId.toString(),

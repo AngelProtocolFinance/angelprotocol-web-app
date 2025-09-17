@@ -60,7 +60,7 @@ export const transfer_action =
       };
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: btxdb.new_tx_item(tx),
+        Item: btxdb.tx_record(tx),
       });
       const bal_update = baldb.balance_update_txi(adm.id, {
         lock_units: ["dec", units],
@@ -99,12 +99,12 @@ export const transfer_action =
       };
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: btxdb.new_tx_item(tx),
+        Item: btxdb.tx_record(tx),
       });
 
       txs.put({
         TableName: BalanceTxsDb.name,
-        Item: btxdb.new_tx_item(lock_tx),
+        Item: btxdb.tx_record(lock_tx),
       });
 
       const bal_update = baldb.balance_update_txi(adm.id, {

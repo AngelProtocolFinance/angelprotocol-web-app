@@ -44,7 +44,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   if (verdict === "reject") {
     const txs = new Txs();
-    const upd81 = await btxdb.tx_update_status_item(tx, "cancelled");
+    const upd81 = await btxdb.tx_update_status_txi(tx, "cancelled");
     //add back units
     const upd82 = baldb.balance_update_txi(+tx.owner, {
       lock_units: ["inc", tx.amount_units],
@@ -56,7 +56,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   }
 
   const txs = new Txs();
-  const upd81 = await btxdb.tx_update_status_item(tx, "final");
+  const upd81 = await btxdb.tx_update_status_txi(tx, "final");
   txs.update(upd81);
 
   //log nav
@@ -102,7 +102,7 @@ export const action: ActionFunction = async ({ params, request }) => {
       // lock_units - already deducted in tx creation
     });
 
-    txs.put({ TableName: BalanceTxsDb.name, Item: btxdb.new_tx_item(liq_tx) });
+    txs.put({ TableName: BalanceTxsDb.name, Item: btxdb.tx_record(liq_tx) });
     txs.update(upd82);
     const cmd = new TransactWriteCommand({ TransactItems: txs.all });
     await baldb.client.send(cmd);

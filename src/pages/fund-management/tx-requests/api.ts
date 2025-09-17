@@ -14,5 +14,5 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return resp.status(403);
   }
 
-  return btxdb.txs({ ...opts, limit: 10 });
+  return btxdb.txs({ ...opts, source_acc: "lock", limit: 10 });
 };
