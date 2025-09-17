@@ -86,3 +86,5 @@ export const kv_envs = {
   url: _var("KV_REST_API_URL"),
   token: _var("KV_REST_API_TOKEN"),
 };
+
+export const gemini_api_key = _var("GEMINI_API_KEY");

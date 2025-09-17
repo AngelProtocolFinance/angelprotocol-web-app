@@ -46,7 +46,7 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
     items: hits.map((x: any) => {
       // id: `${env}-${number}`
       const { id, ...rest } = x.document;
-      return { id: id.split("-")[1], ...rest };
+      return { id: +id.split("-")[1], ...rest };
     }),
     page,
     pages: Math.ceil(found / HITS_PER_PAGE),

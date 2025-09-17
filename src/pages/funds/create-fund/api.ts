@@ -2,7 +2,7 @@ import { Txs } from "@better-giving/db";
 import type { IFund, IFundSettings } from "@better-giving/fundraiser";
 import { fund_new } from "@better-giving/fundraiser/schema";
 import { adminRoutes, appRoutes } from "constants/routes";
-import { search } from "helpers/https";
+import { resp, search } from "helpers/https";
 import {
   type ActionFunction,
   type LoaderFunctionArgs,
@@ -10,6 +10,7 @@ import {
 } from "react-router";
 import { isError } from "types/auth";
 import { parse } from "valibot";
+import { evaluate } from "./evaluate";
 import { cognito, toAuth } from ".server/auth";
 import { TransactWriteCommand, funddb, npodb, userdb } from ".server/aws/db";
 import { env } from ".server/env";
@@ -18,8 +19,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
   const { npo: id } = search(request);
-  const npo = id ? await npodb.npo(+id) : null;
-  return npo;
+  if (id) {
+    const npo = await npodb.npo(+id);
+    if (!npo) return resp.status(404);
+    return npo;
+  }
+  return null;
 };
 
 export const action: ActionFunction = async ({ request }) => {
@@ -27,6 +32,16 @@ export const action: ActionFunction = async ({ request }) => {
   if (!user) return toAuth(request, headers);
 
   const payload = parse(fund_new, await request.json());
+
+  const evaluation = await evaluate({
+    title: payload.name,
+    description: payload.description,
+  }).catch((err) => {
+    console.error(err);
+    return null;
+  });
+
+  if (evaluation) throw `Fundraiser flagged: ${JSON.stringify(evaluation)}`;
 
   const npoo = payload.npo_owner;
   if (npoo && !user.endowments.includes(npoo)) return { status: 401 };

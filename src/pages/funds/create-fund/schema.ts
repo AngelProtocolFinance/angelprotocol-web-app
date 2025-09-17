@@ -6,7 +6,7 @@ import { video } from "../common/videos";
 
 const str = v.pipe(v.string("required"), v.trim());
 
-export const endowOption = v.object({
+export const endow_opt = v.object({
   id: v.number(),
   name: str,
   logo: v.optional(v.pipe(str, v.url())),
@@ -23,7 +23,7 @@ export const schema = v.object({
   banner: imgOutput({ required: true }),
   logo: imgOutput({ required: true }),
   members: v.pipe(
-    v.array(endowOption),
+    v.array(endow_opt),
     v.minLength(1, "must contain at least one nonprofit"),
     v.maxLength(10, "cannot contain more than 10 nonprofits")
   ),
@@ -43,6 +43,6 @@ export const schema = v.object({
   videos: v.array(video),
 });
 
-export interface FundMember extends v.InferOutput<typeof endowOption> {}
+export interface FundMember extends v.InferOutput<typeof endow_opt> {}
 export interface EndowOption extends FundMember {}
 export interface FV extends v.InferOutput<typeof schema> {}

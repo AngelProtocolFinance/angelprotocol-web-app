@@ -24,7 +24,6 @@ const fetcher = async ({
     fields: "id,name,card_img,registration_number",
   });
   const res = await fetch(`/api/npos?${search.toString()}`);
-
   if (!res.ok) throw res;
   return res.json() as Promise<EndowFundMembersOptionsPage>;
 };

@@ -9,7 +9,6 @@ import {
 import { RichText, richTextStyles } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { type LinksFunction, useFetcher } from "react-router";
-import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import type { Route } from "./+types";
@@ -17,15 +16,13 @@ import { EndowmentSelector } from "./endowment-selector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 
 export { loader, action } from "./api";
-export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export { ErrorBoundary } from "components/error";
 export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
 
-export default CacheRoute(Page);
-function Page({ loaderData: endow }: Route.ComponentProps) {
+export default function Page({ loaderData: endow }: Route.ComponentProps) {
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state !== "idle";
   const {
@@ -100,7 +97,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
             method: "POST",
             action: ".",
           });
-        })}
+        }, console.error)}
         disabled={isSubmitting}
         className="grid border border-gray-l3 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
