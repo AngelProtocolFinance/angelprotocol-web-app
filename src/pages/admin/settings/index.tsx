@@ -11,7 +11,7 @@ import { CheckField, Form as F, Field } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { Increments } from "components/increments";
 import { BG_ID } from "constants/common";
-import { useActionResult } from "hooks/use-action-result";
+import { use_action_result } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { Outlet, useFetcher } from "react-router";
@@ -29,7 +29,7 @@ export default CacheRoute(Page);
 
 function Page({ loaderData: endow }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionData>();
-  useActionResult(fetcher.data);
+  use_action_result(fetcher.data);
 
   const {
     reset,

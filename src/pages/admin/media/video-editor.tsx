@@ -1,22 +1,22 @@
-import { https_url } from "@better-giving/schemas";
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Field, RmxForm, useRmxForm } from "components/form";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Field, RmxForm } from "components/form";
 import { Modal } from "components/modal";
-import { parseWithValibot } from "conform-to-valibot";
 import { X } from "lucide-react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router";
-import { isFormErr } from "types/action";
-import { object } from "valibot";
+import {
+  Link,
+  useNavigate,
+  useNavigation,
+  useSearchParams,
+} from "react-router";
+import { useRemixForm } from "remix-hook-form";
+import type { Route as RouteEdit } from "./+types/video-edit";
+import type { Route as RouteNew } from "./+types/video-new";
+import { type ISchema, schema } from "./schema";
 
-type Props = {
-  edit?: { prevUrl: string; mediaId: string };
-};
-
-export const schema = object({ url: https_url(true) });
-
-export default function VideoEditor() {
-  const [params] = useSearchParams();
-  const { mediaId } = useParams();
+export default function Page({
+  params,
+}: RouteEdit.ComponentProps | RouteNew.ComponentProps) {
+  const [sp] = useSearchParams();
 
   const navigate = useNavigate();
   return (
@@ -28,26 +28,28 @@ export default function VideoEditor() {
       classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <Content
-        edit={
-          mediaId ? { prevUrl: params.get("prev_url")!, mediaId } : undefined
-        }
+        action={"mediaId" in params ? "edit" : "add"}
+        prev_url={sp.get("prev_url")}
       />
     </Modal>
   );
 }
 
-function Content(props: Props) {
-  const { nav, data } = useRmxForm();
-  const [form, fields] = useForm({
-    lastResult: isFormErr(data) ? data : undefined,
-    shouldRevalidate: "onInput",
-    onValidate({ formData }) {
-      return parseWithValibot(formData, {
-        schema,
-      });
-    },
-    defaultValue: {
-      url: props.edit?.prevUrl ?? "",
+interface IProps {
+  action: "edit" | "add";
+  prev_url: string | null;
+}
+
+function Content(props: IProps) {
+  const nav = useNavigation();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isDirty },
+  } = useRemixForm<ISchema>({
+    resolver: valibotResolver(schema),
+    defaultValues: {
+      url: props.prev_url ?? "",
     },
   });
 
@@ -55,11 +57,11 @@ function Content(props: Props) {
     <RmxForm
       method="POST"
       disabled={nav.state !== "idle"}
-      {...getFormProps(form)}
+      onSubmit={handleSubmit}
     >
       <div className="relative">
-        <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
-          {props.edit ? "Edit" : "Add"} video
+        <p className="text-xl capitalize font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
+          {props.action} video
         </p>
         <Link
           to=".."
@@ -71,10 +73,10 @@ function Content(props: Props) {
       </div>
       <div className="p-4">
         <Field
-          {...getInputProps(fields.url, { type: "url" })}
+          {...register("url")}
           placeholder="e.g. https://youtu.be/XOUjJqQ68Ec?si=-WX60lgPXUWAXPCY"
           label="Web Address (URL)"
-          error={fields.url.errors?.[0]}
+          error={errors.url?.message}
           required
         />
       </div>
@@ -84,7 +86,7 @@ function Content(props: Props) {
           Cancel
         </Link>
         <button
-          disabled={!form.dirty}
+          disabled={!isDirty}
           type="submit"
           className="btn btn-blue px-8 py-2 text-sm"
         >

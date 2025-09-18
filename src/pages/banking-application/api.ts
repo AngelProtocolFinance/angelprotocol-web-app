@@ -1,5 +1,4 @@
 import { update } from "@better-giving/banking-applications/schema";
-import { parseWithValibot } from "conform-to-valibot";
 import {
   type ActionFunction,
   type LoaderFunctionArgs,
@@ -8,10 +7,12 @@ import {
 import * as v from "valibot";
 import { cognito, toAuth } from ".server/auth";
 
-import type { IBapp } from "@better-giving/banking-applications";
+import type { IBapp, IUpdate } from "@better-giving/banking-applications";
 import { $int_gte1 } from "@better-giving/schemas";
 import type { V2RecipientAccount } from "@better-giving/wise";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { resp } from "helpers/https";
+import { getValidatedFormData } from "remix-hook-form";
 import { parse } from "valibot";
 import { bappdb } from ".server/aws/db";
 import { wise } from ".server/sdks";
@@ -40,14 +41,16 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
-  const fv = await request.formData();
-  const payload = parseWithValibot(fv, { schema: update });
-  if (payload.status !== "success") return payload.reply();
+  const fv = await getValidatedFormData<IUpdate>(
+    request,
+    valibotResolver(update)
+  );
+  if (fv.errors) return fv;
 
   const bank_id = v.parse($int_gte1, params.id);
   const x = await bappdb.bapp(bank_id.toString());
   if (!x) return { status: 404, statusText: `Bank:${bank_id} not found` };
 
-  await bappdb.bapp_update(x, payload.value);
+  await bappdb.bapp_update(x, fv.data);
   return redirect("../success");
 };

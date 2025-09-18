@@ -1,12 +1,14 @@
 import type { TStatus } from "@better-giving/banking-applications";
-import { update } from "@better-giving/banking-applications/schema";
-import { getFormProps, getTextareaProps, useForm } from "@conform-to/react";
+import {
+  type IUpdate,
+  update,
+} from "@better-giving/banking-applications/schema";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { parseWithValibot } from "conform-to-valibot";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ChevronRight, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link, useFetcher, useNavigate } from "react-router";
-import { type ActionData, isFormErr } from "types/action";
+import { useRemixForm } from "remix-hook-form";
 
 type Props = {
   verdict: TStatus;
@@ -31,21 +33,21 @@ export function Prompt(props: Props) {
 }
 
 function Content({ verdict }: Props) {
-  const fetcher = useFetcher<ActionData<any>>({
+  const fetcher = useFetcher({
     key: `banking-application-${verdict}`,
   });
-
-  const [form, fields] = useForm({
-    shouldRevalidate: "onInput",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: update });
-    },
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useRemixForm<IUpdate>({
+    resolver: valibotResolver(update),
   });
+  const reason_id = "reject-reason";
 
   return (
     <fetcher.Form
-      {...getFormProps(form)}
+      onSubmit={handleSubmit}
       method="POST"
       className="grid content-start justify-items-center text-gray-d4"
     >
@@ -85,19 +87,16 @@ function Content({ verdict }: Props) {
 
       {verdict === "rejected" && (
         <div className="px-6 w-full pb-6 grid">
-          <label
-            htmlFor={fields.reason.id}
-            className="label mb-2"
-            data-required
-          >
+          <label htmlFor={reason_id} className="label mb-2" data-required>
             Reason for rejection:
           </label>
           <textarea
-            {...getTextareaProps(fields.reason)}
+            {...register("reason")}
+            id={reason_id}
             className="field-input"
           />
           <span className="empty:hidden text-xs text-red mt-1">
-            {fields.reason.errors?.[0]}
+            {errors.reason?.message}
           </span>
         </div>
       )}

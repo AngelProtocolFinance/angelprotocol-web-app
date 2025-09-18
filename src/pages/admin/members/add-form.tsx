@@ -1,15 +1,15 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Field, RmxForm, useRmxForm } from "components/form";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Field, RmxForm } from "components/form";
 import { Modal } from "components/modal";
-import { parseWithValibot } from "conform-to-valibot";
-import { useNavigate, useRouteLoaderData } from "react-router";
-import { isFormErr } from "types/action";
+import { useNavigate, useNavigation, useRouteLoaderData } from "react-router";
+import { useRemixForm } from "remix-hook-form";
 import type { LoaderData } from "./api";
-import { schema } from "./schema";
+import { type ISchema, schema } from "./schema";
 
 export { add_action as action } from "./api";
 export { ErrorModal as ErrorBoundary } from "components/error";
-export default function AddForm() {
+
+export default function Page() {
   const navigate = useNavigate();
   return (
     <Modal
@@ -27,41 +27,39 @@ export default function AddForm() {
 function Content() {
   const ldta = useRouteLoaderData<LoaderData>("endow-admins");
   const { admins = [] } = ldta ?? {};
-  const { data, nav } = useRmxForm();
-  const [form, fields] = useForm({
-    lastResult: isFormErr(data) ? data : undefined,
-    shouldRevalidate: "onInput",
-    onValidate({ formData }) {
-      return parseWithValibot(formData, {
-        schema: schema(admins.map((x) => x.email)),
-      });
-    },
+  const nav = useNavigation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useRemixForm<ISchema>({
+    resolver: valibotResolver(schema(admins.map((a) => a.email))),
   });
 
   return (
     <RmxForm
-      {...getFormProps(form)}
+      onSubmit={handleSubmit}
       disabled={nav.state !== "idle"}
       method="POST"
       className="w-full grid gap-4"
     >
       <h4 className="text-center text-xl font-bold mb-4">Invite User</h4>
       <Field
-        {...getInputProps(fields.email, { type: "email" })}
+        {...register("email")}
         label="Email"
         required
-        error={fields.email.errors?.[0]}
+        error={errors.email?.message}
       />
       <Field
-        {...getInputProps(fields.firstName, { type: "text" })}
+        {...register("firstName")}
         label="First name"
         required
-        error={fields.firstName.errors?.[0]}
+        error={errors.firstName?.message}
       />
       <Field
-        {...getInputProps(fields.lastName, { type: "text" })}
+        {...register("lastName")}
         label="Last name"
-        error={fields.lastName.errors?.[0]}
+        error={errors.lastName?.message}
         required
       />
       <button disabled={nav.state !== "idle"} className="btn btn-blue mt-6">

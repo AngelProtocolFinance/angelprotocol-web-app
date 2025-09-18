@@ -5,7 +5,7 @@ import { CheckField, Form } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { errorPrompt } from "helpers/error-prompt";
+import { error_prompt } from "helpers/error-prompt";
 import { Eraser, PenToolIcon } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
@@ -348,7 +348,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
               const search = `?name=${encodeURIComponent(props.init.recipient.name)}&id=${props.init.recipient.id}`;
               navigate(`${appRoutes.donate_thanks}${search}`);
             } catch (err) {
-              setPrompt(errorPrompt(err, { context: "processing donation" }));
+              setPrompt(error_prompt(err, { context: "processing donation" }));
             } finally {
               setGrantState(undefined);
             }

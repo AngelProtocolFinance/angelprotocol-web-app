@@ -1,6 +1,6 @@
 import type { IPromptV2 } from "components/prompt";
-import { errorPrompt } from "helpers/error-prompt";
-import { useActionResult } from "hooks/use-action-result";
+import { error_prompt } from "helpers/error-prompt";
+import { use_action_result } from "hooks/use-action-result";
 import { useState } from "react";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
@@ -10,10 +10,10 @@ import type { FV } from "./schema";
 
 type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
-export default function useEditProfile(df: DirtyFields) {
+export function use_edit_npo(df: DirtyFields) {
   const fetcher = useFetcher();
-  useActionResult(fetcher.data);
-  const [prompt, setPrompt] = useState<IPromptV2>();
+  use_action_result(fetcher.data);
+  const [prompt, set_prompt] = useState<IPromptV2>();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
@@ -30,7 +30,7 @@ export default function useEditProfile(df: DirtyFields) {
           );
 
           if (npo?.id) {
-            return setPrompt({
+            return set_prompt({
               type: "error",
               children: `Slug "${fv.slug}" is already taken`,
             });
@@ -67,7 +67,7 @@ export default function useEditProfile(df: DirtyFields) {
         encType: "application/json",
       });
     } catch (err) {
-      setPrompt(errorPrompt(err, { context: "applying profile changes" }));
+      set_prompt(error_prompt(err, { context: "applying profile changes" }));
     }
   };
 
@@ -75,6 +75,6 @@ export default function useEditProfile(df: DirtyFields) {
     onSubmit,
     state: fetcher.state,
     prompt,
-    setPrompt,
+    set_prompt,
   };
 }

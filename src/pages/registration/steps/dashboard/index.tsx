@@ -1,4 +1,4 @@
-import { useActionResult } from "hooks/use-action-result";
+import { use_action_result } from "hooks/use-action-result";
 import { Outlet, useFetcher } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { ActionData, Ok } from "types/action";
@@ -15,7 +15,7 @@ export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export default CacheRoute(Page);
 function Page({ loaderData: reg }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });
-  useActionResult(fetcher.data);
+  use_action_result(fetcher.data);
 
   const is_steps_disabled = fetcher.state !== "idle" || reg.status === "02";
 

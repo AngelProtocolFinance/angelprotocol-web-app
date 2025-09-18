@@ -1,28 +1,27 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "components/form";
-import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { Mail } from "lucide-react";
 import { Link, useFetcher } from "react-router";
-import { type ActionData, isFormErr } from "types/action";
-import { emailSchema } from "./schema";
+import { useRemixForm } from "remix-hook-form";
+import { type IEmailSchema, email_schema } from "./schema";
 
 type Props = { to: string };
 
 export default function InitForm(props: Props) {
-  const fetcher = useFetcher<ActionData<string>>();
-  const [form, fields] = useForm({
-    shouldRevalidate: "onInput",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: emailSchema });
-    },
+  const fetcher = useFetcher();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useRemixForm<IEmailSchema>({
+    resolver: valibotResolver(email_schema),
   });
 
   return (
     <fetcher.Form
       method="POST"
-      {...getFormProps(form)}
+      onSubmit={handleSubmit}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl"
     >
       <h3 className="text-center text-xl sm:text-2xl font-bold text-gray-d4">
@@ -33,11 +32,11 @@ export default function InitForm(props: Props) {
       </p>
 
       <Input
-        {...getInputProps(fields.email, { type: "email" })}
+        {...register("email")}
         placeholder="Email address"
         classes={{ container: "mt-6" }}
         icon={Mail}
-        error={fields.email.errors?.[0]}
+        error={errors.email?.message}
       />
 
       <button

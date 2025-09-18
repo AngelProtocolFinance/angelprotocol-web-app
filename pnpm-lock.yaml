@@ -89,12 +89,6 @@ importers:
       '@better-giving/wise':
         specifier: 1.1.7
         version: 1.1.7
-      '@conform-to/dom':
-        specifier: 1.2.2
-        version: 1.2.2
-      '@conform-to/react':
-        specifier: 1.2.2
-        version: 1.2.2(react@18.2.0)
       '@fontsource-variable/dm-sans':
         specifier: 5.1.1
         version: 5.1.1
@@ -109,10 +103,10 @@ importers:
         version: 2.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@hookform/error-message':
         specifier: 2.0.1
-        version: 2.0.1(react-dom@18.2.0(react@18.2.0))(react-hook-form@7.54.2(react@18.2.0))(react@18.2.0)
+        version: 2.0.1(react-dom@18.2.0(react@18.2.0))(react-hook-form@7.62.0(react@18.2.0))(react@18.2.0)
       '@hookform/resolvers':
         specifier: 3.9.0
-        version: 3.9.0(react-hook-form@7.54.2(react@18.2.0))
+        version: 3.9.0(react-hook-form@7.62.0(react@18.2.0))
       '@maskito/core':
         specifier: 3.5.0
         version: 3.5.0
@@ -158,9 +152,6 @@ importers:
       '@vercel/kv':
         specifier: 3.0.0
         version: 3.0.0
-      conform-to-valibot:
-        specifier: 1.11.0
-        version: 1.11.0(@conform-to/dom@1.2.2)(valibot@0.42.0(typescript@5.9.2))
       cron-parser:
         specifier: 5.3.0
         version: 5.3.0
@@ -234,8 +225,8 @@ importers:
         specifier: 15.2.0
         version: 15.2.0(react@18.2.0)
       react-hook-form:
-        specifier: 7.54.2
-        version: 7.54.2(react@18.2.0)
+        specifier: 7.62.0
+        version: 7.62.0(react@18.2.0)
       react-player:
         specifier: 2.16.0
         version: 2.16.0(react@18.2.0)
@@ -248,6 +239,9 @@ importers:
       remix-client-cache:
         specifier: 3.0.0
         version: 3.0.0(react-dom@18.2.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+      remix-hook-form:
+        specifier: 7.1.0
+        version: 7.1.0(react-dom@18.2.0(react@18.2.0))(react-hook-form@7.62.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       remix-utils:
         specifier: 8.1.0
         version: 8.1.0(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(zod@3.24.2)
@@ -837,14 +831,6 @@ packages:
 
   '@bundled-es-modules/statuses@1.0.1':
     resolution: {integrity: sha512-yn7BklA5acgcBr+7w064fGV+SGIFySjCKpqjcWgBAIfrAkY+4GQTJJHQMeT3V/sgz23VTEVV8TtOmkvJAhFVfg==}
-
-  '@conform-to/dom@1.2.2':
-    resolution: {integrity: sha512-f05EClpNP31o6lX4LYmmLqgsiTOHdGfY7z2XXK6U6rRp+EtxrkUBdrFlIGsfkf7e9AFO19h3/Cb/cXHVd1k1FA==}
-
-  '@conform-to/react@1.2.2':
-    resolution: {integrity: sha512-1JBECb3NKi5/IlexaYLgnAxGJ55MRuO2sEQ10cJfUK2bfltNbTIQnYUDG6pU886A4lda/q6UH/adPsjiB/4Gkg==}
-    peerDependencies:
-      react: '>=18'
 
   '@csstools/color-helpers@5.0.1':
     resolution: {integrity: sha512-MKtmkA0BX87PKaO1NFRTFH+UnkgnmySQOvNxJubsadusqPEC2aJ9MOQiMceZJJ6oitUl/i0L6u0M1IrmAOmgBA==}
@@ -2383,12 +2369,6 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  conform-to-valibot@1.11.0:
-    resolution: {integrity: sha512-OyAAKxyb85aTJWcKnZhckQPJxcEx/J8puTwS/4DI2INnuk3g3lzZ902AIGFwGl10aIwECAQXpe2QOpXHAPo9TA==}
-    peerDependencies:
-      '@conform-to/dom': '>= 1.0.0'
-      valibot: '>= 0.32.0'
-
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
@@ -3385,8 +3365,8 @@ packages:
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
 
-  react-hook-form@7.54.2:
-    resolution: {integrity: sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==}
+  react-hook-form@7.62.0:
+    resolution: {integrity: sha512-7KWFejc98xqG/F4bAxpL41NB3o1nnvQO1RWZT3TqRZYL8RryQETGfEdVnJN2fy1crCiBLLjkRBVK05j24FxJGA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -3468,6 +3448,14 @@ packages:
       react: ^18.2.0 || ^19.0.0
       react-dom: ^18.2.0 || ^19.0.0
       react-router: ^7.0.0
+
+  remix-hook-form@7.1.0:
+    resolution: {integrity: sha512-RyuYq4tKHw/GH8FdKDEGRul8qFJLspZwbDRGehj9hKbVvhREaxROu2zpv0Yqt6drUaYCW1jH2vltL+n5vGmIag==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+      react-dom: ^18.2.0 || ^19.0.0
+      react-hook-form: ^7.55.0
+      react-router: '>=7.5.0'
 
   remix-utils@8.1.0:
     resolution: {integrity: sha512-k44K4FOPyMv6QQ+yaQrCrXdnzkKE1b86ZUODAK5fvmWsmi7ntZAAA+Ods+nzNAxFEAPDTreCzl7cGWnxWd6ibw==}
@@ -4946,13 +4934,6 @@ snapshots:
     dependencies:
       statuses: 2.0.1
 
-  '@conform-to/dom@1.2.2': {}
-
-  '@conform-to/react@1.2.2(react@18.2.0)':
-    dependencies:
-      '@conform-to/dom': 1.2.2
-      react: 18.2.0
-
   '@csstools/color-helpers@5.0.1': {}
 
   '@csstools/css-calc@2.1.1(@csstools/css-parser-algorithms@3.0.4(@csstools/css-tokenizer@3.0.3))(@csstools/css-tokenizer@3.0.3)':
@@ -5093,15 +5074,15 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@hookform/error-message@2.0.1(react-dom@18.2.0(react@18.2.0))(react-hook-form@7.54.2(react@18.2.0))(react@18.2.0)':
+  '@hookform/error-message@2.0.1(react-dom@18.2.0(react@18.2.0))(react-hook-form@7.62.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-hook-form: 7.54.2(react@18.2.0)
+      react-hook-form: 7.62.0(react@18.2.0)
 
-  '@hookform/resolvers@3.9.0(react-hook-form@7.54.2(react@18.2.0))':
+  '@hookform/resolvers@3.9.0(react-hook-form@7.62.0(react@18.2.0))':
     dependencies:
-      react-hook-form: 7.54.2(react@18.2.0)
+      react-hook-form: 7.62.0(react@18.2.0)
 
   '@inquirer/confirm@5.1.16(@types/node@22.15.21)':
     dependencies:
@@ -6559,11 +6540,6 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  conform-to-valibot@1.11.0(@conform-to/dom@1.2.2)(valibot@0.42.0(typescript@5.9.2)):
-    dependencies:
-      '@conform-to/dom': 1.2.2
-      valibot: 0.42.0(typescript@5.9.2)
-
   convert-source-map@2.0.0: {}
 
   cookie@0.7.2: {}
@@ -7436,7 +7412,7 @@ snapshots:
 
   react-fast-compare@3.2.2: {}
 
-  react-hook-form@7.54.2(react@18.2.0):
+  react-hook-form@7.62.0(react@18.2.0):
     dependencies:
       react: 18.2.0
 
@@ -7521,6 +7497,13 @@ snapshots:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+      react-router: 7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+
+  remix-hook-form@7.1.0(react-dom@18.2.0(react@18.2.0))(react-hook-form@7.62.0(react@18.2.0))(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-hook-form: 7.62.0(react@18.2.0)
       react-router: 7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
   remix-utils@8.1.0(react-router@7.8.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)(zod@3.24.2):

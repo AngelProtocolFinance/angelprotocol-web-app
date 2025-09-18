@@ -1,14 +1,16 @@
 import { media_ksuid } from "@better-giving/endowment/schema";
 import { $int_gte1 } from "@better-giving/schemas";
-import { parseWithValibot } from "conform-to-valibot";
+import { valibotResolver } from "@hookform/resolvers/valibot";
+// import { parseWithValibot } from "conform-to-valibot";
 import { search } from "helpers/https";
 import {
   type ActionFunction,
   type LoaderFunctionArgs,
   redirect,
 } from "react-router";
+import { getValidatedFormData } from "remix-hook-form";
 import { parse } from "valibot";
-import { schema } from "./video-editor";
+import { type ISchema, schema } from "./schema";
 import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -53,11 +55,14 @@ export const videos_action: ActionFunction = async (x) => {
 export const new_action: ActionFunction = async (x) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
-  const fv = await adm.req.formData();
-  const payload = parseWithValibot(fv, { schema });
-  if (payload.status !== "success") return payload.reply();
 
-  await npodb.npo_med_put(adm.id, payload.value.url);
+  const fv = await getValidatedFormData<ISchema>(
+    adm.req,
+    valibotResolver(schema)
+  );
+  if (fv.errors) return fv;
+
+  await npodb.npo_med_put(adm.id, fv.data.url);
 
   return redirect("..");
 };
@@ -66,15 +71,18 @@ export const edit_action: ActionFunction = async (x) => {
   const mid = parse(media_ksuid, x.params.mediaId);
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
-  const fv = await adm.req.formData();
-  const payload = parseWithValibot(fv, { schema });
-  if (payload.status !== "success") return payload.reply();
+
+  const fv = await getValidatedFormData<ISchema>(
+    adm.req,
+    valibotResolver(schema)
+  );
+  if (fv.errors) return fv;
 
   const m = await npodb.npo_med(adm.id, mid);
   if (!m) return { status: 404 };
 
   await npodb.npo_med_update(adm.id, m, {
-    url: payload.value.url,
+    url: fv.data.url,
   });
 
   return redirect("..");

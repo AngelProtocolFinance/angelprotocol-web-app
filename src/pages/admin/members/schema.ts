@@ -11,3 +11,5 @@ export const schema = (added: string[]) =>
       v.check((input) => !added.includes(input), "already a member")
     ),
   });
+
+export interface ISchema extends v.InferOutput<ReturnType<typeof schema>> {}
