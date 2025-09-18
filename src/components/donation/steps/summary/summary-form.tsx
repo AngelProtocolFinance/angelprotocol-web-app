@@ -21,7 +21,7 @@ const schema = object({
   with_tribute: boolean(),
   with_tribute_notif: optional(boolean()),
   tribute: optional(tribute),
-  cover_fee: boolean(),
+  cover_fee: optional(boolean()),
 });
 
 interface FV extends InferOutput<typeof schema> {}
@@ -58,7 +58,7 @@ export type Props = {
   method: DonateMethodId;
 };
 
-export default function SummaryForm({ classes = "", ...props }: Props) {
+export function SummaryForm({ classes = "", ...props }: Props) {
   const {
     handleSubmit,
     watch,

@@ -5,7 +5,7 @@ import SummaryContainer from "../common/summary";
 import { token } from "../common/token";
 import { use_donation_state } from "../context";
 import type { SummaryStep } from "../types";
-import SummaryForm from "./summary-form";
+import { SummaryForm } from "./summary-form";
 
 export default function Summary(props: SummaryStep) {
   const user = useRootData();
