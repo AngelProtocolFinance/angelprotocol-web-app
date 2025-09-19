@@ -1,4 +1,3 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, RmxForm } from "components/form";
 import { Modal } from "components/modal";
 import { X } from "lucide-react";
@@ -10,7 +9,7 @@ import {
   useSearchParams,
 } from "react-router";
 import { useRemixForm } from "remix-hook-form";
-import { type ISchema, schema } from "./schema";
+import type { ISchema } from "./schema";
 
 export default function Page() {
   const [sp] = useSearchParams();
@@ -45,10 +44,7 @@ function Content(props: IProps) {
     register,
     formState: { errors, isDirty },
   } = useRemixForm<ISchema>({
-    resolver: valibotResolver(schema),
-    defaultValues: {
-      url: props.prev_url ?? "",
-    },
+    defaultValues: { url: props.prev_url ?? "" },
   });
 
   return (
