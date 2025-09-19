@@ -1,7 +1,7 @@
 import { Input, PasswordInput } from "components/form";
 import { use_action_result } from "hooks/use-action-result";
 import { use_counter } from "hooks/use-counter";
-import { Form, useFetcher } from "react-router";
+import { useFetcher } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 import type { IPasswordSchema } from "./schema";
 import type { CodeRecipient } from "./types";
@@ -24,7 +24,7 @@ export default function SetPasswordForm(props: Props) {
   } = useRemixForm<IPasswordSchema>({ fetcher });
 
   return (
-    <Form
+    <fetcher.Form
       method="POST"
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl"
     >
@@ -106,6 +106,6 @@ export default function SetPasswordForm(props: Props) {
       >
         Confirm
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }

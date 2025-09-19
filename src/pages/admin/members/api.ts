@@ -45,7 +45,7 @@ export const add_action = async (x: Route.ActionArgs) => {
   await userdb.npo_admin_tx(adm.id, {
     endowName: npo.name,
     invitee: fv.data.email,
-    inviteeFirstName: fv.data.firstName,
+    inviteeFirstName: fv.data.first_name,
     invitor: adm.email,
   });
 

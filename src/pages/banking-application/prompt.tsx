@@ -3,7 +3,7 @@ import type { IUpdate } from "@better-giving/banking-applications/schema";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { ChevronRight, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Form, Link, useFetcher, useNavigate } from "react-router";
+import { Link, useFetcher, useNavigate } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 
 type Props = {
@@ -34,7 +34,6 @@ function Content({ verdict }: Props) {
   });
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useRemixForm<IUpdate>({
     defaultValues: { type: verdict },
@@ -43,11 +42,11 @@ function Content({ verdict }: Props) {
   const reason_id = "reject-reason";
 
   return (
-    <Form
-      onSubmit={handleSubmit}
+    <fetcher.Form
       method="POST"
       className="grid content-start justify-items-center text-gray-d4"
     >
+      <input type="hidden" value={verdict} name="type" />
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           Banking application
@@ -55,7 +54,7 @@ function Content({ verdict }: Props) {
         <Link
           to=".."
           aria-disabled={fetcher.state !== "idle"}
-          className="border border-gray-l3 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
+          className="border border-gray-l3 p-2 rounded-md absolute top-1/2 right-4 transfetcher.Form -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
         >
           <X className="text-lg sm:text-2xl" />
         </Link>
@@ -115,7 +114,7 @@ function Content({ verdict }: Props) {
           Submit
         </button>
       </div>
-    </Form>
+    </fetcher.Form>
   );
 }
 

@@ -51,15 +51,15 @@ function Content() {
         error={errors.email?.message}
       />
       <Field
-        {...register("firstName")}
+        {...register("first_name")}
         label="First name"
         required
-        error={errors.firstName?.message}
+        error={errors.first_name?.message}
       />
       <Field
-        {...register("lastName")}
+        {...register("last_name")}
         label="Last name"
-        error={errors.lastName?.message}
+        error={errors.last_name?.message}
         required
       />
       <button disabled={nav.state !== "idle"} className="btn btn-blue mt-6">

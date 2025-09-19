@@ -1,12 +1,11 @@
+import { $req } from "@better-giving/schemas";
 import * as v from "valibot";
-const str = v.pipe(v.string("required"), v.trim());
 export const schema = (added: string[]) =>
   v.object({
-    firstName: v.pipe(str, v.nonEmpty("required")),
-    lastName: v.pipe(str, v.nonEmpty("required")),
+    first_name: $req,
+    last_name: $req,
     email: v.pipe(
-      str,
-      v.nonEmpty("required"),
+      $req,
       v.email("invalid email"),
       v.check((input) => !added.includes(input), "already a member")
     ),

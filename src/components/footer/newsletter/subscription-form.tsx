@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { Form, useFetcher } from "react-router";
+import { useFetcher } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 import type { IEmailSubs } from "types/hubspot-subscription";
 
@@ -7,21 +7,14 @@ export function SubscriptionForm() {
   const fetcher = useFetcher<"success" | "error">();
 
   const {
-    handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useRemixForm<IEmailSubs>({
     fetcher,
-    submitData: { intent: "subscribe" },
   });
 
   return (
-    <Form
-      action="/"
-      onSubmit={handleSubmit}
-      method="POST"
-      className="grid content-start"
-    >
+    <fetcher.Form action="/" method="POST" className="grid content-start">
       <div className="grid mb-3">
         <input
           {...register("email")}
@@ -46,7 +39,7 @@ export function SubscriptionForm() {
       >
         Subscribe
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
 

@@ -11,7 +11,7 @@ export const action: ActionFunction = async ({ request }) => {
   const form = await r.formData();
   const intent = form.get("intent");
 
-  if (intent === '"subscribe"') {
+  if (intent === "subscribe") {
     const fv = await getValidatedFormData<IEmailSubs>(
       form,
       valibotResolver(email_subs)
