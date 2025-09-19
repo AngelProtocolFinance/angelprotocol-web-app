@@ -1,18 +1,17 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ext-link";
-import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
+import { Input, PasswordInput, RmxForm } from "components/form";
 import Image from "components/image";
 import { Separator } from "components/separator";
-import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
-import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import { Link, data, redirect } from "react-router";
-import type { ActionData } from "types/action";
-import { isError, signIn } from "types/auth";
+import { Link, data, redirect, useNavigation } from "react-router";
+import { getValidatedFormData, useRemixForm } from "remix-hook-form";
+import type { ActionData, IFormInvalid } from "types/action";
+import { type ISignIn, isError, sign_in } from "types/auth";
 import type { Route } from "./+types/signin";
 import { cognito, oauth } from ".server/auth";
 
@@ -30,13 +29,15 @@ export const action = async ({ request }: Route.ActionArgs) => {
       return redirect(oauth.initiateUrl(redirect_to, from.origin));
     }
 
-    const payload = parseWithValibot(fv, { schema: signIn });
-
-    if (payload.status !== "success") return payload.reply();
+    const payload = await getValidatedFormData<ISignIn>(
+      fv,
+      valibotResolver(sign_in)
+    );
+    if (payload.errors) return payload;
 
     const res = await cognito.initiate(
-      payload.value.email.toLowerCase(),
-      payload.value.password,
+      payload.data.email.toLowerCase(),
+      payload.data.password,
       request.headers.get("cookie")
     );
 
@@ -44,12 +45,15 @@ export const action = async ({ request }: Route.ActionArgs) => {
       if (res.__type === "UserNotConfirmedException") {
         const to = new URL(from);
         to.pathname = appRoutes.signup + "/confirm";
-        to.searchParams.set("email", payload.value.email);
+        to.searchParams.set("email", payload.data.email);
         to.searchParams.set("redirect", redirect_to);
         return redirect(to.toString());
       }
 
-      return payload.reply({ fieldErrors: { password: [res.message] } });
+      return {
+        errors: { password: { type: "value", message: res.message } },
+        receivedValues: payload.receivedValues,
+      } satisfies IFormInvalid<ISignIn>;
     }
 
     return redirect(redirect_to, { headers: { "set-cookie": res } });
@@ -71,18 +75,18 @@ export const meta: Route.MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Page({ loaderData: to }: Route.ComponentProps) {
-  const { nav, data } = useRmxForm();
-  const formErr = useActionResult(data);
+  const nav = useNavigation();
 
-  const [form, fields] = useForm({
-    shouldRevalidate: "onInput",
-    lastResult: formErr,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: signIn });
-    },
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useRemixForm<ISignIn>({
+    resolver: valibotResolver(sign_in),
   });
 
-  const isSubmitting = nav.state !== "idle";
+  const form_id = "signin-form";
+  const is_submitting = nav.state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-gray">
@@ -93,7 +97,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Log in to support 18000+ causes or register and manage your nonprofit.
         </p>
-        <RmxForm disabled={isSubmitting} method="POST" className="contents">
+        <RmxForm disabled={is_submitting} method="POST" className="contents">
           <button
             name="intent"
             value="oauth"
@@ -110,21 +114,22 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
           OR
         </Separator>
         <RmxForm
+          id={form_id}
+          onSubmit={handleSubmit}
           method="POST"
-          disabled={isSubmitting}
-          {...getFormProps(form)}
+          disabled={is_submitting}
           className="grid gap-3"
         >
           <Input
-            {...getInputProps(fields.email, { type: "text" })}
+            {...register("email")}
             placeholder="Email address"
             autoComplete="username"
             icon={Mail}
-            error={fields.email.errors?.[0]}
+            error={errors.email?.message}
           />
           <PasswordInput
-            {...getInputProps(fields.password, { type: "text" })}
-            error={fields.password.errors?.[0]}
+            {...register("password")}
+            error={errors.password?.message}
             placeholder="Password"
           />
           <Link
@@ -135,8 +140,8 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
           </Link>
         </RmxForm>
         <button
-          disabled={isSubmitting}
-          form={form.id}
+          disabled={is_submitting}
+          form={form_id}
           type="submit"
           className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full mt-4"
         >
@@ -147,7 +152,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
           <Link
             to={appRoutes.signup + `?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
-            aria-disabled={isSubmitting}
+            aria-disabled={is_submitting}
           >
             Sign up
           </Link>

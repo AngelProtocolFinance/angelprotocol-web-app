@@ -60,12 +60,12 @@ export interface DetailedUser extends UserV2 {
 }
 
 const email = v.pipe($req, v.toLowerCase(), v.email("invalid email format"));
-export const signIn = v.object({
+export const sign_in = v.object({
   email,
   password: v.pipe(v.string("required"), v.nonEmpty("required")),
 });
 
-export type SignIn = v.InferOutput<typeof signIn>;
+export type ISignIn = v.InferOutput<typeof sign_in>;
 
 const new_password = v.pipe(
   v.string("required"),
