@@ -3,7 +3,7 @@ import { Select } from "components/selector/select";
 import { Info, LoadingStatus } from "components/status";
 import { memo, useState } from "react";
 import type { IFormButtons, OnSubmit } from "../types";
-import RecipientDetailsForm from "./recipient-details-form";
+import { RecipientDetailsForm } from "./recipient-details-form";
 import { use_requirements } from "./use-requirements";
 
 type Props = {
@@ -26,10 +26,10 @@ function RecipientDetails({
   const { req } = use_requirements(!amount ? null : { amount, currency });
   const { data, isLoading, isValidating, error } = req;
   const requirements = data?.requirements || [];
-  const [selectedIdx, setSelectedIdx] = useState(0);
+  const [selected_idx, set_selected_idx] = useState(0);
 
   // when num options is reduced from current selected, revert to first option
-  const reqIdx = selectedIdx + 1 > requirements.length ? 0 : selectedIdx;
+  const req_idx = selected_idx + 1 > requirements.length ? 0 : selected_idx;
 
   if (isLoading) {
     return (
@@ -66,8 +66,8 @@ function RecipientDetails({
           Transfer type
         </Label>
         <Select
-          value={selectedIdx.toString()}
-          onChange={(value) => setSelectedIdx(+value)}
+          value={selected_idx.toString()}
+          onChange={(value) => set_selected_idx(+value)}
           options={requirements.map((_, i) => i.toString())}
           option_disp={(x) => requirements[+x].title}
           disabled={disabled || isValidating}
@@ -79,10 +79,10 @@ function RecipientDetails({
         verified={verified}
         disabled={disabled}
         quoteId={req.data?.quoteId ?? ""}
-        type={requirements[reqIdx].type}
+        type={requirements[req_idx].type}
         currency={currency}
         amount={amount}
-        fields={requirements[reqIdx]?.fields.flatMap((f) => f.group) || []}
+        fields={requirements[req_idx]?.fields.flatMap((f) => f.group) || []}
         FormButtons={FormButtons}
         onSubmit={onSubmit}
       />

@@ -1,6 +1,6 @@
-import { newPassword } from "schemas/string";
+import { new_password } from "schemas/string";
 import * as v from "valibot";
-export const emailSchema = v.object({
+export const email_schema = v.object({
   email: v.pipe(
     v.string("required"),
     v.nonEmpty("required"),
@@ -8,25 +8,32 @@ export const emailSchema = v.object({
   ),
 });
 
-export const passwordSchema = v.pipe(
-  v.object({
-    otp: v.pipe(
-      v.string("required"),
-      v.nonEmpty("required"),
-      v.digits("invalid code"),
-      v.length(6, "invalid code")
-    ),
-    password: newPassword,
-    passwordConfirmation: v.pipe(v.string("required"), v.nonEmpty("required")),
-  }),
+export interface IEmailSchema extends v.InferOutput<typeof email_schema> {}
+
+const password_schema_raw = v.object({
+  otp: v.pipe(
+    v.string("required"),
+    v.nonEmpty("required"),
+    v.digits("invalid code"),
+    v.length(6, "invalid code")
+  ),
+  password: new_password,
+  password_confirmation: v.pipe(v.string("required"), v.nonEmpty("required")),
+});
+
+export const password_schema = v.pipe(
+  password_schema_raw,
   v.forward(
     v.partialCheck(
-      [["password"], ["passwordConfirmation"]],
+      [["password"], ["password_confirmation"]],
       (input) => {
-        return input.password === input.passwordConfirmation;
+        return input.password === input.password_confirmation;
       },
       "password mismatch"
     ),
-    ["passwordConfirmation"]
+    ["password_confirmation"]
   )
 );
+
+export interface IPasswordSchema
+  extends v.InferOutput<typeof password_schema_raw> {}

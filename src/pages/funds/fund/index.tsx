@@ -3,7 +3,7 @@ import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import { DonorMsgs } from "components/donor-msgs";
 import { FundCreator } from "components/fundraiser";
-import { FundStatus, statusFn } from "components/fundraiser";
+import { FundStatus, status_fn } from "components/fundraiser";
 import Image from "components/image";
 import { RichText, richTextStyles, toText } from "components/rich-text";
 import { Target, toTarget } from "components/target";
@@ -41,7 +41,7 @@ export default CacheRoute(Fund);
 function Fund({ loaderData }: Route.ComponentProps) {
   const { url, ...fund } = loaderData;
 
-  const status = statusFn(
+  const status = status_fn(
     fund.expiration ?? MAX_EXPIRATION_ISO,
     fund.active,
     fund.donation_total_usd
@@ -197,7 +197,7 @@ function DonateSection(props: IDonateSection) {
       )}
       <NavLink
         aria-disabled={
-          !statusFn(
+          !status_fn(
             props.expiration ?? MAX_EXPIRATION_ISO,
             props.active,
             props.donation_total_usd

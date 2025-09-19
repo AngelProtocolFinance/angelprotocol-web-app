@@ -7,7 +7,7 @@ import { ErrorTrigger } from "components/error";
 import { LoadText } from "components/load-text";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { appRoutes } from "constants/routes";
-import { errorPrompt } from "helpers/error-prompt";
+import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import type { StripeCheckoutStep } from "../../types";
 import Loader from "../loader";
@@ -17,8 +17,8 @@ type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
-  const [complete, setComplete] = useState(false);
-  const [prompt, setPrompt] = useState<IPromptV2>();
+  const [complete, set_complete] = useState(false);
+  const [prompt, set_prompt] = useState<IPromptV2>();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -27,7 +27,7 @@ export default function Checkout(props: StripeCheckoutStep) {
   // we first show a Loader ring and when the Stripe Element starts loading
   // (it has an inherent loading animation) that's when we hide the loader ring
   // and start showing the "Back" button
-  const [status, setStatus] = useState<Status>("init");
+  const [status, set_status] = useState<Status>("init");
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ export default function Checkout(props: StripeCheckoutStep) {
       return;
     }
 
-    setStatus("submitting");
+    set_status("submitting");
 
     const encoded_name = encodeURIComponent(props.init.recipient.name);
     const search = `?name=${encoded_name}&id=${props.init.recipient.id}`;
@@ -47,7 +47,7 @@ export default function Checkout(props: StripeCheckoutStep) {
         ? `${window.location.origin}${appRoutes.donate_widget}/donate-thanks${search}`
         : `${window.location.origin}/donate-thanks${search}`;
 
-    const stripeConfirmParams = {
+    const stripe_confirm_params = {
       elements,
       confirmParams: {
         return_url,
@@ -56,8 +56,8 @@ export default function Checkout(props: StripeCheckoutStep) {
 
     const { error } =
       props.details.frequency === "recurring"
-        ? await stripe.confirmSetup(stripeConfirmParams)
-        : await stripe.confirmPayment(stripeConfirmParams);
+        ? await stripe.confirmSetup(stripe_confirm_params)
+        : await stripe.confirmPayment(stripe_confirm_params);
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -65,12 +65,12 @@ export default function Checkout(props: StripeCheckoutStep) {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
-      setPrompt(errorPrompt(error.message, "parsed"));
+      set_prompt(error_prompt(error.message, "parsed"));
     } else {
-      setPrompt(errorPrompt(error, { context: "processing payment" }));
+      set_prompt(error_prompt(error, { context: "processing payment" }));
     }
 
-    setStatus("ready");
+    set_status("ready");
   };
 
   if (typeof status === "object") {
@@ -102,10 +102,10 @@ export default function Checkout(props: StripeCheckoutStep) {
             },
           },
         }}
-        onReady={() => setStatus("ready")}
-        onLoadError={(error) => setStatus({ error })}
-        onLoaderStart={() => setStatus("loading")}
-        onChange={(x) => setComplete(x.complete)}
+        onReady={() => set_status("ready")}
+        onLoadError={(error) => set_status({ error })}
+        onLoaderStart={() => set_status("loading")}
+        onChange={(x) => set_complete(x.complete)}
       />
       {status === "init" ? (
         <Loader />
@@ -120,7 +120,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           </LoadText>
         </button>
       )}
-      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
     </form>
   );
 }

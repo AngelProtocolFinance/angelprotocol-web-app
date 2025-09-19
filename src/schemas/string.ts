@@ -43,7 +43,7 @@ export const password = requiredString
   .matches(/\d/, "must have numbers")
   .matches(/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/, "must have special characters");
 
-export const newPassword = v.pipe(
+export const new_password = v.pipe(
   v.string("required"),
   v.nonEmpty("required"),
   v.minLength(8, "must have at least 8 characters"),

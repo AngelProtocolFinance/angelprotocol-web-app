@@ -1,9 +1,9 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Input, PasswordInput } from "components/form";
-import { useActionResult } from "hooks/use-action-result";
-import useCounter from "hooks/use-counter";
+import { use_action_result } from "hooks/use-action-result";
+import { use_counter } from "hooks/use-counter";
 import { useFetcher } from "react-router";
-import type { ActionData } from "types/action";
+import { useRemixForm } from "remix-hook-form";
+import type { IPasswordSchema } from "./schema";
 import type { CodeRecipient } from "./types";
 
 const MAX_TIME = 30;
@@ -13,21 +13,19 @@ type Props = {
 };
 
 export default function SetPasswordForm(props: Props) {
-  const fetcher = useFetcher<ActionData>();
-  const { counter, resetCounter } = useCounter(MAX_TIME);
-  const formErr = useActionResult(fetcher.data, {
-    onData: () => resetCounter(),
+  const fetcher = useFetcher();
+  const { counter, reset_counter } = use_counter(MAX_TIME);
+  use_action_result(fetcher.data, {
+    on_data: () => reset_counter(),
   });
-
-  const [form, fields] = useForm({
-    shouldRevalidate: "onSubmit",
-    lastResult: formErr,
-  });
+  const {
+    register,
+    formState: { errors },
+  } = useRemixForm<IPasswordSchema>({ fetcher });
 
   return (
     <fetcher.Form
       method="POST"
-      {...getFormProps(form)}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl"
     >
       <input type="hidden" name="email" value={props.recipient.recipient_raw} />
@@ -54,10 +52,10 @@ export default function SetPasswordForm(props: Props) {
 
       <div className="mt-6 grid gap-3">
         <Input
-          {...getInputProps(fields.otp, { type: "text" })}
+          {...register("otp")}
           placeholder="Enter 6-digit code"
           autoComplete="one-time-code"
-          error={fields.otp.errors?.at(0)}
+          error={errors.otp?.message}
         />
 
         <span className="mb-3 flex items-center justify-between text-xs sm:text-sm font-medium">
@@ -70,20 +68,20 @@ export default function SetPasswordForm(props: Props) {
             value="resend-otp"
             type="submit"
             className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
-            disabled={counter > 0}
+            disabled={counter > 0 || fetcher.state !== "idle"}
           >
             Resend code
           </button>
         </span>
 
         <PasswordInput
-          {...getInputProps(fields.password, { type: "password" })}
-          error={fields.password.errors?.at(0)}
+          {...register("password")}
+          error={errors.password?.message}
           placeholder="New Password"
         />
         <PasswordInput
-          {...getInputProps(fields.passwordConfirmation, { type: "password" })}
-          error={fields.passwordConfirmation.errors?.at(0)}
+          {...register("password_confirmation")}
+          error={errors.password_confirmation?.message}
           placeholder="Confirm New Password"
         />
       </div>

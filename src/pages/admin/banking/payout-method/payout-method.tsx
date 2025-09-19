@@ -1,6 +1,6 @@
 import { priority_nums } from "@better-giving/banking-applications/schema";
 import ExtLink from "components/ext-link";
-import { useActionResult } from "hooks/use-action-result";
+import { use_action_result } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { NavLink, Outlet, useFetcher } from "react-router";
@@ -15,7 +15,7 @@ export { ErrorBoundary } from "components/error";
 
 export default function Page({ loaderData: d }: Route.ComponentProps) {
   const fetcher = useFetcher();
-  useActionResult(fetcher.data);
+  use_action_result(fetcher.data);
 
   const is_rejected = d.ba.status === "rejected";
   const is_approved = d.ba.status === "approved";

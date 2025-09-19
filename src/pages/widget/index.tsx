@@ -3,7 +3,7 @@ import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
 import { useState } from "react";
 import type { WidgetConfig } from "types/widget";
-import Configurer from "./configurer";
+import { Configurer } from "./configurer";
 import { Preview } from "./preview";
 import { Snippet } from "./snippet";
 

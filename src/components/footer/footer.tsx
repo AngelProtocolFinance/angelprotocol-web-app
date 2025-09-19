@@ -4,7 +4,7 @@ import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { guidestar } from "constants/urls";
 import { Link } from "react-router";
-import Newsletter from "./newsletter";
+import { Newsletter } from "./newsletter";
 import Socials from "./socials";
 
 type Props = { classes?: string };

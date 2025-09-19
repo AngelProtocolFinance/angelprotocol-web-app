@@ -27,7 +27,7 @@ type Props = {
   setConfig: Dispatch<SetStateAction<WidgetConfig>>;
 };
 
-export default function Configurer({
+export function Configurer({
   classes = "",
   config,
   endow,

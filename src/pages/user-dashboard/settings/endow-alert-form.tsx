@@ -1,6 +1,6 @@
 import { CheckField, Form } from "components/form";
 import { Info } from "components/status";
-import { useActionResult } from "hooks/use-action-result";
+import { use_action_result } from "hooks/use-action-result";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { UserV2 } from "types/auth";
@@ -17,7 +17,7 @@ type FV = { items: IUserNpo2[] };
 
 export default function EndowAlertForm({ classes = "", user_npos }: Props) {
   const fetcher = useFetcher();
-  useActionResult(fetcher.data);
+  use_action_result(fetcher.data);
 
   const {
     register,

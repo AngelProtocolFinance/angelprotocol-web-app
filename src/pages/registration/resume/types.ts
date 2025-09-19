@@ -1,6 +1,7 @@
 import { reg_id } from "@better-giving/reg/schema";
-import { type InferOutput, object } from "valibot";
+import { $req } from "@better-giving/schemas";
+import { type InferOutput, object, pipe } from "valibot";
 
-export const schema = object({ reference: reg_id });
+export const schema = object({ reference: pipe($req, reg_id) });
 
-export interface FormValues extends InferOutput<typeof schema> {}
+export interface FV extends InferOutput<typeof schema> {}

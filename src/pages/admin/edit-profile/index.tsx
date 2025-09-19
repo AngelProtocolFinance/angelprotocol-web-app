@@ -4,7 +4,7 @@ import { sans_https } from "helpers/https";
 import type { LinksFunction } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
-import Form from "./form";
+import { Form } from "./form";
 import type { FV } from "./schema";
 
 export { loader, action } from "./api";
@@ -46,7 +46,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
 
   return (
     <Form
-      initSlug={endow.slug}
+      init_slug={endow.slug}
       init={defaults}
       id={endow.id}
       base_url={endow.base_url}

@@ -7,7 +7,7 @@ import {
 import { Form, Label } from "components/form";
 import { type IPromptV2, PromptV2 } from "components/prompt";
 import { Select } from "components/selector/select";
-import { errorPrompt } from "helpers/error-prompt";
+import { error_prompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
 import type {
@@ -17,8 +17,8 @@ import type {
   ValidationContent,
 } from "types/bank-details";
 import { safeParse } from "valibot";
-import type { IFormButtons, OnSubmit } from "../../types";
-import { use_requirements } from "../use-requirements";
+import type { IFormButtons, OnSubmit } from "../types";
+import { use_requirements } from "./use-requirements";
 
 type Props = {
   fields: Group[];
@@ -36,7 +36,7 @@ interface FV extends Record<string, any> {
   bankStatement: FileOutput;
 }
 
-export default function RecipientDetailsForm({
+export function RecipientDetailsForm({
   fields,
   currency,
   type,
@@ -149,7 +149,7 @@ export default function RecipientDetailsForm({
             //wait a bit for `isSubmitting:false`, as disabled fields can't be focused
           }, 50);
         } catch (err) {
-          const prmpt = errorPrompt(err, { context: "validating" });
+          const prmpt = error_prompt(err, { context: "validating" });
           set_prompt(prmpt);
         }
       })}

@@ -19,7 +19,7 @@ import { Outlet } from "react-router";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
 import { Slug } from "./slug";
-import useEditProfile from "./use-edit-profile";
+import { use_edit_npo } from "./use-edit-profile";
 import useRhf from "./use-rhf";
 
 const endowDesignations: EndowDesignation[] = [
@@ -31,15 +31,15 @@ const endowDesignations: EndowDesignation[] = [
 ];
 
 interface Props {
-  initSlug?: string;
+  init_slug?: string;
   init: FV;
   id: number;
   base_url: string;
 }
 
-export default function Form({ initSlug = "", init, id, base_url }: Props) {
+export function Form({ init_slug = "", init, id, base_url }: Props) {
   const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
-  const { onSubmit, state, prompt, setPrompt } = useEditProfile(dirtyFields);
+  const { onSubmit, state, prompt, set_prompt } = use_edit_npo(dirtyFields);
   const isUploading = [
     rhf.logo.value,
     rhf.card_img.value,
@@ -56,7 +56,7 @@ export default function Form({ initSlug = "", init, id, base_url }: Props) {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
@@ -169,9 +169,9 @@ export default function Form({ initSlug = "", init, id, base_url }: Props) {
 
         <Slug
           base_url={base_url}
-          initSlug={initSlug}
-          newSlug={rhf.slug}
-          slugField={
+          init_slug={init_slug}
+          new_slug={rhf.slug}
+          slug_field={
             <Field
               {...rhf.register("slug")}
               label="Custom Profile URL"

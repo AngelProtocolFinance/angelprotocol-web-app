@@ -2,21 +2,26 @@ import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 
-const genLink = (slug: string, base_url: string) =>
+const gen_link = (slug: string, base_url: string) =>
   `${base_url}${appRoutes.marketplace}/${slug}`;
 
 interface Props {
-  initSlug?: string;
-  newSlug: string;
-  slugField: ReactNode;
+  init_slug?: string;
+  new_slug: string;
+  slug_field: ReactNode;
   base_url: string;
 }
-export function Slug({ initSlug = "", newSlug, slugField, base_url }: Props) {
-  const link = initSlug && genLink(initSlug, base_url);
+export function Slug({
+  init_slug = "",
+  new_slug,
+  slug_field,
+  base_url,
+}: Props) {
+  const link = init_slug && gen_link(init_slug, base_url);
 
   return (
     <div>
-      {slugField}
+      {slug_field}
       {link && (
         <div className="text-sm italic mt-1">
           <span>Current URL:</span>{" "}
@@ -34,7 +39,7 @@ export function Slug({ initSlug = "", newSlug, slugField, base_url }: Props) {
       </p>
 
       <p className="text-xs sm:text-sm text-gray italic mt-2">
-        Example: {genLink(newSlug || "myNonprofit", base_url)}
+        Example: {gen_link(new_slug || "myNonprofit", base_url)}
       </p>
     </div>
   );

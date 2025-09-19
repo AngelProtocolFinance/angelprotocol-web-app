@@ -1,7 +1,8 @@
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ap, ver } from "api/api";
-import { parseWithValibot } from "conform-to-valibot";
 import type { ActionFunction } from "react-router";
-import { emailSubs } from "types/hubspot-subscription";
+import { getValidatedFormData } from "remix-hook-form";
+import { type IEmailSubs, email_subs } from "types/hubspot-subscription";
 import { cognito, toAuth } from ".server/auth";
 import { userdb } from ".server/aws/db";
 
@@ -11,15 +12,14 @@ export const action: ActionFunction = async ({ request }) => {
   const intent = form.get("intent");
 
   if (intent === "subscribe") {
-    const payload = await request
-      .formData()
-      .then((f) => parseWithValibot(f, { schema: emailSubs }));
-
-    if (payload.status !== "success") return payload.reply();
-
+    const fv = await getValidatedFormData<IEmailSubs>(
+      form,
+      valibotResolver(email_subs)
+    );
+    if (fv.errors) return fv;
     const res = await ap.post(`${ver(1)}/hubspot/email-subs`, {
       throwHttpErrors: false,
-      json: { email: payload.value.email },
+      json: { email: fv.data.email },
     });
     if (!res.ok) return "error";
     return "success";

@@ -11,33 +11,32 @@ type Generic = {
 };
 type DisplayType = "parsed" | Generic | { custom: ReactNode };
 
-function parseError(error: unknown): string | undefined {
+function parse_error(error: unknown): string | undefined {
   if (typeof error === "string") return error;
 
   if (typeof error === "object" && error != null) {
-    if ("message" in error) return parseError(error.message);
-    if ("data" in error) return parseError(error.data);
-    if ("error" in error) return parseError(error.error);
+    if ("message" in error) return parse_error(error.message);
+    if ("data" in error) return parse_error(error.data);
+    if ("error" in error) return parse_error(error.error);
   }
 
   if (error instanceof Error) return error.message;
 }
+const generic_msg = (context?: string) =>
+  `An unexpected error occurred${
+    context ? ` while ${context} ` : " "
+  }and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
-export const errorPrompt = (error: unknown, display?: DisplayType) => {
+export const error_prompt = (error: unknown, display?: DisplayType) => {
   console.error(error);
   const disp = display || {};
   return {
     type: "error" as const,
     children:
       disp === "parsed"
-        ? parseError(error)
+        ? parse_error(error)
         : "custom" in disp
           ? disp.custom
-          : genericMsg(disp.context),
+          : generic_msg(disp.context),
   };
 };
-
-const genericMsg = (context?: string) =>
-  `An unexpected error occurred${
-    context ? ` while ${context} ` : " "
-  }and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;

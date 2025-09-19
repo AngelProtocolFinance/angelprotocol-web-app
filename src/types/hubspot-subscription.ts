@@ -1,5 +1,5 @@
 import * as v from "valibot";
-export const emailSubs = v.object({
+export const email_subs = v.object({
   email: v.pipe(
     v.string("required"),
     v.nonEmpty("required"),
@@ -8,3 +8,5 @@ export const emailSubs = v.object({
     v.email("invalid email")
   ),
 });
+
+export interface IEmailSubs extends v.InferOutput<typeof email_subs> {}

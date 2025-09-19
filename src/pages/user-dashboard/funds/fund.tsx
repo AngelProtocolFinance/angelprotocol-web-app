@@ -1,11 +1,11 @@
 import type { IFund } from "@better-giving/fundraiser";
-import { FundStatus, statusFn } from "components/fundraiser";
+import { FundStatus, status_fn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
 
 export const Fund = (props: IFund) => {
-  const status = statusFn(
+  const status = status_fn(
     props.expiration,
     props.active,
     props.donation_total_usd

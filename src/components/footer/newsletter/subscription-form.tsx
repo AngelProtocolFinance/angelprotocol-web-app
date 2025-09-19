@@ -1,56 +1,41 @@
-import {
-  type SubmissionResult,
-  getFormProps,
-  getInputProps,
-  useForm,
-} from "@conform-to/react";
-import { parseWithValibot } from "conform-to-valibot";
 import { Check } from "lucide-react";
 import { useFetcher } from "react-router";
-import { emailSubs } from "types/hubspot-subscription";
+import { useRemixForm } from "remix-hook-form";
+import type { IEmailSubs } from "types/hubspot-subscription";
 
-export default function SubscriptionForm() {
-  const fetcher = useFetcher<SubmissionResult | "success" | "error">();
+export function SubscriptionForm() {
+  const fetcher = useFetcher<"success" | "error">();
 
-  const [form, fields] = useForm({
-    shouldRevalidate: "onInput",
-    // Optional: Required only if you're validating on the server
-    lastResult: typeof fetcher.data === "string" ? undefined : fetcher.data,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: emailSubs });
-    },
+  const {
+    register,
+    formState: { errors, isSubmitting },
+  } = useRemixForm<IEmailSubs>({
+    fetcher,
   });
 
   return (
-    <fetcher.Form
-      {...getFormProps(form)}
-      action="/"
-      method="POST"
-      className="grid content-start"
-      onSubmit={form.onSubmit}
-    >
+    <fetcher.Form action="/" method="POST" className="grid content-start">
       <div className="grid mb-3">
         <input
-          {...getInputProps(fields.email, { type: "email" })}
+          {...register("email")}
           className="text-[#000000] opacity-[.9] p-3 rounded-md font-normal text-base md:text-sm border border-gray-l3 w-full outline-blue-d1"
           placeholder="Enter your email"
-          disabled={fetcher.state === "submitting"}
+          disabled={isSubmitting}
         />
         <p className="empty:hidden w-full text-red-d2 text-left mt-0.5 text-xs">
-          {fields.email.errors?.[0]}
+          {errors.email?.message}
         </p>
-        {fetcher.data === "success" ? (
-          <SuccessMessage />
-        ) : fetcher.data === "error" ? (
+        {fetcher.data === "success" && <SuccessMessage />}
+        {fetcher.data === "error" && (
           <p className="text-xs text-red mt-0.5">Failed to subscribe</p>
-        ) : null}
+        )}
       </div>
       <button
         type="submit"
         name="intent"
         value="subscribe"
         className="sm:justify-self-start rounded-full px-5 py-2 btn-blue text-sm font-medium"
-        disabled={fetcher.state === "submitting"}
+        disabled={isSubmitting}
       >
         Subscribe
       </button>

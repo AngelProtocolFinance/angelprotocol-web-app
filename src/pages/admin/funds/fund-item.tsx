@@ -1,9 +1,9 @@
 import type { IFundItem } from "@better-giving/fundraiser";
-import { FundCreator, FundStatus, statusFn } from "components/fundraiser";
+import { FundCreator, FundStatus, status_fn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { fromUnixTime } from "date-fns";
-import { useActionResult } from "hooks/use-action-result";
+import { use_action_result } from "hooks/use-action-result";
 import { LoaderCircle, Split } from "lucide-react";
 import { Link, NavLink, useFetcher } from "react-router";
 import type { ActionData } from "types/action";
@@ -14,8 +14,8 @@ interface Props extends IFundItem {
 }
 export const FundItem = (props: Props) => {
   const fetcher = useFetcher<ActionData>({ key: `fund-${props.id}` });
-  useActionResult(fetcher.data);
-  const status = statusFn(
+  use_action_result(fetcher.data);
+  const status = status_fn(
     fromUnixTime(props.expiration).toISOString(),
     props.active,
     props.donation_total_usd

@@ -3,7 +3,7 @@ import { Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
-import { useActionResult } from "hooks/use-action-result";
+import { use_action_result } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { IFund } from "types/fund";
@@ -26,13 +26,13 @@ export function Form({
   ...props
 }: IFund & Props) {
   const fetcher = useFetcher();
-  useActionResult(fetcher.data);
+  use_action_result(fetcher.data);
   const { dirtyFields: df, ...rhf } = useRhf(props);
 
-  const isSubmitting = fetcher.state !== "idle";
+  const is_submitting = fetcher.state !== "idle";
   const isUploading =
     rhf.banner.value === "loading" || rhf.logo.value === "loading";
-  const isClosingFund = isSubmitting && !!(fetcher.json as any).close;
+  const is_closing_fund = is_submitting && !!(fetcher.json as any).close;
 
   const onSubmit: SubmitHandler<FV> = async ({ target, ...fv }) => {
     /// BUILD UPDATE ///
@@ -64,7 +64,7 @@ export function Form({
   return (
     <Frm
       onSubmit={rhf.handleSubmit(onSubmit)}
-      disabled={isSubmitting}
+      disabled={is_submitting}
       className={classes + " pb-4"}
     >
       <Field
@@ -110,7 +110,7 @@ export function Form({
       <Videos {...rhf.videos} classes="mt-4 mb-8" />
       <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
       <ImgEditor
-        disabled={isSubmitting}
+        disabled={is_submitting}
         value={rhf.logo.value}
         onChange={(v) => {
           rhf.logo.onChange(v);
@@ -127,7 +127,7 @@ export function Form({
 
       <label className="text-lg font-medium block mt-6 mb-2">Banner</label>
       <ImgEditor
-        disabled={isSubmitting}
+        disabled={is_submitting}
         value={rhf.banner.value}
         onChange={(v) => {
           rhf.banner.onChange(v);
@@ -179,11 +179,11 @@ export function Form({
           type="button"
           className="btn btn-red text-sm font-medium px-4 py-2 justify-self-end"
         >
-          {isClosingFund ? "Closing.." : "Close fund"}
+          {is_closing_fund ? "Closing.." : "Close fund"}
         </button>
         <button
           disabled={
-            !rhf.isDirty || rhf.isUploading || isSubmitting || isUploading
+            !rhf.isDirty || rhf.isUploading || is_submitting || isUploading
           }
           type="submit"
           className="btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"

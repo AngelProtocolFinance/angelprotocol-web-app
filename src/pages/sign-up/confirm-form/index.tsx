@@ -1,12 +1,10 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Input } from "components/form";
-import { parseWithValibot } from "conform-to-valibot";
-import { useActionResult } from "hooks/use-action-result";
-import useCounter from "hooks/use-counter";
+import { use_action_result } from "hooks/use-action-result";
+import { use_counter } from "hooks/use-counter";
 import { useFetcher } from "react-router";
-import { signUpConfirm } from "types/auth";
+import { useRemixForm } from "remix-hook-form";
+import type { ISignUpConfirm } from "types/auth";
 import type { Route } from "./+types";
-import type { ActionData } from "./types";
 
 const MAX_TIME = 30;
 
@@ -14,19 +12,17 @@ export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
 
 export default function Page({ loaderData: email }: Route.ComponentProps) {
-  const fetcher = useFetcher<ActionData>();
-  const { counter, resetCounter } = useCounter(MAX_TIME);
-  const formErr = useActionResult(fetcher.data, {
-    onData: () => resetCounter(),
+  const fetcher = useFetcher();
+  const { counter, reset_counter } = use_counter(MAX_TIME);
+  use_action_result(fetcher.data, {
+    on_data: () => reset_counter(),
   });
 
-  const [form, fields] = useForm({
-    shouldRevalidate: "onInput",
-    lastResult: formErr,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: signUpConfirm });
-    },
-  });
+  const form_id = "sign-up-confirm-form";
+  const {
+    register,
+    formState: { errors },
+  } = useRemixForm<ISignUpConfirm>({ fetcher });
 
   return (
     <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl">
@@ -35,16 +31,16 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
       </h3>
       <p className="text-center font-normal max-sm:text-sm mt-2">
         You are almost there! 6-digit security code has been sent to{" "}
-        <span className="font-medium">{obscureEmail(email)}</span>
+        <span className="font-medium">{obscure_email(email)}</span>
       </p>
-      <fetcher.Form {...getFormProps(form)} className="contents" method="POST">
+      <fetcher.Form id={form_id} className="contents" method="POST">
         <input readOnly name="email" value={email} className="invisible" />
         <Input
-          {...getInputProps(fields.code, { type: "text" })}
+          {...register("code")}
           placeholder="Enter 6-digit code"
           classes={{ container: "my-6" }}
           autoComplete="one-time-code"
-          error={fields.code.errors?.[0]}
+          error={errors.code?.message}
         />
       </fetcher.Form>
 
@@ -70,7 +66,7 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
 
       <button
         disabled={fetcher.state === "submitting"}
-        form={form.id}
+        form={form_id}
         type="submit"
         className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full mt-5"
       >
@@ -80,27 +76,19 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
   );
 }
 
-function obscureEmail(email: string) {
-  // Validate email
-  if (!email || !email.includes("@")) {
-    throw new Error("Invalid email address");
-  }
-
-  // Split email into parts
+function obscure_email(email: string) {
   const [username, domain] = email.split("@");
 
-  // Obscure username
-  const obscuredUsername =
+  const obscured_username =
     username.length > 3
       ? username.slice(0, 2) + "*".repeat(username.length - 2)
       : username.slice(0, 1) + "*".repeat(username.length - 1);
 
-  // Obscure domain
-  const domainParts = domain.split(".");
-  const obscuredDomain = domainParts
+  const domain_parts = domain.split(".");
+  const obscured_domain = domain_parts
     .map((part, index) => {
       // Keep TLD visible
-      if (index === domainParts.length - 1) {
+      if (index === domain_parts.length - 1) {
         return part;
       }
       // Obscure domain name
@@ -110,5 +98,5 @@ function obscureEmail(email: string) {
     })
     .join(".");
 
-  return `${obscuredUsername}@${obscuredDomain}`;
+  return `${obscured_username}@${obscured_domain}`;
 }

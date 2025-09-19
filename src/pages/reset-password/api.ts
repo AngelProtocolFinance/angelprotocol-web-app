@@ -1,11 +1,17 @@
-import { parseWithValibot } from "conform-to-valibot";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { search } from "helpers/https";
 import { type ActionFunction, data, redirect } from "react-router";
-import type { ActionData } from "types/action";
+import { getValidatedFormData } from "remix-hook-form";
+import type { ActionData, IFormInvalid } from "types/action";
 import { isError } from "types/auth";
 import { parse } from "valibot";
 import type { Route } from "./+types";
-import { emailSchema, passwordSchema } from "./schema";
+import {
+  type IEmailSchema,
+  type IPasswordSchema,
+  email_schema,
+  password_schema,
+} from "./schema";
 import { type LoaderData, step } from "./types";
 import { cognito } from ".server/auth";
 
@@ -34,34 +40,46 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (fv.get("intent") === "confirm") {
-    const payload = parseWithValibot(fv, { schema: passwordSchema });
-    if (payload.status !== "success") return payload.reply();
+    const payload = await getValidatedFormData<IPasswordSchema>(
+      fv,
+      valibotResolver(password_schema),
+      true
+    );
+
+    if (payload.errors) return payload;
 
     const res = await cognito.confirmForgotPassword(
       email,
-      payload.value.password,
-      payload.value.otp
+      payload.data.password,
+      payload.data.otp
     );
+
     if (isError(res)) {
-      return payload.reply({ fieldErrors: { otp: [res.message] } });
+      return {
+        errors: { otp: { message: res.message, type: "value" } },
+        receivedValues: payload.receivedValues,
+      } satisfies IFormInvalid<IPasswordSchema>;
     }
+
     const to = new URL(request.url);
     to.searchParams.set("type", "success");
     return redirect(to.toString());
   }
 
-  const payload = parseWithValibot(fv, { schema: emailSchema });
+  const payload = await getValidatedFormData(fv, valibotResolver(email_schema));
+  if (payload.errors) return payload;
 
-  if (payload.status !== "success") return payload.reply();
-
-  const res = await cognito.forgotPassword(payload.value.email);
+  const res = await cognito.forgotPassword(payload.data.email);
   if (isError(res)) {
-    return payload.reply({ fieldErrors: { email: [res.message] } });
+    return {
+      errors: { email: { message: res.message, type: "value" } },
+      receivedValues: payload.receivedValues,
+    } satisfies IFormInvalid<IEmailSchema>;
   }
 
   const to = new URL(request.url);
   to.searchParams.set("type", "set-password");
-  to.searchParams.set("recipient_raw", payload.value.email);
+  to.searchParams.set("recipient_raw", payload.data.email);
   to.searchParams.set("recipient_obscured", res);
 
   return redirect(to.toString());

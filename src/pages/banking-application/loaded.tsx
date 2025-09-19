@@ -6,22 +6,22 @@ import { NavLink } from "react-router";
 import type { LoaderData } from "./api";
 
 export function Loaded(props: LoaderData) {
-  const isApproved = props.ba.status === "approved";
-  const isRejected = props.ba.status === "rejected";
-  const prevVerdict = isApproved || isRejected;
+  const is_approved = props.ba.status === "approved";
+  const is_rejected = props.ba.status === "rejected";
+  const prev_verdict = is_approved || is_rejected;
 
   return (
     <>
-      {prevVerdict && (
+      {prev_verdict && (
         <div
           className={`${
-            isApproved ? "bg-green" : "bg-red"
+            is_approved ? "bg-green" : "bg-red"
           } text-white px-2 py-1 text-xs uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
         >
-          {isApproved ? "Approved" : "Rejected"}
+          {is_approved ? "Approved" : "Rejected"}
         </div>
       )}
-      {isRejected && (
+      {is_rejected && (
         <p className="text-red text-sm -mt-3">{props.ba.rejection_reason}</p>
       )}
       <div className="flex max-sm:flex-col gap-x-4">
@@ -31,7 +31,7 @@ export function Loaded(props: LoaderData) {
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
         <span className="uppercase text-sm">
-          {new Date(props.ba.rejection_reason).toLocaleDateString()}
+          {new Date(props.ba.date_created).toLocaleDateString()}
         </span>
       </div>
 
@@ -73,7 +73,7 @@ export function Loaded(props: LoaderData) {
         <NavLink
           replace
           preventScrollReset
-          aria-disabled={!!prevVerdict}
+          aria-disabled={!!prev_verdict}
           to="reject"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-red"
         >
@@ -82,7 +82,7 @@ export function Loaded(props: LoaderData) {
         <NavLink
           replace
           preventScrollReset
-          aria-disabled={!!prevVerdict}
+          aria-disabled={!!prev_verdict}
           to="approve"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-green"
         >

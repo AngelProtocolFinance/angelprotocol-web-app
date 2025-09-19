@@ -1,11 +1,11 @@
 import { Progress } from "@better-giving/reg/progress";
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field } from "components/form";
 import { Separator } from "components/separator";
-import { parseWithValibot } from "conform-to-valibot";
 import { Link, redirect, useFetcher } from "react-router";
+import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import type { Route } from "./+types";
-import { schema } from "./types";
+import { type FV, schema } from "./types";
 import { cognito, toAuth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
@@ -22,11 +22,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return toAuth(request, headers);
 
-  const fv = await request.formData();
-  const parsed = parseWithValibot(fv, { schema });
-  if (parsed.status !== "success") return parsed.reply();
+  const fv = await getValidatedFormData<FV>(request, valibotResolver(schema));
+  if (fv.errors) return fv;
 
-  const reg = await regdb.reg(parsed.value.reference);
+  const reg = await regdb.reg(fv.data.reference);
   if (!reg) return { status: 404 };
 
   /** set existing reference user inputs */
@@ -46,17 +45,19 @@ export { ErrorBoundary } from "components/error";
 
 export default function Page({ loaderData: prev }: Route.ComponentProps) {
   const fetcher = useFetcher();
-  const [form, fields] = useForm({
-    shouldRevalidate: "onSubmit",
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema });
-    },
-    defaultValue: { reference: prev || "" },
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useRemixForm<FV>({
+    resolver: valibotResolver(schema),
+    defaultValues: { reference: prev || "" },
   });
+
   return (
     <fetcher.Form
       method="POST"
-      {...getFormProps(form)}
+      onSubmit={handleSubmit}
       className="grid px-5 w-full max-w-2xl"
     >
       <h3 className="text-3xl text-center">Resume registration</h3>
@@ -65,11 +66,11 @@ export default function Page({ loaderData: prev }: Route.ComponentProps) {
       </p>
 
       <Field
-        {...getInputProps(fields.reference, { type: "text" })}
+        {...register("reference")}
         label="Registration reference"
         placeholder="e.g. 00000000-0000-0000-0000-000000000000"
         classes={{ container: "mt-8 mx-0 sm:mx-24" }}
-        error={fields.reference.errors?.at(0)}
+        error={errors.reference?.message}
       />
 
       <button

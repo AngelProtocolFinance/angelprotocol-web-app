@@ -1,35 +1,41 @@
-import type { SubmissionResult } from "@conform-to/dom";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { type ActionData, isData, isErr, isFormErr, isOk } from "types/action";
+import {
+  type ActionData,
+  type IFormInvalid,
+  is_data,
+  is_err,
+  is_form_err,
+  is_ok,
+} from "types/action";
 
 interface Cbs<T> {
-  onData?: (data: T) => void;
-  onErr?: (err: string) => void;
+  on_data?: (data: T) => void;
+  on_err?: (err: string) => void;
 }
 
-export const useActionResult = <T>(
+export const use_action_result = <T>(
   result: ActionData<T> | undefined,
   cbs?: Cbs<T>
-): SubmissionResult | undefined => {
+): IFormInvalid | undefined => {
   // biome-ignore lint: make sure cbs is the same
   useEffect(() => {
     if (!result) return;
-    if (isData<T>(result)) {
-      cbs?.onData?.(result);
-      if (isOk(result)) {
+    if (is_data<T>(result)) {
+      cbs?.on_data?.(result);
+      if (is_ok(result)) {
         toast.success(result.__ok);
       }
       return;
     }
 
-    if (isErr(result)) {
-      cbs?.onErr?.(result.__err);
+    if (is_err(result)) {
+      cbs?.on_err?.(result.__err);
       toast.error(result.__err);
     }
   }, [result]);
 
-  if (isFormErr(result)) {
+  if (is_form_err(result)) {
     return result;
   }
 };

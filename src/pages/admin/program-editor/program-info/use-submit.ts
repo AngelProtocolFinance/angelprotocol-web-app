@@ -1,5 +1,5 @@
 import type { IProgramUpdate } from "@better-giving/endowment";
-import { useActionResult } from "hooks/use-action-result";
+import { use_action_result } from "hooks/use-action-result";
 import type { FieldNamesMarkedBoolean } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
@@ -9,7 +9,7 @@ export default function useSubmit(
   df: Partial<Readonly<FieldNamesMarkedBoolean<FV>>>
 ) {
   const fetcher = useFetcher();
-  useActionResult(fetcher.data);
+  use_action_result(fetcher.data);
 
   const submit: SubmitHandler<FV> = async (fv) => {
     const update: IProgramUpdate = {};

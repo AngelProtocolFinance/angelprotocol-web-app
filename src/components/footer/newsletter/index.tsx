@@ -1,8 +1,8 @@
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
-import SubscriptionForm from "./subscription-form";
+import { SubscriptionForm } from "./subscription-form";
 
-export default function Newsletter({ classes = "" }) {
+export function Newsletter({ classes = "" }) {
   return (
     <div
       className={`grid content-start px-1 ${classes} sm:max-md:grid-cols-2 xl:grid-cols-1 gap-x-8 xl:max-w-md`}

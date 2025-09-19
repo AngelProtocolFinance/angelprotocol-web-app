@@ -3,54 +3,54 @@ import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
 import PromptV2, { type IPromptV2 } from "components/prompt";
 import { roundToCents } from "helpers/decimal";
-import { errorPrompt } from "helpers/error-prompt";
+import { error_prompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { Payment } from "types/crypto";
 
 interface IQrModal extends Payment {
-  orderAmount: number;
-  onClose: () => void;
+  order_amount: number;
+  on_close: () => void;
 }
 interface Props {
-  paymentId: number | string;
+  payment_id: number | string;
   classes?: string;
   amount: number;
 }
-export default function PaymentResumer({ paymentId, classes, amount }: Props) {
-  const [intentState, setIntentState] = useState<"pending">();
-  const [qr, setQr] = useState<IQrModal>();
-  const [prompt, setPrompt] = useState<IPromptV2>();
+export default function PaymentResumer({ payment_id, classes, amount }: Props) {
+  const [intent_state, set_intent_state] = useState<"pending">();
+  const [qr, set_qr] = useState<IQrModal>();
+  const [prompt, set_prompt] = useState<IPromptV2>();
 
   return (
     <button
-      disabled={intentState === "pending"}
+      disabled={intent_state === "pending"}
       type="button"
       className={`${classes} btn btn-blue px-3 py-1 text-xs`}
       onClick={async () => {
         try {
-          setIntentState("pending");
-          const res = await fetch(`/api/crypto-intents/${paymentId}`);
+          set_intent_state("pending");
+          const res = await fetch(`/api/crypto-intents/${payment_id}`);
           if (res.status === 410) {
             return toast.error("Donation is already processing.");
           }
           const payment: Payment = await res.json();
-          setQr({
+          set_qr({
             ...payment,
-            orderAmount: amount,
-            onClose: () => setQr(undefined),
+            order_amount: amount,
+            on_close: () => set_qr(undefined),
           });
         } catch (err) {
-          setQr(undefined);
-          setPrompt(errorPrompt(err));
+          set_qr(undefined);
+          set_prompt(error_prompt(err));
         } finally {
-          setIntentState(undefined);
+          set_intent_state(undefined);
         }
       }}
     >
-      {intentState === "pending" ? "Loading..." : "Finish paying"}
-      {qr && <QrModal {...qr} onClose={() => setQr(undefined)} />}
-      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+      {intent_state === "pending" ? "Loading..." : "Finish paying"}
+      {qr && <QrModal {...qr} on_close={() => set_qr(undefined)} />}
+      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
     </button>
   );
 }
@@ -60,7 +60,7 @@ function QrModal(props: IQrModal) {
   return (
     <Modal
       open={true}
-      onClose={props.onClose ?? (() => {})}
+      onClose={props.on_close ?? (() => {})}
       classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden px-4 py-8"
     >
       <h4 className="text-lg text-center mb-2">
@@ -69,7 +69,7 @@ function QrModal(props: IQrModal) {
 
       <p className="text-gray text-balance text-center mb-3.5 max-w-sm justify-self-center">
         To complete your donation, send{" "}
-        {roundToCents(props.orderAmount, props.rate, token.precision)}
+        {roundToCents(props.order_amount, props.rate, token.precision)}
         &nbsp;
         {token.symbol} from your crypto wallet to the address below
       </p>

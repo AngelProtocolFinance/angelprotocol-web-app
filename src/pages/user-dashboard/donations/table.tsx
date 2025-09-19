@@ -190,7 +190,10 @@ function LastRowColContent(props: Donation.Item & { status: Donation.Status }) {
 
   if (props.status === "intent" && props.via_id !== "fiat") {
     return props.payment_id ? (
-      <PaymentResumer paymentId={props.payment_id} amount={props.init_amount} />
+      <PaymentResumer
+        payment_id={props.payment_id}
+        amount={props.init_amount}
+      />
     ) : (
       <>---</>
     );
