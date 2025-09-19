@@ -1,3 +1,4 @@
+import { $req } from "@better-giving/schemas";
 import * as v from "valibot";
 import type { INpoBookmark, IUserNpo2 } from "./user";
 
@@ -58,8 +59,7 @@ export interface DetailedUser extends UserV2 {
   bookmarks: Promise<INpoBookmark[]>;
 }
 
-const str = v.pipe(v.string("required"), v.trim(), v.nonEmpty("required"));
-const email = v.pipe(str, v.email("invalid email format"));
+const email = v.pipe($req, v.toLowerCase(), v.email("invalid email format"));
 export const signIn = v.object({
   email,
   password: v.pipe(v.string("required"), v.nonEmpty("required")),
@@ -67,7 +67,7 @@ export const signIn = v.object({
 
 export type SignIn = v.InferOutput<typeof signIn>;
 
-const newPassword = v.pipe(
+const new_password = v.pipe(
   v.string("required"),
   v.nonEmpty("required"),
   v.minLength(8, "must have at least 8 characters"),
@@ -77,29 +77,29 @@ const newPassword = v.pipe(
   v.regex(/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/, "must have special characters")
 );
 
-export const signUp = v.pipe(
+export const sign_up = v.pipe(
   v.object({
     email,
-    emailConfirmation: email,
-    firstName: str,
-    lastName: str,
-    password: newPassword,
+    email_confirmation: email,
+    first_name: $req,
+    last_name: $req,
+    password: new_password,
   }),
   v.forward(
     v.partialCheck(
-      [["email"], ["emailConfirmation"]],
+      [["email"], ["email_confirmation"]],
       (input) => {
         return (
-          input.email.toLowerCase() === input.emailConfirmation.toLowerCase()
+          input.email.toLowerCase() === input.email_confirmation.toLowerCase()
         );
       },
 
       "email mismatch"
     ),
-    ["emailConfirmation"]
+    ["email_confirmation"]
   )
 );
 
-export const signUpConfirm = v.object({ code: str });
-export type SignUpConfirm = v.InferOutput<typeof signUpConfirm>;
-export type SignUp = v.InferOutput<typeof signUp>;
+export const signup_confirm = v.object({ code: $req });
+export type ISignUpConfirm = v.InferOutput<typeof signup_confirm>;
+export type ISignUp = v.InferOutput<typeof sign_up>;

@@ -1,18 +1,16 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ext-link";
-import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
+import { Input, PasswordInput, RmxForm } from "components/form";
 import Image from "components/image";
 import { Separator } from "components/separator";
-import { parseWithValibot } from "conform-to-valibot";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
-import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import { Link, type MetaDescriptor } from "react-router";
-import type { ActionData } from "types/action";
-import { signUp } from "types/auth";
+import { Link, type MetaDescriptor, useNavigation } from "react-router";
+import { useRemixForm } from "remix-hook-form";
+import { type ISignUp, sign_up } from "types/auth";
 import type { Route } from "./+types/signup-form";
 
 export { action } from "./api";
@@ -75,23 +73,22 @@ export const meta: Route.MetaFunction = ({ loaderData: to }) => {
   return ctx?.meta || [{ title: "Sign Up - Better Giving" }];
 };
 
-export default function SignupForm({ loaderData: to }: Route.ComponentProps) {
+export default function Page({ loaderData: to }: Route.ComponentProps) {
   const ctx = get_context(to);
   const terms_0 = ctx.terms[0];
   const terms_1 = ctx.terms[1];
 
-  const { data, nav } = useRmxForm<ActionData>();
-  const formErr = useActionResult(data);
-
-  const [form, fields] = useForm({
-    shouldRevalidate: "onInput",
-    lastResult: formErr,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: signUp });
-    },
+  const nav = useNavigation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useRemixForm<ISignUp>({
+    resolver: valibotResolver(sign_up),
   });
 
-  const isSubmitting = nav.state !== "idle";
+  const form_id = "sign-up-form";
+  const is_submitting = nav.state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5">
@@ -103,7 +100,7 @@ export default function SignupForm({ loaderData: to }: Route.ComponentProps) {
           {ctx.description}
         </p>
 
-        <RmxForm disabled={isSubmitting} method="POST" className="contents">
+        <RmxForm disabled={is_submitting} method="POST" className="contents">
           <button
             name="intent"
             value="oauth"
@@ -122,53 +119,54 @@ export default function SignupForm({ loaderData: to }: Route.ComponentProps) {
         </Separator>
 
         <RmxForm
+          id={form_id}
           method="POST"
-          {...getFormProps(form)}
-          disabled={isSubmitting}
+          onSubmit={handleSubmit}
+          disabled={is_submitting}
           className="grid gap-3"
         >
           <div className="grid grid-cols-2 gap-3">
             <Input
-              {...getInputProps(fields.firstName, { type: "text" })}
+              {...register("first_name")}
               placeholder="First Name"
-              error={fields.firstName.errors?.[0]}
+              error={errors.first_name?.message}
             />
             <Input
-              {...getInputProps(fields.lastName, { type: "text" })}
+              {...register("last_name")}
               placeholder="Last Name"
-              error={fields.firstName.errors?.[0]}
+              error={errors.last_name?.message}
             />
           </div>
           <Input
-            {...getInputProps(fields.email, { type: "email" })}
+            {...register("email")}
             autoComplete="username"
             placeholder="Email address"
             icon={Mail}
-            error={fields.email.errors?.[0]}
+            error={errors.email?.message}
             classes={{ container: "mt-4" }}
           />
           <Input
-            {...getInputProps(fields.emailConfirmation, { type: "email" })}
+            {...register("email_confirmation")}
             autoComplete="username"
             placeholder="Confirm email"
             icon={Mail}
-            error={fields.emailConfirmation.errors?.[0]}
+            error={errors.email_confirmation?.message}
             classes={{ container: "mb-4" }}
           />
           <PasswordInput
-            {...getInputProps(fields.password, { type: "password" })}
+            {...register("password")}
             placeholder="Create password"
-            error={fields.password.errors?.[0]}
+            error={errors.password?.message}
           />
         </RmxForm>
 
         <button
-          disabled={isSubmitting}
-          form={form.id}
+          disabled={is_submitting}
+          form={form_id}
           type="submit"
           className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
         >
-          {isSubmitting ? "Submitting..." : "Sign up"}
+          {is_submitting ? "Submitting..." : "Sign up"}
         </button>
 
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
@@ -176,7 +174,7 @@ export default function SignupForm({ loaderData: to }: Route.ComponentProps) {
           <Link
             to={appRoutes.signin + `?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
-            aria-disabled={isSubmitting}
+            aria-disabled={is_submitting}
           >
             Login
           </Link>
