@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-export function use_counter(countFrom: number) {
-  const [counter, set_counter] = useState(countFrom);
+export function use_counter(count_from: number) {
+  const [counter, set_counter] = useState(count_from);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -18,5 +18,5 @@ export function use_counter(countFrom: number) {
     };
   }, [counter]);
 
-  return { counter, reset_counter: () => set_counter(countFrom) };
+  return { counter, reset_counter: () => set_counter(count_from) };
 }

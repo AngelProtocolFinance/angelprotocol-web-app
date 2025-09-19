@@ -1,10 +1,9 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "components/form";
 import { use_action_result } from "hooks/use-action-result";
 import { use_counter } from "hooks/use-counter";
 import { useFetcher } from "react-router";
 import { useRemixForm } from "remix-hook-form";
-import { type ISignUpConfirm, signup_confirm } from "types/auth";
+import type { ISignUpConfirm } from "types/auth";
 import type { Route } from "./+types";
 
 const MAX_TIME = 30;
@@ -22,12 +21,8 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
   const form_id = "sign-up-confirm-form";
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useRemixForm<ISignUpConfirm>({
-    resolver: valibotResolver(signup_confirm),
-    defaultValues: { code: "" },
-  });
+  } = useRemixForm<ISignUpConfirm>({ fetcher });
 
   return (
     <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl">
@@ -38,12 +33,7 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
         You are almost there! 6-digit security code has been sent to{" "}
         <span className="font-medium">{obscure_email(email)}</span>
       </p>
-      <fetcher.Form
-        id={form_id}
-        onSubmit={handleSubmit}
-        className="contents"
-        method="POST"
-      >
+      <fetcher.Form id={form_id} className="contents" method="POST">
         <input readOnly name="email" value={email} className="invisible" />
         <Input
           {...register("code")}

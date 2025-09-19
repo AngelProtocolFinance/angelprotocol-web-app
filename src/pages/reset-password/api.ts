@@ -40,10 +40,12 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (fv.get("intent") === "confirm") {
-    const payload = await getValidatedFormData(
+    const payload = await getValidatedFormData<IPasswordSchema>(
       fv,
-      valibotResolver(password_schema)
+      valibotResolver(password_schema),
+      true
     );
+
     if (payload.errors) return payload;
 
     const res = await cognito.confirmForgotPassword(

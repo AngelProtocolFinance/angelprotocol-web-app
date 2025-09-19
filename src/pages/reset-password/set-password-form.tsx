@@ -1,10 +1,9 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input, PasswordInput } from "components/form";
 import { use_action_result } from "hooks/use-action-result";
 import { use_counter } from "hooks/use-counter";
-import { useFetcher } from "react-router";
+import { Form, useFetcher } from "react-router";
 import { useRemixForm } from "remix-hook-form";
-import { type IPasswordSchema, password_schema } from "./schema";
+import type { IPasswordSchema } from "./schema";
 import type { CodeRecipient } from "./types";
 
 const MAX_TIME = 30;
@@ -19,19 +18,14 @@ export default function SetPasswordForm(props: Props) {
   use_action_result(fetcher.data, {
     on_data: () => reset_counter(),
   });
-
   const {
-    handleSubmit,
     register,
     formState: { errors },
-  } = useRemixForm<IPasswordSchema>({
-    resolver: valibotResolver(password_schema),
-  });
+  } = useRemixForm<IPasswordSchema>({ fetcher });
 
   return (
-    <fetcher.Form
+    <Form
       method="POST"
-      onSubmit={handleSubmit}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl"
     >
       <input type="hidden" name="email" value={props.recipient.recipient_raw} />
@@ -74,7 +68,7 @@ export default function SetPasswordForm(props: Props) {
             value="resend-otp"
             type="submit"
             className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
-            disabled={counter > 0}
+            disabled={counter > 0 || fetcher.state !== "idle"}
           >
             Resend code
           </button>
@@ -112,6 +106,6 @@ export default function SetPasswordForm(props: Props) {
       >
         Confirm
       </button>
-    </fetcher.Form>
+    </Form>
   );
 }

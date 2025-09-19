@@ -1,17 +1,13 @@
 import type { TStatus } from "@better-giving/banking-applications";
-import {
-  type IUpdate,
-  update,
-} from "@better-giving/banking-applications/schema";
+import type { IUpdate } from "@better-giving/banking-applications/schema";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ChevronRight, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link, useFetcher, useNavigate } from "react-router";
+import { Form, Link, useFetcher, useNavigate } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 
 type Props = {
-  verdict: TStatus;
+  verdict: Extract<TStatus, "approved" | "rejected">;
 };
 
 export function Prompt(props: Props) {
@@ -41,17 +37,17 @@ function Content({ verdict }: Props) {
     handleSubmit,
     formState: { errors },
   } = useRemixForm<IUpdate>({
-    resolver: valibotResolver(update),
+    defaultValues: { type: verdict },
+    fetcher,
   });
   const reason_id = "reject-reason";
 
   return (
-    <fetcher.Form
+    <Form
       onSubmit={handleSubmit}
       method="POST"
       className="grid content-start justify-items-center text-gray-d4"
     >
-      <input type="hidden" value={verdict} name="type" />
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           Banking application
@@ -111,11 +107,15 @@ function Content({ verdict }: Props) {
         >
           Cancel
         </Link>
-        <button type="submit" className="btn btn-blue px-8 py-2 text-sm">
+        <button
+          disabled={fetcher.state !== "idle"}
+          type="submit"
+          className="btn btn-blue px-8 py-2 text-sm"
+        >
           Submit
         </button>
       </div>
-    </fetcher.Form>
+    </Form>
   );
 }
 

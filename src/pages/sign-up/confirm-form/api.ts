@@ -4,7 +4,6 @@ import { search } from "helpers/https";
 import {
   type ActionFunction,
   type LoaderFunctionArgs,
-  data,
   redirect,
 } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
@@ -31,13 +30,14 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (fv.get("intent") === "resend-otp") {
     const res = await cognito.resendConfirmationCode(email.toString());
-    if (isError(res)) return data<ActionData>({ __err: res.message }, 500);
-    return data<ActionData>({ time_remaining: 30 });
+    if (isError(res)) return { __err: res.message } satisfies ActionData;
+    return { time_remaining: 30 } satisfies ActionData;
   }
 
   const p = await getValidatedFormData<ISignUpConfirm>(
     fv,
-    valibotResolver(signup_confirm)
+    valibotResolver(signup_confirm),
+    true
   );
   if (p.errors) return p;
 

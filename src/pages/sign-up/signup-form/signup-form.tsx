@@ -1,4 +1,3 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ext-link";
 import { Input, PasswordInput, RmxForm } from "components/form";
@@ -10,7 +9,7 @@ import { metas } from "helpers/seo";
 import { Mail } from "lucide-react";
 import { Link, type MetaDescriptor, useNavigation } from "react-router";
 import { useRemixForm } from "remix-hook-form";
-import { type ISignUp, sign_up } from "types/auth";
+import type { ISignUp } from "types/auth";
 import type { Route } from "./+types/signup-form";
 
 export { action } from "./api";
@@ -83,9 +82,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useRemixForm<ISignUp>({
-    resolver: valibotResolver(sign_up),
-  });
+  } = useRemixForm<ISignUp>({});
 
   const form_id = "sign-up-form";
   const is_submitting = nav.state !== "idle";
