@@ -13,9 +13,10 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (intent === "subscribe") {
     const fv = await getValidatedFormData<IEmailSubs>(
-      request,
+      form,
       valibotResolver(email_subs)
     );
+    console.log(fv);
     if (fv.errors) return fv;
 
     const res = await ap.post(`${ver(1)}/hubspot/email-subs`, {

@@ -6,19 +6,17 @@ import {
   Link,
   useNavigate,
   useNavigation,
+  useParams,
   useSearchParams,
 } from "react-router";
 import { useRemixForm } from "remix-hook-form";
-import type { Route as RouteEdit } from "./+types/video-edit";
-import type { Route as RouteNew } from "./+types/video-new";
 import { type ISchema, schema } from "./schema";
 
-export default function Page({
-  params,
-}: RouteEdit.ComponentProps | RouteNew.ComponentProps) {
+export default function Page() {
   const [sp] = useSearchParams();
-
+  const params = useParams();
   const navigate = useNavigate();
+
   return (
     <Modal
       open={true}
@@ -28,7 +26,7 @@ export default function Page({
       classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <Content
-        action={"mediaId" in params ? "edit" : "add"}
+        action={params.mediaId ? "edit" : "add"}
         prev_url={sp.get("prev_url")}
       />
     </Modal>
