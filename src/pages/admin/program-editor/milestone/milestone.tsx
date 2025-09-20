@@ -11,7 +11,7 @@ import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
 import { useFetcher } from "react-router";
-import { MAX_CHARS, imgSpec } from "../common";
+import { MAX_CHARS, img_spec } from "../common";
 import { type FV, schema } from "./schema";
 
 type Props = IMilestone & { programId: string };
@@ -78,15 +78,15 @@ export default function Milestone(props: Props) {
         <Label className="-mb-4">Image of milestone</Label>
         <ImgEditor
           value={media.value}
-          onChange={(v) => {
+          on_change={(v) => {
             media.onChange(v);
             trigger("media");
           }}
-          onUndo={(e) => {
+          on_undo={(e) => {
             e.stopPropagation();
             resetField("media");
           }}
-          spec={imgSpec([4, 1])}
+          spec={img_spec([4, 1])}
           classes={{
             container: "mb-4",
             dropzone: "w-full @-md:aspect-4/1 h-36 @md:h-auto",

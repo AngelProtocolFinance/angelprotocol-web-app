@@ -1,20 +1,11 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
-import type { ILog } from "@better-giving/nav-history";
+import type { IInterestLog } from "@better-giving/liquid";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { ArrowRight } from "lucide-react";
-import type { ReactNode } from "react";
 import type { IPaginator } from "types/components";
 
-export interface Props extends IPaginator<ILog> {}
+export interface Props extends IPaginator<IInterestLog> {}
 
-export function FlowIcon(this_account: string, data: IBalanceTx): ReactNode {
-  if (data.account === this_account) {
-    return <ArrowRight size={16} className="text-green" />;
-  }
-}
-
-export function HistoryTable({
+export function InterestHistoryTable({
   items,
   classes = "",
   disabled,
@@ -27,20 +18,14 @@ export function HistoryTable({
         <thead className="bg-blue-l5">
           <tr>
             <th className="font-medium text-sm text-gray">Date</th>
-            <th className="font-medium text-sm text-gray">Description</th>
-            <th className="font-medium text-sm text-gray">Value</th>
-            <th className="font-medium text-sm text-gray">Units</th>
-            <th className="font-medium text-sm text-gray">Price</th>
+            <th className="font-medium text-sm text-gray">Total</th>
           </tr>
         </thead>
         <tbody>
           {items.map((r, idx) => (
             <tr key={idx} className="text-sm">
-              <td>{format(r.date, "PP")}</td>
-              <td>{r.reason}</td>
-              <td>${humanize(r.value)}</td>
-              <td>{humanize(r.units)}</td>
-              <td>${humanize(r.price)}</td>
+              <td>{format(r.date_created, "PP")}</td>
+              <td>${humanize(r.total)}</td>
             </tr>
           ))}
         </tbody>

@@ -7,7 +7,7 @@ import { use_action_result } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { IFund } from "types/fund";
-import { imgSpec } from "../common";
+import { img_spec } from "../common";
 import { Videos } from "../common/videos";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
 import { Slug } from "./slug";
@@ -112,15 +112,15 @@ export function Form({
       <ImgEditor
         disabled={is_submitting}
         value={rhf.logo.value}
-        onChange={(v) => {
+        on_change={(v) => {
           rhf.logo.onChange(v);
           rhf.trigger("logo");
         }}
-        onUndo={(e) => {
+        on_undo={(e) => {
           e.stopPropagation();
           rhf.resetField("logo");
         }}
-        spec={imgSpec([1, 1])}
+        spec={img_spec([1, 1])}
         classes={{ dropzone: "w-80 aspect-1/1" }}
         error={rhf.errors.logo?.message}
       />
@@ -129,15 +129,15 @@ export function Form({
       <ImgEditor
         disabled={is_submitting}
         value={rhf.banner.value}
-        onChange={(v) => {
+        on_change={(v) => {
           rhf.banner.onChange(v);
           rhf.trigger("banner");
         }}
-        onUndo={(e) => {
+        on_undo={(e) => {
           e.stopPropagation();
           rhf.resetField("banner");
         }}
-        spec={imgSpec([4, 1])}
+        spec={img_spec([4, 1])}
         classes={{ dropzone: "w-full aspect-4/1" }}
         error={rhf.errors.banner?.message}
       />

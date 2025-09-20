@@ -160,8 +160,12 @@ export default [
         ),
       ]),
       r(
-        "savings/nav-history",
-        pages.$("fund-management/savings/history/index.tsx")._
+        "savings/balance-history",
+        pages.$("fund-management/savings/history-balance/index.tsx")._
+      ),
+      r(
+        "savings/interest-history",
+        pages.$("fund-management/savings/history-interest/index.tsx")._
       ),
     ]
   ),

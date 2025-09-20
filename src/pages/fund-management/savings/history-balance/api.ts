@@ -2,7 +2,7 @@ import { resp } from "helpers/https";
 import * as v from "valibot";
 import type { Route } from "./+types";
 import { cognito } from ".server/auth";
-import { navdb } from ".server/aws/db";
+import { liqdb } from ".server/aws/db";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { searchParams: s } = new URL(request.url);
@@ -17,7 +17,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     return resp.status(403);
   }
 
-  const page = await navdb.list({
+  const page = await liqdb.bal_logs({
     limit: 6,
     next: key ?? undefined,
   });

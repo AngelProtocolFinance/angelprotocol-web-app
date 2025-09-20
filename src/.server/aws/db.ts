@@ -20,6 +20,7 @@ import { BalanceTxsDb } from "@better-giving/balance-txs";
 import { BankingApplicationsDb } from "@better-giving/banking-applications";
 import { NpoDb } from "@better-giving/endowment";
 import { FundDb } from "@better-giving/fundraiser";
+import { LiquidDb } from "@better-giving/liquid";
 import { NavHistoryDB } from "@better-giving/nav-history";
 import { PayoutsDB } from "@better-giving/payouts";
 import { RegDb } from "@better-giving/reg";
@@ -63,6 +64,7 @@ export const apes = DynamoDBDocumentClient.from(
 export const bappdb = new BankingApplicationsDb(ap, env);
 export const podb = new PayoutsDB(apes, env);
 export const navdb = new NavHistoryDB(apes, env);
+export const liqdb = new LiquidDb(apes, env);
 export const baldb = new BalanceDb(apes, env);
 export const btxdb = new BalanceTxsDb(apes, env);
 export const npodb = new NpoDb(ap, env);

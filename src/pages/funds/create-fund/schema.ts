@@ -1,5 +1,5 @@
 import { target } from "components/goal-selector";
-import { imgOutput } from "components/img-editor";
+import { img_output } from "components/img-editor";
 import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { video } from "../common/videos";
@@ -20,8 +20,8 @@ export const schema = v.object({
     maxChars: MAX_DESCRIPTION_CHAR,
     required: true,
   }),
-  banner: imgOutput({ required: true }),
-  logo: imgOutput({ required: true }),
+  banner: img_output({ required: true }),
+  logo: img_output({ required: true }),
   members: v.pipe(
     v.array(endow_opt),
     v.minLength(1, "must contain at least one nonprofit"),

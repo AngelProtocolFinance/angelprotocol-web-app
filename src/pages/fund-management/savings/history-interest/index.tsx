@@ -2,7 +2,7 @@ import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeftIcon } from "lucide-react";
 import { Link, useSearchParams } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import { HistoryTable } from "../history-table";
+import { InterestHistoryTable } from "../history-table-interest";
 import type { Route } from "./+types";
 
 export { loader } from "./api";
@@ -12,7 +12,7 @@ export default CacheRoute(Page);
 function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [search] = useSearchParams();
   const { node } = use_paginator({
-    table: (x) => <HistoryTable {...x} />,
+    table: (x) => <InterestHistoryTable {...x} />,
     page1,
     classes: "mt-4",
     gen_loader: (load, next) => () => {
