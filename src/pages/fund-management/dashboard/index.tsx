@@ -1,3 +1,4 @@
+import { NpoName } from "components/npo-name";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { NavLink, Outlet, useNavigate } from "react-router";
@@ -195,7 +196,9 @@ function Page({ loaderData }: Route.ComponentProps) {
             <tbody>
               {top_holders.map(([holder, units]) => (
                 <tr key={holder} className="text-sm text-gray-d4">
-                  <td>{holder}</td>
+                  <td>
+                    <NpoName id={holder} />
+                  </td>
                   <td className="text-right">{humanize(units)}</td>
                   <td className="text-right font-bold">
                     ${humanize(units * ltd.price)}

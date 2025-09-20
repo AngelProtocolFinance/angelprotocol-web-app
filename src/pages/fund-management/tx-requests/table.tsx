@@ -1,4 +1,5 @@
 import type { IBalanceTx } from "@better-giving/balance-txs";
+import { NpoName } from "components/npo-name";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { NavLink } from "react-router";
@@ -32,7 +33,9 @@ export function Table({
             <tr key={idx} className="text-sm">
               <td>{format(r.date_created, "PP")}</td>
               <td>Redeem units</td>
-              <td>{r.owner}</td>
+              <td>
+                <NpoName id={r.owner} />
+              </td>
               <td>{humanize(r.amount_units)}</td>
               <td>${humanize(r.amount / r.amount_units)}</td>
               <td>${humanize(r.amount)}</td>
