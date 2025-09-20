@@ -1,21 +1,21 @@
 import type { LinkGroup } from "layout/dashboard";
-import { BookOpenCheckIcon, LayoutDashboardIcon } from "lucide-react";
+import { BookOpenCheckIcon, LineChartIcon } from "lucide-react";
 import { routes } from "./routes";
 
 const linkGroup1: LinkGroup = {
   links: [
     {
-      title: "Dashboard",
-      to: routes.dashboard,
+      title: "Investments",
+      to: routes.investments,
       icon: {
-        fn: LayoutDashboardIcon,
+        fn: LineChartIcon,
         size: 18,
       },
       end: true,
     },
     {
-      title: "Tx Requests",
-      to: routes.tx_requests,
+      title: "Redemption requests",
+      to: routes.redeem_request,
       icon: {
         fn: BookOpenCheckIcon,
         size: 18,

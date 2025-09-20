@@ -1,4 +1,4 @@
 export const routes = {
-  dashboard: "dashboard",
-  tx_requests: "tx-requests",
+  investments: "investments",
+  redeem_request: "redeem-requests",
 } as const;
