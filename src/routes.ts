@@ -153,6 +153,16 @@ export default [
           ),
         ]
       ),
+      r("savings", pages.$("fund-management/savings/index.tsx")._, [
+        r(
+          "rebalance",
+          pages.$("fund-management/savings/rebalance/index.tsx")._
+        ),
+      ]),
+      r(
+        "savings/nav-history",
+        pages.$("fund-management/savings/history/index.tsx")._
+      ),
     ]
   ),
 

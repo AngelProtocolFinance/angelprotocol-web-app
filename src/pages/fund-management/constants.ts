@@ -1,5 +1,5 @@
 import type { LinkGroup } from "layout/dashboard";
-import { BookOpenCheckIcon, LineChartIcon } from "lucide-react";
+import { BookOpenCheckIcon, LineChartIcon, PiggyBankIcon } from "lucide-react";
 import { routes } from "./routes";
 
 const linkGroup1: LinkGroup = {
@@ -18,6 +18,15 @@ const linkGroup1: LinkGroup = {
       to: routes.redeem_request,
       icon: {
         fn: BookOpenCheckIcon,
+        size: 18,
+      },
+      end: true,
+    },
+    {
+      title: "Savings",
+      to: routes.savings,
+      icon: {
+        fn: PiggyBankIcon,
         size: 18,
       },
       end: true,
