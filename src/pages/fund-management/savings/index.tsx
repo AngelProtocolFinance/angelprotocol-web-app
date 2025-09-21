@@ -88,7 +88,7 @@ function Page({ loaderData }: Route.ComponentProps) {
         }}
       />
 
-      <div className="flex items-center gap-x-2 mt-8">
+      <div className="flex items-center gap-x-2 mt-8 mb-4">
         <h4 className="font-bold text-lg">Recent interests</h4>
         <NavLink
           replace
