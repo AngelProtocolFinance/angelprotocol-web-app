@@ -1,7 +1,7 @@
 import { NpoName } from "components/npo-name";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { Outlet, useNavigate } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
 import {
   Legend,
   Line,
@@ -29,7 +29,6 @@ function Page({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
   const { logs_intr, logs_bal } = loaderData;
   const ltd = logs_bal[0];
-  console.log(logs_intr);
 
   const line_data = logs_bal.toReversed().map((x) => {
     const { date, total } = x;
@@ -89,7 +88,17 @@ function Page({ loaderData }: Route.ComponentProps) {
         }}
       />
 
-      <h4 className="text-lg mb-4 mt-8">Recent interests</h4>
+      <div className="flex items-center gap-x-2 mt-8">
+        <h4 className="font-bold text-lg">Recent interests</h4>
+        <NavLink
+          replace
+          preventScrollReset
+          to="log-interest"
+          className="btn-blue text-xs px-2 py-1 roundes-xs"
+        >
+          Log interest
+        </NavLink>
+      </div>
       <InterestHistoryTable
         items={logs_intr}
         load_next={

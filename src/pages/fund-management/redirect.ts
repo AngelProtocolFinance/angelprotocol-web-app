@@ -1,2 +1,3 @@
 import { redirect } from "react-router";
-export const loader = () => redirect("dashboard");
+import { routes } from "./routes";
+export const loader = () => redirect(routes.investments);

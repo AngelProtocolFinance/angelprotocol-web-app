@@ -155,8 +155,8 @@ export default [
       ),
       r("savings", pages.$("fund-management/savings/index.tsx")._, [
         r(
-          "rebalance",
-          pages.$("fund-management/savings/rebalance/index.tsx")._
+          "log-interest",
+          pages.$("fund-management/savings/log-interest/index.tsx")._
         ),
       ]),
       r(
@@ -302,6 +302,7 @@ export default [
   ),
   r("q/final-recorder", "./routes/final-recorder/index.ts"),
   r("utils/calendar", "./routes/calendar.tsx"),
+  r("api/npos/interest-log-simul", "./routes/npo-interest-log-simul.ts"),
   r("robots.txt", "./routes/robots.ts"),
   r("sitemap.xml", "./routes/sitemap.ts"),
 ] satisfies RouteConfig;

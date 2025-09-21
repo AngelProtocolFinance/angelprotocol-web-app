@@ -1,17 +1,12 @@
-import type { ILog } from "@better-giving/nav-history";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { useState } from "react";
 import { Link, useFetcher, useNavigate } from "react-router";
-import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import type { Route } from "./+types";
-import { RebalanceForm } from "./form";
+import { LogForm } from "./log-form";
 import { Review } from "./review";
 import type { State } from "./types";
-export { loader, action } from "./api";
-export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export { action } from "./api";
 
-export default CacheRoute(Page);
-function Page({ loaderData: data }: Route.ComponentProps) {
+export default function Page() {
   const navigate = useNavigate();
   return (
     <Dialog
@@ -23,26 +18,26 @@ function Page({ loaderData: data }: Route.ComponentProps) {
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
       <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 w-[90vw] rounded-sm overflow-hidden">
-        <Content {...data} />
+        <Content />
       </DialogPanel>
     </Dialog>
   );
 }
 
-function Content(props: ILog) {
+function Content() {
   const [state, setState] = useState<State>({ type: "form" });
   const fetcher = useFetcher();
 
   return (
     <div>
       {state.type === "form" && (
-        <RebalanceForm
-          composition={props.composition}
-          init={state.data}
-          on_submit={(x) => setState({ type: "review", data: x })}
+        <LogForm
+          on_submit={(x, y) => setState({ type: "review", fv: x, shares: y })}
         />
       )}
-      {state.type === "review" && <Review fv={state.data} ltd={props} />}
+      {state.type === "review" && (
+        <Review amount={+state.fv.total} shares={state.shares} />
+      )}
 
       <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l3">
         {state.type === "form" ? (
@@ -66,12 +61,12 @@ function Content(props: ILog) {
         )}
         <button
           disabled={fetcher.state !== "idle"}
-          form={state.type === "form" ? "rebalance-form" : undefined}
+          form={state.type === "form" ? "log-interest-form" : undefined}
           type={state.type === "form" ? "submit" : "button"}
           onClick={
             state.type === "review"
               ? () =>
-                  fetcher.submit(state.data.txs, {
+                  fetcher.submit(state.fv, {
                     method: "post",
                     encType: "application/json",
                   })
