@@ -15,7 +15,8 @@ export const action = async ({ request }: Route.ActionArgs) => {
   if (!user) return toAuth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
-  const fv = parse(interest_log, await request.json());
+  /** exclude: use server side time */
+  const { date_created, ...fv } = parse(interest_log, await request.json());
 
   const shares = await npo_interest_shares({
     start: fv.date_start,
@@ -73,6 +74,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
   const intr_log = liqdb.intr_log_put_txi({
     ...fv,
+    date_created: intr_date,
     alloc: shares,
     id: intr_id,
   });
