@@ -22,7 +22,9 @@ export function LogForm({ classes = "", on_submit, init }: Props) {
         ? toYYYMMDD(new Date(init.date_created))
         : toYYYMMDD(now),
       date_start: init?.date_start ? toYYYMMDD(new Date(init.date_start)) : "",
-      date_end: init?.date_end ? toYYYMMDD(new Date(init.date_end)) : "",
+      date_end: init?.date_end
+        ? toYYYMMDD(new Date(init.date_end))
+        : toYYYMMDD(now),
       total: init?.total || "",
     },
   });
@@ -53,7 +55,8 @@ export function LogForm({ classes = "", on_submit, init }: Props) {
       />
       <Field
         {...register("total")}
-        label="Amount"
+        label="Amount ($)"
+        placeholder="e.g. 100"
         error={errors.total?.message}
         classes={{ container: "mb-4", label: "font-semibold" }}
       />

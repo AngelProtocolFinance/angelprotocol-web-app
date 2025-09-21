@@ -53,6 +53,7 @@ function Content() {
           </Link>
         ) : (
           <button
+            disabled={fetcher.state !== "idle"}
             className="btn-outline btn text-sm px-8 py-2"
             type="button"
             onClick={() => setState((x) => ({ ...x, type: "form" }))}

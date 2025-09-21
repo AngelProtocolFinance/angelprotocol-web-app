@@ -1,5 +1,6 @@
 import { NpoName } from "components/npo-name";
 import { humanize } from "helpers/decimal";
+import { MIN_INTR_TO_CREDIT } from "pages/fund-management/constants";
 
 interface Props {
   amount: number;
@@ -20,13 +21,14 @@ export function Review({ classes = "", amount, shares }: Props) {
         </thead>
         <tbody>
           {Object.entries(shares)
+            .filter(([, v]) => v > MIN_INTR_TO_CREDIT)
             .toSorted(([, a], [, b]) => b - a)
             .map(([npo, share]) => (
               <tr key={npo} className="text-sm text-gray-d4">
                 <td>
                   <NpoName id={npo} />
                 </td>
-                <td className="text-right">{humanize(share * 100)}</td>
+                <td className="text-right">{humanize(share * 100)} %</td>
                 <td className="text-right">${humanize(share * amount)}</td>
               </tr>
             ))}

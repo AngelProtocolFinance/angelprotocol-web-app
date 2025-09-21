@@ -49,7 +49,9 @@ function Page({ loaderData }: Route.ComponentProps) {
         <p className="text-3xl font-bold">${humanize(ltd.total)}</p>
       </div>
 
-      <h4 className="font-bold text-lg mb-4 mt-8">NAV Price & Units</h4>
+      <h4 className="font-bold text-lg mb-4 mt-8 capitalize">
+        Total savings balance
+      </h4>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={line_data}

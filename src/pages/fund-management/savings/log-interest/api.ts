@@ -1,5 +1,6 @@
 import { Txs } from "@better-giving/db";
 import { interest_log } from "@better-giving/liquid/schemas";
+import { MIN_INTR_TO_CREDIT } from "pages/fund-management/constants";
 import { redirect } from "react-router";
 import { parse } from "valibot";
 import type { Route } from "./+types";
@@ -23,6 +24,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   for (const npo in shares) {
     const share = shares[npo];
     const to_credit = share * +fv.total;
+    if (to_credit < MIN_INTR_TO_CREDIT) continue; // skip less than 1 cent
     const upd8 = baldb.balance_update_txi(+npo, {
       liq: ["inc", to_credit],
     });
