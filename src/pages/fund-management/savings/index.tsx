@@ -112,16 +112,15 @@ function Page({ loaderData }: Route.ComponentProps) {
 
       <div className="overflow-x-auto">
         <h5 className="font-bold text-md mt-8 mb-2">
-          Top Holders{" "}
+          Top savers{" "}
           <span className="text-sm text-gray">( of {num_holders} )</span>
         </h5>
         <div className="overflow-x-auto">
           <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
             <thead>
               <tr>
-                <th className="font-medium text-sm text-gray">Holder</th>
-                <th className="font-medium text-sm text-gray">Units</th>
-                <th className="font-medium text-sm text-gray">Value</th>
+                <th className="font-medium text-sm text-gray">Name</th>
+                <th className="font-medium text-sm text-gray">Balance</th>
               </tr>
             </thead>
             <tbody>
