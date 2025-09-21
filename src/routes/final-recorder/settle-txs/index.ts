@@ -104,11 +104,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         account_other_bal_begin: net_alloc.lock,
         account_other_bal_end: 0,
       };
-      const lock_tx_record = baltxs_db.tx_record(lock_tx);
-      txs.put({
-        TableName: BalanceTxsDb.name,
-        Item: lock_tx_record,
-      });
+      txs.put(baltxs_db.tx_put_txi(lock_tx));
     }
 
     if (net_alloc.liq) {
@@ -128,11 +124,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         account_other_bal_begin: net_alloc.liq,
         account_other_bal_end: 0,
       };
-      const liq_tx_record = baltxs_db.tx_record(lock_tx);
-      txs.put({
-        TableName: BalanceTxsDb.name,
-        Item: liq_tx_record,
-      });
+      txs.put(baltxs_db.tx_put_txi(lock_tx));
     }
   }
 

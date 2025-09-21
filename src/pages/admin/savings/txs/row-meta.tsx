@@ -30,6 +30,14 @@ export const row_meta = (data: IBalanceTx): IRowMeta => {
       description: <Description text="Donation" id={data.account_other_id} />,
     };
   }
+  // always positive
+  if (data.account_other === "interest") {
+    return {
+      icon: <ArrowRight size={16} className="text-green" />,
+      description: <Description text="Interest" id={data.id} />,
+    };
+  }
+
   // always negative
   if (data.account_other === "grant") {
     return {

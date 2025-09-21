@@ -1,4 +1,4 @@
-import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
+import type { IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
 import { type IPayout, PayoutsDB } from "@better-giving/payouts";
 import { nanoid } from "nanoid";
@@ -62,10 +62,8 @@ export const withdraw_action =
         amount: +fv.amount,
         amount_units: units,
       };
-      txs.put({
-        TableName: BalanceTxsDb.name,
-        Item: btxdb.tx_record(tx),
-      });
+
+      txs.put(btxdb.tx_put_txi(tx));
       const bal_update = baldb.balance_update_txi(adm.id, {
         lock_units: ["dec", units],
       });
@@ -83,10 +81,7 @@ export const withdraw_action =
         amount: +fv.amount,
         amount_units: +fv.amount,
       };
-      txs.put({
-        TableName: BalanceTxsDb.name,
-        Item: btxdb.tx_record(tx),
-      });
+      txs.put(btxdb.tx_put_txi(tx));
       const bal_update = baldb.balance_update_txi(adm.id, {
         liq: ["dec", +fv.amount],
         cash: ["inc", +fv.amount],

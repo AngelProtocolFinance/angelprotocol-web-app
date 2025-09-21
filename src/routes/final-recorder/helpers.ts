@@ -1,11 +1,10 @@
-import type { TxType } from "@better-giving/db";
+import { type TxType, Txs } from "@better-giving/db";
 import type { Donation } from "@better-giving/donation";
 import type {
   DMKey,
   DonationMessage,
 } from "@better-giving/donation/donation-message";
 import type { INpo } from "@better-giving/endowment";
-import { TxBuilder } from "@better-giving/helpers-db";
 import * as ref_db from "@better-giving/referrals/db";
 import type { Environment } from "@better-giving/types/list";
 import { nanoid } from "nanoid";
@@ -74,7 +73,7 @@ export const commission_fn = (
   const is_expired = new Date(endow.referrer_expiry) < new Date();
 
   if (is_expired) return null;
-  const builder = new TxBuilder();
+  const txs = new Txs();
   const d = new Date().toISOString();
   const status = "pending";
   const commission: ref_db.Commission = {
@@ -90,7 +89,7 @@ export const commission_fn = (
     status,
     env: endow.env,
   };
-  builder.put({ TableName: ref_db.name, Item: commission });
+  txs.put({ TableName: ref_db.name, Item: commission });
 
   const source: ICommissionSource = {
     id: endow.id,

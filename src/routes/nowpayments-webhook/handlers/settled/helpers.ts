@@ -1,6 +1,6 @@
+import { type TxItems, Txs } from "@better-giving/db";
 import type { Donation } from "@better-giving/donation";
 import type { Environment, INpo } from "@better-giving/endowment";
-import { TxBuilder, type TxItems } from "@better-giving/helpers-db";
 import * as ref_db from "@better-giving/referrals/db";
 
 interface Commission {
@@ -20,7 +20,7 @@ export const commissionFn = (
   const is_expired = new Date(endow.referrer_expiry) < new Date();
 
   if (is_expired) return null;
-  const builder = new TxBuilder();
+  const txs = new Txs();
   const d = new Date().toISOString();
   const status = "pending";
   const commission: ref_db.Commission = {
@@ -36,9 +36,9 @@ export const commissionFn = (
     status,
     env,
   };
-  builder.put({ TableName: ref_db.name, Item: commission });
+  txs.put({ TableName: ref_db.name, Item: commission });
 
-  builder.update({
+  txs.update({
     TableName: ref_db.name,
     Key: {
       PK: `Ltd#${endow.referrer}`,
@@ -59,7 +59,7 @@ export const commissionFn = (
 
   return {
     to: endow.referrer,
-    txs: builder.txs,
+    txs: txs.all,
     breakdown: {
       from_tip: tx.tip,
       from_fee: tx.fee,

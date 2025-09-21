@@ -1,4 +1,4 @@
-import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
+import type { IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
@@ -58,10 +58,7 @@ export const transfer_action =
         account_other_bal_begin: bal.liq,
         account_other_bal_end: bal.liq + +fv.amount,
       };
-      txs.put({
-        TableName: BalanceTxsDb.name,
-        Item: btxdb.tx_record(tx),
-      });
+      txs.put(btxdb.tx_put_txi(tx));
       const bal_update = baldb.balance_update_txi(adm.id, {
         lock_units: ["dec", units],
       });
@@ -97,15 +94,8 @@ export const transfer_action =
         account_other_bal_begin: bal.liq,
         account_other_bal_end: bal.liq - +fv.amount,
       };
-      txs.put({
-        TableName: BalanceTxsDb.name,
-        Item: btxdb.tx_record(tx),
-      });
-
-      txs.put({
-        TableName: BalanceTxsDb.name,
-        Item: btxdb.tx_record(lock_tx),
-      });
+      txs.put(btxdb.tx_put_txi(tx));
+      txs.put(btxdb.tx_put_txi(lock_tx));
 
       const bal_update = baldb.balance_update_txi(adm.id, {
         liq: ["dec", +fv.amount],
