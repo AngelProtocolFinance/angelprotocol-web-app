@@ -17,7 +17,7 @@ export default function Page() {
       className="relative z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
-      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 w-[90vw] rounded-sm overflow-hidden">
+      <DialogPanel className="fixed-center z-10 dark:text-white bg-white dark:bg-blue-d4 w-full max-w-3xl max-h-[90vh] rounded-sm overflow-auto">
         <Content />
       </DialogPanel>
     </Dialog>
@@ -32,6 +32,7 @@ function Content() {
     <div>
       {state.type === "form" && (
         <LogForm
+          init={state.fv}
           on_submit={(x, y) => setState({ type: "review", fv: x, shares: y })}
         />
       )}
