@@ -13,23 +13,29 @@ export const npo_interest_shares = async (
     date_start: period.start,
     date_end: period.end,
   });
+
   const logs = await liqdb.exhaust(QueryCommand, q, (x) => x as IBalLog);
 
-  const totals: Record<string, number> = {};
-  let total = 0;
+  const npo_bal_days: Record<string, number> = {};
+  let total_bal_days = 0;
 
-  for (const log of logs) {
-    for (const [k, v] of Object.entries(log.balances)) {
-      totals[k] ||= 0;
-      totals[k] += v;
+  for (let i = 0; i < logs.length; i++) {
+    const current_log = logs[i];
+
+    // logs is daily so use idx for weights
+    // in reverse chronological order
+    const days_remaining = i + 1;
+
+    for (const [npo_id, balance] of Object.entries(current_log.balances)) {
+      npo_bal_days[npo_id] ||= 0;
+      npo_bal_days[npo_id] += balance * days_remaining;
     }
-    total += log.total;
+    total_bal_days += current_log.total * days_remaining;
   }
 
   const shares: Record<string, number> = {};
-  for (const npo in totals) {
-    const share = totals[npo] / total;
-    shares[npo] = share;
+  for (const npo_id in npo_bal_days) {
+    shares[npo_id] = npo_bal_days[npo_id] / total_bal_days;
   }
 
   return shares;
