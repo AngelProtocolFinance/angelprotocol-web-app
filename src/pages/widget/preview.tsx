@@ -46,7 +46,7 @@ export function Preview({ classes = "", config, endow }: Props) {
   return (
     <Container {...config}>
       {config.isTitleShown && (
-        <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
+        <h1 className="text-center w-full text-pretty mb-2 text-lg @sm/preview:text-3xl">
           {config.title || `Donate to ${endow.name}`}
         </h1>
       )}
