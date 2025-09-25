@@ -70,10 +70,12 @@ function shortenHumanize(num: number, rate: number, precision = 2): string {
   if (num > 1e10) {
     // numbers over 10 Billion
     return `${humanize(num / 1e9, decimals)}B`;
-  } else if (num > 1e7) {
+  }
+  if (num > 1e7) {
     // numbers over 10 Million
     return `${humanize(num / 1e6, decimals)}M`;
-  } else if (num > 1e4) {
+  }
+  if (num > 1e4) {
     // numbers over 10 Thousand
     return `${humanize(num / 1e3, decimals)}K`;
   }

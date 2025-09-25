@@ -21,9 +21,11 @@ export function toText(json: string | undefined) {
   return toDelta(json ?? "").ops.reduce((text, op) => {
     if (typeof op.insert === "string") {
       return text + op.insert;
-    } else if (typeof op.insert === "object" && op.insert.text) {
+    }
+    if (typeof op.insert === "object" && op.insert.text) {
       return text + op.insert.text;
-    } else if (typeof op.insert === "object" && op.insert.image) {
+    }
+    if (typeof op.insert === "object" && op.insert.image) {
       return text + (op.attributes?.alt || "");
     }
     return text;

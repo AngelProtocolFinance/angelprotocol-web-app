@@ -34,9 +34,8 @@ export default function Component() {
     const minutes = time % 60;
     if (hours > 0) {
       return `${hours} hour${hours > 1 ? "s" : ""} ${minutes} minute${minutes !== 1 ? "s" : ""}`;
-    } else {
-      return `${minutes} minute${minutes !== 1 ? "s" : ""}`;
     }
+    return `${minutes} minute${minutes !== 1 ? "s" : ""}`;
   };
 
   return (

@@ -10,9 +10,8 @@ export const to_sorted = <T extends Record<string, any>>(
   return list.toSorted((a, b) => {
     if (order.toLowerCase() === "asc") {
       return a[attrName].localeCompare(b[attrName]);
-    } else {
-      return b[attrName].localeCompare(a[attrName]);
     }
+    return b[attrName].localeCompare(a[attrName]);
   });
 };
 
