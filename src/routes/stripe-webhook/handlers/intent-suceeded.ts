@@ -44,7 +44,7 @@ export async function handle_intent_succeeded(
 
   const subs_meta =
     subscription_details?.metadata as StripeDonation.SetupIntentMetadata | null;
-  if (!subs_meta) throw `missing subs metadata`;
+  if (!subs_meta) throw "missing subs metadata";
 
   const onhold = to_onhold(subs_meta, { payment_method: pm });
   const final = to_final(onhold, settled);

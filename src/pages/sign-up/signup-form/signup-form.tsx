@@ -186,7 +186,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         >
           Privacy Policy
         </ExtLink>
-        , {!terms_1 && ` and  `}
+        , {!terms_1 && " and  "}
         {terms_0 && (
           <ExtLink
             href={appRoutes.terms_donors}
@@ -195,7 +195,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
             {terms_0.title}
           </ExtLink>
         )}
-        {terms_0 && terms_1 && `, and  `}
+        {terms_0 && terms_1 && ", and  "}
         {terms_1 && (
           <ExtLink href={terms_1.to} className="text-blue hover:text-blue-l2">
             {terms_1.title}

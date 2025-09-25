@@ -17,7 +17,7 @@ export const mockPrograms: IProgram[] = [
 ];
 
 export const handlers = [
-  http.get(`api/npo/:id/programs`, () => {
+  http.get("api/npo/:id/programs", () => {
     return HttpResponse.json(mockPrograms);
   }),
 ];

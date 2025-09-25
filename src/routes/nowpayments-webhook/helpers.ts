@@ -13,7 +13,7 @@ export async function sendEmail(
 ) {
   return ses.send(
     new SendEmailCommand({
-      FromEmailAddress: `Better Giving 😇 <hello@better.giving>`,
+      FromEmailAddress: "Better Giving 😇 <hello@better.giving>",
       Destination: { ToAddresses: payload.recipients },
       Content: {
         Template: {

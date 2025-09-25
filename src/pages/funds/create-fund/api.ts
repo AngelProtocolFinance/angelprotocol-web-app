@@ -68,7 +68,7 @@ export const action: ActionFunction = async ({ request }) => {
       name: npo.name,
     };
   })(user, npoo);
-  if (!creator) throw `failed to retrieve creator`;
+  if (!creator) throw "failed to retrieve creator";
 
   const id = crypto.randomUUID();
   const { expiration, target, members: ns, ...rest } = payload;

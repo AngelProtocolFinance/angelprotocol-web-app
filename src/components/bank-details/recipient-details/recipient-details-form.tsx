@@ -110,7 +110,7 @@ export function RecipientDetailsForm({
             details,
           };
 
-          const res = await fetch(`/api/wise/v1/accounts`, {
+          const res = await fetch("/api/wise/v1/accounts", {
             method: "POST",
             body: JSON.stringify(payload),
             headers: { "content-type": "application/json" },

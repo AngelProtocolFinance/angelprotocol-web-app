@@ -23,7 +23,7 @@ export const loader = async ({ params, request }: Route.LoaderArgs) => {
   const reg = await regdb.reg(id);
   if (!reg) throw new Response("Registration not found", { status: 404 });
 
-  if (!reg.o_bank_id) throw `No bank account associated with application`;
+  if (!reg.o_bank_id) throw "No bank account associated with application";
 
   const wacc = await wise.v2_account(+reg.o_bank_id);
 

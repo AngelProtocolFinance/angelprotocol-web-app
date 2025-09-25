@@ -13,7 +13,7 @@ export interface LoaderData {
 }
 
 const anvil_form_url = (forge_slug: string) =>
-  `https://app.useanvil.com/weld/${anvil_envs.org_slug}/${forge_slug}${env === "staging" ? `?test=true` : ""}`;
+  `https://app.useanvil.com/weld/${anvil_envs.org_slug}/${forge_slug}${env === "staging" ? "?test=true" : ""}`;
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return to_auth(request, headers);

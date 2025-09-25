@@ -76,7 +76,9 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
               })}
               target="_blank"
               rel="noopener noreferrer"
-              className={`hover:bg-gray-l4 flex items-center gap-3 px-3 py-2 rounded-md text-gray-700 hover:text-gray-900`}
+              className={
+                "hover:bg-gray-l4 flex items-center gap-3 px-3 py-2 rounded-md text-gray-700 hover:text-gray-900"
+              }
             >
               {item.icon}
               <span className="text-sm font-heading">{item.name}</span>
@@ -88,7 +90,9 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
             onClick={() => {
               navigator.clipboard.writeText(p.url);
             }}
-            className={`hover:bg-gray-l4 border-t border-gray-l4 text-sm col-span-full flex items-center gap-3 w-full px-3 py-2 rounded-md text-gray-d2 hover:text-gray-900`}
+            className={
+              "hover:bg-gray-l4 border-t border-gray-l4 text-sm col-span-full flex items-center gap-3 w-full px-3 py-2 rounded-md text-gray-d2 hover:text-gray-900"
+            }
           >
             <LinkIcon size={16} />
             Copy link

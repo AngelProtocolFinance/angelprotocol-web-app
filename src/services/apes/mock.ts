@@ -41,7 +41,7 @@ const mockCurrencies: DBCurrency[] = [
 
 export const endpoints = {
   tokens: `${APIs.apes}/v1/tokens/:chainId`,
-  fiatCurrencies: `api/currencies`,
+  fiatCurrencies: "api/currencies",
 };
 
 export const fiatCurrenciesErrorHandler = http.get(

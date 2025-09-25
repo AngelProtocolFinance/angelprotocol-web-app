@@ -31,7 +31,6 @@
       "style": {
         "useImportType": "warn",
         "noNonNullAssertion": "off",
-        "noUnusedTemplateLiteral": "off",
         "useExponentiationOperator": "off",
         "useSelfClosingElements": "off",
         "useConst": "off",

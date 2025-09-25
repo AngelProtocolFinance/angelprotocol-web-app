@@ -91,7 +91,7 @@ export const Video = ({ classes = "", vid }: Props) => {
             poster={vid.poster}
             src={vid.url}
             ref={videoRef}
-            className={`absolute top-0 left-0 w-full h-full object-cover`}
+            className={"absolute top-0 left-0 w-full h-full object-cover"}
             playsInline
             controls
             autoPlay

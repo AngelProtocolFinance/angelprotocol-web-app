@@ -11,13 +11,13 @@ export async function handle_intent_failed(
   const meta = await (async (pi) => {
     //subs pi metadata is empty object // retrieve from invoice
     if (Object.keys(pi.metadata).length === 0) {
-      if (!pi.invoice) throw `missing invoice`;
+      if (!pi.invoice) throw "missing invoice";
       const { subscription_details } = await stripe.invoices.retrieve(
         str_id(pi.invoice)
       );
       const m =
         subscription_details?.metadata as StripeDonation.SetupIntentMetadata | null;
-      if (!m) throw `missing invoice metadata`;
+      if (!m) throw "missing invoice metadata";
       return m;
     }
     return pi.metadata as StripeDonation.Metadata;

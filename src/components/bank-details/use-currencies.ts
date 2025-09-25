@@ -16,7 +16,7 @@ async function get_currencies(path: string) {
 
 export function use_currencies(): QueryState<WiseCurrencyOption[]> {
   const { data, isLoading, isValidating, error } = useSWR(
-    `/api/wise/v1/currencies`,
+    "/api/wise/v1/currencies",
     get_currencies
   );
   return { data, isLoading, isFetching: isValidating, isError: !!error, error };

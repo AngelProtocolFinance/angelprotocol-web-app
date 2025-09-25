@@ -7,7 +7,7 @@ export async function handle_setup_intent_failed(
 ) {
   const meta = data.object
     .metadata as StripeDonation.SetupIntentMetadata | null;
-  if (!meta) throw `missing setup intent metadata`;
+  if (!meta) throw "missing setup intent metadata";
 
   const message = `Setup Intent ID ${data.object.id} failed due to: ${data.object.last_setup_error?.message ?? "Stripe error"}`;
   await send_email({

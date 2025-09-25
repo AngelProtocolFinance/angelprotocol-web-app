@@ -245,7 +245,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
           // https://givechariot.readme.io/reference/integrating-connect#pre-populate-data-into-your-connect-session
           onDonationRequest={async () => {
             const isValid = await trigger(undefined, { shouldFocus: true });
-            if (!isValid) throw `invalid`;
+            if (!isValid) throw "invalid";
 
             //always use recent values
             const _tip = adjusted?.tip || (props.tip?.value ?? 0);

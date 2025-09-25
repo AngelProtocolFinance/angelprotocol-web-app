@@ -39,7 +39,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   const ltd = await navdb.ltd();
 
   if (ltd.composition.CASH.value < tx.amount) {
-    throw `insufficient cash balance to approve this request.`;
+    throw "insufficient cash balance to approve this request.";
   }
 
   if (verdict === "reject") {

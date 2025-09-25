@@ -31,7 +31,7 @@ const requirements: Fetcher<RequirementsOutput, Input | null> = async (
     sourceAmount: input.amount,
   };
 
-  const quote = await fetch(`/api/wise/v3/profiles/{{profileId}}/quotes`, {
+  const quote = await fetch("/api/wise/v3/profiles/{{profileId}}/quotes", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(quote_payload),

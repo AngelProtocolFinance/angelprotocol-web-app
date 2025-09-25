@@ -21,7 +21,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (!user) return to_auth(request, headers);
 
   if (!user.groups.includes("ap-admin")) {
-    throw `Unauthorized`;
+    throw "Unauthorized";
   }
 
   const fv: { reason?: string } = await request.json();
@@ -36,7 +36,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (!reg) throw new Response("Registration not found", { status: 404 });
 
   const r = new Progress(reg).banking; // no need to look at fsa
-  if (!r) throw `registration has incomplete steps`;
+  if (!r) throw "registration has incomplete steps";
 
   if (reg.status !== "02") {
     throw `registration not in review, curr status:${reg.status}`;
