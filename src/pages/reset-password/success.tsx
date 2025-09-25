@@ -15,7 +15,7 @@ export default function Success(props: { to: string }) {
       </p>
 
       <Link
-        to={appRoutes.signin + `?redirect=${props.to}`}
+        to={`${appRoutes.signin}?redirect=${props.to}`}
         className="flex-center mt-9 w-full btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
       >
         Back to Sign in

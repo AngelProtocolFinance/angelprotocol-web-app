@@ -6,7 +6,7 @@ export function currency({ rate, code }: DBCurrency) {
   const CODE = code.toUpperCase();
   return function Amount({ classes = "", amount }: Props) {
     return (
-      <dd className={classes + " text-right"}>
+      <dd className={`${classes} text-right`}>
         {CODE === "USD"
           ? `$${humanize(amount, 2)}`
           : rate

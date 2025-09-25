@@ -54,12 +54,7 @@ const widgetURLfn = (config: WidgetConfig, base_url: string, endowId = 0) => {
       .map((inc) => inc.label.replace(/,/g, "_"))
       .join(","),
   };
-  return (
-    base_url +
-    appRoutes.donate_widget +
-    "/" +
-    endowId +
-    "?" +
-    new URLSearchParams(cleanObject(params)).toString()
-  );
+  return `${
+    base_url + appRoutes.donate_widget
+  }/${endowId}?${new URLSearchParams(cleanObject(params)).toString()}`;
 };

@@ -40,7 +40,7 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
       {props.status_approved_npo_id && (
         <NavLink
           className="text-blue-d1 [&:is(.pending)]:text-gray hover:underline block -mt-6 text-sm"
-          to={appRoutes.marketplace + `/${props.status_approved_npo_id}`}
+          to={`${appRoutes.marketplace}/${props.status_approved_npo_id}`}
         >
           Endowment ID: {props.status_approved_npo_id}
         </NavLink>
@@ -76,7 +76,7 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
             {props.o_active_in_countries?.join(", ") ?? "N/A"}
           </Row>
           <Row label="Contact name">
-            {props.r_first_name + " " + props.r_last_name}
+            {`${props.r_first_name} ${props.r_last_name}`}
           </Row>
           <Row label="Contact email">{props.r_id}</Row>
           {props.r_proof_of_identity && (

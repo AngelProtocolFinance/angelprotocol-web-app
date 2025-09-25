@@ -35,7 +35,7 @@ export const UrlInput = forwardRef<El, Props>((props, ref) => {
   const error_id = `__error_${props.name}`;
 
   return (
-    <div className={style.container + " "}>
+    <div className={`${style.container} `}>
       <Label
         className={`${style.label} mb-2 label`}
         required={required}
@@ -61,7 +61,7 @@ export const UrlInput = forwardRef<El, Props>((props, ref) => {
         </span>
       </div>
 
-      <p id={error_id} className={style.error + " field-err mt-1 empty:hidden"}>
+      <p id={error_id} className={`${style.error} field-err mt-1 empty:hidden`}>
         {error}
       </p>
     </div>

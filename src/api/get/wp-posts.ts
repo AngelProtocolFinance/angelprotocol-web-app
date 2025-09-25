@@ -10,6 +10,6 @@ export const posts = async (page: number): Promise<[IPost[], number]> => {
   return [await res.json(), total] as const;
 };
 
-export const postsMock = http.get(wpUrl + "/posts", () =>
+export const postsMock = http.get(`${wpUrl}/posts`, () =>
   HttpResponse.json([] satisfies IPost[])
 );

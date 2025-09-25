@@ -7,7 +7,7 @@ class Path {
     this.value = path;
   }
   $(path: string) {
-    return new Path(this.value + "/" + path);
+    return new Path(`${this.value}/${path}`);
   }
   get _() {
     return this.value;

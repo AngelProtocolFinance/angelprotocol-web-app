@@ -38,7 +38,7 @@ export function Options({ classes = "", searchText }: Props) {
 
   if (endowments.isLoading || isDebouncing) {
     return (
-      <LoadingStatus classes={classes + " p-2"}>
+      <LoadingStatus classes={`${classes} p-2`}>
         Loading options...
       </LoadingStatus>
     );
@@ -46,7 +46,7 @@ export function Options({ classes = "", searchText }: Props) {
 
   if (endowments.error) {
     return (
-      <ErrorStatus classes={classes + " p-2"}>
+      <ErrorStatus classes={`${classes} p-2`}>
         Failed to load endowments
       </ErrorStatus>
     );
@@ -56,7 +56,7 @@ export function Options({ classes = "", searchText }: Props) {
   if (!endows) return null;
 
   if (endows.length === 0) {
-    return <Info classes={classes + " p-2"}>No endowments found</Info>;
+    return <Info classes={`${classes} p-2`}>No endowments found</Info>;
   }
 
   return (

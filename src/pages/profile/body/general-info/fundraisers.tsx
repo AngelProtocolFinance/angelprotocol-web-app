@@ -34,7 +34,7 @@ function Fund(props: IFundItem) {
       />
       <Link
         className="hover:text-blue-d1"
-        to={appRoutes.funds + `/${props.id}`}
+        to={`${appRoutes.funds}/${props.id}`}
       >
         {props.name}
       </Link>

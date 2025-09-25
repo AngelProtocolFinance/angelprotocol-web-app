@@ -43,7 +43,7 @@ export const Toggle = ({ children, ...props }: Props) => {
         {children}
       </Label>
 
-      <p data-error className={cls.error + " empty:hidden"}>
+      <p data-error className={`${cls.error} empty:hidden`}>
         {props.error}
       </p>
     </Field>

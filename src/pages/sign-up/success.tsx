@@ -16,7 +16,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
       </p>
 
       <Link
-        to={appRoutes.signin + `?redirect=${to}`}
+        to={`${appRoutes.signin}?redirect=${to}`}
         className="flex-center mt-9 w-full btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
       >
         Continue to Sign in

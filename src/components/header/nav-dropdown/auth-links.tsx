@@ -13,7 +13,7 @@ export function AuthLinks({ to, classes = "" }: Props) {
     <>
       <MenuItem>
         <NavLink
-          to={appRoutes.signin + `?redirect=${to}`}
+          to={`${appRoutes.signin}?redirect=${to}`}
           className={`${styles} ${classes}`}
         >
           Login
@@ -22,7 +22,7 @@ export function AuthLinks({ to, classes = "" }: Props) {
 
       <MenuItem>
         <NavLink
-          to={appRoutes.signup + `?redirect=${to}`}
+          to={`${appRoutes.signup}?redirect=${to}`}
           className={`${styles} ${classes}`}
         >
           Sign up

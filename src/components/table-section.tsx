@@ -8,10 +8,7 @@ export function TableSection(props: HeadProps | BodyProps) {
         <tr
           key={index}
           onClick={props.onRowSelect && props.onRowSelect(index)}
-          className={
-            props.rowClass +
-            ` ${props.selectedRow === index ? props.selectedClass || "" : ""}`
-          }
+          className={`${props.rowClass} ${props.selectedRow === index ? props.selectedClass || "" : ""}`}
         >
           {child}
         </tr>

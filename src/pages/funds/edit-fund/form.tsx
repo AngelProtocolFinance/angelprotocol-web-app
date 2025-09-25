@@ -65,7 +65,7 @@ export function Form({
     <Frm
       onSubmit={rhf.handleSubmit(onSubmit)}
       disabled={is_submitting}
-      className={classes + " pb-4"}
+      className={`${classes} pb-4`}
     >
       <Field
         {...rhf.register("name")}

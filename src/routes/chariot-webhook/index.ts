@@ -17,7 +17,7 @@ export const action: ActionFunction = async ({ request }) => {
     const timestamp = sig.match(/[^t=]*\Z/g)![0];
     const sig_hash = sig.split("v1=")[1];
 
-    const signed = timestamp + "." + body;
+    const signed = `${timestamp}.${body}`;
     const hash = crypto
       .createHmac("sha256", chariot_envs.signing_key)
       .update(signed)

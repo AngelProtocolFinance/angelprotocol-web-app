@@ -61,7 +61,7 @@ export const Combo = forwardRef<El, Props>((props, ref) => {
           ref={ref}
           placeholder={props.placeholder}
           onChange={(event) => setQuery(event.target.value as any)}
-          className={props.classes?.input + ` field-input w-full h-full`}
+          className={`${props.classes?.input} field-input w-full h-full`}
         />
 
         {props.value && (
@@ -83,7 +83,7 @@ export const Combo = forwardRef<El, Props>((props, ref) => {
           option_disp={props.option_disp}
         />
       </Combobox>
-      <span className={cls.error + " empty:hidden field-err mt-1"}>
+      <span className={`${cls.error} empty:hidden field-err mt-1`}>
         {props.error}
       </span>
     </Field>

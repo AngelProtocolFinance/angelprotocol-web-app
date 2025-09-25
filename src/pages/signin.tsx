@@ -44,7 +44,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     if (isError(res)) {
       if (res.__type === "UserNotConfirmedException") {
         const to = new URL(from);
-        to.pathname = appRoutes.signup + "/confirm";
+        to.pathname = `${appRoutes.signup}/confirm`;
         to.searchParams.set("email", payload.data.email);
         to.searchParams.set("redirect", redirect_to);
         return redirect(to.toString());
@@ -133,7 +133,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
             placeholder="Password"
           />
           <Link
-            to={appRoutes.reset_password + `?redirect=${to}`}
+            to={`${appRoutes.reset_password}?redirect=${to}`}
             className="font-medium text-gray hover:text-gray-d1 active:text-gray-d2 text-xs sm:text-sm justify-self-end hover:underline"
           >
             Forgot password?
@@ -150,7 +150,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={appRoutes.signup + `?redirect=${to}`}
+            to={`${appRoutes.signup}?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={is_submitting}
           >

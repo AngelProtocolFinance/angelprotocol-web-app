@@ -11,7 +11,7 @@ export default function DonateButton({
 
   return (
     <NavLink
-      to={appRoutes.donate + `/${profile.id}`}
+      to={`${appRoutes.donate}/${profile.id}`}
       className={`${className} btn btn-blue h-12 px-6 text-base lg:text-sm`}
     >
       Donate now

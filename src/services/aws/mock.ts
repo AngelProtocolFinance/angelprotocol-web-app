@@ -4,7 +4,7 @@ import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
 
 export const handlers = [
-  http.post(APIs.aws + "/v2/file/upload", () => {
+  http.post(`${APIs.aws}/v2/file/upload`, () => {
     return HttpResponse.json();
   }),
   http.get("api/npos", () => {

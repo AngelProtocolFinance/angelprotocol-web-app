@@ -16,7 +16,7 @@ function X(
   const id = `__${props.name}`;
 
   return (
-    <td className={classes + " has-focus:bg-amber-l5 relative"}>
+    <td className={`${classes} has-focus:bg-amber-l5 relative`}>
       <input
         ref={ref}
         {...props}

@@ -14,7 +14,7 @@ export const sendDonationReceipt = async (id: string, update: KYC) => {
     TableName: tables.donations,
     Key: { transactionId: id } satisfies Donation.PrimaryKey,
     ConditionExpression: "attribute_exists(transactionId)",
-    UpdateExpression: "SET " + components.map(({ update: u }) => u).join(","),
+    UpdateExpression: `SET ${components.map(({ update: u }) => u).join(",")}`,
     ExpressionAttributeNames: components.reduce(
       (prev, { name: [n, _n] }) => ({ ...prev, [n]: _n }),
       {}

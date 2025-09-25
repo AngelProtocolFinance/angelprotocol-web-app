@@ -22,7 +22,7 @@ export function Copier({ text, classes, size, children }: Props) {
     : {};
   return (
     <button
-      className={container + " relative"}
+      className={`${container} relative`}
       type="button"
       onClick={handle_copy}
     >

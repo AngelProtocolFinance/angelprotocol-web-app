@@ -25,7 +25,7 @@ export function FundCreator(props: IFundCreator) {
 
   return (
     <Link
-      className={props.classes + " hover:text-blue-d1"}
+      className={`${props.classes} hover:text-blue-d1`}
       to={`${appRoutes.marketplace}/${props.id}`}
     >
       {props.name}

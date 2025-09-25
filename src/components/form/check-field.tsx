@@ -21,7 +21,7 @@ function _CheckField(props: NativeProps, ref: ForwardedRef<HTMLInputElement>) {
     <div className={`check-field ${style.container}`}>
       <input
         ref={ref}
-        className={style.input + " peer"}
+        className={`${style.input} peer`}
         type="checkbox"
         id={id}
         aria-disabled={props.disabled}
@@ -34,7 +34,7 @@ function _CheckField(props: NativeProps, ref: ForwardedRef<HTMLInputElement>) {
         </label>
       )}
 
-      <p data-error className={style.error + " empty:hidden"}>
+      <p data-error className={`${style.error} empty:hidden`}>
         {error}
       </p>
     </div>

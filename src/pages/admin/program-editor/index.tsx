@@ -20,7 +20,7 @@ function Page({ loaderData: program }: Route.ComponentProps) {
   return (
     <>
       <Link
-        to={"../" + adminRoutes.programs}
+        to={`../${adminRoutes.programs}`}
         className="flex items-center gap-2 text-blue-d1 hover:text-blue"
       >
         <ChevronLeft />

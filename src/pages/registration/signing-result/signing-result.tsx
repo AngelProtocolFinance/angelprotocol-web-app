@@ -10,9 +10,7 @@ export default function SignResult({ classes = "" }) {
 
   return (
     <div
-      className={
-        classes + " grid px-5 max-w-lg justify-items-center content-start"
-      }
+      className={`${classes} grid px-5 max-w-lg justify-items-center content-start`}
     >
       {isSuccess(params) ? <Success {...params} /> : <ErrorPage {...params} />}
     </div>

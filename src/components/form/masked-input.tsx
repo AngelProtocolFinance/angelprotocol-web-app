@@ -35,10 +35,10 @@ export const MaskedInput = forwardRef<El, Props>((props, ref) => {
   const errorId = `error_${props.id}`;
 
   return (
-    <div className={style.container + " "}>
+    <div className={`${style.container} `}>
       <label
         data-required={props.required}
-        className={style.label + ` label ${props.sub ? "" : "mb-2"}`}
+        className={`${style.label} label ${props.sub ? "" : "mb-2"}`}
         htmlFor={props.id}
       >
         {props.label}

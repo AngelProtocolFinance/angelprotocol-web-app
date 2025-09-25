@@ -317,7 +317,7 @@ class OAuth extends Storage {
     const params = new URLSearchParams({
       response_type: "code",
       client_id: this.config.client_id,
-      redirect_uri: base_url + "/",
+      redirect_uri: `${base_url}/`,
       identity_provider: "Google",
       state: Buffer.from(state).toString("base64"),
       scope: scopes.join(" "),
@@ -327,14 +327,14 @@ class OAuth extends Storage {
   }
 
   async exchange(code: string, base_url: string, cookieHeader: string | null) {
-    const res = await fetch(this.config.domain + "/oauth2/token", {
+    const res = await fetch(`${this.config.domain}/oauth2/token`, {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
         grant_type: "authorization_code",
         client_id: this.config.client_id,
         code,
-        redirect_uri: base_url + "/",
+        redirect_uri: `${base_url}/`,
       }),
     });
 

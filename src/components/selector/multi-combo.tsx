@@ -134,7 +134,7 @@ function _MultiCombo<T extends string>(
             </p>
           )}
         </ComboboxOptions>
-        <p className={styles.error + " empty:hidden"}>{props.error}</p>
+        <p className={`${styles.error} empty:hidden`}>{props.error}</p>
       </Combobox>
       {children && children(props.values)}
     </>

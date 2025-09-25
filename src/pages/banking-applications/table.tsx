@@ -54,7 +54,7 @@ export function Table({
                 <Status status={row.status} />
               </td>
               <NavLink
-                to={appRoutes.banking_applications + `/${row.id}`}
+                to={`${appRoutes.banking_applications}/${row.id}`}
                 className="text-center w-full inline-block hover:text-blue-d1 [&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none"
               >
                 <Folder

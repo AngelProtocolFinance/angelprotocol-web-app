@@ -16,7 +16,7 @@ export const etch_eids = async (
   const FILE_ALIAS = "ap-agreement";
   const signer_data = {
     id: reg_id,
-    name: signer.first_name + " " + signer.last_name,
+    name: `${signer.first_name} ${signer.last_name}`,
     email: signer.email,
     signerType: "embedded",
     enableEmails: ["etchComplete"],

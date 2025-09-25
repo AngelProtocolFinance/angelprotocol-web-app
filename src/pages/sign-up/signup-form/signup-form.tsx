@@ -169,7 +169,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
-            to={appRoutes.signin + `?redirect=${to}`}
+            to={`${appRoutes.signin}?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={is_submitting}
           >

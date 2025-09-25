@@ -44,7 +44,7 @@ export function DetailsColumn({ classes = "", fundraisers }: Props) {
             />
           )}
           <NavLink
-            to={appRoutes.donate + `/${p.id}`}
+            to={`${appRoutes.donate}/${p.id}`}
             className="w-full btn btn-blue h-12 px-6 text-base lg:text-sm"
           >
             Donate now

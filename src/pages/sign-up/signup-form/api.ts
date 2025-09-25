@@ -40,7 +40,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const to = new URL(from);
-  to.pathname = from.pathname + "/confirm";
+  to.pathname = `${from.pathname}/confirm`;
   to.searchParams.set("email", p.data.email);
   return redirect(to.toString());
 };

@@ -103,7 +103,7 @@ const A: typeof ExtLink = ({ className, ...props }) => {
   return (
     <ExtLink
       {...props}
-      className={className + " font-medium hover:underline"}
+      className={`${className} font-medium hover:underline`}
     />
   );
 };

@@ -20,18 +20,17 @@ export function SfPerf({ id, classes = "" }: Props) {
   );
   if (data.points.length === 0) return null;
   return (
-    <div className={classes + " inline relative bottom-1"}>
+    <div className={`${classes} inline relative bottom-1`}>
       <button
         type="button"
         onClick={() => expand(true)}
-        className={
-          "text-xs font-semibold rounded-sm focus:outline-none  " +
-          (data.total_return > 0
+        className={`text-xs font-semibold rounded-sm focus:outline-none  ${
+          data.total_return > 0
             ? "text-green"
             : data.total_return < 0
               ? "text-red"
-              : "")
-        }
+              : ""
+        }`}
       >
         {data.total_return > 0 ? (
           <ArrowUp className="relative bottom-px inline mr-0.5" size={14} />

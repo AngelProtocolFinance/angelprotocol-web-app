@@ -42,13 +42,13 @@ function _Field<T extends InputType = InputType>(
 ) {
   const style = unpack(classes);
 
-  const id = "__" + String(props.name);
-  const errorId = "__error_" + String(props.name);
+  const id = `__${String(props.name)}`;
+  const errorId = `__error_${String(props.name)}`;
 
   return (
-    <div className={style.container + " "}>
+    <div className={`${style.container} `}>
       <Label
-        className={style.label + ` label ${props.sub ? "" : "mb-2"}`}
+        className={`${style.label} label ${props.sub ? "" : "mb-2"}`}
         required={required}
         htmlFor={id}
       >
@@ -76,7 +76,7 @@ function _Field<T extends InputType = InputType>(
       })}
 
       {(tooltip && ( //tooltip in normal flow
-        <p className={style.error + " text-left mt-1 left-0 text-xs"}>
+        <p className={`${style.error} text-left mt-1 left-0 text-xs`}>
           {typeof tooltip === "string" ? (
             <span className="text-gray dark:text-gray">{tooltip}</span>
           ) : (
@@ -92,7 +92,7 @@ function _Field<T extends InputType = InputType>(
       )) || (
         <p
           id={errorId}
-          className={style.error + " field-err mt-1 empty:hidden"}
+          className={`${style.error} field-err mt-1 empty:hidden`}
         >
           {error}
         </p>

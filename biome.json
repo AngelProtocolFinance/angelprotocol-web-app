@@ -29,7 +29,6 @@
         "noUselessFragments": "off"
       },
       "style": {
-        "useTemplate": "off",
         "useImportType": "warn",
         "noNonNullAssertion": "off",
         "noUselessElse": "off",
