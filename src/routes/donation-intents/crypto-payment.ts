@@ -1,6 +1,6 @@
 import { type Token, isCustom } from "@better-giving/assets/tokens";
 import type { Payment } from "types/crypto";
-import { _var, env } from ".server/env";
+import { _var, deposit_addrs_envs, env } from ".server/env";
 import { np } from ".server/sdks";
 
 export interface Order {
@@ -17,10 +17,9 @@ export async function crypto_payment(
   webhookUrl: string
 ): Promise<Payment> {
   if (isCustom(token.id)) {
-    const deposit_addr = _var(`DEPOSIT_ADDR_${token.network.toUpperCase()}`);
     return {
       id: order.id,
-      address: deposit_addr,
+      address: deposit_addrs_envs(token.network),
       amount: order.amount,
       currency: token.code,
       description: order.description,

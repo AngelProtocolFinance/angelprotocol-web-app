@@ -304,6 +304,10 @@ export default [
   r("api/npos/interest-log-simul", "./routes/npo-interest-log-simul.ts"),
   r("api/irs-npos-aggregates/:type", "./routes/irs-npos-aggregates.ts"),
   r("api/irs-npos/export", "./routes/irs-npos-export.ts"),
+  r(
+    "api/alchemy-webhook/:chain_id/:signing_key",
+    "./routes/alchemy-webhook/index.ts"
+  ),
   r("q/final-recorder", "./routes/final-recorder/index.ts"),
   r("utils/calendar", "./routes/calendar.tsx"),
   r("robots.txt", "./routes/robots.ts"),
