@@ -1,6 +1,7 @@
-import type { LoaderFunction } from "@vercel/remix";
-import { nposParams } from "helpers/npos-params";
+import { npos_search } from "helpers/npos-search";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
+import type { Route } from "./+types";
+import { cognito, toAuth } from ".server/auth";
 import { nonprofits } from ".server/mongodb/db";
 
 export interface LoaderData {
@@ -10,8 +11,14 @@ export interface LoaderData {
   num_items: number;
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const { filter, page, limit, sort } = nposParams(request);
+export const loader = async ({ request }: Route.LoaderArgs) => {
+  const { user } = await cognito.retrieve(request);
+  if (!user) return toAuth(request);
+  if (!user.groups.includes("ap-admin")) {
+    throw new Response(null, { status: 403 });
+  }
+
+  const { filter, page, limit, sort } = npos_search(request);
   const skip = (page - 1) * limit;
   const [sort_key, sort_dir] = sort.split("+");
 

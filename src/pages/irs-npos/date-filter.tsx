@@ -84,7 +84,7 @@ export function DateFilter(props: Props) {
             props.onChange?.(vals);
           },
           (err) => {
-            console.log(err);
+            console.error(err);
           }
         )}
       >

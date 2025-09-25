@@ -1,4 +1,4 @@
-import type { useSearchParams } from "@remix-run/react";
+import type { useSearchParams } from "react-router";
 export interface IFilter {
   _key: string;
   is_active: boolean;

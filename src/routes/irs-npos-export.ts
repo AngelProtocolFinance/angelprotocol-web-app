@@ -1,7 +1,9 @@
-import type { LoaderFunction } from "@vercel/remix";
 import { format } from "date-fns";
-import { nposParams } from "helpers/npos-params";
+import { resp } from "helpers/https";
+import { npos_search } from "helpers/npos-search";
+import type { LoaderFunction } from "react-router";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
+import { cognito, toAuth } from ".server/auth";
 import { nonprofits } from ".server/mongodb/db";
 
 const heads = [
@@ -36,15 +38,17 @@ const heads = [
 ];
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { filter, sort } = nposParams(request);
+  const { user } = await cognito.retrieve(request);
+  if (!user) return toAuth(request);
+  if (!user.groups.includes("ap-admin")) throw resp.status(403);
+
+  const { filter, sort } = npos_search(request);
   const [sort_key, sort_dir] = sort.split("+");
 
   const collection = await nonprofits;
 
   const count = await collection.countDocuments(filter);
-  if (count > 100_000) {
-    return new Response("Too many records", { status: 400 });
-  }
+  if (count > 100_000) return resp.err(400, "Too many records");
 
   const source = collection
     .find(filter)
@@ -94,43 +98,43 @@ export const loader: LoaderFunction = async ({ request }) => {
           const { email, name = "_", role = "_" } = c;
           return `${name}#${email}#${role}`;
         });
-        const cleanValue = (value: string | undefined) =>
+        const clean_val = (value: string | undefined) =>
           value?.replace(/,/g, "").replace(/\n/g, "").trim() ?? "";
 
         const row1 = [
-          cleanValue(
+          clean_val(
             last_updated && format(new Date(last_updated), "yyyy-MM-dd")
           ),
-          cleanValue(ein),
-          cleanValue(name),
-          cleanValue(website),
+          clean_val(ein),
+          clean_val(name),
+          clean_val(website),
           cs
             ?.filter((x) => x)
-            .map(cleanValue)
+            .map(clean_val)
             .join("|") ?? "",
-          social_media?.map((s) => cleanValue(s.url)).join("|") ?? "",
-          cleanValue(donation_platform),
-          cleanValue(asset_code),
-          cleanValue(asset_amount?.toString()),
-          cleanValue(income_code),
-          cleanValue(income_amount?.toString()),
-          cleanValue(revenue_amount?.toString()),
-          cleanValue(city),
-          cleanValue(state),
-          cleanValue(country),
-          cleanValue(ntee_code),
-          cleanValue(group_exemption_number),
-          cleanValue(subsection_code),
-          cleanValue(affilation_code),
-          cleanValue(classification_code),
-          cleanValue(deductibility_code),
-          cleanValue(deductibility_code_pub78?.join("|")),
-          cleanValue(foundation_code),
-          cleanValue(activity_code),
-          cleanValue(organization_code),
-          cleanValue(exempt_organization_status_code),
-          cleanValue(filing_requirement_code),
-          cleanValue(sort_name),
+          social_media?.map((s) => clean_val(s.url)).join("|") ?? "",
+          clean_val(donation_platform),
+          clean_val(asset_code),
+          clean_val(asset_amount?.toString()),
+          clean_val(income_code),
+          clean_val(income_amount?.toString()),
+          clean_val(revenue_amount?.toString()),
+          clean_val(city),
+          clean_val(state),
+          clean_val(country),
+          clean_val(ntee_code),
+          clean_val(group_exemption_number),
+          clean_val(subsection_code),
+          clean_val(affilation_code),
+          clean_val(classification_code),
+          clean_val(deductibility_code),
+          clean_val(deductibility_code_pub78?.join("|")),
+          clean_val(foundation_code),
+          clean_val(activity_code),
+          clean_val(organization_code),
+          clean_val(exempt_organization_status_code),
+          clean_val(filing_requirement_code),
+          clean_val(sort_name),
         ];
 
         controller.enqueue(encoder.encode(`${row1.join(",")}\n`));

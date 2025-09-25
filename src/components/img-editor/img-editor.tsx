@@ -1,5 +1,4 @@
 import { humanize } from "helpers/decimal";
-import { logger } from "helpers/logger";
 import { fixedForwardRef } from "helpers/react";
 import { unpack } from "helpers/unpack";
 import { uploadFile } from "helpers/upload-file";
@@ -74,7 +73,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
       const url = await uploadFile(cropped);
       return props.on_change(url);
     } catch (err) {
-      logger.error(err);
+      console.error(err);
       props.on_change("failure");
     }
   }

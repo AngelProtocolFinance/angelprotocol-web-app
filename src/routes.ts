@@ -258,6 +258,7 @@ export default [
       r("success", reg_app.$("success-prompt.tsx")._),
     ]),
     r("donation-calculator", donation_calculator.$("index.tsx")._),
+    r("irs-npos", pages.$("irs-npos/index.tsx")._),
   ]),
 
   r("donate-widget", donate_widget.$("widget-context.tsx")._, [
@@ -300,9 +301,11 @@ export default [
     "api/zapier/triggers/new-donation",
     "./routes/zapier-triggers-new-donation.ts"
   ),
+  r("api/npos/interest-log-simul", "./routes/npo-interest-log-simul.ts"),
+  r("api/irs-npos-aggregates/:type", "./routes/irs-npos-aggregates.ts"),
+  r("api/irs-npos/export", "./routes/irs-npos-export.ts"),
   r("q/final-recorder", "./routes/final-recorder/index.ts"),
   r("utils/calendar", "./routes/calendar.tsx"),
-  r("api/npos/interest-log-simul", "./routes/npo-interest-log-simul.ts"),
   r("robots.txt", "./routes/robots.ts"),
   r("sitemap.xml", "./routes/sitemap.ts"),
 ] satisfies RouteConfig;

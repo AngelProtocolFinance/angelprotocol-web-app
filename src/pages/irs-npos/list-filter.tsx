@@ -37,7 +37,7 @@ const getFilter = async (path: string) => {
 
 export function Options(props: Props) {
   const vals = useSWR(
-    `/api/irs-npos/aggregates/${props._key}`,
+    `/api/irs-npos-aggregates/${props._key}`,
     props.optsFn || getFilter
   );
 

@@ -7,7 +7,8 @@
     "ignore": [
       "./package.json",
       "./public/scripts/*",
-      "./src/components/TokenField/TokenSelector/coins/*"
+      "./src/components/TokenField/TokenSelector/coins/*",
+      "./src/scripts/*"
     ]
   },
   "linter": {

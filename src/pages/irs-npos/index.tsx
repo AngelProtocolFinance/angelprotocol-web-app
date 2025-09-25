@@ -1,14 +1,14 @@
-import { Link, useSearchParams } from "@remix-run/react";
-import type { LoaderData } from "./api";
+import { Link, useSearchParams } from "react-router";
 import { ListFilter } from "./list-filter";
 import { Paginator } from "./paginator";
 import { RangeFilter } from "./range-filter";
-export { loader } from "./api";
-export { clientLoader } from "api/cache";
-import { useCachedLoaderData } from "api/cache";
+
 import ExtLink from "components/ext-link";
 import { toYYYMMDD } from "components/form";
+import { toUsd } from "helpers/to-usd";
 import { XIcon } from "lucide-react";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
 import { filter_factory } from "./common";
 import { Contacts } from "./contacts";
 import { DateFilter } from "./date-filter";
@@ -17,13 +17,11 @@ import { Socials } from "./socials";
 import type { ISort } from "./sort";
 import { TextFilter } from "./text-filter";
 
-const _usd = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export default function Page() {
-  const data = useCachedLoaderData<LoaderData>();
+export default CacheRoute(Page);
+function Page({ loaderData: data }: Route.ComponentProps) {
   const [params, setParams] = useSearchParams();
   const { sort, ...filters } = Object.fromEntries(params.entries());
   const sort_obj: ISort = {
@@ -79,7 +77,7 @@ export default function Page() {
           {data.num_items > 0 && (
             <a
               aria-disabled={data.num_items > 100_000}
-              href={`/api/marketing/npos/export?${params.toString()}`}
+              href={`/api/irs-npos/export?${params.toString()}`}
               className="btn btn-blue text-xs px-3 py-1"
             >
               {data.num_items > 100_000 ? "Too many records" : "Export"}
@@ -289,7 +287,7 @@ export default function Page() {
             </thead>
             <tbody>
               {data.items.map((d, i) => (
-                <tr key={d._id + i}>
+                <tr key={i}>
                   <td>
                     {d.last_updated && toYYYMMDD(new Date(d.last_updated))}
                   </td>
@@ -322,18 +320,18 @@ export default function Page() {
                   <td>{d.asset_code}</td>
                   <td>
                     {d.asset_amount && !Number.isNaN(d.asset_amount)
-                      ? _usd.format(d.asset_amount)
+                      ? toUsd(d.asset_amount)
                       : "-"}
                   </td>
                   <td>{d.income_code}</td>
                   <td>
                     {d.income_amount && !Number.isNaN(d.income_amount)
-                      ? _usd.format(d.income_amount)
+                      ? toUsd(d.income_amount)
                       : "-"}
                   </td>
                   <td>
                     {d.revenue_amount && !Number.isNaN(d.revenue_amount)
-                      ? _usd.format(d.revenue_amount)
+                      ? toUsd(d.revenue_amount)
                       : "-"}
                   </td>
 

@@ -1,4 +1,3 @@
-import { logger } from "helpers/logger";
 import { uploadFile } from "helpers/upload-file";
 import { type ReactNode, forwardRef, useState } from "react";
 import { useDropzone } from "react-dropzone-esm";
@@ -36,7 +35,7 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
       const url = await uploadFile(f);
       return props.onChange(url);
     } catch (err) {
-      logger.error(err);
+      console.error(err);
       return props.onChange("failure");
     }
   };

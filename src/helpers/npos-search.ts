@@ -78,7 +78,7 @@ class Filter {
   }
 }
 
-export const nposParams = (request: Request) => {
+export const npos_search = (request: Request) => {
   const url = new URL(request.url);
   const {
     last_updated = "",
