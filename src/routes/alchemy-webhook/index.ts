@@ -2,15 +2,9 @@ import crypto from "node:crypto";
 import type { Alert } from "@better-giving/helpers/discord";
 import { resp } from "helpers/https";
 import type { Route } from "./+types";
-import { usd_rate } from "./cg-request";
-import type { IPayload, TAlchemyChainId } from "./types";
-import { deposit_addrs_envs } from ".server/env";
+import type { IPayload, IPriceByKey, TAlchemyChainId } from "./types";
+import { coingecko_api_key, deposit_addrs_envs } from ".server/env";
 import { discordAwsMonitor } from ".server/sdks";
-
-const cg_native_ids: { [key in TAlchemyChainId]: string } = {
-  "eth-mainnet": "ethereum",
-  "bnb-mainnet": "binancecoin",
-};
 
 const cg_platform_ids: { [key in TAlchemyChainId]: string } = {
   "eth-mainnet": "ethereum",
@@ -40,32 +34,40 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
   for (const activity of p.event.activity) {
     // we are only interested in receives
     const to = deposit_addrs_envs(chain_env_key[chain_id]);
-    if (activity.toAddress !== to) continue;
-
-    let rate = 0;
-    let asset = cg_native_ids[chain_id];
+    if (activity.toAddress !== to) {
+      console.warn(`not a receive transaction, to: ${activity.toAddress}`);
+      continue;
+    }
     const contract = activity.rawContract.address?.toLowerCase();
-    if (contract) {
-      const platform = cg_platform_ids[chain_id];
-      rate = await usd_rate(
-        `api/v3/simple/token_price/${platform}?contract_addresses=${contract}&vs_currencies=usd`,
-        contract
-      );
-      asset = activity.asset;
-    } else {
-      rate = await usd_rate(
-        `api/v3/simple/price?ids=${asset}&vs_currencies=usd`,
-        asset
-      );
+    if (!contract) {
+      console.warn("not a token transfer, skipping");
+      continue;
     }
 
-    const usd_value = activity.value * rate;
+    // fetch usd_rate
+    const platform = cg_platform_ids[chain_id];
+    const path = `api/v3/simple/token_price/${platform}?contract_addresses=${contract}&vs_currencies=usd`;
+    const cg_res = await fetch(`https://api.coingecko.com/${path}`, {
+      headers: {
+        accept: "application/json",
+        "x-cg-demo-api-key": coingecko_api_key,
+      },
+    });
+    if (!cg_res.ok) {
+      console.error(`cg fetch failed: ${cg_res.statusText}`);
+      continue;
+    }
+
+    const data: IPriceByKey = await cg_res.json();
+    const usd_rate = data?.[contract]?.usd ?? 0;
+
+    const usd_value = activity.value * usd_rate;
     const alert: Alert = {
       from: "alchemy-webhook",
       type: "NOTICE",
       title: `New ${chain_id} donation`,
       fields: [
-        { name: "Asset", value: asset, inline: true },
+        { name: "Asset", value: activity.asset, inline: true },
         { name: "Chain", value: chain_id, inline: true },
         { name: "From", value: activity.fromAddress },
         { name: "Amount", value: activity.value.toString(), inline: true },

@@ -24,3 +24,7 @@ export interface IPayload {
     activity: IActivity[];
   };
 }
+
+export interface IPriceByKey {
+  [address_or_coin_id: string]: { usd?: number } | undefined;
+}
