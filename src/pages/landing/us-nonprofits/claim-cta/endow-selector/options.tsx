@@ -1,7 +1,7 @@
 import type { INposPage } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import Image from "components/image";
-import QueryLoader from "components/query-loader";
+import { Image } from "components/image";
+import { QueryLoader } from "components/query-loader";
 import useDebouncer from "hooks/use-debouncer";
 import useSWR from "swr/immutable";
 

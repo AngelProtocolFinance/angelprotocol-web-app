@@ -1,6 +1,6 @@
 import type { INposSearch } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import Image from "components/image";
+import { Image } from "components/image";
 import { ErrorStatus, Info, LoadingStatus } from "components/status";
 import useDebouncer from "hooks/use-debouncer";
 import useSWR from "swr/immutable";

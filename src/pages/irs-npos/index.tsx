@@ -3,7 +3,7 @@ import { ListFilter } from "./list-filter";
 import { Paginator } from "./paginator";
 import { RangeFilter } from "./range-filter";
 
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { toYYYMMDD } from "components/form";
 import { toUsd } from "helpers/to-usd";
 import { XIcon } from "lucide-react";

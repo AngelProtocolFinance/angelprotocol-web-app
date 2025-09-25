@@ -1,33 +1,19 @@
 import { Field, Label, Switch } from "@headlessui/react";
 import { unpack } from "helpers/unpack";
 import type { PropsWithChildren } from "react";
-import {
-  type FieldValues as FV,
-  type Path,
-  get,
-  useController,
-  useFormContext,
-} from "react-hook-form";
 
 type Classes = { container?: string; label?: string; error?: string };
 
-interface BaseProps extends PropsWithChildren {
+interface Props extends PropsWithChildren {
   classes?: Classes;
   disabled?: boolean;
   required?: boolean;
-}
-
-interface Props<T extends FV> extends BaseProps {
-  name: Path<T>;
-}
-
-interface ControlledProps extends BaseProps {
   value: boolean;
   onChange: (val: boolean) => void;
   error?: string;
 }
 
-export const ControlledToggle = ({ children, ...props }: ControlledProps) => {
+export const Toggle = ({ children, ...props }: Props) => {
   const cls = unpack(props.classes);
   return (
     <Field
@@ -63,26 +49,3 @@ export const ControlledToggle = ({ children, ...props }: ControlledProps) => {
     </Field>
   );
 };
-
-export default function Toggle<T extends FV>({
-  name,
-  disabled,
-  ...props
-}: Props<T>) {
-  const {
-    formState: { isSubmitting, errors },
-  } = useFormContext<T>();
-  const {
-    field: { onChange, value },
-  } = useController<Record<string, boolean>>({ name });
-
-  return (
-    <ControlledToggle
-      value={value}
-      onChange={onChange}
-      disabled={disabled || isSubmitting}
-      {...props}
-      error={get(errors, name)?.message}
-    />
-  );
-}

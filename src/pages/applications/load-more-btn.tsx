@@ -1,4 +1,4 @@
-import LoaderRing from "components/loader-ring";
+import { LoaderRing } from "components/loader-ring";
 
 export default function LoadMoreBtn({
   onLoadMore,

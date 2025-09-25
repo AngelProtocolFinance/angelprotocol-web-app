@@ -1,12 +1,12 @@
 import { CircleAlert } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import Status from "./status";
+import { Status } from "./status";
 
 type Props = PropsWithChildren<{
   classes?: string;
 }>;
 
-export default function Info({ classes = "", children }: Props) {
+export function Info({ classes = "", children }: Props) {
   return (
     <Status
       inline

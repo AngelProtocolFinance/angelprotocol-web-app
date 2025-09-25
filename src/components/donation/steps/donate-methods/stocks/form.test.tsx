@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import type { Init, StocksDonationDetails } from "../../types";
-import Form from "./form";
+import { Form } from "./form";
 
 const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({

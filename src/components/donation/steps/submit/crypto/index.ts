@@ -1,1 +1,1 @@
-export { default } from "./crypto";
+export { Crypto } from "./crypto";

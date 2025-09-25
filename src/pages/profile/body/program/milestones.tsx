@@ -1,5 +1,5 @@
 import type { IMilestone } from "@better-giving/endowment";
-import Image from "components/image";
+import { Image } from "components/image";
 import { RichText } from "components/rich-text";
 import { Info } from "components/status";
 import Container from "../common/container";

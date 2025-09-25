@@ -1,5 +1,5 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/image";
+import { Image } from "components/image";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { toUsd } from "helpers/to-usd";
 import { CircleHelpIcon, TrendingDown, TrendingUp } from "lucide-react";

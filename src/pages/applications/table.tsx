@@ -1,9 +1,9 @@
 import type { IReg, TStatus } from "@better-giving/reg";
 import { HeaderButton } from "components/header-button";
-import TableSection, { Cells } from "components/table-section";
+import { Cells, TableSection } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";
-import useSort from "hooks/use-sort";
+import { use_sort } from "hooks/use-sort";
 import { Folder } from "lucide-react";
 import { NavLink } from "react-router";
 import type { IPaginator } from "types/components";
@@ -18,7 +18,7 @@ export function Table({
   loading,
   load_next,
 }: Props) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
+  const { handleHeaderClick, sorted, sortDirection, sortKey } = use_sort(
     items,
     "updated_at"
   );

@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 
-export default function Group({
+export function Group({
   className = "",
   description,
   title,

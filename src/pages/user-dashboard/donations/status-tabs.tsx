@@ -5,7 +5,7 @@ type Props = {
   changeStatus: (status: DonationsQueryParams["status"]) => void;
 };
 
-export default function StatusTabs(props: Props) {
+export function StatusTabs(props: Props) {
   return (
     <div className="inline-flex">
       <button

@@ -1,10 +1,10 @@
 import type { IFundItem } from "@better-giving/fundraiser";
 import flying_character from "assets/images/flying-character.webp";
-import Image from "components/image";
+import { Image } from "components/image";
 import { toText } from "components/rich-text";
 import { ShareButton } from "components/share-btn";
 import { Target, toTarget } from "components/target";
-import VerifiedIcon from "components/verified-icon";
+import { VerifiedIcon } from "components/verified-icon";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { NavLink } from "react-router";

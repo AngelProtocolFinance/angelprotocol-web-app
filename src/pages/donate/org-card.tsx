@@ -1,5 +1,5 @@
 import type { DonateData } from "api/donate-loader";
-import Image from "components/image";
+import { Image } from "components/image";
 import { type TTarget, Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Await, Link } from "react-router";

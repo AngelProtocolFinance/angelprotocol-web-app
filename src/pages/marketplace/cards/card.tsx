@@ -1,9 +1,9 @@
 import flying_character from "assets/images/flying-character.webp";
-import BookmarkBtn from "components/bookmark-btn";
-import Image from "components/image";
+import { BookmarkBtn } from "components/bookmark-btn";
+import { Image } from "components/image";
 import { ShareButton } from "components/share-btn";
 import { Target, toTarget } from "components/target";
-import VerifiedIcon from "components/verified-icon";
+import { VerifiedIcon } from "components/verified-icon";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";

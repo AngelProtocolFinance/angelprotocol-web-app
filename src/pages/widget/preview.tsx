@@ -1,7 +1,7 @@
 import type { INpo } from "@better-giving/endowment";
 import { laira } from "assets/laira/laira";
 import { type DonationState, Steps, init_details } from "components/donation";
-import Image from "components/image/image";
+import { Image } from "components/image/image";
 import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
 import type { WidgetConfig } from "types/widget";

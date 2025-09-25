@@ -2,7 +2,7 @@ import { BadgeCheck } from "lucide-react";
 import { Arrow, Content, Tooltip } from "./tooltip";
 type Props = { size: number; classes?: string };
 
-export default function VerifiedIcon({ size, classes = "" }: Props) {
+export function VerifiedIcon({ size, classes = "" }: Props) {
   return (
     <Tooltip
       tip={

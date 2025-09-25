@@ -1,5 +1,5 @@
 import { priority_nums } from "@better-giving/banking-applications/schema";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { use_action_result } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";

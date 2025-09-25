@@ -1,6 +1,6 @@
 import React, { cloneElement } from "react";
 
-export default function TableSection(props: HeadProps | BodyProps) {
+export function TableSection(props: HeadProps | BodyProps) {
   return React.createElement(props.type, {
     className: props.classes,
     children: React.Children.map(props.children, (child, index) => {

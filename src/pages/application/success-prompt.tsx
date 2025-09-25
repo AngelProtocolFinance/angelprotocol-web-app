@@ -1,5 +1,3 @@
-import { PromptV2 } from "components/prompt";
-const SuccessPrompt = () => (
-  <PromptV2 type="success">Review submitted</PromptV2>
-);
+import { Prompt } from "components/prompt";
+const SuccessPrompt = () => <Prompt type="success">Review submitted</Prompt>;
 export default SuccessPrompt;

@@ -1,4 +1,4 @@
-import Image from "components/image";
+import { Image } from "components/image";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
 import fiscalsponsorshipImg from "./images/fiscal-sponsorship.webp";

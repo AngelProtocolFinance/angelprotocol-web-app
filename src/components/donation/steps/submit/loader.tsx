@@ -1,9 +1,9 @@
-import LoaderRing from "components/loader-ring";
+import { LoaderRing } from "components/loader-ring";
 
 type Props = {
   msg?: string;
 };
-export default function Loader({ msg }: Props) {
+export function Loader({ msg }: Props) {
   return (
     <div
       data-testid="loader"

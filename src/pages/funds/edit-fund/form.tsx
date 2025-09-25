@@ -1,7 +1,7 @@
 import type { IFundUpdate } from "@better-giving/fundraiser";
 import { Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import { ControlledImgEditor as ImgEditor } from "components/img-editor";
+import { ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { use_action_result } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";

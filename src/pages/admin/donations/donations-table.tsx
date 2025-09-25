@@ -1,11 +1,11 @@
-import CsvExporter from "components/csv-exporter";
+import { CsvExporter } from "components/csv-exporter";
 import { humanize } from "helpers/decimal";
 import { replaceWithEmptyString } from "helpers/replace-with-empty-string";
 import { ArrowDownToLine } from "lucide-react";
 import type { IPaginator } from "types/components";
 import type { Donation } from "types/donations";
 import type { Ensure } from "types/utils";
-import Table from "./table";
+import { Table } from "./table";
 
 interface Props extends IPaginator<Donation.Item> {}
 

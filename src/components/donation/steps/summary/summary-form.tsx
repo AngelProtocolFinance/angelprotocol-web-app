@@ -11,7 +11,7 @@ import {
   donor_public_msg_max_length,
 } from "types/donation-intent";
 import { type InferOutput, boolean, object, optional } from "valibot";
-import ContinueBtn from "../common/continue-btn";
+import { ContinueBtn } from "../common/continue-btn";
 import { TributeFields } from "../common/tribute-fields";
 import { type Mode, type Tribute, tribute } from "../types";
 

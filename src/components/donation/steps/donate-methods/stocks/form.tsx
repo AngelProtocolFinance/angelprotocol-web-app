@@ -3,7 +3,7 @@ import { Field, Form as FormContainer } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
-import ContinueBtn from "../../common/continue-btn";
+import { ContinueBtn } from "../../common/continue-btn";
 import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import type { StockFormStep, StocksDonationDetails } from "../../types";
@@ -13,7 +13,7 @@ type FV = Omit<StocksDonationDetails, "method" | "numShares"> & {
   numShares: string;
 };
 
-export default function Form(props: StockFormStep) {
+export function Form(props: StockFormStep) {
   const { set_state } = use_donation_state();
   const {
     register,

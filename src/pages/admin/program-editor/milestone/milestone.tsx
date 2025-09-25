@@ -7,7 +7,7 @@ import {
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, Form, Label, toYYYMMDD } from "components/form";
 import { DrawerIcon } from "components/icon";
-import { ControlledImgEditor as ImgEditor } from "components/img-editor";
+import { ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
 import { useFetcher } from "react-router";

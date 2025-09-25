@@ -1,1 +1,1 @@
-export { default } from "./form";
+export { Form } from "./form";

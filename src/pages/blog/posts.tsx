@@ -1,5 +1,5 @@
 import { posts } from "api/get/wp-posts";
-import Media from "components/media";
+import { Media } from "components/media";
 import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
 import { NavLink, useFetcher, useSearchParams } from "react-router";

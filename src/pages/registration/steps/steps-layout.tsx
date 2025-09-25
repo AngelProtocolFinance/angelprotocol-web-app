@@ -1,5 +1,5 @@
 import { Progress } from "@better-giving/reg/progress";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { appRoutes } from "constants/routes";
 import { Outlet, useRouteLoaderData } from "react-router";
 import type { Reg$IdData } from "../types";

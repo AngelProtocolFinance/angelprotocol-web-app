@@ -1,1 +1,1 @@
-export { default } from "./csv-exporter";
+export { CsvExporter } from "./csv-exporter";

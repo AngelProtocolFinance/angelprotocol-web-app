@@ -1,6 +1,6 @@
 import type { IProgramDb } from "@better-giving/endowment";
-import Image from "components/image";
-import LoaderRing from "components/loader-ring";
+import { Image } from "components/image";
+import { LoaderRing } from "components/loader-ring";
 import { adminRoutes } from "constants/routes";
 import { Link, useFetcher } from "react-router";
 

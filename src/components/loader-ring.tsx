@@ -5,7 +5,7 @@ type Classes =
       ringToColor?: "to-blue-d1" | "to-white" | "to-(--accent-primary)";
     };
 
-export default function LoaderRing({
+export function LoaderRing({
   thickness,
   classes = "",
 }: {

@@ -1,5 +1,5 @@
 import type { IProgramDb } from "@better-giving/endowment";
-import Image from "components/image";
+import { Image } from "components/image";
 import { RichText } from "components/rich-text";
 import { Link } from "react-router";
 

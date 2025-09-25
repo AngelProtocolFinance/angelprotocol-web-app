@@ -4,7 +4,7 @@ import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types/home";
 import { Animation } from "./animation";
 import Benefits from "./benefits";
-import Blogs from "./blogs";
+import { Blogs } from "./blogs";
 import { BottomCta } from "./bottom-cta";
 import Brands from "./brands";
 import { Feature1 } from "./feature1";

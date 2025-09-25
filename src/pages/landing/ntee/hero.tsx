@@ -1,4 +1,4 @@
-import Image from "components/image";
+import { Image } from "components/image";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";

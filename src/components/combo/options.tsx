@@ -10,7 +10,7 @@ type Props = {
   option_disp: (string: string) => ReactNode;
 };
 
-export default function Options({ query, options, option_disp }: Props) {
+export function Options({ query, options, option_disp }: Props) {
   const filtered = options.filter((o) =>
     o.toLowerCase().includes(query.toLowerCase())
   );

@@ -1,7 +1,7 @@
 import googleIcon from "assets/icons/google.svg";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { Input, PasswordInput, RmxForm } from "components/form";
-import Image from "components/image";
+import { Image } from "components/image";
 import { Separator } from "components/separator";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";

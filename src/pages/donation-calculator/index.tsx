@@ -1,5 +1,5 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/image";
+import { Image } from "components/image";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
 import { useState } from "react";

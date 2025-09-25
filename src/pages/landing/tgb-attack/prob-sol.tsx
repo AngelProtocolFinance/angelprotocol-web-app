@@ -1,5 +1,5 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/image";
+import { Image } from "components/image";
 import { Heart, X } from "lucide-react";
 
 const solutions = [

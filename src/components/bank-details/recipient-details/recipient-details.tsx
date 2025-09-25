@@ -15,7 +15,7 @@ type Props = {
   verified?: boolean;
 };
 
-function RecipientDetails({
+function _RecipientDetails({
   amount,
   currency,
   disabled,
@@ -90,4 +90,4 @@ function RecipientDetails({
   );
 }
 
-export default memo(RecipientDetails);
+export const RecipientDetails = memo(_RecipientDetails);

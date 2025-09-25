@@ -6,7 +6,7 @@ import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import { stb } from "../../__tests__/test-data";
 import type { Init, StripeDonationDetails } from "../../types";
-import Form from "./form";
+import { Form } from "./form";
 
 const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({

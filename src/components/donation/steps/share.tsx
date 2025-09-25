@@ -6,7 +6,7 @@ import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { X } from "lucide-react";
 import { useCallback, useState } from "react";
-import ExtLink from "../../ext-link";
+import { ExtLink } from "../../ext-link";
 import { Modal } from "../../modal";
 import { type DonationRecipient, is_fund } from "./types";
 
@@ -43,10 +43,7 @@ interface ShareProps extends Recipient {
   className?: string;
 }
 
-export default function ShareContainer({
-  className = "",
-  ...recipient
-}: ShareProps) {
+export function ShareContainer({ className = "", ...recipient }: ShareProps) {
   return (
     <div className={`${className} grid justify-items-center py-2`}>
       <h2 className="w-full pt-2 text-center font-medium text-[color:var(--accent-primary)] mb-2">

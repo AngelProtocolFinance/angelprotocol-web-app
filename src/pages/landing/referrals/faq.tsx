@@ -1,4 +1,4 @@
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { referrals_hub } from "constants/urls";
 import { ArrowRight } from "lucide-react";
 

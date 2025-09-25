@@ -1,1 +1,1 @@
-export { default } from "./recipient-details";
+export { RecipientDetails } from "./recipient-details";

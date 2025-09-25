@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "react";
 
-export default function ContentLoader({
+export function ContentLoader({
   className = "",
   ...props
 }: HTMLAttributes<HTMLDivElement>) {

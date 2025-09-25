@@ -1,11 +1,11 @@
 import { wp } from "api/api";
 import useSWR from "swr/immutable";
 import type { IMedia } from "types/wordpress";
-import Image from "./image";
+import { Image } from "./image";
 
 type Props = { id: number; classes?: string; sizes: string };
 
-export default function Media(props: Props) {
+export function Media(props: Props) {
   const {
     data: media,
     isLoading,

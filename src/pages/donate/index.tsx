@@ -1,6 +1,6 @@
 import flying_character from "assets/images/flying-character.webp";
 import { Steps } from "components/donation";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { DappLogo } from "components/image";
 import { INTERCOM_HELP } from "constants/env";
 import { APP_NAME, BASE_URL } from "constants/env";

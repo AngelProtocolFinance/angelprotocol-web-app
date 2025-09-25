@@ -1,6 +1,6 @@
 import flying_character from "assets/images/flying-character.webp";
-import ContentLoader from "components/content-loader";
-import Image from "components/image";
+import { ContentLoader } from "components/content-loader";
+import { Image } from "components/image";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
 import type { EndowmentCard } from "types/npo";

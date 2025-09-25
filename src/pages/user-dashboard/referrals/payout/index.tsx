@@ -1,5 +1,5 @@
 import { BankDetails } from "components/bank-details";
-import { type IPromptV2, PromptV2 } from "components/prompt";
+import { type IPrompt, Prompt } from "components/prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { Link, useFetcher } from "react-router";
@@ -10,7 +10,7 @@ export { ErrorBoundary } from "components/error";
 
 export default function Payout() {
   const fetcher = useFetcher();
-  const [prompt, setPrompt] = useState<IPromptV2>();
+  const [prompt, setPrompt] = useState<IPrompt>();
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function Payout() {
         }
         isLoading={fetcher.state !== "idle"}
       />
-      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+      {prompt && <Prompt {...prompt} onClose={() => setPrompt(undefined)} />}
     </>
   );
 }

@@ -4,9 +4,9 @@ import linkedin from "assets/icons/social/linkedin.webp";
 import x from "assets/icons/social/x.webp";
 import youtube from "assets/icons/social/youtube.webp";
 import { socials } from "constants/urls";
-import ExtLink from "../ext-link";
+import { ExtLink } from "../ext-link";
 
-export default function Socials({ classes = "" }) {
+export function Socials({ classes = "" }) {
   return (
     <div className={`flex items-center gap-3 md:gap-6 ${classes} pb-4`}>
       <ExtLink

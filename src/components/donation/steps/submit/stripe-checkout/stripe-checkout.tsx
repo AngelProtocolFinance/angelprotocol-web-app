@@ -5,12 +5,12 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import useSWR from "swr/immutable";
 import type { DonationIntent } from "types/donation-intent";
 import { currency } from "../../common/currency";
-import Summary from "../../common/summary";
+import { Summary } from "../../common/summary";
 import { use_donation_state } from "../../context";
 import type { StripeCheckoutStep } from "../../types";
 import { DonationTerms } from "../donation-terms";
-import Loader from "../loader";
-import Checkout from "./checkout";
+import { Loader } from "../loader";
+import { Checkout } from "./checkout";
 
 const fetcher = async (intent: DonationIntent) =>
   fetch("/api/donation-intents/stripe", {

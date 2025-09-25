@@ -2,7 +2,7 @@ import type { TRegUpdate } from "@better-giving/reg";
 import { Progress } from "@better-giving/reg/progress";
 import { type OrgDesignation, org_designations } from "@better-giving/schemas";
 import { Combo } from "components/combo";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { Label, UrlInput } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { LoadText } from "components/load-text";

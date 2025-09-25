@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
-export default function ContinueBtn({
+export function ContinueBtn({
   className,
   type = "button",
   text = "Continue",

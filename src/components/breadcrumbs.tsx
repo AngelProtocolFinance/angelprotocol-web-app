@@ -10,7 +10,7 @@ type Props = {
   }[];
 };
 
-export default function Breadcrumbs({ items, className = "" }: Props) {
+export function Breadcrumbs({ items, className = "" }: Props) {
   return (
     <div className={`flex justify-center items-center gap-1 ${className}`}>
       {items.map((item, i) => (

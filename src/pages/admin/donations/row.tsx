@@ -1,4 +1,4 @@
-import Copier from "components/copier";
+import { Copier } from "components/copier";
 import { Cells } from "components/table-section";
 import { appRoutes } from "constants/routes";
 import { toPP } from "helpers/date";

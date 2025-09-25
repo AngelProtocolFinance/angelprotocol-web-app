@@ -5,20 +5,20 @@ import {
 } from "@stripe/react-stripe-js";
 import { ErrorTrigger } from "components/error";
 import { LoadText } from "components/load-text";
-import { type IPromptV2, PromptV2 } from "components/prompt";
+import { type IPrompt, Prompt } from "components/prompt";
 import { appRoutes } from "constants/routes";
 import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import type { StripeCheckoutStep } from "../../types";
-import Loader from "../loader";
+import { Loader } from "../loader";
 
 type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout(props: StripeCheckoutStep) {
+export function Checkout(props: StripeCheckoutStep) {
   const [complete, set_complete] = useState(false);
-  const [prompt, set_prompt] = useState<IPromptV2>();
+  const [prompt, set_prompt] = useState<IPrompt>();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -120,7 +120,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           </LoadText>
         </button>
       )}
-      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
     </form>
   );
 }

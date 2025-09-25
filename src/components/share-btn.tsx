@@ -4,7 +4,7 @@ import instagram from "assets/icons/social/instagram.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
 import x from "assets/icons/social/x.webp";
 import { LinkIcon, MailIcon, ShareIcon } from "lucide-react";
-import Image from "./image";
+import { Image } from "./image";
 
 interface IShareButton {
   orgName: string;

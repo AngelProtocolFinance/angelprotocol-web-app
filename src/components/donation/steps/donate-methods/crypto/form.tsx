@@ -1,7 +1,7 @@
 import { DONATION_INCREMENTS } from "constants/common";
-import TokenField from "../../../../token-field";
-import ContinueBtn from "../../common/continue-btn";
-import Incrementers from "../../common/incrementers";
+import { TokenField } from "../../../../token-field";
+import { ContinueBtn } from "../../common/continue-btn";
+import { Incrementers } from "../../common/incrementers";
 import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import type { CryptoFormStep } from "../../types";
@@ -9,7 +9,7 @@ import { next_form_state } from "../helpers";
 import type { DonateValues } from "./types";
 import { use_rhf } from "./use-rhf";
 
-export default function Form(props: CryptoFormStep) {
+export function Form(props: CryptoFormStep) {
   const { set_state } = use_donation_state();
 
   const { handleSubmit, reset, program, token, errors, on_increment } =

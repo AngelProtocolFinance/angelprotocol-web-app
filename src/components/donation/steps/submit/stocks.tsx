@@ -1,11 +1,11 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import BackBtn from "../common/back-btn";
+import { BackBtn } from "../common/back-btn";
 import { use_donation_state } from "../context";
 import type { StockCheckoutStep } from "../types";
 import { DonationTerms } from "./donation-terms";
 
-export default function Stocks(props: StockCheckoutStep) {
+export function Stocks(props: StockCheckoutStep) {
   const profile_url = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
   const { set_state } = use_donation_state();
   return (

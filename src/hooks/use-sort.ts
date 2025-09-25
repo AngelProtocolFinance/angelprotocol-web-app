@@ -4,7 +4,7 @@ type SortDirection = "asc" | "desc";
 type SortKey<T> = keyof T;
 
 //TODO: remove custom sorter and pass sort params to AWS instead
-export default function useSort<T>(donations: T[], defaultSortKey: keyof T) {
+export function use_sort<T>(donations: T[], defaultSortKey: keyof T) {
   const [sortKey, setSortKey] = useState<SortKey<T>>(defaultSortKey);
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 

@@ -1,4 +1,4 @@
-import ContentLoader from "components/content-loader";
+import { ContentLoader } from "components/content-loader";
 import React, {
   type ReactElement,
   type ReactNode,
@@ -6,14 +6,14 @@ import React, {
   useRef,
   useState,
 } from "react";
-import ImagePlaceholder from "./image-placeholder";
+import { ImagePlaceholder } from "./image-placeholder";
 
 type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   isSrcLoading?: boolean;
   render?: (img: ReactNode) => ReactElement;
 };
 
-const Image = React.forwardRef<HTMLImageElement, ImageProps>(
+export const Image = React.forwardRef<HTMLImageElement, ImageProps>(
   (
     { alt = "", className, isSrcLoading, render, onError, ...props },
     forwardRef
@@ -89,5 +89,3 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     );
   }
 );
-
-export default Image;

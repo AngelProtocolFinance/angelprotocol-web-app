@@ -15,7 +15,7 @@ interface Props {
   onChange: (freq: Freq) => void;
   error?: string;
 }
-export default function Frequency({ value, onChange, error }: Props) {
+export function Frequency({ value, onChange, error }: Props) {
   return (
     <RadioGroup
       value={value}

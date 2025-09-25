@@ -15,7 +15,7 @@ type Props = {
   isDisabled: boolean;
 };
 
-export default function Filter({ classes = "", isDisabled }: Props) {
+export function Filter({ classes = "", isDisabled }: Props) {
   const [params, setParams] = useSearchParams();
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 

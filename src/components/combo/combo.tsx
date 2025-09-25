@@ -9,7 +9,7 @@ import { unpack } from "helpers/unpack";
 import { X } from "lucide-react";
 import { type ReactElement, type ReactNode, forwardRef, useState } from "react";
 
-import Options from "./options";
+import { Options } from "./options";
 
 type El = HTMLInputElement;
 

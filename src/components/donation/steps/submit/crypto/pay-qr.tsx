@@ -1,5 +1,5 @@
 import { isCustom } from "@better-giving/assets/tokens";
-import Copier from "components/copier";
+import { Copier } from "components/copier";
 import { logoUrl } from "constants/common";
 import { QRCodeSVG } from "qrcode.react";
 import type { TokenV2 } from "types/components";

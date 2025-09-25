@@ -5,16 +5,16 @@ import { useEffect } from "react";
 import useSWR from "swr/immutable";
 import type { DBCurrency } from "types/currency";
 import { USD_CODE } from "../../common/constants";
-import ContinueBtn from "../../common/continue-btn";
-import Incrementers from "../../common/incrementers";
+import { ContinueBtn } from "../../common/continue-btn";
+import { Incrementers } from "../../common/incrementers";
 import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import { next_form_state } from "../helpers";
-import Frequency from "./frequency";
+import { Frequency } from "./frequency";
 import type { Props } from "./types";
 import { use_rhf } from "./use-rhf";
 
-export default function Form(props: Props) {
+export function Form(props: Props) {
   const currency = useSWR("/api/currencies", (path) =>
     fetch(path).then((res) => res.json())
   );

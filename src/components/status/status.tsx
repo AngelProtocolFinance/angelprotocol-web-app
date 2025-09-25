@@ -1,6 +1,6 @@
 import type { StatusProps } from "./types";
 
-export default function Status({
+export function Status({
   icon,
   inline = false,
   classes = "",

@@ -1,5 +1,5 @@
 import type { INpo } from "@better-giving/endowment";
-import Copier from "components/copier";
+import { Copier } from "components/copier";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/clean-object";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";

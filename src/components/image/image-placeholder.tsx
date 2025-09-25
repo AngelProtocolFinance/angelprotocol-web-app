@@ -1,6 +1,6 @@
 import { Image } from "lucide-react";
 
-export default function ImagePlaceholder({ className = "" }) {
+export function ImagePlaceholder({ className = "" }) {
   return (
     <div
       className={`${className} flex items-center justify-center bg-blue-l3 dark:bg-blue`}

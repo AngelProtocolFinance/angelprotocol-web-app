@@ -9,7 +9,7 @@ import type {
   StripeDonationDetails,
   SummaryStep,
 } from "../types";
-import Summary from "./summary";
+import { Summary } from "./summary";
 
 vi.mock("../context", () => ({
   use_donation_state: vi

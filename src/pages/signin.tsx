@@ -1,8 +1,8 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import googleIcon from "assets/icons/google.svg";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { Input, PasswordInput, RmxForm } from "components/form";
-import Image from "components/image";
+import { Image } from "components/image";
 import { Separator } from "components/separator";
 import { appRoutes } from "constants/routes";
 import { search } from "helpers/https";

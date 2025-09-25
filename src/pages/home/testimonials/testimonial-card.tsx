@@ -1,4 +1,4 @@
-import Image from "components/image";
+import { Image } from "components/image";
 import type { Testimonial } from "content/testimonials";
 
 const TestimonialCard = (props: Testimonial) => {

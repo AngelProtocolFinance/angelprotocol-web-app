@@ -1,8 +1,8 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import ContentLoader from "components/content-loader";
+import { ContentLoader } from "components/content-loader";
 import { ErrorBoundaryClass } from "components/error";
 import { CheckField, Form } from "components/form";
-import { type IPromptV2, PromptV2 } from "components/prompt";
+import { type IPrompt, Prompt } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { error_prompt } from "helpers/error-prompt";
@@ -29,7 +29,7 @@ import {
 } from "valibot";
 import { currency } from "../../common/currency";
 import { min_fee_allowance } from "../../common/min-fee-allowance";
-import Summary from "../../common/summary";
+import { Summary } from "../../common/summary";
 import { TributeFields } from "../../common/tribute-fields";
 import { use_donation_state } from "../../context";
 import type { DafCheckoutStep, Tribute } from "../../types";
@@ -75,7 +75,7 @@ interface GrantMetaData extends FV {
 
 export function ChariotCheckout(props: DafCheckoutStep) {
   const { set_state } = use_donation_state();
-  const [prompt, setPrompt] = useState<IPromptV2>();
+  const [prompt, setPrompt] = useState<IPrompt>();
   const [grantState, setGrantState] = useState<"pending">();
   const navigate = useNavigate();
 
@@ -360,7 +360,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
         endowName={props.init.recipient.name}
         classes="border-t border-gray-l3 mt-5 pt-4 "
       />
-      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+      {prompt && <Prompt {...prompt} onClose={() => setPrompt(undefined)} />}
     </Summary>
   );
 }

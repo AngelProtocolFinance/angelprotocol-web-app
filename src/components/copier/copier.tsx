@@ -1,7 +1,7 @@
 import { unpack } from "helpers/unpack";
 import { Check, Copy } from "lucide-react";
 import type { ReactNode } from "react";
-import useCopier from "./use-copier";
+import { use_copier } from "./use-copier";
 
 type Classes = string | { container?: string; icon?: string };
 
@@ -12,8 +12,8 @@ type Props = {
   children?: ReactNode;
 };
 
-export default function Copier({ text, classes, size, children }: Props) {
-  const { handleCopy, copied } = useCopier(text);
+export function Copier({ text, classes, size, children }: Props) {
+  const { handle_copy, copied } = use_copier(text);
   const { container, icon } = unpack(classes);
   const { check = 16, copy = 16 } = size
     ? typeof size === "number"
@@ -24,7 +24,7 @@ export default function Copier({ text, classes, size, children }: Props) {
     <button
       className={container + " relative"}
       type="button"
-      onClick={handleCopy}
+      onClick={handle_copy}
     >
       {(copied && (
         <Check

@@ -17,7 +17,7 @@ type State = {
 
 const INIT = "__INIT";
 const context = createContext<State>(INIT as any);
-export default function Context({
+export function Context({
   children,
   ...initState
 }: PropsWithChildren<DonationState>) {

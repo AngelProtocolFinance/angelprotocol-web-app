@@ -1,11 +1,11 @@
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { ArrowUpFromLine, LoaderCircle } from "lucide-react";
 
 interface Props {
   value?: string | File;
 }
 
-export default function DropzoneText({ value }: Props) {
+export function DropzoneText({ value }: Props) {
   if (value == null || value === "") {
     return (
       <div className="grid justify-items-center text-sm text-gray dark:text-gray select-none">

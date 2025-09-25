@@ -1,4 +1,4 @@
-import TableSection, { Cells } from "components/table-section";
+import { Cells, TableSection } from "components/table-section";
 import { Plus } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
 import type { LoaderData } from "./api";

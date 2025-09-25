@@ -1,5 +1,5 @@
-import ContentLoader from "components/content-loader";
-import QueryLoader from "components/query-loader";
+import { ContentLoader } from "components/content-loader";
+import { QueryLoader } from "components/query-loader";
 import { appRoutes } from "constants/routes";
 import { NavLink } from "react-router";
 import useSWR from "swr/immutable";

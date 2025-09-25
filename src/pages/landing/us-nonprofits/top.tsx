@@ -1,5 +1,5 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/image";
+import { Image } from "components/image";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
 import { useLocation } from "react-router";

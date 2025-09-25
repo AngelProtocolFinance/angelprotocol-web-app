@@ -1,9 +1,9 @@
 import dappLogoWhite from "assets/images/bettergiving-logo-white.webp";
 import dappLogo from "assets/images/bg-logo-503c.webp";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
-import Image from "./image";
+import { Image } from "./image";
 
 type Props = {
   classes?: string;
@@ -11,7 +11,7 @@ type Props = {
   to?: { href: string; title: string };
 };
 
-export default function DappLogo({ classes = "", color = "blue", to }: Props) {
+export function DappLogo({ classes = "", color = "blue", to }: Props) {
   return (
     <Image
       className={classes}

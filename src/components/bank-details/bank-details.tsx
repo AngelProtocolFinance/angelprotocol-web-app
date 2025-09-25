@@ -6,7 +6,7 @@ import useDebouncer from "hooks/use-debouncer";
 import { useState } from "react";
 import type { WiseCurrencyOption } from "types/components";
 import { CurrencySelector } from "../currency-selector";
-import RecipientDetails from "./recipient-details";
+import { RecipientDetails } from "./recipient-details";
 import type { IFormButtons, OnSubmit } from "./types";
 import { use_currencies } from "./use-currencies";
 

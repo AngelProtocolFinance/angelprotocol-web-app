@@ -1,7 +1,7 @@
 import { uploadFile } from "helpers/upload-file";
 import { type ReactNode, forwardRef, useState } from "react";
 import { useDropzone } from "react-dropzone-esm";
-import DropzoneText from "./dropzone-text";
+import { DropzoneText } from "./dropzone-text";
 import type { FileOutput, FileSpec } from "./types";
 
 interface Props {

@@ -1,5 +1,5 @@
 import { randomLaira } from "assets/laira/laira";
-import Image from "components/image";
+import { Image } from "components/image";
 import { Info, LoadingStatus } from "components/status";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";

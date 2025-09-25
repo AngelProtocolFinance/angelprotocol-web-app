@@ -13,7 +13,7 @@ interface Props {
   classes?: string;
 }
 
-export default function Incrementers({
+export function Incrementers({
   increments = DONATION_INCREMENTS,
   classes = "",
   ...props

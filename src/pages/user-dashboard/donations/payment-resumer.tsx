@@ -1,7 +1,7 @@
 import tokens from "@better-giving/assets/tokens/map";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
-import PromptV2, { type IPromptV2 } from "components/prompt";
+import { type IPrompt, Prompt } from "components/prompt";
 import { roundToCents } from "helpers/decimal";
 import { error_prompt } from "helpers/error-prompt";
 import { useState } from "react";
@@ -17,10 +17,10 @@ interface Props {
   classes?: string;
   amount: number;
 }
-export default function PaymentResumer({ payment_id, classes, amount }: Props) {
+export function PaymentResumer({ payment_id, classes, amount }: Props) {
   const [intent_state, set_intent_state] = useState<"pending">();
   const [qr, set_qr] = useState<IQrModal>();
-  const [prompt, set_prompt] = useState<IPromptV2>();
+  const [prompt, set_prompt] = useState<IPrompt>();
 
   return (
     <button
@@ -50,7 +50,7 @@ export default function PaymentResumer({ payment_id, classes, amount }: Props) {
     >
       {intent_state === "pending" ? "Loading..." : "Finish paying"}
       {qr && <QrModal {...qr} on_close={() => set_qr(undefined)} />}
-      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
     </button>
   );
 }

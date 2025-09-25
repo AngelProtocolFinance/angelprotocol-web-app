@@ -1,4 +1,4 @@
-import type { IPromptV2 } from "components/prompt";
+import type { IPrompt } from "components/prompt";
 import { error_prompt } from "helpers/error-prompt";
 import { use_action_result } from "hooks/use-action-result";
 import { useState } from "react";
@@ -13,7 +13,7 @@ type DirtyFields = FieldNamesMarkedBoolean<FV>;
 export function use_edit_npo(df: DirtyFields) {
   const fetcher = useFetcher();
   use_action_result(fetcher.data);
-  const [prompt, set_prompt] = useState<IPromptV2>();
+  const [prompt, set_prompt] = useState<IPrompt>();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {

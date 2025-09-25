@@ -1,7 +1,7 @@
 import type { INpo } from "@better-giving/endowment";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
-import Image from "components/image";
+import { Image } from "components/image";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
 import { Outlet } from "react-router";

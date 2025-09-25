@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
 
-const copyWaitTime = 700;
+const copy_wait_time = 700;
 
-export default function useCopier(text: string) {
-  const [copied, setCopied] = useState(false);
+export function use_copier(text: string) {
+  const [copied, set_copied] = useState(false);
 
   useEffect(() => {
     (async () => {
       if (copied) {
-        await new Promise((r) => setTimeout(r, copyWaitTime));
-        setCopied(false);
+        await new Promise((r) => setTimeout(r, copy_wait_time));
+        set_copied(false);
       }
     })();
   }, [copied]);
 
-  async function handleCopy() {
+  async function handle_copy() {
     //write access is automatically granted on active tab
     if (!text) {
       return;
     }
     await navigator.clipboard.writeText(text);
-    setCopied(true);
+    set_copied(true);
   }
 
-  return { handleCopy, copied };
+  return { handle_copy, copied };
 }

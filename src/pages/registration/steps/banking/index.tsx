@@ -1,5 +1,5 @@
 import { BankDetails, type OnSubmit } from "components/bank-details";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
 import { NavLink, useFetcher } from "react-router";

@@ -1,8 +1,8 @@
 import char from "assets/images/celebrating-character.webp";
 import { laira } from "assets/laira/laira";
 import { Share, donation_recipient, is_fund } from "components/donation";
-import ExtLink from "components/ext-link";
-import Image from "components/image";
+import { ExtLink } from "components/ext-link";
+import { Image } from "components/image";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";

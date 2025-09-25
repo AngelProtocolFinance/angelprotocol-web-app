@@ -1,13 +1,13 @@
 import chains from "@better-giving/assets/chains";
-import ContentLoader from "components/content-loader";
-import QueryLoader from "components/query-loader";
+import { ContentLoader } from "components/content-loader";
+import { QueryLoader } from "components/query-loader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers/decimal";
 import { useNavigate } from "react-router";
 import useSWR from "swr/immutable";
 import type { Payment } from "types/crypto";
 import type { DonationIntent } from "types/donation-intent";
-import ContinueBtn from "../../common/continue-btn";
+import { ContinueBtn } from "../../common/continue-btn";
 import type { CryptoSubmitStep } from "../../types";
 import { PayQr } from "./pay-qr";
 
@@ -22,7 +22,7 @@ const fetcher = async (intent: DonationIntent) =>
     body: JSON.stringify(intent),
   }).then<Payment>((res) => res.json());
 
-export default function DirectMode({ donation, classes = "" }: Props) {
+export function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
   const { details, init, tip, donor, fee_allowance, tribute } = donation;

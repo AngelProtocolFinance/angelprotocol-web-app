@@ -3,20 +3,20 @@ import type { PropsWithChildren } from "react";
 import { useNavigate } from "react-router";
 import { Modal } from "../modal";
 import { PromptIcon } from "./prompt-icon";
-export interface Props extends PropsWithChildren {
+export interface IPrompt extends PropsWithChildren {
   type?: "success" | "error" | "loading";
   open?: boolean;
   onClose?: () => void;
   isDismissable?: boolean;
 }
 
-export function PromptV2({
+export function Prompt({
   type,
   children,
   onClose,
   open,
   isDismissable = true,
-}: Props) {
+}: IPrompt) {
   const navigate = useNavigate();
   function close() {
     if (!isDismissable) return;

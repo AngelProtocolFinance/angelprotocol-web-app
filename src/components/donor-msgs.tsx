@@ -1,5 +1,5 @@
 import laira from "assets/laira/laira-face.png";
-import Image from "components/image";
+import { Image } from "components/image";
 import useSWR from "swr/immutable";
 
 interface Props {

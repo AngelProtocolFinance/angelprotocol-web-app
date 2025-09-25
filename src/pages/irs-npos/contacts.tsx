@@ -1,4 +1,4 @@
-import Copier from "components/copier";
+import { Copier } from "components/copier";
 import type { Contact } from "types/mongodb/nonprofits";
 
 interface Props {

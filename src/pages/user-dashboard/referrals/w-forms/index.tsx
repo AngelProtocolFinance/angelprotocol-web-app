@@ -1,5 +1,5 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { useNavigate } from "react-router";
 import type { Route } from "./+types";
 import type { LoaderData } from "./api";

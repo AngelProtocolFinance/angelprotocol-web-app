@@ -1,4 +1,4 @@
-import CsvExporter from "components/csv-exporter";
+import { CsvExporter } from "components/csv-exporter";
 import { humanize } from "helpers/decimal";
 import { replaceWithEmptyString as fill } from "helpers/replace-with-empty-string";
 import { use_paginator } from "hooks/use-paginator";
@@ -8,9 +8,9 @@ import { Outlet, useSearchParams } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Donation } from "types/donations";
 import type { Route } from "./+types";
-import Filter from "./filter";
-import NoDonations from "./no-donations";
-import StatusTabs from "./status-tabs";
+import { Filter } from "./filter";
+import { NoDonations } from "./no-donations";
+import { StatusTabs } from "./status-tabs";
 import { Table } from "./table";
 
 export { loader } from "./donations-loader";

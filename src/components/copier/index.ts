@@ -1,1 +1,1 @@
-export { default } from "./copier";
+export { Copier } from "./copier";

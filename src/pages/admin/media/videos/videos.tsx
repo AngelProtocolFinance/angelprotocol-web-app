@@ -1,4 +1,4 @@
-import Breadcrumbs from "components/breadcrumbs";
+import { Breadcrumbs } from "components/breadcrumbs";
 import { appRoutes } from "constants/routes";
 import { use_paginator } from "hooks/use-paginator";
 import { Plus } from "lucide-react";

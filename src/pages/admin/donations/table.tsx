@@ -1,14 +1,14 @@
 import { HeaderButton } from "components/header-button";
-import TableSection, { Cells } from "components/table-section";
-import useSort from "hooks/use-sort";
+import { Cells, TableSection } from "components/table-section";
+import { use_sort } from "hooks/use-sort";
 import type { IPaginator } from "types/components";
 import type { Donation } from "types/donations";
 import Row from "./row";
 
 interface Props extends IPaginator<Donation.Item> {}
 
-export default function Table({ items, load_next, loading, disabled }: Props) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
+export function Table({ items, load_next, loading, disabled }: Props) {
+  const { handleHeaderClick, sorted, sortDirection, sortKey } = use_sort(
     items,
     "date"
   );

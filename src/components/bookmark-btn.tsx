@@ -11,7 +11,7 @@ type Props = {
   user: DetailedUser | null;
 };
 
-export default function Loader({ classes = "", user, endowId }: Props) {
+export function BookmarkBtn({ classes = "", user, endowId }: Props) {
   if (!user) {
     return (
       <Tooltip
@@ -30,7 +30,7 @@ export default function Loader({ classes = "", user, endowId }: Props) {
     <Suspense fallback={<Heart size={19} className={`${classes} text-gray`} />}>
       <Await resolve={user.bookmarks}>
         {(loaded) => (
-          <BookmarkBtn
+          <Loaded
             bookmarks={loaded}
             user={user}
             endowId={endowId}
@@ -42,7 +42,7 @@ export default function Loader({ classes = "", user, endowId }: Props) {
   );
 }
 
-interface IBookmarkBtn {
+interface ILoaded {
   /** user endow */
   endowId: number;
   user: UserV2;
@@ -50,7 +50,7 @@ interface IBookmarkBtn {
   classes?: string;
 }
 
-function BookmarkBtn({ bookmarks, classes = "", endowId }: IBookmarkBtn) {
+function Loaded({ bookmarks, classes = "", endowId }: ILoaded) {
   const fetcher = useFetcher({ key: `bookmark-${endowId}` });
   const isBookmarked = fetcher.data
     ? fetcher.data === "add"

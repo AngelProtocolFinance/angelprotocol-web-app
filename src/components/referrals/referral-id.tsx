@@ -1,4 +1,4 @@
-import Copier from "components/copier";
+import { Copier } from "components/copier";
 import { appRoutes, regRoutes } from "constants/routes";
 
 interface Props {

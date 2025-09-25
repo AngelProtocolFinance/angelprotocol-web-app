@@ -1,15 +1,15 @@
 import chains from "@better-giving/assets/chains";
 import { isCustom } from "@better-giving/assets/tokens";
 import { logoUrl } from "constants/common";
-import Image from "../../../../image";
-import Summary from "../../common/summary";
+import { Image } from "../../../../image";
+import { Summary } from "../../common/summary";
 import { token } from "../../common/token";
 import { use_donation_state } from "../../context";
 import type { CryptoSubmitStep } from "../../types";
 import { DonationTerms } from "../donation-terms";
-import DirectMode from "./direct-mode";
+import { DirectMode } from "./direct-mode";
 
-export default function Crypto(props: CryptoSubmitStep) {
+export function Crypto(props: CryptoSubmitStep) {
   const { set_state } = use_donation_state();
   const { details, tip, fee_allowance } = props;
   const Amount = token(details.token.rate, details.token.precision);

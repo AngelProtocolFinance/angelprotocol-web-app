@@ -3,14 +3,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
 import dappLogo from "assets/images/bettergiving-logo.webp";
 import { laira } from "assets/laira/laira";
-import Image from "components/image/image";
+import { Image } from "components/image/image";
 import { centsDecimals, humanize, roundDown } from "helpers/decimal";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import BackBtn from "../common/back-btn";
+import { BackBtn } from "../common/back-btn";
 import { summary_data } from "../common/constants";
-import ContinueBtn from "../common/continue-btn";
+import { ContinueBtn } from "../common/continue-btn";
 import { use_donation_state } from "../context";
 import type { TipFormat, TipStep } from "../types";
 
@@ -36,7 +36,7 @@ const shape = schema<FV>({
   tip: tipSchema,
 });
 
-export default function Tip(props: TipStep) {
+export function Tip(props: TipStep) {
   const { details, tip: persistedTip } = props;
   const { set_state } = use_donation_state();
 

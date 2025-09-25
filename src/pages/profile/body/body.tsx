@@ -1,8 +1,8 @@
-import BookmarkBtn from "components/bookmark-btn";
-import Breadcrumbs from "components/breadcrumbs";
-import ExtLink from "components/ext-link";
+import { BookmarkBtn } from "components/bookmark-btn";
+import { Breadcrumbs } from "components/breadcrumbs";
+import { ExtLink } from "components/ext-link";
 import { Target, toTarget } from "components/target";
-import VerifiedIcon from "components/verified-icon";
+import { VerifiedIcon } from "components/verified-icon";
 import { appRoutes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";

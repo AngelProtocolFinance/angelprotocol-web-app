@@ -1,5 +1,5 @@
 import type { V2RecipientAccount } from "@better-giving/wise";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { endOfMonth, format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { ArrowRightIcon, HistoryIcon, PencilIcon } from "lucide-react";

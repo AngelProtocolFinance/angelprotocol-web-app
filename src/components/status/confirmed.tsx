@@ -1,6 +1,6 @@
 import { CircleCheck } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import Status from "./status";
+import { Status } from "./status";
 
 type Props = PropsWithChildren<{
   classes?: string;

@@ -1,6 +1,6 @@
 import { CurrencySelector } from "components/currency-selector";
 import { Field, Form, Label } from "components/form";
-import { ControlledImgEditor as ImgEditor } from "components/img-editor";
+import { ImgEditor } from "components/img-editor";
 import { use_action_result } from "hooks/use-action-result";
 import { useFetcher } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";

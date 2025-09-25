@@ -1,5 +1,5 @@
 import { CircleAlert } from "lucide-react";
-import Status from "./status";
+import { Status } from "./status";
 import type { StatusProps } from "./types";
 
 export function ErrorStatus({

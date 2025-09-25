@@ -1,4 +1,4 @@
-import Image from "components/image";
+import { Image } from "components/image";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { Link } from "react-router";

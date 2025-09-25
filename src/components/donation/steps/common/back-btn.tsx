@@ -1,7 +1,7 @@
 import { ChevronLeft } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
-export default function BackBtn({
+export function BackBtn({
   className,
   ...props
 }: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children">) {

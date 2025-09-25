@@ -3,15 +3,15 @@ import { Form as FormContainer } from "components/form";
 import { MaskedInput } from "components/form";
 import { currency } from "components/form/masks";
 import { usd_option } from "../../common/constants";
-import ContinueBtn from "../../common/continue-btn";
-import Incrementers from "../../common/incrementers";
+import { ContinueBtn } from "../../common/continue-btn";
+import { Incrementers } from "../../common/incrementers";
 import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import { next_form_state } from "../helpers";
 import type { Props } from "./types";
 import { use_rhf } from "./use-rhf";
 
-export default function Form(props: Props) {
+export function Form(props: Props) {
   const { set_state } = use_donation_state();
   const rhf = use_rhf(props);
 

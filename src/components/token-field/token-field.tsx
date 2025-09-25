@@ -2,7 +2,7 @@ import { humanize, roundToCents } from "helpers/decimal";
 import { unpack } from "helpers/unpack";
 import { forwardRef, useEffect, useState } from "react";
 import { number } from "yup";
-import TokenSelector from "./token-selector";
+import { TokenSelector } from "./token-selector";
 import type { Props, Token } from "./types";
 
 type El = HTMLInputElement;
@@ -10,7 +10,7 @@ type El = HTMLInputElement;
 const multipliable = (amount: string) =>
   number().min(0).isValidSync(amount) ? +amount : 0;
 
-const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
+const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
   const style = unpack(props.classes);
   const [tokenState, setTokenState] = useState<Token.State>("ok");
   useEffect(() => {
@@ -83,4 +83,4 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
   );
 };
 
-export default forwardRef(TokenField);
+export const TokenField = forwardRef(Field);

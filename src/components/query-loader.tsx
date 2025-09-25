@@ -1,4 +1,4 @@
-import Status, { ErrorStatus, LoadingStatus } from "components/status";
+import { ErrorStatus, LoadingStatus, Status } from "components/status";
 import { CircleAlert } from "lucide-react";
 import type { ReactElement } from "react";
 import type { QueryState } from "types/components";
@@ -19,7 +19,7 @@ type Props<T> = {
   children(data: NonNullable<T>): ReactElement;
 };
 
-export default function QueryLoader<T>({
+export function QueryLoader<T>({
   queryState,
   classes = {},
   messages = {},
@@ -31,14 +31,14 @@ export default function QueryLoader<T>({
   const { isLoading, isFetching, isError, data, error } = queryState;
 
   if (isLoading) {
-    return renderMessage(
+    return render_msg(
       (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
       messages.loading,
       container
     );
   }
   if (isFetching && messages.fetching) {
-    return renderMessage(
+    return render_msg(
       (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
       messages.fetching,
       container
@@ -46,7 +46,7 @@ export default function QueryLoader<T>({
   }
   if (isError || (dataRequired && !data)) {
     if (isError) console.error(error);
-    return renderMessage(
+    return render_msg(
       (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,
       messages.error,
       container
@@ -55,7 +55,7 @@ export default function QueryLoader<T>({
 
   if (Array.isArray(data)) {
     if (data.length === 0) {
-      return renderMessage(
+      return render_msg(
         (msg) => <Status icon={<CircleAlert />}>{msg || "No data"}</Status>,
         messages.empty,
         container
@@ -65,7 +65,7 @@ export default function QueryLoader<T>({
     if (filterFn) {
       const filtered = data.filter(filterFn);
       if (filtered.length === 0) {
-        return renderMessage(
+        return render_msg(
           (msg) => <Status icon={<CircleAlert />}>{msg || "No data"}</Status>,
           messages.empty,
           container
@@ -79,7 +79,7 @@ export default function QueryLoader<T>({
   return children(data as NonNullable<T>);
 }
 
-function renderMessage(
+function render_msg(
   fallback: (message?: string) => ReactElement,
   message?: string | ReactElement,
   classes?: string

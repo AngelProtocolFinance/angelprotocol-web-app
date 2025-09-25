@@ -1,11 +1,11 @@
 import dappLogo from "assets/images/bg-logo-503c.webp";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { guidestar } from "constants/urls";
 import { Link } from "react-router";
 import { Newsletter } from "./newsletter";
-import Socials from "./socials";
+import { Socials } from "./socials";
 
 type Props = { classes?: string };
 

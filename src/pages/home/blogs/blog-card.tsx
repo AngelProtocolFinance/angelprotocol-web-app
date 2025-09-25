@@ -1,10 +1,10 @@
-import ContentLoader from "components/content-loader";
-import Media from "components/media";
+import { ContentLoader } from "components/content-loader";
+import { Media } from "components/media";
 import { appRoutes } from "constants/routes";
 import { NavLink } from "react-router";
 import type { IPost } from "types/wordpress";
 
-const BlogCard = (props: IPost) => {
+export const BlogCard = (props: IPost) => {
   return (
     <div className="h-[27rem] has-[.pending]:grayscale grid gap-3 pb-5 rounded-3xl bg-white">
       <Media
@@ -36,5 +36,3 @@ const BlogCard = (props: IPost) => {
 export const Skeleton = () => (
   <ContentLoader className="h-[27rem] rounded-3xl" />
 );
-
-export default BlogCard;

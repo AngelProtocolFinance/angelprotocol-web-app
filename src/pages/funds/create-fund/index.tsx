@@ -2,10 +2,7 @@ import type { IFundNew } from "@better-giving/fundraiser/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, Form, Label } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import {
-  ControlledImgEditor as ImgEditor,
-  imgEditorStyles,
-} from "components/img-editor";
+import { ImgEditor, imgEditorStyles } from "components/img-editor";
 import { RichText, richTextStyles } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { type LinksFunction, useFetcher } from "react-router";

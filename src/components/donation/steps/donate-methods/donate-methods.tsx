@@ -2,14 +2,14 @@ import type { DonateMethodId } from "@better-giving/endowment";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import dafPayLogo from "assets/icons/dafpay.svg";
 import { Label } from "components/form";
-import Image from "components/image";
+import { Image } from "components/image";
 import { ChartSpline, Coins, CreditCard } from "lucide-react";
 import type { ReactNode } from "react";
 import type { FormStep } from "../types";
-import Crypto from "./crypto";
-import Daf from "./daf";
-import Stocks from "./stocks";
-import Stripe from "./stripe";
+import { Form as Crypto } from "./crypto";
+import { Form as Daf } from "./daf";
+import { Form as Stocks } from "./stocks";
+import { Form as Stripe } from "./stripe";
 
 const methods: {
   [K in DonateMethodId]: {
@@ -48,7 +48,7 @@ const tab_classes = (selected: boolean) =>
       : "border border-gray-l3 @xl/steps:border-none text-gray"
   }  flex items-center gap-2 p-2 @xl/steps:px-3 @xl/steps:py-[1.15rem] @xl/steps:grid @xl/steps:grid-cols-subgrid @xl/steps:col-span-2 focus:outline-hidden @xl/steps:w-full rounded @xl/steps:rounded-none`;
 
-export default function DonateMethods(props: FormStep) {
+export function DonateMethods(props: FormStep) {
   const { details, step, init } = props;
   const method_ids = init.config?.method_ids;
 

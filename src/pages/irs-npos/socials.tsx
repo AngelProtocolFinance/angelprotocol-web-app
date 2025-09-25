@@ -5,8 +5,8 @@ import linkedin from "assets/icons/social/linkedin.webp";
 import tiktok from "assets/icons/social/tiktok.webp";
 import x from "assets/icons/social/x.webp";
 import youtube from "assets/icons/social/youtube.webp";
-import ExtLink from "components/ext-link";
-import Image from "components/image";
+import { ExtLink } from "components/ext-link";
+import { Image } from "components/image";
 import {} from "lucide-react";
 import type { SocialMedia } from "types/mongodb/nonprofits";
 

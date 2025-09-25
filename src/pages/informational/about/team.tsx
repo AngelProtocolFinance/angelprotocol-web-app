@@ -8,7 +8,7 @@ import justin from "assets/people/justin.webp";
 import pallav from "assets/people/pallav.webp";
 import shaun from "assets/people/shaun.webp";
 import tim from "assets/people/tim.webp";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { Mail } from "lucide-react";
 import { useState } from "react";
 

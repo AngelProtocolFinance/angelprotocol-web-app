@@ -1,5 +1,5 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/image";
+import { Image } from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";

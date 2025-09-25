@@ -8,7 +8,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export default function ExpectedFunds(props: Props) {
+export function ExpectedFunds(props: Props) {
   return (
     <div className="">
       <Label htmlFor="wise__amount" required className="mb-2">

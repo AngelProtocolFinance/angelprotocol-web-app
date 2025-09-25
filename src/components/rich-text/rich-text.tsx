@@ -1,6 +1,6 @@
 import { unpack } from "helpers/unpack";
 import { Suspense, forwardRef, lazy } from "react";
-import ContentLoader from "../content-loader";
+import { ContentLoader } from "../content-loader";
 import type { Props } from "./types";
 const Editor = lazy(() => import("./editor"));
 
@@ -45,5 +45,3 @@ export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
     </div>
   );
 });
-
-export default RichText;

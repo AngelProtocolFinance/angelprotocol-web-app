@@ -2,13 +2,13 @@ import { Popover, PopoverButton } from "@headlessui/react";
 import { CircleAlert, LoaderCircle } from "lucide-react";
 import { DrawerIcon } from "../../icon";
 import type { Props, Token } from "../types";
-import TokenOptions from "./token-options";
+import { TokenOptions } from "./token-options";
 
 interface ITokenSelector extends Pick<Props, "token" | "onChange"> {
   tokenState: Token.State;
   classes?: string;
 }
-export default function TokenSelector({
+export function TokenSelector({
   onChange,
   token,
   tokenState,

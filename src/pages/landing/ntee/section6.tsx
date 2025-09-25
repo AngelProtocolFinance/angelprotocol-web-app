@@ -1,4 +1,4 @@
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { INTERCOM_HELP } from "constants/env";
 import { ArrowRight, CircleQuestionMark } from "lucide-react";
 interface Item {

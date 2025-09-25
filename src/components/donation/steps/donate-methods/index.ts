@@ -1,1 +1,1 @@
-export { default } from "./donate-methods";
+export { DonateMethods } from "./donate-methods";

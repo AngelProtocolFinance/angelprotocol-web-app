@@ -1,4 +1,4 @@
-import LoaderRing from "components/loader-ring";
+import { LoaderRing } from "components/loader-ring";
 import { CircleAlert, CircleCheck } from "lucide-react";
 import type { Props } from "./types";
 

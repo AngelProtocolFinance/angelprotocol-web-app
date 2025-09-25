@@ -1,10 +1,10 @@
 import type { SubmitStep } from "../types";
-import Crypto from "./crypto";
+import { Crypto } from "./crypto";
 import { ChariotCheckout } from "./daf-checkout";
-import Stocks from "./stocks";
+import { Stocks } from "./stocks";
 import { StripeCheckout } from "./stripe-checkout";
 
-export default function Submit(props: SubmitStep) {
+export function Submit(props: SubmitStep) {
   if (props.details.method === "crypto") {
     const { details, ...rest } = props;
     return <Crypto details={details} {...rest} />;

@@ -1,5 +1,5 @@
 import { laira } from "assets/laira/laira";
-import Image from "components/image";
+import { Image } from "components/image";
 import type { DonationsQueryParams } from "types/donations";
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   status: DonationsQueryParams["status"];
 };
 
-export default function NoDonations({ classes, status }: Props) {
+export function NoDonations({ classes, status }: Props) {
   return (
     <div
       className={`${classes} max-sm:text-center grid sm:grid-cols-[1fr_auto] max-w-md gap-y-2 gap-x-4`}

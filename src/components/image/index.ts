@@ -1,2 +1,2 @@
-export { default } from "./image";
-export { default as DappLogo } from "./dapp-logo";
+export { Image } from "./image";
+export { DappLogo } from "./dapp-logo";

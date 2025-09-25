@@ -1,6 +1,6 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Combo } from "components/combo";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { Field } from "components/form";
 import { DrawerIcon } from "components/icon";
 import { Select } from "components/selector/select";

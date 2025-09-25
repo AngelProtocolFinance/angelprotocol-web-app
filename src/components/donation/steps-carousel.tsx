@@ -1,4 +1,4 @@
-import Image from "components/image";
+import { Image } from "components/image";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";

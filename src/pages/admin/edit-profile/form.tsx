@@ -1,17 +1,17 @@
 import type { EndowDesignation } from "@better-giving/endowment";
 import type { OrgDesignation } from "@better-giving/schemas";
 import { Combo } from "components/combo";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { Form as F, Field, Label, UrlInput } from "components/form";
-import Group from "components/group";
+import { Group } from "components/group";
 import { DrawerIcon } from "components/icon";
-import { ControlledImgEditor as ImgEditor } from "components/img-editor";
-import PromptV2 from "components/prompt";
+import { ImgEditor } from "components/img-editor";
+import { Prompt } from "components/prompt";
 import { RichText } from "components/rich-text";
 import { MultiCombo } from "components/selector/multi-combo";
 import { Select } from "components/selector/select";
 import { Confirmed, Info } from "components/status";
-import { ControlledToggle as Toggle } from "components/toggle";
+import { Toggle } from "components/toggle";
 import { countries, country_names } from "constants/countries";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
@@ -54,9 +54,9 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
         rhf.reset();
       }}
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
+      className="w-full max-w-4xl grid content-start gap-6"
     >
-      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public

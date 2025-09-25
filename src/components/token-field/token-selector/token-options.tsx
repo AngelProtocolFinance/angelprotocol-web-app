@@ -16,7 +16,7 @@ import Fuse from "fuse.js";
 import { SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { TokenV2 } from "types/components";
-import Image from "../../image";
+import { Image } from "../../image";
 import type { Token } from "../types";
 import type { OnTokenChange } from "./types";
 
@@ -27,7 +27,7 @@ type Props = {
 };
 const container =
   "w-56 border border-gray-l3 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-hidden";
-export default function TokenOptions({ onChange, token }: Props) {
+export function TokenOptions({ onChange, token }: Props) {
   return (
     <PopoverPanel
       anchor={{ to: "bottom end", gap: 8, offset: 20 }}

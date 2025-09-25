@@ -1,8 +1,8 @@
 import type { IProgram } from "@better-giving/endowment";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, Form, Label } from "components/form";
-import Group from "components/group";
-import { ControlledImgEditor as ImgEditor } from "components/img-editor";
+import { Group } from "components/group";
+import { ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
 import { MAX_CHARS, img_spec } from "../common";

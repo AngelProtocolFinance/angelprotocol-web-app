@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-export default function Loader({
+export function Loader({
   bgColorClass,
   widthClass,
   gapClass,

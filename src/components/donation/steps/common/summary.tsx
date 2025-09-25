@@ -3,7 +3,7 @@ import { ListCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import type { OptionType } from "types/components";
 import type { Frequency } from "../types";
-import BackBtn from "./back-btn";
+import { BackBtn } from "./back-btn";
 
 type Classes =
   | string
@@ -26,11 +26,7 @@ type Props = {
   program?: OptionType<string>;
 };
 
-export default function Summary({
-  Amount,
-  frequency = "one-time",
-  ...props
-}: Props) {
+export function Summary({ Amount, frequency = "one-time", ...props }: Props) {
   const { container, split: splitClass } = unpack(props.classes);
 
   const tipValue = props.tip?.value ?? 0;

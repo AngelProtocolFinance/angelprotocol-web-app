@@ -4,7 +4,7 @@ import type { CommonPropTypes } from "react-csv/components/CommonPropTypes";
 
 type Props = CommonPropTypes & { classes?: string; children: ReactNode };
 
-export default function CsvExporter(props: Props) {
+export function CsvExporter(props: Props) {
   return (
     <CSVLink
       {...props}

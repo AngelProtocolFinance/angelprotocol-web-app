@@ -6,16 +6,9 @@ import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
 import { type DropzoneOptions, useDropzone } from "react-dropzone-esm";
-import {
-  type FieldValues,
-  type Path,
-  get,
-  useController,
-  useFormContext,
-} from "react-hook-form";
 import { AspectTooltip } from "./aspect-tooltip";
 import { ImgCropper } from "./img-cropper";
-import type { ControlledProps, Props } from "./types";
+import type { ControlledProps } from "./types";
 
 const BYTES_IN_MB = 1e6;
 
@@ -194,45 +187,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   );
 }
 
-export const ControlledImgEditor = fixedForwardRef(_ImgEditor);
-
-export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
-  props: Props<T, K>
-) {
-  const { name, ...rest } = props;
-  const {
-    trigger,
-    resetField,
-    formState: { errors, isSubmitting },
-  } = useFormContext<T>();
-
-  const {
-    field: { value, onChange, ref },
-  } = useController<T, typeof name>({
-    name,
-  });
-
-  const filePath = `${name}.file`;
-
-  return (
-    <ControlledImgEditor
-      ref={ref}
-      value={value}
-      on_change={(v) => {
-        onChange(v);
-        trigger(filePath as any);
-      }}
-      on_undo={(e) => {
-        ////prevent container dropzone from catching click event
-        e.stopPropagation();
-        resetField(name);
-      }}
-      error={get(errors, filePath)?.message}
-      disabled={isSubmitting}
-      {...rest}
-    />
-  );
-}
+export const ImgEditor = fixedForwardRef(_ImgEditor);
 
 const buttonStyle =
   "cursor-pointer text-white text-lg bg-blue hover:bg-blue-l1 disabled:bg-gray-l2 p-2 m-1 rounded-md shadow-lg";

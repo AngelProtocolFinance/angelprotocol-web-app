@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton } from "@headlessui/react";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { APP_NAME } from "constants/env";
 import { referrals_hub } from "constants/urls";

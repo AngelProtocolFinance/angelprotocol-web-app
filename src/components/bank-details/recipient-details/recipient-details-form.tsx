@@ -5,7 +5,7 @@ import {
   fileOutput,
 } from "components/file-dropzone";
 import { Form, Label } from "components/form";
-import { type IPromptV2, PromptV2 } from "components/prompt";
+import { type IPrompt, Prompt } from "components/prompt";
 import { Select } from "components/selector/select";
 import { error_prompt } from "helpers/error-prompt";
 import { useState } from "react";
@@ -58,7 +58,7 @@ export function RecipientDetailsForm({
     getFieldState,
   } = useForm<FV>({ disabled, shouldUnregister: true });
 
-  const [prompt, set_prompt] = useState<IPromptV2>();
+  const [prompt, set_prompt] = useState<IPrompt>();
   const { update_requirements } = use_requirements(
     !amount ? null : { amount, currency }
   );
@@ -365,7 +365,7 @@ export function RecipientDetailsForm({
         disabled={disabled || bankStatement.value === "loading"}
         isSubmitting={isSubmitting}
       />
-      {prompt && <PromptV2 {...prompt} onClose={() => set_prompt(undefined)} />}
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
     </Form>
   );
 }

@@ -1,4 +1,4 @@
-import Image from "components/image";
+import { Image } from "components/image";
 import { APP_NAME } from "constants/env";
 import type { PageContext } from "./types";
 

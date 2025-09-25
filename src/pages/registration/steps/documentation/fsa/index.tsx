@@ -1,5 +1,5 @@
 import type { IFsaDocs } from "@better-giving/reg";
-import ExtLink from "components/ext-link";
+import { ExtLink } from "components/ext-link";
 import { FileDropzone } from "components/file-dropzone";
 import { Field, Form as Frm, Label } from "components/form";
 import { LoadText } from "components/load-text";
