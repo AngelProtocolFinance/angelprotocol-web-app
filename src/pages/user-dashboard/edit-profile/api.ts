@@ -3,7 +3,7 @@ import type { ActionData } from "types/action";
 import { type UserV2, isError } from "types/auth";
 import type { UserCurrencies } from "types/currency";
 import type { Route } from "./+types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { get_db_currencies } from ".server/currency";
 
 export interface LoaderData extends UserCurrencies {
@@ -12,14 +12,14 @@ export interface LoaderData extends UserCurrencies {
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   const currencies = await get_db_currencies(user.currency);
   return { user, ...currencies } satisfies LoaderData;
 };
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const attributes = await request.json();
   const result = await cognito.updateUserAttributes(

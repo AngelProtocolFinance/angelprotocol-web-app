@@ -1,5 +1,4 @@
 import Status, { ErrorStatus, LoadingStatus } from "components/status";
-import { logger } from "helpers/logger";
 import { CircleAlert } from "lucide-react";
 import type { ReactElement } from "react";
 import type { QueryState } from "types/components";
@@ -46,7 +45,7 @@ export default function QueryLoader<T>({
     );
   }
   if (isError || (dataRequired && !data)) {
-    if (isError) logger.error(error);
+    if (isError) console.error(error);
     return renderMessage(
       (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,
       messages.error,

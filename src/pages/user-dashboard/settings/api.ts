@@ -6,7 +6,7 @@ import type { IUserNpo2 } from "types/user";
 import { parse } from "valibot";
 import type { Route } from "./+types";
 import { alert_prefs } from "./schema";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { TransactWriteCommand, userdb } from ".server/aws/db";
 import { user_npos } from ".server/user";
 
@@ -17,7 +17,7 @@ export interface SettingsData {
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   return {
     user,
@@ -27,7 +27,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const prefs = parse(alert_prefs, await request.json());
   const txis = new Txis();

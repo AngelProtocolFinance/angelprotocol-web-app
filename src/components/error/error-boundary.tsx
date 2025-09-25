@@ -1,4 +1,3 @@
-import { logger } from "helpers/logger";
 import {
   Component,
   type ErrorInfo,
@@ -23,8 +22,8 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    logger.error(error);
-    logger.error(errorInfo);
+    console.error(error);
+    console.error(errorInfo);
   }
 
   render() {

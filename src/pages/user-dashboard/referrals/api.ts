@@ -2,7 +2,7 @@ import type { V2RecipientAccount } from "@better-giving/wise";
 import type { LoaderFunctionArgs } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { getEarnings } from ".server/donations";
 import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
 import { wise } from ".server/sdks";
@@ -25,7 +25,7 @@ function payout(id: number) {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const [pendings, referreds, earnings, p, pltd] = await Promise.all([
     pendingEarnings(user.referral_id),

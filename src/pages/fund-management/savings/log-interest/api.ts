@@ -6,13 +6,13 @@ import { MIN_INTR_TO_CREDIT } from "pages/fund-management/constants";
 import { redirect } from "react-router";
 import { parse } from "valibot";
 import type { Route } from "./+types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { TransactWriteCommand, baldb, btxdb, liqdb } from ".server/aws/db";
 import { npo_interest_shares } from ".server/npos-interest-share";
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
   /** exclude: use server side time */

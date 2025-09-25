@@ -4,12 +4,12 @@ import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import type { ActionData } from "types/action";
 import { parse } from "valibot";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 
 export const submit_action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const id = parse(reg_id, params.regId);
   const reg = await regdb.reg(id);

@@ -9,12 +9,12 @@ import {
 } from "react-router";
 import { parse } from "valibot";
 import type { Reg$IdData } from "../types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 
 export const reg_loader: LoaderFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   const rid = parse(reg_id, params.regId);
   const reg = await regdb.reg(rid);
   if (!reg) return { status: 404 };
@@ -28,7 +28,7 @@ export const step_loader =
   (this_step: Progress["step"]) =>
   async ({ params, request }: LoaderFunctionArgs) => {
     const { user, headers } = await cognito.retrieve(request);
-    if (!user) return toAuth(request, headers);
+    if (!user) return to_auth(request, headers);
     const rid = parse(reg_id, params.regId);
 
     const reg = await regdb.reg(rid);

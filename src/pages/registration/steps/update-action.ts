@@ -4,7 +4,7 @@ import { reg_id, reg_update } from "@better-giving/reg/schema";
 import { resp } from "helpers/https";
 import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 
 const changed = <T extends boolean | string | number | undefined>(a: T, b: T) =>
@@ -14,7 +14,7 @@ export const update_action =
   (next: string): ActionFunction =>
   async ({ request, params }) => {
     const { user, headers } = await cognito.retrieve(request);
-    if (!user) return toAuth(request, headers);
+    if (!user) return to_auth(request, headers);
 
     const rid = parse(reg_id, params.regId);
     const upd8 = parse(reg_update, await request.json());

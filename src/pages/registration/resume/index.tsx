@@ -6,21 +6,21 @@ import { Link, redirect, useFetcher } from "react-router";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import type { Route } from "./+types";
 import { type FV, schema } from "./types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const cookieHeader = request.headers.get("cookie");
   const { user, headers } = await cognito.retrieve(cookieHeader);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const rc = await reg_cookie.parse(cookieHeader).then((x) => x || {});
   return rc.reference || null;
 };
 export const action = async ({ request }: Route.ActionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const fv = await getValidatedFormData<FV>(request, valibotResolver(schema));
   if (fv.errors) return fv;

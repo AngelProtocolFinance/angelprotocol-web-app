@@ -4,7 +4,7 @@ import {
   redirect,
 } from "react-router";
 import { isError } from "types/auth";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { anvil_envs, env } from ".server/env";
 
 export interface LoaderData {
@@ -16,7 +16,7 @@ const anvil_form_url = (forge_slug: string) =>
   `https://app.useanvil.com/weld/${anvil_envs.org_slug}/${forge_slug}${env === "staging" ? `?test=true` : ""}`;
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const wform: LoaderData = {
     w8ben_url: anvil_form_url("fw8ben"),
@@ -28,7 +28,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const amnt = await request.text();
   const result = await cognito.updateUserAttributes(

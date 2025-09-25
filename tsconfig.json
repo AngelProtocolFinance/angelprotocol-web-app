@@ -23,5 +23,6 @@
     "./src/**/*.tsx",
     "./src/.server/**/*.ts",
     "./src/.server/**/*.tsx"
-  ]
+  ],
+  "exclude": ["./src/scripts/**/*"]
 }

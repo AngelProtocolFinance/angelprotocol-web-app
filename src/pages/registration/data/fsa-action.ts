@@ -9,14 +9,14 @@ import {
 import { regRoutes } from "constants/routes";
 import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 import { gen_fsa_signing_url } from ".server/registration/gen-fsa-signing-url";
 import { reg_id_from_signer_eid } from ".server/registration/helpers";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const content_type = request.headers.get("content-type");
   const payload =

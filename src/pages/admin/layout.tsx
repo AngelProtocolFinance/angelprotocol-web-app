@@ -10,7 +10,7 @@ import { linkGroups } from "./constants";
 import { Header } from "./header";
 import SidebarHeader from "./sidebar-header";
 import type { LoaderData } from "./types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { npodb } from ".server/aws/db";
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
@@ -21,7 +21,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const id = parse($int_gte1, params.id);
 
