@@ -1,1 +1,1 @@
-export { default } from "./hero-bottom";
+export { HeroBottom as default } from "./hero-bottom";

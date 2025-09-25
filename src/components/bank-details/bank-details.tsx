@@ -2,7 +2,7 @@ import { MaskedInput } from "components/form";
 import { dollar } from "components/form/masks";
 import { Separator } from "components/separator";
 import { APP_NAME } from "constants/env";
-import useDebouncer from "hooks/use-debouncer";
+import { use_debouncer } from "hooks/use-debouncer";
 import { useState } from "react";
 import type { WiseCurrencyOption } from "types/components";
 import { CurrencySelector } from "../currency-selector";
@@ -40,7 +40,7 @@ export function BankDetails({
   const [amount, setAmount] = useState(
     DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
   );
-  const [debounced_amount] = useDebouncer(amount, 500);
+  const [debounced_amount] = use_debouncer(amount, 500);
 
   const handleSubmit: OnSubmit = async (...params) => {
     try {

@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 
-export default function useDebouncer<T = number>(
+export function use_debouncer<T = number>(
   value: T,
   delay: number
 ): [T, boolean] {
-  const [loading, setLoading] = useState(false);
-  const [_value, _setValue] = useState<T>(value);
+  const [loading, set_loading] = useState(false);
+  const [v, set_v] = useState<T>(value);
 
   useEffect(() => {
-    setLoading(true);
+    set_loading(true);
     const timer = setTimeout(() => {
-      _setValue(value);
-      setLoading(false);
+      set_v(value);
+      set_loading(false);
     }, delay);
     return () => {
       clearTimeout(timer);
-      setLoading(false);
+      set_loading(false);
     };
   }, [value, delay]);
 
-  return [_value, loading];
+  return [v, loading];
 }

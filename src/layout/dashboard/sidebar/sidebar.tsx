@@ -9,7 +9,7 @@ type Props = {
   onChange?: () => void;
 };
 
-export default function Sidebar({
+export function Sidebar({
   className = "",
   linkGroups,
   onChange,

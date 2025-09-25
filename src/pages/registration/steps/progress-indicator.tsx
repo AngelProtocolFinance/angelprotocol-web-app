@@ -1,8 +1,9 @@
 import type { Progress } from "@better-giving/reg";
 import { DrawerIcon } from "components/icon";
 import { idParamToNum } from "helpers/id-param-to-num";
-import useHandleScreenResize, {
+import {
   SCREEN_BREAKPOINTS,
+  use_handle_screen_resize,
 } from "hooks/use-handle-screen-resize";
 import { type PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router";
@@ -24,8 +25,8 @@ export function ProgressIndicator({ step, classes = "" }: Props) {
     return window.innerWidth >= SCREEN_BREAKPOINTS.md;
   });
 
-  useHandleScreenResize(
-    (screen, ref) => {
+  use_handle_screen_resize(
+    (screen: number, ref) => {
       const isOnDesktop = screen >= SCREEN_BREAKPOINTS.md;
       if (isOnDesktop !== ref.isOpen) {
         setIsOtherStepsShown(isOnDesktop);
@@ -38,9 +39,9 @@ export function ProgressIndicator({ step, classes = "" }: Props) {
       }
     },
     {
-      shouldAttachListener: true,
-      shouldCallOnResizeOnLoad: true,
-      debounceTime: 150,
+      should_attach_listener: true,
+      should_call_onresize_onload: true,
+      debounce_time: 150,
       ref: { isOpen: isOtherStepsShown, isDesktop },
     }
   );

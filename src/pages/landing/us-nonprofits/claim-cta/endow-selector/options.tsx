@@ -2,7 +2,7 @@ import type { INposPage } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { Image } from "components/image";
 import { QueryLoader } from "components/query-loader";
-import useDebouncer from "hooks/use-debouncer";
+import { use_debouncer } from "hooks/use-debouncer";
 import useSWR from "swr/immutable";
 
 type Props = {
@@ -16,7 +16,7 @@ const fetcher = async (path: string) =>
   fetch(path).then<INposPage<Field>>((res) => res.json());
 
 export function Options({ searchText }: Props) {
-  const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 200);
+  const [debouncedSearchText, isDebouncing] = use_debouncer(searchText, 200);
 
   const params = {
     query: debouncedSearchText,

@@ -1,6 +1,6 @@
 import { brands } from "content/brands";
 
-export default function FellowNonProfits({ className = "" }) {
+export function FellowNonProfits({ className = "" }) {
   return (
     <section className={`${className} grid`}>
       <h2 className="text-center text-3xl/tight md:text-4.5xl/tight text-gray-d4 text-pretty mb-16 px-4">

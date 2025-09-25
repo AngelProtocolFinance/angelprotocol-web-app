@@ -1,2 +1,2 @@
-export { default } from "./sidebar";
+export { Sidebar } from "./sidebar";
 export * from "./sidebar-opener";

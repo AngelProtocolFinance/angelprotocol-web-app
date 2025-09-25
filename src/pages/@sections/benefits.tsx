@@ -8,7 +8,7 @@ type Props = {
   heading: string;
   body: string;
 };
-export default function Benefits(props: Props) {
+export function Benefits(props: Props) {
   return (
     <section className={`grid ${props.className ?? ""}`}>
       {props.subheading && (

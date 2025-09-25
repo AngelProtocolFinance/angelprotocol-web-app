@@ -1,17 +1,24 @@
 import { benefits } from "content/benefits";
-import Benefits from "../../@sections/benefits";
+import type { MetaFunction } from "react-router";
+import { Benefits } from "../../@sections/benefits";
 import { BottomCta } from "./bottom-cta";
-import DonationFormInfo from "./donation-form-info";
-import FAQ from "./faq";
+import { DonationFormInfo } from "./donation-form-info";
+import { FAQ } from "./faq";
 import { Features } from "./features";
-import FellowNonProfits from "./fellow-nonprofits";
-import FiscalSponsorship from "./fiscal-sponsorship";
-import Hero from "./hero";
-import Investment from "./investment";
-import Testimonials from "./testimonials";
-import WhyBG from "./why-bg";
+import { FellowNonProfits } from "./fellow-nonprofits";
+import { FiscalSponsorship } from "./fiscal-sponsorship";
+import { Hero } from "./hero";
+import { WhyBG } from "./investment";
+import { Testimonials } from "./testimonials";
 
-export default function NonprofitInfo() {
+export const meta: MetaFunction = () => [
+  {
+    title: "For Nonprofits",
+    description: "Accept any type of donation, anywhere in the world",
+  },
+];
+
+export default function Page() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <div className="bg-linear-to-br from-50% from-transparent to-peach/50">
@@ -44,7 +51,7 @@ export default function NonprofitInfo() {
         <FiscalSponsorship className="@3xl:mt-56 xl:container xl:mx-auto px-5" />
       </div>
       <div className="bg-linear-to-b from-transparent via-lilac/20 to-transparent">
-        <Investment className="mt-56 xl:container xl:mx-auto px-5" />
+        <WhyBG className="mt-56 xl:container xl:mx-auto px-5" />
       </div>
 
       <div className="bg-linear-to-tr from-lilac/50 from-5% via-20% via-transparent to-transparent">

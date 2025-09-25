@@ -3,7 +3,7 @@ import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
 import fiscalsponsorshipImg from "./images/fiscal-sponsorship.webp";
 
-export default function FiscalSponsorship({ className = "" }) {
+export function FiscalSponsorship({ className = "" }) {
   return (
     <section
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-[1fr_auto] py-24`}

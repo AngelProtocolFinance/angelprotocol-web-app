@@ -11,47 +11,47 @@ export const SCREEN_BREAKPOINTS = {
 };
 
 type Options<T extends object> = {
-  shouldCallOnResizeOnLoad?: boolean;
-  shouldAttachListener?: boolean;
-  debounceTime?: number;
+  should_call_onresize_onload?: boolean;
+  should_attach_listener?: boolean;
+  debounce_time?: number;
   ref?: T;
 };
 
-export default function useHandleScreenResize<T extends object>(
-  onResize: (screenSize: number, ref: T) => void,
+export function use_handle_screen_resize<T extends object>(
+  on_resize: (screenSize: number, ref: T) => void,
   options?: Options<T>
 ) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   useEffect(() => {
     const {
-      shouldAttachListener,
-      shouldCallOnResizeOnLoad,
-      debounceTime,
+      should_attach_listener,
+      should_call_onresize_onload,
+      debounce_time,
       ref = {} as T,
     } = options || {};
 
     /** track state */
     /** on first visit */
-    if (shouldCallOnResizeOnLoad) {
-      onResize(window.innerWidth, ref);
+    if (should_call_onresize_onload) {
+      on_resize(window.innerWidth, ref);
     }
 
-    if (!shouldAttachListener) return;
+    if (!should_attach_listener) return;
 
-    const handler = debounceTime
-      ? debounceCallback(function callback() {
-          onResize(window.innerWidth, ref);
-        }, debounceTime)
+    const handler = debounce_time
+      ? debounce_callback(function callback() {
+          on_resize(window.innerWidth, ref);
+        }, debounce_time)
       : function callback() {
-          onResize(window.innerWidth, ref);
+          on_resize(window.innerWidth, ref);
         };
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
-  }, [options?.shouldAttachListener]);
+  }, [options?.should_attach_listener]);
 }
 
 type Fn = (...args: any[]) => void;
-function debounceCallback(callback: Fn, msDelay: number): Fn {
+function debounce_callback(callback: Fn, msDelay: number): Fn {
   let timeout: number | undefined;
 
   const debounced: Fn = (args) => {

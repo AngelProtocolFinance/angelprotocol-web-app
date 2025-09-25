@@ -2,7 +2,7 @@ import type { INposSearch } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { Image } from "components/image";
 import { ErrorStatus, Info, LoadingStatus } from "components/status";
-import useDebouncer from "hooks/use-debouncer";
+import { use_debouncer } from "hooks/use-debouncer";
 import useSWR from "swr/immutable";
 import type { EndowFundMembersOptionsPage } from "types/npo";
 import type { EndowOption } from "../schema";
@@ -29,7 +29,7 @@ const fetcher = async ({
 };
 
 export function Options({ classes = "", searchText }: Props) {
-  const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 200);
+  const [debouncedSearchText, isDebouncing] = use_debouncer(searchText, 200);
 
   const endowments = useSWR(
     { query: debouncedSearchText, page: "1", fund_opt_in: "true" },

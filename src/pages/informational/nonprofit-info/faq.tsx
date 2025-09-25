@@ -9,7 +9,7 @@ import { INTERCOM_HELP } from "constants/env";
 import { ArrowRight } from "lucide-react";
 import { Fragment } from "react";
 
-export default function FAQ({ classes = "" }) {
+export function FAQ({ classes = "" }) {
   return (
     <div className={classes + " grid divide-y divide-gray-l3"}>
       <h2 className="col-span-full text-center text-3xl md:text-4xl leading-snug mb-10">

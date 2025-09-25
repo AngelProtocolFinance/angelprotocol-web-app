@@ -5,7 +5,7 @@ import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
 import type { EndowmentCard } from "types/npo";
 
-const Card = (props: EndowmentCard) => {
+export const Card = (props: EndowmentCard) => {
   return (
     <div className="grid rounded-4xl bg-white h-[27rem] border border-gray-l3/30 shadow-xs shadow-black/5">
       <Image
@@ -35,5 +35,3 @@ const Card = (props: EndowmentCard) => {
 export const Skeleton = () => (
   <ContentLoader className="h-[27rem] rounded-4xl" />
 );
-
-export default Card;

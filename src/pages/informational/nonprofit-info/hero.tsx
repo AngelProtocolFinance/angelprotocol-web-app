@@ -3,7 +3,7 @@ import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
 
-export default function Hero({ className = "" }) {
+export function Hero({ className = "" }) {
   return (
     <section
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-2 py-24`}

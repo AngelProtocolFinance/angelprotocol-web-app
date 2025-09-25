@@ -34,7 +34,7 @@ const items: TListItem[] = [
   },
 ];
 
-export default function DonationFormInfo({ className = "" }) {
+export function DonationFormInfo({ className = "" }) {
   return (
     <section
       className={`${className} grid @6xl:grid-cols-2 gap-x-16 content-start`}

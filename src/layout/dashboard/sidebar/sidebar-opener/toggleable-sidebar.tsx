@@ -1,5 +1,5 @@
 import { Modal } from "components/modal";
-import Sidebar from "../sidebar";
+import { Sidebar } from "../sidebar";
 import type { LinkGroup } from "../types";
 
 interface Props {
@@ -8,11 +8,7 @@ interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function ToggleableSidebar({
-  linkGroups,
-  setOpen,
-  open,
-}: Props) {
+export function ToggleableSidebar({ linkGroups, setOpen, open }: Props) {
   return (
     <Modal
       open={open}

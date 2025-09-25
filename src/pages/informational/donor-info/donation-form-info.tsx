@@ -3,7 +3,7 @@ import { Image } from "components/image";
 import { benefits } from "content/benefits";
 import { Star } from "lucide-react";
 
-export default function DonationFormInfo({ className = "" }) {
+export function DonationFormInfo({ className = "" }) {
   return (
     <section className={`${className} grid @6xl:grid-cols-2 gap-x-16`}>
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">

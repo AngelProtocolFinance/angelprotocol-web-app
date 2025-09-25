@@ -3,7 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router";
 import type { EndowmentCard } from "types/npo";
-import Card from "./card";
+import { Card } from "./card";
 import frame1 from "./characters/frame_1.webp";
 import frame2 from "./characters/frame_2.webp";
 import frame3 from "./characters/frame_3.webp";
@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-const HeroBottom = ({ className = "", endowments }: Props) => {
+export const HeroBottom = ({ className = "", endowments }: Props) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
@@ -130,5 +130,3 @@ const HeroBottom = ({ className = "", endowments }: Props) => {
     </div>
   );
 };
-
-export default HeroBottom;
