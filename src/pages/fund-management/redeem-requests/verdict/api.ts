@@ -1,4 +1,4 @@
-import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
+import type { IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
 import { type IPayout, PayoutsDB } from "@better-giving/payouts";
 import { produce } from "immer";
@@ -102,7 +102,7 @@ export const action: ActionFunction = async ({ params, request }) => {
       // lock_units - already deducted in tx creation
     });
 
-    txs.put({ TableName: BalanceTxsDb.name, Item: btxdb.tx_record(liq_tx) });
+    txs.put(btxdb.tx_put_txi(liq_tx));
     txs.update(upd82);
     const cmd = new TransactWriteCommand({ TransactItems: txs.all });
     await baldb.client.send(cmd);

@@ -1,24 +1,36 @@
 import type { LinkGroup } from "layout/dashboard";
-import { BookOpenCheckIcon, LayoutDashboardIcon } from "lucide-react";
+import { BookOpenCheckIcon, LineChartIcon, PiggyBankIcon } from "lucide-react";
 import { routes } from "./routes";
+
+/** to reduce number to txs, skip tiny amounts */
+export const MIN_INTR_TO_CREDIT = 0.01;
 
 const linkGroup1: LinkGroup = {
   links: [
     {
-      title: "Dashboard",
-      to: routes.dashboard,
+      title: "Investments",
+      to: routes.investments,
       icon: {
-        fn: LayoutDashboardIcon,
+        fn: LineChartIcon,
         size: 18,
       },
       end: true,
     },
     {
-      title: "Tx Requests",
-      to: routes.tx_requests,
+      title: "Redemption requests",
+      to: routes.redeem_request,
       icon: {
         fn: BookOpenCheckIcon,
         size: 18,
+      },
+      end: true,
+    },
+    {
+      title: "Savings",
+      to: routes.savings,
+      icon: {
+        fn: PiggyBankIcon,
+        size: 20,
       },
       end: true,
     },

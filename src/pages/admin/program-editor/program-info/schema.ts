@@ -1,12 +1,12 @@
-import { imgOutput } from "components/img-editor";
+import { $req } from "@better-giving/schemas";
+import { img_output } from "components/img-editor";
 import * as v from "valibot";
 import { MAX_CHARS } from "../common";
 
-const requiredStr = v.pipe(v.string("required"), v.nonEmpty("required"));
 export const schema = v.object({
-  title: requiredStr,
+  title: $req,
   description: v.object({
-    value: requiredStr,
+    value: $req,
     length: v.optional(
       v.pipe(
         v.number(),
@@ -14,8 +14,8 @@ export const schema = v.object({
       )
     ),
   }),
-  image: imgOutput(),
-  targetRaise: v.lazy((val) => {
+  image: img_output(),
+  target_raise: v.lazy((val) => {
     if (val === "") return v.string();
     return v.pipe(
       v.string(),

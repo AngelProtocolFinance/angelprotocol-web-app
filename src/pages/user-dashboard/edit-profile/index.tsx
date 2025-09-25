@@ -6,7 +6,7 @@ import { useFetcher } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { ActionData } from "types/action";
 import type { Route } from "./+types";
-import { avatarSpec, useRhf } from "./use-rhf";
+import { avatar_spec, use_rhf } from "./use-rhf";
 
 export { action, loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
@@ -18,7 +18,7 @@ export default CacheRoute(Page);
 function Page({ loaderData: data }: Route.ComponentProps) {
   const fetcher = useFetcher<ActionData>();
   use_action_result(fetcher.data);
-  const rhf = useRhf(data);
+  const rhf = use_rhf(data);
 
   return (
     <Form
@@ -59,13 +59,13 @@ function Page({ loaderData: data }: Route.ComponentProps) {
 
       <Label className="text-base font-medium mb-2">Avatar</Label>
       <ImgEditor
-        spec={avatarSpec}
+        spec={avatar_spec}
         value={rhf.avatar.value}
-        onChange={(v) => {
+        on_change={(v) => {
           rhf.avatar.onChange(v);
           rhf.trigger("avatar");
         }}
-        onUndo={(e) => {
+        on_undo={(e) => {
           e.stopPropagation();
           rhf.resetField("avatar");
         }}

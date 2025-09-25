@@ -9,7 +9,7 @@ import {
 import { RichText, richTextStyles } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { type LinksFunction, useFetcher } from "react-router";
-import { imgSpec } from "../common";
+import { img_spec } from "../common";
 import { Videos } from "../common/videos";
 import type { Route } from "./+types";
 import { EndowmentSelector } from "./endowment-selector";
@@ -165,12 +165,12 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         </Label>
         <ImgEditor
           value={banner.value}
-          spec={imgSpec([4, 1])}
-          onChange={(v) => {
+          spec={img_spec([4, 1])}
+          on_change={(v) => {
             banner.onChange(v);
             trigger("banner");
           }}
-          onUndo={(e) => {
+          on_undo={(e) => {
             e.stopPropagation();
             resetField("banner");
           }}
@@ -186,15 +186,15 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         </Label>
         <ImgEditor
           value={logo.value}
-          onChange={(v) => {
+          on_change={(v) => {
             logo.onChange(v);
             trigger("logo");
           }}
-          onUndo={(e) => {
+          on_undo={(e) => {
             e.stopPropagation();
             resetField("logo");
           }}
-          spec={imgSpec([1, 1])}
+          spec={img_spec([1, 1])}
           classes={{
             container: "mb-4",
             dropzone: "aspect-1/1 w-60",

@@ -87,12 +87,12 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
         <Label className="-mb-4">Banner image of your organization</Label>
         <ImgEditor
           value={rhf.banner.value}
-          onChange={(val) => {
+          on_change={(val) => {
             rhf.banner.onChange(val);
             // trigger validation - this opts for onChange validation instead of onSubmit
             rhf.trigger("image");
           }}
-          onUndo={(e) => {
+          on_undo={(e) => {
             e.stopPropagation();
             rhf.resetField("image");
           }}
@@ -103,11 +103,11 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
         <Label className="-mb-4">Logo of your organization</Label>
         <ImgEditor
           value={rhf.logo.value}
-          onChange={(val) => {
+          on_change={(val) => {
             rhf.logo.onChange(val);
             rhf.trigger("logo");
           }}
-          onUndo={(e) => {
+          on_undo={(e) => {
             e.stopPropagation();
             rhf.resetField("logo");
           }}
@@ -123,11 +123,11 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
         </Label>
         <ImgEditor
           value={rhf.card_img.value}
-          onChange={(val) => {
+          on_change={(val) => {
             rhf.card_img.onChange(val);
             rhf.trigger("card_img");
           }}
-          onUndo={(e) => {
+          on_undo={(e) => {
             e.stopPropagation();
             rhf.resetField("card_img");
           }}

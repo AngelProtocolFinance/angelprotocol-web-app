@@ -4,14 +4,14 @@ import { useController, useForm } from "react-hook-form";
 import type { LoaderData } from "./api";
 import { type FV, schema } from "./types";
 
-export const avatarSpec: ImgSpec = {
+export const avatar_spec: ImgSpec = {
   type: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
   aspect: [1, 1],
-  maxSize: 4e6,
+  max_size: 4e6,
   rounded: true,
 };
 
-export function useRhf(props: LoaderData) {
+export function use_rhf(props: LoaderData) {
   const {
     register,
     control,

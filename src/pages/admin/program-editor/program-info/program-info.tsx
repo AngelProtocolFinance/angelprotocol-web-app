@@ -5,7 +5,7 @@ import Group from "components/group";
 import { ControlledImgEditor as ImgEditor } from "components/img-editor";
 import { RichText } from "components/rich-text";
 import { useController, useForm } from "react-hook-form";
-import { MAX_CHARS, imgSpec } from "../common";
+import { MAX_CHARS, img_spec } from "../common";
 import { type FV, schema } from "./schema";
 import useSubmit from "./use-submit";
 
@@ -22,7 +22,7 @@ export default function ProgramInfo(props: IProgram) {
       title: props.title,
       image: props.banner ?? "",
       description: { value: props.description },
-      targetRaise: props.targetRaise?.toString() ?? "",
+      target_raise: props.targetRaise?.toString() ?? "",
     },
     resolver: valibotResolver(schema),
   });
@@ -50,15 +50,15 @@ export default function ProgramInfo(props: IProgram) {
         <Label className="-mb-4">Banner image of program</Label>
         <ImgEditor
           value={image.value}
-          onChange={(v) => {
+          on_change={(v) => {
             image.onChange(v);
             trigger("image");
           }}
-          onUndo={(e) => {
+          on_undo={(e) => {
             e.stopPropagation();
             resetField("image");
           }}
-          spec={imgSpec([4, 1])}
+          spec={img_spec([4, 1])}
           classes={{ container: "mb-4", dropzone: "w-full aspect-4/1" }}
           error={errors.image?.message}
         />
@@ -82,11 +82,11 @@ export default function ProgramInfo(props: IProgram) {
           }
         />
         <Field
-          {...register("targetRaise")}
+          {...register("target_raise")}
           classes="mb-4"
           label="Target amount to raise (USD)"
           placeholder="e.g. $1000"
-          error={errors.targetRaise?.message}
+          error={errors.target_raise?.message}
         />
         <button
           disabled={

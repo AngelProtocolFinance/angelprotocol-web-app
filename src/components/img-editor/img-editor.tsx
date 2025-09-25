@@ -41,11 +41,11 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
     if (!props.spec.type.includes(newFile.type as any)) {
       //don't show cropper, render blank preview
-      return props.onChange("invalid-type");
+      return props.on_change("invalid-type");
     }
 
-    if (props.spec.maxSize && size > props.spec.maxSize) {
-      return props.onChange("exceeds-size");
+    if (props.spec.max_size && size > props.spec.max_size) {
+      return props.on_change("exceeds-size");
     }
 
     setFile(newFile);
@@ -65,17 +65,17 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   async function handleSave(cropped: File) {
     setFile(cropped);
     setOpenCropper(false);
-    if (props.spec.maxSize && cropped.size > props.spec.maxSize) {
-      return props.onChange("exceeds-size");
+    if (props.spec.max_size && cropped.size > props.spec.max_size) {
+      return props.on_change("exceeds-size");
     }
 
     try {
-      props.onChange("loading");
+      props.on_change("loading");
       const url = await uploadFile(cropped);
-      return props.onChange(url);
+      return props.on_change(url);
     } catch (err) {
       logger.error(err);
-      props.onChange("failure");
+      props.on_change("failure");
     }
   }
 
@@ -88,9 +88,9 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
             .join(", ")}
           .{" "}
-          {props.spec.maxSize ? (
+          {props.spec.max_size ? (
             <>
-              Image should be less than {props.spec.maxSize / BYTES_IN_MB}MB in
+              Image should be less than {props.spec.max_size / BYTES_IN_MB}MB in
               size.
               <br />
               {file?.size
@@ -166,7 +166,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
                   disabled={props.disabled}
                   onClick={(e) => {
                     setFile(undefined);
-                    props.onUndo(e);
+                    props.on_undo(e);
                   }}
                 >
                   <Undo size={18} />
@@ -219,11 +219,11 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
     <ControlledImgEditor
       ref={ref}
       value={value}
-      onChange={(v) => {
+      on_change={(v) => {
         onChange(v);
         trigger(filePath as any);
       }}
-      onUndo={(e) => {
+      on_undo={(e) => {
         ////prevent container dropzone from catching click event
         e.stopPropagation();
         resetField(name);

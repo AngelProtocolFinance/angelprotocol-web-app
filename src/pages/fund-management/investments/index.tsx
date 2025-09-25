@@ -50,7 +50,7 @@ function Page({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
+      <h3 className="font-bold text-2xl mb-4">Investments</h3>
       <div className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-lg">
           <p className="text-gray text-sm mb-2">Portfolio Value</p>

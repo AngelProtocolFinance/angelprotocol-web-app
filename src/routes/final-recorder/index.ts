@@ -1,7 +1,7 @@
 import { fees } from "@better-giving/constants";
+import { Txs } from "@better-giving/db";
 import type { Donation, OnHoldDonation } from "@better-giving/donation";
 import { partition } from "@better-giving/helpers";
-import { TxBuilder } from "@better-giving/helpers-db";
 import { tables } from "@better-giving/types/list";
 import { default_allocation } from "constants/common";
 import { resp } from "helpers/https";
@@ -103,7 +103,7 @@ export const action: ActionFunction = async ({ request }) => {
       base.programName = tx.program.name;
     }
 
-    const builder = new TxBuilder();
+    const txs = new Txs();
 
     const processed_tip = apply_fees(
       p_net_settled.tip,
@@ -172,13 +172,13 @@ export const action: ActionFunction = async ({ request }) => {
         );
         if (c) {
           overrides.referrer = { id: c.ltd.id, commission: c.breakdown };
-          builder.put(c.record);
+          txs.put(c.record);
           tip_tos.push(c.ltd.id);
           commission_ltds.push(c.ltd);
         }
 
         const _txs = await settle_txs(base, overrides);
-        builder.append(_txs);
+        txs.append(_txs);
         //use net as it reflects fee allowance add-back
         fund_net += processed.net;
 
@@ -194,13 +194,13 @@ export const action: ActionFunction = async ({ request }) => {
             transaction_id: tx.id,
             usd_value: tx.amount.usd_value / num_members,
           });
-          builder.put({ TableName: tables.donation_messages, Item: msg });
+          txs.put({ TableName: tables.donation_messages, Item: msg });
         }
       }
       //commit ltds per referrer
 
       for (const [r, i] of Object.entries(ltd_by_referrer(commission_ltds))) {
-        builder.update(referrer_ltd_update_txi(r, i));
+        txs.update(referrer_ltd_update_txi(r, i));
       }
 
       await ap
@@ -251,15 +251,15 @@ export const action: ActionFunction = async ({ request }) => {
       );
       if (c) {
         overrides.referrer = { id: c.ltd.id, commission: c.breakdown };
-        builder.put(c.record);
+        txs.put(c.record);
         tip_tos.push(c.ltd.id);
-        builder.update(referrer_ltd_update_txi(c.ltd.id, [c.ltd.source]));
+        txs.update(referrer_ltd_update_txi(c.ltd.id, [c.ltd.source]));
       }
       const _txs = await settle_txs(base, overrides);
-      builder.append(_txs);
+      txs.append(_txs);
     }
 
-    builder.del({
+    txs.del({
       TableName: tables.on_hold_donations,
       Key: { transactionId: tx.id } as OnHoldDonation.PrimaryKey,
     });
@@ -276,7 +276,7 @@ export const action: ActionFunction = async ({ request }) => {
         transaction_id: tx.id,
         usd_value: tx.amount.usd_value,
       });
-      builder.put({ TableName: tables.donation_messages, Item: msg });
+      txs.put({ TableName: tables.donation_messages, Item: msg });
     }
 
     const BG_ENDOW_ID = 1293762;
@@ -310,10 +310,10 @@ export const action: ActionFunction = async ({ request }) => {
       overrides.net -= tip_commission;
     }
     const tipTxs = await settle_txs(base, overrides);
-    builder.append(tipTxs);
+    txs.append(tipTxs);
 
     const res = await apes.send(
-      new TransactWriteCommand({ TransactItems: builder.txs })
+      new TransactWriteCommand({ TransactItems: txs.all })
     );
     return resp.json(res.$metadata);
   } catch (err) {

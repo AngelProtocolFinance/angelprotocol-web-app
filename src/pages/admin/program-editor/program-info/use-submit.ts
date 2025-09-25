@@ -16,8 +16,8 @@ export default function useSubmit(
     if (df.image) update.banner = fv.image;
     if (df.description) update.description = fv.description.value;
     if (df.title) update.title = fv.title;
-    if (df.targetRaise) {
-      update.targetRaise = fv.targetRaise ? +fv.targetRaise : null;
+    if (df.target_raise) {
+      update.targetRaise = fv.target_raise ? +fv.target_raise : null;
     }
 
     fetcher.submit(update, {

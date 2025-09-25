@@ -1,8 +1,11 @@
 import type { ImgSpec } from "components/img-editor";
 
-export const imgSpec = (aspect: [number, number], rounded = false): ImgSpec => {
+export const img_spec = (
+  aspect: [number, number],
+  rounded = false
+): ImgSpec => {
   return {
-    maxSize: 4e6,
+    max_size: 4e6,
     type: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
     aspect,
     rounded,

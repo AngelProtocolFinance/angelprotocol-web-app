@@ -1,9 +1,9 @@
-import { imgOutput } from "components/img-editor";
+import { $req } from "@better-giving/schemas";
+import { img_output } from "components/img-editor";
 import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { MAX_CHARS } from "../common";
 
-const requiredStr = v.pipe(v.string("required"), v.nonEmpty("required"));
 export const schema = v.object({
   date: v.pipe(
     v.string(),
@@ -12,8 +12,8 @@ export const schema = v.object({
     v.transform((x) => x.toISOString())
   ),
   description: richTextContent({ maxChars: MAX_CHARS, required: true }),
-  title: requiredStr,
-  media: imgOutput(),
+  title: $req,
+  media: img_output(),
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}

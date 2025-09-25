@@ -1,4 +1,4 @@
-import { imgOutput } from "components/img-editor";
+import { img_output } from "components/img-editor";
 import * as v from "valibot";
 
 export const schema = v.object({
@@ -10,7 +10,7 @@ export const schema = v.object({
     min: v.number(),
     rate: v.number(),
   }),
-  avatar: imgOutput(),
+  avatar: img_output(),
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}

@@ -125,26 +125,48 @@ export default [
     { id: "fund-management" },
     [
       index(pages.$("fund-management/redirect.ts")._),
-      r("dashboard", pages.$("fund-management/dashboard/index.tsx")._, [
+      r("investments", pages.$("fund-management/investments/index.tsx")._, [
         r(
           "rebalance",
-          pages.$("fund-management/dashboard/rebalance/index.tsx")._
+          pages.$("fund-management/investments/rebalance/index.tsx")._
         ),
       ]),
       r(
-        "dashboard/nav-history",
-        pages.$("fund-management/dashboard/history/index.tsx")._
+        "investments/nav-history",
+        pages.$("fund-management/investments/history/index.tsx")._
       ),
-      r("tx-requests", pages.$("fund-management/tx-requests/index.tsx")._, [
+      r(
+        "redeem-requests",
+        pages.$("fund-management/redeem-requests/index.tsx")._,
+        [
+          r(
+            ":tx_id/approve",
+            pages.$(
+              "fund-management/redeem-requests/verdict/verdict-approve.tsx"
+            )._
+          ),
+          r(
+            ":tx_id/reject",
+            pages.$(
+              "fund-management/redeem-requests/verdict/verdict-reject.tsx"
+            )._
+          ),
+        ]
+      ),
+      r("savings", pages.$("fund-management/savings/index.tsx")._, [
         r(
-          ":tx_id/approve",
-          pages.$("fund-management/tx-requests/verdict/verdict-approve.tsx")._
-        ),
-        r(
-          ":tx_id/reject",
-          pages.$("fund-management/tx-requests/verdict/verdict-reject.tsx")._
+          "log-interest",
+          pages.$("fund-management/savings/log-interest/index.tsx")._
         ),
       ]),
+      r(
+        "savings/balance-history",
+        pages.$("fund-management/savings/history-balance/index.tsx")._
+      ),
+      r(
+        "savings/interest-history",
+        pages.$("fund-management/savings/history-interest/index.tsx")._
+      ),
     ]
   ),
 
@@ -280,6 +302,7 @@ export default [
   ),
   r("q/final-recorder", "./routes/final-recorder/index.ts"),
   r("utils/calendar", "./routes/calendar.tsx"),
+  r("api/npos/interest-log-simul", "./routes/npo-interest-log-simul.ts"),
   r("robots.txt", "./routes/robots.ts"),
   r("sitemap.xml", "./routes/sitemap.ts"),
 ] satisfies RouteConfig;
