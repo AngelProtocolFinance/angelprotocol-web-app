@@ -108,9 +108,7 @@ export function Earnings({
               >
                 Setup Payout Method
               </Link>
-              {w_form && (
-                <ExtLink download href={`/api/anvil-doc/${w_form}`}></ExtLink>
-              )}
+              {w_form && <ExtLink download href={`/api/anvil-doc/${w_form}`} />}
             </div>
           )}
 

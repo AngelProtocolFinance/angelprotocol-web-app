@@ -23,7 +23,7 @@ export function Top({ classes = "" }) {
         <h1 className="text-4.5xl leading-snug max-lg:text-center text-right">
           <div className="relative w-fit max-lg:mx-auto lg:ml-auto text-nowrap">
             You're Losing Donations{" "}
-            <span className="absolute bottom-2 left-0 w-full h-4 bg-blue-l3 -z-10"></span>
+            <span className="absolute bottom-2 left-0 w-full h-4 bg-blue-l3 -z-10" />
           </div>
         </h1>
         <p className="mb-4 text-gray-d4 text-lg max-lg:text-center text-right mt-4">

@@ -22,7 +22,7 @@ export function Result1({ classes = "", ...v }: Props) {
         <p className="text-lg sm:text-xl font-bold">{toUsd(v.amount)}</p>
       </div>
 
-      <div className="border-t border-gray-l3 my-6"></div>
+      <div className="border-t border-gray-l3 my-6" />
 
       <h3 className="text-lg sm:text-xl font-bold mb-4">
         Donation Processing Impact

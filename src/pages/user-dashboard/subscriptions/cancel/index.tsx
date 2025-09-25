@@ -54,7 +54,7 @@ function Content() {
         cannot be undone. You will no longer be charged for this subscription.
       </p>
 
-      <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2"></div>
+      <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2" />
 
       <div className="px-6 w-full pb-6">
         <Field
