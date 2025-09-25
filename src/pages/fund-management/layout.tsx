@@ -6,14 +6,14 @@ import { CircleAlert } from "lucide-react";
 import type { Route } from "./+types/layout";
 import { linkGroups } from "./constants";
 import { Header } from "./header";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 
 export const meta: Route.MetaFunction = () =>
   metas({ title: "Fund Management" });
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   return user;
 };

@@ -1,6 +1,6 @@
 import { resp } from "helpers/https";
 import type { Route } from "./+types/irs-npos-aggregates";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { nonprofits } from ".server/mongodb/db";
 
 export const loader = async ({
@@ -8,7 +8,7 @@ export const loader = async ({
   request,
 }: Route.LoaderArgs) => {
   const { user } = await cognito.retrieve(request);
-  if (!user) return toAuth(request);
+  if (!user) return to_auth(request);
   if (!user.groups.includes("ap-admin")) throw resp.status(403);
   const c = await nonprofits;
 

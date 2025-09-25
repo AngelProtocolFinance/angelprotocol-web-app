@@ -4,7 +4,7 @@ import { $ } from "@better-giving/schemas";
 import { type ActionFunction, redirect } from "react-router";
 import { literal, object, parse, variant } from "valibot";
 import { npo_new } from "./npo-new";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 export { default } from "./prompt";
 export { ErrorModal as ErrorBoundary } from "components/error";
@@ -18,7 +18,7 @@ export const schema = variant("type", [approval, rejection]);
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   if (!user.groups.includes("ap-admin")) {
     throw `Unauthorized`;

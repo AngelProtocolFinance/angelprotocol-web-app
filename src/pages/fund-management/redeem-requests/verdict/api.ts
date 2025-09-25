@@ -5,7 +5,7 @@ import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { type ActionFunction, redirect } from "react-router";
 import * as v from "valibot";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import {
   TransactWriteCommand,
   baldb,
@@ -22,7 +22,7 @@ const tx_id_schema = v.pipe(
 
 export const action: ActionFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
   const fv = await request.formData();

@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs, data } from "react-router";
 import { type UserV2, isError } from "types/auth";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import type { Stored } from ".server/auth/session";
 import { weld_data_fn } from ".server/registration/weld-data";
 
@@ -10,7 +10,7 @@ export interface LoaderData {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers, session } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   const q = new URL(request.url).searchParams;
   const weld_data_eid = q.get("weldDataEid");
   if (!weld_data_eid) throw new Response(null, { status: 400 });

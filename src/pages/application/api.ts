@@ -4,7 +4,7 @@ import type { V2RecipientAccount } from "@better-giving/wise";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
 import type { Route } from "./+types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { regdb } from ".server/aws/db";
 import { wise } from ".server/sdks";
 
@@ -16,7 +16,7 @@ export interface LoaderData {
 
 export const loader = async ({ params, request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const id = parse(reg_id, params.id);
 

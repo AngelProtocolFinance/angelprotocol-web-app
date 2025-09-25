@@ -5,7 +5,7 @@ import {
   redirect,
 } from "react-router";
 import * as v from "valibot";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 
 import type { IBapp, IUpdate } from "@better-giving/banking-applications";
 import { $int_gte1 } from "@better-giving/schemas";
@@ -24,7 +24,7 @@ export interface LoaderData extends V2RecipientAccount {
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const bankId = parse($int_gte1, params.id);
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   if (!user.groups.includes("ap-admin")) throw resp.status(403);
 
@@ -37,7 +37,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 
 export const action: ActionFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 

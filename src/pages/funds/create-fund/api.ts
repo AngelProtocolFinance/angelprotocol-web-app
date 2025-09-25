@@ -11,13 +11,13 @@ import {
 import { isError } from "types/auth";
 import { parse } from "valibot";
 import { evaluate } from "./evaluate";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { TransactWriteCommand, funddb, npodb, userdb } from ".server/aws/db";
 import { env } from ".server/env";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   const { npo: id } = search(request);
   if (id) {
     const npo = await npodb.npo(+id);
@@ -29,7 +29,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const payload = parse(fund_new, await request.json());
 

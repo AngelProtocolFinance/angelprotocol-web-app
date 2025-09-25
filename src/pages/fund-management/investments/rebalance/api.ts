@@ -12,19 +12,19 @@ import { parse } from "valibot";
 import type { Route } from "./+types";
 import { prices_fn, to_bals } from "./helpers";
 import { fv as schema, ticker_nets } from "./types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { TransactWriteCommand, navdb } from ".server/aws/db";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   if (!user.groups.includes("ap-admin")) return resp.status(403);
   return navdb.ltd();
 };
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   if (!user.groups.includes("ap-admin")) return { status: 403 };
 
   const ltd = await navdb.ltd();

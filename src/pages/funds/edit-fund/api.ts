@@ -5,7 +5,7 @@ import type { UserV2 } from "types/auth";
 import type { IFund } from "types/fund";
 import { parse } from "valibot";
 import type { Route } from "./+types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { funddb } from ".server/aws/db";
 import { get_fund } from ".server/fund";
 
@@ -16,7 +16,7 @@ export interface LoaderData {
 }
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const id = parse(fund_id, params.fundId);
 
@@ -38,7 +38,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 
 export const action = async ({ request, params }: Route.ActionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const id = parse(fund_id, params.fundId);
 

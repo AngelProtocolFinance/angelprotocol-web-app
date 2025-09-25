@@ -1,7 +1,7 @@
 import type { StripeDonation } from "@better-giving/donation";
 import type Stripe from "stripe";
 import type { Route } from "./+types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { stripe } from ".server/sdks";
 
 export interface SubsItem {
@@ -20,7 +20,7 @@ export interface LoaderData {
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const res = await stripe.customers.search({
     expand: ["data.subscriptions"], // needed so we can check if customer has existing subs

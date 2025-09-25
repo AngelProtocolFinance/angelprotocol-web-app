@@ -3,7 +3,7 @@ import { resp } from "helpers/https";
 import { npos_search } from "helpers/npos-search";
 import type { LoaderFunction } from "react-router";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { nonprofits } from ".server/mongodb/db";
 
 const heads = [
@@ -39,7 +39,7 @@ const heads = [
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user } = await cognito.retrieve(request);
-  if (!user) return toAuth(request);
+  if (!user) return to_auth(request);
   if (!user.groups.includes("ap-admin")) throw resp.status(403);
 
   const { filter, sort } = npos_search(request);

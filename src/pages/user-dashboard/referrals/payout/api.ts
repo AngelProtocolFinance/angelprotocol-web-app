@@ -1,10 +1,10 @@
 import { type ActionFunction, redirect } from "react-router";
 import { isError } from "types/auth";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const recipient_id = await request.text();
   const result = await cognito.updateUserAttributes(

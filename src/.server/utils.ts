@@ -7,7 +7,7 @@ import type {
 } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 
 interface IChecked extends UserV2 {
   req: Request;
@@ -21,7 +21,7 @@ export const admin_checks = async ({
 }: LoaderFunctionArgs | ActionFunctionArgs): Promise<Response | IChecked> => {
   const id = parse($int_gte1, params.id);
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   if (!user.groups.includes("ap-admin") && !user.endowments.includes(id)) {
     return resp.status(403);
   }

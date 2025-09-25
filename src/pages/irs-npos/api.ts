@@ -1,7 +1,7 @@
 import { npos_search } from "helpers/npos-search";
 import type { NonprofitItem } from "types/mongodb/nonprofits";
 import type { Route } from "./+types";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { nonprofits } from ".server/mongodb/db";
 
 export interface LoaderData {
@@ -13,7 +13,7 @@ export interface LoaderData {
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user } = await cognito.retrieve(request);
-  if (!user) return toAuth(request);
+  if (!user) return to_auth(request);
   if (!user.groups.includes("ap-admin")) {
     throw new Response(null, { status: 403 });
   }

@@ -6,20 +6,20 @@ import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import type { Route } from "./+types/layout";
 import { steps } from "./routes";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { npodb, regdb } from ".server/aws/db";
 import { reg_cookie } from ".server/cookie";
 import { is_claimed } from ".server/registration/helpers";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
   return user;
 };
 
 export const new_application: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   const cookie = await reg_cookie
     .parse(request.headers.get("cookie"))

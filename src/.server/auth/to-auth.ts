@@ -1,6 +1,6 @@
 import { redirect } from "react-router";
 
-export const toAuth = (req: Request, headers?: Headers) => {
+export const to_auth = (req: Request, headers?: Headers) => {
   const from = new URL(req.url);
   const to = new URL(from);
   const { pathname: p, search: s } = from;

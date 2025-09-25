@@ -3,7 +3,7 @@ import { ap, ver } from "api/api";
 import type { ActionFunction } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
 import { type IEmailSubs, email_subs } from "types/hubspot-subscription";
-import { cognito, toAuth } from ".server/auth";
+import { cognito, to_auth } from ".server/auth";
 import { userdb } from ".server/aws/db";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -26,7 +26,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return toAuth(request, headers);
+  if (!user) return to_auth(request, headers);
 
   //authenticated requests
 

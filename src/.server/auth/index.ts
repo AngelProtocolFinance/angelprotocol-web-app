@@ -1,2 +1,2 @@
 export { cognito, oauth } from "./cognito";
-export { toAuth } from "./to-auth";
+export { to_auth } from "./to-auth";
