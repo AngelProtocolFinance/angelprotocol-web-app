@@ -1,7 +1,7 @@
 import { laira } from "assets/laira/laira";
 import { Image } from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
@@ -55,7 +55,7 @@ export default function WhyBG({ className = "" }) {
       </ul>
       <div className="isolate z-10 flex flex-col @3xl:flex-row items-center justify-self-center gap-4 mt-24">
         <Link
-          to={appRoutes.register}
+          to={app_routes.register}
           className="btn-blue isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative group active:translate-x-1 font-bold shadow-2xl"
         >
           <span className="ml-1">Start Today</span>

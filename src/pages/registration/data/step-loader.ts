@@ -1,6 +1,6 @@
 import { Progress } from "@better-giving/reg/progress";
 import { reg_id } from "@better-giving/reg/schema";
-import { regRoutes } from "constants/routes";
+import { reg_routes } from "constants/routes";
 import { resp } from "helpers/https";
 import {
   type LoaderFunction,
@@ -41,7 +41,7 @@ export const step_loader =
     }
 
     if (reg.status === "03") {
-      const to = `../../${regRoutes.success}?name=${reg.o_name}&id=${reg.status_approved_npo_id}`;
+      const to = `../../${reg_routes.success}?name=${reg.o_name}&id=${reg.status_approved_npo_id}`;
       return redirect(to);
     }
 

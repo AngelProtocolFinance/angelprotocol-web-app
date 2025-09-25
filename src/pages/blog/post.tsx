@@ -1,6 +1,6 @@
 import { wp } from "api/api";
 import { Media } from "components/media";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
 import { Link, type LoaderFunctionArgs } from "react-router";
@@ -37,7 +37,7 @@ export default function Post({ loaderData: post }: Route.ComponentProps) {
   return (
     <div className={containerStyle}>
       <Link
-        to={appRoutes.blog}
+        to={app_routes.blog}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
       >
         <ChevronLeft className="text-[1em]" />

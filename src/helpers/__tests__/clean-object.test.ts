@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { cleanObject } from "../clean-object";
+import { clean_object } from "../clean-object";
 
-describe("cleanObject", () => {
+describe("clean_object", () => {
   test("remove blacklisted values", () => {
-    const inputObject = {
+    const input = {
       prop1: "Hello",
       prop2: null,
       prop3: "",
@@ -17,9 +17,9 @@ describe("cleanObject", () => {
       prop12: { hello: "world" },
     };
 
-    const cleanedObject = cleanObject(inputObject);
+    const cleaned = clean_object(input);
 
-    expect(cleanedObject).toStrictEqual({
+    expect(cleaned).toStrictEqual({
       prop1: "Hello",
       prop7: "World",
       prop8: [1, 2, 3],

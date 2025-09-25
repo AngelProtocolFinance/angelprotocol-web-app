@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { CircleUserRound } from "lucide-react";
 import { NavLink } from "react-router";
 
@@ -10,7 +10,7 @@ interface Props {
 export function UserAvatar({ classes = "", avatar }: Props) {
   return (
     <NavLink
-      to={`${appRoutes.user_dashboard}/edit-profile`}
+      to={`${app_routes.user_dashboard}/edit-profile`}
       className={`[&:is(.pending)]:grayscale ${classes}`}
     >
       {avatar ? (

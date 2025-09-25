@@ -1,5 +1,5 @@
-import { appRoutes } from "constants/routes";
-import { regRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
+import { reg_routes } from "constants/routes";
 import { CircleAlert } from "lucide-react";
 import { Link, useFetcher } from "react-router";
 import type { ErrorQueryParams } from "./types";
@@ -28,7 +28,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
       </button>
       <Link
         className="w-full max-w-[26.25rem] btn-outline btn text-sm mt-4"
-        to={`${appRoutes.register}/${regRoutes.resume}`}
+        to={`${app_routes.register}/${reg_routes.resume}`}
         aria-disabled={isRedirecting}
       >
         Back

@@ -13,7 +13,7 @@ import { Select } from "components/selector/select";
 import { Confirmed, Info } from "components/status";
 import { Toggle } from "components/toggle";
 import { countries, country_names } from "constants/countries";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { Outlet } from "react-router";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
@@ -331,7 +331,7 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
           </Toggle>
 
           <ExtLink
-            href={`${appRoutes.marketplace}/${id}`}
+            href={`${app_routes.marketplace}/${id}`}
             className="text-blue-d1 hover:text-gray-d1 text-sm flex items-center gap-1"
           >
             View Profile

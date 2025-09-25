@@ -1,7 +1,7 @@
 import type { IFundItem } from "@better-giving/fundraiser";
 import { toText } from "components/rich-text";
 import { Target, toTarget } from "components/target";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link, NavLink } from "react-router";
 
 interface Props {
@@ -34,7 +34,7 @@ function Fund(props: IFundItem) {
       />
       <Link
         className="hover:text-blue-d1"
-        to={`${appRoutes.funds}/${props.id}`}
+        to={`${app_routes.funds}/${props.id}`}
       >
         {props.name}
       </Link>
@@ -47,7 +47,7 @@ function Fund(props: IFundItem) {
         progress={props.donation_total_usd}
       />
       <NavLink
-        to={`${appRoutes.funds}/${props.id}/donate`}
+        to={`${app_routes.funds}/${props.id}/donate`}
         className="btn btn-blue text-xs w-full col-span-full mt-4"
       >
         Donate

@@ -2,7 +2,7 @@ import { laira } from "assets/laira/laira";
 import { Image } from "components/image";
 import { Video, videos } from "components/video/video";
 import { BOOK_A_DEMO } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
@@ -61,7 +61,7 @@ export function Feature1({ className = "" }) {
       </ul>
       <div className="isolate z-10 flex max-md:flex-col items-center justify-self-center gap-4 mt-24">
         <Link
-          to={appRoutes.register}
+          to={app_routes.register}
           className="btn-blue group isolate normal-case inline-flex items-center px-10 py-3 gap-1 text-lg relative active:translate-x-1 font-heading font-bold shadow-2xl rounded-full"
         >
           <span className="ml-1">Start Today</span>

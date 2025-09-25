@@ -1,4 +1,4 @@
-export enum appRoutes {
+export enum app_routes {
   marketplace = "/marketplace",
   admin = "/admin",
   user_dashboard = "/dashboard",
@@ -47,12 +47,12 @@ export const adminRoutes = {
   investments: "investments",
 } as const;
 
-export enum donateWidgetRoutes {
+export enum donate_widget_routes {
   donate_thanks = "donate-thanks",
   stripe_payment_status = "stripe-payment-status",
 }
 
-export enum regRoutes {
+export enum reg_routes {
   index = "",
   resume = "resume",
   success = "success",
@@ -61,8 +61,8 @@ export enum regRoutes {
   sign_result = "sign-result",
 }
 
-export const authRoutes: string[] = [
-  appRoutes.signin,
-  appRoutes.signup,
-  appRoutes.reset_password,
+export const auth_routes: string[] = [
+  app_routes.signin,
+  app_routes.signup,
+  app_routes.reset_password,
 ];

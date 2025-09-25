@@ -1,6 +1,6 @@
 import { Separator } from "components/separator";
 import { APP_NAME } from "constants/env";
-import { regRoutes } from "constants/routes";
+import { reg_routes } from "constants/routes";
 import { Link, useFetcher } from "react-router";
 
 const NEED_HELP_ARTICLE_ID = 6628120;
@@ -34,7 +34,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
 
-      <Link className="btn-outline btn text-sm" to={regRoutes.resume}>
+      <Link className="btn-outline btn text-sm" to={reg_routes.resume}>
         Resume your registration
       </Link>
 

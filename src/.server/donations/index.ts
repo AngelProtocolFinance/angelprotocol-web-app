@@ -36,7 +36,7 @@ export const get_donations = async (
     .join("AND");
 
   let startKey: Record<string, any> | undefined;
-  let items: Donation.Item[] = [];
+  const items: Donation.Item[] = [];
   do {
     const table =
       status === "final" ? tables.donations : tables.on_hold_donations;

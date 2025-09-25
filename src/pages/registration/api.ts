@@ -1,6 +1,6 @@
 import type { INpoClaim, IRegNew } from "@better-giving/reg";
 import { reg_new } from "@better-giving/reg/schema";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { search } from "helpers/https";
 import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
@@ -67,7 +67,7 @@ export const new_application: ActionFunction = async ({ request }) => {
   const id = await regdb.reg_put(parsed);
   cookie.reference = id;
 
-  return redirect(`${appRoutes.register}/${id}/${steps.contact}`, {
+  return redirect(`${app_routes.register}/${id}/${steps.contact}`, {
     headers: { "set-cookie": await reg_cookie.serialize(cookie) },
   });
 };

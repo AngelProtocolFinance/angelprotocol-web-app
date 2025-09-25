@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router";
@@ -92,7 +92,7 @@ export const HeroBottom = ({ className = "", endowments }: Props) => {
       </div>
 
       <Link
-        to={appRoutes.marketplace}
+        to={app_routes.marketplace}
         className="z-10 mt-16 justify-self-center btn btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full font-heading relative"
       >
         <span className="ml-1">Explore All Causes</span>

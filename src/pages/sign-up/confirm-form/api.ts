@@ -1,5 +1,5 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { search } from "helpers/https";
 import {
   type ActionFunction,
@@ -14,10 +14,10 @@ import { cognito } from ".server/auth";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user } = await cognito.retrieve(request);
-  if (user) return redirect(appRoutes.marketplace);
+  if (user) return redirect(app_routes.marketplace);
 
   const { email } = search(request);
-  if (!email) return redirect(appRoutes.signup);
+  if (!email) return redirect(app_routes.signup);
 
   return email;
 };
@@ -51,6 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
 
   from.searchParams.delete("email");
   const to = new URL(from);
-  to.pathname = `${appRoutes.signup}/success`;
+  to.pathname = `${app_routes.signup}/success`;
   return redirect(to.toString());
 };

@@ -6,7 +6,7 @@ import {
 import { ErrorTrigger } from "components/error";
 import { LoadText } from "components/load-text";
 import { type IPrompt, Prompt } from "components/prompt";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import type { StripeCheckoutStep } from "../../types";
@@ -44,7 +44,7 @@ export function Checkout(props: StripeCheckoutStep) {
     const search = `?name=${encoded_name}&id=${props.init.recipient.id}`;
     const return_url =
       props.init.source === "bg-widget"
-        ? `${window.location.origin}${appRoutes.donate_widget}/donate-thanks${search}`
+        ? `${window.location.origin}${app_routes.donate_widget}/donate-thanks${search}`
         : `${window.location.origin}/donate-thanks${search}`;
 
     const stripe_confirm_params = {

@@ -1,5 +1,5 @@
 import { Info } from "components/status";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { toUsd } from "helpers/to-usd";
@@ -21,7 +21,7 @@ function Page({ loaderData: { subs } }: Route.ComponentProps) {
       <tr key={s.id}>
         <td className="text-sm text-gray-d4">
           <Link
-            to={`${s.recipient.type === "fund" ? appRoutes.funds : appRoutes.marketplace}/${s.recipient.id}`}
+            to={`${s.recipient.type === "fund" ? app_routes.funds : app_routes.marketplace}/${s.recipient.id}`}
             className="text-blue hover:text-blue-d1"
           >
             {s.recipient.name}

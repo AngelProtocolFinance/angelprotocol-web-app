@@ -97,8 +97,6 @@ export function createScrollAnimation({
         (current_scroll_progress - bubble1_threshold) / (1 - bubble1_threshold);
     }
 
-    let interpolated_view_box: string;
-
     // Parse viewBox values for interpolation
     const parse_view_box = (vb: string) => {
       const [x, y, width, height] = vb.split(" ").map(Number);
@@ -152,7 +150,7 @@ export function createScrollAnimation({
       };
     }
 
-    interpolated_view_box = `${current_vb.x} ${current_vb.y} ${current_vb.width} ${current_vb.height}`;
+    const interpolated_view_box = `${current_vb.x} ${current_vb.y} ${current_vb.width} ${current_vb.height}`;
     svg_element.setAttribute("viewBox", interpolated_view_box);
 
     // Update bubble states based on ball position with improved timing

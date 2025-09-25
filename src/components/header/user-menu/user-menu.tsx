@@ -1,5 +1,5 @@
 import { MenuItem } from "@headlessui/react";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import {
   Building2Icon,
   CircleDollarSign,
@@ -25,7 +25,7 @@ export function UserMenu({ user, classes }: Props) {
       <div className="w-64 min-h-[5rem] p-5">
         <MenuItem
           as={Link}
-          to={`${appRoutes.user_dashboard}/donations`}
+          to={`${app_routes.user_dashboard}/donations`}
           className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
           <CircleDollarSign size={18} />
@@ -38,7 +38,7 @@ export function UserMenu({ user, classes }: Props) {
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
-              to={appRoutes.applications}
+              to={app_routes.applications}
               className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
               <Building2Icon size={18} />
@@ -48,7 +48,7 @@ export function UserMenu({ user, classes }: Props) {
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
-              to={appRoutes.banking_applications}
+              to={app_routes.banking_applications}
               className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
               <LandmarkIcon size={18} />
@@ -58,7 +58,7 @@ export function UserMenu({ user, classes }: Props) {
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
-              to={appRoutes.fund_management}
+              to={app_routes.fund_management}
               className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
               <PieChartIcon size={16} />

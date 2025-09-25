@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { TriangleAlert } from "lucide-react";
 import { Link } from "react-router";
 
@@ -8,7 +8,7 @@ export default function PageError() {
       <TriangleAlert size={30} />
       <p className="text-lg text-center">Failed to load nonprofit profile</p>
       <Link
-        to={`${appRoutes.marketplace}`}
+        to={`${app_routes.marketplace}`}
         className="text-blue-l5 hover:text-blue text-sm"
       >
         Back to Marketplace

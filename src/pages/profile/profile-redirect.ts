@@ -1,5 +1,5 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { type LoaderFunction, redirect } from "react-router";
 
 export const loader: LoaderFunction = ({ params }) =>
-  redirect(`${appRoutes.marketplace}/${params.id}`);
+  redirect(`${app_routes.marketplace}/${params.id}`);

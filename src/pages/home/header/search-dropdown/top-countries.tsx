@@ -1,6 +1,6 @@
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { NavLink } from "react-router";
 import useSWR from "swr/immutable";
 
@@ -40,7 +40,7 @@ export function TopCountries() {
                 key={country}
                 className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
-                  pathname: appRoutes.marketplace,
+                  pathname: app_routes.marketplace,
                   search: new URLSearchParams({
                     countries: country,
                   }).toString(),

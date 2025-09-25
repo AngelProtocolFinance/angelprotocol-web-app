@@ -1,7 +1,7 @@
 import chains from "@better-giving/assets/chains";
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { roundToCents } from "helpers/decimal";
 import { useNavigate } from "react-router";
 import useSWR from "swr/immutable";
@@ -102,7 +102,7 @@ export function DirectMode({ donation, classes = "" }: Props) {
         disabled={!!error || isLoading}
         onClick={() =>
           navigate(
-            `${appRoutes.donate_thanks}?name=${init.recipient.name}&id=${init.recipient.id}`
+            `${app_routes.donate_thanks}?name=${init.recipient.name}&id=${init.recipient.id}`
           )
         }
         text="I have completed the payment"

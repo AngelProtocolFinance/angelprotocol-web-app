@@ -1,9 +1,9 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 
 const get_link = (slug: string, base_url: string) =>
-  `${base_url}${appRoutes.funds}/${slug}`;
+  `${base_url}${app_routes.funds}/${slug}`;
 
 interface Props {
   slug_init?: string;

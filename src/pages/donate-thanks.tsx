@@ -4,7 +4,7 @@ import { Share, donation_recipient, is_fund } from "components/donation";
 import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
 import { BASE_URL } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
@@ -27,8 +27,8 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   const donate_url =
     d && d.id
       ? is_fund(d.id)
-        ? `${BASE_URL}${appRoutes.funds}/${d.id}/donate`
-        : `${BASE_URL}${appRoutes.donate}/${d.id}`
+        ? `${BASE_URL}${app_routes.funds}/${d.id}/donate`
+        : `${BASE_URL}${app_routes.donate}/${d.id}`
       : undefined;
 
   return metas({
@@ -80,13 +80,13 @@ export default function Page({ loaderData: recipient }: Route.ComponentProps) {
         {widgetVersion ? (
           <ExtLink
             className="text-blue"
-            href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}
+            href={`${BASE_URL}${app_routes.user_dashboard}/donations`}
           >
             My Donations
           </ExtLink>
         ) : (
           <NavLink
-            to={`${appRoutes.user_dashboard}/donations`}
+            to={`${app_routes.user_dashboard}/donations`}
             className="text-blue [&:is(.pending)]:text-gray"
           >
             My Donations page
@@ -96,7 +96,7 @@ export default function Page({ loaderData: recipient }: Route.ComponentProps) {
 
       {!widgetVersion && (
         <Link
-          to={appRoutes.marketplace}
+          to={app_routes.marketplace}
           className="btn btn-outline h-[3.25rem] font-heading max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
         >
           Back to the platform

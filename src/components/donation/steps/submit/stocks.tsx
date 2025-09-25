@@ -1,12 +1,12 @@
 import { EMAIL_SUPPORT } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { BackBtn } from "../common/back-btn";
 import { use_donation_state } from "../context";
 import type { StockCheckoutStep } from "../types";
 import { DonationTerms } from "./donation-terms";
 
 export function Stocks(props: StockCheckoutStep) {
-  const profile_url = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
+  const profile_url = `${window.location.origin}${app_routes.donate}/${props.init.recipient.id}`;
   const { set_state } = use_donation_state();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">

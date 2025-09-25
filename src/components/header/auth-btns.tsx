@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
 interface Props {
@@ -9,13 +9,13 @@ export function AuthBtns({ classes = "", to }: Props) {
   return (
     <div className={`${classes} flex items-center gap-x-4`}>
       <Link
-        to={`${appRoutes.signin}?redirect=${to}`}
+        to={`${app_routes.signin}?redirect=${to}`}
         className="btn text-base normal-case hover:underline"
       >
         Log in
       </Link>
       <Link
-        to={`${appRoutes.signup}?redirect=${to}`}
+        to={`${app_routes.signup}?redirect=${to}`}
         className="btn-blue text-nowrap px-6 py-2 rounded-full"
       >
         Sign up

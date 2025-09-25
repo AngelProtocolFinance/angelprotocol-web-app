@@ -1,7 +1,7 @@
 import { laira } from "assets/laira/laira";
 import { StepsCarousel } from "components/donation";
 import { Image } from "components/image";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
 type TListItem = {
@@ -59,7 +59,7 @@ export function DonationFormInfo({ className = "" }) {
         ))}
       </ul>
       <Link
-        to={`${appRoutes.register}/welcome`}
+        to={`${app_routes.register}/welcome`}
         className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading font-bold shadow-2xl rounded-xl justify-self-center col-span-full mt-8"
       >
         Start Free

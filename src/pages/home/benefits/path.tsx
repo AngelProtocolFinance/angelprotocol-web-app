@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
@@ -32,8 +32,8 @@ const Path = () => {
       <Link
         to={
           path === "nonprofits"
-            ? appRoutes.nonprofit_info
-            : appRoutes.donor_info
+            ? app_routes.nonprofit_info
+            : app_routes.donor_info
         }
         className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1 font-heading font-bold shadow-2xl rounded-full"
       >

@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import type { PropsWithChildren } from "react";
 import type {} from "react-router";
@@ -191,7 +191,7 @@ export default function TermsDonors() {
             Your personally identifiable information (“PII”), including your
             name, email address and physical address will be handled in
             accordance with our{" "}
-            <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>, and
+            <Link to={app_routes.privacy_policy}>Privacy Policy</Link>, and
             unless you have elected to donate anonymously, may be shared with
             the NPO(s). We use commercially reasonable safeguards to preserve
             the integrity and security of your PII. However, we cannot guarantee

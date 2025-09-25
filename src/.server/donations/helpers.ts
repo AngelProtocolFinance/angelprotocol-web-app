@@ -20,7 +20,7 @@ export function askerIsDonor(asker: string | number): asker is string {
 }
 
 export function to_items(records: DBRecord[], asker: string | number) {
-  let items: Donation.Item[] = [];
+  const items: Donation.Item[] = [];
   for (const r of records) {
     const splitLiq = parse(fallback(pct, 50), r.splitLiq);
     const amountForAsker = askerIsDonor(asker) ? r.usdValue : 0;

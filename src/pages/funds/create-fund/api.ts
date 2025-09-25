@@ -1,7 +1,7 @@
 import { Txs } from "@better-giving/db";
 import type { IFund, IFundSettings } from "@better-giving/fundraiser";
 import { fund_new } from "@better-giving/fundraiser/schema";
-import { adminRoutes, appRoutes } from "constants/routes";
+import { adminRoutes, app_routes } from "constants/routes";
 import { resp, search } from "helpers/https";
 import {
   type ActionFunction,
@@ -138,7 +138,7 @@ export const action: ActionFunction = async ({ request }) => {
     : { headers: { "set-cookie": refreshed.commit } };
 
   if (npoo) {
-    return redirect(`${appRoutes.admin}/${npoo}/${adminRoutes.funds}`, commit);
+    return redirect(`${app_routes.admin}/${npoo}/${adminRoutes.funds}`, commit);
   }
-  return redirect(`${appRoutes.user_dashboard}/funds`, commit);
+  return redirect(`${app_routes.user_dashboard}/funds`, commit);
 };

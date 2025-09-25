@@ -1,5 +1,5 @@
 import { ExtLink } from "components/ext-link";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { NavLink } from "react-router";
@@ -65,7 +65,7 @@ export function Loaded(props: LoaderData) {
         <NavLink
           replace
           preventScrollReset
-          to={appRoutes.banking_applications}
+          to={app_routes.banking_applications}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back

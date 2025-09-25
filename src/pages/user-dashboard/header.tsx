@@ -1,5 +1,5 @@
 import { DappLogo } from "components/image";
-import { authRoutes } from "constants/routes";
+import { auth_routes } from "constants/routes";
 import { useLocation } from "react-router";
 
 import {
@@ -14,7 +14,7 @@ type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const { pathname: p, search: s } = useLocation();
-  const to = authRoutes.includes(p) ? undefined : p + s;
+  const to = auth_routes.includes(p) ? undefined : p + s;
   const user = useRootData();
 
   return (

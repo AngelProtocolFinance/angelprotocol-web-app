@@ -3,7 +3,7 @@ import { Breadcrumbs } from "components/breadcrumbs";
 import { ExtLink } from "components/ext-link";
 import { Target, toTarget } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
@@ -33,10 +33,10 @@ function Page({ loaderData: bal }: Route.ComponentProps) {
           items={[
             {
               title: "Marketplace",
-              to: `${appRoutes.marketplace}/`,
+              to: `${app_routes.marketplace}/`,
               end: true,
             },
-            { title: p.name, to: `${appRoutes.marketplace}/${p.id}` },
+            { title: p.name, to: `${app_routes.marketplace}/${p.id}` },
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
@@ -48,7 +48,7 @@ function Page({ loaderData: bal }: Route.ComponentProps) {
             />
           )}
           <NavLink
-            to={`${appRoutes.donate}/${p.id}`}
+            to={`${app_routes.donate}/${p.id}`}
             className="btn btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now

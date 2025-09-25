@@ -4,7 +4,7 @@ import { ExtLink } from "components/ext-link";
 import { Input, PasswordInput, RmxForm } from "components/form";
 import { Image } from "components/image";
 import { Separator } from "components/separator";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { Mail } from "lucide-react";
@@ -19,7 +19,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   try {
     const from = new URL(request.url);
     const redirect_to =
-      from.searchParams.get("redirect") || appRoutes.marketplace;
+      from.searchParams.get("redirect") || app_routes.marketplace;
     const { user } = await cognito.retrieve(request);
     if (user) return redirect(redirect_to);
 
@@ -44,7 +44,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     if (isError(res)) {
       if (res.__type === "UserNotConfirmedException") {
         const to = new URL(from);
-        to.pathname = `${appRoutes.signup}/confirm`;
+        to.pathname = `${app_routes.signup}/confirm`;
         to.searchParams.set("email", payload.data.email);
         to.searchParams.set("redirect", redirect_to);
         return redirect(to.toString());
@@ -66,7 +66,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user } = await cognito.retrieve(request);
   const { redirect: to } = search(request);
-  if (user) return redirect(to || appRoutes.marketplace);
+  if (user) return redirect(to || app_routes.marketplace);
   return to || "/";
 };
 
@@ -133,7 +133,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
             placeholder="Password"
           />
           <Link
-            to={`${appRoutes.reset_password}?redirect=${to}`}
+            to={`${app_routes.reset_password}?redirect=${to}`}
             className="font-medium text-gray hover:text-gray-d1 active:text-gray-d2 text-xs sm:text-sm justify-self-end hover:underline"
           >
             Forgot password?
@@ -150,7 +150,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={`${appRoutes.signup}?redirect=${to}`}
+            to={`${app_routes.signup}?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={is_submitting}
           >
@@ -161,21 +161,21 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
       <span className="text-xs sm:text-sm text-center w-80">
         By signing in, you agree to our{" "}
         <ExtLink
-          href={appRoutes.privacy_policy}
+          href={app_routes.privacy_policy}
           className="text-blue hover:text-blue-l2"
         >
           Privacy Policy
         </ExtLink>
         ,{" "}
         <ExtLink
-          href={appRoutes.terms_donors}
+          href={app_routes.terms_donors}
           className="text-blue hover:text-blue-l2"
         >
           Terms of Use (Donors)
         </ExtLink>
         , and{" "}
         <ExtLink
-          href={appRoutes.terms_nonprofits}
+          href={app_routes.terms_nonprofits}
           className="text-blue hover:text-blue-l2"
         >
           Terms of Use (Nonprofits)

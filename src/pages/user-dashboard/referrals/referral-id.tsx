@@ -1,5 +1,5 @@
 import { Copier } from "components/copier";
-import { appRoutes, regRoutes } from "constants/routes";
+import { app_routes, reg_routes } from "constants/routes";
 import { Link } from "react-router";
 
 interface Props {
@@ -35,10 +35,10 @@ export function ReferralId({ classes = "", ...p }: Props) {
         <div className="flex items-center">
           <p className="text-blue-l1 truncate max-w-xs font-mono">
             {p.base_url}
-            {appRoutes.register}/{regRoutes.welcome}?referrer={p.referral_id}
+            {app_routes.register}/{reg_routes.welcome}?referrer={p.referral_id}
           </p>
           <Copier
-            text={`${p.base_url}${appRoutes.register}/${regRoutes.welcome}?referrer=${p.referral_id}`}
+            text={`${p.base_url}${app_routes.register}/${reg_routes.welcome}?referrer=${p.referral_id}`}
             classes={{
               container: "text-gray hover:text-gray-d1 ml-2",
               icon: "size-5",

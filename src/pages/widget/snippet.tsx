@@ -1,7 +1,7 @@
 import type { INpo } from "@better-giving/endowment";
 import { Copier } from "components/copier";
-import { appRoutes } from "constants/routes";
-import { cleanObject } from "helpers/clean-object";
+import { app_routes } from "constants/routes";
+import { clean_object } from "helpers/clean-object";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 type Props = {
@@ -55,6 +55,6 @@ const widgetURLfn = (config: WidgetConfig, base_url: string, endowId = 0) => {
       .join(","),
   };
   return `${
-    base_url + appRoutes.donate_widget
-  }/${endowId}?${new URLSearchParams(cleanObject(params)).toString()}`;
+    base_url + app_routes.donate_widget
+  }/${endowId}?${new URLSearchParams(clean_object(params)).toString()}`;
 };

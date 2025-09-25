@@ -1,5 +1,5 @@
 import { Footer } from "components/footer";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
@@ -32,7 +32,7 @@ export default function Page({ loaderData: user }: Route.ComponentProps) {
     <div className="grid">
       <Header classes="sticky z-40 top-[-1px]" />
       <Layout
-        rootRoute={appRoutes.fund_management}
+        rootRoute={app_routes.fund_management}
         linkGroups={linkGroups}
         //dummy header
         sidebarHeader={<div className="h-5" />}

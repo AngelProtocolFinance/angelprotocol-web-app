@@ -1,7 +1,7 @@
 import type { IFundItem } from "@better-giving/fundraiser";
 import { FundCreator, FundStatus, status_fn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { fromUnixTime } from "date-fns";
 import { use_action_result } from "hooks/use-action-result";
 import { LoaderCircle, Split } from "lucide-react";
@@ -42,7 +42,7 @@ export const FundItem = (props: Props) => {
       </div>
 
       <Link
-        to={`${appRoutes.funds}/${props.id}`}
+        to={`${app_routes.funds}/${props.id}`}
         className="mt-4 font-semibold text-gray hover:text-blue-d1 font-heading"
       >
         {props.name}
@@ -93,7 +93,7 @@ export const FundItem = (props: Props) => {
           className={`btn btn btn-blue rounded-full text-xs px-6 py-2 ${
             props.isEditor ? "" : "invisible"
           }`}
-          to={`${appRoutes.funds}/${props.id}/edit`}
+          to={`${app_routes.funds}/${props.id}/edit`}
         >
           Edit
         </NavLink>

@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 import { SubscriptionForm } from "./subscription-form";
 
@@ -13,7 +13,7 @@ export function Newsletter({ classes = "" }) {
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
           <Link
-            to={appRoutes.privacy_policy}
+            to={app_routes.privacy_policy}
             className="font-medium underline text-black"
           >
             Privacy Policy

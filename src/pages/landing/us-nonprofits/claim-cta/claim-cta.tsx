@@ -1,4 +1,4 @@
-import { appRoutes, regRoutes } from "constants/routes";
+import { app_routes, reg_routes } from "constants/routes";
 import { useState } from "react";
 import { Link } from "react-router";
 import type { EndowmentOption } from "types/npo";
@@ -13,7 +13,7 @@ export function ClaimCta({ classes = "" }) {
         onChange={setEndow}
       />
       <Link
-        to={`${appRoutes.register}/${regRoutes.welcome}?claim=${endow?.registration_number}`}
+        to={`${app_routes.register}/${reg_routes.welcome}?claim=${endow?.registration_number}`}
         aria-disabled={!endow?.id}
         className="h-full flex items-center text-sm uppercase font-bold font-heading bg-blue-d1 text-white shadow-xl enabled:active:translate-x-1 hover:bg-blue-d2 rounded-full px-6 py-2 aria-disabled:bg-gray"
       >

@@ -1,5 +1,5 @@
 import { Info } from "components/status";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { Link } from "react-router";
@@ -19,7 +19,7 @@ export function Nonprofits({ classes = "", npos }: Props) {
       <tr key={npo.id}>
         <td className="text-sm text-gray-d4">
           <Link
-            to={`${appRoutes.marketplace}/${npo.id}`}
+            to={`${app_routes.marketplace}/${npo.id}`}
             className="text-blue hover:text-blue-d1"
           >
             {npo.name}

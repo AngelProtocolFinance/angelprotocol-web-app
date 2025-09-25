@@ -1,7 +1,7 @@
 import dappLogo from "assets/images/bg-logo-503c.webp";
 import { ExtLink } from "components/ext-link";
 import { INTERCOM_HELP } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { guidestar } from "constants/urls";
 import { Link } from "react-router";
 import { Newsletter } from "./newsletter";
@@ -32,7 +32,7 @@ export function Footer({ classes = "" }: Props) {
         <div className="flex items-center max-2xl:justify-center flex-wrap my-2 order-2">
           <Link
             className="underline pr-2 text-gray 2xl:border-r border-gray"
-            to={appRoutes.privacy_policy}
+            to={app_routes.privacy_policy}
           >
             Privacy Policy
           </Link>
@@ -44,13 +44,13 @@ export function Footer({ classes = "" }: Props) {
           </Link>
           <Link
             className="underline px-2 text-gray @sm/links:text-nowrap order-5 @md/links:order-none "
-            to={appRoutes.terms_donors}
+            to={app_routes.terms_donors}
           >
             Terms of Use (Donors)
           </Link>
           <Link
             className="underline px-2 text-gray 2xl:border-r border-gray"
-            to={appRoutes.about}
+            to={app_routes.about}
           >
             About Us
           </Link>
@@ -62,7 +62,7 @@ export function Footer({ classes = "" }: Props) {
           </a>
           <Link
             className="underline px-2 text-gray 2xl:border-r border-gray @sm/links:text-nowrap"
-            to={appRoutes.terms_nonprofits}
+            to={app_routes.terms_nonprofits}
           >
             Terms of Use (Nonprofits)
           </Link>

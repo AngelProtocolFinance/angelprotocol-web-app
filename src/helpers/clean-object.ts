@@ -1,4 +1,4 @@
-export function cleanObject<T extends Record<string, any>>(obj: T): T {
+export function clean_object<T extends Record<string, any>>(obj: T): T {
   const cleanedObject: any = {};
 
   for (const key in obj) {

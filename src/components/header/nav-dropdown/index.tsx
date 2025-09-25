@@ -4,7 +4,7 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { ChevronDown, CornerDownRight, MenuIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router";
@@ -45,18 +45,18 @@ export function NavDropdown({ user, auth_links }: Props) {
       >
         <div className="p-5 grid gap-y-2 w-80">
           <MenuItem>
-            <NavLink to={appRoutes.home} end className={styler}>
+            <NavLink to={app_routes.home} end className={styler}>
               Home
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.nonprofit_info} className={styler}>
+            <NavLink to={app_routes.nonprofit_info} className={styler}>
               For Nonprofits
             </NavLink>
           </MenuItem>
           <MenuItem>
             <NavLink
-              to={appRoutes.register + (user ? "/" : "/welcome")}
+              to={app_routes.register + (user ? "/" : "/welcome")}
               className={styler}
             >
               <CornerDownRight strokeWidth={1.5} size={15} />
@@ -64,24 +64,24 @@ export function NavDropdown({ user, auth_links }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.donor_info} className={styler}>
+            <NavLink to={app_routes.donor_info} className={styler}>
               For Donors
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.marketplace} className={styler}>
+            <NavLink to={app_routes.marketplace} className={styler}>
               <CornerDownRight strokeWidth={1.5} size={15} />
               <span>Marketplace</span>
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.funds} className={styler} end>
+            <NavLink to={app_routes.funds} className={styler} end>
               <CornerDownRight strokeWidth={1.5} size={15} />
               Fundraisers
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.blog} className={styler}>
+            <NavLink to={app_routes.blog} className={styler}>
               Blog
             </NavLink>
           </MenuItem>

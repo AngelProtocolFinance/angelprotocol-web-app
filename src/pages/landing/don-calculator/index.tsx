@@ -1,6 +1,6 @@
 import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { Link, type MetaFunction } from "react-router";
 import { Top } from "./top";
@@ -32,7 +32,7 @@ export default function Component() {
         <div className="xl:container xl:mx-auto px-10 py-4 flex justify-between gap-x-4 items-center">
           <DappLogo classes="h-12" />
           <Link
-            to={appRoutes.signup}
+            to={app_routes.signup}
             className="btn btn-blue max-xl:text-sm normal-case text-nowrap px-6 py-2 rounded-full"
           >
             Sign up

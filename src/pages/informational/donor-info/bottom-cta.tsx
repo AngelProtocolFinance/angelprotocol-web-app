@@ -1,6 +1,6 @@
 import { laira } from "assets/laira/laira";
 import { Image } from "components/image";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
 export function BottomCta({ className = "" }) {
@@ -16,7 +16,7 @@ export function BottomCta({ className = "" }) {
           Together, we can change the world for good
         </h3>
         <Link
-          to={appRoutes.marketplace}
+          to={app_routes.marketplace}
           className="disabled:bg-gray-l3 aria-disabled:bg-gray-l3 text-blue-d1 border border-blue-d1 enabled:hover:border-blue justify-self-center @5xl:justify-self-start btn bg-white rounded-full px-8 py-3 @5xl:px-12 @5xl:py-6 @5xl:text-xl"
         >
           Donate today

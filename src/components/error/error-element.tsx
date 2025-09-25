@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { CircleAlert } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { NavLink, isRouteErrorResponse, useRouteError } from "react-router";
@@ -29,7 +29,7 @@ export function ErrorElement() {
             The resource you requested was not found
           </p>
           <NavLink
-            to={appRoutes.marketplace}
+            to={app_routes.marketplace}
             className="btn btn-outline text-sm px-6 py-2 rounded-full"
           >
             Back

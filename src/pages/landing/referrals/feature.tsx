@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import {
   ArrowRight,
   DollarSignIcon,
@@ -50,8 +50,8 @@ export function Feature({ className = "" }) {
 
       <Link
         to={{
-          pathname: appRoutes.signup,
-          search: `?redirect=${appRoutes.user_dashboard}/referrals`,
+          pathname: app_routes.signup,
+          search: `?redirect=${app_routes.user_dashboard}/referrals`,
         }}
         className="btn-blue mt-8 justify-self-center col-span-full ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
       >

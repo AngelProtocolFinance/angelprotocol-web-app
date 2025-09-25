@@ -130,7 +130,7 @@ function removeOffscreenFettis(fettis: Fetti[], trigger: HTMLElement) {
 }
 
 const isElementOffscreen = (el: HTMLElement) => {
-  var rect = el.getBoundingClientRect();
+  const rect = el.getBoundingClientRect();
   const windowBufferPercentage = 0.025;
   const heightBuffer = window.innerHeight * windowBufferPercentage;
   const widthBuffer = window.innerWidth * windowBufferPercentage;

@@ -9,7 +9,7 @@ import { RichText, richTextStyles, toText } from "components/rich-text";
 import { Target, toTarget } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { unpack } from "helpers/unpack";
 import { ArrowLeft } from "lucide-react";
@@ -160,7 +160,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
                   width={50}
                 />
                 <Link
-                  to={`${appRoutes.marketplace}/${m.id}`}
+                  to={`${app_routes.marketplace}/${m.id}`}
                   className="font-bold font-heading text-gray hover:text-blue-d1"
                 >
                   {m.name}
@@ -203,7 +203,7 @@ function DonateSection(props: IDonateSection) {
             props.donation_total_usd
           ).active
         }
-        to={`${appRoutes.funds}/${props.id}/donate`}
+        to={`${app_routes.funds}/${props.id}/donate`}
         className={`w-full btn btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >
         Donate now

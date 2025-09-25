@@ -1,6 +1,6 @@
 import { Copier } from "components/copier";
 import { Cells } from "components/table-section";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
@@ -27,7 +27,7 @@ export default function Row(
       {props.program_id ? (
         <Link
           className="text-blue hover:text-blue-d1"
-          to={`${appRoutes.marketplace}/${props.recipient_id}/program/${props.program_id}`}
+          to={`${app_routes.marketplace}/${props.recipient_id}/program/${props.program_id}`}
         >
           {props.program_name}
         </Link>

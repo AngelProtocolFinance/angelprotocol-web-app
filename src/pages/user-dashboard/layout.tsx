@@ -1,5 +1,5 @@
 import { Footer } from "components/footer";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import DashboardLayout from "layout/dashboard";
 import type { MetaFunction } from "react-router";
@@ -13,7 +13,7 @@ export default function Layout() {
     <div className="grid">
       <Header classes="sticky z-40 top-[-1px]" />
       <DashboardLayout
-        rootRoute={`${appRoutes.user_dashboard}/`}
+        rootRoute={`${app_routes.user_dashboard}/`}
         linkGroups={linkGroups}
         //dummy header
         sidebarHeader={<div className="h-5" />}

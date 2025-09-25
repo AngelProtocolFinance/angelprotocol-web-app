@@ -6,7 +6,7 @@ import {
   fsa_docs_or_signer,
   reg_id,
 } from "@better-giving/reg/schema";
-import { regRoutes } from "constants/routes";
+import { reg_routes } from "constants/routes";
 import { type ActionFunction, redirect } from "react-router";
 import { parse } from "valibot";
 import { cognito, to_auth } from ".server/auth";
@@ -37,7 +37,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (!r) throw `registration: ${rid} doesn't contain fsa docs`;
 
     const from = new URL(request.url);
-    from.pathname = `register/${rid}/${regRoutes.sign_result}`;
+    from.pathname = `register/${rid}/${reg_routes.sign_result}`;
     from.search = "";
 
     const docs: IFsaDocs = {
@@ -72,7 +72,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (!r) throw `registration not ready for FSA signing: ${rid}`;
 
   const from = new URL(request.url);
-  from.pathname = `register/${rid}/${regRoutes.sign_result}`;
+  from.pathname = `register/${rid}/${reg_routes.sign_result}`;
   from.search = "";
 
   const signer: IFsaSigner = {

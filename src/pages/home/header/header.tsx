@@ -5,7 +5,7 @@ import {
   UserAvatar,
 } from "components/header";
 import { DappLogo } from "components/image";
-import { authRoutes } from "constants/routes";
+import { auth_routes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { useState } from "react";
 import { useLocation } from "react-router";
@@ -22,7 +22,7 @@ export function Header({ classes, page1 }: Props) {
   const user = useRootData();
   const [query, setQuery] = useState("");
   const { pathname: p, search: s } = useLocation();
-  const to = authRoutes.includes(p) ? undefined : p + s;
+  const to = auth_routes.includes(p) ? undefined : p + s;
 
   return (
     <header

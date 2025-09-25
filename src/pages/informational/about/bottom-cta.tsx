@@ -1,7 +1,7 @@
 import { laira } from "assets/laira/laira";
 import { Image } from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
 export function BottomCta({ className = "" }) {
@@ -19,7 +19,7 @@ export function BottomCta({ className = "" }) {
         </h3>
         <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-6">
           <Link
-            to={appRoutes.register}
+            to={app_routes.register}
             className="active:translate-x-1 btn-blue font-heading uppercase font-bold shadow-2xl rounded-full px-8 py-3 md:px-12 md:py-6"
           >
             Start today

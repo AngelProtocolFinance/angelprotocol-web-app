@@ -1,7 +1,7 @@
 import type { DonateData } from "api/donate-loader";
 import { Image } from "components/image";
 import { type TTarget, Target, toTarget } from "components/target";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Await, Link } from "react-router";
 
 type Props = {
@@ -24,7 +24,7 @@ export default function OrgCard({ classes = "", balance, ...props }: Props) {
           className="size-14 border border-gray-l3 rounded-lg object-cover bg-white row-span-2"
         />
         <Link
-          to={`${appRoutes.marketplace}/${props.id}`}
+          to={`${app_routes.marketplace}/${props.id}`}
           className="hover:text-blue-d1 text-ellipsis overflow-hidden text-nowrap @xl/org-card:text-balance col-start-2 w-full"
         >
           {props.name}

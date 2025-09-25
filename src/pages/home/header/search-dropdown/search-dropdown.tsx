@@ -1,7 +1,7 @@
 import { randomLaira } from "assets/laira/laira";
 import { Image } from "components/image";
 import { Info, LoadingStatus } from "components/status";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { categories } from "constants/unsdgs";
 import { Link, NavLink, useFetcher } from "react-router";
 import type { EndowCardsPage } from "types/npo";
@@ -29,7 +29,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
                 key={v.name}
                 className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
-                  pathname: appRoutes.marketplace,
+                  pathname: app_routes.marketplace,
                   search: new URLSearchParams({
                     sdgs: v.sdgs.join(),
                   }).toString(),
@@ -44,7 +44,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
 
           <NavLink
             className="text-blue-d1 [&:is(.pending)]:text-gray font-medium text-lg text-center mt-8 block"
-            to={appRoutes.marketplace}
+            to={app_routes.marketplace}
           >
             Explore all Causes
           </NavLink>
@@ -72,7 +72,7 @@ function SearchResult(props: ISearchResult) {
     <div className="flex flex-wrap items-center gap-4">
       {props.items.map((endow) => (
         <Link
-          to={`${appRoutes.marketplace}/${endow.id}`}
+          to={`${app_routes.marketplace}/${endow.id}`}
           key={endow.id}
           className="flex items-center gap-4 border border-gray-l3 hover:bg-blue-l4 pr-6 rounded-full overflow-clip h-10"
         >
@@ -98,7 +98,7 @@ function SearchResult(props: ISearchResult) {
         <Link
           className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
           to={{
-            pathname: appRoutes.marketplace,
+            pathname: app_routes.marketplace,
             search: new URLSearchParams({
               query: props.query,
             }).toString(),

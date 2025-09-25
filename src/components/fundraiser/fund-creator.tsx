@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 import * as v from "valibot";
 interface IFundCreator {
@@ -26,7 +26,7 @@ export function FundCreator(props: IFundCreator) {
   return (
     <Link
       className={`${props.classes} hover:text-blue-d1`}
-      to={`${appRoutes.marketplace}/${props.id}`}
+      to={`${app_routes.marketplace}/${props.id}`}
     >
       {props.name}
     </Link>

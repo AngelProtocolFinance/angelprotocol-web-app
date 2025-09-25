@@ -1,5 +1,5 @@
 import { Image } from "components/image";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { Link } from "react-router";
 
@@ -22,7 +22,7 @@ export function Hero({ className = "" }) {
         </p>
 
         <Link
-          to={appRoutes.marketplace}
+          to={app_routes.marketplace}
           className="justify-self-center @6xl:justify-self-start btn btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50"
         >
           Donate today

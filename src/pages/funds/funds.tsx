@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
 import debounce from "lodash/debounce";
@@ -66,7 +66,7 @@ function Funds({ loaderData: page1 }: Route.ComponentProps) {
             />
           </div>
           <NavLink
-            to={`${appRoutes.funds}/new`}
+            to={`${app_routes.funds}/new`}
             className="btn btn-blue text-sm rounded-lg px-6 normal-case"
           >
             Create Fundraiser

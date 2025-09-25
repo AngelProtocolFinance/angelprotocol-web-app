@@ -1,5 +1,5 @@
 import { Breadcrumbs } from "components/breadcrumbs";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { use_paginator } from "hooks/use-paginator";
 import { Plus } from "lucide-react";
 import { NavLink, Outlet, useSearchParams } from "react-router";
@@ -35,7 +35,7 @@ function Page({ loaderData: page1, params }: Route.ComponentProps) {
         items={[
           {
             title: "Media",
-            to: `${appRoutes.admin}/${params.id}/media`,
+            to: `${app_routes.admin}/${params.id}/media`,
             end: true,
           },
           {

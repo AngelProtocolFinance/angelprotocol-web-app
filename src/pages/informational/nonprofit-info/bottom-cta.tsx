@@ -1,7 +1,7 @@
 import { laira } from "assets/laira/laira";
 import { Image } from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
 export function BottomCta({ className = "" }) {
@@ -18,7 +18,7 @@ export function BottomCta({ className = "" }) {
       <CtaCard
         className="from-blue-d1 "
         title="Ready to unlock your fundraising potential?"
-        to={{ href: appRoutes.register, title: "Get started" }}
+        to={{ href: app_routes.register, title: "Get started" }}
         img={{ src: laira.shakeHands, width: 140 }}
       />
       <CtaCard

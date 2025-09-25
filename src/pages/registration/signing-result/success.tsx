@@ -1,5 +1,5 @@
 import { Progress } from "@better-giving/reg/progress";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
 import { Link, useNavigation, useRouteLoaderData } from "react-router";
 import { next_step } from "../routes";
@@ -33,7 +33,7 @@ export default function Success({
       <Link
         aria-disabled={isLoading}
         className="w-full max-w-[26.25rem] btn btn-blue text-sm mt-4"
-        to={`${appRoutes.register}/${reg.id}/${next_step[step]}`}
+        to={`${app_routes.register}/${reg.id}/${next_step[step]}`}
       >
         {isLoading ? "Loading..." : "Continue"}
       </Link>

@@ -3,7 +3,7 @@ import linkedin from "assets/icons/social/linkedin.webp";
 import telegram from "assets/icons/social/telegram.webp";
 import x from "assets/icons/social/x.webp";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { X } from "lucide-react";
 import { useCallback, useState } from "react";
 import { ExtLink } from "../../ext-link";
@@ -144,8 +144,8 @@ function generateShareLink(
   recipient: Recipient
 ) {
   const donateUrl = is_fund(recipient.id)
-    ? `${BASE_URL}/${appRoutes.funds}/${recipient.id}/donate`
-    : `${BASE_URL}/${appRoutes.donate}/${recipient.id}`;
+    ? `${BASE_URL}/${app_routes.funds}/${recipient.id}/donate`
+    : `${BASE_URL}/${app_routes.donate}/${recipient.id}`;
 
   switch (type) {
     case "x":
@@ -158,7 +158,7 @@ function generateShareLink(
      */
     case "fb":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        `${BASE_URL}/${appRoutes.donate_thanks}?name=${recipient.name}&id=${recipient.id}`
+        `${BASE_URL}/${app_routes.donate_thanks}?name=${recipient.name}&id=${recipient.id}`
       )}&quote=${encodeURIComponent(rawText)}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons

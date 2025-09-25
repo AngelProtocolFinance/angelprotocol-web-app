@@ -2,7 +2,7 @@ import { Copier } from "components/copier";
 import { ExtLink } from "components/ext-link";
 import { HeaderButton } from "components/header-button";
 import { Cells, TableSection } from "components/table-section";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
@@ -92,7 +92,7 @@ export function Table({
               }`}
             >
               <Link
-                to={`${appRoutes.marketplace}/${row.recipient_id}`}
+                to={`${app_routes.marketplace}/${row.recipient_id}`}
                 className="flex items-center justify-between gap-1 text-blue hover:text-blue-d1"
               >
                 <span className="truncate max-w-[12rem]">
@@ -102,7 +102,7 @@ export function Table({
               {row.program_id ? (
                 <Link
                   className="text-blue hover:text-blue-d1"
-                  to={`${appRoutes.profile}/${row.recipient_id}/program/${row.program_id}`}
+                  to={`${app_routes.profile}/${row.recipient_id}/program/${row.program_id}`}
                 >
                   {row.program_name}
                 </Link>

@@ -5,7 +5,7 @@ import { ShareButton } from "components/share-btn";
 import { Target, toTarget } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { BASE_URL } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
 import { NavLink } from "react-router";
 import type { EndowmentCard } from "types/npo";
@@ -25,7 +25,7 @@ export default function Card({
   return (
     <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none  grid grid-rows-subgrid row-span-4 gap-y-0">
       <NavLink
-        to={`${appRoutes.marketplace}/${id}`}
+        to={`${app_routes.marketplace}/${id}`}
         className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l3 hover:border-blue-d1"
       >
         <Image
@@ -64,11 +64,11 @@ export default function Card({
       <div className="absolute grid grid-cols-[1fr_auto_1fr] items-center mt-2 bottom-4 left-4 right-4">
         <ShareButton
           orgName={name}
-          url={`${BASE_URL}${appRoutes.marketplace}/${id}`}
+          url={`${BASE_URL}${app_routes.marketplace}/${id}`}
           classes=""
         />
         <NavLink
-          to={`${appRoutes.donate}/${id}`}
+          to={`${app_routes.donate}/${id}`}
           className="btn btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate

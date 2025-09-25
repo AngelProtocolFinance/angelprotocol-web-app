@@ -1,6 +1,6 @@
 import type { IReg } from "@better-giving/reg";
 import { ExtLink } from "components/ext-link";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { NavLink, Outlet } from "react-router";
@@ -23,7 +23,7 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
       {claim && (
         <ExtLink
           className="-mt-7 justify-self-start text-sm rounded-sm text-blue-d1 hover:underline"
-          href={`${appRoutes.marketplace}/${claim.id}`}
+          href={`${app_routes.marketplace}/${claim.id}`}
         >
           Claim: {claim.name}, EIN: {claim.ein}
         </ExtLink>
@@ -40,7 +40,7 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
       {props.status_approved_npo_id && (
         <NavLink
           className="text-blue-d1 [&:is(.pending)]:text-gray hover:underline block -mt-6 text-sm"
-          to={`${appRoutes.marketplace}/${props.status_approved_npo_id}`}
+          to={`${app_routes.marketplace}/${props.status_approved_npo_id}`}
         >
           Endowment ID: {props.status_approved_npo_id}
         </NavLink>
@@ -110,7 +110,7 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
       </Container>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <NavLink
-          to={appRoutes.applications}
+          to={app_routes.applications}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back

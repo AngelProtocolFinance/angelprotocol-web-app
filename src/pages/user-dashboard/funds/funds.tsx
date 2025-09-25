@@ -1,5 +1,5 @@
 import { Info } from "components/status";
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types/funds";
@@ -26,7 +26,7 @@ function Page({ loaderData: { funds } }: Route.ComponentProps) {
       <div className="flex items-center justify-between mb-2 w-full border-b border-gray-l3 pb-4">
         <h3 className="text-3xl">My Fundraisers</h3>
         <Link
-          to={`${appRoutes.funds}/new`}
+          to={`${app_routes.funds}/new`}
           className="btn btn-blue text-sm px-6 py-2 rounded-full"
         >
           Create

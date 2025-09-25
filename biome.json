@@ -30,10 +30,7 @@
       },
       "style": {
         "useImportType": "warn",
-        "noNonNullAssertion": "off",
-        "useExponentiationOperator": "off",
-        "useConst": "off",
-        "noVar": "off"
+        "noNonNullAssertion": "off"
       },
       "performance": {
         "noAccumulatingSpread": "off"
@@ -43,8 +40,6 @@
         "noPrecisionLoss": "off",
         "noSwitchDeclarations": "off",
         "noChildrenProp": "off",
-        "noUnusedVariables": "warn",
-        "noUnusedImports": "warn",
         "useJsxKeyInIterable": "off"
       },
       "a11y": {

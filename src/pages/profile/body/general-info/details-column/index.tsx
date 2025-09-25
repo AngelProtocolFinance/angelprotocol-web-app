@@ -1,6 +1,6 @@
 import type { IPrettyBalance } from "@better-giving/balance";
 import { Target, toTarget } from "components/target";
-import { appRoutes, regRoutes } from "constants/routes";
+import { app_routes, reg_routes } from "constants/routes";
 import type { PropsWithChildren, ReactNode } from "react";
 import { NavLink, useOutletContext } from "react-router";
 import { useProfileContext } from "../../../profile-context";
@@ -44,7 +44,7 @@ export function DetailsColumn({ classes = "", fundraisers }: Props) {
             />
           )}
           <NavLink
-            to={`${appRoutes.donate}/${p.id}`}
+            to={`${app_routes.donate}/${p.id}`}
             className="w-full btn btn-blue h-12 px-6 text-base lg:text-sm"
           >
             Donate now
@@ -52,7 +52,7 @@ export function DetailsColumn({ classes = "", fundraisers }: Props) {
         </div>
         {p.claimed === false && (
           <NavLink
-            to={`${appRoutes.register}/${regRoutes.welcome}?claim=${p.registration_number}`}
+            to={`${app_routes.register}/${reg_routes.welcome}?claim=${p.registration_number}`}
             className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l3 rounded-sm"
           >
             Claim this organization

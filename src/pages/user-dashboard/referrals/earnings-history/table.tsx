@@ -1,4 +1,4 @@
-import { appRoutes } from "constants/routes";
+import { app_routes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { Link } from "react-router";
@@ -23,7 +23,7 @@ export function EarningsHistory({ items, classes = "", load_next }: Props) {
             <tr key={idx} className="text-sm text-gray-d4">
               <td>{format(payout.date, "PP")}</td>
               <td>
-                <Link to={`${appRoutes.marketplace}/${payout.donation.to_id}`}>
+                <Link to={`${app_routes.marketplace}/${payout.donation.to_id}`}>
                   {payout.donation.to_name}
                 </Link>
               </td>

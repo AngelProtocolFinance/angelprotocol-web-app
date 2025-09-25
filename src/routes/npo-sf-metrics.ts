@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async (x) => {
 
   let $running = 0;
   let $perf = 0;
-  let $points: IPerfPoint[] = [];
+  const $points: IPerfPoint[] = [];
 
   for (let i = 1; i < items.length; i++) {
     const prev = items[i - 1];

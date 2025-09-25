@@ -41,5 +41,5 @@ export const to_atomic = (amount: number, currency: string): number => {
   } as const;
 
   const p = places[currency.toUpperCase()] ?? 2;
-  return Math.trunc(round_number(amount, p) * Math.pow(10, p));
+  return Math.trunc(round_number(amount, p) * 10 ** p);
 };
