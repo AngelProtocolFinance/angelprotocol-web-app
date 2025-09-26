@@ -24,8 +24,8 @@ importers:
         specifier: 3.485.0
         version: 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
       '@better-giving/assets':
-        specifier: 1.0.38
-        version: 1.0.38
+        specifier: 1.0.39
+        version: 1.0.39
       '@better-giving/balance':
         specifier: 2.0.8
         version: 2.0.8(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.6(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)
@@ -639,8 +639,8 @@ packages:
     resolution: {integrity: sha512-ruv7Ae4J5dUYULmeXw1gmb7rYRz57OWCPM57pHojnLq/3Z1CK2lNSLTCVjxVk1F/TZHwOZZrOWi0ur95BbLxNQ==}
     engines: {node: '>=6.9.0'}
 
-  '@better-giving/assets@1.0.38':
-    resolution: {integrity: sha512-fJ7mEOWiBRLt1gCEPZw9VMWWJGnN8ya3oiJadADIjJGI3d6r3yZ0JWIq5ELHpXa4l1JraH7+OHgansznfTWtOQ==}
+  '@better-giving/assets@1.0.39':
+    resolution: {integrity: sha512-14GZM/6cxZrjfCjS/caambPlaGuzFv220TJXgU698r8B9pQUAUwChx6cexbDG19lRnLLbQEt8uGYrDS44LrONg==}
 
   '@better-giving/balance-txs@2.0.9':
     resolution: {integrity: sha512-jkNWlT+otJFXaqvguJ6LWyrnL4g/6MsCFCgz+CmNDkXiUtQK4g32mQrHe0rX/0hsMyWScdXLSXAtlP0BIGqo1A==}
@@ -4837,7 +4837,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@better-giving/assets@1.0.38': {}
+  '@better-giving/assets@1.0.39': {}
 
   '@better-giving/balance-txs@2.0.9(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.6(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.9.2))':
     dependencies:

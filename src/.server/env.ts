@@ -99,7 +99,7 @@ export const deposit_addrs_envs = (chain: string) => {
   switch (chain.toUpperCase()) {
     case "ETH":
       return deposit_addr_evm;
-    case "BSC":
+    case "BNB":
       return deposit_addr_evm;
     case "HBAR":
       return deposit_addr_hbar;

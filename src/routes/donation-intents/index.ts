@@ -104,10 +104,20 @@ export const action: ActionFunction = async ({ request, params }) => {
             from: "donation-intents-creator",
             type: "NOTICE",
             title: "Donation intent - manual notification",
-            fields: Object.entries(p).map(([k, v]) => ({
-              name: k,
-              value: String(v),
-            })),
+            fields: [
+              { name: "Intent ID", value: intent_id },
+              {
+                name: "Amount",
+                value: `${to_pay} ${token.code}`,
+                inline: true,
+              },
+              { name: "Approx", value: `$${to_pay * rate}`, inline: true },
+              { name: "Recipient", value: recipient.name, inline: true },
+              {
+                name: "Sender",
+                value: `${intent.donor.first_name} ${intent.donor.last_name} <${intent.donor.email}>`,
+              },
+            ],
           })
           .catch((x) => {
             console.error(x);

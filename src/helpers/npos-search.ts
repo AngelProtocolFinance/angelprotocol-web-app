@@ -64,7 +64,6 @@ class Filter {
     const [[k, v]] = Object.entries(kv);
     if (!v) return;
     const range = this.extract_blank_exists(k, v as string);
-    console.log(range, wrapper(range[0]), wrapper(range[1]));
     if (range.length > 1) {
       this.filter.$and ||= [];
       this.filter.$and.push({
