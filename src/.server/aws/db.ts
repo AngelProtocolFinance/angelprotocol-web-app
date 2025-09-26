@@ -33,6 +33,7 @@ import {
   aws_secret_access_key,
   env,
 } from "../env";
+import { DonationsDb, OnHoldDonationsDb } from "@better-giving/donation";
 
 const config: TranslateConfig = {
   marshallOptions: {
@@ -71,3 +72,5 @@ export const npodb = new NpoDb(ap, env);
 export const userdb = new UserDb(ap, env);
 export const funddb = new FundDb(ap, env);
 export const regdb = new RegDb(ap, env);
+export const dondb = new DonationsDb(apes, env);
+export const onholddb = new OnHoldDonationsDb(apes, env);
