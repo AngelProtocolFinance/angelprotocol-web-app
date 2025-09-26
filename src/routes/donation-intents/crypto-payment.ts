@@ -12,14 +12,13 @@ export interface Order {
 }
 export async function crypto_payment(
   order: Order,
-
-  webhookUrl: string
+  webhook_url: string
 ): Promise<Payment> {
   const invoice = await np.invoice({
     price_amount: order.amount * order.rate,
     price_currency: "usd",
     pay_currency: order.currency,
-    ipn_callback_url: webhookUrl,
+    ipn_callback_url: webhook_url,
     order_id: order.id,
     order_description: order.description,
   });

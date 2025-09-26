@@ -104,7 +104,10 @@ export const action: ActionFunction = async ({ request, params }) => {
             from: "donation-intents-creator",
             type: "NOTICE",
             title: "Donation intent - manual notification",
-            fields: Object.entries(p).map(([k, v]) => ({ name: k, value: v })),
+            fields: Object.entries(p).map(([k, v]) => ({
+              name: k,
+              value: String(v),
+            })),
           })
           .catch((x) => {
             console.error(x);
