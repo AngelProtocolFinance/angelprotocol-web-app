@@ -1,6 +1,6 @@
 import chains from "@better-giving/assets/chains";
-import { isCustom } from "@better-giving/assets/tokens";
-import { logoUrl } from "constants/common";
+import { is_custom } from "@better-giving/assets/tokens";
+import { logo_url } from "constants/common";
 import { Image } from "../../../../image";
 import { Summary } from "../../common/summary";
 import { token } from "../../common/token";
@@ -35,7 +35,7 @@ export function Crypto(props: CryptoSubmitStep) {
             <dt className="mr-auto">Currency</dt>
             <Image
               className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
-              src={logoUrl(details.token.logo, isCustom(details.token.id))}
+              src={logo_url(details.token.logo, is_custom(details.token.id))}
             />
             <dd className="text-gray-d4">{details.token.symbol}</dd>
           </dl>

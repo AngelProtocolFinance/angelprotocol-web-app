@@ -94,6 +94,7 @@ export const coingecko_api_key = _var("COINGECKO_API_KEY");
 
 const deposit_addr_evm = _var("DEPOSIT_ADDR_EVM");
 const deposit_addr_hbar = _var("DEPOSIT_ADDR_HBAR");
+const deposit_addr_reef = _var("DEPOSIT_ADDR_REEF");
 export const deposit_addrs_envs = (chain: string) => {
   switch (chain.toUpperCase()) {
     case "ETH":
@@ -102,6 +103,8 @@ export const deposit_addrs_envs = (chain: string) => {
       return deposit_addr_evm;
     case "HBAR":
       return deposit_addr_hbar;
+    case "REEF":
+      return deposit_addr_reef;
     default:
       return "chain not supported";
   }

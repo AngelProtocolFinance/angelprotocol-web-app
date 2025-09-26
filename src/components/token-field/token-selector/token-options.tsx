@@ -1,5 +1,5 @@
 import chains from "@better-giving/assets/chains";
-import prod_tokens, { isCustom } from "@better-giving/assets/tokens";
+import prod_tokens, { is_custom } from "@better-giving/assets/tokens";
 import test_tokens from "@better-giving/assets/tokens/test";
 import type { NP } from "@better-giving/nowpayments/types";
 import {
@@ -10,7 +10,7 @@ import {
   ComboboxOptions,
   PopoverPanel,
 } from "@headlessui/react";
-import { logoUrl } from "constants/common";
+import { logo_url } from "constants/common";
 import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
 import { SearchIcon } from "lucide-react";
@@ -75,7 +75,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         try {
           tokenEv("loading");
 
-          if (isCustom(tkn.id)) {
+          if (is_custom(tkn.id)) {
             //get usd rate from coingecko
             const res = await fetch(
               `https://api.coingecko.com/api/v3/simple/price?ids=${tkn.cg_id}&vs_currencies=usd`
@@ -142,7 +142,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                 value={{ ...token, amount: "" }}
               >
                 <Image
-                  src={logoUrl(token.logo, isCustom(token.id))}
+                  src={logo_url(token.logo, is_custom(token.id))}
                   className="w-6 h-6 rounded-full row-span-2"
                 />
 

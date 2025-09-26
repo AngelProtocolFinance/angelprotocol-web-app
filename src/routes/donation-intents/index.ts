@@ -1,11 +1,12 @@
-import { isCustom } from "@better-giving/assets/tokens";
-import tokenMap from "@better-giving/assets/tokens/map";
+import { is_custom } from "@better-giving/assets/tokens";
+import tokens_map from "@better-giving/assets/tokens/map";
 import type { OnHoldDonation } from "@better-giving/donation";
 import { tables } from "@better-giving/types/list";
 import { resp } from "helpers/https";
 import { round_number } from "helpers/round-number";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
+import type { Payment } from "types/crypto";
 import { intent as schema } from "types/donation-intent";
 import { parse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
@@ -17,8 +18,8 @@ import { donation_type } from "./types";
 import { cognito } from ".server/auth";
 import { PutCommand, apes } from ".server/aws/db";
 import { get_recipient } from ".server/donation-recipient";
-import { env } from ".server/env";
-import { chariot, np } from ".server/sdks";
+import { deposit_addrs_envs, env } from ".server/env";
+import { chariot, discordAwsMonitor, np } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -37,10 +38,10 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (d_type === "crypto") {
     //custom bg token, return
-    const token = tokenMap[intent.amount.currency];
+    const token = tokens_map[intent.amount.currency];
 
     const [min, rate] = await (async (t) => {
-      if (isCustom(t.id)) {
+      if (is_custom(t.id)) {
         const res = await fetch(
           `https://api.coingecko.com/api/v3/simple/price?ids=${t.cg_id}&vs_currencies=usd`
         );
@@ -61,6 +62,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (to_pay < min) {
       return resp.txt(`Min amount for ${token.code} is: ${min}`, 400);
     }
+
     const onhold: OnHoldDonation.CryptoDBRecord = {
       ...base,
       transactionId: intent_id,
@@ -75,7 +77,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       ...(env === "staging" && {
         expireAt: Math.floor(now.getTime() / 1_000 + 86_400),
       }),
-      ...(isCustom(token.id) && { payment_id: intent_id }),
+      ...(is_custom(token.id) && { payment_id: intent_id }),
       third_party: true,
     };
 
@@ -85,6 +87,38 @@ export const action: ActionFunction = async ({ request, params }) => {
     });
 
     await apes.send(cmd);
+
+    if (is_custom(token.id)) {
+      const p: Payment = {
+        id: intent_id,
+        address: deposit_addrs_envs(token.network),
+        amount: to_pay,
+        currency: token.code,
+        description: recipient.name,
+        rate,
+      };
+
+      if (token.id.startsWith("man_")) {
+        const res = await discordAwsMonitor
+          .sendAlert({
+            from: "donation-intents-creator",
+            type: "NOTICE",
+            title: "Donation intent - manual notification",
+            fields: Object.entries(p).map(([k, v]) => ({ name: k, value: v })),
+          })
+          .catch((x) => {
+            console.error(x);
+            return null;
+          });
+        console.info(
+          "manual intent notification",
+          res?.status,
+          res?.statusText
+        );
+      }
+      return resp.json(p);
+    }
+
     const np_order: Order = {
       id: intent_id,
       description: recipient.name,
@@ -95,7 +129,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     const url = new URL(request.url);
     const payment = await crypto_payment(
-      token,
       np_order,
       `${url.origin}/api/nowpayments-webhook/${env}`
     );

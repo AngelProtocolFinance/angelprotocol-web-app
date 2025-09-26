@@ -28,5 +28,5 @@ export const default_allocation: Allocation = {
   lock: 0,
 };
 
-export const logoUrl = (path: string, isBg = false) =>
-  isBg ? path : `https://nowpayments.io${path}`;
+export const logo_url = (path: string, custom = false) =>
+  custom ? path : `https://nowpayments.io${path}`;
