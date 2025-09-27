@@ -1,16 +1,12 @@
 import { SQSClient } from "@aws-sdk/client-sqs";
-import {
-  apes_aws_access_key_id,
-  apes_aws_secret_access_key,
-  aws_region,
-} from "../env";
+import { aws_access_key_id, aws_region, aws_secret_access_key } from "../env";
 
 export { SendMessageCommand } from "@aws-sdk/client-sqs";
 
-export const apes = new SQSClient({
+export const sqsc_ap = new SQSClient({
   region: aws_region,
   credentials: {
-    accessKeyId: apes_aws_access_key_id,
-    secretAccessKey: apes_aws_secret_access_key,
+    accessKeyId: aws_access_key_id,
+    secretAccessKey: aws_secret_access_key,
   },
 });

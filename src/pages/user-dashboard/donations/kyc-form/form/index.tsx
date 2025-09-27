@@ -7,11 +7,11 @@ import { countries, country_names } from "constants/countries";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useController } from "react-hook-form";
 import { useFetcher, useParams } from "react-router";
+import { useRemixForm } from "remix-hook-form";
+import type { UserV2 } from "types/auth";
 import type { FV } from "../schema";
 import { Tooltip } from "./tooltip";
 import { states } from "./us-states";
-import { useRemixForm } from "remix-hook-form";
-import type { UserV2 } from "types/auth";
 
 export const form_style = "w-full text-gray-d4 dark:text-white p-3";
 
@@ -34,12 +34,14 @@ export function Form({ classes = "", user }: IForm) {
     us_state: "",
   };
   const {
+    handleSubmit,
     resetField,
     register,
     formState: { errors },
     control,
   } = useRemixForm<FV>({
     defaultValues: init,
+    fetcher,
   });
 
   const { field: country } = useController<FV, "country">({
@@ -56,21 +58,7 @@ export function Form({ classes = "", user }: IForm) {
   return (
     <fetcher.Form
       method="PUT"
-      // onSubmit={handleSubmit((fv) => {
-      //   const payload: ReceiptPayload = {
-      //     fullName: `${fv.name.first} ${fv.name.last}`,
-      //     email: fv.email,
-      //     streetAddress: `${fv.address.street} ${fv.address.complement}`,
-      //     city: fv.city,
-      //     state: fv.usState || fv.state,
-      //     zipCode: fv.postalCode,
-      //     country: fv.country,
-      //   };
-      //   fetcher.submit(payload, {
-      //     encType: "application/json",
-      //     method: "put",
-      //   });
-      // })}
+      onSubmit={handleSubmit}
       className={`${classes} ${form_style} grid gap-5 p-4`}
       autoComplete="off"
       autoSave="off"

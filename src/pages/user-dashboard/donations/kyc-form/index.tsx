@@ -1,16 +1,14 @@
 import { Modal } from "components/modal";
 import { useNavigate } from "react-router";
-import { Form } from "./form";
-import type { FV } from "./schema";
 import type { Route } from "./+types";
+import { Form } from "./form";
 
 export { ErrorModal as ErrorBoundary } from "components/error";
 export { action } from "./api";
 export { loader } from "./api";
 
-export default function Page({ params, loaderData }: Route.ComponentProps) {
+export default function Page({ loaderData }: Route.ComponentProps) {
   const navigate = useNavigate();
-  params.id;
 
   return (
     <Modal

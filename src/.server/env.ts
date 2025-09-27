@@ -110,3 +110,5 @@ export const deposit_addrs_envs = (chain: string) => {
       return "chain not supported";
   }
 };
+
+export const bg_npo_id = Number.parseInt(_var("BG_NPO_ID"));
