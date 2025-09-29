@@ -1,6 +1,6 @@
 import type { TOnHoldStatus } from "@better-giving/donation";
 import { use_paginator } from "hooks/use-paginator";
-import { useSearchParams } from "react-router";
+import { Outlet, useSearchParams } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { NoDonations } from "../no-donations";
 import type { Route } from "./+types";
@@ -33,5 +33,11 @@ function Donations({ loaderData }: Route.ComponentProps) {
     },
   });
 
-  return <div className="overflow-x-auto">{node}</div>;
+  return (
+    <div className="overflow-x-auto">
+      {/** render kyc form */}
+      <Outlet />
+      {node}
+    </div>
+  );
 }

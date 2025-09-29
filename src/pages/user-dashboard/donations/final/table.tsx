@@ -1,15 +1,14 @@
-import { ExtLink } from "components/ext-link";
 import { HeaderButton } from "components/header-button";
 import { Cells, TableSection } from "components/table-section";
 import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, round_to_cents } from "helpers/decimal";
 import { use_sort } from "hooks/use-sort";
+import { ArrowDownToLine } from "lucide-react";
 import { Link } from "react-router";
 import type { IPaginator } from "types/components";
 import { LoadMoreBtn } from "../load-more-btn";
 import type { IRow } from "./helpers";
-import { PaymentResumer } from "./payment-resumer";
 
 interface Props extends IPaginator<IRow> {}
 
@@ -67,6 +66,7 @@ export function Table({
           >
             Amount
           </HeaderButton>
+          <>Receipt</>
         </Cells>
       </TableSection>
       <TableSection
@@ -116,8 +116,10 @@ export function Table({
                 <p className="text-2xs text-gray-d1 uppercase">
                   {row.frequency}
                 </p>
-                <Resumer {...row} />
               </div>
+              <Link to={row.id} className="w-full flex justify-center">
+                <ArrowDownToLine size={20} />
+              </Link>
             </Cells>
           ))
           .concat(
@@ -140,22 +142,4 @@ export function Table({
       </TableSection>
     </table>
   );
-}
-
-function Resumer(props: IRow) {
-  if (props.payment_id) {
-    return (
-      <PaymentResumer payment_id={props.payment_id} amount={props.amount} />
-    );
-  }
-  if (props.stripe_continue_url) {
-    return (
-      <ExtLink
-        href={props.stripe_continue_url}
-        className="btn btn-blue px-3 py-1 text-xs"
-      >
-        Verify Bank Account
-      </ExtLink>
-    );
-  }
 }

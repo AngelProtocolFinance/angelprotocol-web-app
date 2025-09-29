@@ -175,7 +175,10 @@ export default [
     r("edit-profile", user.$("edit-profile/index.tsx")._),
     r("settings", user.$("settings/index.tsx")._),
     r("donations", user.$("donations/layout.tsx")._, [
-      r("received", user.$("donations/final/index.tsx")._),
+      index(user.$("donations/redirect.ts")._),
+      r("received", user.$("donations/final/index.tsx")._, [
+        r(":id", user.$("donations/final/kyc-form/index.tsx")._),
+      ]),
       r("pending", user.$("donations/onhold/index.tsx")._),
     ]),
     r("subscriptions", user.$("subscriptions/index.tsx")._, [
