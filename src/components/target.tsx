@@ -11,7 +11,7 @@ export interface ITarget {
 
 export type TTarget = "smart" | "0" | (string & {});
 
-export const toTarget = (target: TTarget): "smart" | number | null => {
+export const to_target = (target: TTarget): "smart" | number | null => {
   return target === "smart" ? "smart" : target === "0" ? null : +target;
 };
 

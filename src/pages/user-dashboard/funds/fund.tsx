@@ -1,6 +1,6 @@
 import type { IFund } from "@better-giving/fundraiser";
 import { FundStatus, status_fn } from "components/fundraiser";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
@@ -41,7 +41,7 @@ export const Fund = (props: IFund) => {
       <Target
         classes="mt-4"
         progress={props.donation_total_usd}
-        target={toTarget(props.target)}
+        target={to_target(props.target)}
       />
 
       <Link

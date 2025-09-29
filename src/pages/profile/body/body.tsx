@@ -1,7 +1,7 @@
 import { BookmarkBtn } from "components/bookmark-btn";
 import { Breadcrumbs } from "components/breadcrumbs";
 import { ExtLink } from "components/ext-link";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { app_routes } from "constants/routes";
 import { useRootData } from "hooks/use-root-data";
@@ -44,7 +44,7 @@ function Page({ loaderData: bal }: Route.ComponentProps) {
             <Target
               text={<Target.Text classes="mb-2" />}
               progress={bal.ltd}
-              target={toTarget(p.target)}
+              target={to_target(p.target)}
             />
           )}
           <NavLink

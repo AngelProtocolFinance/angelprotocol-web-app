@@ -6,7 +6,7 @@ import { FundCreator } from "components/fundraiser";
 import { FundStatus, status_fn } from "components/fundraiser";
 import { Image } from "components/image";
 import { RichText, richTextStyles, toText } from "components/rich-text";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { app_routes } from "constants/routes";
@@ -191,7 +191,7 @@ function DonateSection(props: IDonateSection) {
         <Target
           text={<Target.Text classes="mb-2" />}
           progress={props.donation_total_usd}
-          target={toTarget(props.target)}
+          target={to_target(props.target)}
           classes={`${s.target} ${s.container} w-full`}
         />
       )}

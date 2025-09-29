@@ -1,12 +1,13 @@
 import { Image } from "components/image";
 import { toText } from "components/rich-text";
-import { Target } from "components/target";
+import { type TTarget, Target, to_target } from "components/target";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
 type Props = {
   id: string;
   progress: number;
+  target: TTarget;
   name: string;
   logo: string;
   tagline?: string;
@@ -37,7 +38,7 @@ export function FundCard({ classes = "", ...props }: Props) {
       <Target
         text={<Target.Text classes="mb-2" />}
         progress={props.progress}
-        target="smart"
+        target={to_target(props.target)}
         classes="order-1 @xl/fund-card:order-2"
       />
     </div>

@@ -1,5 +1,5 @@
 import type { IPrettyBalance } from "@better-giving/balance";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { app_routes, reg_routes } from "constants/routes";
 import type { PropsWithChildren, ReactNode } from "react";
 import { NavLink, useOutletContext } from "react-router";
@@ -39,7 +39,7 @@ export function DetailsColumn({ classes = "", fundraisers }: Props) {
             <Target
               text={<Target.Text classes="mb-2" />}
               progress={bal.ltd}
-              target={toTarget(p.target)}
+              target={to_target(p.target)}
               classes="-mb-5 mt-4"
             />
           )}

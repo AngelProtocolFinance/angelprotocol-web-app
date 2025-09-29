@@ -13,7 +13,7 @@ export const toFormTarget = (target?: "smart" | (string & {})): Target => {
   return { type: "fixed", value: target };
 };
 
-export const toTarget = (target: Target): "smart" | (string & {}) => {
+export const to_target = (target: Target): "smart" | (string & {}) => {
   if (target.type === "none") {
     return "0";
   }

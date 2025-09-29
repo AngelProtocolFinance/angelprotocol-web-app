@@ -1,6 +1,6 @@
 import type { IFundItem } from "@better-giving/fundraiser";
 import { FundCreator, FundStatus, status_fn } from "components/fundraiser";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { app_routes } from "constants/routes";
 import { fromUnixTime } from "date-fns";
 import { use_action_result } from "hooks/use-action-result";
@@ -59,7 +59,7 @@ export const FundItem = (props: Props) => {
       <Target
         classes="mt-4"
         progress={props.donation_total_usd}
-        target={toTarget(props.target)}
+        target={to_target(props.target)}
       />
 
       <fetcher.Form

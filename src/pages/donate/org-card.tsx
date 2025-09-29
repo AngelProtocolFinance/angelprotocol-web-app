@@ -1,6 +1,6 @@
 import type { DonateData } from "api/donate-loader";
 import { Image } from "components/image";
-import { type TTarget, Target, toTarget } from "components/target";
+import { type TTarget, Target, to_target } from "components/target";
 import { app_routes } from "constants/routes";
 import { Await, Link } from "react-router";
 
@@ -42,7 +42,7 @@ export default function OrgCard({ classes = "", balance, ...props }: Props) {
             <Target
               text={<Target.Text classes="mb-2" />}
               progress={b.ltd}
-              target={toTarget(props.target)}
+              target={to_target(props.target)}
               classes="order-1 @xl/org-card:order-2"
             />
           )

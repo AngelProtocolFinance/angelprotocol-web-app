@@ -1,6 +1,6 @@
 import type { IFundItem } from "@better-giving/fundraiser";
 import { toText } from "components/rich-text";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { app_routes } from "constants/routes";
 import { Link, NavLink } from "react-router";
 
@@ -43,7 +43,7 @@ function Fund(props: IFundItem) {
       </p>
       <Target
         classes="col-span-full mt-4"
-        target={toTarget(props.target)}
+        target={to_target(props.target)}
         progress={props.donation_total_usd}
       />
       <NavLink

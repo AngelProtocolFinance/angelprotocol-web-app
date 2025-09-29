@@ -3,7 +3,7 @@ import flying_character from "assets/images/flying-character.webp";
 import { Image } from "components/image";
 import { toText } from "components/rich-text";
 import { ShareButton } from "components/share-btn";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { BASE_URL } from "constants/env";
 import { app_routes } from "constants/routes";
@@ -60,7 +60,7 @@ export default function Card({
             {toText(description)}
           </p>
 
-          <Target target={toTarget(target)} progress={donation_total_usd} />
+          <Target target={to_target(target)} progress={donation_total_usd} />
         </div>
       </NavLink>
       {/** absolute so above whole `Link` card */}

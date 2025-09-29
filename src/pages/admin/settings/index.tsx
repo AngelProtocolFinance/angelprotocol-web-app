@@ -19,7 +19,7 @@ import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { toast } from "sonner";
 import type { ActionData } from "types/action";
 import type { Route } from "./+types";
-import { toFormTarget, toTarget } from "./helpers";
+import { toFormTarget, to_target } from "./helpers";
 import { type FV, schema } from "./types";
 
 export { loader, action } from "./api";
@@ -92,7 +92,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
           const update: INpoUpdate = {
             ...fv,
             fund_opt_in: fundOptIn,
-            target: toTarget(fvTarget),
+            target: to_target(fvTarget),
             progDonationsAllowed: !programDonateDisabled,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)

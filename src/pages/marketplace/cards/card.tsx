@@ -2,7 +2,7 @@ import flying_character from "assets/images/flying-character.webp";
 import { BookmarkBtn } from "components/bookmark-btn";
 import { Image } from "components/image";
 import { ShareButton } from "components/share-btn";
-import { Target, toTarget } from "components/target";
+import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { BASE_URL } from "constants/env";
 import { app_routes } from "constants/routes";
@@ -56,7 +56,7 @@ export default function Card({
           )}
 
           {target && (
-            <Target progress={contributions_total} target={toTarget(target)} />
+            <Target progress={contributions_total} target={to_target(target)} />
           )}
         </div>
       </NavLink>
