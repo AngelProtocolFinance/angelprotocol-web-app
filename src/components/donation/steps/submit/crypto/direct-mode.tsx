@@ -2,7 +2,7 @@ import chains from "@better-giving/assets/chains";
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
 import { app_routes } from "constants/routes";
-import { roundToCents } from "helpers/decimal";
+import { round_to_cents } from "helpers/decimal";
 import { useNavigate } from "react-router";
 import useSWR from "swr/immutable";
 import type { Payment } from "types/crypto";
@@ -52,7 +52,7 @@ export function DirectMode({ donation, classes = "" }: Props) {
 
   const { data, isLoading, error, isValidating } = useSWR(intent, fetcher);
 
-  const totalDisplayAmount = roundToCents(
+  const totalDisplayAmount = round_to_cents(
     +details.token.amount + (tip?.value ?? 0) + fee_allowance,
     details.token.rate,
     details.token.precision

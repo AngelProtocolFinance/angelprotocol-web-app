@@ -1,16 +1,17 @@
 import type { IBapp } from "@better-giving/banking-applications";
+import type { IDonationFinal } from "@better-giving/donation";
+import type { IPageKeyed } from "@better-giving/types/api";
 import type { LoaderFunctionArgs } from "react-router";
-import type { EarningsPage, PendingEarnings, Referred } from "types/referrals";
+import type { PendingEarnings, Referred } from "types/referrals";
 import { config } from "./config";
-import { bappdb, npodb } from ".server/aws/db";
-import { getEarnings } from ".server/donations";
+import { bappdb, dondb, npodb } from ".server/aws/db";
 import { paidOutLtd, pendingEarnings, referredBy } from ".server/referrals";
 import { admin_checks, is_resp } from ".server/utils";
 
 export interface LoaderData {
   id: string;
   referreds: Referred[];
-  earnings: EarningsPage;
+  earnings: IPageKeyed<IDonationFinal>;
   pendings: PendingEarnings;
   payout?: IBapp;
   payout_ltd: number;
@@ -30,7 +31,7 @@ export const loader = async (x: LoaderFunctionArgs) => {
   const [pendings, referreds, earnings, p, pltd] = await Promise.all([
     pendingEarnings(endow.referral_id),
     referredBy(endow.referral_id),
-    getEarnings(endow.referral_id, undefined, 4),
+    dondb.referred_by(endow.referral_id, { limit: 4 }),
     bappdb.npo_default_bapp(endow.id),
     paidOutLtd(endow.referral_id),
   ]);

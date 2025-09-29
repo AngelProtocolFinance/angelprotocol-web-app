@@ -2,10 +2,10 @@ import { HeaderButton } from "components/header-button";
 import { Cells, TableSection } from "components/table-section";
 import { use_sort } from "hooks/use-sort";
 import type { IPaginator } from "types/components";
-import type { Donation } from "types/donations";
-import Row from "./row";
+import type { IRow } from "./helpers";
+import { Row } from "./row";
 
-interface Props extends IPaginator<Donation.Item> {}
+interface Props extends IPaginator<IRow> {}
 
 export function Table({ items, load_next, loading, disabled }: Props) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = use_sort(
@@ -34,7 +34,7 @@ export function Table({ items, load_next, loading, disabled }: Props) {
           </HeaderButton>
           <>Program</>
           <HeaderButton
-            onClick={handleHeaderClick("app_used")}
+            onClick={handleHeaderClick("donation_origin")}
             _activeSortKey={sortKey}
             _sortKey="appUsed"
             _sortDirection={sortDirection}
@@ -50,7 +50,7 @@ export function Table({ items, load_next, loading, disabled }: Props) {
             Method
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("final_amount_usd")}
+            onClick={handleHeaderClick("usd_value")}
             _activeSortKey={sortKey}
             _sortKey="finalAmountUsd"
             _sortDirection={sortDirection}

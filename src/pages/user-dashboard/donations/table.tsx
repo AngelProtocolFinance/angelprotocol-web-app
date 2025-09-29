@@ -4,7 +4,7 @@ import { HeaderButton } from "components/header-button";
 import { Cells, TableSection } from "components/table-section";
 import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
-import { centsDecimals, humanize, roundToCents } from "helpers/decimal";
+import { centsDecimals, humanize, round_to_cents } from "helpers/decimal";
 import { mask_string } from "helpers/mask-string";
 import { use_sort } from "hooks/use-sort";
 import { ArrowDownToLine } from "lucide-react";
@@ -118,7 +118,7 @@ export function Table({
               <td>
                 <div>
                   {row.symbol}{" "}
-                  {roundToCents(
+                  {round_to_cents(
                     row.init_amount,
                     centsDecimals(
                       (row.final_amount_usd || 0) /

@@ -1,4 +1,4 @@
-import type { Allocation } from "@better-giving/donation/schema";
+import type { IAllocation } from "@better-giving/donation/schema";
 import { default_allocation } from "constants/common";
 import { funddb, npodb } from "./aws/db";
 
@@ -17,7 +17,7 @@ export interface Recipient {
   hide_bg_tip: boolean;
   fiscal_sponsored: boolean;
   receiptMsg: string;
-  allocation: Allocation;
+  allocation: IAllocation;
 }
 
 /**

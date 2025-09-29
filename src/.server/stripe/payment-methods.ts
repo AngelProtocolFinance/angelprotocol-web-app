@@ -1,11 +1,11 @@
-import type { StripeDonation } from "@better-giving/donation";
+import type { TPaymentMethods } from "@better-giving/stripe";
 
 /**
  * Listed payment methods are ones that are enabled in our Stripe account
  * @see {@link https://docs.stripe.com/api/payment_methods/object#payment_method_object-type}
  */
 export const payment_methods: {
-  [key in string]: StripeDonation.PaymentMethods[];
+  [key in string]: TPaymentMethods[];
 } = {
   CAD: ["acss_debit", "card"],
   EUR: ["bancontact", "card", "eps", "ideal", "p24", "sepa_debit", "sofort"],
@@ -14,6 +14,6 @@ export const payment_methods: {
 };
 
 /** Remove payment methods that does not support recurring payments */
-export function nonSubsPM(pm: StripeDonation.PaymentMethods) {
+export function nonSubsPM(pm: TPaymentMethods) {
   return pm !== "eps" && pm !== "p24";
 }

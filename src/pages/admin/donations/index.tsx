@@ -4,7 +4,7 @@ import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { use_admin_data } from "../use-admin-data";
 import type { Route } from "./+types";
 import { Allocation } from "./allocation";
-import DonationsTable from "./donations-table";
+import { DonationsTable } from "./donations-table";
 export { ErrorBoundary } from "components/error";
 export { loader, action } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();

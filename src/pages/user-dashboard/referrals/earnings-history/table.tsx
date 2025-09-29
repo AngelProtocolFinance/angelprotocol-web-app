@@ -1,11 +1,11 @@
+import type { IDonationFinal } from "@better-giving/donation";
 import { app_routes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { Link } from "react-router";
 import type { IPaginator } from "types/components";
-import type { Earning } from "types/referrals";
 
-export interface Props extends IPaginator<Earning> {}
+export interface Props extends IPaginator<IDonationFinal> {}
 export function EarningsHistory({ items, classes = "", load_next }: Props) {
   return (
     <div className={`${classes} overflow-x-auto`}>
@@ -19,25 +19,37 @@ export function EarningsHistory({ items, classes = "", load_next }: Props) {
           </tr>
         </thead>
         <tbody>
-          {items.map((payout, idx) => (
-            <tr key={idx} className="text-sm text-gray-d4">
-              <td>{format(payout.date, "PP")}</td>
-              <td>
-                <Link to={`${app_routes.marketplace}/${payout.donation.to_id}`}>
-                  {payout.donation.to_name}
-                </Link>
-              </td>
+          {items.map((p, idx) => {
+            const amnt =
+              (p.referrer_commission?.from_fee ?? 0) +
+              (p.referrer_commission?.from_tip ?? 0);
 
-              <td>${humanize(payout.amount)}</td>
-              <td>
-                <div
-                  className={`${payout.status === "pending" ? "bg-gray" : "bg-green"} text-white text-xs font-semibold px-2 py-0.5  rounded-sm inline-block`}
-                >
-                  {payout.status}
-                </div>
-              </td>
-            </tr>
-          ))}
+            const status: "pending" | "paid" = p.referrer_commission
+              ?.transfer_id
+              ? "paid"
+              : "pending";
+            return (
+              <tr key={idx} className="text-sm text-gray-d4">
+                <td>
+                  {p.transactionDate ? format(p.transactionDate, "PP") : ""}
+                </td>
+                <td>
+                  <Link to={`${app_routes.marketplace}/${p.endowmentId}`}>
+                    {p.charityName}
+                  </Link>
+                </td>
+
+                <td>${humanize(amnt)}</td>
+                <td>
+                  <div
+                    className={`${status === "pending" ? "bg-gray" : "bg-green"} text-white text-xs font-semibold px-2 py-0.5  rounded-sm inline-block`}
+                  >
+                    {status}
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
         <tfoot>
           {load_next && (

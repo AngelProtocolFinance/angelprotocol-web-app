@@ -8,18 +8,6 @@ export interface Referred {
   ltd: number;
 }
 
-export interface Earning {
-  amount: number;
-  date: string;
-  donation: {
-    id: string;
-    to_id: string;
-    to_name: string;
-  };
-  status: "paid" | "pending";
-}
-
-export interface EarningsPage extends IPageKeyed<Earning> {}
 export interface PayoutsPage extends IPageKeyed<Payout> {}
 
 export interface PendingEarnings {

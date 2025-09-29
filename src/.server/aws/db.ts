@@ -18,6 +18,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb } from "@better-giving/balance-txs";
 import { BankingApplicationsDb } from "@better-giving/banking-applications";
+import { DonationsDb, OnHoldDonationsDb } from "@better-giving/donation";
 import { NpoDb } from "@better-giving/endowment";
 import { FundDb } from "@better-giving/fundraiser";
 import { LiquidDb } from "@better-giving/liquid";
@@ -33,7 +34,6 @@ import {
   aws_secret_access_key,
   env,
 } from "../env";
-import { DonationsDb, OnHoldDonationsDb } from "@better-giving/donation";
 
 const config: TranslateConfig = {
   marshallOptions: {

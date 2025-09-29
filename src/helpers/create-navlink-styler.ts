@@ -1,9 +1,9 @@
 import type { NavLinkProps } from "react-router";
 
-export function createNavLinkStyler(
-  className: string,
-  activeClassName: string
+export function nav_link_class_fn(
+  classes: string,
+  active_classes: string
 ): NavLinkProps["className"] {
   return (props: { isActive: boolean }) =>
-    props.isActive ? `${className} ${activeClassName}` : className;
+    props.isActive ? `${classes} ${active_classes}` : classes;
 }

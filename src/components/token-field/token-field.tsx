@@ -1,4 +1,4 @@
-import { humanize, roundToCents } from "helpers/decimal";
+import { humanize, round_to_cents } from "helpers/decimal";
 import { unpack } from "helpers/unpack";
 import { forwardRef, useEffect, useState } from "react";
 import { number } from "yup";
@@ -72,7 +72,7 @@ const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
       {props.withMininum && props.token.min !== 0 && (
         <p className="text-xs mt-2 peer-data-[error=true]:mt-0">
           Minimum amount: {props.token.symbol}{" "}
-          {roundToCents(
+          {round_to_cents(
             props.token.min,
             props.token.rate,
             props.token.precision

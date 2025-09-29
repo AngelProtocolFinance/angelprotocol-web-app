@@ -1,10 +1,10 @@
-import type { StripeDonation } from "@better-giving/donation";
+import type { IMetadataSubs } from "@better-giving/stripe";
 import { stripe } from ".server/sdks";
 
 export async function create_subscription(
   customer_id: string,
   payment_method_id: string,
-  intent: StripeDonation.SetupIntentMetadata
+  intent: IMetadataSubs
 ): Promise<string> {
   // Update a Customer's default payment method
   await stripe.customers.update(customer_id, {
@@ -37,7 +37,7 @@ export async function create_subscription(
         quantity: +intent.subsQuantity, // subs qty. is integer: 1USD/unit
       },
     ],
-    metadata: intent,
+    metadata: intent as any,
     off_session: true,
   });
 

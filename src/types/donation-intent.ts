@@ -1,11 +1,17 @@
-import { donor_title, frequency } from "@better-giving/donation/schema";
-export {
-  donor_titles,
-  type Frequency,
+import {
+  donation_source,
+  donor_title,
   frequency,
 } from "@better-giving/donation/schema";
+
+export {
+  donation_source,
+  donor_titles,
+  type TFrequency,
+  frequency,
+} from "@better-giving/donation/schema";
+
 import * as v from "valibot";
-import { donation_source } from "./donations";
 
 export const str = v.pipe(v.string(), v.trim());
 export const required_str = v.pipe(str, v.nonEmpty("required"));
