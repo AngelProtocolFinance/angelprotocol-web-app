@@ -1,6 +1,6 @@
 import { fees } from "@better-giving/constants";
 import { Txs } from "@better-giving/db";
-import type { Donation, OnHoldDonation } from "@better-giving/donation";
+import type { ITributeNotif } from "@better-giving/donation";
 import { partition } from "@better-giving/helpers";
 import { tables } from "@better-giving/types/list";
 import { default_allocation } from "constants/common";
@@ -18,9 +18,15 @@ import {
 } from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
 import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
-import { TransactWriteCommand, ap, apes, npodb } from ".server/aws/db";
+import {
+  TransactWriteCommand,
+  ap,
+  apes,
+  npodb,
+  onholddb,
+} from ".server/aws/db";
 import { env } from ".server/env";
-import { discordFiatMonitor, qstash_receiver } from ".server/sdks";
+import { fiat_monitor, qstash_receiver } from ".server/sdks";
 
 export const action: ActionFunction = async ({ request }) => {
   try {
@@ -52,45 +58,40 @@ export const action: ActionFunction = async ({ request }) => {
     const p_fee_allowance = parts(p_init_amount_usd.feeAllowance);
 
     const base: Base = {
-      //KEYS
-      appUsed: tx.app_used as any,
-      email: tx.from.id,
       transactionDate: tx.date,
-      //ATTRIBUTES
-      chainId: tx.via.id as any,
+      network: env,
+      isRecurring: tx.is_recurring,
+      denomination: tx.amount.currency,
+
+      //via
+      appUsed: tx.app_used,
+      chainId: tx.via.id,
       chainName: tx.via.name,
       fiatRamp: tx.via.name as any,
-      client: "apes",
-      denomination: tx.amount.currency,
-      isRecurring: tx.is_recurring,
-      network: env,
       paymentMethod: tx.via.method,
-      /**  */
-      splitLiq: "100",
-      //FINAL DONATION DATA
+
+      // from
+      email: tx.from.id,
+      title: tx.from.title,
+      streetAddress: tx.from.address?.street,
+      state: tx.from.address?.state,
+      city: tx.from.address?.city,
+      country: tx.from.address?.country,
+      zipCode: tx.from.address?.zip,
+      company_name: tx.from.company_name,
+
+      // settlement
       destinationChainId: tx.settled_in.id,
       donationFinalChainId: tx.settled_in.id,
       donationFinalDenom: tx.settled_in.currency,
       donationFinalTxDate: new Date().toISOString(),
       donationFinalTxHash: tx.settled_in.hash,
-      kycEmail: tx.from.id,
-      fullName: tx.from.name,
-      company_name: tx.from.company_name,
-      ukGiftAid: tx.from.uk_gift_aid,
-      ...(tx.from.title && { title: tx.from.title as any }),
-      ...(tx.from.address && {
-        streetAddress: tx.from.address.street,
-        city: tx.from.address.city,
-        state: tx.from.address.state,
-        zipCode: tx.from.address.zip,
-        country: tx.from.address.country,
-      }),
     };
 
     if (tx.tribute) {
       base.inHonorOf = tx.tribute.to;
       if (tx.tribute.notif) {
-        const notif: Donation.TributeNotif = {
+        const notif: ITributeNotif = {
           toEmail: tx.tribute.notif.to_email,
           toFullName: tx.tribute.notif.to_fullname,
           fromMsg: tx.tribute.notif.from_msg ?? "",
@@ -259,10 +260,7 @@ export const action: ActionFunction = async ({ request }) => {
       txs.append(_txs);
     }
 
-    txs.del({
-      TableName: tables.on_hold_donations,
-      Key: { transactionId: tx.id } as OnHoldDonation.PrimaryKey,
-    });
+    txs.del(onholddb.del_txi(tx.id));
 
     /** creates donation message for single fund/npo donation */
     if (tx.from.is_public) {
@@ -318,7 +316,7 @@ export const action: ActionFunction = async ({ request }) => {
     return resp.json(res.$metadata);
   } catch (err) {
     console.error(err);
-    await discordFiatMonitor.sendAlert({
+    await fiat_monitor.sendAlert({
       type: "ERROR",
       from: `final-donation-recorder:${env}`,
       title: "Lambda encountered an error",

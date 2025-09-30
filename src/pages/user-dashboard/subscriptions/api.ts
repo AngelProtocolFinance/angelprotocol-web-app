@@ -1,4 +1,4 @@
-import type { StripeDonation } from "@better-giving/donation";
+import type { IMetadata } from "@better-giving/stripe";
 import type Stripe from "stripe";
 import type { Route } from "./+types";
 import { cognito, to_auth } from ".server/auth";
@@ -29,7 +29,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
   const subs = res.data.flatMap((x) => x.subscriptions?.data || []);
   const items = subs.map<SubsItem>((x) => {
-    const meta = x.metadata as StripeDonation.Metadata;
+    const meta = x.metadata as unknown as IMetadata;
     const recipient: SubsItem["recipient"] = meta.fund_id
       ? {
           type: "fund",

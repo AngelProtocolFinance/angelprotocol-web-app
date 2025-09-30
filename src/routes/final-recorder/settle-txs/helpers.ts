@@ -1,5 +1,4 @@
 import type { IBalanceUpdate } from "@better-giving/balance";
-import type { Donation } from "@better-giving/donation";
 import type { FundDb } from "@better-giving/fundraiser";
 import { tables } from "@better-giving/types/list";
 import { UpdateCommand } from ".server/aws/db";
@@ -45,7 +44,7 @@ export interface Increments {
 
 export const bal_deltas_fn = (
   i: Increments,
-  app: Donation.App
+  app: string
 ): Readonly<IBalanceUpdate> => {
   const total = i.liq + i.lock + i.cash;
   return {

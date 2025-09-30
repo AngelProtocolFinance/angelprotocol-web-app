@@ -1,7 +1,8 @@
 import { is_custom } from "@better-giving/assets/tokens";
 import tokens_map from "@better-giving/assets/tokens/map";
-import type { OnHoldDonation } from "@better-giving/donation";
+import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import { tables } from "@better-giving/types/list";
+import { addDays, getUnixTime } from "date-fns";
 import { resp } from "helpers/https";
 import { round_number } from "helpers/round-number";
 import { nanoid } from "nanoid";
@@ -19,7 +20,7 @@ import { cognito } from ".server/auth";
 import { PutCommand, apes } from ".server/aws/db";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
-import { chariot, discordAwsMonitor, np } from ".server/sdks";
+import { aws_monitor, chariot, np } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -63,22 +64,15 @@ export const action: ActionFunction = async ({ request, params }) => {
       return resp.txt(`Min amount for ${token.code} is: ${min}`, 400);
     }
 
-    const onhold: OnHoldDonation.CryptoDBRecord = {
+    const onhold: IDonationOnHoldAttr = {
       ...base,
       transactionId: intent_id,
       transactionDate: now.toISOString(),
+      chainId: intent.via_id,
       amount: to_pay,
       usdValue: to_pay * rate,
-
-      chainId: intent.via_id as any,
-      destinationChainId: env === "production" ? "137" : "80002",
-      walletAddress: "",
-      // `expire` event would delete this record in production
-      ...(env === "staging" && {
-        expireAt: Math.floor(now.getTime() / 1_000 + 86_400),
-      }),
+      expireAt: getUnixTime(addDays(now, 3)),
       ...(is_custom(token.id) && { payment_id: intent_id }),
-      third_party: true,
     };
 
     const cmd = new PutCommand({
@@ -99,7 +93,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       };
 
       if (token.id.startsWith("man_")) {
-        const res = await discordAwsMonitor
+        const res = await aws_monitor
           .sendAlert({
             from: "donation-intents-creator",
             type: "NOTICE",
@@ -156,7 +150,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       round_number(to_pay * 100, 0)
     );
 
-    const onhold: OnHoldDonation.FiatDBRecord = {
+    const onhold: IDonationOnHoldAttr = {
       ...base,
       transactionId: grant.id,
       transactionDate: now.toISOString(),
@@ -164,7 +158,6 @@ export const action: ActionFunction = async ({ request, params }) => {
       usdValue: to_pay, // chariot returns USD value
       fiatRamp: "CHARIOT",
       chainId: "fiat",
-      destinationChainId: "fiat",
       email: intent.donor.email,
     };
     const cmd = new PutCommand({
@@ -199,7 +192,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       // don't add fee allowance fo subs
       (intent.frequency === "one-time" ? intent.amount.fee_allowance : 0);
 
-    const onhold: OnHoldDonation.FiatDBRecord = {
+    const onhold: IDonationOnHoldAttr = {
       ...base,
       transactionId: intent_id,
       transactionDate: now.toISOString(),
@@ -207,7 +200,6 @@ export const action: ActionFunction = async ({ request, params }) => {
       usdValue: to_pay / usd_rate,
       fiatRamp: "STRIPE",
       chainId: "fiat",
-      destinationChainId: "fiat",
       email: intent.donor.email,
     };
 

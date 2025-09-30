@@ -1,14 +1,10 @@
 import type { EmailSQS } from "@better-giving/types/email-sqs";
-import { type Environment, tables } from "@better-giving/types/list";
-
-import type { INpo } from "@better-giving/endowment";
-import { GetCommand, ap } from ".server/aws/db";
 import { SendEmailCommand, ses } from ".server/aws/ses";
 
 /**
  * Sends email to donor
  */
-export async function sendEmail(
+export async function send_email(
   payload: Extract<EmailSQS.Payload, { template: "donation-error" }>
 ) {
   return ses.send(
@@ -23,15 +19,4 @@ export async function sendEmail(
       },
     })
   );
-}
-
-export async function getEndow(endowId: number, environment: Environment) {
-  const command = new GetCommand({
-    TableName: tables.endowments_v3,
-    Key: {
-      PK: `Endow#${endowId}`,
-      SK: environment,
-    },
-  });
-  return ap.send(command).then<INpo | undefined>((data) => data.Item as any);
 }

@@ -9,8 +9,8 @@ import {
   handle_subscription_deleted,
 } from "./handlers";
 import { handle_intent_succeeded } from "./handlers/intent-suceeded";
-import { stripeEnvs } from ".server/env";
-import { discordFiatMonitor, stripe } from ".server/sdks";
+import { stripe_envs } from ".server/env";
+import { fiat_monitor, stripe } from ".server/sdks";
 
 /**
  * Webhook signing logic inspired by stripe-node,
@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({
   const event = stripe.webhooks.constructEvent(
     await request.text(),
     signature,
-    stripeEnvs.webhookSecret
+    stripe_envs.webhook_secret
   );
 
   // Event handlers
@@ -73,7 +73,7 @@ export const action: ActionFunction = async ({
       err instanceof Error
         ? err.message
         : JSON.stringify(err, Object.getOwnPropertyNames(err));
-    await discordFiatMonitor.sendAlert({
+    await fiat_monitor.sendAlert({
       type: "ERROR",
       from: `stripe-event-handler-${stage}`,
       title: "Stripe Event Processing",

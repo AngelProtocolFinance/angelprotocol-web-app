@@ -1,5 +1,5 @@
-import type { StripeDonation } from "@better-giving/donation";
 import type { Subscription } from "@better-giving/donation/subscription";
+import type { IMetadata, IMetadataSubs } from "@better-giving/stripe";
 import { tables } from "@better-giving/types/list";
 import { to_onhold } from "routes/helpers/donation-metadata";
 import type Stripe from "stripe";
@@ -27,8 +27,8 @@ export async function handle_intent_succeeded(
   };
 
   if (is_onetime(intent.metadata)) {
-    const meta = intent.metadata as StripeDonation.Metadata;
-    const order = to_onhold(meta, { payment_method: pm });
+    const meta = intent.metadata as IMetadata;
+    const order = to_onhold(meta, { payment_method: pm, status: "pending" });
     const final = to_final(order, settled);
     return qstash.publishJSON({
       body: final,
@@ -42,11 +42,13 @@ export async function handle_intent_succeeded(
   const { subscription, subscription_details, hosted_invoice_url } =
     await stripe.invoices.retrieve(str_id(intent.invoice));
 
-  const subs_meta =
-    subscription_details?.metadata as StripeDonation.SetupIntentMetadata | null;
+  const subs_meta = subscription_details?.metadata as IMetadataSubs | null;
   if (!subs_meta) throw "missing subs metadata";
 
-  const onhold = to_onhold(subs_meta, { payment_method: pm });
+  const onhold = to_onhold(subs_meta, {
+    payment_method: pm,
+    status: "pending",
+  });
   const final = to_final(onhold, settled);
 
   const res = await qstash.publishJSON({
@@ -75,6 +77,6 @@ export async function handle_intent_succeeded(
 }
 
 // One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice
-function is_onetime(metadata: any): metadata is StripeDonation.Metadata {
+function is_onetime(metadata: any): metadata is IMetadata {
   return Object.keys(metadata).length > 0;
 }

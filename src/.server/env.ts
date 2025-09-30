@@ -41,10 +41,10 @@ export const discordEnvs = {
   fiatMonitorUrl: _var("DISCORD_FIAT_MONITOR_WEBHOOK_URL"),
 };
 
-export const stripeEnvs = {
-  secretKey: _var("STRIPE_SECRET_KEY"),
-  subsProductId: _var("STRIPE_SUBS_PRODUCT_ID"),
-  webhookSecret: _var("STRIPE_WEBHOOK_SECRET"),
+export const stripe_envs = {
+  secret_key: _var("STRIPE_SECRET_KEY"),
+  subs_product_id: _var("STRIPE_SUBS_PRODUCT_ID"),
+  webhook_secret: _var("STRIPE_WEBHOOK_SECRET"),
 };
 
 export const wise_envs = {

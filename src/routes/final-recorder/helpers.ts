@@ -1,5 +1,5 @@
 import { type TxType, Txs } from "@better-giving/db";
-import type { Donation } from "@better-giving/donation";
+import type { IDonationFinal } from "@better-giving/donation";
 import type {
   DMKey,
   DonationMessage,
@@ -62,7 +62,7 @@ export interface IReferrerLtdItem {
 interface Commission {
   ltd: IReferrerLtdItem;
   record: TxType["Put"];
-  breakdown: Donation.ReferrerCommission;
+  breakdown: IDonationFinal["referrer_commission"];
 }
 
 export const commission_fn = (

@@ -1,4 +1,4 @@
-import type { StripeDonation } from "@better-giving/donation";
+import type { IMetadata } from "@better-giving/stripe";
 import { tables } from "@better-giving/types/list";
 import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
@@ -19,10 +19,11 @@ export async function handle_intent_requires_action(intent: Intent) {
 
   if (!verification_link) throw new Error("Verification link is undefined");
 
-  const meta = intent.metadata as StripeDonation.Metadata;
+  const meta = intent.metadata as IMetadata;
   const onhold = to_onhold(meta, {
     payment_method: await payment_method(str_id(intent.payment_method)),
     verify_url: verification_link,
+    status: "intent",
   });
 
   //create intent record in on_hold_donations table

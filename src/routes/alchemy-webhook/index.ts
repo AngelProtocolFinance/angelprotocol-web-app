@@ -4,7 +4,7 @@ import { resp } from "helpers/https";
 import type { Route } from "./+types";
 import type { IPayload, IPriceByKey, TAlchemyChainId } from "./types";
 import { coingecko_api_key, deposit_addrs_envs } from ".server/env";
-import { discordAwsMonitor } from ".server/sdks";
+import { aws_monitor } from ".server/sdks";
 
 const cg_platform_ids: { [key in TAlchemyChainId]: string } = {
   "eth-mainnet": "ethereum",
@@ -77,7 +77,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
     };
     console.info(JSON.stringify(alert, null, 2));
 
-    const res = await discordAwsMonitor.sendAlert(alert);
+    const res = await aws_monitor.sendAlert(alert);
     console.info("discord notif", res.status, res.statusText);
   }
 

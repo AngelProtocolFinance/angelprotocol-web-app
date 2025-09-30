@@ -14,6 +14,6 @@ export const payment_methods: {
 };
 
 /** Remove payment methods that does not support recurring payments */
-export function nonSubsPM(pm: TPaymentMethods) {
+export function nonsubs_pm(pm: TPaymentMethods) {
   return pm !== "eps" && pm !== "p24";
 }

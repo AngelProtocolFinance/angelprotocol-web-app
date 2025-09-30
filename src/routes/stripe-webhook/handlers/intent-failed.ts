@@ -1,4 +1,4 @@
-import type { StripeDonation } from "@better-giving/donation";
+import type { IMetadata } from "@better-giving/stripe";
 import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
 import { send_email } from "../helpers/send-email";
@@ -15,12 +15,11 @@ export async function handle_intent_failed(
       const { subscription_details } = await stripe.invoices.retrieve(
         str_id(pi.invoice)
       );
-      const m =
-        subscription_details?.metadata as StripeDonation.SetupIntentMetadata | null;
+      const m = subscription_details?.metadata as IMetadata | null;
       if (!m) throw "missing invoice metadata";
       return m;
     }
-    return pi.metadata as StripeDonation.Metadata;
+    return pi.metadata as unknown as IMetadata;
   })(data.object);
 
   await send_email({

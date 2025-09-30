@@ -1,6 +1,5 @@
-import tokenMap from "@better-giving/assets/tokens/map";
-import type { OnHoldDonation } from "@better-giving/donation";
-import { tables } from "@better-giving/types/list";
+import tokens_map from "@better-giving/assets/tokens/map";
+import { resp } from "helpers/https";
 import type { LoaderFunction } from "react-router";
 import type { Payment } from "types/crypto";
 import {
@@ -13,8 +12,8 @@ import {
   union,
   uuid,
 } from "valibot";
-import { GetCommand, apes } from ".server/aws/db";
-import { _var } from ".server/env";
+import { onholddb } from ".server/aws/db";
+import { _var, deposit_addrs_envs } from ".server/env";
 import { np } from ".server/sdks";
 
 const int = pipe(
@@ -41,35 +40,23 @@ export const loader: LoaderFunction = async ({ params }) => {
       description: p.order_description,
     };
   }
-  //non nowpayments intents are saved in db
-  const cmd = new GetCommand({
-    TableName: tables.on_hold_donations,
-    Key: { transactionId: id } satisfies OnHoldDonation.PrimaryKey,
-  });
-  const res = await apes.send(cmd);
-  if (!res.Item) {
-    return new Response(null, { status: 404 });
-  }
 
-  const item = res.Item as OnHoldDonation.DBRecord;
-  if (item.status !== "intent") {
-    return new Response(null, { status: 410 });
-  }
+  const don = await onholddb.item(id);
+  if (!don) return resp.status(404);
+  if (don.status !== "intent") return resp.status(410);
 
-  const token = tokenMap[item.denomination];
-  const deposit_addr = _var(`DEPOSIT_ADDR_${token.network.toUpperCase()}`);
+  const token = tokens_map[don.denomination];
+  const deposit_addr = deposit_addrs_envs(token.network);
 
   if (!deposit_addr) return 500;
-  const recipient = item.fund_id ? item.fund_name : item.charityName;
+  const recipient = don.fund_id ? don.fund_name : don.charityName;
   const data: Payment = {
-    id: item.transactionId,
+    id: don.transactionId,
     address: deposit_addr,
-    amount: item.amount,
-    currency: item.denomination,
+    amount: don.amount,
+    currency: don.denomination,
     description: `Donation to ${recipient}`,
-    rate: item.usdValue / item.amount,
+    rate: don.usdValue / don.amount,
   };
-  return new Response(JSON.stringify(data), {
-    headers: { "content-type": "application/json" },
-  });
+  return resp.json(data);
 };

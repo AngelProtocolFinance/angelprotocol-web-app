@@ -1,16 +1,14 @@
-import { BalanceDb } from "@better-giving/balance";
-import { BalanceTxsDb, type IBalanceTx } from "@better-giving/balance-txs";
+import type { IBalanceTx } from "@better-giving/balance-txs";
 import { type TxItems, Txs } from "@better-giving/db";
-import type { Donation } from "@better-giving/donation";
-import type { Allocation } from "@better-giving/donation/schema";
-import { NavHistoryDB } from "@better-giving/nav-history/db";
+import type { IDonationFinalAttr } from "@better-giving/donation";
+import type { IAllocation } from "@better-giving/endowment";
 import { PayoutsDB } from "@better-giving/payouts";
 import { tables } from "@better-giving/types/list";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { type Increments, bal_deltas_fn } from "./helpers";
 import type { Base, Overrides, Uniques } from "./types";
-import { apes, podb } from ".server/aws/db";
+import { baldb, btxdb, navdb, podb } from ".server/aws/db";
 export type { Base, Overrides, Uniques } from "./types";
 export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   const timestamp = new Date().toISOString();
@@ -51,24 +49,22 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
     uniques.allocation = o.allocation;
   }
 
-  const record: Donation.V2DBRecord = {
+  const record: IDonationFinalAttr = {
     ...base,
     ...uniques,
   };
 
-  const net_alloc: Allocation = {
+  const net_alloc: IAllocation = {
     cash: (o.allocation.cash / 100) * o.net,
     liq: (o.allocation.liq / 100) * o.net,
     lock: (o.allocation.lock / 100) * o.net,
   };
 
   const txs = new Txs();
-  const navdb = new NavHistoryDB(apes, base.network);
-  const baldb = new BalanceDb(apes, base.network);
+
   if (net_alloc.lock || net_alloc.liq) {
     const { lock_units, liq } = await baldb.npo_balance(o.endowId);
     const nav = await navdb.ltd();
-    const baltxs_db = new BalanceTxsDb(apes, base.network);
 
     if (net_alloc.lock) {
       const purchased_units = net_alloc.lock / nav.price;
@@ -104,7 +100,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         account_other_bal_begin: net_alloc.lock,
         account_other_bal_end: 0,
       };
-      txs.put(baltxs_db.tx_put_txi(lock_tx));
+      txs.put(btxdb.tx_put_txi(lock_tx));
     }
 
     if (net_alloc.liq) {
@@ -124,7 +120,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
         account_other_bal_begin: net_alloc.liq,
         account_other_bal_end: 0,
       };
-      txs.put(baltxs_db.tx_put_txi(lock_tx));
+      txs.put(btxdb.tx_put_txi(lock_tx));
     }
   }
 
@@ -158,7 +154,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   }
 
   if (o.net > 0) {
-    const bal_deltas = bal_deltas_fn(incs, base.appUsed);
+    const bal_deltas = bal_deltas_fn(incs, base.appUsed ?? "bg-marketplace");
     txs.update(baldb.balance_update_txi(o.endowId, bal_deltas));
   }
 

@@ -13,15 +13,15 @@ import {
   env,
   npEnvs,
   qtash_envs,
-  stripeEnvs,
+  stripe_envs,
   typesense_envs,
   wiseApiToken,
 } from "./env";
 
-export const discordAwsMonitor = new Discord(discordEnvs.awsMonitorUrl);
-export const discordFiatMonitor = new Discord(discordEnvs.fiatMonitorUrl);
+export const aws_monitor = new Discord(discordEnvs.awsMonitorUrl);
+export const fiat_monitor = new Discord(discordEnvs.fiatMonitorUrl);
 export const np = new Nowpayments(npEnvs);
-export const stripe = new Stripe(stripeEnvs.secretKey);
+export const stripe = new Stripe(stripe_envs.secret_key);
 
 export const wise = new Wise({
   apiToken: wiseApiToken,
