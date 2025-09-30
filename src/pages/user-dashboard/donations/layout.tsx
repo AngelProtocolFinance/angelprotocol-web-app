@@ -7,12 +7,10 @@ const class_fn = nav_link_class_fn(
 );
 export default function Layout() {
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 @5xl:gap-y-8 @5xl:gap-x-3 relative">
-      <h1 className="text-3xl text-center @5xl:text-left col-span-full @5xl:col-span-1 mb-4 @5xl:mb-0">
-        My Donations
-      </h1>
+    <div className="grid content-start relative">
+      <h1 className="text-3xl mb-6">My Donations</h1>
 
-      <div className="grid col-span-full gap-y-4">
+      <div className="flex">
         <NavLink to="received" className={class_fn}>
           <span
             className="uppercase group-active:outline-hidden group-active:rounded-xs 
@@ -29,9 +27,8 @@ export default function Layout() {
             Pending
           </span>
         </NavLink>
-
-        <Outlet />
       </div>
+      <Outlet />
     </div>
   );
 }

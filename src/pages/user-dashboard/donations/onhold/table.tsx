@@ -52,14 +52,6 @@ export function Table({
             Recipient
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("payment_method")}
-            _activeSortKey={sortKey}
-            _sortKey="payment_method"
-            _sortDirection={sortDirection}
-          >
-            Method
-          </HeaderButton>
-          <HeaderButton
             onClick={handleHeaderClick("usd_value")}
             _activeSortKey={sortKey}
             _sortKey="amount"
@@ -67,6 +59,15 @@ export function Table({
           >
             Amount
           </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("payment_method")}
+            _activeSortKey={sortKey}
+            _sortKey="payment_method"
+            _sortDirection={sortDirection}
+          >
+            Method
+          </HeaderButton>
+          <>status</>
         </Cells>
       </TableSection>
       <TableSection
@@ -83,9 +84,10 @@ export function Table({
                 load_next ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
+              <>{toPP(row.date)}</>
               <div>
                 <Link
-                  to={`${app_routes.marketplace}/${row.recipient_name}`}
+                  to={`${app_routes.marketplace}/${row.recipient_id}`}
                   className="flex items-center justify-between gap-1 text-blue hover:text-blue-d1"
                 >
                   <span className="truncate max-w-[12rem]">
@@ -101,10 +103,6 @@ export function Table({
                   </Link>
                 )}
               </div>
-
-              <>{toPP(row.date)}</>
-              <span className="capitalize">{row.payment_method}</span>
-
               <div>
                 {row.currency}{" "}
                 {round_to_cents(row.amount, centsDecimals(row.usd_value))}{" "}
@@ -116,8 +114,9 @@ export function Table({
                 <p className="text-2xs text-gray-d1 uppercase">
                   {row.frequency}
                 </p>
-                <Resumer {...row} />
               </div>
+              <span className="capitalize">{row.payment_method}</span>
+              <Resumer {...row} />
             </Cells>
           ))
           .concat(
@@ -158,4 +157,5 @@ function Resumer(props: IRow) {
       </ExtLink>
     );
   }
+  return <span className="capitalize">{props.status}</span>;
 }

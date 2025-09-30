@@ -51,20 +51,20 @@ export function Table({
             Recipient
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("payment_method")}
-            _activeSortKey={sortKey}
-            _sortKey="payment_method"
-            _sortDirection={sortDirection}
-          >
-            Method
-          </HeaderButton>
-          <HeaderButton
             onClick={handleHeaderClick("usd_value")}
             _activeSortKey={sortKey}
             _sortKey="amount"
             _sortDirection={sortDirection}
           >
             Amount
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("payment_method")}
+            _activeSortKey={sortKey}
+            _sortKey="payment_method"
+            _sortDirection={sortDirection}
+          >
+            Method
           </HeaderButton>
           <>Receipt</>
         </Cells>
@@ -83,6 +83,7 @@ export function Table({
                 load_next ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
+              <>{toPP(row.date)}</>
               <div>
                 <Link
                   to={`${app_routes.marketplace}/${row.recipient_name}`}
@@ -101,10 +102,6 @@ export function Table({
                   </Link>
                 )}
               </div>
-
-              <>{toPP(row.date)}</>
-              <span className="capitalize">{row.payment_method}</span>
-
               <div>
                 {row.currency}{" "}
                 {round_to_cents(row.amount, centsDecimals(row.usd_value))}{" "}
@@ -117,6 +114,7 @@ export function Table({
                   {row.frequency}
                 </p>
               </div>
+              <span className="capitalize">{row.payment_method}</span>
               <Link to={row.id} className="w-full flex justify-center">
                 <ArrowDownToLine size={20} />
               </Link>

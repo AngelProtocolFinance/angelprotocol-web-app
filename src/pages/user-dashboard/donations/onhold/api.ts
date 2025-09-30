@@ -10,8 +10,11 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return to_auth(request, headers);
   const raw = search(request);
-  const params = parse(page_opts, raw);
-  const { items, next } = await onholddb.list_by_email(user.email, params);
+  const { next, limit = 10 } = parse(page_opts, raw);
+  const { items, next: n } = await onholddb.list_by_email(user.email, {
+    next,
+    limit,
+  });
 
-  return { next, user, items: items.map(to_row) };
+  return { next: n, user, items: items.map(to_row) };
 };

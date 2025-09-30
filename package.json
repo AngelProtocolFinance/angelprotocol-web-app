@@ -42,7 +42,7 @@
     "@better-giving/constants": "1.1.2",
     "@better-giving/stripe": "1.0.7",
     "@better-giving/db": "2.0.6",
-    "@better-giving/donation": "3.0.13",
+    "@better-giving/donation": "3.0.14",
     "@better-giving/endowment": "4.0.29",
     "@better-giving/fundraiser": "3.0.29",
     "@better-giving/helpers": "1.1.11",

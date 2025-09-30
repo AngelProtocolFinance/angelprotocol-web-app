@@ -28,7 +28,7 @@ function Donations({ loaderData }: Route.ComponentProps) {
     page1,
     gen_loader: (load, next) => () => {
       const copy = new URLSearchParams(params);
-      if (next) copy.set("page", next.toString());
+      if (next) copy.set("next", next.toString());
       load(`?${copy.toString()}`);
     },
   });
