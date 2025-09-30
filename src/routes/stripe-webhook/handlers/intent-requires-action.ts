@@ -25,7 +25,6 @@ export async function handle_intent_requires_action(intent: Intent) {
     status: "intent",
   });
 
-  //create intent record in on_hold_donations table
   await onholddb.put(onhold);
 
   return send_email({
