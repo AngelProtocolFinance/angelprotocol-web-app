@@ -14,13 +14,6 @@ export function Row(props: IRow & { has_more?: boolean; classes?: string }) {
       type="td"
       cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${props.classes}`}
     >
-      <Copier
-        size={16}
-        text={props.id}
-        classes="text-center inline-flex items-center gap-x-2 text-sm"
-      >
-        {mask_string(props.id)}
-      </Copier>
       <span className="text-sm">{toPP(props.date)}</span>
       {props.program_id ? (
         <Link

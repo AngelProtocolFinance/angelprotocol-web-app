@@ -17,7 +17,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
     page1,
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(search);
-      if (next) p.set("page", next);
+      if (next) p.set("next", next);
       load(`?${p.toString()}`);
     },
   });
