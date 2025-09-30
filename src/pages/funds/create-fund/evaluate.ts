@@ -5,7 +5,24 @@ interface IFundraiser {
   description: string;
 }
 
-export const evaluate = async (fundraiser: IFundraiser) => {
+interface IEvaluation {
+  is_spam: boolean;
+  confidence: number; // 0-100
+  risk_factors: string[]; // specific issues found
+  category?:
+    | "drugs"
+    | "advertisement"
+    | "terrorism"
+    | "fraud"
+    | "adult"
+    | "hate"
+    | "other";
+  explanation: string; // brief reason for decision
+}
+
+export const evaluate = async (
+  fundraiser: IFundraiser
+): Promise<IEvaluation> => {
   const prompt = `Evaluate this fundraiser for spam/inappropriate content:
 
 FUNDRAISER:

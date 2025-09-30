@@ -37,11 +37,13 @@ export const action: ActionFunction = async ({ request }) => {
     title: payload.name,
     description: payload.description,
   }).catch((err) => {
-    console.error(err);
-    return null;
+    console.error("evaluation failed", err);
+    return { is_spam: false };
   });
-
-  if (evaluation) throw `Fundraiser flagged: ${JSON.stringify(evaluation)}`;
+  console.log(evaluation);
+  if (evaluation.is_spam) {
+    throw `Fundraiser flagged: ${JSON.stringify(evaluation)}`;
+  }
 
   const npoo = payload.npo_owner;
   if (npoo && !user.endowments.includes(npoo)) return { status: 401 };
