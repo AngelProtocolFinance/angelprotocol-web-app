@@ -3,12 +3,11 @@ import { type TxItems, Txs } from "@better-giving/db";
 import type { IDonationFinalAttr } from "@better-giving/donation";
 import type { IAllocation } from "@better-giving/endowment";
 import { PayoutsDB } from "@better-giving/payouts";
-import { tables } from "@better-giving/types/list";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
 import { type Increments, bal_deltas_fn } from "./helpers";
 import type { Base, Overrides, Uniques } from "./types";
-import { baldb, btxdb, navdb, podb } from ".server/aws/db";
+import { baldb, btxdb, dondb, navdb, podb } from ".server/aws/db";
 export type { Base, Overrides, Uniques } from "./types";
 export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
   const timestamp = new Date().toISOString();
@@ -158,10 +157,7 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
     txs.update(baldb.balance_update_txi(o.endowId, bal_deltas));
   }
 
-  txs.put({
-    TableName: tables.donations,
-    Item: record,
-  });
+  txs.put(dondb.put_txi(record));
 
   return txs.all;
 }

@@ -6,9 +6,9 @@ import {
   handle_intent_requires_action,
   handle_setup_intent_failed,
   handle_setup_intent_succeeded,
-  handle_subscription_deleted,
 } from "./handlers";
 import { handle_intent_succeeded } from "./handlers/intent-suceeded";
+import { subsdb } from ".server/aws/db";
 import { stripe_envs } from ".server/env";
 import { fiat_monitor, stripe } from ".server/sdks";
 
@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({
   try {
     switch (event.type) {
       case "customer.subscription.deleted":
-        const res = await handle_subscription_deleted(event.data);
+        const res = await subsdb.del(event.data.object.id);
         return resp.json(res.$metadata);
       case "payment_intent.succeeded":
         await handle_intent_succeeded(event.data, base_url);

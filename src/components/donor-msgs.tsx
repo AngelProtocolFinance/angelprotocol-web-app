@@ -9,27 +9,27 @@ interface Props {
 
 interface Page {
   items: any[];
-  nextPageKey: string | null;
+  next: string | null;
 }
 
 const fetcher = ([, id, key]: [string, string, string | null]) =>
-  fetch(`/api/npo/${id}/donors${key ? `?nextKey=${key}` : ""}`).then<Page>(
-    (res) => res.json()
+  fetch(`/api/npo/${id}/donors${key ? `?next=${key}` : ""}`).then<Page>((res) =>
+    res.json()
   );
 
 export function DonorMsgs({ classes = "", id }: Props) {
   const { data, mutate, error } = useSWR(["txs", id, null], fetcher);
 
   if (error || !data) return null;
-  const { items, nextPageKey } = data;
+  const { items, next } = data;
   if (items.length === 0) return null;
 
-  async function load(nextKey: string) {
-    const res = await fetcher(["txs", id, nextKey]);
+  async function load(next: string) {
+    const res = await fetcher(["txs", id, next]);
     mutate(
       (x) => ({
         items: [...(x?.items || []), ...res.items],
-        nextPageKey: res.nextPageKey,
+        next: res.next,
       }),
       { revalidate: false }
     );
@@ -64,10 +64,10 @@ export function DonorMsgs({ classes = "", id }: Props) {
         ))}
       </div>
 
-      {nextPageKey && (
+      {next && (
         <button
           type="button"
-          onClick={() => load(nextPageKey)}
+          onClick={() => load(next)}
           className="text-blue font-medium mt-4 hover:text-blue-d1"
         >
           View more

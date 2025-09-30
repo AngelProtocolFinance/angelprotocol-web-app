@@ -73,60 +73,66 @@ interface Additional {
 
 export const to_onhold = (m: IMetadata, additional: Additional) => {
   const x: IDonationOnHoldAttr = {
-    fiatRamp: "STRIPE",
+    // Transaction details
     transactionDate: m.transactionDate,
     transactionId: m.transactionId,
+    status: additional.status,
+    network: m.network,
+
+    // Amount details
     amount: +m.amount,
+    ...(m.feeAllowance && { feeAllowance: +m.feeAllowance }),
     tipAmount: +m.tipAmount,
-    chainName: "Fiat",
     usdValue: +m.usdValue,
-    appUsed: m.appUsed as any,
-    charityName: m.charityName,
+    ...(m.allocation && { allocation: JSON.parse(m.allocation) }),
     denomination: m.denomination,
+    isRecurring: m.isRecurring === "true",
+
+    // FROM - Donor details
+    ...(m.title && { title: m.title as any }),
+    fullName: m.fullName,
+    ...(m.company_name && { company_name: m.company_name }),
+    ...(m.donor_message && { donor_message: m.donor_message }),
+    ...(m.donor_public && { donor_public: m.donor_public === "true" }),
+    kycEmail: m.email,
+    ...(m.msg_to_npo && { msg_to_npo: m.msg_to_npo }),
+    ukGiftAid: m.ukGiftAid === "true",
+    ...(m.streetAddress && { streetAddress: m.streetAddress }),
+    ...(m.city && { city: m.city }),
+    ...(m.state && { state: m.state }),
+    ...(m.country && { country: m.country }),
+    ...(m.zipCode && { zipCode: m.zipCode }),
+
+    // TO - Recipient details
     endowmentId: +m.endowmentId,
-    donor_message: m.donor_message,
-    fund_id: m.fund_id,
-    fund_name: m.fund_name,
-    fund_members: m.fund_members?.split(",").map(Number),
-    programId: m.programId,
-    programName: m.programName,
-    inHonorOf: m.inHonorOf,
-    tributeNotif: m.tributeNotif && JSON.parse(m.tributeNotif),
+    charityName: m.charityName,
     claimed: m.claimed === "true",
     fiscalSponsored: m.fiscalSponsored === "true",
+    ...(m.fund_id && { fund_id: m.fund_id }),
+    ...(m.fund_members && {
+      fund_members: m.fund_members.split(",").map(Number),
+    }),
+    ...(m.fund_name && { fund_name: m.fund_name }),
     hideBgTip: m.hideBgTip === "true",
-    network: m.network as any,
-    email: m.email,
-    kycEmail: m.email,
-    fullName: m.fullName,
-    company_name: m.company_name,
-    title: m.title,
-    ukGiftAid: m.ukGiftAid === "true",
-    isRecurring: m.isRecurring === "true",
+    ...(m.programId && { programId: m.programId }),
+    ...(m.programName && { programName: m.programName }),
+
+    // VIA - Payment details
+    appUsed: m.appUsed as any,
     chainId: "fiat",
-    status: additional.status,
-    //additionals
-    stripeDepositVerifyUrl: additional?.verify_url,
-    paymentMethod: additional?.payment_method,
+    chainName: "Fiat",
+    fiatRamp: "STRIPE",
+    ...(additional?.payment_method && {
+      paymentMethod: additional.payment_method,
+    }),
+    ...(additional?.verify_url && {
+      stripeDepositVerifyUrl: additional.verify_url,
+    }),
+
+    // TRIBUTE
+    ...(m.inHonorOf && { inHonorOf: m.inHonorOf }),
+    ...(m.tributeNotif && { tributeNotif: JSON.parse(m.tributeNotif) }),
   };
-
-  if (m.tipAmount) {
-    x.tipAmount = +m.tipAmount;
-  }
-  if (m.feeAllowance) {
-    x.feeAllowance = +m.feeAllowance;
-  }
-  if (m.donor_public) {
-    x.donor_public = m.donor_public === "true";
-  }
-
-  if (m.msg_to_npo) {
-    x.msg_to_npo = m.msg_to_npo;
-  }
-
-  if (m.allocation) {
-    x.allocation = JSON.parse(m.allocation);
-  }
 
   return x;
 };

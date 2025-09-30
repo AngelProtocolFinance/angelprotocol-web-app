@@ -1,13 +1,12 @@
-import type { Subscription } from "@better-giving/donation/subscription";
+import type {} from "@better-giving/donation/subscriptions-db";
 import type { IMetadata, IMetadataSubs } from "@better-giving/stripe";
-import { tables } from "@better-giving/types/list";
 import { to_onhold } from "routes/helpers/donation-metadata";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
 import { str_id } from "../../helpers/stripe";
 import { payment_method } from "../helpers/payment-method";
 import { settled_fn } from "../helpers/settled";
-import { UpdateCommand, apes } from ".server/aws/db";
+import { onholddb, subsdb } from ".server/aws/db";
 import { qstash, stripe } from ".server/sdks";
 
 export async function handle_intent_succeeded(
@@ -49,8 +48,10 @@ export async function handle_intent_succeeded(
     payment_method: pm,
     status: "pending",
   });
-  const final = to_final(onhold, settled);
 
+  await onholddb.put(onhold);
+
+  const final = to_final(onhold, settled);
   const res = await qstash.publishJSON({
     body: final,
     url: `${base_url}/q/final-recorder`,
@@ -60,20 +61,10 @@ export async function handle_intent_succeeded(
 
   console.info(`Final donation record sent:${res.messageId}`);
 
-  const subs_update = new UpdateCommand({
-    TableName: tables.subscriptions,
-    Key: {
-      subscription_id: str_id(subscription),
-    } satisfies Subscription.PrimaryKey,
-    UpdateExpression: "SET latest_invoice = :latest_invoice, #status = :status",
-    ExpressionAttributeNames: { "#status": "status" },
-    ExpressionAttributeValues: {
-      ":latest_invoice": hosted_invoice_url || "",
-      ":status": "active",
-    },
+  await subsdb.update(str_id(subscription), {
+    latest_invoice: hosted_invoice_url || "",
+    status: "active",
   });
-
-  await apes.send(subs_update);
 }
 
 // One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice

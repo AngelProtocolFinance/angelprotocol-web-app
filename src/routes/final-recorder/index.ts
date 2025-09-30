@@ -2,7 +2,6 @@ import { fees } from "@better-giving/constants";
 import { Txs } from "@better-giving/db";
 import type { ITributeNotif } from "@better-giving/donation";
 import { partition } from "@better-giving/helpers";
-import { tables } from "@better-giving/types/list";
 import { default_allocation } from "constants/common";
 import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
@@ -11,7 +10,6 @@ import type { FinalRecorderPayload } from "../types/final-recorder";
 import { referral_commission_rate } from "./config";
 import {
   type IReferrerLtdItem,
-  build_donation_msg,
   commission_fn,
   ltd_by_referrer,
   referrer_ltd_update_txi,
@@ -22,6 +20,7 @@ import {
   TransactWriteCommand,
   ap,
   apes,
+  donordb,
   npodb,
   onholddb,
 } from ".server/aws/db";
@@ -185,17 +184,18 @@ export const action: ActionFunction = async ({ request }) => {
 
         // creates single donation message record per fund member
         if (tx.from.is_public) {
-          const msg = build_donation_msg({
+          const r = donordb.record({
+            id: nanoid(),
+            donation_id: tx.id,
             date: tx.id,
             donor_id: tx.from.id,
             donor_message: tx.from.message ?? "",
             donor_name: tx.from.name,
             env: endow.env,
             recipient_id: `${endow.id}`,
-            transaction_id: tx.id,
-            usd_value: tx.amount.usd_value / num_members,
+            amount: tx.amount.usd_value / num_members,
           });
-          txs.put({ TableName: tables.donation_messages, Item: msg });
+          txs.put(donordb.put_txi(r));
         }
       }
       //commit ltds per referrer
@@ -264,17 +264,18 @@ export const action: ActionFunction = async ({ request }) => {
 
     /** creates donation message for single fund/npo donation */
     if (tx.from.is_public) {
-      const msg = build_donation_msg({
+      const r = donordb.record({
+        id: nanoid(),
         date: tx.date,
         donor_id: tx.from.id,
         donor_message: tx.from.message ?? "",
         donor_name: tx.from.name,
         env: env,
         recipient_id: tx.to.id,
-        transaction_id: tx.id,
-        usd_value: tx.amount.usd_value,
+        donation_id: tx.id,
+        amount: tx.amount.usd_value,
       });
-      txs.put({ TableName: tables.donation_messages, Item: msg });
+      txs.put(donordb.put_txi(r));
     }
 
     const BG_ENDOW_ID = 1293762;

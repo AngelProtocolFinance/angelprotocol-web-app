@@ -1,11 +1,10 @@
 import type { IMetadata } from "@better-giving/stripe";
-import { tables } from "@better-giving/types/list";
 import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
 import { to_onhold } from "../../helpers/donation-metadata";
 import { payment_method } from "../helpers/payment-method";
 import { send_email } from "../helpers/send-email";
-import { PutCommand, apes } from ".server/aws/db";
+import { onholddb } from ".server/aws/db";
 
 type Intent = Stripe.PaymentIntent | Stripe.SetupIntent;
 
@@ -27,11 +26,7 @@ export async function handle_intent_requires_action(intent: Intent) {
   });
 
   //create intent record in on_hold_donations table
-  const cmd = new PutCommand({
-    TableName: tables.on_hold_donations,
-    Item: onhold,
-  });
-  await apes.send(cmd);
+  await onholddb.put(onhold);
 
   return send_email({
     recipients: [meta.email],

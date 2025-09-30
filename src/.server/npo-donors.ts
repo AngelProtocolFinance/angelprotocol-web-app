@@ -1,37 +1,18 @@
-import { BatchGetCommand, QueryCommand, apes } from "./aws/db";
+import { BatchGetCommand, apes, donordb } from "./aws/db";
 import { env } from "./env";
 
-const toBase64 = (key: Record<string, any> | undefined) =>
-  key ? Buffer.from(JSON.stringify(key)).toString("base64") : undefined;
-
-export const npoDonors = async (
+export const npo_donors = async (
   recipient_id: string /** uuid or number id */,
   next?: string
 ) => {
-  const cmd = new QueryCommand({
-    TableName: "donation_messages",
-    IndexName: "recipient-env-gsi",
-    KeyConditionExpression: "#pk = :pk",
-    ScanIndexForward: false,
-    ExpressionAttributeNames: {
-      "#pk": "gsi1PK",
-    },
-    ExpressionAttributeValues: {
-      ":pk": `Recipient#${recipient_id}#${env}`,
-    },
-    ExclusiveStartKey: next
-      ? JSON.parse(Buffer.from(next, "base64").toString())
-      : undefined,
+  const { items: donors, next: n } = await donordb.list(recipient_id, {
+    next,
+    limit: 10,
   });
-
-  const { Items = [], LastEvaluatedKey } = await apes.send(cmd);
-  if (Items.length === 0) {
-    return { items: [], nextKey: toBase64(LastEvaluatedKey) };
-  }
 
   //get user's metadata
   const tables_users_meta = "users-meta";
-  const distinct_donor_ids = new Set<string>(Items.map((x) => x.donor_id));
+  const distinct_donor_ids = new Set<string>(donors.map((x) => x.donor_id));
   const batchGet = new BatchGetCommand({
     RequestItems: {
       [tables_users_meta]: {
@@ -52,15 +33,13 @@ export const npoDonors = async (
     return acc;
   }, {});
 
-  const items = (Items || []).map(
-    ({ PK, SK, gsi1PK, gsi1SK, donor_id, env, ...x }) => ({
-      ...x,
-      photo: photoMap[donor_id],
-    })
-  );
+  const items = (donors || []).map(({ donor_id, env, ...x }) => ({
+    ...x,
+    photo: photoMap[donor_id],
+  }));
 
   return {
     items,
-    nextPageKey: toBase64(LastEvaluatedKey),
+    next: n,
   };
 };

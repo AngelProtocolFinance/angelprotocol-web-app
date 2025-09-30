@@ -18,7 +18,12 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { BalanceDb } from "@better-giving/balance";
 import { BalanceTxsDb } from "@better-giving/balance-txs";
 import { BankingApplicationsDb } from "@better-giving/banking-applications";
-import { DonationsDb, OnHoldDonationsDb } from "@better-giving/donation";
+import {
+  DonationDonorsDb,
+  DonationsDb,
+  OnHoldDonationsDb,
+  SubsDb,
+} from "@better-giving/donation";
 import { NpoDb } from "@better-giving/endowment";
 import { FundDb } from "@better-giving/fundraiser";
 import { LiquidDb } from "@better-giving/liquid";
@@ -74,3 +79,5 @@ export const funddb = new FundDb(ap, env);
 export const regdb = new RegDb(ap, env);
 export const dondb = new DonationsDb(apes, env);
 export const onholddb = new OnHoldDonationsDb(apes, env);
+export const subsdb = new SubsDb(apes, env);
+export const donordb = new DonationDonorsDb(apes, env);

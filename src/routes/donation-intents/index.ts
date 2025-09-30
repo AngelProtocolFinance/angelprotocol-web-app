@@ -1,7 +1,6 @@
 import { is_custom } from "@better-giving/assets/tokens";
 import tokens_map from "@better-giving/assets/tokens/map";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import { tables } from "@better-giving/types/list";
 import { addDays, getUnixTime } from "date-fns";
 import { resp } from "helpers/https";
 import { round_number } from "helpers/round-number";
@@ -17,7 +16,7 @@ import { get_customer_id } from "./stripe/customer-id";
 import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { cognito } from ".server/auth";
-import { PutCommand, apes } from ".server/aws/db";
+import { PutCommand, apes, onholddb } from ".server/aws/db";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
 import { aws_monitor, chariot, np } from ".server/sdks";
@@ -75,12 +74,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       ...(is_custom(token.id) && { payment_id: intent_id }),
     };
 
-    const cmd = new PutCommand({
-      TableName: tables.on_hold_donations,
-      Item: onhold,
-    });
-
-    await apes.send(cmd);
+    await onholddb.put(onhold);
 
     if (is_custom(token.id)) {
       const p: Payment = {
@@ -160,11 +154,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       chainId: "fiat",
       email: intent.donor.email,
     };
-    const cmd = new PutCommand({
-      TableName: tables.on_hold_donations,
-      Item: onhold,
-    });
-    await apes.send(cmd);
+    await onholddb.put(onhold);
     return resp.json({ grantId: grant.id });
   }
 
