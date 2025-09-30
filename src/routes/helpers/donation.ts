@@ -61,26 +61,17 @@ export const to_final = (
     id: onhold.kycEmail,
     name: onhold.fullName ?? "Anonymous",
     is_public: onhold.donor_public ?? false,
-    uk_gift_aid: false,
     message: onhold.donor_message,
     company_name: onhold.company_name,
+    uk_gift_aid: onhold.ukGiftAid ?? false,
+    address: {
+      street: onhold.streetAddress,
+      city: onhold.city,
+      state: onhold.state,
+      zip: onhold.zipCode,
+      country: onhold.country,
+    },
   };
-
-  if (onhold.kycEmail) {
-    from.id = onhold.kycEmail;
-    from.name = onhold.fullName ?? "Anonymous Person";
-    from.uk_gift_aid = onhold.ukGiftAid ?? false;
-
-    if ("country" in onhold) {
-      from.address = {
-        street: onhold.streetAddress,
-        city: onhold.city,
-        state: onhold.state,
-        zip: onhold.zipCode,
-        country: onhold.country,
-      };
-    }
-  }
 
   const x: FinalRecorderPayload = {
     id: onhold.transactionId,
