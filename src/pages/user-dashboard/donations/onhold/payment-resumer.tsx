@@ -26,7 +26,7 @@ export function PaymentResumer({ payment_id, classes, amount }: Props) {
     <button
       disabled={intent_state === "pending"}
       type="button"
-      className={`${classes} btn btn-blue px-3 py-1 text-xs`}
+      className={`${classes} text-xs uppercase text-blue`}
       onClick={async () => {
         try {
           set_intent_state("pending");
