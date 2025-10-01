@@ -1,7 +1,9 @@
 import type { IFundUpdate } from "@better-giving/fundraiser";
+import { Field as HuiField } from "@headlessui/react";
 import { Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { ImgEditor } from "components/img-editor";
+import { Increments } from "components/increments";
 import { RichText } from "components/rich-text";
 import { use_action_result } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";
@@ -11,7 +13,7 @@ import { img_spec } from "../common";
 import { Videos } from "../common/videos";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
 import { Slug } from "./slug";
-import { useRhf } from "./use-rhf";
+import { use_rhf } from "./use-rhf";
 
 interface Props {
   classes?: string;
@@ -27,7 +29,7 @@ export function Form({
 }: IFund & Props) {
   const fetcher = useFetcher();
   use_action_result(fetcher.data);
-  const { dirtyFields: df, ...rhf } = useRhf(props);
+  const { dirtyFields: df, ...rhf } = use_rhf(props);
 
   const is_submitting = fetcher.state !== "idle";
   const isUploading =
@@ -147,10 +149,10 @@ export function Form({
       </label>
       <GoalSelector
         classes="mt-2 mb-2"
-        value={rhf.targetType.value}
-        onChange={rhf.targetType.onChange}
+        value={rhf.target_type.value}
+        onChange={rhf.target_type.onChange}
       />
-      {rhf.targetType.value === "fixed" && (
+      {rhf.target_type.value === "fixed" && (
         <Field
           {...rhf.register("target.value", { shouldUnregister: true })}
           label="How much money do you want to raise?"
@@ -159,6 +161,53 @@ export function Form({
           error={rhf.errors?.target?.value?.message}
         />
       )}
+
+      <Increments
+        classes="mt-8 mb-10"
+        fields={increments.fields}
+        onAdd={(val) => {
+          if (increments.fields.length >= 4) {
+            return alert("You can only have 4 increments");
+          }
+          increments.append({ value: val, label: "" });
+        }}
+        onRemove={(idx) => increments.remove(idx)}
+        countError={errors.increments?.root?.message}
+        field={(idx) => (
+          <>
+            <HuiField className="grid grid-rows-subgrid row-span-2">
+              <div className="relative w-full">
+                <DollarSign
+                  size={15}
+                  className="text-gray absolute top-1/2 left-2 transform -translate-y-1/2"
+                />
+                <Input
+                  type="number"
+                  {...register(`increments.${idx}.value`)}
+                  className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                />
+              </div>
+
+              <p className="mt-1 empty:hidden text-left text-xs text-red">
+                {errors.increments?.[idx]?.value?.message}
+              </p>
+            </HuiField>
+            <HuiField className="grid grid-rows-subgrid row-span-2">
+              <Textarea
+                {...register(`increments.${idx}.label`)}
+                rows={2}
+                className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+              />
+              <p
+                data-error={!!errors.increments?.[idx]?.label?.message}
+                className="mt-1 text-left text-xs data-[error='true']:text-red"
+              >
+                {incs[idx].label.length}/{increment_label_max_chars}
+              </p>
+            </HuiField>
+          </>
+        )}
+      />
 
       <div className="flex items-center justify-end gap-4 mt-4 mb-8">
         <button

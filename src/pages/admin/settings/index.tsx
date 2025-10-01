@@ -1,14 +1,16 @@
 import type { INpoUpdate } from "@better-giving/endowment";
-import {
-  MAX_RECEIPT_MSG_CHAR,
-  increment_label_max_chars,
-} from "@better-giving/endowment/schema";
+import { MAX_RECEIPT_MSG_CHAR } from "@better-giving/endowment/schema";
+import { increment_label_max_chars } from "@better-giving/schemas";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods, fill } from "components/donate-methods";
 import { CheckField, Form as F, Field } from "components/form";
-import { GoalSelector } from "components/goal-selector";
+import {
+  GoalSelector,
+  to_form_target,
+  to_target,
+} from "components/goal-selector";
 import { Increments } from "components/increments";
 import { BG_ID } from "constants/common";
 import { use_action_result } from "hooks/use-action-result";
@@ -19,7 +21,6 @@ import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { toast } from "sonner";
 import type { ActionData } from "types/action";
 import type { Route } from "./+types";
-import { toFormTarget, to_target } from "./helpers";
 import { type FV, schema } from "./types";
 
 export { loader, action } from "./api";
@@ -47,18 +48,13 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
       donateMethods: fill(endow.donateMethods),
       increments: endow.increments ?? [],
       fundOptIn: endow.fund_opt_in ?? true,
-      target: toFormTarget(endow.target),
+      target: to_form_target(endow.target),
     },
   });
 
   const { field: donateMethods } = useController({
     control,
     name: "donateMethods",
-  });
-
-  const increments = useFieldArray({
-    control,
-    name: "increments",
   });
 
   const { field: target } = useController({

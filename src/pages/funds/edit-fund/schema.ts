@@ -1,4 +1,5 @@
 import { slug } from "@better-giving/endowment/schema";
+import { MAX_NUM_INCREMENTS, increment } from "@better-giving/schemas";
 import { target } from "components/goal-selector";
 import { img_output } from "components/img-editor";
 import { richTextContent } from "types/components";
@@ -19,6 +20,13 @@ export const schema = v.object({
   videos: v.array(video),
   banner: img_output({ required: true }),
   logo: img_output({ required: true }),
+  increments: v.pipe(
+    v.array(increment),
+    v.maxLength(
+      MAX_NUM_INCREMENTS,
+      ({ requirement }) => `cannot have more than ${requirement} increments`
+    )
+  ),
 });
 
 export type FV = v.InferOutput<typeof schema>;
