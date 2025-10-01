@@ -1,6 +1,6 @@
+import type { IIncrement } from "@better-giving/schemas";
 import { DONATION_INCREMENTS } from "constants/common";
 import { centsDecimals, humanize } from "helpers/decimal";
-import type { Increment } from "types/widget";
 
 export type OnIncrement = (increment: number) => void;
 
@@ -9,7 +9,7 @@ interface Props {
   precision?: number;
   code: string;
   on_increment: OnIncrement;
-  increments?: Increment[];
+  increments?: IIncrement[];
   classes?: string;
 }
 
@@ -21,7 +21,7 @@ export function Incrementers({
   return (
     <div className={` grid grid-cols-2 gap-2 ${classes}`}>
       {increments
-        .toSorted((a, b) => a.value - b.value)
+        .toSorted((a, b) => +a.value - +b.value)
         .map((inc) => (
           <Incrementer key={inc.value} inc={inc} {...props} />
         ))}
@@ -30,7 +30,7 @@ export function Incrementers({
 }
 
 interface IIncrementer extends Props {
-  inc: Increment;
+  inc: IIncrement;
 }
 
 function Incrementer({
@@ -40,7 +40,7 @@ function Incrementer({
   on_increment,
   precision = 2,
 }: IIncrementer) {
-  const value = rate * inc.value;
+  const value = rate * +inc.value;
   return (
     <button
       data-testid="incrementer"

@@ -1,11 +1,8 @@
 import type { DonateMethodId } from "@better-giving/endowment";
+import type { IIncrement } from "@better-giving/schemas";
 import { DONATION_INCREMENTS } from "constants/common";
 import { search } from "helpers/https";
-import {
-  type Increment,
-  type WidgetConfig,
-  widgetUrlSearchParams,
-} from "types/widget";
+import { type WidgetConfig, widgetUrlSearchParams } from "types/widget";
 import { safeParse } from "valibot";
 
 export type Parsed = Omit<
@@ -13,7 +10,7 @@ export type Parsed = Omit<
   "endowment" | "methods" | "program" | "increments"
 > & {
   methodIds?: DonateMethodId[];
-  increments: Increment[];
+  increments: IIncrement[];
   programId?: string;
 };
 
@@ -39,7 +36,7 @@ export default function parseConfig(
     accentPrimary: config.accentPrimary,
     accentSecondary: config.accentSecondary,
     increments: (
-      config.increments?.map(Number) || DONATION_INCREMENTS.map((i) => i.value)
+      config.increments || DONATION_INCREMENTS.map((i) => i.value)
     ).map((x, i) => ({
       value: x,
       label: descriptions[i],

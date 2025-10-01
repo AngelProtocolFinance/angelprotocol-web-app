@@ -68,10 +68,7 @@ function Page({ loaderData }: Route.ComponentProps) {
             }}
             config={{
               method_ids: endow.donateMethods,
-              increments: endow.increments?.map((i) => ({
-                ...i,
-                value: +i.value,
-              })),
+              increments: endow.increments,
             }}
             className="md:border border-gray-l3 rounded-lg row-start-2"
           />

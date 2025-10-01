@@ -20,7 +20,7 @@ export function Preview({ classes = "", config, endow }: Props) {
     );
   }
 
-  const { methods, increments, ...restConfig } = config;
+  const { methods, increments, ...cfg } = config;
 
   const initState: DonationState = {
     step: "donate-form",
@@ -35,12 +35,12 @@ export function Preview({ classes = "", config, endow }: Props) {
         members: [],
       },
       config: {
-        ...restConfig,
+        ...cfg,
         method_ids: methods.filter((m) => !m.disabled).map((m) => m.id),
-        increments: increments.map((i) => ({ ...i, value: +i.value })),
+        increments: increments,
       },
     },
-    details: init_details(methods.at(0)?.id ?? "stripe", restConfig.program),
+    details: init_details(methods.at(0)?.id ?? "stripe", cfg.program),
   };
 
   return (

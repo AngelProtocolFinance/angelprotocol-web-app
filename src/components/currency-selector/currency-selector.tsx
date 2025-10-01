@@ -11,7 +11,7 @@ import { useState } from "react";
 import {
   type CurrencyOption,
   type QueryState,
-  isQuery,
+  is_query,
 } from "types/components";
 import { DrawerIcon } from "../icon";
 import { CurrencyOptions } from "./currency-options";
@@ -40,8 +40,8 @@ export function CurrencySelector<T extends CurrencyOption>({
 }: Props<T>) {
   const [query, setQuery] = useState("");
 
-  const isCurrencyLoading = isQuery(currencies) && currencies.isLoading;
-  const isCurrencyError = isQuery(currencies) && currencies.isError;
+  const isCurrencyLoading = is_query(currencies) && currencies.isLoading;
+  const isCurrencyError = is_query(currencies) && currencies.isError;
 
   const style = unpack(props.classes);
 

@@ -33,6 +33,7 @@ export function use_rhf(init: IFund) {
   });
 
   const slug = watch("slug");
+  const incs = watch("increments");
 
   const { field: target_type } = useController({
     control,
@@ -43,7 +44,7 @@ export function use_rhf(init: IFund) {
     control,
     name: "description",
   });
-  const { field: increments } = useController({
+  const increments = useFieldArray({
     control,
     name: "increments",
   });
@@ -71,6 +72,7 @@ export function use_rhf(init: IFund) {
     desc,
     videos,
     increments,
+    incs,
     is_uploading: logo.value === "loading" || banner.value === "loading",
   };
 }

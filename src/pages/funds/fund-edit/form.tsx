@@ -1,11 +1,13 @@
 import type { IFundUpdate } from "@better-giving/fundraiser";
-import { Field as HuiField } from "@headlessui/react";
+import { increment_label_max_chars } from "@better-giving/schemas";
+import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { ImgEditor } from "components/img-editor";
 import { Increments } from "components/increments";
 import { RichText } from "components/rich-text";
 import { use_action_result } from "hooks/use-action-result";
+import { DollarSign } from "lucide-react";
 import type { SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { IFund } from "types/fund";
@@ -32,7 +34,7 @@ export function Form({
   const { dirtyFields: df, ...rhf } = use_rhf(props);
 
   const is_submitting = fetcher.state !== "idle";
-  const isUploading =
+  const is_uploading =
     rhf.banner.value === "loading" || rhf.logo.value === "loading";
   const is_closing_fund = is_submitting && !!(fetcher.json as any).close;
 
@@ -56,6 +58,7 @@ export function Form({
     if (df.description) update.description = fv.description.value;
     if (df.slug) update.slug = fv.slug;
     if (df.videos) update.videos = fv.videos.map((v) => v.url);
+    if (df.increments) update.increments = fv.increments;
 
     fetcher.submit(update, {
       method: "PATCH",
@@ -164,15 +167,15 @@ export function Form({
 
       <Increments
         classes="mt-8 mb-10"
-        fields={increments.fields}
+        fields={rhf.increments.fields}
         onAdd={(val) => {
-          if (increments.fields.length >= 4) {
+          if (rhf.increments.fields.length >= 4) {
             return alert("You can only have 4 increments");
           }
-          increments.append({ value: val, label: "" });
+          rhf.increments.append({ value: val, label: "" });
         }}
-        onRemove={(idx) => increments.remove(idx)}
-        countError={errors.increments?.root?.message}
+        onRemove={(idx) => rhf.increments.remove(idx)}
+        countError={rhf.errors.increments?.root?.message}
         field={(idx) => (
           <>
             <HuiField className="grid grid-rows-subgrid row-span-2">
@@ -183,26 +186,26 @@ export function Form({
                 />
                 <Input
                   type="number"
-                  {...register(`increments.${idx}.value`)}
+                  {...rhf.register(`increments.${idx}.value`)}
                   className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                 />
               </div>
 
               <p className="mt-1 empty:hidden text-left text-xs text-red">
-                {errors.increments?.[idx]?.value?.message}
+                {rhf.errors.increments?.[idx]?.value?.message}
               </p>
             </HuiField>
             <HuiField className="grid grid-rows-subgrid row-span-2">
               <Textarea
-                {...register(`increments.${idx}.label`)}
+                {...rhf.register(`increments.${idx}.label`)}
                 rows={2}
                 className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
               />
               <p
-                data-error={!!errors.increments?.[idx]?.label?.message}
+                data-error={!!rhf.errors.increments?.[idx]?.label?.message}
                 className="mt-1 text-left text-xs data-[error='true']:text-red"
               >
-                {incs[idx].label.length}/{increment_label_max_chars}
+                {rhf.incs[idx].label.length}/{increment_label_max_chars}
               </p>
             </HuiField>
           </>
@@ -232,7 +235,7 @@ export function Form({
         </button>
         <button
           disabled={
-            !rhf.isDirty || rhf.isUploading || is_submitting || isUploading
+            !rhf.isDirty || rhf.is_uploading || is_submitting || is_uploading
           }
           type="submit"
           className="btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"

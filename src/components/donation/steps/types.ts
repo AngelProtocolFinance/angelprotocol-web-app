@@ -1,5 +1,5 @@
 import type { DonateMethodId } from "@better-giving/endowment";
-import { $int_gte1 } from "@better-giving/schemas";
+import { $int_gte1, type IIncrement } from "@better-giving/schemas";
 import type { OptionType, TokenWithDetails } from "types/components";
 import { db_currency } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
@@ -11,7 +11,6 @@ export {
   donor,
 } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
-import type { Increment } from "types/widget";
 import * as v from "valibot";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
@@ -141,7 +140,7 @@ export type Config = {
   accent_primary?: string;
   /** hex color without alpha */
   accent_secondary?: string;
-  increments?: Increment[];
+  increments?: IIncrement[];
 };
 
 export type Init = {

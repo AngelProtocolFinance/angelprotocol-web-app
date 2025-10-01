@@ -69,7 +69,10 @@ function Page({ loaderData: { fund } }: Route.ComponentProps) {
                 members: fund.members.map((x) => x.id.toString()),
                 progDonationsAllowed: false,
               }}
-              config={{ method_ids: fund.settings.donateMethods }}
+              config={{
+                method_ids: fund.settings.donateMethods,
+                increments: fund.increments,
+              }}
               className="md:border border-gray-l3 rounded-lg row-start-2"
             />
           )}

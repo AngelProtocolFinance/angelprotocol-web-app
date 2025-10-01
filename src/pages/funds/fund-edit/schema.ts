@@ -2,7 +2,7 @@ import { slug } from "@better-giving/endowment/schema";
 import { MAX_NUM_INCREMENTS, increment } from "@better-giving/schemas";
 import { target } from "components/goal-selector";
 import { img_output } from "components/img-editor";
-import { richTextContent } from "types/components";
+import { richtext_content } from "types/components";
 import * as v from "valibot";
 import { video } from "../common/videos";
 
@@ -11,7 +11,7 @@ const str = v.pipe(v.string(), v.trim());
 export const MAX_DESCRIPTION_CHARS = 3000;
 export const schema = v.object({
   name: v.pipe(str, v.nonEmpty("required")),
-  description: richTextContent({
+  description: richtext_content({
     maxChars: MAX_DESCRIPTION_CHARS,
     required: true,
   }),

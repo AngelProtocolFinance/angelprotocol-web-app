@@ -1,6 +1,6 @@
 import { $req } from "@better-giving/schemas";
 import { img_output } from "components/img-editor";
-import { richTextContent } from "types/components";
+import { richtext_content } from "types/components";
 import * as v from "valibot";
 import { MAX_CHARS } from "../common";
 
@@ -11,7 +11,7 @@ export const schema = v.object({
     v.date("invalid date"),
     v.transform((x) => x.toISOString())
   ),
-  description: richTextContent({ maxChars: MAX_CHARS, required: true }),
+  description: richtext_content({ maxChars: MAX_CHARS, required: true }),
   title: $req,
   media: img_output(),
 });

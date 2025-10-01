@@ -1,7 +1,7 @@
 import { $, MAX_RECEIPT_MSG_CHAR } from "@better-giving/endowment/schema";
 import { MAX_NUM_INCREMENTS, increment } from "@better-giving/schemas";
 import { target } from "components/goal-selector";
-import { donateMethod } from "types/components";
+import { donate_method } from "types/components";
 import * as v from "valibot";
 
 export const schema = v.object({
@@ -23,7 +23,7 @@ export const schema = v.object({
     )
   ),
   donateMethods: v.pipe(
-    v.array(donateMethod),
+    v.array(donate_method),
     v.filterItems((m) => !m.disabled),
     v.minLength(1, "at least one payment option should be active")
   ),

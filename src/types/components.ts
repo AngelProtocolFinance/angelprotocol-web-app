@@ -42,7 +42,7 @@ interface RichTextContentOptions {
   maxChars?: number;
   required?: boolean;
 }
-export const richTextContent = ({
+export const richtext_content = ({
   maxChars = Number.MAX_SAFE_INTEGER,
   required = false,
 }: RichTextContentOptions) => {
@@ -69,12 +69,14 @@ export interface QueryState<T> {
 }
 
 /** query loader */
-export function isQuery<T>(val: T | QueryState<T>): val is QueryState<T> {
+export function is_query<T>(val: T | QueryState<T>): val is QueryState<T> {
   return "isLoading" in (val as any) && "isFetching" in (val as any);
 }
-export type RichTextContent = v.InferOutput<ReturnType<typeof richTextContent>>;
+export type RichTextContent = v.InferOutput<
+  ReturnType<typeof richtext_content>
+>;
 
-export const donateMethod = v.object({
+export const donate_method = v.object({
   id: donate_method_id,
   name: v.string(),
   disabled: v.boolean(),
@@ -82,7 +84,7 @@ export const donateMethod = v.object({
   tooltip: v.optional(v.string()),
 });
 
-export type TDonateMethod = v.InferOutput<typeof donateMethod>;
+export type TDonateMethod = v.InferOutput<typeof donate_method>;
 
 //re-exports
 export type { Token as TokenV2 } from "@better-giving/assets/tokens";

@@ -57,6 +57,11 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
     name: "donateMethods",
   });
 
+  const increments = useFieldArray({
+    control,
+    name: "increments",
+  });
+
   const { field: target } = useController({
     control,
     name: "target.type",
