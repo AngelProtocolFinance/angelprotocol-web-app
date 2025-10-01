@@ -6,7 +6,7 @@ import { type Settled, to_final } from "../../helpers/donation";
 import { str_id } from "../../helpers/stripe";
 import { payment_method } from "../helpers/payment-method";
 import { settled_fn } from "../helpers/settled";
-import { onholddb, subsdb } from ".server/aws/db";
+import { subsdb } from ".server/aws/db";
 import { qstash, stripe } from ".server/sdks";
 
 export async function handle_intent_succeeded(
@@ -48,8 +48,6 @@ export async function handle_intent_succeeded(
     payment_method: pm,
     status: "pending",
   });
-
-  await onholddb.put(onhold);
 
   const final = to_final(onhold, settled);
   const res = await qstash.publishJSON({
