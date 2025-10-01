@@ -28,7 +28,12 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
     searchParams: search_params,
   });
 
-  if (!res.ok) throw res;
+  if (!res.ok)
+    return {
+      items: [],
+      page: 1,
+      pages: 1,
+    };
 
   const result = await res.json<any>();
   const hits = result.hits || [];
