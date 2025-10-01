@@ -1,6 +1,4 @@
-import { HeaderButton } from "components/header-button";
 import { Cells, TableSection } from "components/table-section";
-import { use_sort } from "hooks/use-sort";
 import type { IPaginator } from "types/components";
 import type { IRow } from "./helpers";
 import { Row } from "./row";
@@ -8,11 +6,6 @@ import { Row } from "./row";
 interface Props extends IPaginator<IRow> {}
 
 export function Table({ items, load_next, loading, disabled }: Props) {
-  const { handleHeaderClick, sorted, sortDirection, sortKey } = use_sort(
-    items,
-    "date"
-  );
-
   return (
     <table className="w-full text-sm rounded-sm border border-separate border-spacing-0 border-gray-l3">
       <TableSection
@@ -23,39 +16,11 @@ export function Table({ items, load_next, loading, disabled }: Props) {
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
-          <HeaderButton
-            onClick={handleHeaderClick("date")}
-            _activeSortKey={sortKey}
-            _sortKey="date"
-            _sortDirection={sortDirection}
-          >
-            Date
-          </HeaderButton>
+          <>Date</>
           <>Program</>
-          <HeaderButton
-            onClick={handleHeaderClick("donation_origin")}
-            _activeSortKey={sortKey}
-            _sortKey="appUsed"
-            _sortDirection={sortDirection}
-          >
-            Origin
-          </HeaderButton>
-          <HeaderButton
-            onClick={handleHeaderClick("payment_method")}
-            _activeSortKey={sortKey}
-            _sortKey="paymentMethod"
-            _sortDirection={sortDirection}
-          >
-            Method
-          </HeaderButton>
-          <HeaderButton
-            onClick={handleHeaderClick("usd_value")}
-            _activeSortKey={sortKey}
-            _sortKey="finalAmountUsd"
-            _sortDirection={sortDirection}
-          >
-            Amount
-          </HeaderButton>
+          <>Origin</>
+          <>Method</>
+          <>Amount</>
           <>Allocation</>
           <>Donor</>
         </Cells>
@@ -65,7 +30,7 @@ export function Table({ items, load_next, loading, disabled }: Props) {
         rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
-        {sorted
+        {items
           .map((record) => (
             <Row
               key={record.id}
