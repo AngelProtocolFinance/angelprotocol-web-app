@@ -8,7 +8,7 @@ import {
   social_media_urls,
 } from "@better-giving/endowment/schema";
 import { type ImgSpec, img_output } from "components/img-editor";
-import { richTextContent } from "types/components";
+import { richtext_content } from "types/components";
 import type { ImageMIMEType } from "types/lists";
 import * as v from "valibot";
 
@@ -42,7 +42,7 @@ export const schema = v.object({
   registration_number: reg_number,
   name: $req,
   endow_designation: org_designation,
-  overview: richTextContent({ maxChars: MAX_CHARS, required: true }),
+  overview: richtext_content({ maxChars: MAX_CHARS, required: true }),
   tagline: v.pipe($req, v.maxLength(140, "max length is 140 chars")),
   image: img_output({ required: true }),
   logo: img_output({ required: true }),

@@ -76,7 +76,7 @@ export const optionType = ({ required } = { required: false }) =>
     value: required ? requiredString : string(),
   });
 
-export function richTextContent(
+export function richtext_content(
   options: {
     maxChars?: number;
     required?: boolean;

@@ -1,6 +1,7 @@
+import { MAX_NUM_INCREMENTS, increment } from "@better-giving/schemas";
 import { target } from "components/goal-selector";
 import { img_output } from "components/img-editor";
-import { richTextContent } from "types/components";
+import { richtext_content } from "types/components";
 import * as v from "valibot";
 import { video } from "../common/videos";
 
@@ -16,7 +17,7 @@ export const MAX_DESCRIPTION_CHAR = 3000;
 
 export const schema = v.object({
   name: v.pipe(str, v.nonEmpty("required")),
-  description: richTextContent({
+  description: richtext_content({
     maxChars: MAX_DESCRIPTION_CHAR,
     required: true,
   }),
@@ -41,6 +42,13 @@ export const schema = v.object({
   ),
   target,
   videos: v.array(video),
+  increments: v.pipe(
+    v.array(increment),
+    v.maxLength(
+      MAX_NUM_INCREMENTS,
+      ({ requirement }) => `cannot have more than ${requirement} increments`
+    )
+  ),
 });
 
 export interface FundMember extends v.InferOutput<typeof endow_opt> {}

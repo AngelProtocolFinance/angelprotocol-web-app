@@ -4,7 +4,7 @@ import { useController, useFieldArray, useForm } from "react-hook-form";
 import type { IFund } from "types/fund";
 import { type FV, schema } from "./schema";
 
-export function useRhf(init: IFund) {
+export function use_rhf(init: IFund) {
   const {
     register,
     handleSubmit,
@@ -28,12 +28,14 @@ export function useRhf(init: IFund) {
       logo: init.logo,
       banner: init.banner,
       videos: init.videos.map((v) => ({ url: v })),
+      increments: init.increments ?? [],
     },
   });
 
   const slug = watch("slug");
+  const incs = watch("increments");
 
-  const { field: targetType } = useController({
+  const { field: target_type } = useController({
     control,
     name: "target.type",
   });
@@ -41,6 +43,10 @@ export function useRhf(init: IFund) {
   const { field: desc } = useController({
     control,
     name: "description",
+  });
+  const increments = useFieldArray({
+    control,
+    name: "increments",
   });
 
   const { field: logo } = useController({ control, name: "logo" });
@@ -60,11 +66,13 @@ export function useRhf(init: IFund) {
     resetField,
     //controllers
     slug,
-    targetType,
+    target_type,
     logo,
     banner,
     desc,
     videos,
-    isUploading: logo.value === "loading" || banner.value === "loading",
+    increments,
+    incs,
+    is_uploading: logo.value === "loading" || banner.value === "loading",
   };
 }

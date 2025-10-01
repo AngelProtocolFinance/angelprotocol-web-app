@@ -18,6 +18,7 @@ interface IEvaluation {
     | "hate"
     | "other";
   explanation: string; // brief reason for decision
+  field: "name" | "description";
 }
 
 export const evaluate = async (
@@ -26,8 +27,8 @@ export const evaluate = async (
   const prompt = `Evaluate this fundraiser for spam/inappropriate content:
 
 FUNDRAISER:
-Title: "${fundraiser.title}"
-Description: "${fundraiser.description}"
+Name: "${fundraiser.title}"
+Description: "${fundraiser.description}" // ignore rich text formatting
 
 Analyze for these spam indicators:
 1. Drug sales/promotion
@@ -38,12 +39,14 @@ Analyze for these spam indicators:
 6. Hate speech
 7. Suspicious language patterns
 
+
 interface SpamEvaluation {
   is_spam: boolean;
   confidence: number; // 0-100
   risk_factors: string[]; // specific issues found
   category?: 'drugs' | 'advertisement' | 'terrorism' | 'fraud' | 'adult' | 'hate' | 'other';
   explanation: string; // brief reason for decision
+  field: 'name' | 'description' // specify which field is problematic
 }
 
 IMPORTANT: Your response must be ONLY a valid JSON object. Do not include any markdown formatting, code blocks, or backticks. Do not wrap the JSON in \`\`\`json or any other formatting. Return raw JSON only.

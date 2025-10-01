@@ -1,5 +1,5 @@
 import type { IAllocation } from "@better-giving/donation/schema";
-import type { Increment } from "types/widget";
+import type { IIncrement } from "@better-giving/schemas";
 import { EMAIL_SUPPORT, IS_TEST } from "./env";
 
 export const GENERIC_ERROR_MESSAGE = `An unexpected error occurred and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
@@ -14,11 +14,11 @@ export const PROCESSING_RATES = {
   crypto: 0.04,
 };
 
-export const DONATION_INCREMENTS: Increment[] = [
-  { value: 40, label: "" },
-  { value: 100, label: "" },
-  { value: 200, label: "" },
-  { value: 400, label: "" },
+export const DONATION_INCREMENTS: IIncrement[] = [
+  { value: "40", label: "" },
+  { value: "100", label: "" },
+  { value: "200", label: "" },
+  { value: "400", label: "" },
 ];
 export const BG_ID = IS_TEST ? 8 : 1;
 

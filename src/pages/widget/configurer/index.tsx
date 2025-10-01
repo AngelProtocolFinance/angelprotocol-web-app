@@ -1,5 +1,5 @@
 import type { INpo } from "@better-giving/endowment";
-import { increment_label_max_chars } from "@better-giving/endowment/schema";
+import { increment_label_max_chars } from "@better-giving/schemas";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/donate-methods";
@@ -15,7 +15,7 @@ import {
   useForm,
 } from "react-hook-form";
 import type { EndowmentOption } from "types/npo";
-import { type WidgetConfig, widgetConfig } from "types/widget";
+import { type WidgetConfig, widget_config } from "types/widget";
 import { EndowmentSelector } from "./endowment-selector";
 import type { FormValues } from "./types";
 
@@ -43,7 +43,7 @@ export function Configurer({
     register,
     control,
   } = useForm<FormValues>({
-    resolver: valibotResolver(widgetConfig),
+    resolver: valibotResolver(widget_config),
     //set new config as default, so user would need to make a change to be able to update again
     values: config,
   });

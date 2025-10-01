@@ -1,9 +1,13 @@
 import type { IFundUpdate } from "@better-giving/fundraiser";
+import { increment_label_max_chars } from "@better-giving/schemas";
+import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { Field, Form as Frm } from "components/form";
-import { GoalSelector } from "components/goal-selector";
+import { GoalSelector, to_target } from "components/goal-selector";
 import { ImgEditor } from "components/img-editor";
+import { Increments } from "components/increments";
 import { RichText } from "components/rich-text";
 import { use_action_result } from "hooks/use-action-result";
+import { DollarSign } from "lucide-react";
 import type { SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { IFund } from "types/fund";
@@ -11,7 +15,7 @@ import { img_spec } from "../common";
 import { Videos } from "../common/videos";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
 import { Slug } from "./slug";
-import { useRhf } from "./use-rhf";
+import { use_rhf } from "./use-rhf";
 
 interface Props {
   classes?: string;
@@ -27,10 +31,10 @@ export function Form({
 }: IFund & Props) {
   const fetcher = useFetcher();
   use_action_result(fetcher.data);
-  const { dirtyFields: df, ...rhf } = useRhf(props);
+  const { dirtyFields: df, ...rhf } = use_rhf(props);
 
   const is_submitting = fetcher.state !== "idle";
-  const isUploading =
+  const is_uploading =
     rhf.banner.value === "loading" || rhf.logo.value === "loading";
   const is_closing_fund = is_submitting && !!(fetcher.json as any).close;
 
@@ -41,19 +45,13 @@ export function Form({
     if (df.banner) update.banner = fv.banner;
     if (df.logo) update.logo = fv.logo;
 
-    if (df.target) {
-      update.target =
-        target.type === "none"
-          ? "0"
-          : target.type === "smart"
-            ? "smart"
-            : target.value;
-    }
+    if (df.target) update.target = to_target(target);
 
     if (df.name) update.name = fv.name;
     if (df.description) update.description = fv.description.value;
     if (df.slug) update.slug = fv.slug;
     if (df.videos) update.videos = fv.videos.map((v) => v.url);
+    if (df.increments) update.increments = fv.increments;
 
     fetcher.submit(update, {
       method: "PATCH",
@@ -147,10 +145,10 @@ export function Form({
       </label>
       <GoalSelector
         classes="mt-2 mb-2"
-        value={rhf.targetType.value}
-        onChange={rhf.targetType.onChange}
+        value={rhf.target_type.value}
+        onChange={rhf.target_type.onChange}
       />
-      {rhf.targetType.value === "fixed" && (
+      {rhf.target_type.value === "fixed" && (
         <Field
           {...rhf.register("target.value", { shouldUnregister: true })}
           label="How much money do you want to raise?"
@@ -159,6 +157,53 @@ export function Form({
           error={rhf.errors?.target?.value?.message}
         />
       )}
+
+      <Increments
+        classes="mt-8 mb-10"
+        fields={rhf.increments.fields}
+        onAdd={(val) => {
+          if (rhf.increments.fields.length >= 4) {
+            return alert("You can only have 4 increments");
+          }
+          rhf.increments.append({ value: val, label: "" });
+        }}
+        onRemove={(idx) => rhf.increments.remove(idx)}
+        countError={rhf.errors.increments?.root?.message}
+        field={(idx) => (
+          <>
+            <HuiField className="grid grid-rows-subgrid row-span-2">
+              <div className="relative w-full">
+                <DollarSign
+                  size={15}
+                  className="text-gray absolute top-1/2 left-2 transform -translate-y-1/2"
+                />
+                <Input
+                  type="number"
+                  {...rhf.register(`increments.${idx}.value`)}
+                  className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                />
+              </div>
+
+              <p className="mt-1 empty:hidden text-left text-xs text-red">
+                {rhf.errors.increments?.[idx]?.value?.message}
+              </p>
+            </HuiField>
+            <HuiField className="grid grid-rows-subgrid row-span-2">
+              <Textarea
+                {...rhf.register(`increments.${idx}.label`)}
+                rows={2}
+                className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+              />
+              <p
+                data-error={!!rhf.errors.increments?.[idx]?.label?.message}
+                className="mt-1 text-left text-xs data-[error='true']:text-red"
+              >
+                {rhf.incs[idx].label.length}/{increment_label_max_chars}
+              </p>
+            </HuiField>
+          </>
+        )}
+      />
 
       <div className="flex items-center justify-end gap-4 mt-4 mb-8">
         <button
@@ -183,7 +228,7 @@ export function Form({
         </button>
         <button
           disabled={
-            !rhf.isDirty || rhf.isUploading || is_submitting || isUploading
+            !rhf.isDirty || rhf.is_uploading || is_submitting || is_uploading
           }
           type="submit"
           className="btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"

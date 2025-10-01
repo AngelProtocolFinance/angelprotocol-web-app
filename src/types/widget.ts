@@ -1,15 +1,13 @@
+import { donate_method_id } from "@better-giving/endowment/schema";
 import {
-  donate_method_id,
   increment,
   increment_label,
   increment_val,
-} from "@better-giving/endowment/schema";
+} from "@better-giving/schemas";
 import * as v from "valibot";
-import { donateMethod } from "./components";
+import { donate_method } from "./components";
 
 const str = v.pipe(v.string(), v.trim());
-
-export type Increment = { value: number; label: string };
 
 const increments = v.array(increment);
 
@@ -19,7 +17,7 @@ const description = v.pipe(
   v.maxLength(300, "cannot exceed 300 characters")
 );
 
-export const widgetConfig = v.object({
+export const widget_config = v.object({
   title: v.optional(title),
   isTitleShown: v.boolean(),
   description: v.optional(description),
@@ -30,7 +28,7 @@ export const widgetConfig = v.object({
   }),
   isDescriptionTextShown: v.boolean(),
   methods: v.pipe(
-    v.array(donateMethod),
+    v.array(donate_method),
     v.filterItems((m) => !m.disabled),
     v.minLength(1, "at least one payment option should be active")
   ),
@@ -39,7 +37,7 @@ export const widgetConfig = v.object({
   increments,
 });
 
-export interface WidgetConfig extends v.InferInput<typeof widgetConfig> {}
+export interface WidgetConfig extends v.InferInput<typeof widget_config> {}
 
 const toBool = v.pipe(
   v.picklist(["true", "false"] as const),
