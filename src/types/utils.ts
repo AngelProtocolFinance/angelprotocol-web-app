@@ -12,5 +12,3 @@ export type SemiPartial<T, K extends keyof T> = { [key in K]: T[key] } & {
 };
 
 export type Ensure<T, K extends keyof T> = T & Required<{ [key in K]: T[key] }>;
-
-export type AllKeys<T> = { [K in keyof T]: NonNullable<T[K]> | undefined };

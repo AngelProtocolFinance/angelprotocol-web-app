@@ -62,6 +62,12 @@ export const action: ActionFunction = async ({ request }) => {
       isRecurring: tx.is_recurring,
       denomination: tx.amount.currency,
 
+      //to
+      ...(tx.program && {
+        programId: tx.program.id,
+        programName: tx.program.name,
+      }),
+
       //via
       appUsed: tx.app_used,
       chainId: tx.via.id,
@@ -70,6 +76,7 @@ export const action: ActionFunction = async ({ request }) => {
       paymentMethod: tx.via.method,
 
       // from
+      fullName: tx.from.name,
       email: tx.from.id,
       title: tx.from.title,
       streetAddress: tx.from.address?.street,
@@ -78,6 +85,8 @@ export const action: ActionFunction = async ({ request }) => {
       country: tx.from.address?.country,
       zipCode: tx.from.address?.zip,
       company_name: tx.from.company_name,
+      donor_message: tx.from.message,
+      donor_public: tx.from.is_public,
 
       // settlement
       destinationChainId: tx.settled_in.id,
@@ -97,10 +106,6 @@ export const action: ActionFunction = async ({ request }) => {
         };
         base.tributeNotif = notif;
       }
-    }
-    if (tx.program) {
-      base.programId = tx.program.id;
-      base.programName = tx.program.name;
     }
 
     const txs = new Txs();
