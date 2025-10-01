@@ -41,10 +41,10 @@ export const discordEnvs = {
   fiatMonitorUrl: _var("DISCORD_FIAT_MONITOR_WEBHOOK_URL"),
 };
 
-export const stripeEnvs = {
-  secretKey: _var("STRIPE_SECRET_KEY"),
-  subsProductId: _var("STRIPE_SUBS_PRODUCT_ID"),
-  webhookSecret: _var("STRIPE_WEBHOOK_SECRET"),
+export const stripe_envs = {
+  secret_key: _var("STRIPE_SECRET_KEY"),
+  subs_product_id: _var("STRIPE_SUBS_PRODUCT_ID"),
+  webhook_secret: _var("STRIPE_WEBHOOK_SECRET"),
 };
 
 export const wise_envs = {
@@ -91,6 +91,7 @@ export const gemini_api_key = _var("GEMINI_API_KEY");
 export const mongodb_url = _var("MONGODB_URL");
 
 export const coingecko_api_key = _var("COINGECKO_API_KEY");
+export const q_url_email = _var("Q_URL_EMAIL");
 
 const deposit_addr_evm = _var("DEPOSIT_ADDR_EVM");
 const deposit_addr_hbar = _var("DEPOSIT_ADDR_HBAR");
@@ -109,3 +110,5 @@ export const deposit_addrs_envs = (chain: string) => {
       return "chain not supported";
   }
 };
+
+export const bg_npo_id = Number.parseInt(_var("BG_NPO_ID"));

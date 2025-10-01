@@ -1,11 +1,11 @@
-import type { StripeDonation } from "@better-giving/donation";
+import type { TPaymentMethods } from "@better-giving/stripe";
 import { stripe } from ".server/sdks";
 
 export async function payment_method(id: string): Promise<string> {
   const pms = await stripe.paymentMethods.retrieve(id);
 
   let payment;
-  switch (pms.type as StripeDonation.PaymentMethods) {
+  switch (pms.type as TPaymentMethods) {
     case "amazon_pay":
       payment = "Amazon Pay";
       break;

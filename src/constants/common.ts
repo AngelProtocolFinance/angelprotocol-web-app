@@ -1,4 +1,4 @@
-import type { Allocation } from "@better-giving/donation/schema";
+import type { IAllocation } from "@better-giving/donation/schema";
 import type { Increment } from "types/widget";
 import { EMAIL_SUPPORT, IS_TEST } from "./env";
 
@@ -22,7 +22,7 @@ export const DONATION_INCREMENTS: Increment[] = [
 ];
 export const BG_ID = IS_TEST ? 8 : 1;
 
-export const default_allocation: Allocation = {
+export const default_allocation: IAllocation = {
   liq: 100,
   cash: 0,
   lock: 0,

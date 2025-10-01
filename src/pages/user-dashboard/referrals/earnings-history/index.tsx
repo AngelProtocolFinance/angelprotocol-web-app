@@ -19,7 +19,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
     classes: "mt-2",
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(params);
-      if (next) p.set("nextKey", next);
+      if (next) p.set("next", next);
       load(`?${p.toString()}`);
     },
   });

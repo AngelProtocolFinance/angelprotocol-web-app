@@ -5,7 +5,7 @@ import { db_currency } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
 export {
   type Tribute,
-  type Frequency,
+  type TFrequency,
   type Donor,
   tribute,
   donor,

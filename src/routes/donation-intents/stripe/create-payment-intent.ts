@@ -1,22 +1,18 @@
-import type { OnHoldDonation, StripeDonation } from "@better-giving/donation";
+import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import { round_number } from "helpers/round-number";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe } from ".server/sdks";
 import { payment_methods } from ".server/stripe/payment-methods";
 
 export async function create_payment_intent(
-  order: OnHoldDonation.FiatDBRecord,
+  order: IDonationOnHoldAttr,
   customer_id: string
 ): Promise<string> {
-  // Create a Payment Intent
   const { client_secret } = await stripe.paymentIntents.create({
     amount: to_atomic(order.amount, order.denomination),
     currency: order.denomination,
     customer: customer_id,
-    metadata: {
-      isRecurring: "false",
-      ...to_metadata(order),
-    } satisfies StripeDonation.Metadata,
+    metadata: to_metadata(order) as any,
     payment_method_options: {
       acss_debit: {
         mandate_options: {

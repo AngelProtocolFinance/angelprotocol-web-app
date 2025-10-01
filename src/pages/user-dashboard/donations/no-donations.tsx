@@ -1,10 +1,10 @@
+import type { TOnHoldStatus } from "@better-giving/donation";
 import { laira } from "assets/laira/laira";
 import { Image } from "components/image";
-import type { DonationsQueryParams } from "types/donations";
 
 type Props = {
   classes: string;
-  status: DonationsQueryParams["status"];
+  status: TOnHoldStatus;
 };
 
 export function NoDonations({ classes, status }: Props) {

@@ -1,9 +1,7 @@
-import type { Donation, StripeDonation } from "@better-giving/donation";
-import type { Subscription } from "@better-giving/donation/subscription";
-import { tables } from "@better-giving/types/list";
+import type { IMetadataSubs } from "@better-giving/stripe";
 import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
-import { PutCommand, apes } from ".server/aws/db";
+import { subsdb } from ".server/aws/db";
 import { create_subscription } from ".server/stripe/create-subscription";
 
 /**
@@ -14,19 +12,18 @@ import { create_subscription } from ".server/stripe/create-subscription";
 export async function handle_setup_intent_succeeded({
   object: intent,
 }: Stripe.SetupIntentSucceededEvent.Data) {
-  const metadata = intent.metadata as StripeDonation.SetupIntentMetadata;
+  const metadata = intent.metadata as IMetadataSubs;
 
   /** CREATE SUBSCRIPTION */
-  const subs = await create_subscription(
+  const subs_id = await create_subscription(
     str_id(intent.customer),
     str_id(intent.payment_method),
     metadata
   );
 
-  /** SUBS DB RECORD CREATION */
-  const subsFields: Subscription.DBRecord = {
-    subscription_id: subs,
-    app_used: metadata.appUsed as Donation.App,
+  await subsdb.put({
+    subscription_id: subs_id,
+    app_used: metadata.appUsed as any,
     charity_name: metadata.charityName,
     customer_id: str_id(intent.customer),
     email: metadata.email,
@@ -40,12 +37,5 @@ export async function handle_setup_intent_succeeded({
     quantity: +metadata.subsQuantity || 1,
     split_liq: metadata.splitLiq || "50",
     status: "incomplete",
-  };
-
-  const cmd = new PutCommand({
-    TableName: tables.subscriptions,
-    Item: subsFields,
   });
-
-  await apes.send(cmd);
 }

@@ -1,4 +1,3 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Combo } from "components/combo";
 import { ExtLink } from "components/ext-link";
 import { Field } from "components/form";
@@ -6,64 +5,61 @@ import { DrawerIcon } from "components/icon";
 import { Select } from "components/selector/select";
 import { countries, country_names } from "constants/countries";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { useController, useForm } from "react-hook-form";
+import { useController } from "react-hook-form";
 import { useFetcher, useParams } from "react-router";
-import type { ReceiptPayload } from "types/donate";
-import { type FV, schema } from "../schema";
+import { useRemixForm } from "remix-hook-form";
+import type { UserV2 } from "types/auth";
+import type { FV } from "../schema";
 import { Tooltip } from "./tooltip";
 import { states } from "./us-states";
 
-export const formStyle = "w-full text-gray-d4 dark:text-white p-3";
+export const form_style = "w-full text-gray-d4 dark:text-white p-3";
 
-interface IForm extends FV {
+interface IForm {
   classes?: string;
+  user: UserV2;
 }
-export function Form({ classes = "", ...init }: IForm) {
+export function Form({ classes = "", user }: IForm) {
   const params = useParams();
   const fetcher = useFetcher();
+
+  const init: FV = {
+    name: { first: user.firstName, last: user.lastName },
+    address: { street: "", complement: "" },
+    city: "",
+    postal_code: "",
+    country: "",
+    email: user.email,
+    state: "",
+    us_state: "",
+  };
   const {
     handleSubmit,
     resetField,
     register,
     formState: { errors },
     control,
-  } = useForm<FV>({
-    mode: "onSubmit",
-    reValidateMode: "onChange",
+  } = useRemixForm<FV>({
     defaultValues: init,
-    resolver: valibotResolver(schema),
+    fetcher,
   });
 
   const { field: country } = useController<FV, "country">({
     control,
     name: "country",
   });
-  const { field: usState } = useController<FV, "usState">({
+  const { field: us_state } = useController<FV, "state">({
     control,
-    name: "usState",
+    name: "state",
   });
 
   const isUS = /united states/i.test(country.value);
 
   return (
-    <form
-      onSubmit={handleSubmit((fv) => {
-        const payload: ReceiptPayload = {
-          fullName: `${fv.name.first} ${fv.name.last}`,
-          kycEmail: fv.kycEmail,
-          streetAddress: `${fv.address.street} ${fv.address.complement}`,
-          city: fv.city,
-          state: fv.usState || fv.state,
-          zipCode: fv.postalCode,
-          country: fv.country,
-        };
-        fetcher.submit(payload, {
-          encType: "application/json",
-          method: "put",
-          action: ".",
-        });
-      })}
-      className={`${classes} ${formStyle} grid gap-5 p-4`}
+    <fetcher.Form
+      method="PUT"
+      onSubmit={handleSubmit}
+      className={`${classes} ${form_style} grid gap-5 p-4`}
       autoComplete="off"
       autoSave="off"
     >
@@ -103,11 +99,11 @@ export function Form({ classes = "", ...init }: IForm) {
         error={errors.city?.message}
       />
       <Field
-        {...register("postalCode")}
+        {...register("postal_code")}
         label="Zip code"
         placeholder="e.g. 1080"
         required
-        error={errors.postalCode?.message}
+        error={errors.postal_code?.message}
       />
 
       <Combo
@@ -118,7 +114,7 @@ export function Form({ classes = "", ...init }: IForm) {
         onChange={country.onChange}
         placeholder="Select a country"
         options={country_names}
-        onReset={() => resetField("usState")}
+        onReset={() => resetField("us_state")}
         error={errors.country?.message}
         classes={{ input: "pl-12" }}
         option_disp={(c) => (
@@ -146,8 +142,8 @@ export function Form({ classes = "", ...init }: IForm) {
         <Select
           required={false}
           label="State"
-          onChange={usState.onChange}
-          value={usState.value}
+          onChange={us_state.onChange}
+          value={us_state.value}
           options={states}
           classes={{ options: "text-sm" }}
           option_disp={(s) => s}
@@ -163,12 +159,12 @@ export function Form({ classes = "", ...init }: IForm) {
       )}
 
       <Field
-        {...register("kycEmail")}
+        {...register("email")}
         label="Email address"
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full" }}
         required
-        error={errors.kycEmail?.message}
+        error={errors.email?.message}
       />
       <p className="text-sm col-span-full">
         By submitting this information, you agree to our{" "}
@@ -192,6 +188,6 @@ export function Form({ classes = "", ...init }: IForm) {
       >
         {fetcher.state !== "idle" ? "Processing..." : "Submit"}
       </button>
-    </form>
+    </fetcher.Form>
   );
 }

@@ -3,13 +3,12 @@ import type { NP } from "@better-giving/nowpayments/types";
 import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
-import { handleConfirming } from "./handlers/confirming";
-import { handleExpired } from "./handlers/expired";
-import { handleFailed } from "./handlers/failed";
-import { handleSettled } from "./handlers/settled";
-import { handleWaiting } from "./handlers/waiting";
+import { handle_confirming } from "./handlers/confirming";
+import { handle_failed } from "./handlers/failed";
+import { handle_settled } from "./handlers/settled";
+import { onholddb } from ".server/aws/db";
 import { npEnvs } from ".server/env";
-import { discordAwsMonitor } from ".server/sdks";
+import { aws_monitor } from ".server/sdks";
 
 export const action: ActionFunction = async ({
   request,
@@ -53,32 +52,34 @@ export const action: ActionFunction = async ({
     }
 
     if (status === "waiting") {
-      const res = await handleWaiting(payment.payment_id, payment.order_id);
-      console.info("waiting", res.Attributes);
-      return resp.json(res.Attributes ?? {});
+      const res = await onholddb.update(payment.order_id, {
+        payment_id: payment.payment_id,
+      });
+      console.info("waiting", res);
+      return resp.json(res);
     }
 
     if (status === "confirming") {
-      const res = await handleConfirming(payment, stage);
-      console.info("confirming", res.Attributes);
-      return resp.json(res.Attributes ?? {});
+      const res = await handle_confirming(payment, stage);
+      console.info("confirming", res);
+      return resp.json(res);
     }
 
     if (status === "expired") {
-      const res = await handleExpired(payment.order_id);
+      const res = await onholddb.del(payment.order_id);
       console.info("expired", res.Attributes);
       return resp.json(res.Attributes ?? {});
     }
 
     if (status === "failed") {
-      const res = await handleFailed(payment);
+      const res = await handle_failed(payment);
       console.info(`deleted failed payment:${payment.payment_id}`);
       return resp.json(res.Attributes ?? {});
     }
 
-    const res = await handleSettled(payment, new URL(request.url).origin);
+    const res = await handle_settled(payment, new URL(request.url).origin);
 
-    await discordAwsMonitor.sendAlert({
+    await aws_monitor.sendAlert({
       from: `nowpayments-webhook-${stage}`,
       title: "Donation settled",
       body: JSON.stringify(payment),
@@ -87,7 +88,7 @@ export const action: ActionFunction = async ({
 
     return resp.txt("Donation settled");
   } catch (err) {
-    await discordAwsMonitor.sendAlert({
+    await aws_monitor.sendAlert({
       from: `nowpayments-webhook-${stage}`,
       title: "Unknown error occured",
       body: JSON.stringify(err, Object.getOwnPropertyNames(err)),

@@ -2,7 +2,7 @@ import tokens from "@better-giving/assets/tokens/map";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
 import { type IPrompt, Prompt } from "components/prompt";
-import { roundToCents } from "helpers/decimal";
+import { round_to_cents } from "helpers/decimal";
 import { error_prompt } from "helpers/error-prompt";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -26,7 +26,7 @@ export function PaymentResumer({ payment_id, classes, amount }: Props) {
     <button
       disabled={intent_state === "pending"}
       type="button"
-      className={`${classes} btn btn-blue px-3 py-1 text-xs`}
+      className={`${classes} text-xs uppercase text-blue`}
       onClick={async () => {
         try {
           set_intent_state("pending");
@@ -69,7 +69,7 @@ function QrModal(props: IQrModal) {
 
       <p className="text-gray text-balance text-center mb-3.5 max-w-sm justify-self-center">
         To complete your donation, send{" "}
-        {roundToCents(props.order_amount, props.rate, token.precision)}
+        {round_to_cents(props.order_amount, props.rate, token.precision)}
         &nbsp;
         {token.symbol} from your crypto wallet to the address below
       </p>

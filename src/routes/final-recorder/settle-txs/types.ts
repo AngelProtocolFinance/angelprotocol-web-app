@@ -1,36 +1,48 @@
-import type { Donation } from "@better-giving/donation";
-import type { Allocation } from "@better-giving/donation/schema";
+import type { IDonationFinalAttr } from "@better-giving/donation";
+import type { IAllocation } from "@better-giving/endowment";
 
 export type Base = Pick<
-  Donation.V2DBRecord,
+  IDonationFinalAttr,
   | "transactionDate"
-  | "email"
-  | "inHonorOf"
-  | "tributeNotif"
-  | "appUsed"
+  | "network"
+  | "isRecurring"
   | "denomination"
-  | "splitLiq"
+  //via
+  | "appUsed"
   | "chainId"
   | "chainName"
-  // not speficied for fund donations
-  | "programId"
   | "fiatRamp"
-  // not speficied for fund donations
-  | "programName"
-  | "client"
-  | "network"
   | "paymentMethod"
-  | "isRecurring"
+  //to
+  | "programId"
+  | "programName"
+
+  //from
+  | "donor_public"
+  | "donor_message"
+  | "email"
+  | "title"
+  | "fullName"
+  | "streetAddress"
+  | "state"
+  | "city"
+  | "country"
+  | "zipCode"
+  | "company_name"
+
+  //tribute
+  | "inHonorOf"
+  | "tributeNotif"
+
+  // settlement
   | "destinationChainId"
   | "donationFinalChainId"
+  | "donationFinalDenom"
   | "donationFinalTxDate"
   | "donationFinalTxHash"
-  | "donationFinalDenom"
-  | "company_name"
-> &
-  (Donation.WithKYC | Donation.WithoutKYC);
+>;
 
-export type Uniques = Omit<Donation.V2DBRecord, keyof Base>;
+export type Uniques = Omit<IDonationFinalAttr, keyof Base>;
 
 export interface Overrides {
   input: number;
@@ -45,7 +57,7 @@ export interface Overrides {
   excessFeeAllowance: number;
   referrer?: {
     id: string;
-    commission: Donation.ReferrerCommission;
+    commission: IDonationFinalAttr["referrer_commission"];
   };
   /** usd */
   fees: {
@@ -67,5 +79,5 @@ export interface Overrides {
   claimed: boolean;
   fiscal_sponsored: boolean;
   msg_to_npo?: string;
-  allocation: Allocation;
+  allocation: IAllocation;
 }

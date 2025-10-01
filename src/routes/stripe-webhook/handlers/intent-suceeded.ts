@@ -1,13 +1,12 @@
-import type { StripeDonation } from "@better-giving/donation";
-import type { Subscription } from "@better-giving/donation/subscription";
-import { tables } from "@better-giving/types/list";
+import type {} from "@better-giving/donation/subscriptions-db";
+import type { IMetadata, IMetadataSubs } from "@better-giving/stripe";
 import { to_onhold } from "routes/helpers/donation-metadata";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
 import { str_id } from "../../helpers/stripe";
 import { payment_method } from "../helpers/payment-method";
 import { settled_fn } from "../helpers/settled";
-import { UpdateCommand, apes } from ".server/aws/db";
+import { subsdb } from ".server/aws/db";
 import { qstash, stripe } from ".server/sdks";
 
 export async function handle_intent_succeeded(
@@ -27,8 +26,8 @@ export async function handle_intent_succeeded(
   };
 
   if (is_onetime(intent.metadata)) {
-    const meta = intent.metadata as StripeDonation.Metadata;
-    const order = to_onhold(meta, { payment_method: pm });
+    const meta = intent.metadata as IMetadata;
+    const order = to_onhold(meta, { payment_method: pm, status: "pending" });
     const final = to_final(order, settled);
     return qstash.publishJSON({
       body: final,
@@ -42,13 +41,15 @@ export async function handle_intent_succeeded(
   const { subscription, subscription_details, hosted_invoice_url } =
     await stripe.invoices.retrieve(str_id(intent.invoice));
 
-  const subs_meta =
-    subscription_details?.metadata as StripeDonation.SetupIntentMetadata | null;
+  const subs_meta = subscription_details?.metadata as IMetadataSubs | null;
   if (!subs_meta) throw "missing subs metadata";
 
-  const onhold = to_onhold(subs_meta, { payment_method: pm });
-  const final = to_final(onhold, settled);
+  const onhold = to_onhold(subs_meta, {
+    payment_method: pm,
+    status: "pending",
+  });
 
+  const final = to_final(onhold, settled);
   const res = await qstash.publishJSON({
     body: final,
     url: `${base_url}/q/final-recorder`,
@@ -58,23 +59,13 @@ export async function handle_intent_succeeded(
 
   console.info(`Final donation record sent:${res.messageId}`);
 
-  const subs_update = new UpdateCommand({
-    TableName: tables.subscriptions,
-    Key: {
-      subscription_id: str_id(subscription),
-    } satisfies Subscription.PrimaryKey,
-    UpdateExpression: "SET latest_invoice = :latest_invoice, #status = :status",
-    ExpressionAttributeNames: { "#status": "status" },
-    ExpressionAttributeValues: {
-      ":latest_invoice": hosted_invoice_url || "",
-      ":status": "active",
-    },
+  await subsdb.update(str_id(subscription), {
+    latest_invoice: hosted_invoice_url || "",
+    status: "active",
   });
-
-  await apes.send(subs_update);
 }
 
 // One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice
-function is_onetime(metadata: any): metadata is StripeDonation.Metadata {
+function is_onetime(metadata: any): metadata is IMetadata {
   return Object.keys(metadata).length > 0;
 }

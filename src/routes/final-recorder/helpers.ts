@@ -1,53 +1,7 @@
 import { type TxType, Txs } from "@better-giving/db";
-import type { Donation } from "@better-giving/donation";
-import type {
-  DMKey,
-  DonationMessage,
-} from "@better-giving/donation/donation-message";
+import type { IDonationFinal } from "@better-giving/donation";
 import type { INpo } from "@better-giving/endowment";
 import * as ref_db from "@better-giving/referrals/db";
-import type { Environment } from "@better-giving/types/list";
-import { nanoid } from "nanoid";
-
-interface DonationMessageParams {
-  date: string;
-  donor_id: string;
-  donor_message: string;
-  donor_name: string;
-  env: Environment;
-  recipient_id: string;
-  transaction_id: string;
-  usd_value: number;
-}
-
-export const build_donation_msg = ({
-  date,
-  donor_id,
-  donor_message,
-  donor_name,
-  env,
-  recipient_id,
-  transaction_id,
-  usd_value,
-}: DonationMessageParams): DonationMessage.DBRecord => {
-  const uuid = nanoid();
-  const message_id: DMKey = `DM#${uuid}`;
-  return {
-    PK: message_id,
-    SK: message_id,
-    gsi1PK: `Recipient#${recipient_id}#${env}`,
-    gsi1SK: date,
-    amount: usd_value,
-    date,
-    donation_id: transaction_id,
-    donor_id,
-    donor_message,
-    donor_name,
-    env,
-    id: uuid,
-    recipient_id,
-  };
-};
 
 export interface ICommissionSource {
   /** npo id */
@@ -62,7 +16,7 @@ export interface IReferrerLtdItem {
 interface Commission {
   ltd: IReferrerLtdItem;
   record: TxType["Put"];
-  breakdown: Donation.ReferrerCommission;
+  breakdown: IDonationFinal["referrer_commission"];
 }
 
 export const commission_fn = (

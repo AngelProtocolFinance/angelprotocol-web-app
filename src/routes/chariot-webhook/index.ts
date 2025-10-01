@@ -1,8 +1,8 @@
 import crypto from "node:crypto";
 import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
-import { delete_order, get_order } from "routes/helpers/onhold";
 import { type Settled, to_final } from "../helpers/donation";
+import { onholddb } from ".server/aws/db";
 import { chariot_envs } from ".server/env";
 import { chariot, qstash } from ".server/sdks";
 
@@ -30,7 +30,7 @@ export const action: ActionFunction = async ({ request }) => {
     console.info(payload, grant);
 
     if (grant.status === "Canceled") {
-      await delete_order(grant.id);
+      await onholddb.del(grant.id);
       console.info(`chariot grant:${grant.id} cancelled and deleted`);
       return resp.status(202);
     }
@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
       in: { id: "fiat", currency: "USD", hash: grant.id },
     };
 
-    const order = await get_order(grant.id);
+    const order = await onholddb.item(grant.id);
 
     if (!order) return resp.status(204);
     const final = to_final(order, settlement);

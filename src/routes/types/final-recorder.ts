@@ -1,11 +1,11 @@
-import type { Allocation } from "@better-giving/donation/schema";
+import type { IAllocation } from "@better-giving/donation/schema";
 
 export interface FromAddress {
-  street: string;
-  city: string;
+  street?: string;
+  city?: string;
   state?: string;
-  zip: string;
-  country: string;
+  zip?: string;
+  country?: string;
 }
 
 export interface From {
@@ -30,7 +30,7 @@ export interface To {
   /** tipping is disabled */
   no_tip: boolean;
   message?: string;
-  allocation: Allocation;
+  allocation: IAllocation;
 }
 
 export interface Amount {

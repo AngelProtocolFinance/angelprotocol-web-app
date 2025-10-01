@@ -34,7 +34,7 @@ export function centsDecimals(usdValue: number, decimals = 2) {
   return Dec.min(decimals, Dec.max(x, 0)).floor().toNumber();
 }
 
-export function roundToCents(amount: number, usdValue: number, decimals = 2) {
+export function round_to_cents(amount: number, usdValue: number, decimals = 2) {
   return new Dec(amount).toFixed(
     centsDecimals(usdValue, decimals),
     Dec.ROUND_UP

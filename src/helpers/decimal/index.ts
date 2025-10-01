@@ -2,6 +2,6 @@ export {
   humanize,
   roundDown,
   roundDownToNum,
-  roundToCents,
+  round_to_cents,
   centsDecimals,
 } from "./utils";

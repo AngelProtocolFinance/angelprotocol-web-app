@@ -4,7 +4,7 @@ import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { use_admin_data } from "../use-admin-data";
 import type { Route } from "./+types";
 import { Allocation } from "./allocation";
-import DonationsTable from "./donations-table";
+import { DonationsTable } from "./donations-table";
 export { ErrorBoundary } from "components/error";
 export { loader, action } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
@@ -17,7 +17,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
     page1,
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(search);
-      if (next) p.set("page", next);
+      if (next) p.set("next", next);
       load(`?${p.toString()}`);
     },
   });

@@ -1,5 +1,5 @@
 /** fill undefined with "" */
-export function replaceWithEmptyString<T extends object>(
+export function replace_with_empty_str<T extends object>(
   obj: T
 ): { [K in keyof T]-?: NonNullable<T[K]> } {
   return new Proxy(obj, {

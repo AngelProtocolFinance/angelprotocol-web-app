@@ -1,17 +1,17 @@
 import { type TxItems, Txs } from "@better-giving/db";
-import type { Donation } from "@better-giving/donation";
+import type { IDonationFinal } from "@better-giving/donation";
 import type { Environment, INpo } from "@better-giving/endowment";
 import * as ref_db from "@better-giving/referrals/db";
 
 interface Commission {
   txs: TxItems;
   to: string;
-  breakdown: Donation.ReferrerCommission;
+  breakdown: IDonationFinal["referrer_commission"];
 }
 
 export const referral_commission_rate = 0.3;
 
-export const commissionFn = (
+export const commission_fn = (
   tx: { tip: number; fee: number; id: string },
   endow: INpo,
   env: Environment

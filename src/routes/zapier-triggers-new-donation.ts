@@ -1,6 +1,7 @@
+import { DonationsDb } from "@better-giving/donation";
 import type { ActionFunction, LoaderFunction } from "react-router";
 import { isResponse, validateApiKey } from "./helpers/validate-api-key";
-import { get_donations } from ".server/donations";
+import { apes, dondb, npodb } from ".server/aws/db";
 import {
   deleteZapierHookUrl,
   saveZapierHookUrl,
@@ -28,23 +29,26 @@ export const loader: LoaderFunction = async ({ request }) => {
   const result = await validateApiKey(request.headers.get("x-api-key"));
   if (isResponse(result)) return result;
   const { npoId, env } = result;
-  const page1 = await get_donations({ asker: npoId, limit: 3 }, env);
+  const dondb = new DonationsDb(apes, env);
+  const page1 = await dondb.list_to_npo(npoId, { limit: 3 });
   const items = page1.items.map((i) => {
+    const pm =
+      i.paymentMethod || (i.chainId !== "fiat" ? "Crypto" : i.fiatRamp);
     const x: Item = {
-      id: i.id,
-      date: i.date,
-      recipient_id: i.recipient_id,
-      recipient_name: i.recipient_name,
-      amount: i.init_amount,
-      amount_usd: i.final_amount_usd!, //should be defined for finalized records
-      currency: i.symbol,
-      donor_name: i.donor_details?.full_name ?? "Anonymous",
-      donor_email: i.donor_id,
-      program_id: i.program_id,
-      program_name: i.program_name,
-      payment_method: i.payment_method || i.via_name,
-      is_recurring: i.is_recurring ?? false,
-      donor_company: i.donor_details?.company,
+      id: i.transactionId || "",
+      date: i.transactionDate || "",
+      recipient_id: i.endowmentId || 0,
+      recipient_name: i.charityName || "",
+      amount: i.amount || 0,
+      amount_usd: i.usdValue || 0, //should be defined for finalized records
+      currency: i.denomination || "",
+      donor_name: i.fullName || "",
+      donor_email: i.email || "",
+      program_id: i.programId || "",
+      program_name: i.programName || "",
+      payment_method: pm || "",
+      is_recurring: i.isRecurring ?? false,
+      donor_company: i.company_name,
     };
     return x;
   });

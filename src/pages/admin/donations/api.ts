@@ -1,26 +1,17 @@
+import { donations_search } from "@better-giving/donation/schema";
 import { search } from "helpers/https";
-import type { LoaderFunctionArgs } from "react-router";
-import type { Donation } from "types/donations";
+import { parse } from "valibot";
 import { endowUpdate } from "../endow-update-action";
-import { get_donations } from ".server/donations";
+import type { Route } from "./+types";
+import { dondb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
-export interface LoaderData {
-  items: Donation.Item[];
-  next?: string;
-}
-
-export const loader = async (x: LoaderFunctionArgs) => {
+export const loader = async (x: Route.LoaderArgs) => {
   const adm = await admin_checks(x);
   if (is_resp(adm)) return adm;
 
-  const { page: pn = "1" } = search(adm.req);
-
-  const page = await get_donations({
-    asker: adm.id,
-    status: "final",
-    page: +pn,
-  });
+  const { limit = 10, ...q } = parse(donations_search, search(x.request));
+  const page = await dondb.list_to_npo(adm.id, { ...q, limit });
 
   return page;
 };

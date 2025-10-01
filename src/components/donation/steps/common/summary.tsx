@@ -1,8 +1,8 @@
+import type { TFrequency } from "@better-giving/donation";
 import { unpack } from "helpers/unpack";
 import { ListCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import type { OptionType } from "types/components";
-import type { Frequency } from "../types";
 import { BackBtn } from "./back-btn";
 
 type Classes =
@@ -19,7 +19,7 @@ type Props = {
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
   on_back(): void;
-  frequency?: Frequency;
+  frequency?: TFrequency;
   classes?: Classes;
   children?: ReactNode;
   pre_split_content?: ReactNode;

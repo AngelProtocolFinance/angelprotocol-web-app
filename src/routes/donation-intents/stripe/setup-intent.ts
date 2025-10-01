@@ -1,12 +1,13 @@
-import type { OnHoldDonation, StripeDonation } from "@better-giving/donation";
+import type { IDonationOnHoldAttr } from "@better-giving/donation";
+import type { IMetadataSubs } from "@better-giving/stripe";
 import { round_number } from "helpers/round-number";
 import { to_metadata } from "../../helpers/donation-metadata";
-import { stripeEnvs } from ".server/env";
+import { stripe_envs } from ".server/env";
 import { stripe } from ".server/sdks";
-import { nonSubsPM, payment_methods } from ".server/stripe/payment-methods";
+import { nonsubs_pm, payment_methods } from ".server/stripe/payment-methods";
 
 export async function setup_intent(
-  order: OnHoldDonation.FiatDBRecord,
+  order: IDonationOnHoldAttr,
   customer_id: string
 ): Promise<string> {
   const { client_secret } = await stripe.setupIntents.create({
@@ -24,14 +25,13 @@ export async function setup_intent(
     },
     payment_method_types: (
       payment_methods[order.denomination] ?? ["card"]
-    ).filter(nonSubsPM),
+    ).filter(nonsubs_pm),
+
     metadata: {
-      // Subscription required fields
-      productId: stripeEnvs.subsProductId,
-      subsQuantity: String(round_number(order.usdValue, 0)),
-      isRecurring: "true",
       ...to_metadata(order),
-    } satisfies StripeDonation.SetupIntentMetadata,
+      productId: stripe_envs.subs_product_id,
+      subsQuantity: String(round_number(order.usdValue, 0)),
+    } satisfies IMetadataSubs,
     usage: "off_session",
   });
 
