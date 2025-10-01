@@ -1,6 +1,8 @@
 import { Txs } from "@better-giving/db";
+import { npo } from "@better-giving/endowment/schema";
 import type { IFund, IFundSettings } from "@better-giving/fundraiser";
-import { fund_new } from "@better-giving/fundraiser/schema";
+import { $int_gte1 } from "@better-giving/schemas";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { adminRoutes, app_routes } from "constants/routes";
 import { resp, search } from "helpers/https";
 import {
@@ -8,12 +10,16 @@ import {
   type LoaderFunctionArgs,
   redirect,
 } from "react-router";
+import { getValidatedFormData } from "remix-hook-form";
+import type { IFormInvalid } from "types/action";
 import { isError } from "types/auth";
 import { parse } from "valibot";
 import { evaluate } from "./evaluate";
+import { type FV, schema } from "./schema";
 import { cognito, to_auth } from ".server/auth";
 import { TransactWriteCommand, funddb, npodb, userdb } from ".server/aws/db";
 import { env } from ".server/env";
+import { is_resp } from ".server/utils";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user, headers } = await cognito.retrieve(request);
@@ -30,23 +36,45 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
   if (!user) return to_auth(request, headers);
+  const { npo: npo_id } = search(request);
+  const fv = await getValidatedFormData<FV>(request, valibotResolver(schema));
+  if (fv.errors) return fv;
 
-  const payload = parse(fund_new, await request.json());
+  const { data: d } = fv;
 
-  const evaluation = await evaluate({
-    title: payload.name,
-    description: payload.description,
+  const evl = await evaluate({
+    title: d.name,
+    description: d.description.value,
   }).catch((err) => {
     console.error("evaluation failed", err);
-    return { is_spam: false };
+    return undefined;
   });
-  console.log(evaluation);
-  if (evaluation.is_spam) {
-    throw `Fundraiser flagged: ${JSON.stringify(evaluation)}`;
+
+  console.info(evl);
+
+  if (evl && evl.is_spam) {
+    if (evl.field === "name") {
+      return {
+        receivedValues: d,
+        errors: { name: { type: "value", message: evl.explanation } },
+      } satisfies IFormInvalid<FV>;
+    }
+    return {
+      receivedValues: d,
+      errors: {
+        description: { value: { type: "value", message: evl.explanation } },
+      },
+    } satisfies IFormInvalid<FV>;
   }
 
-  const npoo = payload.npo_owner;
-  if (npoo && !user.endowments.includes(npoo)) return { status: 401 };
+  const npo_owner = ((n) => {
+    if (!n) return undefined;
+    const id = parse($int_gte1, n);
+    if (!user.endowments.includes(id)) return resp.status(401);
+    return id;
+  })(npo_id);
+
+  if (is_resp(npo_owner)) return npo_owner;
 
   interface ICreator {
     id: string;
@@ -54,7 +82,7 @@ export const action: ActionFunction = async ({ request }) => {
     name: string;
   }
   const creator: ICreator | null = await (async (u, n) => {
-    if (!npoo) {
+    if (!n) {
       const user_fullname = [u.firstName, u.lastName].filter(Boolean).join(" ");
       return {
         id: u.email,
@@ -69,12 +97,13 @@ export const action: ActionFunction = async ({ request }) => {
       isBg: u.groups.includes("ap-admin"),
       name: npo.name,
     };
-  })(user, npoo);
+  })(user, npo_owner);
   if (!creator) throw "failed to retrieve creator";
 
   const id = crypto.randomUUID();
-  const { expiration, target, members: ns, ...rest } = payload;
-  const members = await npodb.npos_get(ns, [
+  const { expiration, members: ms, target, increments } = d;
+  const m_ids = ms.map((m) => m.id);
+  const members = await npodb.npos_get(m_ids, [
     "id",
     "claimed",
     "fund_opt_in",
@@ -102,7 +131,21 @@ export const action: ActionFunction = async ({ request }) => {
     };
   })(members);
 
+  const trgt =
+    target.type === "none"
+      ? `${0}`
+      : target.type === "smart"
+        ? "smart"
+        : `${+target.value}`;
+
   const fund: IFund = {
+    featured: true,
+    npo_owner: npo_owner || 0,
+    name: d.name,
+    description: d.description.value,
+    banner: d.banner,
+    logo: d.logo,
+    videos: d.videos.map((v) => v.url),
     id,
     env,
     active: true,
@@ -113,13 +156,13 @@ export const action: ActionFunction = async ({ request }) => {
      */
     verified: !all_members_unclaimed || creator.isBg,
     donation_total_usd: 0,
-    target,
-    members: ns,
+    target: trgt,
+    members: m_ids,
     expiration,
     settings,
     creator_id: creator.id,
     creator_name: creator.name,
-    ...rest,
+    increments,
   };
 
   const txs = new Txs();
@@ -139,8 +182,9 @@ export const action: ActionFunction = async ({ request }) => {
     ? undefined
     : { headers: { "set-cookie": refreshed.commit } };
 
-  if (npoo) {
-    return redirect(`${app_routes.admin}/${npoo}/${adminRoutes.funds}`, commit);
+  if (npo_owner) {
+    const to = `${app_routes.admin}/${npo_owner}/${adminRoutes.funds}`;
+    return redirect(to, commit);
   }
   return redirect(`${app_routes.user_dashboard}/funds`, commit);
 };

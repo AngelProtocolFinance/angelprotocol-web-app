@@ -1,3 +1,4 @@
+import { MAX_NUM_INCREMENTS, increment } from "@better-giving/schemas";
 import { target } from "components/goal-selector";
 import { img_output } from "components/img-editor";
 import { richtext_content } from "types/components";
@@ -41,6 +42,13 @@ export const schema = v.object({
   ),
   target,
   videos: v.array(video),
+  increments: v.pipe(
+    v.array(increment),
+    v.maxLength(
+      MAX_NUM_INCREMENTS,
+      ({ requirement }) => `cannot have more than ${requirement} increments`
+    )
+  ),
 });
 
 export interface FundMember extends v.InferOutput<typeof endow_opt> {}

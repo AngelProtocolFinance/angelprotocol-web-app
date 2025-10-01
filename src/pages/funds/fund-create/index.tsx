@@ -1,16 +1,19 @@
-import type { IFundNew } from "@better-giving/fundraiser/schema";
-import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Field, Form, Label } from "components/form";
+import { increment_label_max_chars } from "@better-giving/schemas";
+import { Field as HuiField, Input, Textarea } from "@headlessui/react";
+import { Field, Label } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { ImgEditor, imgEditorStyles } from "components/img-editor";
+import { Increments } from "components/increments";
 import { RichText, richTextStyles } from "components/rich-text";
-import { useController, useFieldArray, useForm } from "react-hook-form";
+import { DollarSign } from "lucide-react";
+import { useController, useFieldArray } from "react-hook-form";
 import { type LinksFunction, useFetcher } from "react-router";
+import { useRemixForm } from "remix-hook-form";
 import { img_spec } from "../common";
 import { Videos } from "../common/videos";
 import type { Route } from "./+types";
 import { EndowmentSelector } from "./endowment-selector";
-import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
+import { type FV, MAX_DESCRIPTION_CHAR } from "./schema";
 
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
@@ -21,16 +24,18 @@ export const links: LinksFunction = () => [
 
 export default function Page({ loaderData: endow }: Route.ComponentProps) {
   const fetcher = useFetcher();
-  const isSubmitting = fetcher.state !== "idle";
+  const is_submitting = fetcher.state !== "idle";
   const {
     register,
+    watch,
     control,
     trigger,
     resetField,
     handleSubmit,
     formState: { errors },
-  } = useForm<FV>({
-    resolver: valibotResolver(schema),
+  } = useRemixForm<FV>({
+    reValidateMode: "onSubmit",
+    fetcher,
     defaultValues: {
       name: "",
       description: "",
@@ -43,6 +48,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         type: "smart",
       },
       videos: [],
+      increments: [],
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -51,7 +57,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
     control,
     name: "members",
   });
-  const { field: targetType } = useController({
+  const { field: target_type } = useController({
     control,
     name: "target.type",
   });
@@ -65,37 +71,21 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
     name: "videos",
   });
 
-  const isUploading = banner.value === "loading" || logo.value === "loading";
+  const increments = useFieldArray({
+    control,
+    name: "increments",
+  });
 
+  const incs = watch("increments");
+
+  const is_uploading = banner.value === "loading" || logo.value === "loading";
+
+  console.log(errors);
   return (
     <div className="w-full xl:container xl:mx-auto px-5">
-      <Form
-        onSubmit={handleSubmit((fv) => {
-          const fund: IFundNew = {
-            name: fv.name,
-            description: fv.description.value,
-            banner: fv.banner,
-            logo: fv.logo,
-            members: fv.members.map((m) => m.id),
-            featured: true, // internal ( req update: all fundraisers are public )
-            target:
-              fv.target.type === "none"
-                ? `${0}`
-                : fv.target.type === "smart"
-                  ? "smart"
-                  : `${+fv.target.value}`, //fixedTarget is required when targetType is fixed
-            videos: fv.videos.map((v) => v.url),
-            npo_owner: endow?.id ?? 0,
-          };
-          if (fv.expiration) fund.expiration = fv.expiration;
-
-          fetcher.submit(fund, {
-            encType: "application/json",
-            method: "POST",
-            action: ".",
-          });
-        }, console.error)}
-        disabled={isSubmitting}
+      <fetcher.Form
+        method="POST"
+        onSubmit={handleSubmit}
         className="grid border border-gray-l3 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
         <h4 className="font-bold text-xl mb-4">Create your fundraiser</h4>
@@ -106,7 +96,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
           sub="A great name will attract more donors"
           required
           error={errors.name?.message}
-          classes={{ label: "font-medium" }}
+          classes={{ label: "font-medium text-left" }}
         />
         <label className="label font-medium mt-4 mb-1" data-required>
           Description
@@ -144,10 +134,10 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         </label>
         <GoalSelector
           classes="mt-2 mb-2"
-          value={targetType.value}
-          onChange={targetType.onChange}
+          value={target_type.value}
+          onChange={target_type.onChange}
         />
-        {targetType.value === "fixed" && (
+        {target_type.value === "fixed" && (
           <Field
             {...register("target.value", { shouldUnregister: true })}
             label="How much money do you want to raise?"
@@ -199,9 +189,56 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
           error={errors.logo?.message}
         />
 
+        <Increments
+          classes="mt-8 mb-10"
+          fields={increments.fields}
+          onAdd={(val) => {
+            if (increments.fields.length >= 4) {
+              return alert("You can only have 4 increments");
+            }
+            increments.append({ value: val, label: "" });
+          }}
+          onRemove={(idx) => increments.remove(idx)}
+          countError={errors.increments?.root?.message}
+          field={(idx) => (
+            <>
+              <HuiField className="grid grid-rows-subgrid row-span-2">
+                <div className="relative w-full">
+                  <DollarSign
+                    size={15}
+                    className="text-gray absolute top-1/2 left-2 transform -translate-y-1/2"
+                  />
+                  <Input
+                    type="number"
+                    {...register(`increments.${idx}.value`)}
+                    className="w-full h-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                  />
+                </div>
+
+                <p className="mt-1 empty:hidden text-left text-xs text-red">
+                  {errors.increments?.[idx]?.value?.message}
+                </p>
+              </HuiField>
+              <HuiField className="grid grid-rows-subgrid row-span-2">
+                <Textarea
+                  {...register(`increments.${idx}.label`)}
+                  rows={2}
+                  className="w-full font-heading outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                />
+                <p
+                  data-error={!!errors.increments?.[idx]?.label?.message}
+                  className="mt-1 text-left text-xs data-[error='true']:text-red"
+                >
+                  {incs[idx].label.length}/{increment_label_max_chars}
+                </p>
+              </HuiField>
+            </>
+          )}
+        />
+
         <Field
           {...register("expiration")}
-          label="I want my fundraiser to end on this date"
+          label="I want my fundraiser to end on this date "
           type="date"
           classes={{ input: "uppercase" }}
           error={errors.expiration?.message}
@@ -209,13 +246,13 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         />
 
         <button
-          disabled={isUploading}
+          disabled={is_uploading || is_submitting}
           type="submit"
           className="mt-8 btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"
         >
           Create Fund
         </button>
-      </Form>
+      </fetcher.Form>
     </div>
   );
 }

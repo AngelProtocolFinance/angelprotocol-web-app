@@ -2,7 +2,7 @@ import type { IFundUpdate } from "@better-giving/fundraiser";
 import { increment_label_max_chars } from "@better-giving/schemas";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { Field, Form as Frm } from "components/form";
-import { GoalSelector } from "components/goal-selector";
+import { GoalSelector, to_target } from "components/goal-selector";
 import { ImgEditor } from "components/img-editor";
 import { Increments } from "components/increments";
 import { RichText } from "components/rich-text";
@@ -45,14 +45,7 @@ export function Form({
     if (df.banner) update.banner = fv.banner;
     if (df.logo) update.logo = fv.logo;
 
-    if (df.target) {
-      update.target =
-        target.type === "none"
-          ? "0"
-          : target.type === "smart"
-            ? "smart"
-            : target.value;
-    }
+    if (df.target) update.target = to_target(target);
 
     if (df.name) update.name = fv.name;
     if (df.description) update.description = fv.description.value;
