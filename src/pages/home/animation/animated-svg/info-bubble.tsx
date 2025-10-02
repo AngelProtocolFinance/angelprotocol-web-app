@@ -42,7 +42,7 @@ export const InfoBubble: React.FC<InfoBubbleProps> = ({
       />
       <image href={imageUrl} width="272" height="272" x="112" y="0" />
       <text
-        className="fill-gray-d4 capitalize font-heading font-bold text-3xl"
+        className="fill-gray-d4 capitalize  font-bold text-3xl"
         x="248"
         y="317"
         textAnchor="middle"

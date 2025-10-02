@@ -30,7 +30,7 @@ export function Form(props: Props) {
         onChange={() => {}}
         value={usd_option}
         classes={{
-          label: "font-heading font-semibold text-base",
+          label: "font-semibold text-base",
           input: "field-input-donate",
         }}
         required
@@ -45,7 +45,7 @@ export function Form(props: Props) {
         label="Donation amount"
         placeholder="Enter amount"
         classes={{
-          label: "font-heading font-semibold text-base",
+          label: " font-semibold text-base",
           input: "field-input-donate",
           container: "mt-1",
         }}

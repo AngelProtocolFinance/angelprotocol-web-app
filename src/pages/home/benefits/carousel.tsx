@@ -4,7 +4,7 @@ import { PreCta } from "./common";
 type Props = { slides: Benefit[]; classes?: string };
 const Carousel = ({ slides, classes = "" }: Props) => {
   return (
-    <div className={`grid gap-5 font-body ${classes} px-8`}>
+    <div className={`grid gap-5  ${classes} px-8`}>
       {slides.map((slide, index) => {
         return (
           <div
@@ -16,7 +16,7 @@ const Carousel = ({ slides, classes = "" }: Props) => {
               alt="Visual representation of benefit"
               className="size-56 mb-8"
             />
-            <p className="font-heading text-lg text-center md:text-xl text-black font-bold">
+            <p className=" text-lg text-center md:text-xl text-black font-bold">
               {slide.title}
             </p>
             <p className="text-center md:text-lg text-black font-bold mb-3">

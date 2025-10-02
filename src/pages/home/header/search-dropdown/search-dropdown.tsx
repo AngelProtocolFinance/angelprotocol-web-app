@@ -91,7 +91,7 @@ function SearchResult(props: ISearchResult) {
             />
           )}
 
-          <span className="text-gray font-heading group-hover/item:text-blue">
+          <span className="text-gray  group-hover/item:text-blue">
             {endow.name}
           </span>
         </Link>

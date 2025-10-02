@@ -5,5 +5,5 @@ export const styles = {
   option:
     "px-4 py-2 data-selected:bg-(--accent-secondary) hover:cursor-pointer hover:bg-(--accent-secondary)",
   options:
-    "font-heading rounded-xs border border-gray-l3 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller",
+    " rounded-xs border border-gray-l3 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller",
 };

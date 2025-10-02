@@ -107,10 +107,10 @@ function ListItem(props: TListItem) {
   return (
     <li className="grid content-start @3xl:grid-rows-subgrid row-span-4 justify-items-center px-4">
       {props.icon}
-      <h5 className="text-center font-body font-medium text-xl @6xl:text-2xl text-gray-d1 mt-8">
+      <h5 className="text-center  font-medium text-xl @6xl:text-2xl text-gray-d1 mt-8">
         {props.title1}
       </h5>
-      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-gray mb-4">
+      <h6 className="text-center self-center font-normal  text-lg @6xl:text-xl text-gray mb-4">
         {props.title2}
       </h6>
       <p className="text-center @6xl:text-lg text-gray mt-4">

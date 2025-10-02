@@ -20,9 +20,7 @@ export default function SearchField({ classes = "", onChange }: Props) {
   }
 
   return (
-    <div
-      className={`${classes} flex items-center px-4 py-1 text-sm gap-1 font-heading`}
-    >
+    <div className={`${classes} flex items-center px-4 py-1 text-sm gap-1 `}>
       <label htmlFor="__endow-search">
         <Search className="mr-1 text-2xl text-gray" />
       </label>

@@ -117,7 +117,7 @@ export function ProbSol({ className = "" }) {
               {solutions.map((solution, index) => (
                 <>
                   <tr>
-                    <td className="font-bold text-sm py-2 font-heading">
+                    <td className="font-bold text-sm py-2 ">
                       {solution.problem}
                     </td>
                     <td />

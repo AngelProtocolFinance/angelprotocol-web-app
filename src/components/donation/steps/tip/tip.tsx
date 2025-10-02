@@ -176,7 +176,7 @@ export function Tip(props: TipStep) {
           <label
             data-required
             htmlFor="tip-custom-amount"
-            className="label mb-2 block text-base font-heading font-semibold"
+            className="label mb-2 block text-base  font-semibold"
           >
             Your One-Time Donation Amount
           </label>

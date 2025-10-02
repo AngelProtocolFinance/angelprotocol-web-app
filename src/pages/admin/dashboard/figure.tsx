@@ -30,7 +30,7 @@ export function Figure(props: Props) {
           <ArrowRightIcon size={18} />
         </NavLink>
       </div>
-      <div className="text-lg font-medium font-heading">{props.amount}</div>
+      <div className="text-lg font-medium ">{props.amount}</div>
       {/* {props.actions} */}
     </div>
   );

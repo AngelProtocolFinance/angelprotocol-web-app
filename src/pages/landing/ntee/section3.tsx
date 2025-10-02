@@ -47,7 +47,7 @@ export function Section3({ classes = "" }: Props) {
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
         Keep <span className="text-blue">Every Dollar</span>.
       </h2>
-      <p className="text-xl @6xl:text-2xl mb-6 font-heading @6xl:leading-tight capitalize text-gray-d1 font-medium text-center text-balance">
+      <p className="text-xl @6xl:text-2xl mb-6  @6xl:leading-tight capitalize text-gray-d1 font-medium text-center text-balance">
         Zero fees. Zero admin. Just funding for your mission.
       </p>
       <div className="grid @6xl:grid-cols-2 gap-4">
@@ -74,7 +74,7 @@ export function Section3({ classes = "" }: Props) {
       </div>
       <Link
         to={`${app_routes.register}/welcome`}
-        className="block mt-8 text-center justify-self-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading capitalize font-bold shadow-2xl rounded-xl"
+        className="block mt-8 text-center justify-self-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  capitalize font-bold shadow-2xl rounded-xl"
       >
         Start Free
       </Link>
