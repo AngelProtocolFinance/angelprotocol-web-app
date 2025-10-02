@@ -37,7 +37,7 @@ export const testimonials: Testimonial[] = [
       "Having an untied, passive income stream from an endowment is highly appealing to complement our other revenue streams.",
     reviewer: "Sarah Hornby",
     org: undefined,
-    org_logo: { w: 60, src: ygap, classes: "-mt-4 -z-10" },
+    org_logo: { w: 60, src: ygap, classes: "-mt-3" },
   },
   {
     content:

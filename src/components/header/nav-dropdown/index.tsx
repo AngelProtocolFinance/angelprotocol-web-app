@@ -50,17 +50,11 @@ export function NavDropdown({ user, auth_links }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={app_routes.nonprofit_info} className={styler}>
-              For Nonprofits
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
             <NavLink
               to={app_routes.register + (user ? "/" : "/welcome")}
               className={styler}
             >
-              <CornerDownRight strokeWidth={1.5} size={15} />
-              <span>Register NPO</span>
+              Register NPO
             </NavLink>
           </MenuItem>
           <MenuItem>
@@ -70,13 +64,11 @@ export function NavDropdown({ user, auth_links }: Props) {
           </MenuItem>
           <MenuItem>
             <NavLink to={app_routes.marketplace} className={styler}>
-              <CornerDownRight strokeWidth={1.5} size={15} />
-              <span>Marketplace</span>
+              Marketplace
             </NavLink>
           </MenuItem>
           <MenuItem>
             <NavLink to={app_routes.funds} className={styler} end>
-              <CornerDownRight strokeWidth={1.5} size={15} />
               Fundraisers
             </NavLink>
           </MenuItem>
