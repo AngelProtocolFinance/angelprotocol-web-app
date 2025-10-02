@@ -2,11 +2,12 @@
 import { Footer } from "components/footer";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types/home";
-import { Animation } from "./animation";
-import Benefits from "./benefits";
+// import { Animation } from "./animation";
+// import Benefits from "./benefits";
 import { Blogs } from "./blogs";
 import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
+import { Ctas } from "./ctas";
 import { Feature1 } from "./feature1";
 import { Header } from "./header";
 import Hero from "./hero";
@@ -27,8 +28,9 @@ function Home({ loaderData: page1 }: Route.ComponentProps) {
       {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
 
       <Feature1 classes="xl:container xl:mx-auto px-5 mt-36" />
-      <Benefits />
-      <Animation />
+      <Ctas classes="xl:container xl:mx-auto px-5 mt-36" />
+      {/* <Benefits /> */}
+      {/* <Animation /> */}
 
       {/* <Video /> */}
       <Testimonials />
