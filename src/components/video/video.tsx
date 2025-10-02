@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import aboutSubtitle from "./about.vtt";
-import aboutPoster from "./about.webp";
-import bgCalculatorPoster from "./bg-calculator.webp";
+// import about_subtitle from "./about.vtt";
+import about_poster from "./about.webp";
+import bg_calculator_poster from "./bg-calculator.webp";
 
 type VideoStatus = "loading" | "error" | "loaded";
 
@@ -18,12 +18,12 @@ interface Props {
 export const videos = {
   about: {
     url: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/about-better-giving-HXqlfIWwctto66xyOTStih3rWj9Ajg",
-    poster: aboutPoster,
-    subtitle: aboutSubtitle,
+    poster: about_poster,
+    subtitle: "",
   },
   donation_calculator: {
     url: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/donation-calculator-SZju4lCvUjU6HUYWi2adrQVR9NDCaz",
-    poster: bgCalculatorPoster,
+    poster: bg_calculator_poster,
   },
 };
 

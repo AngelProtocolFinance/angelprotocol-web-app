@@ -43,7 +43,7 @@ const brands: IPartner[] = [
   },
 ];
 
-export function Brands({ classes = "" }) {
+export function Partners({ classes = "" }) {
   return (
     <section className={`${classes} grid content-start mask-b-from-50%`}>
       <h2 className="font-medium text-3xl/tight md:text-3.5xl/tight text-gray-d4 text-center text-balance mb-8">

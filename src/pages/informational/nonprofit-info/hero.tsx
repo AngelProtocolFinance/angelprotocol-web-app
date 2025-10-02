@@ -6,7 +6,7 @@ import { Link } from "react-router";
 export function Hero({ className = "" }) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-2 py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-2 py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-gray-d4 mb-5">
