@@ -16,9 +16,9 @@ export function AuthBtns({ classes = "", to }: Props) {
       </Link>
       <Link
         to={`${app_routes.signup}?redirect=${to}`}
-        className="btn-blue text-nowrap px-6 py-2 rounded-full"
+        className="btn-blue font-semibold text-nowrap px-6 py-2 rounded-full"
       >
-        Sign up
+        Join us today!
       </Link>
     </div>
   );
