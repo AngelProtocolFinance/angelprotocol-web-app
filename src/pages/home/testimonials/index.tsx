@@ -4,7 +4,7 @@ import { TestimonialCard } from "./testimonial-card";
 
 export function Testimonials({ classes = "s" }) {
   return (
-    <div className={`grid ${classes}`}>
+    <div className={`grid ${classes} pb-8 pt-24`}>
       <img
         src={quotation}
         alt="quotation mark"

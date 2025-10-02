@@ -11,6 +11,7 @@ import { Section6 } from "./6-section";
 import { Section7 } from "./7-section";
 import { Section8 } from "./8-section";
 import { Features } from "./9-features";
+import { FAQ } from "./11-faq";
 // import { Animation } from "./animation";
 // import Benefits from "./benefits";
 import { Blogs } from "./blogs";
@@ -39,14 +40,20 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       <Manifesto classes="mt-56 xl:container xl:mx-auto px-5" />
       <Section6 classes="xl:container xl:mx-auto px-5" />
       <Section7 classes="xl:container xl:mx-auto px-5" />
+
       <Section8 classes="xl:container xl:mx-auto px-5" />
-      <Features classes="xl:container xl:mx-auto px-5" />
+      <div className="bg-gradient-to-br from-transparent to-lilac/40">
+        <Features classes="xl:container xl:mx-auto px-5" />
+      </div>
       {/* <Video /> */}
-      <div className="bg-gray-l4 py-8">
+      <div className="bg-gradient-to-bl from-lilac/40 to-peach/10">
         <Testimonials classes="xl:container xl:mx-auto px-5" />
       </div>
-      <Blogs />
+      <div className="bg-gradient-to-br from-peach/10 from-80% to-transparent">
+        <Blogs />
+      </div>
       <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
+      <FAQ classes="xl:container xl:mx-auto px-5" />
       <Footer />
     </div>
   );

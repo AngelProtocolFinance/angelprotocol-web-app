@@ -1,13 +1,13 @@
 import { posts } from "api/get/wp-posts";
-import useEmblaCarousel from "embla-carousel-react";
+import use_embla_carousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import useSWR from "swr/immutable";
 import { BlogCard, Skeleton } from "./blog-card";
 
-export const Blogs = () => {
+export const Blogs = ({ classes = "" }) => {
   const { data } = useSWR(["posts", "1"], ([, page]) => posts(+page));
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
+  const [embla_ref, embla_api] = use_embla_carousel({
     loop: true,
     align: "center",
     skipSnaps: false,
@@ -29,7 +29,7 @@ export const Blogs = () => {
   });
 
   return (
-    <section className="grid content-start py-40 bg-linear-to-b from-transparent via-peach/40 to-transparent overflow-x-clip">
+    <section className={`${classes} grid content-start py-40`}>
       <h2 className="text-gray-d4 text-3xl md:text-4.5xl text-center mb-14 px-4">
         Gain Knowledge to Empower Your Nonprofit
       </h2>
@@ -37,7 +37,7 @@ export const Blogs = () => {
       <div className="relative">
         <button
           type="button"
-          onClick={() => emblaApi?.scrollPrev()}
+          onClick={() => embla_api?.scrollPrev()}
           className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 md:left-[15%]"
           aria-label="Previous slide"
         >
@@ -46,7 +46,7 @@ export const Blogs = () => {
 
         <div
           className="overflow-hidden w-[70vw] md:w-[80vw] lg:w-[65vw] mx-auto"
-          ref={emblaRef}
+          ref={embla_ref}
         >
           <div className="flex">
             {(data?.[0] || [1, 2, 3, 4, 5, 6]).map((blog, idx) => (
@@ -66,7 +66,7 @@ export const Blogs = () => {
 
         <button
           type="button"
-          onClick={() => emblaApi?.scrollNext()}
+          onClick={() => embla_api?.scrollNext()}
           className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-10 md:right-[15%]"
           aria-label="Next slide"
         >
@@ -76,5 +76,3 @@ export const Blogs = () => {
     </section>
   );
 };
-
-export default Blogs;
