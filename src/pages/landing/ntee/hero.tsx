@@ -10,7 +10,7 @@ interface Props extends PageContext {
 export function Hero({ className = "", ...props }: Props) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-2 pb-24 pt-20`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-2 pb-24 pt-20`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <p className="text-center @6xl:text-left text-gray-d4 mb-5">

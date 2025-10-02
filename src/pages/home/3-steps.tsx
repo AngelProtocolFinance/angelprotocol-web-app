@@ -4,7 +4,6 @@ import laira3 from "assets/laira/laira3.png";
 import { Image } from "components/image";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { app_routes } from "constants/routes";
-import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
 type TListItem = {
@@ -36,7 +35,7 @@ const items: TListItem[] = [
   },
 ];
 
-export function Feature1({ classes = "" }) {
+export function Steps({ classes = "" }) {
   return (
     <section className={`${classes} grid content-start `}>
       <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
@@ -56,7 +55,7 @@ export function Feature1({ classes = "" }) {
         <span className="font-bold">save for your future</span> with simple but
         powerful high-yield savings and investment options
       </p>
-      <div className="isolate z-10 flex max-md:flex-col items-center justify-self-center gap-4 mt-24">
+      <div className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10">
         <Link
           to={app_routes.register}
           className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded-full"
