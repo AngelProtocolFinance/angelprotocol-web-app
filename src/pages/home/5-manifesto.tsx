@@ -1,6 +1,7 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import laira_pointing from "assets/laira/laira-pointing.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
+import { APP_NAME } from "constants/env";
 
 export function Manifesto({ classes = "" }) {
   return (
@@ -35,7 +36,7 @@ export function Manifesto({ classes = "" }) {
         </h2>
         <p className="text-gray-d1 text-center mb-8 col-span-full text-xl mt-4 max-w-3xl justify-self-center">
           Membership isn't a program, it's how we show up for each other. As a
-          nonprofit ourselves, Better Giving makes every nonprofit a Member by
+          nonprofit ourselves, {APP_NAME} makes every nonprofit a Member by
           default, with shared tools, shared growth, and shared responsibility.
         </p>
 
@@ -55,7 +56,7 @@ export function Manifesto({ classes = "" }) {
           <TabPanels className="mt-6">
             <TabPanel className="">
               <p className="text-lg xl:text-xl mb-4 font-bold">
-                The Better Giving Manifesto — your three rights:
+                The {APP_NAME} Manifesto — your three rights:
               </p>
               <ul className="space-y-2 text-gray xl:text-lg list-disc list-inside">
                 <li>

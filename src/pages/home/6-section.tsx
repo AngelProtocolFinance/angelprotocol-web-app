@@ -1,4 +1,5 @@
 import { Video, videos } from "components/video/video";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
@@ -11,12 +12,12 @@ export function Section6({ classes = "" }) {
         <h4 className="text-center xl:text-left xl:text-lg uppercase text-gray-d4 mb-5">
           Everything you need, already included.
         </h4>
-        <h1 className="text-center xl:text-left text-4.5xl xl:text-5xl xl:leading-tight text-balance mb-4 text-gray-d4">
+        <h2 className="text-center xl:text-left text-4xl xl:text-4.5xl xl:leading-tight text-balance mb-4 text-gray-d4">
           Raise funds easily. <br /> Grow them effortlessly.
-        </h1>
+        </h2>
         <p className="mb-10 text-lg xl:text-xl text-center xl:text-left">
           From high-converting donation forms to growth through Savings and a
-          Sustainability Fund, plus global fiscal sponsorship. Better Giving is
+          Sustainability Fund, plus global fiscal sponsorship. {APP_NAME} is
           built by and for nonprofits. Free-no platform or fund-management fees.
         </p>
 
@@ -31,12 +32,6 @@ export function Section6({ classes = "" }) {
         classes="max-w-2xl xl:max-w-auto order-1 xl:order-2 w-full self-center"
         vid={videos.about}
       />
-      {/* <Image
-        src={benefits.donors[1].img}
-        width={420}
-        height={420}
-        className="rounded-4xl order-1 xl:order-2"
-      /> */}
     </section>
   );
 }

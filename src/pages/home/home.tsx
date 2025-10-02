@@ -9,6 +9,7 @@ import { Ctas } from "./4-ctas";
 import { Manifesto } from "./5-manifesto";
 import { Section6 } from "./6-section";
 import { Section7 } from "./7-section";
+import { Section8 } from "./8-section";
 // import { Animation } from "./animation";
 // import Benefits from "./benefits";
 import { Blogs } from "./blogs";
@@ -37,6 +38,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       <Manifesto classes="mt-56 xl:container xl:mx-auto px-5" />
       <Section6 classes="xl:container xl:mx-auto px-5" />
       <Section7 classes="xl:container xl:mx-auto px-5" />
+      <Section8 classes="xl:container xl:mx-auto px-5" />
       {/* <Video /> */}
       <Testimonials />
       <Blogs />
