@@ -105,7 +105,7 @@ const features: IFeature[] = [
 export function Features({ classes = "" }) {
   return (
     <div className={`${classes} grid @xl:grid-cols-2 @4xl:grid-cols-3 gap-4`}>
-      <h4 className="text-lg font-heading text-blue-d1 uppercase -mb-4 col-span-full text-center @4xl:text-left">
+      <h4 className="text-lg  text-blue-d1 uppercase -mb-4 col-span-full text-center @4xl:text-left">
         Features
       </h4>
       <div className="row-span-2 col-span-full @4xl:col-span-2 pb-8">
@@ -129,7 +129,7 @@ function Feature(props: IFeature) {
     <div className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2">
       <div className="flex items-center gap-x-2">
         {props.icon}
-        <p className="font-bold text-sm font-heading">{props.title}</p>
+        <p className="font-bold text-sm ">{props.title}</p>
       </div>
       <p className="text-gray-d1">{props.body}</p>
     </div>

@@ -15,7 +15,7 @@ export function Faq({ classes = "" }) {
 
       <ul className="list-disc pl-5 space-y-4 text-lg">
         <li className="">
-          <strong className="font-heading">Who can join?</strong>
+          <strong className="">Who can join?</strong>
           <p className="text-gray-d1">
             Anyone with a Better Giving account - donors, consultants,
             influencers, nonprofits.
@@ -23,7 +23,7 @@ export function Faq({ classes = "" }) {
         </li>
 
         <li className="">
-          <strong className="font-heading">How do I earn rewards?</strong>
+          <strong className="">How do I earn rewards?</strong>
           <p className="text-gray-d1">
             Share your link, and you earn whenever a referred nonprofit receives
             donations.
@@ -31,14 +31,14 @@ export function Faq({ classes = "" }) {
         </li>
 
         <li className="">
-          <strong className="font-heading">When will I get paid?</strong>
+          <strong className="">When will I get paid?</strong>
           <p className="text-gray-d1">
             We process payouts monthly, directly to your account.
           </p>
         </li>
 
         <li>
-          <strong className="font-heading">
+          <strong className="">
             What if a nonprofit forgets to use my link?
           </strong>
           <p className="text-gray-d1">
@@ -46,7 +46,7 @@ export function Faq({ classes = "" }) {
           </p>
         </li>
         <li>
-          <strong className="font-heading">
+          <strong className="">
             Why would a nonprofit want to use Better Giving?
           </strong>
           <p className="text-gray-d1">

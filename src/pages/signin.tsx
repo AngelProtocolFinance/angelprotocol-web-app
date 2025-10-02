@@ -105,7 +105,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
             className="flex-center btn-outline btn rounded-lg gap-2 h-12 sm:h-[52px] mt-6"
           >
             <Image src={googleIcon} height={18} width={18} />
-            <span className="normal-case font-heading font-semibold text-gray-d4">
+            <span className="normal-case  font-semibold text-gray-d4">
               Continue with Google
             </span>
           </button>

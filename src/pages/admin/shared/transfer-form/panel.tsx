@@ -46,7 +46,7 @@ export function Panel(props: Props) {
         </div>
       ) : (
         <div className="grid items-center grid-cols-[1fr_auto_1fr] gap-x-4 border-y border-gray-l3 py-4">
-          <p className="font-heading justify-self-end">
+          <p className=" justify-self-end">
             <span className="text-gray text-xs mr-1">from</span>
             {source.value === "liq" ? (
               <span className="text-amber font-semibold">Savings</span>
@@ -78,7 +78,7 @@ export function Panel(props: Props) {
               />
             </div>
           </button>
-          <p className="font-heading justify-self-start">
+          <p className=" justify-self-start">
             <span className="text-gray text-xs mr-1">to</span>
             {source.value === "liq" ? (
               <span className="text-green font-semibold">Investments</span>
@@ -111,7 +111,7 @@ export function Panel(props: Props) {
 
       <button
         disabled={props.is_submitting || !isDirty}
-        className="text-sm btn-blue rounded-sm p-4 font-heading uppercase font-bold mt-8"
+        className="text-sm btn-blue rounded-sm p-4  uppercase font-bold mt-8"
       >
         {props.is_submitting ? "Submitting..." : "Submit"}
       </button>

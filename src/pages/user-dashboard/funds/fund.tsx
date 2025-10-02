@@ -33,7 +33,7 @@ export const Fund = (props: IFund) => {
 
       <Link
         to={`${app_routes.funds}/${props.id}`}
-        className="mt-4 font-semibold text-gray hover:text-blue-d1 font-heading"
+        className="mt-4 font-semibold text-gray hover:text-blue-d1 "
       >
         {props.name}
       </Link>

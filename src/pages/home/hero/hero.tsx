@@ -11,7 +11,7 @@ const Hero = ({ classes = "" }) => {
         backgroundImage: `linear-gradient(to top, rgba(255,255,255) 1%, transparent), url('${banner}')`,
       }}
     >
-      <p className="text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
+      <p className="text-sm md:text-lg  uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>
       <h1 className="mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
@@ -27,7 +27,7 @@ const Hero = ({ classes = "" }) => {
       <div className="mt-8 isolate z-10 justify-self-center relative">
         <Link
           to={`${app_routes.register}/welcome`}
-          className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
+          className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
         >
           Join Us Today!
           <ArrowRight size={18} className="group-hover:translate-x-1" />

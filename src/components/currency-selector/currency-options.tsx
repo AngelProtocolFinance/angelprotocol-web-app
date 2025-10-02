@@ -41,7 +41,7 @@ export function CurrencyOptions({
         loading: <></>,
       }}
       classes={{
-        container: `${classes} font-heading bg-white w-full rounded-sm border border-gray-l3 p-2 text-sm text-gray shadow-lg`,
+        container: `${classes}  bg-white w-full rounded-sm border border-gray-l3 p-2 text-sm text-gray shadow-lg`,
       }}
     >
       {(currencies) => (

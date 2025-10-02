@@ -81,7 +81,7 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
               }
             >
               {item.icon}
-              <span className="text-sm font-heading">{item.name}</span>
+              <span className="text-sm ">{item.name}</span>
             </a>
           </MenuItem>
         ))}

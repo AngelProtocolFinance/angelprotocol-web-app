@@ -101,7 +101,7 @@ function Prompt({ recipient, open, setOpen, ...social }: IPrompt) {
       onClose={() => setOpen(false)}
       classes="grid content-start fixed-center z-20 border border-gray-l3 bg-gray-l6 dark:bg-blue-d5 text-gray-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded-sm overflow-hidden"
     >
-      <div className="grid place-items-center relative h-16 font-heading font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l3">
+      <div className="grid place-items-center relative h-16  font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l3">
         Share on {social.title}
         <button
           onClick={() => setOpen(false)}

@@ -10,9 +10,7 @@ export function FlatFilter<T>(props: GroupProps<T>) {
       value={props.selectedValues}
       onChange={props.onChange}
     >
-      <label className="font-bold text-xs font-heading uppercase mb-2">
-        {props.label}
-      </label>
+      <label className="font-bold text-xs  uppercase mb-2">{props.label}</label>
       <ListboxOptions static className="flex flex-wrap gap-x-1 gap-y-2">
         {props.options.map((option) => (
           <ListboxOption

@@ -103,8 +103,7 @@
   --text-3xs: 0.56rem, 0.7rem;
   --text-4_5xl: 2.625rem;
 
-  --font-heading: Quicksand Variable, serif;
-  --font-body: DM Sans Variable, sans-serif;
+  --font-quicksand: Quicksand Variable, serif;
   --font-gochi: Gochi Hand, cursive;
 
   --width-3\/4: 75%;
