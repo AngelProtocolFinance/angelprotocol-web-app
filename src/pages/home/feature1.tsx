@@ -1,4 +1,6 @@
-import { laira } from "assets/laira/laira";
+import laira_laptop from "assets/laira/laira-laptop.webp";
+import laira_presentation from "assets/laira/laira-presentation.webp";
+import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
 import { Video, videos } from "components/video/video";
 import { BOOK_A_DEMO } from "constants/env";
@@ -18,21 +20,21 @@ const items: TListItem[] = [
     title2: "Sign Up",
     description:
       "Get started in minutes with our quick and easy sign-up process, completely free of charge.",
-    image: { src: laira.shakeHands, width: 100, alt: "Laira negotiating" },
+    image: { src: laira_shake_hands, width: 100, alt: "Laira negotiating" },
   },
   {
     title1: "Step 2",
     title2: "Embed Donation Form ",
     description:
       "Add our customizable donation form to your website effortlessly and start raising funds immediately.",
-    image: { src: laira.laptop, width: 50, alt: "Laira using laptop" },
+    image: { src: laira_laptop, width: 50, alt: "Laira using laptop" },
   },
   {
     title1: "Step 3",
     title2: "Grow Your Funds",
     description:
       "Watch your donations grow with our high-yield savings account and expertly managed investment funds.",
-    image: { src: laira.presentation, width: 90, alt: "Laira presenting" },
+    image: { src: laira_presentation, width: 90, alt: "Laira presenting" },
   },
 ];
 

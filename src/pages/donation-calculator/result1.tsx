@@ -1,4 +1,4 @@
-import { laira } from "assets/laira/laira";
+import laira_coin from "assets/laira/laira-coin.webp";
 import { Image } from "components/image";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { toUsd } from "helpers/to-usd";
@@ -115,7 +115,7 @@ export function Result1({ classes = "", ...v }: Props) {
         {v.advantage > 0 && (
           <Image
             alt="laira holding coin"
-            src={laira.coin}
+            src={laira_coin}
             width={70}
             className="@max-md:hidden ml-auto"
           />

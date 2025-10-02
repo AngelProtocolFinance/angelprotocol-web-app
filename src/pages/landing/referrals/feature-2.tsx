@@ -1,7 +1,10 @@
-import { laira } from "assets/laira/laira";
+import laira_heart from "assets/laira/laira-heart.webp";
+import laira_laptop from "assets/laira/laira-laptop.webp";
+import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
 import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
+
 import { Link } from "react-router";
 
 type TListItem = {
@@ -16,21 +19,21 @@ export const items: TListItem[] = [
     title2: "Get Your Unique Link",
     description:
       "Sign up for a free Better Giving account and access your referral link.",
-    image: { src: laira.laptop, width: 50, alt: "Laira negotiating" },
+    image: { src: laira_laptop, width: 50, alt: "Laira negotiating" },
   },
   {
     title1: "Step 2",
     title2: "Share with Your Network",
     description:
       "Send your link to nonprofits, consultants, or anyone who could benefit.",
-    image: { src: laira.heart, width: 60, alt: "Laira using laptop" },
+    image: { src: laira_heart, width: 60, alt: "Laira using laptop" },
   },
   {
     title1: "Step 3",
     title2: "Earn Rewards",
     description:
       "Earn through Better Giving whenever your referred nonprofits succeed their donations stay 100% theirs.",
-    image: { src: laira.shakeHands, width: 90, alt: "Laira presenting" },
+    image: { src: laira_shake_hands, width: 90, alt: "Laira presenting" },
   },
 ];
 

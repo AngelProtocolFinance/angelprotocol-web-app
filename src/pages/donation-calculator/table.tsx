@@ -1,5 +1,5 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { laira } from "assets/laira/laira";
+import laira_coin from "assets/laira/laira-coin.webp";
 import { Image } from "components/image";
 import { toUsd } from "helpers/to-usd";
 import { TrendingDown, TrendingUp } from "lucide-react";
@@ -42,7 +42,7 @@ export function Table({ classes = "", ...v }: Props) {
         </div>
         {p.total > 0 && (
           <Image
-            src={laira.coin}
+            src={laira_coin}
             width={70}
             className="@max-md:hidden ml-auto"
           />

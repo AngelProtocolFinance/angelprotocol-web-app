@@ -1,5 +1,5 @@
 import char from "assets/images/celebrating-character.webp";
-import { laira } from "assets/laira/laira";
+import laira_gift from "assets/laira/laira-gift.webp";
 import { Share, donation_recipient, is_fund } from "components/donation";
 import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
@@ -33,7 +33,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 
   return metas({
     title: `Donation to ${d?.name ?? "a Nonprofit"}`,
-    image: laira.gift,
+    image: laira_gift,
     description: `I just donated to ${d?.name ?? "a nonprofit"} on Better Giving! ${d && d.id && is_fund(d.id) ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
     url: donate_url,
   });

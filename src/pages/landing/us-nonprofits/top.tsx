@@ -1,4 +1,4 @@
-import { laira } from "assets/laira/laira";
+import laira_pointing from "assets/laira/laira-pointing.webp";
 import { Image } from "components/image";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
@@ -52,7 +52,7 @@ export function Top({ className = "" }) {
           {is_page_b && (
             <div className="absolute top-1.5 max-sm:hidden -left-15 isolate">
               <Image
-                src={laira.pointing}
+                src={laira_pointing}
                 width={80}
                 className="z-10 max-sm:w-24"
               />

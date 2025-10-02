@@ -1,4 +1,4 @@
-import { laira } from "assets/laira/laira";
+import laira_announce from "assets/laira/laira-announce.webp";
 import { Image } from "components/image";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
@@ -78,7 +78,7 @@ export default function Page() {
           <div className="md:absolute md:-left-4 md:-bottom-2 shrink-0">
             <Image
               alt="laira announce"
-              src={laira.announce}
+              src={laira_announce}
               width={90}
               className="z-10 max-md:w-24"
             />

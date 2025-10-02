@@ -1,4 +1,5 @@
-import { laira } from "assets/laira/laira";
+import laira_shake_hands_x2 from "assets/laira/laira-shaking-hands-x2.webp";
+import laira_yellow from "assets/laira/laira-yellow.webp";
 import { Image } from "components/image";
 import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
@@ -22,7 +23,7 @@ export function Top({ classes = "" }) {
       <div className="flex items-baseline justify-self-center mt-4">
         <div className="relative bottom-6">
           <Image
-            src={laira.yellow}
+            src={laira_yellow}
             width={100}
             className="z-10  rotate-z-360"
           />
@@ -46,7 +47,7 @@ export function Top({ classes = "" }) {
         </div>
         <div className="relative">
           <Image
-            src={laira.shakeHandsX2}
+            src={laira_shake_hands_x2}
             width={250}
             className="z-10 rotate-z-360"
           />

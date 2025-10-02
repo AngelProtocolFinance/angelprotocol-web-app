@@ -1,6 +1,7 @@
 import logo from "assets/images/bg-logo.webp";
-import { laira } from "assets/laira/laira";
+import laira_pointing from "assets/laira/laira-pointing.webp";
 import { Image } from "components/image";
+
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
@@ -25,7 +26,7 @@ export function BottomCta({ className = "" }) {
           </Link>
           <div className="absolute -left-20 isolate">
             <Image
-              src={laira.pointing}
+              src={laira_pointing}
               width={90}
               className="z-10 max-sm:w-24"
             />

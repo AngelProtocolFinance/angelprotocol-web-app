@@ -1,5 +1,5 @@
 import type { TOnHoldStatus } from "@better-giving/donation";
-import { laira } from "assets/laira/laira";
+import laira_waiving from "assets/laira/laira-waiving.webp";
 import { Image } from "components/image";
 
 type Props = {
@@ -14,7 +14,7 @@ export function NoDonations({ classes, status }: Props) {
     >
       <Image
         alt="Laira mascot waving"
-        src={laira.waiving}
+        src={laira_waiving}
         className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2"
         width={100}
       />

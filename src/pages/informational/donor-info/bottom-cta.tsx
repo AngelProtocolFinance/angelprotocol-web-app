@@ -1,6 +1,7 @@
-import { laira } from "assets/laira/laira";
+import laira_waiving from "assets/laira/laira-waiving.webp";
 import { Image } from "components/image";
 import { app_routes } from "constants/routes";
+
 import { Link } from "react-router";
 
 export function BottomCta({ className = "" }) {
@@ -23,7 +24,7 @@ export function BottomCta({ className = "" }) {
         </Link>
       </div>
       <Image
-        src={laira.waiving}
+        src={laira_waiving}
         className="place-self-center mb-8 order-1 @5xl:order-2"
       />
     </div>

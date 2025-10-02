@@ -1,5 +1,7 @@
-import { laira } from "assets/laira/laira";
+import laira_laptop from "assets/laira/laira-laptop.webp";
+import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
+
 import { BOOK_A_DEMO } from "constants/env";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
@@ -19,13 +21,13 @@ export function BottomCta({ className = "" }) {
         className="from-blue-d1 "
         title="Ready to unlock your fundraising potential?"
         to={{ href: app_routes.register, title: "Get started" }}
-        img={{ src: laira.shakeHands, width: 140 }}
+        img={{ src: laira_shake_hands, width: 140 }}
       />
       <CtaCard
         className="from-gray-d1"
         title="Want to learn more first?"
         to={{ href: BOOK_A_DEMO, title: "Book a demo" }}
-        img={{ src: laira.laptop, width: 70 }}
+        img={{ src: laira_laptop, width: 70 }}
       />
     </div>
   );

@@ -1,4 +1,5 @@
-import { laira } from "assets/laira/laira";
+import laira_coin from "assets/laira/laira-coin.webp";
+import laira_yellow from "assets/laira/laira-yellow.webp";
 import { Image } from "components/image";
 import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
@@ -16,7 +17,7 @@ export const Top = ({ classes = "" }) => {
       <div className="relative">
         <div className="max-xl:hidden absolute left-16 isolate top-1/2 -translate-y-1/2">
           <Image
-            src={laira.coin}
+            src={laira_coin}
             width={180}
             className="z-10 max-sm:w-24 rotate-y-180"
           />
@@ -50,7 +51,7 @@ export const Top = ({ classes = "" }) => {
         </p>
         <div className="max-xl:hidden absolute right-28 top-1/3">
           <Image
-            src={laira.yellow}
+            src={laira_yellow}
             width={90}
             className="z-10 max-sm:w-24 rotate-y-180"
           />

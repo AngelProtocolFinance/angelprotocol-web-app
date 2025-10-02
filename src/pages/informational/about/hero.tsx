@@ -1,4 +1,5 @@
-import { laira } from "assets/laira/laira";
+import laira_shake_hands_x2 from "assets/laira/laira-shaking-hands-x2.webp";
+import laira_yellow from "assets/laira/laira-yellow.webp";
 import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
@@ -32,12 +33,16 @@ export function Hero({ classes = "" }) {
 
       <div className="flex justify-between lg:-mt-20 max-sm:hidden">
         <img
-          src={laira.yellow}
+          src={laira_yellow}
           width={90}
           alt="laira looking up"
           className="object-contain"
         />
-        <img src={laira.shakeHandsX2} width={150} className="object-contain" />
+        <img
+          src={laira_shake_hands_x2}
+          width={150}
+          className="object-contain"
+        />
       </div>
     </section>
   );

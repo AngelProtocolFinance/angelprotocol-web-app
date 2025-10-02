@@ -1,8 +1,9 @@
-import { laira } from "assets/laira/laira";
+import laira_waiving from "assets/laira/laira-waiving.webp";
 import { Copier } from "components/copier";
 import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
 import { Cells, TableSection } from "components/table-section";
+
 import { APP_NAME } from "constants/env";
 
 export default function WpPlugin() {
@@ -54,7 +55,7 @@ export default function WpPlugin() {
         <div className="mx-auto flex max-w-md gap-4 bg-blue-l2 p-4 my-4 rounded-sm">
           <Image
             alt="Laira mascot waving"
-            src={laira.waiving}
+            src={laira_waiving}
             className="max-sm:place-self-center"
             width={30}
           />

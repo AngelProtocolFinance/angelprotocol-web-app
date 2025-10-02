@@ -1,4 +1,5 @@
-import { laira } from "assets/laira/laira";
+import laira_happy_jump from "assets/laira/laira-happy-jump.webp";
+
 import { useEffect, useState } from "react";
 
 export default function Component() {
@@ -46,7 +47,7 @@ export default function Component() {
           Your new dashboard experience is underway
         </p>
         <img
-          src={laira.jumping}
+          src={laira_happy_jump}
           className="h-10 object-contain"
           alt="Laira jumping"
         />

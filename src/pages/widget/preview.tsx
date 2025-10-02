@@ -1,6 +1,7 @@
 import type { INpo } from "@better-giving/endowment";
-import { laira } from "assets/laira/laira";
+import laira_waiving from "assets/laira/laira-waiving.webp";
 import { type DonationState, Steps, init_details } from "components/donation";
+
 import { Image } from "components/image/image";
 import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
@@ -89,7 +90,7 @@ function Container({
     >
       <div>
         <p className="flex text-gray-d4 text-lg font-heading">
-          <Image src={laira.waiving} className="h-[45px] mr-2 pb-2" />
+          <Image src={laira_waiving} className="h-[45px] mr-2 pb-2" />
           <span className="uppercase font-bold">Live form preview</span>
         </p>
       </div>

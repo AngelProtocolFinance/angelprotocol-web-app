@@ -1,5 +1,5 @@
 import bg from "assets/images/bettergiving-logo-white.png";
-import { laira } from "assets/laira/laira";
+import laira_laptop_full from "assets/laira/laira-laptop-full.webp";
 import { BASE_URL } from "constants/env";
 import { A, Img, Pg, type Style, T, V } from "./components";
 import { Footer } from "./footer";
@@ -211,7 +211,7 @@ export function Page4() {
         }}
       >
         <Img
-          src={laira.laptopFull}
+          src={laira_laptop_full}
           style={{
             width: 150,
           }}

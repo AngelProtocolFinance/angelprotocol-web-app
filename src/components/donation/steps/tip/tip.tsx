@@ -1,8 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
-import dappLogo from "assets/images/bettergiving-logo.webp";
-import { laira } from "assets/laira/laira";
+import dapp_logo from "assets/images/bettergiving-logo.webp";
+import laira_gift from "assets/laira/laira-gift.webp";
+import laira_standing_front from "assets/laira/laira-standing-front.webp";
 import { Image } from "components/image/image";
 import { centsDecimals, humanize, roundDown } from "helpers/decimal";
 import { useState } from "react";
@@ -118,7 +119,7 @@ export function Tip(props: TipStep) {
       />
       <h4 className="mt-4 text-lg">
         One-Time Donation to{" "}
-        <Image src={dappLogo} className="inline-block h-8 px-1" />
+        <Image src={dapp_logo} className="inline-block h-8 px-1" />
       </h4>
       <p className="text-gray">
         Better Giving offers this donation service{" "}
@@ -212,7 +213,7 @@ export function Tip(props: TipStep) {
 
       <div className="rounded-sm bg-(--accent-secondary) mt-16 relative px-4 py-2 grid grid-cols-[auto_1fr] gap-x-4 items-center">
         <Image
-          src={withTip ? laira.gift : laira.standingFront}
+          src={withTip ? laira_gift : laira_standing_front}
           width={withTip ? 50 : 40}
           className=""
         />

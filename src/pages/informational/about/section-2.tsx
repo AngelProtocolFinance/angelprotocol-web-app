@@ -1,4 +1,6 @@
-import { laira } from "assets/laira/laira";
+import laira_heart from "assets/laira/laira-heart.webp";
+import laira_presentation from "assets/laira/laira-presentation.webp";
+import laira_standing from "assets/laira/laira-standing.webp";
 import { Image } from "components/image";
 
 type TListItem = {
@@ -13,21 +15,21 @@ const items: TListItem[] = [
     title2: "Transparency and honesty in everything we do",
     description:
       "As a nonprofit working with other nonprofits, we prioritize accountability and full transparency in our financial operations, fund management, and reporting.",
-    image: { src: laira.standing, width: 45 },
+    image: { src: laira_standing, width: 45 },
   },
   {
     title1: "Sustainability",
     title2: "Long-term financial sustainability",
     description:
       "We empower nonprofits with secure savings options and high-yield investment opportunities, ensuring they can grow their financial resources sustainably and create lasting impact.",
-    image: { src: laira.presentation, width: 80 },
+    image: { src: laira_presentation, width: 80 },
   },
   {
     title1: "Inclusivity",
     title2: "Access to financial tools for all nonprofits",
     description:
       "We offer free donation processing and support for organizations of all sizes, including international nonprofits through fiscal sponsorship.",
-    image: { src: laira.heart, width: 60 },
+    image: { src: laira_heart, width: 60 },
   },
 ];
 

@@ -1,4 +1,4 @@
-import { randomLaira } from "assets/laira/laira";
+import org_building from "assets/icons/org-building.svg";
 import { Image } from "components/image";
 import { Info, LoadingStatus } from "components/status";
 import { app_routes } from "constants/routes";
@@ -52,7 +52,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
       ) : (
         <SearchResult
           {...(data || page1)}
-          isLoading={state !== "idle"}
+          is_loading={state !== "idle"}
           query={query}
         />
       )}
@@ -61,11 +61,11 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
 }
 
 interface ISearchResult extends EndowCardsPage {
-  isLoading: boolean;
+  is_loading: boolean;
   query: string;
 }
 function SearchResult(props: ISearchResult) {
-  if (props.isLoading) return <LoadingStatus>Searching...</LoadingStatus>;
+  if (props.is_loading) return <LoadingStatus>Searching...</LoadingStatus>;
   if (props.items.length === 0) return <Info>No organizations found.</Info>;
 
   return (
@@ -74,24 +74,26 @@ function SearchResult(props: ISearchResult) {
         <Link
           to={`${app_routes.marketplace}/${endow.id}`}
           key={endow.id}
-          className="flex items-center gap-4 border border-gray-l3 hover:bg-blue-l4 pr-6 rounded-full overflow-clip h-10"
+          className="flex items-center gap-x-1 group/item"
         >
           {endow.card_img ? (
             <Image
+              width={26}
               src={endow.card_img}
-              className="h-full aspect-video object-cover"
+              className="aspect-square object-cover rounded-full"
             />
           ) : (
-            <div className="p-1.5 pr-0 h-full">
-              <img
-                src={randomLaira()}
-                alt="Random Laira mascot"
-                className="h-full object-contain"
-              />
-            </div>
+            <img
+              width={35}
+              src={org_building}
+              alt="small house with triangle roof"
+              className="aspect-square object-cover grayscale-100 group-hover/item:grayscale-0"
+            />
           )}
 
-          <span className="text-gray">{endow.name}</span>
+          <span className="text-gray font-heading group-hover/item:text-blue">
+            {endow.name}
+          </span>
         </Link>
       ))}
       {props.page < props.pages && (

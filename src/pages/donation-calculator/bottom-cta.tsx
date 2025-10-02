@@ -1,4 +1,5 @@
-import { laira } from "assets/laira/laira";
+import laira_calling from "assets/laira/laira-calling.webp";
+import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
 import { app_routes } from "constants/routes";
@@ -12,7 +13,7 @@ export function BottomCta({ className = "" }) {
         title="Ready to unlock your fundraising potential?"
         to={{ href: app_routes.register, title: "Get started" }}
         img={{
-          src: laira.shakeHands,
+          src: laira_shake_hands,
           width: 140,
           alt: "laira shaking hands with another character",
         }}
@@ -22,7 +23,7 @@ export function BottomCta({ className = "" }) {
         title="Want to learn more first?"
         to={{ href: BOOK_A_DEMO, title: "Book a demo" }}
         img={{
-          src: laira.calling,
+          src: laira_calling,
           width: 80,
           alt: "laira holding a phone to her ear",
         }}

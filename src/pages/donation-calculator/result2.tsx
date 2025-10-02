@@ -1,4 +1,4 @@
-import { laira } from "assets/laira/laira";
+import laira_coin from "assets/laira/laira-coin.webp";
 import { Image } from "components/image";
 import { toUsd } from "helpers/to-usd";
 import { TrendingDown, TrendingUp } from "lucide-react";
@@ -49,7 +49,7 @@ export function Result2({ classes = "", ...v }: Props) {
         </div>
         {y1.total > 0 && (
           <Image
-            src={laira.coin}
+            src={laira_coin}
             width={70}
             className="@max-md:hidden ml-auto"
           />

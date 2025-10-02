@@ -1,4 +1,4 @@
-import { laira } from "assets/laira/laira";
+import laira_laptop_full from "assets/laira/laira-laptop-full.webp";
 import { Image } from "components/image";
 import { Heart, X } from "lucide-react";
 
@@ -85,7 +85,7 @@ export function ProbSol({ className = "" }) {
       </div>
 
       <Image
-        src={laira.laptopFull}
+        src={laira_laptop_full}
         width={180}
         height={180}
         className="order-1 @6xl:order-2 justify-self-center @max-6xl:w-40 @6xl:justify-self-start self-center rotate-y-180"

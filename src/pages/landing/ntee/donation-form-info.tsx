@@ -1,7 +1,11 @@
-import { laira } from "assets/laira/laira";
+import laira_announce from "assets/laira/laira-announce.webp";
+import laira_cheering from "assets/laira/laira-cheering.webp";
+import laira_like from "assets/laira/laira-like.webp";
+import laira_presentation from "assets/laira/laira-presentation.webp";
 import { StepsCarousel } from "components/donation";
 import { Image } from "components/image";
 import { app_routes } from "constants/routes";
+
 import { Link } from "react-router";
 
 type TListItem = {
@@ -14,25 +18,25 @@ const items: TListItem[] = [
     title: "Quick, simple setup",
     description:
       "Register in minutes, we’ll review and get you started right away.",
-    image: { src: laira.cheering, width: 50 },
+    image: { src: laira_cheering, width: 50 },
   },
   {
     title: "Never miss a donation",
     description:
       "Accept cash, stocks, crypto, and DAF gifts all in one conversion-optimized form.",
-    image: { src: laira.announce, width: 50 },
+    image: { src: laira_announce, width: 50 },
   },
   {
     title: "Make it yours",
     description:
       "Apply your brand colors, customize wording and options, and easily add to your website.",
-    image: { src: laira.like, width: 40 },
+    image: { src: laira_like, width: 40 },
   },
   {
     title: "Grow your funds",
     description:
       "Choose to have your donations saved or invested to provide sustainable funding.",
-    image: { src: laira.presentation, width: 60 },
+    image: { src: laira_presentation, width: 60 },
   },
 ];
 

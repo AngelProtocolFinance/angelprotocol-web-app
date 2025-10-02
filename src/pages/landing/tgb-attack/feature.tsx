@@ -1,5 +1,8 @@
 import photo from "assets/images/bg-logo-leaf-bg.webp";
-import { laira } from "assets/laira/laira";
+import laira_heart from "assets/laira/laira-heart.webp";
+import laira_pointing from "assets/laira/laira-pointing.webp";
+import laira_presentation from "assets/laira/laira-presentation.webp";
+import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
 
 type TListItem = {
@@ -12,23 +15,23 @@ const items: TListItem[] = [
     title1: "More Ways to Give",
     description:
       "Accept crypto, stock, DAFs, and traditional payments all in one place.",
-    image: { src: laira.heart, width: 80, alt: "Laira giving heart symbol" },
+    image: { src: laira_heart, width: 80, alt: "Laira giving heart symbol" },
   },
   {
     title1: "Nonprofit-Owned",
     description: "We exist to support nonprofits, not to profit from them.",
-    image: { src: laira.shakeHands, width: 100, alt: "Laira using laptop" },
+    image: { src: laira_shake_hands, width: 100, alt: "Laira using laptop" },
   },
   {
     title1: "Zero Platform Fees",
     description: "100% of donations go directly to your cause.",
-    image: { src: laira.pointing, width: 65, alt: "Laira presenting" },
+    image: { src: laira_pointing, width: 65, alt: "Laira presenting" },
   },
   {
     title1: "Built for Long-Term Growth",
     description:
       "Free fundraising tools, savings accounts, and financial planning support.",
-    image: { src: laira.presentation, width: 90, alt: "Laira presenting" },
+    image: { src: laira_presentation, width: 90, alt: "Laira presenting" },
   },
 ];
 
