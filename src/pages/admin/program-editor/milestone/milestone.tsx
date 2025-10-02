@@ -89,7 +89,7 @@ export default function Milestone(props: Props) {
           spec={img_spec([4, 1])}
           classes={{
             container: "mb-4",
-            dropzone: "w-full @-md:aspect-4/1 h-36 @md:h-auto",
+            dropzone: "w-full @md:aspect-4/1 h-36 @md:h-auto",
           }}
           error={errors.media?.message}
         />
