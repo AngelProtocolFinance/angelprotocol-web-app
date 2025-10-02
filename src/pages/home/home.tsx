@@ -6,7 +6,7 @@ import { Animation } from "./animation";
 import Benefits from "./benefits";
 import { Blogs } from "./blogs";
 import { BottomCta } from "./bottom-cta";
-import Brands from "./brands";
+import { Brands } from "./brands";
 import { Feature1 } from "./feature1";
 import { Header } from "./header";
 import Hero from "./hero";
@@ -21,11 +21,11 @@ function Home({ loaderData: page1 }: Route.ComponentProps) {
     <div className="grid pb-4">
       <Header page1={page1} classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
+      <Brands classes="xl:container xl:mx-auto" />
       {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
 
       <Feature1 />
       <Benefits />
-      <Brands />
       <Animation />
 
       {/* <Video /> */}
