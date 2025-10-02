@@ -1,9 +1,8 @@
-import laira_laptop from "assets/laira/laira-laptop.webp";
-import laira_presentation from "assets/laira/laira-presentation.webp";
-import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
+import laira1 from "assets/laira/laira1.png";
+import laira2 from "assets/laira/laira2.png";
+import laira3 from "assets/laira/laira3.png";
 import { Image } from "components/image";
-import { Video, videos } from "components/video/video";
-import { BOOK_A_DEMO } from "constants/env";
+import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
@@ -17,64 +16,58 @@ type TListItem = {
 const items: TListItem[] = [
   {
     title1: "Step 1",
-    title2: "Sign Up",
-    description:
-      "Get started in minutes with our quick and easy sign-up process, completely free of charge.",
-    image: { src: laira_shake_hands, width: 100, alt: "Laira negotiating" },
+    title2: "Sign up",
+    description: `Join ${APP_NAME} — free, no platform or fund-management fees.`,
+    image: { src: laira1, width: 95, alt: "Laira holding number 1" },
   },
   {
     title1: "Step 2",
-    title2: "Embed Donation Form ",
+    title2: "Add the donation form ",
     description:
-      "Add our customizable donation form to your website effortlessly and start raising funds immediately.",
-    image: { src: laira_laptop, width: 50, alt: "Laira using laptop" },
+      "Fewer clicks + more donation types + express checkout = more completed gifts and monthly donors.",
+    image: { src: laira2, width: 95, alt: "Laira holding number 2" },
   },
   {
     title1: "Step 3",
-    title2: "Grow Your Funds",
+    title2: "Grow",
     description:
-      "Watch your donations grow with our high-yield savings account and expertly managed investment funds.",
-    image: { src: laira_presentation, width: 90, alt: "Laira presenting" },
+      "Let your hard earned donations work for you with passive high-yield savings & managed investments.",
+    image: { src: laira3, width: 115, alt: "Laira holding number 3" },
   },
 ];
 
-export function Feature1({ className = "" }) {
+export function Feature1({ classes = "" }) {
   return (
-    <section
-      className={`${className} pt-10 pb-20 lg:pb-0 grid content-start bg-linear-to-b from-transparent to-peach/20`}
-    >
-      <h2 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
-        Easy as 1-2-3
-      </h2>
+    <section className={`${classes} grid content-start `}>
       <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
-        How Better Giving Works
+        Easy as 1-2-3
       </h3>
-      <p className="text-gray px-10 text-center mb-2 text-xl">
-        Discover how easy it is to boost your nonprofit’s donations and achieve
-        long-term financial sustainability.
-      </p>
-
-      <Video classes="max-w-2xl justify-self-center p-4" vid={videos.about} />
 
       <ul className="mt-20 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}
       </ul>
+      <p className="text-center max-w-3xl justify-self-center mt-12 text-lg text-gray px-4">
+        We pride ourselves in helping fellow nonprofits like yours{" "}
+        <span className="font-bold">save money</span> with free donation
+        processing, <span className="font-bold">save time</span> by handling all
+        admin & reporting work, and{" "}
+        <span className="font-bold">save for your future</span> with simple but
+        powerful high-yield savings and investment options
+      </p>
       <div className="isolate z-10 flex max-md:flex-col items-center justify-self-center gap-4 mt-24">
         <Link
           to={app_routes.register}
-          className="btn-blue group isolate normal-case inline-flex items-center px-10 py-3 gap-1 text-lg relative active:translate-x-1  font-bold shadow-2xl rounded-full"
+          className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
-          <span className="ml-1">Start Today</span>
-          <ArrowRight size={18} className="group-hover:translate-x-1" />
+          Join us today!
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="group isolate normal-case inline-flex items-center px-10 py-3 gap-1 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1  font-bold rounded-full relative border border-blue-l2"
+          className="inline-flex items-center px-10 py-3 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1  font-bold rounded-full relative border border-blue-l2"
         >
-          <span className="ml-1">Book A Demo</span>
-          <ArrowRight size={18} className="group-hover:translate-x-1" />
+          Book a demo
         </Link>
       </div>
     </section>
