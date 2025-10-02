@@ -35,7 +35,7 @@ const Path = () => {
             ? app_routes.nonprofit_info
             : app_routes.donor_info
         }
-        className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1 font-heading font-bold shadow-2xl rounded-full"
+        className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1  font-bold shadow-2xl rounded-full"
       >
         <span className="mr-1">Learn more</span>
         <ArrowRight size={18} className="group-hover:translate-x-1" />

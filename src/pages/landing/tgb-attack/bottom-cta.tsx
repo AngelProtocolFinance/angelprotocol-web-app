@@ -14,13 +14,13 @@ export function BottomCta({ className = "" }) {
         <h4 className="text-center sm:text-left uppercase sm:text-lg text-white leading-normal mb-6">
           Simple. Sustainable. Free.
         </h4>
-        <h3 className="text-center sm:text-left sm:leading-snug font-heading text-2xl text-white mb-9">
+        <h3 className="text-center sm:text-left sm:leading-snug  text-2xl text-white mb-9">
           Stop paying for what should be free
         </h3>
         <div className="relative max-sm:justify-self-center">
           <Link
             to={`${app_routes.register}/welcome`}
-            className="btn-blue active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-full px-6 py-2 sm:px-10 sm:py-4"
+            className="btn-blue active:translate-x-1  uppercase font-bold shadow-2xl rounded-full px-6 py-2 sm:px-10 sm:py-4"
           >
             Start today
           </Link>

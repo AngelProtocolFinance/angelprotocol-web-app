@@ -44,7 +44,7 @@ type ProgressProps = {
 function TargetProgress({ target, total }: ProgressProps) {
   const progressPct = Math.min(1, total / target) * 100;
   return (
-    <div className="m-6 border-t border-gray-l3 pt-2 font-heading">
+    <div className="m-6 border-t border-gray-l3 pt-2 ">
       <div className="mb-2 flex items-center gap-2">
         <p className="font-medium">Target raise:</p>
         <p className="font-bold text-gray">{to_usd(target)}</p>

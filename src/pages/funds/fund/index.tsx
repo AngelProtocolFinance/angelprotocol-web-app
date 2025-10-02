@@ -94,7 +94,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
                 )}
               </div>
 
-              <h4 className="md:col-start-2 max-md:text-center font-heading font-bold text-2xl w-full break-words">
+              <h4 className="md:col-start-2 max-md:text-center  font-bold text-2xl w-full break-words">
                 {fund.name}
               </h4>
               <div className="pl-0.5">
@@ -161,7 +161,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
                 />
                 <Link
                   to={`${app_routes.marketplace}/${m.id}`}
-                  className="font-bold font-heading text-gray hover:text-blue-d1"
+                  className="font-bold  text-gray hover:text-blue-d1"
                 >
                   {m.name}
                 </Link>

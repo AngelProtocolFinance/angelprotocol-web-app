@@ -97,7 +97,7 @@ export default function Page({ loaderData: recipient }: Route.ComponentProps) {
       {!widgetVersion && (
         <Link
           to={app_routes.marketplace}
-          className="btn btn-outline h-[3.25rem] font-heading max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
+          className="btn btn-outline h-[3.25rem]  max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
         >
           Back to the platform
         </Link>

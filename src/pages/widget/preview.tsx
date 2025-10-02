@@ -89,7 +89,7 @@ function Container({
       className={`${classes} @container/preview pb-4`}
     >
       <div>
-        <p className="flex text-gray-d4 text-lg font-heading">
+        <p className="flex text-gray-d4 text-lg ">
           <Image src={laira_waiving} className="h-[45px] mr-2 pb-2" />
           <span className="uppercase font-bold">Live form preview</span>
         </p>

@@ -43,7 +43,7 @@ export const FundItem = (props: Props) => {
 
       <Link
         to={`${app_routes.funds}/${props.id}`}
-        className="mt-4 font-semibold text-gray hover:text-blue-d1 font-heading"
+        className="mt-4 font-semibold text-gray hover:text-blue-d1 "
       >
         {props.name}
       </Link>
@@ -71,7 +71,7 @@ export const FundItem = (props: Props) => {
           <button
             name="fund_id"
             value={props.id}
-            className="font-heading bg-amber enabled:hover:bg-amber-d1 text-white rounded-full px-4 py-2 text-xs flex items-center gap-1 disabled:bg-gray-l1"
+            className=" bg-amber enabled:hover:bg-amber-d1 text-white rounded-full px-4 py-2 text-xs flex items-center gap-1 disabled:bg-gray-l1"
             type="submit"
             disabled={fetcher.state !== "idle" || !props.active}
           >

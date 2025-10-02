@@ -101,10 +101,10 @@ export default function Component() {
             <table className="min-w-full divide-y divide-gray-l3">
               <thead className="bg-gray-l4">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-body font-medium text-gray-d2 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs  font-medium text-gray-d2 uppercase tracking-wider">
                     YYWW
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-body font-medium text-gray-d2 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs  font-medium text-gray-d2 uppercase tracking-wider">
                     Date & Time Range
                   </th>
                 </tr>

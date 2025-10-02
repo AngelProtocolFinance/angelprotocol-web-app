@@ -52,7 +52,7 @@ Target.Text = ({ classes = "" }) => {
         height={20}
         className="inline-block relative mr-2 bottom-1"
       />
-      <span className="text-sm font-heading font-medium text-gray">
+      <span className="text-sm font-medium text-gray">
         Help them reach their goal!
       </span>
     </p>

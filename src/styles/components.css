@@ -6,7 +6,6 @@
     align-items: center;
     text-transform: uppercase;
     font-weight: 700;
-    font-family: var(--font-heading);
     padding: calc(var(--spacing) * 3);
     border-radius: var(--radius-sm);
   }
@@ -131,7 +130,6 @@
 
   .field-input {
     width: 100%;
-    font-family: var(--font-heading);
     border-radius: var(--radius-sm);
     font-size: var(--text-sm) /* 0.875rem = 14px */;
     line-height: var(
@@ -184,7 +182,6 @@
     }
   }
   .selector-opts {
-    font-family: var(--font-heading);
     border-radius: var(--radius-xs);
     border: 1px solid var(--color-gray-l3);
     background-color: var(--color-gray-l6);

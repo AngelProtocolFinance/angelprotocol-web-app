@@ -54,7 +54,7 @@ export function ProgramSelector({
       {!program.value && (
         <label
           htmlFor="select-program"
-          className={`${styles.label} block font-semibold font-heading mb-2 text-gray-d4`}
+          className={`${styles.label} block font-semibold  mb-2 text-gray-d4`}
         >
           Select a program to donate to{" "}
           <span className="text-xs text-gray">( optional )</span>
