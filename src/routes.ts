@@ -21,7 +21,6 @@ const widget = pages.$("widget");
 const admin = pages.$("admin");
 const user = pages.$("user-dashboard");
 const layouts = new Path("./layout");
-const components = new Path("./components");
 const sign_up = pages.$("sign-up");
 const info = pages.$("informational");
 const blog = pages.$("blog");
