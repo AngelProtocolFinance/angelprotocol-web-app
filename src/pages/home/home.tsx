@@ -10,13 +10,14 @@ import { Manifesto } from "./5-manifesto";
 import { Section6 } from "./6-section";
 import { Section7 } from "./7-section";
 import { Section8 } from "./8-section";
+import { Features } from "./9-features";
 // import { Animation } from "./animation";
 // import Benefits from "./benefits";
 import { Blogs } from "./blogs";
 import { BottomCta } from "./bottom-cta";
 import { Header } from "./header";
 import Hero from "./hero";
-import Testimonials from "./testimonials";
+import { Testimonials } from "./testimonials";
 // import { Video } from "./video";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
@@ -39,8 +40,11 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       <Section6 classes="xl:container xl:mx-auto px-5" />
       <Section7 classes="xl:container xl:mx-auto px-5" />
       <Section8 classes="xl:container xl:mx-auto px-5" />
+      <Features classes="xl:container xl:mx-auto px-5" />
       {/* <Video /> */}
-      <Testimonials />
+      <div className="bg-gray-l4 py-8">
+        <Testimonials classes="xl:container xl:mx-auto px-5" />
+      </div>
       <Blogs />
       <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <Footer />

@@ -66,13 +66,13 @@ export function DonateMethods(props: FormStep) {
       data-testid="donate-methods"
       manual
       as="div"
-      className="grid @-xl/steps:grid-cols-[auto_1fr]"
+      className="grid @xl/steps:grid-cols-[auto_1fr]"
       defaultIndex={tab_idx_found === -1 ? 0 : tab_idx_found}
     >
       <Label className="p-4 pb-0 col-span-full @xl/steps:hidden font-bold">
         Payment method
       </Label>
-      <TabList className="grid @md/steps:grid-cols-2 gap-2 @xl/steps:gap-0 p-4 @xl/steps:p-0 @-xl/steps:grid-cols-[auto_1fr] @[42rem]/steps:min-w-48 content-start @xl/steps:divide-y @xl/steps:divide-white @xl/steps:border-r border-gray-l3">
+      <TabList className="grid @md/steps:grid-cols-2 gap-2 @xl/steps:gap-0 p-4 @xl/steps:p-0 @xl/steps:grid-cols-[auto_1fr] @[42rem]/steps:min-w-48 content-start @xl/steps:divide-y @xl/steps:divide-white @xl/steps:border-r border-gray-l3">
         {tabs.map((tab) => (
           <Tab key={tab} className={({ selected }) => tab_classes(selected)}>
             {methods[tab].icon}

@@ -6,7 +6,7 @@ const TestimonialCard = (props: Testimonial) => {
     <div className="@container">
       <Image
         height={240}
-        src={props.reviewer_org_logo}
+        src={props.org_logo.src}
         alt="Reviewer's organization logo"
         className="object-contain size-28 rounded-lg ml-8 bg-white shadow-xl"
       />
@@ -15,7 +15,7 @@ const TestimonialCard = (props: Testimonial) => {
         <p className="mt-4 @md:mt-0 text-lg opacity-90 font-bold">
           {props.reviewer}
         </p>
-        <p className="md:text-lg font-medium">{props.reviewer_org_role}</p>
+        <p className="md:text-lg font-medium">{props.org}</p>
       </div>
     </div>
   );

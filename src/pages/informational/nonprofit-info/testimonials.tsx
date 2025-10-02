@@ -7,7 +7,7 @@ import {
 export function Testimonials({ className = "" }) {
   return (
     <div
-      className={`${className} grid @-3xl:grid-cols-[2fr_3fr] gap-x-4 relative`}
+      className={`${className} grid @3xl:grid-cols-[2fr_3fr] gap-x-4 relative`}
     >
       <div className="@3xl:mb-40 @3xl:-mt-24 py-4 @3xl:py-0 @3xl:sticky top-16 @3xl:top-32 bottom-32 self-start z-10">
         <img
@@ -33,16 +33,16 @@ export function Testimonials({ className = "" }) {
 
 const Testimonial = (props: TTestimonial) => {
   return (
-    <div className="grid @-lg:grid-cols-[auto_1fr] border border-gray-l3 rounded-3xl p-9 gap-x-8">
+    <div className="grid @lg:grid-cols-[auto_1fr] border border-gray-l3 rounded-3xl p-9 gap-x-8">
       <img
-        src={props.reviewer_org_logo}
+        src={props.org_logo.src}
         alt="organization logo"
         className="size-24 object-contain object-center rounded-lg shadow-xl shadow-black/5 border border-gray-l3 mb-6 @lg:mb-0"
       />
       <div>
         <p className="text-xl mb-9 text-gray">{props.content}</p>
         <p className="text-lg mb-2 font-bold">{props.reviewer}</p>
-        <p className="text-gray">{props.reviewer_org_role}</p>
+        <p className="text-gray">{props.org}</p>
       </div>
     </div>
   );
