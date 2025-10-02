@@ -29,8 +29,7 @@ const Hero = ({ classes = "" }) => {
           to={`${app_routes.register}/welcome`}
           className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
         >
-          Join Us Today!
-          <ArrowRight size={18} className="group-hover:translate-x-1" />
+          Join us today!
         </Link>
 
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
