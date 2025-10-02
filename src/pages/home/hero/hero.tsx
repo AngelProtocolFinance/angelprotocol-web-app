@@ -1,4 +1,5 @@
 import banner from "assets/images/bg-banner.webp";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
@@ -17,10 +18,10 @@ const Hero = ({ classes = "" }) => {
         Raise more this quarter, <br /> Grow funds together
       </h1>
       <p className="px-6 font-medium text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
-        When you sign up, you're a Better Giving Member, no extra steps, no
-        fees. Our high-converting donation flow lifts completed gifts and
-        monthly donors. Savings and a pooled Sustainability Fund build reserves
-        over time.
+        When you sign up, you're a {APP_NAME} Member, no extra steps, no fees.
+        Our high-converting donation flow lifts completed gifts and monthly
+        donors. Savings and a pooled Sustainability Fund build reserves over
+        time.
       </p>
 
       <div className="mt-8 justify-self-center relative">

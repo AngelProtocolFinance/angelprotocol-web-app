@@ -1,3 +1,5 @@
+import { APP_NAME } from "constants/env";
+
 export function Stats({ classes = "" }) {
   return (
     <div className={`${classes} grid md:grid-cols-3 gap-8`}>
@@ -18,7 +20,7 @@ export function Stats({ classes = "" }) {
       <div className="grid justify-items-center">
         <p className="text-3xl text-center font-bold text-blue">18,000+</p>
         <p className="max-w-lg text-center mt-2 text-lg">
-          Causes discoverable across the Better Giving directory.
+          Causes discoverable across the {APP_NAME} directory.
         </p>
       </div>
     </div>
