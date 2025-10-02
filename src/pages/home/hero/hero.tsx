@@ -1,6 +1,5 @@
 import banner from "assets/images/bg-banner.webp";
 import { app_routes } from "constants/routes";
-import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
 const Hero = ({ classes = "" }) => {
@@ -11,10 +10,10 @@ const Hero = ({ classes = "" }) => {
         backgroundImage: `linear-gradient(to top, rgba(255,255,255) 1%, transparent), url('${banner}')`,
       }}
     >
-      <p className="text-sm  md:text-lg isoalte uppercase font-bold text-center mb-5 tracking-wider">
+      <p className="text-sm md:text-lg isoalte uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>
-      <h1 className="mx-auto capitalize text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
+      <h1 className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
         Raise more this quarter, <br /> Grow funds together
       </h1>
       <p className="px-6 font-medium text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">

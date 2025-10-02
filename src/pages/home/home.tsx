@@ -10,6 +10,7 @@ import { Brands } from "./brands";
 import { Feature1 } from "./feature1";
 import { Header } from "./header";
 import Hero from "./hero";
+import { Stats } from "./stats";
 import Testimonials from "./testimonials";
 // import { Video } from "./video";
 export { loader } from "./api";
@@ -21,10 +22,11 @@ function Home({ loaderData: page1 }: Route.ComponentProps) {
     <div className="grid pb-4">
       <Header page1={page1} classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
-      <Brands classes="xl:container xl:mx-auto" />
+      <Brands classes="xl:container xl:mx-auto px-5" />
+      <Stats classes="xl:container xl:mx-auto px-5 mt-16" />
       {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
 
-      <Feature1 />
+      <Feature1 classes="xl:container xl:mx-auto px-5 mt-36" />
       <Benefits />
       <Animation />
 

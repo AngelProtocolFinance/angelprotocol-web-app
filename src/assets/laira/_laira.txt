@@ -23,3 +23,6 @@ import laira_trophy from "assets/laira/laira-trophy.webp";
 import laira_waiving from "assets/laira/laira-waiving.webp";
 import laira_walking from "assets/laira/laira-walking.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
+import laira1 from "assets/laira/laira1.png";
+import laira2 from "assets/laira/laira2.png";
+import laira3 from "assets/laira/laira3.png";
