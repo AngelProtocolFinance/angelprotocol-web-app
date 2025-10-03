@@ -1,6 +1,6 @@
-import { Reorder, useDragControls, useMotionValue } from "framer-motion";
 import { unpack } from "helpers/unpack";
 import { GripVertical } from "lucide-react";
+import { Reorder, useDragControls, useMotionValue } from "motion/react";
 import type { ReactNode } from "react";
 import type { TDonateMethod } from "types/components";
 
