@@ -32,7 +32,7 @@ export function Ctas({ classes = "" }) {
       <div className="grid md:grid-cols-2 items-center">
         <div className="grid max-md:order-2">
           <h4 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
-            We help you raise more
+            We help you raise more.
           </h4>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">
