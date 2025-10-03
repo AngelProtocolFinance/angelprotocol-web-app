@@ -15,31 +15,56 @@ interface IPartner {
   url: string;
   alt: string;
   w: number;
-  h: number;
+  classes?: string;
 }
 
 const brands: IPartner[] = [
-  { url: biodiversity_group, alt: "Biodiversity Group", w: 160, h: 40 },
+  {
+    url: biodiversity_group,
+    alt: "Biodiversity Group",
+    w: 160,
+    classes: "max-md:w-32",
+  },
   {
     url: institute_for_citizens_and_scholars,
     alt: "Institute for Citizens and Scholars",
     w: 140,
-    h: 40,
+    classes: "max-md:w-32",
   },
-  { url: self, alt: "Self", w: 160, h: 40 },
-  { url: plan_for_hope, alt: "Plan for Hope", w: 140, h: 40 },
-  { url: buckminster_fuller, alt: "Buckminster Fuller", w: 200, h: 40 },
-  { url: tutti_cancer_warriors, alt: "Tutti Cancer Warriors", w: 200, h: 40 },
-  { url: core, alt: "Core", w: 120, h: 40 },
-  { url: circle_of_care, alt: "Circle of Care", w: 200, h: 40 },
-  { url: foodbank_bali, alt: "Foodbank Bali", w: 90, h: 40 },
-  { url: yellow_boat, alt: "Yellow Boat", w: 110, h: 40 },
-  { url: nine_lives_project, alt: "Nine Lives Project", w: 90, h: 40 },
+  { url: self, alt: "Self", w: 160, classes: "max-md:w-32" },
+  { url: plan_for_hope, alt: "Plan for Hope", w: 140, classes: "max-md:w-32" },
+  {
+    url: buckminster_fuller,
+    alt: "Buckminster Fuller",
+    w: 200,
+    classes: "max-md:w-32",
+  },
+  {
+    url: tutti_cancer_warriors,
+    alt: "Tutti Cancer Warriors",
+    w: 200,
+    classes: "max-md:w-32",
+  },
+  { url: core, alt: "Core", w: 120, classes: "max-md:w-24" },
+  {
+    url: circle_of_care,
+    alt: "Circle of Care",
+    w: 200,
+    classes: "max-md:w-32",
+  },
+  { url: foodbank_bali, alt: "Foodbank Bali", w: 90, classes: "max-md:w-18" },
+  { url: yellow_boat, alt: "Yellow Boat", w: 110, classes: "max-md:w-18" },
+  {
+    url: nine_lives_project,
+    alt: "Nine Lives Project",
+    w: 90,
+    classes: "max-md:w-18",
+  },
   {
     url: ace_of_hearts_dog_rescue,
     alt: "Ace of Hearts Dog Rescue",
+    classes: "max-md:w-18",
     w: 90,
-    h: 40,
   },
 ];
 
@@ -50,14 +75,13 @@ export function Partners({ classes = "" }) {
         Join <span className="font-semibold text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
       </h2>
-      <div className="grid max-sm:gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 items-center justify-items-center">
+      <div className="max-sm:flex justify-center items-center flex-wrap gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-items-center">
         {brands.map((b, idx) => (
           <img
             key={idx}
             src={b.url}
             width={b.w}
-            height={b.h}
-            className="object-contain mx-6 hover:scale-110"
+            className={`object-contain ${b.classes}`}
             alt="organization logo"
           />
         ))}
