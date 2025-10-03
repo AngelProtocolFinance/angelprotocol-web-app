@@ -104,7 +104,7 @@ export function Features({ classes = "" }) {
       <h4 className="text-lg  text-blue-d1 uppercase -mb-4 col-span-full text-center xl:text-left">
         Features
       </h4>
-      <div className="row-span-2 col-span-full xl:col-span-2 pb-8">
+      <div className="row-span-2 col-span-full pb-8">
         <h3 className="text-2xl xl:text-3xl text-gray-d3 mb-4 text-center xl:text-left">
           Smarter Tools for Seamless Fundraising
         </h3>
