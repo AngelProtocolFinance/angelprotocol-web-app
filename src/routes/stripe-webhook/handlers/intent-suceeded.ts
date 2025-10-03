@@ -49,7 +49,8 @@ export async function handle_intent_succeeded(
     status: "pending",
   });
 
-  const final = to_final(onhold, settled);
+  // unique tx id per record
+  const final = to_final({ ...onhold, transactionId: intent.id }, settled);
   const res = await qstash.publishJSON({
     body: final,
     url: `${base_url}/q/final-recorder`,
