@@ -6,7 +6,7 @@ import type { IPost } from "types/wordpress";
 
 export const BlogCard = (props: IPost) => {
   return (
-    <div className="h-[27rem] has-[.pending]:grayscale grid gap-3 pb-5 rounded-3xl bg-white">
+    <div className="relative hover:border-blue h-[27rem] has-[.pending]:grayscale grid gap-3 pb-5 rounded-3xl bg-white">
       <Media
         sizes="(max-width: 640px) 100vw, 33vw"
         id={props.featured_media}
@@ -24,7 +24,11 @@ export const BlogCard = (props: IPost) => {
       />
       <NavLink
         to={`${app_routes.blog}/${props.slug}`}
-        className="self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
+        className="absolute inset-0"
+      />
+      <NavLink
+        to={`${app_routes.blog}/${props.slug}`}
+        className="z-10 justify-self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
       >
         Read More
         <span className="sr-only">: {props.slug.replace(/-/g, " ")}</span>
