@@ -14,26 +14,22 @@ const Hero = ({ classes = "" }) => {
       <p className="text-sm md:text-lg isoalte uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>
-      <h1 className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
+      <h1 className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-8 px-6 ">
         Raise more this quarter, <br /> Grow funds together
       </h1>
-      <p className="px-6 font-medium text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
+      <p className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center text-pretty sm:text-balance">
         When you sign up, you're a {APP_NAME} Member, no extra steps, no fees.
         Our high-converting donation flow lifts completed gifts and monthly
         donors. Savings and a pooled Sustainability Fund build reserves over
         time.
       </p>
 
-      <div className="mt-8 justify-self-center relative">
-        <Link
-          to={`${app_routes.register}/welcome`}
-          className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
-        >
-          Join us today!
-        </Link>
-
-        <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
-      </div>
+      <Link
+        to={`${app_routes.register}/welcome`}
+        className="btn-blue ml-1 justify-self-center mt-8 active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
+      >
+        Join us today!
+      </Link>
     </section>
   );
 };

@@ -10,6 +10,10 @@ export const npo_donors = async (
     limit: 10,
   });
 
+  if (donors.length === 0) {
+    return { items: [], next: undefined };
+  }
+
   //get user's metadata
   const tables_users_meta = "users-meta";
   const distinct_donor_ids = new Set<string>(donors.map((x) => x.donor_id));
