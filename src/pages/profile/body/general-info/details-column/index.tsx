@@ -1,58 +1,65 @@
-import type { IPrettyBalance } from "@better-giving/balance";
+import type { INpo } from "@better-giving/endowment";
 import { Target, to_target } from "components/target";
 import { app_routes, reg_routes } from "constants/routes";
 import type { PropsWithChildren, ReactNode } from "react";
-import { NavLink, useOutletContext } from "react-router";
-import { useProfileContext } from "../../../profile-context";
+import { NavLink } from "react-router";
 import Socials from "./socials";
-import Tags from "./tags";
+import { Tags } from "./tags";
 
 interface Props {
   fundraisers?: ReactNode;
+  npo: INpo;
+  bal_ltd: number;
   classes?: string;
 }
 
-export function DetailsColumn({ classes = "", fundraisers }: Props) {
-  const p = useProfileContext();
-  const bal = useOutletContext() as IPrettyBalance;
-  const { active_in_countries = [] } = p;
+export function DetailsColumn({
+  classes = "",
+  fundraisers,
+  npo,
+  bal_ltd,
+}: Props) {
   return (
     <div className="flex flex-col gap-6 w-full">
       <div className={`${classes} w-full lg:w-96`}>
         <div className="flex flex-col gap-8 w-full p-8 border border-gray-l3 rounded-sm">
-          {p.registration_number && (
-            <Detail title="registration no.">{p.registration_number}</Detail>
+          {npo.registration_number && (
+            <Detail title="registration no.">{npo.registration_number}</Detail>
           )}
-          {p.street_address && (
-            <Detail title="address">{p.street_address}</Detail>
+          {npo.street_address && (
+            <Detail title="address">{npo.street_address}</Detail>
           )}
           <Detail title="active in">
-            {active_in_countries.length === 0
-              ? p.hq_country
-              : active_in_countries.join(", ")}
+            {npo.active_in_countries.length === 0
+              ? npo.hq_country
+              : npo.active_in_countries.join(", ")}
           </Detail>
-          <Tags {...p} />
-          {p.social_media_urls && (
-            <Socials social_media_urls={p.social_media_urls} />
+          <Tags
+            sdgs={npo.sdgs}
+            designation={npo.endow_designation}
+            kyc_donors_only={npo.kyc_donors_only}
+          />
+          {npo.social_media_urls && (
+            <Socials social_media_urls={npo.social_media_urls} />
           )}
-          {p.target && (
+          {npo.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.ltd}
-              target={to_target(p.target)}
+              progress={bal_ltd}
+              target={to_target(npo.target)}
               classes="-mb-5 mt-4"
             />
           )}
           <NavLink
-            to={`${app_routes.donate}/${p.id}`}
+            to={`${app_routes.donate}/${npo.id}`}
             className="w-full btn btn-blue h-12 px-6 text-base lg:text-sm"
           >
             Donate now
           </NavLink>
         </div>
-        {p.claimed === false && (
+        {npo.claimed === false && (
           <NavLink
-            to={`${app_routes.register}/${reg_routes.welcome}?claim=${p.registration_number}`}
+            to={`${app_routes.register}/${reg_routes.welcome}?claim=${npo.registration_number}`}
             className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l3 rounded-sm"
           >
             Claim this organization

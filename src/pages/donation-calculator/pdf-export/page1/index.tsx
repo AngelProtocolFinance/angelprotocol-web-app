@@ -1,7 +1,7 @@
 import bg from "assets/images/bettergiving-logo-white.png";
 import { BASE_URL } from "constants/env";
 import { format } from "date-fns";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
 import type { View as TView } from "../../types";
 import { A, Img, Pg, T, V } from "../components";
@@ -100,7 +100,7 @@ export function Page1({ v }: Props) {
           <V style={styles.kv}>
             <T style={{ fontSize: fs.base }}>Annual Online Donations</T>
             <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
-              {toUsd(v.amount)}
+              {to_usd(v.amount)}
             </T>
           </V>
           <V style={styles.kv}>
@@ -120,7 +120,7 @@ export function Page1({ v }: Props) {
           <V style={styles.kv}>
             <T style={{ fontSize: fs.base }}>Annual Platform Subscription</T>
             <T style={{ fontSize: fs.sm, fontWeight: fw.sb }}>
-              {toUsd(v.ogSubsCost)}
+              {to_usd(v.ogSubsCost)}
             </T>
           </V>
         </V>

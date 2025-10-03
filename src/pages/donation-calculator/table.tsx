@@ -1,7 +1,7 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import laira_coin from "assets/laira/laira-coin.webp";
 import { Image } from "components/image";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { useState } from "react";
 import type { View } from "./types";
@@ -90,21 +90,21 @@ export function Table({ classes = "", ...v }: Props) {
                     <tbody>
                       <tr>
                         <td>Savings Account (4%)</td>
-                        <td>{toUsd(x.end.liq - x.liq)}</td>
-                        <td>{toUsd(x.end.liq)}</td>
-                        <td>{toUsd(x.liq)}</td>
+                        <td>{to_usd(x.end.liq - x.liq)}</td>
+                        <td>{to_usd(x.end.liq)}</td>
+                        <td>{to_usd(x.liq)}</td>
                       </tr>
                       <tr>
                         <td>Sustainability Fund (20%)</td>
-                        <td>{toUsd(x.end.lock - x.lock)}</td>
-                        <td>{toUsd(x.end.lock)}</td>
-                        <td>{toUsd(x.lock)}</td>
+                        <td>{to_usd(x.end.lock - x.lock)}</td>
+                        <td>{to_usd(x.end.lock)}</td>
+                        <td>{to_usd(x.lock)}</td>
                       </tr>
                       <tr>
                         <td>Total</td>
-                        <td>{toUsd(x.end.total - x.total)}</td>
-                        <td>{toUsd(x.end.total)}</td>
-                        <td>{toUsd(x.total)}</td>
+                        <td>{to_usd(x.end.total - x.total)}</td>
+                        <td>{to_usd(x.end.total)}</td>
+                        <td>{to_usd(x.total)}</td>
                       </tr>
                     </tbody>
                   </table>

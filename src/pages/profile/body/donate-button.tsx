@@ -1,18 +1,16 @@
 import { app_routes } from "constants/routes";
 import { NavLink } from "react-router";
-import { useProfileContext } from "../profile-context";
 
-export default function DonateButton({
-  className = "",
-}: {
-  className?: string;
-}) {
-  const profile = useProfileContext();
+interface Props {
+  id: number;
+  classes?: string;
+}
 
+export function DonateButton({ classes = "", id }: Props) {
   return (
     <NavLink
-      to={`${app_routes.donate}/${profile.id}`}
-      className={`${className} btn btn-blue h-12 px-6 text-base lg:text-sm`}
+      to={`${app_routes.donate}/${id}`}
+      className={`${classes} btn btn-blue h-12 px-6 text-base lg:text-sm`}
     >
       Donate now
     </NavLink>

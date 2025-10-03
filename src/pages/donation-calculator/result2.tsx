@@ -1,6 +1,6 @@
 import laira_coin from "assets/laira/laira-coin.webp";
 import { Image } from "components/image";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import type { View } from "./types";
 import { Usd } from "./usd";
@@ -22,14 +22,14 @@ export function Result2({ classes = "", ...v }: Props) {
           <p className="max-sm:text-sm text-gray">
             Savings Account Growth (4%):
           </p>
-          <p className=" font-semibold">{toUsd(y1.liq)}</p>
+          <p className=" font-semibold">{to_usd(y1.liq)}</p>
         </div>
 
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
           <p className="max-sm:text-sm text-gray">
             Sustainability Fund Growth (20%):
           </p>
-          <p className=" font-semibold">{toUsd(y1.lock)}</p>
+          <p className=" font-semibold">{to_usd(y1.lock)}</p>
         </div>
       </div>
 

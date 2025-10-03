@@ -1,4 +1,4 @@
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import type { Growth } from "../../types";
 import { T, V } from "../components";
 import { fs, fw, green, w } from "../styles";
@@ -29,7 +29,7 @@ export function ImpactCard(p: Props) {
             fontSize: fs.base,
           }}
         >
-          {toUsd(p.total)}
+          {to_usd(p.total)}
         </T>
       </V>
 
@@ -55,7 +55,7 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Invested:</T>
-        <T>{toUsd(p.liq)}</T>
+        <T>{to_usd(p.liq)}</T>
       </V>
       <V
         style={{
@@ -69,7 +69,7 @@ export function ImpactCard(p: Props) {
       >
         <T style={{ marginRight: w["2"] }}>Growth:</T>
         <T style={{ color: green.d, fontWeight: fw.sb }}>
-          {toUsd(p.end.liq - p.liq)}
+          {to_usd(p.end.liq - p.liq)}
         </T>
       </V>
       <V
@@ -83,7 +83,7 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Balance:</T>
-        <T>{toUsd(p.end.liq)}</T>
+        <T>{to_usd(p.end.liq)}</T>
       </V>
 
       <T
@@ -108,7 +108,7 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Invested:</T>
-        <T>{toUsd(p.lock)}</T>
+        <T>{to_usd(p.lock)}</T>
       </V>
       <V
         style={{
@@ -122,7 +122,7 @@ export function ImpactCard(p: Props) {
       >
         <T style={{ marginRight: w["2"] }}>Growth:</T>
         <T style={{ color: green.d, fontWeight: fw.sb }}>
-          {toUsd(p.end.lock - p.lock)}
+          {to_usd(p.end.lock - p.lock)}
         </T>
       </V>
       <V
@@ -136,7 +136,7 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Balance:</T>
-        <T>{toUsd(p.end.lock)}</T>
+        <T>{to_usd(p.end.lock)}</T>
       </V>
 
       <V
@@ -150,7 +150,7 @@ export function ImpactCard(p: Props) {
         }}
       >
         <T style={{ marginRight: w["2"] }}>Total Growth:</T>
-        <T style={{ color: green.d, fontWeight: fw.b }}>{toUsd(p.total)}</T>
+        <T style={{ color: green.d, fontWeight: fw.b }}>{to_usd(p.total)}</T>
       </V>
 
       <V
@@ -178,7 +178,7 @@ export function ImpactCard(p: Props) {
             fontSize: fs.base,
           }}
         >
-          {toUsd(p.end.total)}
+          {to_usd(p.end.total)}
         </T>
       </V>
     </V>

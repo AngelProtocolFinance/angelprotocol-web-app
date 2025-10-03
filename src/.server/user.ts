@@ -1,3 +1,4 @@
+import type { DetailedUser, UserV2 } from "types/auth";
 import type { INpoBookmark, IUserNpo2 } from "types/user";
 import { npodb, userdb } from "./aws/db";
 export async function user_bookmarks(user: string): Promise<INpoBookmark[]> {
@@ -28,3 +29,11 @@ export async function user_npos(user: string): Promise<IUserNpo2[]> {
     logo: m.get(x.id)?.logo,
   }));
 }
+
+export const to_detailed = (user: UserV2): DetailedUser => {
+  return {
+    ...user,
+    bookmarks: user_bookmarks(user.email),
+    orgs: user_npos(user.email),
+  };
+};

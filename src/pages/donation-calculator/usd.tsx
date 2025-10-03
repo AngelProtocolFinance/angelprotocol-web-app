@@ -1,4 +1,4 @@
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 
 interface Props {
   children: number;
@@ -25,7 +25,7 @@ export function Usd({
     >
       {parens && "("}
       {is_plus && sign ? "+" : ""}
-      {toUsd(num)}
+      {to_usd(num)}
       {parens && ")"}
     </span>
   );

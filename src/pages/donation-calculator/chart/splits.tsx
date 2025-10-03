@@ -1,4 +1,4 @@
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 interface Props {
   classes?: string;
   notGranted: number;
@@ -17,7 +17,7 @@ export function Splits({ classes = "", ...v }: Props) {
         <p className="text-right font-semibold text-xs">
           Annual Saved/Invested
         </p>
-        <span className="text-right">{toUsd(v.notGranted)}</span>
+        <span className="text-right">{to_usd(v.notGranted)}</span>
       </div>
       <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
         <p>
@@ -28,7 +28,7 @@ export function Splits({ classes = "", ...v }: Props) {
             ({(v.savingsRate * 100).toFixed(0)}%)
           </span>
         </p>
-        <span className="text-right">{toUsd(v.savings)}</span>
+        <span className="text-right">{to_usd(v.savings)}</span>
       </div>
       <div className="grid @lg:pb-2 border-gray-l3 @lg:px-2">
         <p>
@@ -39,7 +39,7 @@ export function Splits({ classes = "", ...v }: Props) {
             ({(v.investedRate * 100).toFixed(0)}%)
           </span>
         </p>
-        <span className="text-right">{toUsd(v.invested)}</span>
+        <span className="text-right">{to_usd(v.invested)}</span>
       </div>
     </div>
   );

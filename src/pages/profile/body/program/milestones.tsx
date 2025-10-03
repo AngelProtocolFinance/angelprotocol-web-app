@@ -2,14 +2,14 @@ import type { IMilestone } from "@better-giving/endowment";
 import { Image } from "components/image";
 import { RichText } from "components/rich-text";
 import { Info } from "components/status";
-import Container from "../common/container";
+import { Container } from "../common/container";
 
 type Props = {
   classes?: string;
   milestones: IMilestone[];
 };
 
-export default function Milestones({ classes = "", milestones }: Props) {
+export function Milestones({ classes = "", milestones }: Props) {
   return (
     <Container
       title="Milestones"

@@ -1,4 +1,4 @@
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import {
   Area,
   AreaChart,
@@ -50,7 +50,7 @@ export function Chart({ points }: Props) {
               total: "Total Financial Advantage",
             };
 
-            return [toUsd(Number(value)), labels[name] || String(name)];
+            return [to_usd(Number(value)), labels[name] || String(name)];
           }}
         />
         <Legend

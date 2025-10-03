@@ -1,29 +1,37 @@
+import { $int_gte1, segment } from "@better-giving/schemas";
 import { BookmarkBtn } from "components/bookmark-btn";
 import { Breadcrumbs } from "components/breadcrumbs";
 import { ExtLink } from "components/ext-link";
 import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { app_routes } from "constants/routes";
-import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import { useProfileContext } from "../profile-context";
+import { parse, union } from "valibot";
 import type { Route } from "./+types/body";
-import { npoId } from "./common/npo-id";
-import { baldb } from ".server/aws/db";
+import { cognito } from ".server/auth";
+import { baldb, npodb } from ".server/aws/db";
+import { to_detailed } from ".server/user";
 
-export const loader = async ({ params }: Route.LoaderArgs) => {
-  const id = await npoId(params.id);
-  if (typeof id !== "number") return id;
-  return baldb.npo_balance(id);
+export const loader = async ({ params, request }: Route.LoaderArgs) => {
+  const { user } = await cognito.retrieve(request);
+  const id = parse(union([segment, $int_gte1]), params.id);
+  const npo = await npodb.npo(id);
+
+  if (!npo) return new Response(null, { status: 404 });
+
+  return {
+    user: user ? to_detailed(user) : null,
+    npo,
+    bal: await baldb.npo_balance(npo.id),
+  };
 };
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export default CacheRoute(Page);
 
-function Page({ loaderData: bal }: Route.ComponentProps) {
-  const p = useProfileContext();
-  const user = useRootData();
+function Page({ loaderData }: Route.ComponentProps) {
+  const { bal, npo, user } = loaderData;
 
   return (
     <div className="flex justify-center items-center w-full h-full">
@@ -36,19 +44,19 @@ function Page({ loaderData: bal }: Route.ComponentProps) {
               to: `${app_routes.marketplace}/`,
               end: true,
             },
-            { title: p.name, to: `${app_routes.marketplace}/${p.id}` },
+            { title: npo.name, to: `${app_routes.marketplace}/${npo.id}` },
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
-          {p.target && (
+          {npo.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
               progress={bal.ltd}
-              target={to_target(p.target)}
+              target={to_target(npo.target)}
             />
           )}
           <NavLink
-            to={`${app_routes.donate}/${p.id}`}
+            to={`${app_routes.donate}/${npo.id}`}
             className="btn btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now
@@ -59,35 +67,35 @@ function Page({ loaderData: bal }: Route.ComponentProps) {
           <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
             <div className="flex max-sm:flex-col items-center gap-3">
               <h3 className="font-header text-3xl w-full max-w-2xl break-words">
-                {(p.claimed ?? true) && (
+                {(npo.claimed ?? true) && (
                   <VerifiedIcon
                     classes="relative inline bottom-px mr-2"
                     size={27}
                   />
                 )}
-                <span>{p.name}</span>
+                <span>{npo.name}</span>
               </h3>
-              <BookmarkBtn endowId={p.id} user={user} />
+              <BookmarkBtn endowId={npo.id} user={user} />
             </div>
-            <p className="w-full font-normal text-lg">{p.tagline}</p>
+            <p className="w-full font-normal text-lg">{npo.tagline}</p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
-            {p.hq_country && (
+            {npo.hq_country && (
               <span className="flex items-center gap-2 uppercase">
                 <MapPin className="text-blue-d1" size={20} />
-                {p.hq_country}
+                {npo.hq_country}
               </span>
             )}
 
-            {p.url && (
+            {npo.url && (
               <span className="flex items-center gap-2">
                 <Globe className="text-blue-d1" size={20} />
                 <ExtLink
-                  href={p.url}
+                  href={npo.url}
                   title="organization website"
                   className="cursor-pointer underline decoration-1 hover:text-blue-d1 hover:decoration-2"
                 >
-                  {p.url.replace(/^https?:\/\//i, "")}
+                  {npo.url.replace(/^https?:\/\//i, "")}
                 </ExtLink>
               </span>
             )}

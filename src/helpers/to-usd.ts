@@ -6,7 +6,7 @@ const usd = (decimals = 0) =>
     maximumFractionDigits: decimals,
   });
 
-export function toUsd(num: number): string {
+export function to_usd(num: number): string {
   const n = Math.abs(num);
   if (n < 1_000_000) {
     return usd().format(num); // Exact whole-dollar amounts

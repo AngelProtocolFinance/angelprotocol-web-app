@@ -1,5 +1,5 @@
 import diversity from "assets/icons/diversity.svg";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import type { ReactNode } from "react";
 
 export interface ITarget {
@@ -31,11 +31,11 @@ export function Target({ text, target, classes = "", progress }: ITarget) {
       </div>
       <div className="flex items-center justify-between mt-1">
         <p className="flex items-center gap-x-1 text-sm text-gray">
-          <span className="font-medium">{toUsd(progress)}</span>
+          <span className="font-medium">{to_usd(progress)}</span>
           <span className="text-xs">Raised</span>
         </p>
         <p className="flex items-center gap-x-1 text-sm text-gray">
-          <span className="font-medium">{toUsd(to)}</span>
+          <span className="font-medium">{to_usd(to)}</span>
           <span className="text-xs">Goal</span>
         </p>
       </div>

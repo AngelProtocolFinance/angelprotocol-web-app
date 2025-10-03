@@ -1,7 +1,7 @@
 import { RichText } from "components/rich-text";
-import { toUsd } from "helpers/to-usd";
-import Container from "../common/container";
-import Milestones from "./milestones";
+import { to_usd } from "helpers/to-usd";
+import { Container } from "../common/container";
+import { Milestones } from "./milestones";
 
 import { richTextStyles } from "components/rich-text";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
@@ -47,7 +47,7 @@ function TargetProgress({ target, total }: ProgressProps) {
     <div className="m-6 border-t border-gray-l3 pt-2 font-heading">
       <div className="mb-2 flex items-center gap-2">
         <p className="font-medium">Target raise:</p>
-        <p className="font-bold text-gray">{toUsd(target)}</p>
+        <p className="font-bold text-gray">{to_usd(target)}</p>
       </div>
       <div className="h-4 rounded-full bg-gray-l4 relative overflow-clip">
         <div className="h-full bg-green" style={{ width: `${progressPct}%` }} />
@@ -55,7 +55,7 @@ function TargetProgress({ target, total }: ProgressProps) {
       {total ? (
         <div className="mt-1 flex items-center gap-2 text-sm text-gray">
           <p>Donations received</p>
-          <p>{toUsd(total)}</p>
+          <p>{to_usd(total)}</p>
         </div>
       ) : null}
     </div>

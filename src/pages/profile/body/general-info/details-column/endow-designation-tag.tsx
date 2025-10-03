@@ -18,14 +18,14 @@ const icons: {
   Other: HeartHandshake,
 };
 
-export default function EndowDesignationTag({
+export function EndowDesignationTag({
   endow_designation,
-}: Pick<INpo, "endow_designation">) {
+}: { endow_designation: EndowDesignation }) {
   if (endow_designation === "Other") return null;
   const Ico = icons[endow_designation];
 
   return (
-    <div className="flex flex-col items-start gap-3">
+    <div className="space-y-3">
       <Tag>
         <Ico size={20} /> {endow_designation}
       </Tag>

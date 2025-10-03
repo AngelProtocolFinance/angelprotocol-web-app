@@ -1,5 +1,5 @@
 import type { IPrettyBalance } from "@better-giving/balance";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { useOutletContext } from "react-router";
 
 export default function Balances() {
@@ -19,7 +19,7 @@ function Balance(props: { title: string; amount: number }) {
         {props.title}
       </p>
       <p className="font-normal text-lg text-gray dark:text-gray">
-        {toUsd(props.amount)}
+        {to_usd(props.amount)}
       </p>
     </div>
   );

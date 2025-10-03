@@ -8,13 +8,8 @@ type Props = PropsWithChildren<{
   classes?: string;
 }>;
 
-export default function Container({
-  expanded,
-  title,
-  children,
-  classes = "",
-}: Props) {
-  const [isOpen, setOpen] = useState(true);
+export function Container({ expanded, title, children, classes = "" }: Props) {
+  const [open, set_open] = useState(true);
 
   return (
     <div
@@ -24,12 +19,12 @@ export default function Container({
         <StaticHeader title={title} />
       ) : (
         <Header
-          isOpen={isOpen}
+          is_open={open}
           title={title}
-          onClick={() => setOpen((prev) => !prev)}
+          on_click={() => set_open((prev) => !prev)}
         />
       )}
-      {isOpen && children}
+      {open && children}
     </div>
   );
 }
@@ -53,17 +48,17 @@ function StaticHeader({ title, classes = "", children }: HeaderProps) {
 
 function Header(props: {
   title: string;
-  isOpen: boolean;
-  onClick: () => void;
+  is_open: boolean;
+  on_click: () => void;
 }) {
   return (
-    <StaticHeader classes={props.isOpen ? "border-b" : ""} title={props.title}>
+    <StaticHeader classes={props.is_open ? "border-b" : ""} title={props.title}>
       <button
-        onClick={props.onClick}
+        onClick={props.on_click}
         className="flex items-center justify-center p-px w-10 h-10 border border-gray-l3 rounded-sm"
         aria-label="toggle section content's visibility"
       >
-        {props.isOpen ? <Minus size={18} /> : <Plus size={18} />}
+        {props.is_open ? <Minus size={18} /> : <Plus size={18} />}
       </button>
     </StaticHeader>
   );

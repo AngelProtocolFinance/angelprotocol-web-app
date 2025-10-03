@@ -1,4 +1,4 @@
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { T } from "./components";
 import { fs } from "./styles";
 
@@ -23,7 +23,7 @@ export function Usd({ parens, relative = 0, sign, children: num }: Props) {
     >
       {parens && "("}
       {is_plus && sign ? "+" : ""}
-      {toUsd(num)}
+      {to_usd(num)}
       {parens && ")"}
     </T>
   );

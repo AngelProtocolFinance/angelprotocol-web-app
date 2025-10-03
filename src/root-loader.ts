@@ -1,11 +1,9 @@
 import { Buffer } from "node:buffer";
 import { addDays } from "date-fns";
 import { search } from "helpers/https";
-import { type LoaderFunctionArgs, data, redirect } from "react-router";
-import type { DetailedUser } from "types/auth";
-import { cognito, oauth } from ".server/auth";
+import { type LoaderFunctionArgs, redirect } from "react-router";
+import { oauth } from ".server/auth";
 import { reg_cookie } from ".server/cookie";
-import { user_bookmarks, user_npos } from ".server/user";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   /** handle oauth if applicable */
@@ -47,16 +45,4 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     headers.append("set-cookie", rc_commit);
     return redirect(redirectTo, { headers });
   }
-
-  const { user, headers } = await cognito.retrieve(cookie_header);
-  headers?.append("set-cookie", rc_commit);
-  if (!user) return data(null, { headers });
-
-  const duser: DetailedUser = {
-    ...user,
-    bookmarks: user_bookmarks(user.email),
-    orgs: user_npos(user.email),
-  };
-
-  return data(duser, { headers });
 };

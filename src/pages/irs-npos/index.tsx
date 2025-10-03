@@ -5,7 +5,7 @@ import { RangeFilter } from "./range-filter";
 
 import { ExtLink } from "components/ext-link";
 import { toYYYMMDD } from "components/form";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { XIcon } from "lucide-react";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
@@ -320,18 +320,18 @@ function Page({ loaderData: data }: Route.ComponentProps) {
                   <td>{d.asset_code}</td>
                   <td>
                     {d.asset_amount && !Number.isNaN(d.asset_amount)
-                      ? toUsd(d.asset_amount)
+                      ? to_usd(d.asset_amount)
                       : "-"}
                   </td>
                   <td>{d.income_code}</td>
                   <td>
                     {d.income_amount && !Number.isNaN(d.income_amount)
-                      ? toUsd(d.income_amount)
+                      ? to_usd(d.income_amount)
                       : "-"}
                   </td>
                   <td>
                     {d.revenue_amount && !Number.isNaN(d.revenue_amount)
-                      ? toUsd(d.revenue_amount)
+                      ? to_usd(d.revenue_amount)
                       : "-"}
                   </td>
 

@@ -2,7 +2,7 @@ import { Info } from "components/status";
 import { app_routes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { Link, Outlet } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
@@ -35,7 +35,7 @@ function Page({ loaderData: { subs } }: Route.ComponentProps) {
             <span>{humanize(s.amount, 2)}</span>
             {s.denom !== "USD" && (
               <span className="text-xs text-gray-d1">
-                ({toUsd(s.amount_usd)})
+                ({to_usd(s.amount_usd)})
               </span>
             )}
           </div>

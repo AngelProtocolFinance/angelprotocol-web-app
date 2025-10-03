@@ -1,7 +1,7 @@
 import laira_coin from "assets/laira/laira-coin.webp";
 import { Image } from "components/image";
 import { Arrow, Content, Tooltip } from "components/tooltip";
-import { toUsd } from "helpers/to-usd";
+import { to_usd } from "helpers/to-usd";
 import { CircleHelpIcon, TrendingDown, TrendingUp } from "lucide-react";
 import type { View } from "./types";
 import { Usd } from "./usd";
@@ -19,7 +19,7 @@ export function Result1({ classes = "", ...v }: Props) {
 
       <div className="mb-6">
         <p className="text-gray">Current Online Donations</p>
-        <p className="text-lg sm:text-xl font-bold">{toUsd(v.amount)}</p>
+        <p className="text-lg sm:text-xl font-bold">{to_usd(v.amount)}</p>
       </div>
 
       <div className="border-t border-gray-l3 my-6" />
