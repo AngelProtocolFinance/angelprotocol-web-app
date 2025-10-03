@@ -8,7 +8,7 @@ import type { INpoBookmark } from "types/user";
 type Props = {
   classes?: string;
   endowId: number;
-  user: DetailedUser | null;
+  user: DetailedUser | undefined;
 };
 
 export function BookmarkBtn({ classes = "", user, endowId }: Props) {

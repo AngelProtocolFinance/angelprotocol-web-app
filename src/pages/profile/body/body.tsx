@@ -22,7 +22,7 @@ export const loader = async ({ params, request }: Route.LoaderArgs) => {
   if (!npo) return new Response(null, { status: 404 });
 
   return {
-    user: user ? to_detailed(user) : null,
+    user: user && to_detailed(user),
     npo,
     bal: await baldb.npo_balance(npo.id),
   };

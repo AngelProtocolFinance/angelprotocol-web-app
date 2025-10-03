@@ -6,7 +6,7 @@ import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { BASE_URL } from "constants/env";
 import { app_routes } from "constants/routes";
-import { useRootData } from "hooks/use-root-data";
+import { use_root_data } from "hooks/use-root-data";
 import { NavLink } from "react-router";
 import type { EndowmentCard } from "types/npo";
 
@@ -21,7 +21,7 @@ export default function Card({
   contributions_total,
   target,
 }: EndowmentCard) {
-  const user = useRootData();
+  const user = use_root_data();
   return (
     <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none  grid grid-rows-subgrid row-span-4 gap-y-0">
       <NavLink

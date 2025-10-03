@@ -42,7 +42,7 @@ interface OauthTokenRes {
 
 /** null: no user, string (expired): cookie to set */
 type Auth = {
-  user: UserV2 | null;
+  user: UserV2 | undefined;
   /** include in response when !user */
   headers?: Headers;
   session: Stored;
@@ -68,12 +68,12 @@ class Storage extends Util {
     const h = new Headers();
 
     if (!token_id || !token_access || !token_refresh || !token_expiry)
-      return { user: null, session, headers: h };
+      return { user: undefined, session, headers: h };
 
     if (token_expiry < new Date().toISOString()) {
       h.append("set-cookie", await commitSession(session));
       this.unset(session);
-      return { user: null, headers: h, session };
+      return { user: undefined, headers: h, session };
     }
 
     return {

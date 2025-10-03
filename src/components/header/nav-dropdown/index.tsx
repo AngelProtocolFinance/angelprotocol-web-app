@@ -14,7 +14,7 @@ import { styler } from "./common";
 
 interface Props {
   auth_links: ReactNode | undefined;
-  user: DetailedUser | null;
+  user: DetailedUser | undefined;
 }
 
 export function NavDropdown({ user, auth_links }: Props) {

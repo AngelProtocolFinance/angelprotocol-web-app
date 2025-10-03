@@ -3,7 +3,7 @@ import { NavDropdown, UserAvatar } from "components/header";
 import { DappLogo } from "components/image";
 import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
-import { useRootData } from "hooks/use-root-data";
+import { use_root_data } from "hooks/use-root-data";
 import { Link, type MetaFunction } from "react-router";
 import { Bottom } from "./bottom";
 import { Faq } from "./faq";
@@ -19,7 +19,7 @@ export const meta: MetaFunction = () =>
   });
 
 export default function Referrals() {
-  const user = useRootData();
+  const user = use_root_data();
   const to = `${app_routes.user_dashboard}/referrals`;
   return (
     <div className="w-full grid content-start pb-16 @container">

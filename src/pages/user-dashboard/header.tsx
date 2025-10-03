@@ -8,14 +8,14 @@ import {
   NavDropdown,
   UserAvatar,
 } from "components/header";
-import { useRootData } from "hooks/use-root-data";
+import { use_root_data } from "hooks/use-root-data";
 
 type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const { pathname: p, search: s } = useLocation();
   const to = auth_routes.includes(p) ? undefined : p + s;
-  const user = useRootData();
+  const user = use_root_data();
 
   return (
     <header

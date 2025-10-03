@@ -8,7 +8,7 @@ import { cognito } from ".server/auth";
 import { get_fund } from ".server/fund";
 
 export interface LoaderData {
-  user: UserV2 | null;
+  user: UserV2 | undefined;
   fund: IFund;
 }
 

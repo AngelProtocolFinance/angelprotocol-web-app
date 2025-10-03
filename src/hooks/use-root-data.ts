@@ -1,7 +1,5 @@
 import { useRouteLoaderData } from "react-router";
-import type { DetailedUser } from "types/auth";
+import type { Route } from "../+types/root";
 
-export const useRootData = () => {
-  const user = useRouteLoaderData("root") as DetailedUser | null;
-  return user;
-};
+export const use_root_data = () =>
+  useRouteLoaderData<Route.ComponentProps["loaderData"]>("root");

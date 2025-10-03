@@ -6,7 +6,7 @@ import {
 } from "components/header";
 import { DappLogo } from "components/image";
 import { auth_routes } from "constants/routes";
-import { useRootData } from "hooks/use-root-data";
+import { use_root_data } from "hooks/use-root-data";
 import { useState } from "react";
 import { useLocation } from "react-router";
 import type { EndowCardsPage } from "types/npo";
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export function Header({ classes, page1 }: Props) {
-  const user = useRootData();
+  const user = use_root_data();
   const [query, setQuery] = useState("");
   const { pathname: p, search: s } = useLocation();
   const to = auth_routes.includes(p) ? undefined : p + s;

@@ -1,4 +1,4 @@
-import { useRootData } from "hooks/use-root-data";
+import { use_root_data } from "hooks/use-root-data";
 import { currency } from "../common/currency";
 import { min_fee_allowance } from "../common/min-fee-allowance";
 import { Summary as SummaryContainer } from "../common/summary";
@@ -8,7 +8,7 @@ import type { SummaryStep } from "../types";
 import { SummaryForm } from "./summary-form";
 
 export function Summary(props: SummaryStep) {
-  const user = useRootData();
+  const user = use_root_data();
   const { details, donor, tribute, tip, init, fee_allowance } = props;
 
   const { set_state } = use_donation_state();
