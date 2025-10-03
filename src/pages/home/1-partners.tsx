@@ -75,7 +75,7 @@ export function Partners({ classes = "" }) {
         Join <span className="font-semibold text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
       </h2>
-      <div className="max-sm:flex justify-center items-center flex-wrap gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-items-center">
+      <div className="max-sm:flex justify-center flex-wrap gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-items-center">
         {brands.map((b, idx) => (
           <img
             key={idx}
