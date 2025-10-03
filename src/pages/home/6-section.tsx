@@ -8,7 +8,7 @@ export function Section6({ classes = "" }) {
     <section
       className={`${classes} grid justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2 pb-24`}
     >
-      <div className="max-w-2xl order-2 xl:order-1">
+      <div className="grid max-w-2xl order-2 xl:order-1">
         <h4 className="text-center xl:text-left xl:text-lg uppercase text-gray-d4 mb-5">
           Everything you need, already included.
         </h4>
@@ -23,7 +23,7 @@ export function Section6({ classes = "" }) {
 
         <Link
           to={app_routes.register}
-          className="btn-blue px-6 py-2 xl:px-10 xl:py-4 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn-blue justify-self-center px-6 py-2 xl:px-10 xl:py-4 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
           Join us today!
         </Link>

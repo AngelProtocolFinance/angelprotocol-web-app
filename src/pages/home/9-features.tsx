@@ -118,7 +118,7 @@ export function Features({ classes = "" }) {
       ))}
       <Link
         to={`${app_routes.register}/welcome`}
-        className="capitalize col-span-full justify-self-center btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg mt-4"
+        className="text-center capitalize col-span-full justify-self-center btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg mt-4"
       >
         Explore all {APP_NAME} features
       </Link>
