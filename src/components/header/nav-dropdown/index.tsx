@@ -58,11 +58,6 @@ export function NavDropdown({ user, auth_links }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={app_routes.donor_info} className={styler}>
-              For Donors
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
             <NavLink to={app_routes.marketplace} className={styler}>
               Marketplace
             </NavLink>
