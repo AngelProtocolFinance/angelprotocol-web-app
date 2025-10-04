@@ -2,25 +2,25 @@ import type { IDonationFinal } from "@better-giving/donation";
 import { CsvExporter } from "components/csv-exporter";
 import { ArrowDownToLine } from "lucide-react";
 import type { IPaginator } from "types/components";
-import { type ICsvRow, to_csv_row, to_row } from "./helpers";
+import { type IRow, to_csv_row, to_row } from "./helpers";
 import { Table } from "./table";
 
 interface Props extends IPaginator<IDonationFinal> {}
 
 const csv_headers: {
-  key: keyof ICsvRow;
+  key: keyof IRow;
   label: string;
 }[] = [
   { key: "id", label: "id" },
   { key: "date", label: "date" },
   { key: "currency", label: "currency" },
   { key: "amount", label: "amount" },
-  { key: "usd_value", label: "usd_value" },
+  { key: "amount_usd", label: "usd_value" },
+  { key: "net_usd", label: "net_usd" },
   { key: "program_name", label: "program" },
   { key: "payment_method", label: "payment method" },
   { key: "frequency", label: "frequency" },
   { key: "donation_origin", label: "donation origin" },
-
   { key: "donor_name", label: "donor name" },
   { key: "donor_company", label: "donor company" },
   { key: "donor_email", label: "donor email" },
@@ -38,7 +38,7 @@ export function DonationsTable({ classes = "", items, ...props }: Props) {
         <CsvExporter
           classes=" hover:text-blue"
           headers={csv_headers}
-          data={items.map<ICsvRow>(to_csv_row)}
+          data={items.map<IRow>(to_csv_row)}
           filename="received_donations.csv"
         >
           <ArrowDownToLine size={17} />
