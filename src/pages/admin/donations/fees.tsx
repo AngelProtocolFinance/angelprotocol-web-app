@@ -19,7 +19,7 @@ export function Fees({ classes = "", ...f }: Props) {
       {f.fsa > 0 && (
         <div>
           <p className="text-2xs uppercase text-gray">fiscal sponsorship</p> $
-          {f.fsa.toFixed(2)}
+          {humanize(f.fsa, 3)}
         </div>
       )}
       {f.processing > 0 && (

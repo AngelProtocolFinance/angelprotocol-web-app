@@ -37,12 +37,6 @@ export interface IRow {
   allocation?: IAllocation;
 }
 
-export const pm = (x: IDonationFinal): string => {
-  return (
-    x.paymentMethod || (x.chainId !== "fiat" ? "Crypto" : x.fiatRamp) || ""
-  );
-};
-
 export const to_csv_row = (x: IDonationFinal): IRow => {
   const fees: IFees = {
     base: x.baseFee || 0,
