@@ -1,4 +1,7 @@
 import { Cells, TableSection } from "components/table-section";
+import { Arrow, Content, Tooltip } from "components/tooltip";
+import { APP_NAME } from "constants/env";
+import { InfoIcon, SparklesIcon } from "lucide-react";
 import type { IPaginator } from "types/components";
 import type { IRow } from "./helpers";
 import { Row } from "./row";
@@ -21,6 +24,46 @@ export function Table({ items, load_next, loading, disabled }: Props) {
           <>Origin</>
           <>Method</>
           <>Amount</>
+          <th>
+            <div className="flex items-center gap-x-1">
+              <span>Fees </span>
+              <Tooltip
+                tip={
+                  <Content className="p-4 bg-white max-w-sm text-sm rounded-lg shadow-lg">
+                    <p className="text-xs uppercase font-semibold">
+                      Base fee{" "}
+                      <span className="text-blue text-xs font-bold">1.5%</span>
+                    </p>
+                    <p className="text-gray-d1 mb-4">
+                      charged when {APP_NAME} tip screen is disabled at the time
+                      of donation
+                    </p>
+                    <p className="text-xs uppercase font-semibold">
+                      Fiscal sponsorship fee{" "}
+                      <span className="text-blue text-xs font-bold">2.9%</span>
+                    </p>
+                    <p className="text-xs uppercase font-semibold mt-4">
+                      Processing fee
+                    </p>
+                    <p className="text-gray-d1">
+                      charged by payment processor (Stripe, Chariot, etc.)
+                    </p>
+                    <p className="text-gray-d1">
+                      covered by donor
+                      <SparklesIcon
+                        className="fill-green stroke-green ml-1 inline"
+                        size={13}
+                      />
+                    </p>
+                    <Arrow className="fill-white" />
+                  </Content>
+                }
+              >
+                <InfoIcon size={14} className="text-gray" />
+              </Tooltip>
+            </div>
+          </th>
+          <>Net</>
           <>Allocation</>
           <>Donor</>
         </Cells>
