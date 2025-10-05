@@ -10,7 +10,9 @@ import Media from "./media";
 import Programs from "./programs";
 
 export { loader } from "./api";
-export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>({
+  key: "profile-general-info",
+});
 export { ErrorBoundary } from "components/error";
 export const links: Route.LinksFunction = () => [...richTextStyles];
 

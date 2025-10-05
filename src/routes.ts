@@ -215,10 +215,8 @@ export default [
       r("filter", marketplace.$("filter/index.ts")._),
     ]),
     r("marketplace/:id", profile.$("index.tsx")._, [
-      layout(profile.$("body/body.tsx")._, [
-        index(profile.$("body/general-info/index.tsx")._),
-        r("program/:programId", profile.$("body/program/index.tsx")._),
-      ]),
+      index(profile.$("body/general-info/index.tsx")._),
+      r("program/:programId", profile.$("body/program/index.tsx")._),
     ]),
     r("profile/:id", profile.$("profile-redirect.ts")._),
     r("funds/*", funds.$("redirect.ts")._),

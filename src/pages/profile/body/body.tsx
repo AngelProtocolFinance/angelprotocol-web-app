@@ -1,4 +1,3 @@
-import { $int_gte1, segment } from "@better-giving/schemas";
 import { BookmarkBtn } from "components/bookmark-btn";
 import { Breadcrumbs } from "components/breadcrumbs";
 import { ExtLink } from "components/ext-link";
@@ -6,42 +5,32 @@ import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { app_routes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
-import { NavLink, Outlet } from "react-router";
-import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import { parse, union } from "valibot";
-import type { Route } from "./+types/body";
-import { cognito } from ".server/auth";
-import { baldb, npodb } from ".server/aws/db";
-import { to_detailed } from ".server/user";
+import { NavLink } from "react-router";
 
-export const loader = async ({ params, request }: Route.LoaderArgs) => {
-  const { user } = await cognito.retrieve(request);
-  const id = parse(union([segment, $int_gte1]), params.id);
-  const npo = await npodb.npo(id);
+import type { IPrettyBalance } from "@better-giving/balance";
+import type { INpo } from "@better-giving/endowment";
+import type { DetailedUser } from "types/auth";
 
-  if (!npo) return new Response(null, { status: 404 });
+interface Props {
+  bal: IPrettyBalance;
+  npo: INpo;
+  user: DetailedUser | undefined;
+  classes?: string;
+  children?: React.ReactNode;
+}
 
-  return {
-    user: user && to_detailed(user),
-    npo,
-    bal: await baldb.npo_balance(npo.id),
-  };
-};
-export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
-export default CacheRoute(Page);
-
-function Page({ loaderData }: Route.ComponentProps) {
-  const { bal, npo, user } = loaderData;
-
+export function Body({ classes = "", npo, user, children, bal }: Props) {
   return (
-    <div className="flex justify-center items-center w-full h-full">
+    <div
+      className={`flex justify-center items-center w-full h-full ${classes}`}
+    >
       <div className="xl:container xl:mx-auto px-5 grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs
           className="font-normal text-xs sm:text-sm lg:ml-52"
           items={[
             {
               title: "Marketplace",
-              to: `${app_routes.marketplace}/`,
+              to: `${app_routes.marketplace}/${npo.id}`,
               end: true,
             },
             { title: npo.name, to: `${app_routes.marketplace}/${npo.id}` },
@@ -102,7 +91,7 @@ function Page({ loaderData }: Route.ComponentProps) {
           </div>
         </div>
 
-        <Outlet context={bal} key="profile-body" />
+        {children}
       </div>
     </div>
   );
