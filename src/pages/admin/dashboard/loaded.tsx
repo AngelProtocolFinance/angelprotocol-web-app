@@ -88,9 +88,11 @@ export function Loaded({ classes = "", ...props }: Props) {
       <div className="@container/period mt-2">
         <div className="flex items-center gap-x-2 mb-2">
           <h4 className="text-lg">Grant items</h4>
-          <NavLink to="payouts" className="text-blue text-sm">
-            see all
-          </NavLink>
+          {props.recent_payouts.items.length > 0 && (
+            <NavLink to="payouts" className="text-blue text-sm">
+              see all
+            </NavLink>
+          )}
         </div>
 
         {props.recent_payouts.items.length > 0 && (
@@ -100,15 +102,19 @@ export function Loaded({ classes = "", ...props }: Props) {
           />
         )}
 
-        <Payout
-          next_payout={props.next_payout}
-          bal_cash={props.bal_cash}
-          threshold={payout_min}
-          pm={props.pm}
-          classes=""
-        />
+        {props.recent_payouts.items.length > 0 && (
+          <Payout
+            next_payout={props.next_payout}
+            bal_cash={props.bal_cash}
+            threshold={payout_min}
+            pm={props.pm}
+            classes=""
+          />
+        )}
 
-        <h4 className="text-lg mb-2 mt-8">Payout history</h4>
+        {props.recent_settlements.items.length > 0 && (
+          <h4 className="text-lg mb-2 mt-8">Payout history</h4>
+        )}
         {props.recent_settlements.items.length > 0 && (
           <GrantsTable
             items={props.recent_settlements.items}
