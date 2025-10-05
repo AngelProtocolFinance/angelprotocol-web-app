@@ -32,7 +32,7 @@ export function GrantsTable({
         <tfoot>
           {load_next && (
             <tr>
-              <td colSpan={3} className="text-right">
+              <td colSpan={2} className="text-right">
                 <button
                   disabled={disabled || loading}
                   onClick={load_next}
