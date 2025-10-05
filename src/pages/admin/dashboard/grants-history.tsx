@@ -4,8 +4,8 @@ import { use_paginator } from "hooks/use-paginator";
 import { ChevronLeft } from "lucide-react";
 import { Link, useSearchParams } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import type { Route } from "./+types";
-import { Table } from "./table";
+import type { Route } from "./+types/grants-history";
+import { GrantsTable } from "./common/grants-table";
 import { podb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -27,7 +27,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
   const [search] = useSearchParams();
   const { node } = use_paginator({
     page1,
-    table: (x) => <Table {...x} />,
+    table: (x) => <GrantsTable {...x} />,
     empty: () => <Info>No payouts found</Info>,
     gen_loader: (load, next) => () => {
       const p = new URLSearchParams(search);
