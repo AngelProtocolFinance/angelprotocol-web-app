@@ -8,20 +8,22 @@ import {
   ArrowLeftRightIcon,
   ArrowRightIcon,
   HistoryIcon,
+  HourglassIcon,
   PencilIcon,
 } from "lucide-react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
+import { GrantsTable } from "./common/grants-table";
 import { PayoutsTable } from "./common/payouts-table";
 import { Figure } from "./figure";
+import { Payout } from "./payout";
 
 interface Props extends DashboardData {
   classes?: string;
 }
+
 export function Loaded({ classes = "", ...props }: Props) {
-  const now = new Date();
-  const next_payout = new Date(props.next_payout);
   const data = use_admin_data();
   const payout_min = data?.endow.payout_minimum ?? min_payout_amount;
 
@@ -40,7 +42,7 @@ export function Loaded({ classes = "", ...props }: Props) {
               <Arrow />
             </Content>
           }
-          amount={`$ ${humanize(props.bal_liq, 2)}`}
+          amount={`$${humanize(props.bal_liq, 2)}`}
         />
         <Figure
           title="Investments"
@@ -83,81 +85,41 @@ export function Loaded({ classes = "", ...props }: Props) {
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
 
       {/** div scopes when the sticky header ends */}
-      <div className="@container/period mt-6">
-        <div className="flex items-center justify-between mb-4 border-b border-gray-l3 pb-1">
-          <h4 className="text-lg">Grants</h4>
-          <Link
-            to="grants"
-            className="group flex items-center gap-x-1 text-blue hover:text-blue-d1"
-          >
-            <HistoryIcon
-              size={18}
-              className="group-hover:hidden @max-lg:hidden"
-            />
-            <ArrowRightIcon
-              size={18}
-              className=" @max-lg:hidden hidden @lg:group-hover:block group-active:translate-x-0.5"
-            />
-            <span className="text-sm">Grants History</span>
-          </Link>
-        </div>
-        <div className="flex flex-wrap items-center gap-x-1">
-          <h5 className="text-lg text-gray-d1">${humanize(props.bal_cash)}</h5>
-          <p className="text-sm text-gray mt-1">
-            pays out {format(next_payout, "PP")}- in{" "}
-            {formatDistance(next_payout, now)}.
-          </p>
+      <div className="@container/period mt-2">
+        <div className="flex items-center gap-x-2 mb-2">
+          <h4 className="text-lg">Grant items</h4>
+          <NavLink to="payouts" className="text-blue text-sm">
+            see all
+          </NavLink>
         </div>
 
-        <div className="mt-4">
-          <p className="text-sm text-gray">Payout threshold</p>
-          <div className="flex gap-x-1 items-center">
-            <p className="font-semibold text-amber-d1">
-              ${humanize(payout_min)}
-            </p>
-            <Link
-              to={{ pathname: "payout-min", search: `?min=${payout_min}` }}
-              replace
-              preventScrollReset
-              className="text-xs"
-            >
-              <PencilIcon size={12} />
-            </Link>
-          </div>
-        </div>
-        {props.pm ? (
-          <div className="mt-4">
-            <p className="text-sm text-gray">Default Payout Method</p>
+        {props.recent_payouts.items.length > 0 && (
+          <PayoutsTable
+            classes="mt-2 mb-3"
+            items={props.recent_payouts.items}
+          />
+        )}
 
-            <Link
-              to="../banking"
-              className="text-blue hover:text-blue-d1 text-sm"
-            >
-              {props.pm.bank_summary}
-            </Link>
-          </div>
-        ) : (
-          <div className="flex items-center mt-4">
-            <Info>No default payout method</Info>
-            <Link
-              to="../banking"
-              className="text-sm text-blue hover:text-blue-d1"
-            >
-              Setup
-            </Link>
-          </div>
+        <Payout
+          next_payout={props.next_payout}
+          bal_cash={props.bal_cash}
+          threshold={payout_min}
+          pm={props.pm}
+          classes=""
+        />
+
+        <h4 className="text-lg mb-2 mt-8">Payout history</h4>
+        {props.recent_settlements.items.length > 0 && (
+          <GrantsTable
+            items={props.recent_settlements.items}
+            load_next={
+              props.recent_settlements.next
+                ? () => navigate("grants")
+                : undefined
+            }
+          />
         )}
       </div>
-
-      {props.recent_payouts.items.length > 0 ? (
-        <PayoutsTable
-          classes="mt-6"
-          items={props.recent_payouts.items}
-          load_next={
-            props.recent_payouts.next ? () => navigate("payouts") : undefined
-          }
-        />
-      ) : null}
     </div>
   );
 }

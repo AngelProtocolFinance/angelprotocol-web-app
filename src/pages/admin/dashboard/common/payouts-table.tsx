@@ -21,8 +21,8 @@ export function PayoutsTable({
         <thead className="bg-blue-l5">
           <tr>
             <th />
-            <th className="font-medium text-sm text-gray">From</th>
             <th className="font-medium text-sm text-gray">Amount</th>
+            <th className="font-medium text-sm text-gray">From</th>
             <th className="font-medium text-sm text-gray">Date</th>
             <th className="font-medium text-sm text-gray">Status</th>
           </tr>
@@ -36,7 +36,6 @@ export function PayoutsTable({
               <td className="w-8">
                 <ArrowRightIcon size={14} className="inline stroke-green" />
               </td>
-              <td>{desc(payout)}</td>
               <td>
                 <div className="relative">
                   {payout.type === "error" && (
@@ -57,7 +56,8 @@ export function PayoutsTable({
                   )}
                   ${humanize(payout.amount)}{" "}
                 </div>
-              </td>
+              </td>{" "}
+              <td>{desc(payout)}</td>
               <td>{format(payout.date, "PP")}</td>
               <td className="uppercase text-xs">
                 {payout.type === "error" ? (

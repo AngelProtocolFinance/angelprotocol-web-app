@@ -114,7 +114,7 @@ export default [
       r("transfer", admin.$("savings/transfer.tsx")._),
     ]),
     r("dashboard/payouts", admin.$("dashboard/payouts.tsx")._),
-    r("dashboard/grants", admin.$("dashboard/grants/index.tsx")._),
+    r("dashboard/grants", admin.$("dashboard/grants-history.tsx")._),
     r("referrals/earnings", admin.$("referrals/earnings-history/index.tsx")._),
     r("referrals/payouts", admin.$("referrals/payout-history/index.tsx")._),
   ]),

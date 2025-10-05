@@ -68,12 +68,13 @@ function Content(props: IContent) {
       <h4 className="mb-2">Payout threshold</h4>
 
       <Field
+        sub="Grant amount to accumulate to trigger payout"
         required
         label="Amount"
         placeholder="e.g. $100"
         {...register("amount")}
         error={errors.amount?.message}
-        classes="mb-8 mt-4"
+        classes="mb-4"
       />
 
       <button
