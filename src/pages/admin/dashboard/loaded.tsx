@@ -1,17 +1,9 @@
 import { min_payout_amount } from "@better-giving/endowment/schema";
 import { Info } from "components/status";
 import { Arrow, Content } from "components/tooltip";
-import { format, formatDistance } from "date-fns";
 import { humanize } from "helpers/decimal";
-import {
-  ArrowDownToLineIcon,
-  ArrowLeftRightIcon,
-  ArrowRightIcon,
-  HistoryIcon,
-  HourglassIcon,
-  PencilIcon,
-} from "lucide-react";
-import { Link, NavLink, useNavigate } from "react-router";
+import { ArrowDownToLineIcon, ArrowLeftRightIcon } from "lucide-react";
+import { NavLink, useNavigate } from "react-router";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
 import { GrantsTable } from "./common/grants-table";
@@ -95,11 +87,13 @@ export function Loaded({ classes = "", ...props }: Props) {
           )}
         </div>
 
-        {props.recent_payouts.items.length > 0 && (
+        {props.recent_payouts.items.length > 0 ? (
           <PayoutsTable
             classes="mt-2 mb-3"
             items={props.recent_payouts.items}
           />
+        ) : (
+          <Info classes="No grant items">No grant items</Info>
         )}
 
         {props.recent_payouts.items.length > 0 && (
@@ -115,7 +109,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         {props.recent_settlements.items.length > 0 && (
           <h4 className="text-lg mb-2 mt-8">Payout history</h4>
         )}
-        {props.recent_settlements.items.length > 0 && (
+        {props.recent_settlements.items.length > 0 ? (
           <GrantsTable
             items={props.recent_settlements.items}
             load_next={
@@ -124,6 +118,8 @@ export function Loaded({ classes = "", ...props }: Props) {
                 : undefined
             }
           />
+        ) : (
+          <Info classes="No payout history">No payout records</Info>
         )}
       </div>
     </div>
