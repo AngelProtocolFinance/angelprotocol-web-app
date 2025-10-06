@@ -5,12 +5,11 @@ import { Link } from "react-router";
 
 const Hero = ({ classes = "" }) => {
   return (
-    <section
-      className={`${classes} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
-      style={{
-        backgroundImage: `linear-gradient(to top, rgba(255,255,255) 1%, transparent), url('${banner}')`,
-      }}
-    >
+    <section className={`${classes} relative grid pt-36 pb-48 sm:pb-96`}>
+      <div
+        className="absolute inset-0 -z-10 mask-b-from-30% bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom]"
+        style={{ backgroundImage: `url('${banner}')` }}
+      />
       <p className="text-sm md:text-lg isoalte uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>

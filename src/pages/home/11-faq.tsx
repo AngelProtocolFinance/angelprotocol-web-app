@@ -27,10 +27,7 @@ export function FAQ({ classes = "" }) {
               className="shrink-0 group-data-open:rotate-180"
             />
           </DisclosureButton>
-          <DisclosurePanel
-            as="div"
-            className="grid gap-3 text-gray data-open:mt-4"
-          >
+          <DisclosurePanel as="div" className="grid gap-3 data-open:mt-4">
             {faq.paragraphs.map((p, idx) => (
               <Fragment key={idx}>{p}</Fragment>
             ))}

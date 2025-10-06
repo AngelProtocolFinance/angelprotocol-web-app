@@ -34,7 +34,7 @@ export function Manifesto({ classes = "" }) {
         <h2 className="text-center text-3xl xl:text-4.5xl leading-snug">
           <span className="text-blue">Membership</span> means belonging.
         </h2>
-        <p className="text-gray-d1 text-center mb-8 col-span-full text-xl mt-4 max-w-5xl justify-self-center">
+        <p className="text-center mb-8 col-span-full text-xl mt-4 max-w-5xl justify-self-center">
           Membership isn't a program, it's how we show up for each other. As a
           nonprofit ourselves, {APP_NAME} makes every nonprofit a Member by
           default, with shared tools, shared growth, and shared responsibility.

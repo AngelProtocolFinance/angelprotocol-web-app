@@ -47,7 +47,7 @@ export function Steps({ classes = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
-      <p className="text-center max-w-3xl justify-self-center mt-12 text-lg text-gray px-4">
+      <p className="text-center max-w-3xl justify-self-center mt-12 text-lg px-4">
         We pride ourselves in helping fellow nonprofits like yours{" "}
         <span className="font-bold">save money</span> with free donation
         processing, <span className="font-bold">save time</span> by handling all
@@ -83,15 +83,11 @@ function ListItem(props: TListItem) {
         alt={props.image.alt}
         className="mb-4"
       />
-      <h4 className="text-center  font-medium text-2xl text-gray-d1 px-8">
-        {props.title1}
-      </h4>
-      <h5 className="py-4 text-center font-medium  text-lg @6xl:text-xl text-gray border-b-[3px] border-blue-d1 mb-7 px-8">
+      <h4 className="text-center  font-medium text-2xl px-8">{props.title1}</h4>
+      <h5 className="py-4 text-center font-medium  text-lg @6xl:text-xl border-b-[3px] border-blue-d1 mb-7 px-8">
         {props.title2}
       </h5>
-      <p className="text-center text-lg @6xl:text-xl text-gray">
-        {props.description}
-      </p>
+      <p className="text-center text-lg @6xl:text-xl">{props.description}</p>
     </li>
   );
 }
