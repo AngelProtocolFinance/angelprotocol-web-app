@@ -106,9 +106,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           />
         )}
 
-        {props.recent_settlements.items.length > 0 && (
-          <h4 className="text-lg mb-2 mt-8">Payout history</h4>
-        )}
+        <h4 className="text-lg mb-2 mt-8">Payout history</h4>
         {props.recent_settlements.items.length > 0 ? (
           <GrantsTable
             items={props.recent_settlements.items}
