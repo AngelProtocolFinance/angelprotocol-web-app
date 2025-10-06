@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
-import dapp_logo from "assets/images/bettergiving-logo.webp";
+import dapp_logo from "assets/images/logo-rectangle.svg";
 import laira_gift from "assets/laira/laira-gift.webp";
 import laira_standing_front from "assets/laira/laira-standing-front.webp";
 import { Image } from "components/image/image";
@@ -120,7 +120,10 @@ export function Tip(props: TipStep) {
       />
       <h4 className="mt-4 text-lg">
         One-Time Donation to{" "}
-        <Image src={dapp_logo} className="inline-block h-8 px-1" />
+        <Image
+          src={dapp_logo}
+          className="inline-block h-4 px-1 relative bottom-0.5"
+        />
       </h4>
       <p className="text-gray">
         {APP_NAME} offers this donation service{" "}

@@ -90,7 +90,7 @@ export default function Page({ loaderData: ctx }: Route.ComponentProps) {
         }}
       >
         <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 xl:container xl:mx-auto px-5 py-2">
-          <DappLogo classes="h-12" />
+          <DappLogo classes="h-6" />
         </div>
       </div>
       <Hero className="xl:container xl:mx-auto px-10" {...ctx} />

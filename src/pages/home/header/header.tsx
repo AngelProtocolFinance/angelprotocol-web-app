@@ -42,7 +42,7 @@ export function Header({ classes, page1 }: Props) {
       }}
     >
       <div className="grid relative items-center grid-cols-2 gap-4 xl:container xl:mx-auto px-5 bg-white rounded-full py-2">
-        <DappLogo classes="h-12" />
+        <DappLogo classes="h-6" />
         <SearchField
           onChange={(txt) => setQuery(txt)}
           classes="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"

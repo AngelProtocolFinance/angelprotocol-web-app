@@ -1,5 +1,5 @@
-import dappLogoWhite from "assets/images/bettergiving-logo-white.webp";
-import dappLogo from "assets/images/bg-logo-503c.webp";
+import dappLogoWhite from "assets/images/logo-rectangle.svg";
+import dappLogo from "assets/images/logo-rectangle.svg";
 import { ExtLink } from "components/ext-link";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";

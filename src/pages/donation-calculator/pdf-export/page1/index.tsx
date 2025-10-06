@@ -1,4 +1,4 @@
-import bg from "assets/images/bettergiving-logo-white.png";
+import bg from "assets/images/logo-rectangle.svg";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { format } from "date-fns";
 import { to_usd } from "helpers/to-usd";

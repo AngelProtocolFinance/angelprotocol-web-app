@@ -1,4 +1,4 @@
-import logo from "assets/images/bg-logo.webp";
+import logo from "assets/images/logo-square.png";
 import laira_pointing from "assets/laira/laira-pointing.webp";
 import { Image } from "components/image";
 

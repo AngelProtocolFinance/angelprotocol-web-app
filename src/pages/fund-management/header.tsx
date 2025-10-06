@@ -26,7 +26,7 @@ export function Header({ classes }: Props) {
         observer.observe(node);
       }}
     >
-      <DappLogo classes="w-48 h-12" />
+      <DappLogo classes="w-48 h-6" />
       {user && <UserAvatar avatar={user.avatar} classes="max-sm:hidden" />}
       <NavDropdown
         auth_links={to && !user && <AuthLinks to={to} classes="sm:hidden" />}

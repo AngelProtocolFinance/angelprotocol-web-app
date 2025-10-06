@@ -1,4 +1,4 @@
-import dappLogo from "assets/images/bg-logo-503c.webp";
+import dappLogo from "assets/images/logo-rectangle.svg";
 import { ExtLink } from "components/ext-link";
 import { INTERCOM_HELP } from "constants/env";
 import { app_routes } from "constants/routes";
@@ -17,8 +17,8 @@ export function Footer({ classes = "" }: Props) {
       <div className="flex items-center gap-x-2 shrink-0 max-2xl:col-start-2">
         <img
           src={dappLogo}
-          height={40}
-          width={170}
+          height={20}
+          width={140}
           className="object-contain my-4"
           alt="logo"
         />

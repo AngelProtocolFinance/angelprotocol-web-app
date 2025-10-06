@@ -1,4 +1,4 @@
-import bg from "assets/images/bettergiving-logo-white.png";
+import bg from "assets/images/logo-rectangle.svg";
 import laira_laptop_full from "assets/laira/laira-laptop-full.webp";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { A, Img, Pg, type Style, T, V } from "./components";
