@@ -93,7 +93,7 @@ export function Loaded({ classes = "", ...props }: Props) {
             items={props.recent_payouts.items}
           />
         ) : (
-          <Info classes="No grant items">No grant items</Info>
+          <Info classes="mt-2 mb-3">No grant items</Info>
         )}
 
         {props.recent_payouts.items.length > 0 && (
@@ -119,7 +119,7 @@ export function Loaded({ classes = "", ...props }: Props) {
             }
           />
         ) : (
-          <Info classes="No payout history">No payout records</Info>
+          <Info>No payout records</Info>
         )}
       </div>
     </div>
