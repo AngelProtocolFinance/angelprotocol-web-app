@@ -13,19 +13,19 @@
   --color-current: currentColor;
   --color-inherit: inherit;
 
-  --color-blue-d7: #050c1a;
-  --color-blue-d6: #0d1e30;
-  --color-blue-d5: #112840;
-  --color-blue-d4: #1a3f60;
-  --color-blue-d3: #194b73;
-  --color-blue-d2: #1a578a;
-  --color-blue-d1: #1e6dab;
-  --color-blue: #2d89c8;
-  --color-blue-l1: #54a5dc;
-  --color-blue-l2: #8fc4ea;
-  --color-blue-l3: #c4def3;
-  --color-blue-l4: #e4effa;
-  --color-blue-l5: #f2f8fd;
+  --color-blue-d7: #1a0328;
+  --color-blue-d6: #2d054a;
+  --color-blue-d5: #40076c;
+  --color-blue-d4: #53098e;
+  --color-blue-d3: #600bb0;
+  --color-blue-d2: #660dc8;
+  --color-blue-d1: #6b0ec5;
+  --color-blue: #6d0ec0;
+  --color-blue-l1: #8439d0;
+  --color-blue-l2: #9b64e0;
+  --color-blue-l3: #b28ff0;
+  --color-blue-l4: #d2c3f4;
+  --color-blue-l5: #f2e7f8;
 
   --color-green-d5: #022c22;
   --color-green-d4: #064e3b;
