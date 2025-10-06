@@ -1,4 +1,5 @@
 import { Image } from "components/image";
+import { APP_NAME } from "constants/env";
 import { Link } from "react-router";
 import img4 from "./diamond-logo.png";
 import img5 from "./laira-holding-folder.png";
@@ -54,7 +55,7 @@ export const Hub = ({ classes = "" }: Props) => {
       <h3 className="text-2xl mb-2">Referral Hub</h3>
       <div className={" bg-gray-l5 p-6 rounded-xl border border-gray-l4"}>
         <p className="mb-6 text-gray-d1">
-          Your all-in-one resource for sharing Better Giving, equipping you to
+          Your all-in-one resource for sharing {APP_NAME}, equipping you to
           refer nonprofits, grow your network, and earn rewards smoothly.
         </p>
         <div className="overflow-x-auto">

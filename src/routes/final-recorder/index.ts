@@ -3,6 +3,7 @@ import { Txs } from "@better-giving/db";
 import type { ITributeNotif } from "@better-giving/donation";
 import { partition } from "@better-giving/helpers";
 import { default_allocation } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
@@ -295,7 +296,7 @@ export const action: ActionFunction = async ({ request }) => {
       fees: processed_tip.fees,
       txId: nanoid(),
       parentTx: tx.id,
-      endowName: "Better Giving",
+      endowName: APP_NAME,
       claimed: true,
       fiscal_sponsored: false,
       allocation: default_allocation,

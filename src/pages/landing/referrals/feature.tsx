@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import {
   ArrowRight,
@@ -39,7 +40,7 @@ export function Feature({ className = "" }) {
   return (
     <section className={`${className} py-10 xl:py-20 grid content-start`}>
       <h2 className="text-3xl md:text-4xl text-balance mb-6 text-center col-span-full">
-        Why Share Better Giving?
+        Why Share {APP_NAME}?
       </h2>
 
       <ul className="col-span-full mt-4 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">

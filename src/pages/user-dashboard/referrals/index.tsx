@@ -1,4 +1,5 @@
 import { Explainer, Hub, Nonprofits, ReferralId } from "components/referrals";
+import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
 import { useNavigate } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
@@ -8,7 +9,7 @@ import { Earnings } from "./earnings";
 export const meta: Route.MetaFunction = () => {
   return metas({
     title: "My Referrals",
-    description: "Track your referrals and earnings on Better Giving.",
+    description: `Track your referrals and earnings on ${APP_NAME}.`,
   });
 };
 export { loader } from "./api";

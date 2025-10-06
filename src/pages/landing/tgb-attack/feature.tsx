@@ -4,6 +4,7 @@ import laira_pointing from "assets/laira/laira-pointing.webp";
 import laira_presentation from "assets/laira/laira-presentation.webp";
 import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
+import { APP_NAME } from "constants/env";
 
 type TListItem = {
   title1: string;
@@ -42,11 +43,11 @@ export function Feature({ className = "" }) {
     >
       <div className="self-center max-lg:contents">
         <h3 className="max-lg:text-center text-3xl md:text-4.5xl text-balance mb-6 max-lg:px-4">
-          Who is Better Giving?
+          Who is {APP_NAME}?
         </h3>
         <p className="text-gray max-lg:px-10 max-lg:text-center mb-4 text-xl">
-          Better Giving is a nonprofit donation platform built by nonprofits,
-          for nonprofits. We believe that fundraising should empower your
+          {APP_NAME} is a nonprofit donation platform built by nonprofits, for
+          nonprofits. We believe that fundraising should empower your
           mission—not drain your resources with excessive fees and restrictions.
         </p>
         <p className="text-gray max-lg:px-10 max-lg:text-center mb-2 text-xl">
@@ -60,7 +61,7 @@ export function Feature({ className = "" }) {
         width={350}
         height={350}
         src={photo}
-        alt="Better Giving logo with leaves background"
+        alt={`${APP_NAME} logo with leaves background`}
         className="w-full max-w-80 justify-self-center p-4 max-lg:hidden"
       />
 

@@ -1,5 +1,6 @@
 import laira_laptop_full from "assets/laira/laira-laptop-full.webp";
 import { Image } from "components/image";
+import { APP_NAME } from "constants/env";
 import { Heart, X } from "lucide-react";
 
 const solutions = [
@@ -68,7 +69,7 @@ export function ProbSol({ className = "" }) {
     >
       <div className="order-2 @6xl:order-1">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
-          CHALLENGES AND BETTER GIVING SOLUTIONS
+          CHALLENGES AND {APP_NAME.toUpperCase()} SOLUTIONS
         </h4>
         <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-gray-d4">
           High Fees, Limited Options, and <br /> Unnecessary Complexity
@@ -93,7 +94,7 @@ export function ProbSol({ className = "" }) {
 
       <article className="col-span-full order-3">
         <h4 className="text-center @6xl:text-left text-lg @6xl:text-3xl uppercase text-gray-d2 mb-6">
-          How Better Giving Solves It
+          How {APP_NAME} Solves It
         </h4>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
@@ -108,7 +109,7 @@ export function ProbSol({ className = "" }) {
                 <th className="text-left font-semibold pb-2 pl-4 @container/solution">
                   <div className="text-lg flex items-center gap-2 text-blue-d1">
                     <Heart className="shrink-0" />
-                    <span className="">Better Giving Solution</span>
+                    <span className="">{APP_NAME} Solution</span>
                   </div>
                 </th>
               </tr>

@@ -1,4 +1,5 @@
 import type { EmailSQS } from "@better-giving/types/email-sqs";
+import { APP_NAME } from "constants/env";
 import { SendEmailCommand, ses } from ".server/aws/ses";
 
 export async function send_email(
@@ -8,7 +9,7 @@ export async function send_email(
   >
 ) {
   const cmd = new SendEmailCommand({
-    FromEmailAddress: "Better Giving 😇 <hello@better.giving>",
+    FromEmailAddress: `${APP_NAME} 😇 <hello@better.giving>`,
     Destination: {
       ToAddresses: payload.recipients,
       BccAddresses: ["hi@better.giving"],

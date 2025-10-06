@@ -1,5 +1,6 @@
 import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { Link, type MetaFunction } from "react-router";
@@ -13,8 +14,7 @@ import { Top } from "./top";
 export const meta: MetaFunction = () =>
   metas({
     title: "Simplify Fundraising, Maximize Impact",
-    description:
-      "Simplify Fundraising, Maximize Impact: Claim Your Better Giving Account Today",
+    description: `Simplify Fundraising, Maximize Impact: Claim Your ${APP_NAME} Account Today`,
   });
 export default function Component() {
   return (

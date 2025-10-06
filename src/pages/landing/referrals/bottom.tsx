@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
@@ -12,7 +13,7 @@ export function Bottom({ classes = "" }) {
       </h2>
       <p className="px-6 max-w-5xl mx-auto text-white md:text-xl text-center text-pretty mb-6">
         Whether you're a consultant, a fundraiser, or simply someone who loves
-        making a difference, Better Giving lets you turn your connections into a
+        making a difference, {APP_NAME} lets you turn your connections into a
         force for good.
       </p>
       <Link

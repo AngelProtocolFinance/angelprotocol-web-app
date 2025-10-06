@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import { AlertCircle } from "lucide-react";
 const imgSrc = "https://placehold.co/400x200";
 export default function Component() {
@@ -5,7 +6,7 @@ export default function Component() {
     <div className="xl:container xl:mx-auto px-5">
       <div className="p-4 sm:p-6 border-b border-gray-l3">
         <h1 className="text-xl sm:text-2xl font-bold text-blue-d1">
-          Using the Better Giving - Zapier Integration
+          Using the {APP_NAME} - Zapier Integration
         </h1>
       </div>
       <div className="p-4 sm:p-6">
@@ -74,12 +75,12 @@ const steps = [
     ),
   },
   {
-    title: "Get your API key from Better Giving",
+    title: `Get your API key from ${APP_NAME}`,
     content: (
       <>
         <p>
           <a href="https://better.giving" className="text-blue hover:underline">
-            Go to your Better Giving NPO dashboard
+            Go to your {APP_NAME} NPO dashboard
           </a>{" "}
           and navigate to the API section to find your API key.
         </p>
@@ -87,7 +88,7 @@ const steps = [
           <h4 className="text-sm font-medium text-amber-d1">Important</h4>
           <p className="mt-1 text-sm text-amber">
             Keep your API key secure. Do not share it with anyone who
-            shouldn&apos;t have access to your Better Giving account.
+            shouldn&apos;t have access to your {APP_NAME} account.
           </p>
         </div>
       </>
@@ -112,7 +113,7 @@ const steps = [
     title: "Select the Trigger",
     content: (
       <>
-        <p>Search for the Better Giving app and click on it.</p>
+        <p>Search for the {APP_NAME} app and click on it.</p>
         <img
           src={imgSrc}
           alt="Select Trigger"
@@ -125,7 +126,7 @@ const steps = [
           <li>New donation is made</li>
         </ul>
         <p>Select the trigger and press continue.</p>
-        <p>To connect to Better Giving, click Sign in with API Key:</p>
+        <p>To connect to {APP_NAME}, click Sign in with API Key:</p>
         <img
           src={imgSrc}
           alt="Sign in with API Key"
@@ -134,8 +135,8 @@ const steps = [
           className="mt-2 rounded-md w-full h-auto"
         />
         <p>
-          Enter the API key you obtained from your Better Giving NPO dashboard
-          and click Yes, Continue.
+          Enter the API key you obtained from your {APP_NAME} NPO dashboard and
+          click Yes, Continue.
         </p>
         <button className="mt-2 px-4 py-2 bg-blue text-white rounded-md hover:bg-blue-d1 transition-colors w-full sm:w-auto">
           Continue

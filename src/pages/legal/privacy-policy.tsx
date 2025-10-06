@@ -19,7 +19,7 @@ export default function PrivacyPolicy() {
         <strong>Introduction</strong>
       </p>
       <p>
-        Better Giving, Inc. (<strong>&quot;Better Giving</strong>&quot;, &quot;
+        {APP_NAME}, Inc. (<strong>&quot;{APP_NAME}</strong>&quot;, &quot;
         <strong>We</strong>&quot; or “<strong>Our</strong>”) respects your
         privacy and is committed to protecting it through our compliance with
         this policy.

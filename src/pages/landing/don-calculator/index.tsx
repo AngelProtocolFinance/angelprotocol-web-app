@@ -1,14 +1,14 @@
 import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { Link, type MetaFunction } from "react-router";
 import { Top } from "./top";
 export const meta: MetaFunction = () =>
   metas({
-    title: "You’re Losing Donations - Find Out How Much | Better Giving",
-    description:
-      "Don’t let lost fees, idle cash, and missed gifts drain your nonprofit’s revenue. Use the free Better Giving Donation Calculator to see what you’re missing in under a minute.",
+    title: `You're Losing Donations - Find Out How Much | ${APP_NAME}`,
+    description: `Don't let lost fees, idle cash, and missed gifts drain your nonprofit's revenue. Use the free ${APP_NAME} Donation Calculator to see what you're missing in under a minute.`,
     url: "https://better.giving/see-what-youre-losing",
   });
 export default function Component() {

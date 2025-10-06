@@ -1,5 +1,6 @@
 import { Footer } from "components/footer";
 import { DappLogo } from "components/image";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import type { MetaFunction } from "react-router";
@@ -12,8 +13,7 @@ import { Top } from "./top";
 export const meta: MetaFunction = () =>
   metas({
     title: "The Smart Move to Make for Accepting Crypto Donations",
-    description:
-      "Better Giving ensures 100% of your donations go toward your mission—no hidden fees, no unnecessary costs, just seamless crypto, stock, and DAF giving.",
+    description: `${APP_NAME} ensures 100% of your donations go toward your mission—no hidden fees, no unnecessary costs, just seamless crypto, stock, and DAF giving.`,
   });
 export default function Component() {
   return (

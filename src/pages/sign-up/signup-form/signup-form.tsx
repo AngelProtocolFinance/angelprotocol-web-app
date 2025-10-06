@@ -44,9 +44,8 @@ const context: { [id: string]: Context } = {
       { to: app_routes.terms_referrals, title: "Terms of Use (Referrals)" },
     ],
     meta: metas({
-      title: "Sign Up Referral | Better Giving",
-      description:
-        "Join Better Giving and start sharing the good! Sign up now to get your own referral code and link, earn rewards by inviting others to give better",
+      title: `Sign Up Referral | ${APP_NAME}`,
+      description: `Join ${APP_NAME} and start sharing the good! Sign up now to get your own referral code and link, earn rewards by inviting others to give better`,
     }),
   },
   fallback: {
@@ -69,7 +68,7 @@ const get_context = (to: string): Context => {
 
 export const meta: Route.MetaFunction = ({ loaderData: to }) => {
   const ctx = get_context(to as string);
-  return ctx?.meta || [{ title: "Sign Up - Better Giving" }];
+  return ctx?.meta || [{ title: `Sign Up - ${APP_NAME}` }];
 };
 
 export default function Page({ loaderData: to }: Route.ComponentProps) {

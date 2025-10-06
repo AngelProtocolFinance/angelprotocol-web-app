@@ -4,6 +4,7 @@ import laira_like from "assets/laira/laira-like.webp";
 import laira_presentation from "assets/laira/laira-presentation.webp";
 import { StepsCarousel } from "components/donation";
 import { Image } from "components/image";
+import { APP_NAME } from "constants/env";
 
 type TListItem = {
   title: string;
@@ -60,7 +61,7 @@ export function DonationFormInfo({ className = "" }) {
         ))}
       </ul>
       <p className="col-span-full text-center text-xl @6xl:text-2xl leading-normal max-w-3xl justify-self-center mt-8">
-        As a 501(c)(3) public charity, Better Giving accepts donations on your
+        As a 501(c)(3) public charity, {APP_NAME} accepts donations on your
         behalf, handling all reporting, processing, and tax receipting. We grant
         100% of donations directly to your bank account, or save and invest a
         portion based on your preferences.
