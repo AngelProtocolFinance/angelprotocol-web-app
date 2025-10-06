@@ -23,9 +23,8 @@ import { Table } from "./table";
 
 export const meta: MetaFunction = () =>
   metas({
-    title: "Better Giving Donation Calculator | Save More, Raise More, Do More",
-    description:
-      " Use Better Giving’s Donation Calculator to see how your nonprofit can lower fees, accept more donation types, and grow funds automatically through smart processing and investing — all in one free platform.",
+    title: `${APP_NAME} Donation Calculator | Save More, Raise More, Do More`,
+    description: ` Use ${APP_NAME}’s Donation Calculator to see how your nonprofit can lower fees, accept more donation types, and grow funds automatically through smart processing and investing — all in one free platform.`,
     image: heroImg,
   });
 

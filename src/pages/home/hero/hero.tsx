@@ -1,4 +1,5 @@
 import banner from "assets/images/bg-banner.webp";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
@@ -18,7 +19,7 @@ const Hero = ({ classes = "" }) => {
         Simplified Giving, <br /> Amplified Impact
       </h1>
       <p className="px-6 text-gray-d1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
-        Benefit from free donation processing with Better Giving’s one-stop
+        Benefit from free donation processing with {APP_NAME}’s one-stop
         solution to simplify giving, earn high-yield savings, and enjoy
         hands-off investment growth. Add our customizable donation form to your
         website in minutes and start putting your donations to work for you.

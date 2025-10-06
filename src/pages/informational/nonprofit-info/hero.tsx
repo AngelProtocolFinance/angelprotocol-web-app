@@ -1,5 +1,5 @@
 import { Video, videos } from "components/video/video";
-import { BOOK_A_DEMO } from "constants/env";
+import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 
@@ -16,8 +16,8 @@ export function Hero({ className = "" }) {
           Raise funds easily. <br /> Grow them effortlessly.
         </h1>
         <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">
-          Better Giving streamlines donations, simplifies administration, and
-          helps your nonprofit grow its funds—all through an easily embeddable
+          {APP_NAME} streamlines donations, simplifies administration, and helps
+          your nonprofit grow its funds—all through an easily embeddable
           donation form. As a 501(c)(3) ourselves, we accept donations on your
           behalf, automate tax receipts, and grant 100% of the funds to you—no
           fees, no hassle.

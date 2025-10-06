@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import type { View } from "../types";
 import { Chart, Pg, T, V } from "./components";
 import { Splits } from "./splits";
@@ -278,7 +279,7 @@ export function Page2({ v }: { v: View }) {
           The Power of Compound Growth
         </T>
         <T style={{ color: blue.d2, fontSize: fs.sm2 }}>
-          These projections demonstrate how Better Giving's integrated approach
+          These projections demonstrate how {APP_NAME}'s integrated approach
           compounds over time. Our organization could accumulate significant
           additional funds through the combination of reduced processing fees,
           expanded donation types, and strategic investments.

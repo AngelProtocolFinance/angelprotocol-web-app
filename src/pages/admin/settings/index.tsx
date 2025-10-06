@@ -13,6 +13,7 @@ import {
 } from "components/goal-selector";
 import { Increments } from "components/increments";
 import { BG_ID } from "constants/common";
+import { APP_NAME } from "constants/env";
 import { use_action_result } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
@@ -158,7 +159,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
         </CheckField>
         <span className="text-xs sm:text-sm italic text-gray">
           During the donation flow, there is a step in which users can choose to
-          support Better Giving by contributing any amount they desire alongside
+          support {APP_NAME} by contributing any amount they desire alongside
           their donation to you - the amount they contribute will not affect the
           donation amount you receive. You may choose to turn this step off in
           the donation flow by ticking the checkbox above and we will instead
@@ -171,7 +172,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
           Allow Fundraisers to be created on behalf of your nonprofit
         </CheckField>
         <p className="text-xs sm:text-sm text-gray italic mt-1">
-          Fundraising functionality is optional for all Better Giving
+          Fundraising functionality is optional for all {APP_NAME}
           nonprofits. By opting in, people will be able to create fundraisers on
           your behalf. You will receive 100% of funds raised for fundraisers
           specific to your organization, and a percentage split of fundraisers

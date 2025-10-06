@@ -1,6 +1,7 @@
 import laira_coin from "assets/laira/laira-coin.webp";
 import { Image } from "components/image";
 import { Arrow, Content, Tooltip } from "components/tooltip";
+import { APP_NAME } from "constants/env";
 import { to_usd } from "helpers/to-usd";
 import { CircleHelpIcon, TrendingDown, TrendingUp } from "lucide-react";
 import type { View } from "./types";
@@ -41,7 +42,7 @@ export function Result1({ classes = "", ...v }: Props) {
           </p>
         </div>
         <div className="@md:p-5 pt-2">
-          <p className="max-sm:text-sm text-gray mb-2">With Better Giving</p>
+          <p className="max-sm:text-sm text-gray mb-2">With {APP_NAME}</p>
           <p className="text-lg sm:text-xl font-bold">
             <Usd relative={v.ogNet}>{v.bgNet}</Usd>{" "}
             <Usd sign parens classes="text-lg sm:text-xl">
@@ -72,7 +73,7 @@ export function Result1({ classes = "", ...v }: Props) {
                   Based on industry data, each payment type represents a portion
                   of potential donations: Credit Card (63%), Bank/ACH (10%),
                   Digital Wallets (7%), DAF (12%), Stocks (6%), Crypto (2%).
-                  Better Giving enables all these payment methods. This assumes
+                  {APP_NAME} enables all these payment methods. This assumes
                   that 50% of donors will choose not to donate if their
                   preferred payment type is unavailable
                   <Arrow />

@@ -1,5 +1,5 @@
 import bg from "assets/images/bettergiving-logo-white.png";
-import { BASE_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { format } from "date-fns";
 import { to_usd } from "helpers/to-usd";
 import { methodsArr } from "types/donation-calculator";
@@ -52,7 +52,7 @@ export function Page1({ v }: Props) {
               fontSize: fs.xl,
             }}
           >
-            Advantage with Better giving
+            Advantage with {APP_NAME}
           </T>
           <T style={{ fontSize: fs.lg, marginTop: w["4"], fontWeight: fw.n }}>
             Donation Processing & Investment Impact Calculator
@@ -183,7 +183,7 @@ export function Page1({ v }: Props) {
             textTransform: "uppercase",
           }}
         >
-          Annual Donation Processing Impact With Better Giving
+          Annual Donation Processing Impact With {APP_NAME}
         </T>
         <V style={{ height: 2, backgroundColor: blue.d, width: 128 }} />
       </V>
@@ -246,7 +246,7 @@ export function Page1({ v }: Props) {
       >
         <V>
           <T style={{ fontSize: fs.base, fontWeight: fw.sb }}>
-            With Better Giving
+            With {APP_NAME}
           </T>
           <V
             style={{
@@ -311,8 +311,8 @@ export function Page1({ v }: Props) {
           fontWeight: fw.sb,
         }}
       >
-        How Strategic Saving and Allocation Through Better Giving Could Grow
-        Your Nonprofit's Resources
+        How Strategic Saving and Allocation Through {APP_NAME} Could Grow Your
+        Nonprofit's Resources
       </T>
 
       <V

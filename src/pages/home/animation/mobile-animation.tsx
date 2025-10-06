@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import { benefits } from "content/benefits";
 import path from "./images/static-path.webp";
 import StepsCard from "./steps-card";
@@ -14,8 +15,7 @@ const MobileAnimation = ({ classes = "" }) => {
     {
       img: benefits.sf[1].img,
       title: "Simple, Sustainable Growth",
-      description:
-        "The Sustainability Fund is owned and managed by Better Giving and invested into a balanced portfolio to protect and grow over time - no admin work or liability for nonprofits.",
+      description: `The Sustainability Fund is owned and managed by ${APP_NAME} and invested into a balanced portfolio to protect and grow over time - no admin work or liability for nonprofits.`,
     },
     {
       img: benefits.sf[2].img,
@@ -26,8 +26,7 @@ const MobileAnimation = ({ classes = "" }) => {
     {
       img: benefits.sf[3].img,
       title: "Result:",
-      description:
-        "Better Giving provides nonprofits with a simple path to financial stability while giving donors a way to amplify their impact, ensuring their gift continues to provide support - not just today, but every day.",
+      description: `${APP_NAME} provides nonprofits with a simple path to financial stability while giving donors a way to amplify their impact, ensuring their gift continues to provide support - not just today, but every day.`,
     },
   ];
 

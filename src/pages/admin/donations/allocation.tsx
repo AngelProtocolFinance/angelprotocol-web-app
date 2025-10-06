@@ -1,5 +1,6 @@
 import type { IAllocation } from "@better-giving/endowment";
 import { Arrow, Content, Tooltip } from "components/tooltip";
+import { APP_NAME } from "constants/env";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
 import { NavLink } from "react-router";
@@ -36,8 +37,8 @@ export function Allocation(props: Props) {
               <Tooltip
                 tip={
                   <Content className="max-w-xs bg-gray-d4 p-4 text-gray-l4 text-sm shadow-lg rounded-lg">
-                    Donations received through Better Giving that will
-                    distributed to your bank account.
+                    Donations received through {APP_NAME} that will distributed
+                    to your bank account.
                     <Arrow />
                   </Content>
                 }

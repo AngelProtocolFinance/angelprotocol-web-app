@@ -1,5 +1,6 @@
 import { posts } from "api/get/wp-posts";
 import { Media } from "components/media";
+import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
 import { NavLink, useFetcher, useSearchParams } from "react-router";
@@ -23,7 +24,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 };
 
 export const meta: Route.MetaFunction = () =>
-  metas({ title: "Blog - Better Giving", description: "Checkout the latest" });
+  metas({ title: `Blog - ${APP_NAME}`, description: "Checkout the latest" });
 
 export { ErrorBoundary } from "components/error";
 export default CacheRoute(Posts);

@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import { benefits } from "content/benefits";
 import { useEffect, useRef } from "react";
 import { Header } from "./header";
@@ -91,7 +92,7 @@ export function AnimatedSVG({ classes = "" }: AnimatedSVGProps) {
             y="210"
             content={{
               title: "Result:",
-              text: "Better Giving offers you a complete financial solution: free donation processing, high yield savings, and expertly managed investments - all designed to maximize your financial stability and empower your nonprofit to make an even greater impact.",
+              text: `${APP_NAME} offers you a complete financial solution: free donation processing, high yield savings, and expertly managed investments - all designed to maximize your financial stability and empower your nonprofit to make an even greater impact.`,
             }}
             imageUrl={benefits.sf[3].img}
           />

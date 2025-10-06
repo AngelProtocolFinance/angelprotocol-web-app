@@ -3,7 +3,7 @@ import laira_presentation from "assets/laira/laira-presentation.webp";
 import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
 import { Video, videos } from "components/video/video";
-import { BOOK_A_DEMO } from "constants/env";
+import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
@@ -47,7 +47,7 @@ export function Feature1({ className = "" }) {
         Easy as 1-2-3
       </h2>
       <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
-        How Better Giving Works
+        How {APP_NAME} Works
       </h3>
       <p className="text-gray px-10 text-center mb-2 text-xl">
         Discover how easy it is to boost your nonprofit’s donations and achieve

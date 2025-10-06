@@ -5,6 +5,7 @@ import {
 } from "@headlessui/react";
 import { ExtLink } from "components/ext-link";
 import { DrawerIcon } from "components/icon";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
 import { Link } from "react-router";
@@ -61,15 +62,15 @@ const faqs = (_: number) => [
         Giving, a registered charitable 501(c)(3) (EIN 87-3758939).
       </p>,
       <p>
-        <Em intensity={2}>For immediate donations</Em>, Better Giving grants out
+        <Em intensity={2}>For immediate donations</Em>, {APP_NAME} grants out
         the donations to the chosen nonprofit on a weekly basis.
       </p>,
       <p>
         <Em intensity={2}>For Sustainability Fund donations</Em>, these are
-        invested as a Board Managed quasi-endowment, and Better Giving grants
-        out 75% of the yield every quarter to the nonprofit, investing the other
-        25% of the yield into the sustainability fund to mitigate against such
-        as inflation. In this way, donors can give today, but see the impact
+        invested as a Board Managed quasi-endowment, and {APP_NAME} grants out
+        75% of the yield every quarter to the nonprofit, investing the other 25%
+        of the yield into the sustainability fund to mitigate against such as
+        inflation. In this way, donors can give today, but see the impact
         continue into the future.
       </p>,
     ],
@@ -91,8 +92,8 @@ const faqs = (_: number) => [
       <p>
         Donors will need to provide KYD (know your donor) information including
         name and address, and can download an annualized cumulative report of
-        all donations provided to nonprofits within Better Giving through their
-        'My Donation' page. Donors can also request further copies of their tax
+        all donations provided to nonprofits within {APP_NAME} through their 'My
+        Donation' page. Donors can also request further copies of their tax
         receipt.
       </p>,
       <p>
@@ -115,12 +116,12 @@ const faqs = (_: number) => [
   },
   {
     id: 3,
-    question: "How much does Better Giving charge?",
+    question: `How much does ${APP_NAME} charge?`,
     paragraphs: [
       <p>
-        It is free to set up and use a Better Giving account. No subscriptions.
-        No upfront costs. No platform fees (unless a nonprofit has opted out of
-        offering donors a voluntary donation to Better Giving).
+        It is free to set up and use a {APP_NAME} account. No subscriptions. No
+        upfront costs. No platform fees (unless a nonprofit has opted out of
+        offering donors a voluntary donation to {APP_NAME}).
       </p>,
       <p>Payment processing fees from 3rd parties may apply.</p>,
     ],
@@ -147,8 +148,8 @@ const faqs = (_: number) => [
         memo.
       </p>,
       <p>
-        If you would like to add a contribution for Better Giving to help keep
-        our services free, you may add that in the memo with{" "}
+        If you would like to add a contribution for {APP_NAME} to help keep our
+        services free, you may add that in the memo with{" "}
         <Em
           intensity={1}
           classes="text-gray-d4 text-xs font-mono bg-blue-l4 p-0.5"

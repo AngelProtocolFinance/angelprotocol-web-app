@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import { socials } from "constants/urls";
 import { A, Img, type Style, T, V } from "./components";
 import facebook from "./icons/facebook.png";
@@ -94,10 +95,9 @@ export function Footer({ style = {} }: { style?: object }) {
           fontSize: fs.sm,
         }}
       >
-        Copyright © {new Date().getFullYear()} Better Giving. All rights
-        reserved. The information provided by Better Giving in this material is
-        for informational and illustrative purposes only, and is subject to
-        change.
+        Copyright © {new Date().getFullYear()} {APP_NAME}. All rights reserved.
+        The information provided by {APP_NAME} in this material is for
+        informational and illustrative purposes only, and is subject to change.
       </T>
     </V>
   );

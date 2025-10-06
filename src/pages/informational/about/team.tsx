@@ -9,6 +9,7 @@ import pallav from "assets/people/pallav.webp";
 import shaun from "assets/people/shaun.webp";
 import tim from "assets/people/tim.webp";
 import { ExtLink } from "components/ext-link";
+import { APP_NAME } from "constants/env";
 import { Mail } from "lucide-react";
 import { useState } from "react";
 
@@ -37,9 +38,9 @@ const members: IMember[] = [
     },
     image: chauncey,
     bio: [
-      "Chauncey St. John is the founder and executive director of Better Giving, a platform designed to empower nonprofits with free tools to fundraise, save, and invest. With a mission to simplify financial sustainability, Better Giving has helped over 180 nonprofits globally, raising more than $6 million in donations while reducing administrative burdens.",
-      "Previously, Chauncey pioneered a blockchain-based fundraising platform named Angel Protocol that processed crypto donations and evolved into Better Giving’s current one-stop solution. He also founded the Better Giving Alliance, uniting over 125 projects to raise millions for charity through innovative, mission-driven partnerships.",
-      "With over a decade of experience leading global operations at GE, Chauncey brings a wealth of expertise in streamlining processes and driving impact through innovation. His work reflects a deep commitment to creating financial self-sufficiency for nonprofits, ensuring they have the tools to thrive in an increasingly complex world.",
+      `Chauncey St. John is the founder and executive director of ${APP_NAME}, a platform designed to empower nonprofits with free tools to fundraise, save, and invest. With a mission to simplify financial sustainability, ${APP_NAME} has helped over 180 nonprofits globally, raising more than $6 million in donations while reducing administrative burdens.",
+      "Previously, Chauncey pioneered a blockchain-based fundraising platform named Angel Protocol that processed crypto donations and evolved into ${APP_NAME}’s current one-stop solution. He also founded the ${APP_NAME} Alliance, uniting over 125 projects to raise millions for charity through innovative, mission-driven partnerships.",
+      "With over a decade of experience leading global operations at GE, Chauncey brings a wealth of expertise in streamlining processes and driving impact through innovation. His work reflects a deep commitment to creating financial self-sufficiency for nonprofits, ensuring they have the tools to thrive in an increasingly complex world.`,
     ],
   },
   {
@@ -94,7 +95,7 @@ const members: IMember[] = [
     },
     image: pallav,
     bio: [
-      "Pallav is an experienced in-house attorney with over 12 years of experience working in the nonprofit, impact investing and social enterprise sectors. At Better Giving, he provides strategic legal guidance and governance oversight to support the organization's mission of empowering effective philanthropy.",
+      `Pallav is an experienced in-house attorney with over 12 years of experience working in the nonprofit, impact investing and social enterprise sectors. At ${APP_NAME}, he provides strategic legal guidance and governance oversight to support the organization's mission of empowering effective philanthropy.`,
     ],
   },
   {
@@ -108,7 +109,7 @@ const members: IMember[] = [
     image: shaun,
     bio: [
       "Shaun has been in the nonprofit space for over 10 years. Blending experiences across a range of impact projects from international financing, to implementation, and monitoring and evaluation, Shaun resonates with the challenges many nonprofits face.",
-      "His personal interestes in blockchain technology and decentralized finance have intersected nicely with his role at Better Giving as he works to build our own internal resilience, while providing best in class financial pathways to the nonprofits we partner with.",
+      "His personal interestes in blockchain technology and decentralized finance have intersected nicely with his role at ${APP_NAME} as he works to build our own internal resilience, while providing best in class financial pathways to the nonprofits we partner with.",
     ],
   },
   {

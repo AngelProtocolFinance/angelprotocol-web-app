@@ -3,6 +3,7 @@ import facebook from "assets/icons/social/facebook.webp";
 import instagram from "assets/icons/social/instagram.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
 import x from "assets/icons/social/x.webp";
+import { APP_NAME } from "constants/env";
 import { LinkIcon, MailIcon, ShareIcon } from "lucide-react";
 import { Image } from "./image";
 
@@ -39,7 +40,7 @@ export function ShareButton({ classes = "", ...p }: IShareButton) {
       name: "LinkedIn",
       icon: <Image src={linkedin} width={20} alt="letters i & n" />,
       getShareLink: ($) => {
-        const text = `Please support ${$.orgName} ${$.url} via @better giving`;
+        const text = `Please support ${$.orgName} ${$.url} via @${APP_NAME.toLowerCase()}`;
         return `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(text)}`;
       },
     },

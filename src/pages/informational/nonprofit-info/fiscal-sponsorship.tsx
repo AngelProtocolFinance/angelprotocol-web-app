@@ -1,4 +1,5 @@
 import { Image } from "components/image";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { Link } from "react-router";
 import fiscalsponsorshipImg from "./images/fiscal-sponsorship.webp";
@@ -17,7 +18,7 @@ export function FiscalSponsorship({ className = "" }) {
           their size or location
         </h1>
         <p className="mb-10 text-gray text-lg @6xl:text-xl text-center @6xl:text-left">
-          At Better Giving, we recognize that many grassroots organizations,
+          At {APP_NAME}, we recognize that many grassroots organizations,
           especially those outside the US, struggle to access IRS tax-exempt
           status and benefit from US donor support. Our fiscal sponsorship
           program helps bridge this gap, allowing these organizations to receive

@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import type { OgInput } from "types/donation-calculator";
 import { PctSlider } from "./pct-slider";
 interface Props {
@@ -19,8 +20,8 @@ export function Form2({ classes = "", state, setState }: Props) {
         tooltip="Select the percentage of donations you would consider allocating towards savings and investments if it were handled effortlessly on your behalf."
       />
       <p className="text-sm text-gray mt-1">
-        Better Giving automates this process completely, handling allocations
-        and investment management.
+        {APP_NAME} automates this process completely, handling allocations and
+        investment management.
       </p>
 
       <p className="font-semibold text-lg mt-6 text-blue-d1">

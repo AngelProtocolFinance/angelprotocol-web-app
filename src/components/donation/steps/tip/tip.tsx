@@ -5,6 +5,7 @@ import dapp_logo from "assets/images/bettergiving-logo.webp";
 import laira_gift from "assets/laira/laira-gift.webp";
 import laira_standing_front from "assets/laira/laira-standing-front.webp";
 import { Image } from "components/image/image";
+import { APP_NAME } from "constants/env";
 import { centsDecimals, humanize, roundDown } from "helpers/decimal";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
@@ -122,7 +123,7 @@ export function Tip(props: TipStep) {
         <Image src={dapp_logo} className="inline-block h-8 px-1" />
       </h4>
       <p className="text-gray">
-        Better Giving offers this donation service{" "}
+        {APP_NAME} offers this donation service{" "}
         <span className={withTip ? "" : "font-bold"}>free of charge</span> to
         empower nonprofits worldwide. As a nonprofit ourselves, we depend on
         your support. Please consider donating to help us keep it free for all.
@@ -219,8 +220,8 @@ export function Tip(props: TipStep) {
         />
         <p className="self-center text-gray indent-4">
           {!withTip
-            ? "Please consider helping keep Better Giving free for everyone, as a nonprofit we charge no platform fees and rely on your support"
-            : "Thank you for keeping Better Giving free for everyone!"}
+            ? `Please consider helping keep ${APP_NAME} free for everyone, as a nonprofit we charge no platform fees and rely on your support`
+            : `Thank you for keeping ${APP_NAME} free for everyone!`}
         </p>
       </div>
 

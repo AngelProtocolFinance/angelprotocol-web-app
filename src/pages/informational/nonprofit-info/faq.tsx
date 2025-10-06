@@ -5,7 +5,7 @@ import {
 } from "@headlessui/react";
 import { ExtLink } from "components/ext-link";
 import { DrawerIcon } from "components/icon";
-import { INTERCOM_HELP } from "constants/env";
+import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { ArrowRight } from "lucide-react";
 import { Fragment } from "react";
 
@@ -64,11 +64,10 @@ export function FAQ({ classes = "" }) {
 const faqs = [
   {
     id: 1,
-    question:
-      "Are Better Giving’s fundraising solutions really free? How do you sustain your operations?",
+    question: `Are ${APP_NAME}’s fundraising solutions really free? How do you sustain your operations?`,
     paragraphs: [
       <p>
-        Yes, Better Giving’s fundraising solutions and donation processing are
+        Yes, {APP_NAME}’s fundraising solutions and donation processing are
         completely free: we grant out 100% of all donations, and you pay no
         costs at any time. We rely on optional donor contributions during
         checkout for support, allowing us to provide free services to nonprofits
@@ -102,14 +101,14 @@ const faqs = [
   },
   {
     id: 3,
-    question: "How quickly can I start fundraising with Better Giving?",
+    question: `How quickly can I start fundraising with ${APP_NAME}?`,
     paragraphs: [
       <p>
-        With Better Giving, you can start accepting donations almost
-        immediately. Our setup process is quick and user-friendly—many
-        nonprofits are up and running within a day. Easily add your donation
-        form to your website or share your custom fundraising page to start
-        receiving donations from day one.
+        With {APP_NAME}, you can start accepting donations almost immediately.
+        Our setup process is quick and user-friendly—many nonprofits are up and
+        running within a day. Easily add your donation form to your website or
+        share your custom fundraising page to start receiving donations from day
+        one.
       </p>,
       <p className="italic">
         Start raising funds fast without the hassle of complex setup processes.
@@ -138,11 +137,11 @@ const faqs = [
     question: "Can I customize my donation forms?",
     paragraphs: [
       <p>
-        Yes, Better Giving offers fully customizable donation forms that allow
-        you to align them with your nonprofit’s branding. You can adjust the
-        form’s appearance, set donation types, and even let donors choose to
-        support specific programs or projects. These forms can be embedded
-        anywhere on your website, creating a seamless experience for donors.
+        Yes, {APP_NAME} offers fully customizable donation forms that allow you
+        to align them with your nonprofit’s branding. You can adjust the form’s
+        appearance, set donation types, and even let donors choose to support
+        specific programs or projects. These forms can be embedded anywhere on
+        your website, creating a seamless experience for donors.
       </p>,
       <p className="italic">
         Customization builds trust with your donors, making them feel more
@@ -155,7 +154,7 @@ const faqs = [
     question: "How does your platform reduce administrative burdens?",
     paragraphs: [
       <p>
-        Better Giving takes care of all the heavy lifting when it comes to tax
+        {APP_NAME} takes care of all the heavy lifting when it comes to tax
         reporting, donor receipts, and compliance. Once your donations are
         processed, we automatically send receipts to donors, simplifying your
         record-keeping. Additionally, our embeddable forms integrate seamlessly
@@ -228,8 +227,7 @@ const faqs = [
   },
   {
     id: 10,
-    question:
-      "Are there any fees for using Better Giving’s fund management solutions?",
+    question: `Are there any fees for using ${APP_NAME}’s fund management solutions?`,
     paragraphs: [
       <p>
         Our optional fund management solutions are provided with no setup costs
@@ -246,13 +244,13 @@ const faqs = [
   },
   {
     id: 11,
-    question: "Can international nonprofits and NGOs use Better Giving?",
+    question: `Can international nonprofits and NGOs use ${APP_NAME}?`,
     paragraphs: [
       <p>
-        Yes, Better Giving supports charitable organizations all around the
-        world. Our platform offers fiscal sponsorship to help organizations
-        outside the U.S. access U.S. grants and donations while also simplifying
-        tax compliance. With our global reach, you can accept donations from
+        Yes, {APP_NAME} supports charitable organizations all around the world.
+        Our platform offers fiscal sponsorship to help organizations outside the
+        U.S. access U.S. grants and donations while also simplifying tax
+        compliance. With our global reach, you can accept donations from
         anywhere in the world in multiple currencies. As a nonprofit, we charge
         a cost-leading 2.9% for these services to keep them affordable for
         organizations of all sizes.
@@ -267,7 +265,7 @@ const faqs = [
     question: "How do I ensure my donations are safe?",
     paragraphs: [
       <p>
-        Better Giving is a nonprofit ourselves, committed to financial
+        {APP_NAME} is a nonprofit ourselves, committed to financial
         transparency. Our platform is integrated with trusted financial partners
         such as Fidelity Investments and is fully compliant with regulatory
         standards, ensuring that all donations are processed securely. For

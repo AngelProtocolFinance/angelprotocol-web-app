@@ -1,16 +1,17 @@
+import { APP_NAME } from "constants/env";
 import { ShipWheel, Sprout, Tally4 } from "lucide-react";
 
 export function Manifesto({ className = "" }) {
   return (
     <section className={`${className} grid pb-40`}>
       <h2 className="col-span-full text-center text-3xl md:text-4.5xl leading-snug">
-        The Better Giving Manifesto
+        The {APP_NAME} Manifesto
       </h2>
       <p className="text-gray-d1 text-center mb-8 col-span-full text-xl mt-4 max-w-3xl justify-self-center">
         Nonprofits are the champions of societal change, addressing the world’s
         most pressing challenges. But they often face barriers like outdated
         systems, restrictive funding, and limited access to financial tools. At
-        Better Giving, we’re committed to breaking down these barriers.
+        {APP_NAME}, we’re committed to breaking down these barriers.
       </p>
 
       <p className="text-xl font-bold text-center text-blue-d1 mb-4">
@@ -153,7 +154,7 @@ export function Manifesto({ className = "" }) {
       </ul>
 
       <p className="justify-self-center text-lg max-w-3xl text-center">
-        At Better Giving, we envision a future where every nonprofit can fully
+        At {APP_NAME}, we envision a future where every nonprofit can fully
         exercise these rights—free from outdated systems and restrictive
         practices. We provide the tools and support you need to strengthen your
         financial future and achieve lasting impact.

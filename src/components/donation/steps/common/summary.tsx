@@ -1,4 +1,5 @@
 import type { TFrequency } from "@better-giving/donation";
+import { APP_NAME } from "constants/env";
 import { unpack } from "helpers/unpack";
 import { ListCheck } from "lucide-react";
 import type { ReactNode } from "react";
@@ -62,7 +63,7 @@ export function Summary({ Amount, frequency = "one-time", ...props }: Props) {
         {tipValue > 0 && (
           <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
             <dt className="mr-auto" aria-label="tip">
-              Donation for Better Giving
+              Donation for {APP_NAME}
             </dt>
             <Amount classes="text-sm" amount={tipValue} />
           </div>

@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
+import { APP_NAME } from "constants/env";
 import { useController, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -99,7 +100,7 @@ export function Form(props: StockFormStep) {
       <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>
       <p className="text-sm">
         You can enjoy significant tax advantages and maximize the size of your
-        contributions when you transfer securities through Better Giving:
+        contributions when you transfer securities through {APP_NAME}:
       </p>
       <div className="grid rounded-sm bg-gray-l5 dark:bg-gray-d3 p-2 my-4">
         <span className="text-sm text-gray">

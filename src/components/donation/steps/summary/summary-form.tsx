@@ -2,6 +2,7 @@ import type { DonateMethodId } from "@better-giving/endowment";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { CheckField, Field, Form } from "components/form";
 import { Select } from "components/selector/select";
+import { APP_NAME } from "constants/env";
 import { Eraser, PenToolIcon } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 import { useController, useForm } from "react-hook-form";
@@ -250,7 +251,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
           <Field
             {...register("address.street")}
             label="House number"
-            placeholder="e.g. 100 Better Giving Rd"
+            placeholder={`e.g. 100 ${APP_NAME} Rd`}
             classes={{ input: "field-input-donate" }}
             required
             error={errors.address?.street?.message}

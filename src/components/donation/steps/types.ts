@@ -1,5 +1,6 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
+import { APP_NAME } from "constants/env";
 import type { OptionType, TokenWithDetails } from "types/components";
 import { db_currency } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
@@ -25,7 +26,7 @@ export const recipient_id = v.pipe(
 );
 export const donation_recipient = v.object({
   id: v.fallback(recipient_id, "1"),
-  name: v.fallback(v.pipe(v.string(), v.nonEmpty()), "Better Giving"),
+  name: v.fallback(v.pipe(v.string(), v.nonEmpty()), APP_NAME),
   /** int-str array */
   members: v.array(v.string()),
   hide_bg_tip: v.optional(v.boolean()),

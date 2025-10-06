@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
@@ -20,7 +21,7 @@ const Path = () => {
         Bridge To Better
       </h2>
       <h3 className="text-3xl md:text-4.5xl capitalize text-gray-d4 leading-snug text-center text-balance mb-11">
-        Why Choose Better Giving
+        Why Choose {APP_NAME}
       </h3>
       <p className="text-lg md:text-2xl font-medium text-gray/60 text-center mb-11">
         Your All-in-One Solution for Sustainable Fundraising and Financial

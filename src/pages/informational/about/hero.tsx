@@ -15,10 +15,10 @@ export function Hero({ classes = "" }) {
         philanthropy
       </h1>
       <p className="px-6 text-gray-d1 max-md:block md:text-2xl text-center text-balance max-w-4xl justify-self-center sm:text-balance">
-        At Better Giving, we’re committed to breaking down the financial
-        barriers that nonprofits face. Through free donation processing,
-        savings, and investment tools, we equip nonprofits with the resources
-        they need to create impact not only today, but long into the future.
+        At , we’re committed to breaking down the financial barriers that
+        nonprofits face. Through free donation processing, savings, and
+        investment tools, we equip nonprofits with the resources they need to
+        create impact not only today, but long into the future.
       </p>
 
       <Link

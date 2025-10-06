@@ -1,3 +1,4 @@
+import { APP_NAME } from "constants/env";
 import casd from "./CASD-SL.webp";
 import ph from "./PH8_Logo.webp";
 import ace from "./ace_of_hearts.webp";
@@ -15,8 +16,7 @@ export type Testimonial = {
 
 export const testimonials: Testimonial[] = [
   {
-    content:
-      "Better Giving is an incredible idea, platform and opportunity. I have loved working with the team.",
+    content: `${APP_NAME} is an incredible idea, platform and opportunity. I have loved working with the team.`,
     reviewer: "Faith Flanigan",
     reviewer_org_role: "Buckminster Fuller Institute",
     reviewer_org_logo: buck,
@@ -36,8 +36,7 @@ export const testimonials: Testimonial[] = [
     reviewer_org_logo: test,
   },
   {
-    content:
-      "As pioneers in the realm of leveraging endowments for sustainable giving, our journey with the Better Giving experience has been nothing short of transformative.",
+    content: `As pioneers in the realm of leveraging endowments for sustainable giving, our journey with the ${APP_NAME} experience has been nothing short of transformative.`,
     reviewer: "Joy Onuche",
     reviewer_org_role: "Shoes that Speak Africa",
     reviewer_org_logo: shoe,
@@ -50,15 +49,13 @@ export const testimonials: Testimonial[] = [
     reviewer_org_logo: ace,
   },
   {
-    content:
-      "The last couple of years have been rough. Better Giving helped us get back on our feet and helped remind me and the team that the work is never done, and helped aligned us back to our overall purpose.",
+    content: `The last couple of years have been rough. ${APP_NAME} helped us get back on our feet and helped remind me and the team that the work is never done, and helped aligned us back to our overall purpose.`,
     reviewer: "Gordon Zhou",
     reviewer_org_role: "PH8 Foundation",
     reviewer_org_logo: ph,
   },
   {
-    content:
-      "As pioneers in leveraging Better Giving for online fundraising, our experience thus far has been overwhelmingly positive. Better Giving has provided us with a powerful platform to engage donors, expand our reach, and make a tangible impact in the communities we serve in Sierra Leone.",
+    content: `As pioneers in leveraging ${APP_NAME} for online fundraising, our experience thus far has been overwhelmingly positive. ${APP_NAME} has provided us with a powerful platform to engage donors, expand our reach, and make a tangible impact in the communities we serve in Sierra Leone.`,
     reviewer: "Brima Kabbah",
     reviewer_org_role: "Community Action for Sustainable Development",
     reviewer_org_logo: casd,

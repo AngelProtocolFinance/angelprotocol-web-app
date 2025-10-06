@@ -4,6 +4,7 @@ import { ExtLink } from "components/ext-link";
 import { Input, PasswordInput, RmxForm } from "components/form";
 import { Image } from "components/image";
 import { Separator } from "components/separator";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
@@ -71,7 +72,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 };
 
 export const meta: Route.MetaFunction = () =>
-  metas({ title: "Login - Better Giving" });
+  metas({ title: `Login - ${APP_NAME}` });
 
 export { ErrorBoundary } from "components/error";
 export default function Page({ loaderData: to }: Route.ComponentProps) {

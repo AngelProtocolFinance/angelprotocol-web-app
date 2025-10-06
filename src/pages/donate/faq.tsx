@@ -5,6 +5,7 @@ import {
 } from "@headlessui/react";
 import { ExtLink } from "components/ext-link";
 import { DrawerIcon } from "components/icon";
+import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
 import { Link } from "react-router";
@@ -56,12 +57,12 @@ const faqs = [
     question: "How does my donation work to benefit nonprofits?",
     paragraphs: [
       <p>
-        Better Giving handles all donation processing and reporting, and grants
+        {APP_NAME} handles all donation processing and reporting, and grants
         your donation 100% to the charitable organization you selected. This
         streamlines efforts and saves costs for the nonprofit you're supporting.
       </p>,
       <p>
-        All nonprofits using Better Giving also have free access to high-yield
+        All nonprofits using {APP_NAME} also have free access to high-yield
         savings and managed investment funds, meaning they can put your donation
         to work to provide for their future. When you give today, you give
         forever.
@@ -85,8 +86,8 @@ const faqs = [
       <p>
         Donors will need to provide KYD (know your donor) information including
         name and address, and can download an annualized cumulative report of
-        all donations provided to nonprofits within Better Giving through their
-        'My Donation' page. Donors can also request further copies of their tax
+        all donations provided to nonprofits within {APP_NAME} through their 'My
+        Donation' page. Donors can also request further copies of their tax
         receipt.
       </p>,
       <p>
@@ -109,12 +110,12 @@ const faqs = [
   },
   {
     id: 3,
-    question: "How much does Better Giving charge?",
+    question: `How much does ${APP_NAME} charge?`,
     paragraphs: [
       <p>
-        It is free to set up and use a Better Giving account. No subscriptions.
-        No upfront costs. No platform fees (unless a nonprofit has opted out of
-        offering donors a voluntary donation to Better Giving).
+        It is free to set up and use a {APP_NAME} account. No subscriptions. No
+        upfront costs. No platform fees (unless a nonprofit has opted out of
+        offering donors a voluntary donation to {APP_NAME}).
       </p>,
       <p>Payment processing fees from 3rd parties may apply.</p>,
     ],
@@ -141,8 +142,8 @@ const faqs = [
         memo.
       </p>,
       <p>
-        If you would like to add a contribution for Better Giving to help keep
-        our services free, you may add that in the memo with{" "}
+        If you would like to add a contribution for {APP_NAME} to help keep our
+        services free, you may add that in the memo with{" "}
         <Em
           intensity={1}
           classes="text-gray-d4 text-xs font-mono bg-blue-l4 p-0.5"

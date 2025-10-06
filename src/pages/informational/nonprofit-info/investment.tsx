@@ -1,4 +1,5 @@
 import { Image } from "components/image";
+import { APP_NAME } from "constants/env";
 import { Bolt, Combine, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import sectionImg from "./images/portfolio.webp";
@@ -20,8 +21,7 @@ const items: TListItem[] = [
   {
     title1: "Secure and Compliant",
     title2: "",
-    description:
-      "Better Giving’s fund management solutions are fully regulated investment vehicles secured through our trusted financial partner, Fidelity Investments. Our portfolios are constructed and reviewed by an experienced investment committee to ensure responsible and effective management.",
+    description: `${APP_NAME}’s fund management solutions are fully regulated investment vehicles secured through our trusted financial partner, Fidelity Investments. Our portfolios are constructed and reviewed by an experienced investment committee to ensure responsible and effective management.`,
     icon: <ShieldCheck size={36} className="text-blue-d1" />,
   },
   {

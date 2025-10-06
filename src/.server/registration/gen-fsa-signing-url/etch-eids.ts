@@ -1,4 +1,5 @@
 import type { IFsaSigner } from "@better-giving/reg";
+import { APP_NAME } from "constants/env";
 import { format } from "date-fns";
 import { anvil_envs, env } from ".server/env";
 import { anvil } from ".server/sdks";
@@ -31,7 +32,7 @@ export const etch_eids = async (
   const file_data = {
     id: FILE_ALIAS,
     castEid: anvil_envs.fsa_template_id,
-    title: "Better Giving Fiscal Sponsorship And Grant Agreement",
+    title: `${APP_NAME}} Fiscal Sponsorship And Grant Agreement`,
     filename: "better-giving-fs-ga.pdf",
     fontSize: 10,
     textColor: "#333333",

@@ -1,6 +1,6 @@
 import bg from "assets/images/bettergiving-logo-white.png";
 import laira_laptop_full from "assets/laira/laira-laptop-full.webp";
-import { BASE_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { A, Img, Pg, type Style, T, V } from "./components";
 import { Footer } from "./footer";
 import { fs, blue, fw, gray, w } from "./styles";
@@ -98,13 +98,13 @@ export function Page4() {
               fontSize: fs.lg,
             }}
           >
-            Better Giving Platform
+            {APP_NAME} Platform
           </T>
           <V style={{ marginLeft: w["6"] }}>
             <V style={listItemStyle}>
               <T style={bulletStyle}>•</T>
               <T>
-                Better Giving doesn't charge processing fees, but third-party
+                {APP_NAME} doesn't charge processing fees, but third-party
                 services charge an average of 2% (no platform fees)
               </T>
             </V>
@@ -118,7 +118,7 @@ export function Page4() {
             <V style={listItemStyle}>
               <T style={bulletStyle}>•</T>
               <T>
-                Better Giving accepts all donation types (credit cards, ACH,
+                {APP_NAME} accepts all donation types (credit cards, ACH,
                 digital wallets, crypto, stocks, DAF)
               </T>
             </V>
