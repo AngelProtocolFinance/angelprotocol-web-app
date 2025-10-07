@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "react-router";
-import { env, npEnvs } from ".server/env";
+import { env, np_envs } from ".server/env";
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const from = new URL(request.url);
@@ -13,6 +13,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   to.search = from.searchParams.toString();
 
   return fetch(to, {
-    headers: { "x-api-key": npEnvs.apiToken },
+    headers: { "x-api-key": np_envs.apiToken },
   }).then((res) => res.json());
 };

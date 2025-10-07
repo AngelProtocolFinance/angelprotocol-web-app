@@ -7,7 +7,7 @@ import { handle_confirming } from "./handlers/confirming";
 import { handle_failed } from "./handlers/failed";
 import { handle_settled } from "./handlers/settled";
 import { onholddb } from ".server/aws/db";
-import { npEnvs } from ".server/env";
+import { np_envs } from ".server/env";
 import { aws_monitor } from ".server/sdks";
 
 export const action: ActionFunction = async ({
@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({
     paymentSorted[k] = v;
   }
 
-  const hmac = crypto.createHmac("sha512", npEnvs.ipnSecret);
+  const hmac = crypto.createHmac("sha512", np_envs.ipnSecret);
   hmac.update(JSON.stringify(paymentSorted));
   const payloadSig = hmac.digest("hex");
 

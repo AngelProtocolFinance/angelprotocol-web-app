@@ -8,7 +8,8 @@ import {
   PayoutsDB,
 } from "@better-giving/payouts";
 import type { Environment } from "@better-giving/types/list";
-import { transfer_grant } from "./transfer-grant.mjs";
+import type { ActionFunction } from "react-router";
+import { transfer_grant } from "./transfer-grant";
 import {
   TransactWriteCommand,
   baldb,
@@ -21,7 +22,7 @@ import { aws_monitor } from ".server/sdks";
 
 const fn = `grants-processor:${env}`;
 
-export default async function handler(request: Request) {
+export const action: ActionFunction = async ({ request }) => {
   const auth_header = request.headers.get("authorization");
   if (auth_header !== `Bearer ${cron_secret}`) {
     return new Response("unauthorized", { status: 403 });
@@ -54,7 +55,7 @@ export default async function handler(request: Request) {
       body: JSON.stringify(err, Object.getOwnPropertyNames(err)),
     });
   }
-}
+};
 
 async function process_item(
   npo_id: number,

@@ -9,22 +9,22 @@ import Stripe from "stripe";
 import {
   anvil_envs,
   chariot_envs,
-  discordEnvs,
+  discord_envs,
   env,
-  npEnvs,
+  np_envs,
   qtash_envs,
   stripe_envs,
   typesense_envs,
-  wiseApiToken,
+  wise_envs,
 } from "./env";
 
-export const aws_monitor = new Discord(discordEnvs.awsMonitorUrl);
-export const fiat_monitor = new Discord(discordEnvs.fiatMonitorUrl);
-export const np = new Nowpayments(npEnvs);
+export const aws_monitor = new Discord(discord_envs.awsMonitorUrl);
+export const fiat_monitor = new Discord(discord_envs.fiatMonitorUrl);
+export const np = new Nowpayments(np_envs);
 export const stripe = new Stripe(stripe_envs.secret_key);
 
 export const wise = new Wise({
-  apiToken: wiseApiToken,
+  apiToken: wise_envs.api_token,
   sandbox: env === "staging",
 });
 

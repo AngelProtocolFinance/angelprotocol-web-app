@@ -30,13 +30,13 @@ export const q_url_donation_processor = _var("Q_URL_DONATION_PROCESSOR");
 
 export const api_encryption_key = _var("API_ENCRYPTION_KEY");
 
-export const npEnvs = {
+export const np_envs = {
   apiToken: _var("NOWPAYMENTS_API_KEY"),
   baseUrl: _var("NOWPAYMENTS_API_URL"),
   ipnSecret: _var("NOWPAYMENTS_IPN_SECRET"),
 };
 
-export const discordEnvs = {
+export const discord_envs = {
   awsMonitorUrl: _var("DISCORD_AWS_MONITOR_WEBHOOK_URL"),
   fiatMonitorUrl: _var("DISCORD_FIAT_MONITOR_WEBHOOK_URL"),
 };
@@ -52,7 +52,6 @@ export const wise_envs = {
   profile_id: _var("WISE_PROFILE_ID"),
   api_url: _var("WISE_API_URL"),
 };
-export const wiseApiToken = _var("WISE_API_TOKEN");
 
 export const chariot_envs = {
   api_key: _var("CHARIOT_API_KEY"),
