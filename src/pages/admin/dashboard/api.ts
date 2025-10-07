@@ -31,7 +31,7 @@ export const loader = async (x: Route.LoaderArgs) => {
   const [ltd, bal, recent_payouts, recent_settlements, pm] = await Promise.all([
     navdb.ltd(),
     baldb.npo_balance(adm.id),
-    podb.npo_payouts(adm.id.toString(), { status: "pending", limit: 3 }),
+    podb.npo_payouts(adm.id.toString(), { limit: 3 }),
     podb.npo_settlements(adm.id.toString(), { limit: 3 }),
     bappdb.npo_default_bapp(adm.id),
   ]);
