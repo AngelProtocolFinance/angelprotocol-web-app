@@ -1,3 +1,5 @@
+import quicksand from "@fontsource-variable/quicksand/index.css?url";
+import gochiHand from "@fontsource/gochi-hand/index.css?url";
 import { metas } from "helpers/seo";
 import nProgressStyles from "nprogress/nprogress.css?url";
 import { type LinksFunction, type MetaFunction, Outlet } from "react-router";
@@ -5,8 +7,6 @@ import ccbase from "vanilla-cookieconsent/dist/cookieconsent.css?url";
 import laira from "./assets/images/flying-character.webp";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
-import "@fontsource-variable/quicksand";
-import "@fontsource/gochi-hand";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
@@ -16,6 +16,8 @@ export const links: LinksFunction = () => [
     href: ccbase,
   },
   { rel: "stylesheet", href: cc },
+  { rel: "stylesheet", href: quicksand },
+  { rel: "stylesheet", href: gochiHand },
 ];
 
 export const meta: MetaFunction = () => metas({});
