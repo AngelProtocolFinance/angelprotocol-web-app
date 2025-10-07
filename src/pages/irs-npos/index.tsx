@@ -57,7 +57,7 @@ function Page({ loaderData: data }: Route.ComponentProps) {
   ));
 
   return (
-    <div className="xl:mx-auto xl:container py-16 font-heading text-sm">
+    <div className="xl:mx-auto xl:container py-16  text-sm">
       <div className="w-full">
         {active_filters.length > 0 && (
           <div>

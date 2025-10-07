@@ -74,7 +74,7 @@ export function DetailsColumn({
 function Detail(props: PropsWithChildren<{ title: string }>) {
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
-      <p className="font-heading font-bold text-xs tracking-wider uppercase">
+      <p className=" font-bold text-xs tracking-wider uppercase">
         {props.title}
       </p>
       <span className="font-normal text-base text-gray dark:text-gray">

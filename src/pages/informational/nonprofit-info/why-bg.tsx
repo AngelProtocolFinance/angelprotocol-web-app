@@ -58,14 +58,14 @@ export default function WhyBG({ className = "" }) {
       <div className="isolate z-10 flex flex-col @3xl:flex-row items-center justify-self-center gap-4 mt-24">
         <Link
           to={app_routes.register}
-          className="btn-blue isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative group active:translate-x-1 font-bold shadow-2xl"
+          className="btn-blue isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg  relative group active:translate-x-1 font-bold shadow-2xl"
         >
           <span className="ml-1">Start Today</span>
           <ArrowRight size={18} className="group-hover:translate-x-1" />
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-white group active:translate-x-1 text-blue-d1 font-bold shadow-2xl shadow-black/10 border border-blue-l3"
+          className="isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg  relative bg-white group active:translate-x-1 text-blue-d1 font-bold shadow-2xl shadow-black/10 border border-blue-l3"
         >
           <span className="ml-1">Book A Demo</span>
           <ArrowRight size={18} className="group-hover:translate-x-1" />
@@ -84,10 +84,10 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         className="mb-4"
       />
-      <h5 className="text-center font-body font-medium text-2xl text-gray-d1">
+      <h5 className="text-center  font-medium text-2xl text-gray-d1">
         {props.title1}
       </h5>
-      <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-gray mb-4">
+      <h6 className="text-center self-center font-normal  text-lg @6xl:text-xl text-gray mb-4">
         {props.title2}
       </h6>
       <p className="pt-4 text-center @6xl:text-lg text-gray border-t-[3px] border-blue-d1 ">

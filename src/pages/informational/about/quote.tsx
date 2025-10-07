@@ -34,7 +34,7 @@ export function Quote({ className = "" }) {
           alt="quotation mark"
           className="justify-self-start w-18 lg:w-24 mb-6 -mt-24"
         />
-        <blockquote className="text-xl sm:text-2xl font-medium text-gray italic mb-2 font-heading">
+        <blockquote className="text-xl sm:text-2xl font-medium text-gray italic mb-2 ">
           Our mission is to give every nonprofit, everywhere, free access to the
           financial tools they need to grow and thrive. <br />
           <br />
@@ -42,7 +42,7 @@ export function Quote({ className = "" }) {
           scarcity and dependence but rather abundance and financial
           self-sufficiency
         </blockquote>
-        <p className="text-right font-heading text-lg text-gray-d1 mt-8 italic">
+        <p className="text-right  text-lg text-gray-d1 mt-8 italic">
           – Chauncey St. John
           <span className="block text-sm font-medium">Founder</span>​
         </p>

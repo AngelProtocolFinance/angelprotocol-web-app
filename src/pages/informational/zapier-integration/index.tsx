@@ -22,7 +22,7 @@ export default function Component() {
                 <h3 className="text-lg font-medium text-blue-d2">
                   {step.title}
                 </h3>
-                <div className="mt-2 text-gray-d1 font-body space-y-4">
+                <div className="mt-2 text-gray-d1  space-y-4">
                   {step.content}
                 </div>
               </div>

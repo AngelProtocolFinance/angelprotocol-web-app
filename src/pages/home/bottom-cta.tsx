@@ -13,24 +13,15 @@ export function BottomCta({ className = "" }) {
         <h4 className="text-center md:text-left uppercase [28rem]:text-lg text-white leading-normal mb-6">
           Simple. Sustainable. Free.
         </h4>
-        <h3 className="text-center md:text-left md:leading-snug font-heading text-2xl @md:text-4xl text-white mb-9">
-          The all-in-one fundraising solution you deserve is only a few clicks
-          away
+        <h3 className="text-center md:text-left md:leading-snug  text-2xl @md:text-4xl text-white mb-9">
+          Ready to grow gifts this quarter? It's only a few clicks away.
         </h3>
-        <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-6">
-          <Link
-            to={app_routes.register}
-            className="btn-blue active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-full px-8 py-3 md:px-12 md:py-6"
-          >
-            Start today
-          </Link>
-          <Link
-            to={BOOK_A_DEMO}
-            className="bg-white shadow-2xl hover:shadow-white/40 active:translate-x-1 text-blue-d1 font-heading uppercase font-bold rounded-full px-8 py-3 md:px-12 md:py-6"
-          >
-            Book a Demo
-          </Link>
-        </div>
+        <Link
+          to={app_routes.register}
+          className="btn-blue active:translate-x-1 font-bold shadow-2xl rounded-full px-6 py-2 md:px-10 md:py-5"
+        >
+          Join us today!
+        </Link>
       </div>
       <Image
         alt="Laira waiving"

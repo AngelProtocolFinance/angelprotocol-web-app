@@ -51,7 +51,7 @@ export function RebalanceForm({
       className={`${classes} grid p-4`}
     >
       <div className="mb-2">
-        <p className="font-heading uppercase text-sm font-bold">Tickers</p>
+        <p className=" uppercase text-sm font-bold">Tickers</p>
         <p className="font-mono text-sm text-gray">
           {Object.keys(composition)
             .map((x) => x.toLowerCase())

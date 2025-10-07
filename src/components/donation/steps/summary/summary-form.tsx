@@ -97,9 +97,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
       className={`grid grid-cols-2 gap-x-4 ${classes}`}
     >
       <Select
-        label={
-          <span className="font-semibold text-base font-heading">Title</span>
-        }
+        label={<span className="font-semibold text-base ">Title</span>}
         value={title.value}
         onChange={title.onChange}
         options={donor_titles as any}
@@ -115,7 +113,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         placeholder="First Name"
         required
         classes={{
-          label: "font-semibold text-base font-heading",
+          label: "font-semibold text-base ",
           input: "field-input-donate",
         }}
         error={errors.first_name?.message}
@@ -126,7 +124,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         placeholder="Last Name"
         classes={{
           input: "field-input-donate",
-          label: "font-semibold text-base font-heading invisible",
+          label: "font-semibold text-base  invisible",
         }}
         error={errors.last_name?.message}
       />
@@ -135,7 +133,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         label="Your company name"
         placeholder="Company name"
         classes={{
-          label: "font-semibold text-base font-heading",
+          label: "font-semibold text-base ",
           container: "col-span-full mt-4",
           input: "field-input-donate",
         }}
@@ -146,7 +144,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         label="Your email"
         placeholder="Email address"
         classes={{
-          label: "font-semibold text-base font-heading",
+          label: "font-semibold text-base ",
           container: "col-span-full my-4",
           input: "field-input-donate",
         }}

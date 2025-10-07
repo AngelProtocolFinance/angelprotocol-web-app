@@ -44,12 +44,12 @@ export function CtaCard({ className = "", title, to, img }: ICtaCard) {
     <div
       className={`${className} grid @md:grid-cols-2 w-full bg-linear-to-br to-transparent p-6 rounded-xl`}
     >
-      <h3 className="@3xl:text-left text-white @3xl:leading-snug font-heading text-xl @sm:text-2xl mb-4 col-span-full">
+      <h3 className="@3xl:text-left text-white @3xl:leading-snug  text-xl @sm:text-2xl mb-4 col-span-full">
         {title}
       </h3>
       <Link
         to={to.href}
-        className="btn-blue uppercase font-bold font-heading shadow-xl active:translate-x-1 rounded-full px-6 py-3 self-start justify-self-start"
+        className="btn-blue uppercase font-bold  shadow-xl active:translate-x-1 rounded-full px-6 py-3 self-start justify-self-start"
       >
         {to.title}
       </Link>

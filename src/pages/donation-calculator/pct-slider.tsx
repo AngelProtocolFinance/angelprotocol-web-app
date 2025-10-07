@@ -45,7 +45,7 @@ export function PctSlider({ classes = "", ...p }: ProcessingFeeSliderProps) {
             <Slider.Thumb className="block size-4 rounded-full border-2 border-blue bg-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-blue focus-visible:ring-opacity-75" />
           </Slider.Root>
         </div>
-        <div className="text-right font-heading font-semibold">
+        <div className="text-right  font-semibold">
           {(p.value * 100).toFixed(1)}%
         </div>
       </div>

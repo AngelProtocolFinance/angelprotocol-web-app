@@ -13,7 +13,7 @@ export function BottomCta({ className = "" }) {
         <h4 className="text-center @5xl:text-left uppercase @md:text-lg text-white leading-normal mb-6">
           Simple. Sustainable. Free.
         </h4>
-        <h3 className="text-center @5xl:text-left @5xl:leading-snug font-heading text-2xl @sm:text-4xl text-white mb-9">
+        <h3 className="text-center @5xl:text-left @5xl:leading-snug  text-2xl @sm:text-4xl text-white mb-9">
           Together, we can change the world for good
         </h3>
         <Link

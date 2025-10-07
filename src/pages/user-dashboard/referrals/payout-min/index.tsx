@@ -79,7 +79,7 @@ function Content(props: IContent) {
         <Input
           placeholder="e.g. $ 100"
           {...register("amount")}
-          className="px-4 py-3 rounded-lg outline-blue-d1 border border-gray-l3 font-heading"
+          className="px-4 py-3 rounded-lg outline-blue-d1 border border-gray-l3 "
         />
         <span className="text-red text-xs text-right empty:hidden mt-1">
           {errors.amount?.message}
@@ -87,7 +87,7 @@ function Content(props: IContent) {
       </Field>
       <button
         disabled={fetcher.state !== "idle" || !isDirty}
-        className="text-sm btn-blue rounded-full px-4 py-2 font-heading uppercase font-bold"
+        className="text-sm btn-blue rounded-full px-4 py-2  uppercase font-bold"
       >
         {fetcher.state !== "idle" ? "Submitting..." : "Submit"}
       </button>

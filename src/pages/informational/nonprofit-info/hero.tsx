@@ -6,7 +6,7 @@ import { Link } from "react-router";
 export function Hero({ className = "" }) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @-6xl:grid-cols-2 py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-2 py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-gray-d4 mb-5">
@@ -26,13 +26,13 @@ export function Hero({ className = "" }) {
         <div className="flex flex-col @sm:flex-row justify-center @6xl:justify-start items-center gap-6">
           <Link
             to={app_routes.register}
-            className="btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-heading uppercase font-bold shadow-2xl rounded-full"
+            className="btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  uppercase font-bold shadow-2xl rounded-full"
           >
             Start today
           </Link>
           <Link
             to={BOOK_A_DEMO}
-            className="uppercase bg-white border-blue-d1 text-blue-d1 active:translate-x-1 font-bold font-heading border-2 rounded-full px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
+            className="uppercase bg-white border-blue-d1 text-blue-d1 active:translate-x-1 font-bold  border-2 rounded-full px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
           >
             Book a Demo
           </Link>

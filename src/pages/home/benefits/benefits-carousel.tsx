@@ -27,7 +27,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
                   className="size-60 object-cover object-center"
                   alt="Visual representation of the benefit"
                 />
-                <p className="mt-6 text-2xl font-heading text-[#0D283A] w-full text-center font-bold">
+                <p className="mt-6 text-2xl  text-[#0D283A] w-full text-center font-bold">
                   {slide.title}
                 </p>
                 <p className="text-xl text-gray-d1 w-full text-center font-medium">

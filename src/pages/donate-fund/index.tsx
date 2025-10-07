@@ -34,7 +34,7 @@ function Page({ loaderData: { fund } }: Route.ComponentProps) {
         <DappLogo classes="h-12" />
         <Link
           to={`${app_routes.funds}/${fund.id}`}
-          className="font-semibold font-heading hover:text-blue-d1"
+          className="font-semibold  hover:text-blue-d1"
         >
           Cancel
         </Link>

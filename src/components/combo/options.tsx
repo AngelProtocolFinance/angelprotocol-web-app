@@ -22,7 +22,7 @@ export function Options({ query, options, option_disp }: Props) {
       {(options.length > 0 &&
         filtered.map((country) => (
           <ComboboxOption
-            className="data-selected:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm font-heading"
+            className="data-selected:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm "
             key={country}
             value={country}
           >

@@ -87,7 +87,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
           setParams(p);
         }}
         className={
-          "fixed @5xl:absolute inset-x-0 top-0 @5xl:top-full @5xl:mt-1 z-40 grid content-start gap-4 w-full rounded-sm border border-gray-l3 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @-5xl:shadow-xs"
+          "fixed @5xl:absolute inset-x-0 top-0 @5xl:top-full @5xl:mt-1 z-40 grid content-start gap-4 w-full rounded-sm border border-gray-l3 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @5xl:shadow-xs"
         }
       >
         <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
