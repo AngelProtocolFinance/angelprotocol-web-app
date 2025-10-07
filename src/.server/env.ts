@@ -112,3 +112,5 @@ export const deposit_addrs_envs = (chain: string) => {
 };
 
 export const bg_npo_id = Number.parseInt(_var("BG_NPO_ID"));
+
+export const cron_secret = _var("CRON_SECRET");
