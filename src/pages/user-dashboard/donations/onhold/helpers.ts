@@ -21,7 +21,7 @@ export const to_row = (x: IDonationOnHold): IRow => {
   const pm = x.paymentMethod || (x.chainId !== "fiat" ? "Crypto" : x.fiatRamp);
   const row: IRow = {
     id: x.transactionId,
-    date: new Date(x.transactionDate).toLocaleDateString(),
+    date: x.transactionDate,
     currency: x.denomination,
     amount: x.amount,
     recipient_id: x.endowmentId,

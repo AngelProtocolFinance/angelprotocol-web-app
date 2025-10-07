@@ -48,9 +48,7 @@ export const to_csv_row = (x: IDonationFinal): IRow => {
   const pm = x.paymentMethod || (x.chainId !== "fiat" ? "Crypto" : x.fiatRamp);
   const row: IRow = {
     id: x.donationFinalTxHash || "",
-    date: x.donationFinalTxDate
-      ? new Date(x.donationFinalTxDate).toLocaleDateString()
-      : "",
+    date: x.donationFinalTxDate || "",
     currency: x.denomination || "",
     amount: x.amount || 0,
     amount_usd: x.usdValue || 0,

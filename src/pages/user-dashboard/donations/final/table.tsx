@@ -47,7 +47,7 @@ export function Table({
                 load_next ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
-              <>{toPP(row.date)}</>
+              <>{row.date ? toPP(row.date) : "--"}</>
               <div>
                 <Link
                   to={`${app_routes.marketplace}/${row.recipient_name}`}

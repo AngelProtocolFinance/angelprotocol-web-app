@@ -13,7 +13,7 @@ export function Row(props: IRow & { has_more?: boolean; classes?: string }) {
       type="td"
       cellClass={`p-3 border-t border-gray-l3 max-w-[256px] truncate ${props.classes}`}
     >
-      <span className="text-sm">{toPP(props.date)}</span>
+      <span className="text-sm">{props.date ? toPP(props.date) : "--"}</span>
       {props.program_id ? (
         <Link
           className="text-blue hover:text-blue-d1"
