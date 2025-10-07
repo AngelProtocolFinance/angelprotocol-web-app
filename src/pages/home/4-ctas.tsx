@@ -19,16 +19,20 @@ function BlurImg({ classes, url, index = 0 }: IBlurImg) {
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
+      role="presentation"
+      aria-hidden="true"
     >
       <img
         width={400}
         src={url}
         className="rounded-full absolute-center blur-2xl"
+        alt=""
       />
       <img
         width={240}
         src={url}
         className="z-10 rounded-full absolute-center"
+        alt=""
       />
     </motion.div>
   );
@@ -36,8 +40,11 @@ function BlurImg({ classes, url, index = 0 }: IBlurImg) {
 
 export function Ctas({ classes = "" }) {
   return (
-    <div className={`${classes} grid gap-y-20 md:gap-y-32 px-5 md:px-24`}>
-      <div className="grid md:grid-cols-2 items-center">
+    <section
+      className={`${classes} grid gap-y-20 md:gap-y-32 px-5 md:px-24`}
+      aria-label="Key benefits"
+    >
+      <article className="grid md:grid-cols-2 items-center">
         <motion.div
           className="grid max-md:order-2"
           initial={{ opacity: 0, x: -30 }}
@@ -45,9 +52,9 @@ export function Ctas({ classes = "" }) {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <h4 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
+          <h3 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
             We help you raise more.
-          </h4>
+          </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">
               Conversion-optimized donation flow
@@ -67,8 +74,8 @@ export function Ctas({ classes = "" }) {
           classes="justify-self-center max-md:mb-4"
           index={0}
         />
-      </div>
-      <div className="grid md:grid-cols-2 items-center">
+      </article>
+      <article className="grid md:grid-cols-2 items-center">
         <BlurImg
           url={girl_watering_plant}
           classes="justify-self-center max-md:mb-4"
@@ -81,9 +88,9 @@ export function Ctas({ classes = "" }) {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <h4 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
+          <h3 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
             We grow what you raise.
-          </h4>
+          </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">Let your donations work for you</span>:
             High-yield savings (FDIC-insured) and a managed option averaging
@@ -97,8 +104,8 @@ export function Ctas({ classes = "" }) {
             Join us today!
           </Link>
         </motion.div>
-      </div>
-      <div className="grid md:grid-cols-2 items-center">
+      </article>
+      <article className="grid md:grid-cols-2 items-center">
         <motion.div
           className="grid max-md:order-2"
           initial={{ opacity: 0, x: -30 }}
@@ -106,9 +113,9 @@ export function Ctas({ classes = "" }) {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <h4 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
+          <h3 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
             We unlock larger gifts.
-          </h4>
+          </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">Stop turning donors away</span>: Accept
             stock & crypto in the same secure flow—no extra systems, no added
@@ -127,8 +134,8 @@ export function Ctas({ classes = "" }) {
           classes="justify-self-center max-md:mb-4"
           index={2}
         />
-      </div>
-      <div className="grid md:grid-cols-2 items-center">
+      </article>
+      <article className="grid md:grid-cols-2 items-center">
         <BlurImg
           url={girl_using_phone}
           classes="justify-self-center max-md:mb-4"
@@ -141,9 +148,9 @@ export function Ctas({ classes = "" }) {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <h4 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
+          <h3 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
             We don't take a cut.
-          </h4>
+          </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">
               Entirely free, all features included
@@ -158,8 +165,8 @@ export function Ctas({ classes = "" }) {
             Join us today!
           </Link>
         </motion.div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 }
 

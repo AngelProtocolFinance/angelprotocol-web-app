@@ -8,10 +8,15 @@ const MLink = motion.create(Link);
 
 const Hero = ({ classes = "" }) => {
   return (
-    <section className={`${classes} relative grid pt-36 pb-48 sm:pb-96`}>
+    <section
+      className={`${classes} relative grid pt-36 pb-48 sm:pb-96`}
+      aria-label="Hero section"
+    >
       <div
         className="absolute inset-0 -z-10 mask-b-from-30% bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom]"
         style={{ backgroundImage: `url('${banner}')` }}
+        role="presentation"
+        aria-hidden="true"
       />
       <motion.p
         className="text-sm md:text-lg uppercase font-bold text-center mb-5 tracking-wider"

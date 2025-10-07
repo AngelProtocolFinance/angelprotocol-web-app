@@ -103,8 +103,11 @@ const features: IFeature[] = [
 
 export function Features({ classes = "" }) {
   return (
-    <div className={`${classes} grid lg:grid-cols-2 xl:grid-cols-3 gap-4 py-8`}>
-      <motion.h4
+    <section
+      className={`${classes} grid lg:grid-cols-2 xl:grid-cols-3 gap-4 py-8`}
+      aria-labelledby="features-heading"
+    >
+      <motion.p
         className="text-lg  text-blue-d1 uppercase -mb-4 col-span-full text-center xl:text-left"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -112,25 +115,30 @@ export function Features({ classes = "" }) {
         transition={{ duration: 0.5 }}
       >
         Features
-      </motion.h4>
-      <motion.div
+      </motion.p>
+      <motion.header
         className="row-span-2 col-span-full pb-8"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <h3 className="text-2xl xl:text-3xl text-gray-d3 mb-4 text-center xl:text-left">
+        <h2
+          id="features-heading"
+          className="text-2xl xl:text-3xl text-gray-d3 mb-4 text-center xl:text-left"
+        >
           Smarter Tools for Seamless Fundraising
-        </h3>
+        </h2>
         <p className="text-lg text-center xl:text-left">
           Raise funds, grow donations, and secure financial stability—all with
           no platform fees.
         </p>
-      </motion.div>
-      {features.map((f, idx) => (
-        <Feature key={f.id} {...f} index={idx} />
-      ))}
+      </motion.header>
+      <ul className="contents">
+        {features.map((f, idx) => (
+          <Feature key={f.id} {...f} index={idx} />
+        ))}
+      </ul>
 
       <MLink
         initial={{ opacity: 0, y: 20 }}
@@ -142,13 +150,13 @@ export function Features({ classes = "" }) {
       >
         Explore all {APP_NAME} features
       </MLink>
-    </div>
+    </section>
   );
 }
 
 function Feature(props: IFeature & { index: number }) {
   return (
-    <motion.div
+    <motion.li
       className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2 bg-white"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -157,9 +165,9 @@ function Feature(props: IFeature & { index: number }) {
     >
       <div className="flex items-center gap-x-2">
         {props.icon}
-        <p className="font-bold text-sm ">{props.title}</p>
+        <h3 className="font-bold text-sm ">{props.title}</h3>
       </div>
       <p className="text-gray-d1">{props.body}</p>
-    </motion.div>
+    </motion.li>
   );
 }

@@ -38,8 +38,11 @@ function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
 
 export function Stats({ classes = "" }) {
   return (
-    <div className={`${classes} grid md:grid-cols-3 gap-8`}>
-      <motion.div
+    <section
+      className={`${classes} grid md:grid-cols-3 gap-8`}
+      aria-label="Platform statistics"
+    >
+      <motion.article
         className="grid justify-items-center"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -51,8 +54,8 @@ export function Stats({ classes = "" }) {
           Raised across crypto, stock, DAF, and card donations for nonprofit
           members.
         </p>
-      </motion.div>
-      <motion.div
+      </motion.article>
+      <motion.article
         className="grid justify-items-center"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -64,8 +67,8 @@ export function Stats({ classes = "" }) {
           Raised across crypto, stock, DAF, and card donations for nonprofit
           members.
         </p>
-      </motion.div>
-      <motion.div
+      </motion.article>
+      <motion.article
         className="grid justify-items-center"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +79,7 @@ export function Stats({ classes = "" }) {
         <p className="max-w-md text-center mt-2 text-lg">
           Causes discoverable across the {APP_NAME} directory.
         </p>
-      </motion.div>
-    </div>
+      </motion.article>
+    </section>
   );
 }

@@ -71,8 +71,12 @@ const brands: IPartner[] = [
 
 export function Partners({ classes = "" }) {
   return (
-    <section className={`${classes} grid content-start`}>
+    <section
+      className={`${classes} grid content-start`}
+      aria-labelledby="partners-heading"
+    >
       <motion.h2
+        id="partners-heading"
         className="font-medium text-3xl/tight md:text-3.5xl/tight text-gray-d4 text-center text-balance mb-8"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -82,21 +86,24 @@ export function Partners({ classes = "" }) {
         Join <span className="font-semibold text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
       </motion.h2>
-      <div className="max-sm:flex justify-center flex-wrap gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-items-center">
+      <ul className="max-sm:flex justify-center flex-wrap gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-items-center">
         {brands.map((b, idx) => (
-          <motion.img
+          <motion.li
             key={idx}
-            src={b.url}
-            width={b.w}
-            className={`object-contain ${b.classes}`}
-            alt="organization logo"
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5, delay: idx * 0.05 }}
-          />
+          >
+            <img
+              src={b.url}
+              width={b.w}
+              className={`object-contain ${b.classes}`}
+              alt={b.alt}
+            />
+          </motion.li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

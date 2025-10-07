@@ -2,37 +2,40 @@ import { GlobeIcon, LayoutPanelLeftIcon, SproutIcon } from "lucide-react";
 
 export function Section7({ classes = "" }) {
   return (
-    <div className={`${classes} grid md:grid-cols-3 pb-24 gap-8`}>
-      <div className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
-        <LayoutPanelLeftIcon />
-        <p className="mt-2 capitalize font-bold text-lg md:text-xl">
+    <section
+      className={`${classes} grid md:grid-cols-3 pb-24 gap-8`}
+      aria-label="Key offerings"
+    >
+      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+        <LayoutPanelLeftIcon aria-hidden="true" />
+        <h3 className="mt-2 capitalize font-bold text-lg md:text-xl">
           All-in one donation form
-        </p>
+        </h3>
         <p className="text-center mt-4 text-lg">
           Raise more with a conversion-optimized form-cash, stock, and crypto in
           one flow.
         </p>
-      </div>
-      <div className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
-        <SproutIcon className="stroke-green" size={26} />
-        <p className="mt-2 capitalize font-bold text-lg md:text-xl">
+      </article>
+      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+        <SproutIcon className="stroke-green" size={26} aria-hidden="true" />
+        <h3 className="mt-2 capitalize font-bold text-lg md:text-xl">
           Sustainability fund management
-        </p>
+        </h3>
         <p className="text-center mt-4 text-lg">
           Turn today's gifts into tomorrow's reserves with Savings and a pooled
           Growth Fund.
         </p>
-      </div>
-      <div className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
-        <GlobeIcon className="stroke-blue" />
-        <p className="mt-2 capitalize font-bold text-lg md:text-xl">
+      </article>
+      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+        <GlobeIcon className="stroke-blue" aria-hidden="true" />
+        <h3 className="mt-2 capitalize font-bold text-lg md:text-xl">
           Fiscal sponsorship
-        </p>
+        </h3>
         <p className="text-center mt-4 text-lg">
           Accept U.S. tax-deductible donations globally without legal or tax
           barriers.
         </p>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 }

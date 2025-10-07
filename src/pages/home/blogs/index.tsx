@@ -29,8 +29,14 @@ export const Blogs = ({ classes = "" }) => {
   });
 
   return (
-    <section className={`${classes} grid content-start py-40`}>
-      <h2 className="text-gray-d4 text-3xl md:text-4.5xl text-center mb-14 px-4">
+    <section
+      className={`${classes} grid content-start py-40`}
+      aria-labelledby="blogs-heading"
+    >
+      <h2
+        id="blogs-heading"
+        className="text-gray-d4 text-3xl md:text-4.5xl text-center mb-14 px-4"
+      >
         Gain Knowledge to Empower Your Nonprofit
       </h2>
 
@@ -48,9 +54,9 @@ export const Blogs = ({ classes = "" }) => {
           className="overflow-hidden w-[70vw] md:w-[80vw] lg:w-[65vw] mx-auto"
           ref={embla_ref}
         >
-          <div className="flex">
+          <ul className="flex">
             {(data?.[0] || [1, 2, 3, 4, 5, 6]).map((blog, idx) => (
-              <div
+              <li
                 key={idx}
                 className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-2.5"
               >
@@ -59,9 +65,9 @@ export const Blogs = ({ classes = "" }) => {
                 ) : (
                   <BlogCard {...blog} />
                 )}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <button

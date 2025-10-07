@@ -11,12 +11,18 @@ import { Fragment } from "react";
 
 export function FAQ({ classes = "" }) {
   return (
-    <div className={`${classes} grid divide-y divide-gray-l3 pb-48`}>
-      <h2 className="col-span-full text-center text-3xl md:text-4xl leading-snug mb-10 border-b-0">
+    <section
+      className={`${classes} grid divide-y divide-gray-l3 pb-48`}
+      aria-labelledby="faq-heading"
+    >
+      <h2
+        id="faq-heading"
+        className="col-span-full text-center text-3xl md:text-4xl leading-snug mb-10 border-b-0"
+      >
         Frequently Asked Questions
       </h2>
       {faqs.map((faq) => (
-        <Disclosure as="div" key={faq.id} className="p-4">
+        <Disclosure as="article" key={faq.id} className="p-4">
           <DisclosureButton className="group flex items-center justify-between gap-2 w-full">
             <span className="text-left group-data-open:font-semibold">
               {faq.question}
@@ -34,7 +40,7 @@ export function FAQ({ classes = "" }) {
           </DisclosurePanel>
         </Disclosure>
       ))}
-      <div className="grid pt-8">
+      <footer className="grid pt-8">
         <ExtLink
           href={INTERCOM_HELP}
           className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
@@ -54,8 +60,8 @@ export function FAQ({ classes = "" }) {
         >
           Need additional support? Live Chat.
         </button>
-      </div>
-    </div>
+      </footer>
+    </section>
   );
 }
 const faqs = [

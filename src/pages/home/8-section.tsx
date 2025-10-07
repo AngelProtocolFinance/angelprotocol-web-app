@@ -37,6 +37,7 @@ export function Section8({ classes = "" }) {
         width={500}
         src={david_and_goliath}
         className="max-w-xl xl:max-w-auto order-1 xl:order-2 w-full self-center"
+        alt="David and Goliath illustration representing how smaller nonprofits can compete"
       />
     </section>
   );
