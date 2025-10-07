@@ -40,19 +40,17 @@ export function Partners({ classes = "" }) {
             ease: "linear",
           }}
         >
-          {/* Render grid twice for seamless loop */}
           {[...Array(2)].map((_, set_idx) => (
             <div
               key={set_idx}
-              className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-6 py-3"
+              className="flex flex-wrap gap-8 py-4 justify-center"
             >
               {partners.map((partner) => (
                 <img
                   key={`${set_idx}-${partner.id}`}
                   src={partner.url}
                   alt={`Partner ${partner.id}`}
-                  width={60}
-                  height={60}
+                  width={80}
                   className="object-contain"
                   loading="lazy"
                 />
