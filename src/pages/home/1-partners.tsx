@@ -1,73 +1,12 @@
-import ace_of_hearts_dog_rescue from "assets/partners/ace-of-hearts-dog-rescue.jpg";
-import biodiversity_group from "assets/partners/biodiversity-group.webp";
-import buckminster_fuller from "assets/partners/buckminster-fuller.svg";
-import circle_of_care from "assets/partners/circle-of-care.jpg";
-import core from "assets/partners/core.png";
-import foodbank_bali from "assets/partners/foodbank-bali.svg";
-import institute_for_citizens_and_scholars from "assets/partners/institute-for-citizens-and-scholars.svg";
-import nine_lives_project from "assets/partners/nine-lives-project.webp";
-import plan_for_hope from "assets/partners/plan-for-hope.jpg";
-import self from "assets/partners/self.png";
-import tutti_cancer_warriors from "assets/partners/tutti-cancer-warriors.png";
-import yellow_boat from "assets/partners/yellow-boat.png";
 import { motion } from "motion/react";
 
-interface IPartner {
-  url: string;
-  alt: string;
-  w: number;
-  classes?: string;
-}
+const logo_url = (num: number) =>
+  `https://elktqtbc25yfiipw.public.blob.vercel-storage.com/partners/${num}.svg`;
 
-const brands: IPartner[] = [
-  {
-    url: biodiversity_group,
-    alt: "Biodiversity Group",
-    w: 160,
-    classes: "max-md:w-32",
-  },
-  {
-    url: institute_for_citizens_and_scholars,
-    alt: "Institute for Citizens and Scholars",
-    w: 140,
-    classes: "max-md:w-32",
-  },
-  { url: self, alt: "Self", w: 160, classes: "max-md:w-32" },
-  { url: plan_for_hope, alt: "Plan for Hope", w: 140, classes: "max-md:w-32" },
-  {
-    url: buckminster_fuller,
-    alt: "Buckminster Fuller",
-    w: 200,
-    classes: "max-md:w-32",
-  },
-  {
-    url: tutti_cancer_warriors,
-    alt: "Tutti Cancer Warriors",
-    w: 200,
-    classes: "max-md:w-32",
-  },
-  { url: core, alt: "Core", w: 120, classes: "max-md:w-24" },
-  {
-    url: circle_of_care,
-    alt: "Circle of Care",
-    w: 200,
-    classes: "max-md:w-32",
-  },
-  { url: foodbank_bali, alt: "Foodbank Bali", w: 90, classes: "max-md:w-18" },
-  { url: yellow_boat, alt: "Yellow Boat", w: 110, classes: "max-md:w-18" },
-  {
-    url: nine_lives_project,
-    alt: "Nine Lives Project",
-    w: 90,
-    classes: "max-md:w-18",
-  },
-  {
-    url: ace_of_hearts_dog_rescue,
-    alt: "Ace of Hearts Dog Rescue",
-    classes: "max-md:w-18",
-    w: 90,
-  },
-];
+const partners = Array.from({ length: 76 }, (_, i) => ({
+  id: i + 1,
+  url: logo_url(i + 1),
+}));
 
 export function Partners({ classes = "" }) {
   return (
@@ -86,24 +25,42 @@ export function Partners({ classes = "" }) {
         Join <span className="font-semibold text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
       </motion.h2>
-      <ul className="max-sm:flex justify-center flex-wrap gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-items-center">
-        {brands.map((b, idx) => (
-          <motion.li
-            key={idx}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: idx * 0.05 }}
-          >
-            <img
-              src={b.url}
-              width={b.w}
-              className={`object-contain ${b.classes}`}
-              alt={b.alt}
-            />
-          </motion.li>
-        ))}
-      </ul>
+
+      <div className="justify-self-center relative overflow-hidden h-[400px]">
+        <div className="absolute inset-0 pointer-events-none z-10">
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent" />
+        </div>
+        <motion.div
+          style={{ y: 0 }}
+          animate={{ y: "-50%" }}
+          transition={{
+            duration: 60,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "linear",
+          }}
+        >
+          {/* Render grid twice for seamless loop */}
+          {[...Array(2)].map((_, set_idx) => (
+            <div
+              key={set_idx}
+              className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-6 py-3"
+            >
+              {partners.map((partner) => (
+                <img
+                  key={`${set_idx}-${partner.id}`}
+                  src={partner.url}
+                  alt={`Partner ${partner.id}`}
+                  width={60}
+                  height={60}
+                  className="object-contain"
+                  loading="lazy"
+                />
+              ))}
+            </div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 }
