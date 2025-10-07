@@ -54,7 +54,7 @@ export function NavDropdown({ user, auth_links }: Props) {
               to={app_routes.register + (user ? "/" : "/welcome")}
               className={styler}
             >
-              Register NPO
+              Register nonprofit
             </NavLink>
           </MenuItem>
           <MenuItem>

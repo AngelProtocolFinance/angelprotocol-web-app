@@ -70,7 +70,7 @@ const brands: IPartner[] = [
 
 export function Partners({ classes = "" }) {
   return (
-    <section className={`${classes} grid content-start mask-b-from-50%`}>
+    <section className={`${classes} grid content-start`}>
       <h2 className="font-medium text-3xl/tight md:text-3.5xl/tight text-gray-d4 text-center text-balance mb-8">
         Join <span className="font-semibold text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
