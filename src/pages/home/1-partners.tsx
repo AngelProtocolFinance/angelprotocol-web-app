@@ -10,6 +10,7 @@ import plan_for_hope from "assets/partners/plan-for-hope.jpg";
 import self from "assets/partners/self.png";
 import tutti_cancer_warriors from "assets/partners/tutti-cancer-warriors.png";
 import yellow_boat from "assets/partners/yellow-boat.png";
+import { motion } from "motion/react";
 
 interface IPartner {
   url: string;
@@ -71,18 +72,28 @@ const brands: IPartner[] = [
 export function Partners({ classes = "" }) {
   return (
     <section className={`${classes} grid content-start`}>
-      <h2 className="font-medium text-3xl/tight md:text-3.5xl/tight text-gray-d4 text-center text-balance mb-8">
+      <motion.h2
+        className="font-medium text-3xl/tight md:text-3.5xl/tight text-gray-d4 text-center text-balance mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+      >
         Join <span className="font-semibold text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
-      </h2>
+      </motion.h2>
       <div className="max-sm:flex justify-center flex-wrap gap-4 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-items-center">
         {brands.map((b, idx) => (
-          <img
+          <motion.img
             key={idx}
             src={b.url}
             width={b.w}
             className={`object-contain ${b.classes}`}
             alt="organization logo"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: idx * 0.05 }}
           />
         ))}
       </div>

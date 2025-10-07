@@ -2,11 +2,18 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import laira_pointing from "assets/laira/laira-pointing.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
 import { APP_NAME } from "constants/env";
+import { motion } from "motion/react";
 
 export function Manifesto({ classes = "" }) {
   return (
     <section className={`${classes} grid pb-40`}>
-      <div className="relative w-full max-w-4xl justify-self-center rounded-2xl border-t border-gray-l4 p-4 sm:p-12 shadow-2xl shadow-black/10">
+      <motion.div
+        className="relative w-full max-w-4xl justify-self-center rounded-2xl border-t border-gray-l4 p-4 sm:p-12 shadow-2xl shadow-black/10"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7 }}
+      >
         <div className="max-xl:hidden absolute -left-32 isolate -bottom-5">
           <img src={laira_pointing} width={120} className="z-10 max-sm:w-24" />
           {/** shadow */}
@@ -128,7 +135,7 @@ export function Manifesto({ classes = "" }) {
             />
           </svg>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

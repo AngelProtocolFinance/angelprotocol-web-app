@@ -3,15 +3,23 @@ import girl_using_phone from "assets/landing/girl-using-phone.webp";
 import girl_watering_plant from "assets/landing/girl-watering-plant.webp";
 import hand_payment_methods from "assets/landing/hand-payment-methods.webp";
 import { app_routes } from "constants/routes";
+import { motion } from "motion/react";
 import { Link } from "react-router";
 
 interface IBlurImg {
   classes?: string;
   url: string;
+  index?: number;
 }
-function BlurImg({ classes, url }: IBlurImg) {
+function BlurImg({ classes, url, index = 0 }: IBlurImg) {
   return (
-    <div className={`${classes} relative w-64 h-64`}>
+    <motion.div
+      className={`${classes} relative w-64 h-64`}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+    >
       <img
         width={400}
         src={url}
@@ -22,7 +30,7 @@ function BlurImg({ classes, url }: IBlurImg) {
         src={url}
         className="z-10 rounded-full absolute-center"
       />
-    </div>
+    </motion.div>
   );
 }
 
@@ -30,7 +38,13 @@ export function Ctas({ classes = "" }) {
   return (
     <div className={`${classes} grid gap-y-20 md:gap-y-32 px-5 md:px-24`}>
       <div className="grid md:grid-cols-2 items-center">
-        <div className="grid max-md:order-2">
+        <motion.div
+          className="grid max-md:order-2"
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h4 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
             We help you raise more.
           </h4>
@@ -47,25 +61,33 @@ export function Ctas({ classes = "" }) {
           >
             Join us today!
           </Link>
-        </div>
+        </motion.div>
         <BlurImg
           url={girl_pointing_up}
           classes="justify-self-center max-md:mb-4"
+          index={0}
         />
       </div>
       <div className="grid md:grid-cols-2 items-center">
         <BlurImg
           url={girl_watering_plant}
           classes="justify-self-center max-md:mb-4"
+          index={1}
         />
-        <div className="grid">
+        <motion.div
+          className="grid"
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h4 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
             We grow what you raise.
           </h4>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">Let your donations work for you</span>:
             High-yield savings (FDIC-insured) and a managed option averaging
-            over 20% annually across the last 5 years (past performance isn’t
+            over 20% annually across the last 5 years (past performance isn't
             guaranteed).
           </p>
           <Link
@@ -74,10 +96,16 @@ export function Ctas({ classes = "" }) {
           >
             Join us today!
           </Link>
-        </div>
+        </motion.div>
       </div>
       <div className="grid md:grid-cols-2 items-center">
-        <div className="grid max-md:order-2">
+        <motion.div
+          className="grid max-md:order-2"
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h4 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
             We unlock larger gifts.
           </h4>
@@ -93,18 +121,26 @@ export function Ctas({ classes = "" }) {
           >
             Join us today!
           </Link>
-        </div>
+        </motion.div>
         <BlurImg
           url={hand_payment_methods}
           classes="justify-self-center max-md:mb-4"
+          index={2}
         />
       </div>
       <div className="grid md:grid-cols-2 items-center">
         <BlurImg
           url={girl_using_phone}
           classes="justify-self-center max-md:mb-4"
+          index={3}
         />
-        <div className="grid">
+        <motion.div
+          className="grid"
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
           <h4 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
             We don't take a cut.
           </h4>
@@ -121,7 +157,7 @@ export function Ctas({ classes = "" }) {
           >
             Join us today!
           </Link>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

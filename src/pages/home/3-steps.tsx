@@ -4,6 +4,7 @@ import laira3 from "assets/laira/laira3.png";
 import { Image } from "components/image";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { app_routes } from "constants/routes";
+import { motion } from "motion/react";
 import { Link } from "react-router";
 
 type TListItem = {
@@ -38,24 +39,42 @@ const items: TListItem[] = [
 export function Steps({ classes = "" }) {
   return (
     <section className={`${classes} grid content-start `}>
-      <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
+      <motion.h3
+        className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+      >
         Easy as 1-2-3
-      </h3>
+      </motion.h3>
 
       <ul className="mt-20 lg:divide-x divide-gray-l3 grid gap-y-20 lg:gap-y-0 lg:grid-cols-3">
         {items.map((item, idx) => (
-          <ListItem {...item} key={idx} />
+          <ListItem {...item} key={idx} index={idx} />
         ))}
       </ul>
-      <p className="text-center max-w-3xl justify-self-center mt-12 text-lg px-4">
+      <motion.p
+        className="text-center max-w-3xl justify-self-center mt-12 text-lg px-4"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+      >
         We pride ourselves in helping fellow nonprofits like yours{" "}
         <span className="font-bold">save money</span> with free donation
         processing, <span className="font-bold">save time</span> by handling all
         admin & reporting work, and{" "}
         <span className="font-bold">save for your future</span> with simple but
         powerful high-yield savings and investment options
-      </p>
-      <div className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10">
+      </motion.p>
+      <motion.div
+        className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+      >
         <Link
           to={app_routes.register}
           className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded-full"
@@ -68,14 +87,20 @@ export function Steps({ classes = "" }) {
         >
           Book a demo
         </Link>
-      </div>
+      </motion.div>
     </section>
   );
 }
 
-function ListItem(props: TListItem) {
+function ListItem(props: TListItem & { index: number }) {
   return (
-    <li className="grid lg:grid-rows-subgrid row-span-4 px-9 justify-items-center">
+    <motion.li
+      className="grid lg:grid-rows-subgrid row-span-4 px-9 justify-items-center"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay: props.index * 0.1 }}
+    >
       <Image
         src={props.image.src}
         height={props.image.height}
@@ -88,6 +113,6 @@ function ListItem(props: TListItem) {
         {props.title2}
       </h5>
       <p className="text-center text-lg @6xl:text-xl">{props.description}</p>
-    </li>
+    </motion.li>
   );
 }

@@ -1,7 +1,10 @@
 import banner from "assets/images/bg-banner.webp";
 import { APP_NAME } from "constants/env";
 import { app_routes } from "constants/routes";
+import { motion } from "motion/react";
 import { Link } from "react-router";
+
+const MLink = motion.create(Link);
 
 const Hero = ({ classes = "" }) => {
   return (
@@ -10,25 +13,43 @@ const Hero = ({ classes = "" }) => {
         className="absolute inset-0 -z-10 mask-b-from-30% bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom]"
         style={{ backgroundImage: `url('${banner}')` }}
       />
-      <p className="text-sm md:text-lg uppercase font-bold text-center mb-5 tracking-wider">
+      <motion.p
+        className="text-sm md:text-lg uppercase font-bold text-center mb-5 tracking-wider"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+      >
         By a nonprofit, for nonprofits
-      </p>
-      <h1 className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-8 px-6 ">
+      </motion.p>
+      <motion.h1
+        className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-8 px-6 "
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         Raise more this quarter, <br /> Grow funds together
-      </h1>
-      <p className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center text-pretty sm:text-balance">
+      </motion.h1>
+      <motion.p
+        className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center text-pretty sm:text-balance"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
         When you sign up, you're a {APP_NAME} Member, no extra steps, no fees.
         Our high-converting donation flow lifts completed gifts and monthly
         donors. Savings and a pooled Sustainability Fund build reserves over
         time.
-      </p>
+      </motion.p>
 
-      <Link
+      <MLink
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
         to={`${app_routes.register}/welcome`}
-        className="btn-blue ml-1 justify-self-center mt-8 active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
+        className="btn-blue justify-self-center mt-8 active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >
         Join us today!
-      </Link>
+      </MLink>
     </section>
   );
 };

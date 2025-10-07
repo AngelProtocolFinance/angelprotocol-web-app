@@ -14,8 +14,11 @@ import {
   Target,
   UsersIcon,
 } from "lucide-react";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
+
+const MLink = motion.create(Link);
 
 interface IFeature {
   id: number;
@@ -101,10 +104,22 @@ const features: IFeature[] = [
 export function Features({ classes = "" }) {
   return (
     <div className={`${classes} grid lg:grid-cols-2 xl:grid-cols-3 gap-4 py-8`}>
-      <h4 className="text-lg  text-blue-d1 uppercase -mb-4 col-span-full text-center xl:text-left">
+      <motion.h4
+        className="text-lg  text-blue-d1 uppercase -mb-4 col-span-full text-center xl:text-left"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5 }}
+      >
         Features
-      </h4>
-      <div className="row-span-2 col-span-full pb-8">
+      </motion.h4>
+      <motion.div
+        className="row-span-2 col-span-full pb-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         <h3 className="text-2xl xl:text-3xl text-gray-d3 mb-4 text-center xl:text-left">
           Smarter Tools for Seamless Fundraising
         </h3>
@@ -112,28 +127,39 @@ export function Features({ classes = "" }) {
           Raise funds, grow donations, and secure financial stability—all with
           no platform fees.
         </p>
-      </div>
-      {features.map((f) => (
-        <Feature key={f.id} {...f} />
+      </motion.div>
+      {features.map((f, idx) => (
+        <Feature key={f.id} {...f} index={idx} />
       ))}
-      <Link
+
+      <MLink
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5 }}
         to={`${app_routes.register}/welcome`}
         className="text-center capitalize col-span-full justify-self-center btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg mt-4"
       >
         Explore all {APP_NAME} features
-      </Link>
+      </MLink>
     </div>
   );
 }
 
-function Feature(props: IFeature) {
+function Feature(props: IFeature & { index: number }) {
   return (
-    <div className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2 bg-white">
+    <motion.div
+      className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2 bg-white"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.4, delay: (props.index % 6) * 0.05 }}
+    >
       <div className="flex items-center gap-x-2">
         {props.icon}
         <p className="font-bold text-sm ">{props.title}</p>
       </div>
       <p className="text-gray-d1">{props.body}</p>
-    </div>
+    </motion.div>
   );
 }
