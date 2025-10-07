@@ -8,7 +8,7 @@ import {
   PayoutsDB,
 } from "@better-giving/payouts";
 import type { Environment } from "@better-giving/types/list";
-import type { ActionFunction } from "react-router";
+import type { LoaderFunction } from "react-router";
 import { transfer_grant } from "./transfer-grant";
 import {
   TransactWriteCommand,
@@ -22,7 +22,7 @@ import { aws_monitor } from ".server/sdks";
 
 const fn = `grants-processor:${env}`;
 
-export const action: ActionFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request }) => {
   const auth_header = request.headers.get("authorization");
   if (auth_header !== `Bearer ${cron_secret}`) {
     return new Response("unauthorized", { status: 403 });
