@@ -14,7 +14,7 @@ export function BottomCta({ className = "" }) {
           Simple. Sustainable. Free.
         </h4>
         <h3 className="text-center md:text-left md:leading-snug  text-2xl @md:text-4xl text-white mb-9">
-          Read to grow gifts this quarter? It's only a few clicks away.
+          Ready to grow gifts this quarter? It's only a few clicks away.
         </h3>
         <Link
           to={app_routes.register}
