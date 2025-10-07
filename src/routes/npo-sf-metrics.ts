@@ -23,10 +23,9 @@ export const loader: LoaderFunction = async (x) => {
   const series = await navdb.npo_series(adm.id, opts);
   const items = series.concat([ltd_holding]);
 
-  let $running = 0;
+  let $running = items[0].value;
   let $perf = 0;
   const $points: IPerfPoint[] = [];
-  const initial_value = items.length > 0 ? items[0].value : 0;
 
   for (let i = 1; i < items.length; i++) {
     const prev = items[i - 1];
@@ -44,8 +43,7 @@ export const loader: LoaderFunction = async (x) => {
     });
   }
 
-  const basis = $running !== 0 ? $running : initial_value;
-  const total_return = basis > 0 ? ($perf - basis) / basis : 0;
+  const total_return = $running > 0 ? ($perf - $running) / $running : 0;
 
   return resp.json({
     points: $points,
