@@ -10,7 +10,7 @@ const Hero = ({ classes = "" }) => {
         className="absolute inset-0 -z-10 mask-b-from-30% bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom]"
         style={{ backgroundImage: `url('${banner}')` }}
       />
-      <p className="text-sm md:text-lg isoalte uppercase font-bold text-center mb-5 tracking-wider">
+      <p className="text-sm md:text-lg uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>
       <h1 className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-8 px-6 ">
