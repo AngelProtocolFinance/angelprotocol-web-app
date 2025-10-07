@@ -127,7 +127,7 @@ export function Features({ classes = "" }) {
           id="features-heading"
           className="text-2xl xl:text-3xl text-gray-d3 mb-4 text-center xl:text-left"
         >
-          Smarter Tools for Seamless Fundraising
+          Smarter Tools for seamless fundraising
         </h2>
         <p className="text-lg text-center xl:text-left">
           Raise funds, grow donations, and secure financial stability—all with

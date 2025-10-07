@@ -19,7 +19,7 @@ export function FAQ({ classes = "" }) {
         id="faq-heading"
         className="col-span-full text-center text-3xl md:text-4xl leading-snug mb-10 border-b-0"
       >
-        Frequently Asked Questions
+        Got questions? We've got answers.
       </h2>
       {faqs.map((faq) => (
         <Disclosure as="article" key={faq.id} className="p-4">

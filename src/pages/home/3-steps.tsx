@@ -76,7 +76,7 @@ export function Steps({ classes = "" }) {
         transition={{ duration: 0.6, delay: 0.5 }}
       >
         <Link
-          to={app_routes.register}
+          to={`${app_routes.register}/welcome`}
           className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
           Join us today!

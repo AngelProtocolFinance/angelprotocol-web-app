@@ -110,7 +110,7 @@ export function Features({ classes = "" }) {
       </h4>
       <div className="row-span-2 col-span-full @4xl:col-span-2 pb-8">
         <h3 className="text-2xl @4xl:text-3xl text-gray-d3 mb-4 text-center @4xl:text-left">
-          Smarter Tools for Seamless Fundraising
+          Smarter tools for seamless fundraising
         </h3>
         <p className="text-lg text-center @4xl:text-left">
           Raise funds, grow donations, and secure financial stability—all with

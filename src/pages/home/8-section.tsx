@@ -29,8 +29,8 @@ export function Section8({ classes = "" }) {
         </p>
         <p className="mb-4 text-lg xl:text-xl text-center xl:text-left">
           We’re willing to go the extra mile with you, because we understand the
-          challenges of operating a nonprofit first hand. At {APP_NAME}
-          you’re not simply another customer, you’re a trusted member.
+          challenges of operating a nonprofit first hand. At {APP_NAME} you’re
+          not simply another customer, you’re a trusted member.
         </p>
       </div>
       <img

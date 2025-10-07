@@ -37,7 +37,7 @@ export const Blogs = ({ classes = "" }) => {
         id="blogs-heading"
         className="text-gray-d4 text-3xl md:text-4.5xl text-center mb-14 px-4"
       >
-        Gain Knowledge to Empower Your Nonprofit
+        Gain knowledge to empower your nonprofit
       </h2>
 
       <div className="relative">

@@ -26,7 +26,7 @@ export function Section6({ classes = "" }) {
         </p>
 
         <Link
-          to={app_routes.register}
+          to={`${app_routes.register}/welcome`}
           className="btn-blue justify-self-center xl:justify-self-start px-6 py-2 xl:px-10 xl:py-4 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
           Join us today!

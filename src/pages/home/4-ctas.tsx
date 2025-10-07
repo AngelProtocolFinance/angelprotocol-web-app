@@ -63,7 +63,7 @@ export function Ctas({ classes = "" }) {
             easy embedding to lift completion and grow monthly donors.
           </p>
           <Link
-            to={app_routes.register}
+            to={`${app_routes.register}/welcome`}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -98,7 +98,7 @@ export function Ctas({ classes = "" }) {
             guaranteed).
           </p>
           <Link
-            to={app_routes.register}
+            to={`${app_routes.register}/welcome`}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -123,7 +123,7 @@ export function Ctas({ classes = "" }) {
             benefits for your donors.
           </p>
           <Link
-            to={app_routes.register}
+            to={`${app_routes.register}/welcome`}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -159,7 +159,7 @@ export function Ctas({ classes = "" }) {
             checkout so you don't pay platform fees or fund-management fees.
           </p>
           <Link
-            to={app_routes.register}
+            to={`${app_routes.register}/welcome`}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -187,7 +187,7 @@ export function Cta({ classes = "" }: ICta) {
           embedding to lift completion and grow monthly donors.
         </p>
         <Link
-          to={app_routes.register}
+          to={`${app_routes.register}/welcome`}
           className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
           Join us today!
