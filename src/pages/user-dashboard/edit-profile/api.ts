@@ -1,6 +1,6 @@
 import { type ActionFunction, data } from "react-router";
 import type { ActionData } from "types/action";
-import { type UserV2, isError } from "types/auth";
+import { type UserV2, is_error } from "types/auth";
 import type { UserCurrencies } from "types/currency";
 import type { Route } from "./+types";
 import { cognito, to_auth } from ".server/auth";
@@ -22,15 +22,15 @@ export const action: ActionFunction = async ({ request }) => {
   if (!user) return to_auth(request, headers);
 
   const attributes = await request.json();
-  const result = await cognito.updateUserAttributes(
+  const result = await cognito.update_user_attributes(
     attributes,
-    user.accessToken
+    user.token_access
   );
   if (result !== "success") throw result.message;
 
   const res = await cognito.refresh(session);
 
-  if (isError(res)) throw res.message;
+  if (is_error(res)) throw res.message;
 
   return data({ __ok: "User profile updated" } satisfies ActionData, {
     headers: {

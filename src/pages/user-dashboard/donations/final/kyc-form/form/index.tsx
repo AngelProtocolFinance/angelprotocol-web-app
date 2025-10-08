@@ -24,7 +24,7 @@ export function Form({ classes = "", user }: IForm) {
   const fetcher = useFetcher();
 
   const init: FV = {
-    name: { first: user.firstName, last: user.lastName },
+    name: { first: user.first_name, last: user.last_name },
     address: { street: "", complement: "" },
     city: "",
     postal_code: "",

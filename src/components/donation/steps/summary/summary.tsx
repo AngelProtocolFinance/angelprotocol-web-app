@@ -63,8 +63,8 @@ export function Summary(props: SummaryStep) {
         recipientMembers={init.recipient.members}
         donor={
           donor || {
-            first_name: user?.firstName ?? "",
-            last_name: user?.lastName ?? "",
+            first_name: user?.first_name ?? "",
+            last_name: user?.last_name ?? "",
             email: user?.email ?? "",
             title: "",
             is_public: true,

@@ -67,10 +67,10 @@ export function DirectMode({ donation, classes = "" }: Props) {
       </p>
       <QueryLoader
         queryState={{
-          isLoading: isLoading,
-          isFetching: isValidating,
+          is_loading: isLoading,
+          is_fetching: isValidating,
           data: data,
-          isError: !!error,
+          is_error: !!error,
         }}
         messages={{
           loading: <ContentLoader className="size-48 rounded-sm" />,

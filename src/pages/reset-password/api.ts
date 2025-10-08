@@ -3,7 +3,7 @@ import { search } from "helpers/https";
 import { type ActionFunction, data, redirect } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
 import type { ActionData, IFormInvalid } from "types/action";
-import { isError } from "types/auth";
+import { is_error } from "types/auth";
 import { parse } from "valibot";
 import type { Route } from "./+types";
 import {
@@ -34,8 +34,8 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (fv.get("intent") === "resend-otp") {
-    const res = await cognito.resendConfirmationCode(email);
-    if (isError(res)) return data({ __err: res.message } satisfies ActionData);
+    const res = await cognito.resend_confirmation_code(email);
+    if (is_error(res)) return data({ __err: res.message } satisfies ActionData);
     return data({ __ok: "OTP sent" } satisfies ActionData);
   }
 
@@ -48,13 +48,13 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (payload.errors) return payload;
 
-    const res = await cognito.confirmForgotPassword(
+    const res = await cognito.forgot_password_confirm(
       email,
       payload.data.password,
       payload.data.otp
     );
 
-    if (isError(res)) {
+    if (is_error(res)) {
       return {
         errors: { otp: { message: res.message, type: "value" } },
         receivedValues: payload.receivedValues,
@@ -69,8 +69,8 @@ export const action: ActionFunction = async ({ request }) => {
   const payload = await getValidatedFormData(fv, valibotResolver(email_schema));
   if (payload.errors) return payload;
 
-  const res = await cognito.forgotPassword(payload.data.email);
-  if (isError(res)) {
+  const res = await cognito.forgot_password(payload.data.email);
+  if (is_error(res)) {
     return {
       errors: { email: { message: res.message, type: "value" } },
       receivedValues: payload.receivedValues,

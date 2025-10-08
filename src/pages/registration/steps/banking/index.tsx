@@ -97,7 +97,7 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
         verified
         FormButtons={FormButtons}
         onSubmit={submit}
-        isLoading={fetcher.state !== "idle"}
+        is_loading={fetcher.state !== "idle"}
       />
     </div>
   );

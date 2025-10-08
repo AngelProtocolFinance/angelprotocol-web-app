@@ -118,7 +118,7 @@ export function Table({
                 <LoadMoreBtn
                   onLoadMore={load_next}
                   disabled={disabled}
-                  isLoading={loading}
+                  is_loading={loading}
                 />
               </td>
             ) : (

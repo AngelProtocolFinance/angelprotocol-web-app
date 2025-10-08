@@ -11,7 +11,7 @@ import { Mail } from "lucide-react";
 import { Link, data, redirect, useNavigation } from "react-router";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import type { ActionData, IFormInvalid } from "types/action";
-import { type ISignIn, isError, sign_in } from "types/auth";
+import { type ISignIn, is_error, sign_in } from "types/auth";
 import type { Route } from "./+types/signin";
 import { cognito, oauth } from ".server/auth";
 
@@ -26,7 +26,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     const fv = await request.formData();
 
     if (fv.get("intent") === "oauth") {
-      return redirect(oauth.initiateUrl(redirect_to, from.origin));
+      return redirect(oauth.initiate_url(redirect_to, from.origin));
     }
 
     const payload = await getValidatedFormData<ISignIn>(
@@ -41,7 +41,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
       request.headers.get("cookie")
     );
 
-    if (isError(res)) {
+    if (is_error(res)) {
       if (res.__type === "UserNotConfirmedException") {
         const to = new URL(from);
         to.pathname = `${app_routes.signup}/confirm`;

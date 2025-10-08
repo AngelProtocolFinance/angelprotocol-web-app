@@ -1,5 +1,5 @@
 import { type ActionFunction, redirect } from "react-router";
-import { type UserV2, isError } from "types/auth";
+import { type UserV2, is_error } from "types/auth";
 import type { Route } from "./+types";
 import { cognito, to_auth } from ".server/auth";
 
@@ -17,15 +17,15 @@ export const action: ActionFunction = async ({ request }) => {
   if (!user) return to_auth(request, headers);
 
   const amnt = await request.text();
-  const result = await cognito.updateUserAttributes(
+  const result = await cognito.update_user_attributes(
     [{ Name: "custom:pay_min", Value: amnt }],
-    user.accessToken
+    user.token_access
   );
   if (result !== "success") throw result.message;
 
   const res = await cognito.refresh(session);
 
-  if (isError(res)) throw res.message;
+  if (is_error(res)) throw res.message;
 
   return redirect("..", {
     headers: {

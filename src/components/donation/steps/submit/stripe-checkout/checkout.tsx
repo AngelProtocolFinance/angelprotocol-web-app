@@ -115,7 +115,7 @@ export function Checkout(props: StripeCheckoutStep) {
           disabled={!stripe || !elements || status !== "ready" || !complete}
           type="submit"
         >
-          <LoadText text="Processing..." isLoading={status === "submitting"}>
+          <LoadText text="Processing..." is_loading={status === "submitting"}>
             Donate Now
           </LoadText>
         </button>

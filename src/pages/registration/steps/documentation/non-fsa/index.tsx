@@ -89,7 +89,7 @@ export function NonFsaForm(props: Props) {
           type="submit"
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
-          <LoadText isLoading={isSubmitting}>Continue</LoadText>
+          <LoadText is_loading={isSubmitting}>Continue</LoadText>
         </button>
       </div>
     </Form>

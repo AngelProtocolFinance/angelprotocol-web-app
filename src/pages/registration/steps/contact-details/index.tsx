@@ -174,7 +174,9 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
         className="mt-8 py-3 px-8 w-full sm:w-auto btn btn-blue text-sm"
         disabled={fetcher.state !== "idle"}
       >
-        <LoadText isLoading={fetcher.state === "submitting"}>Continue</LoadText>
+        <LoadText is_loading={fetcher.state === "submitting"}>
+          Continue
+        </LoadText>
       </button>
     </form>
   );

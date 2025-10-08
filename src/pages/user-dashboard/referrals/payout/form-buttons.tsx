@@ -12,7 +12,7 @@ export default function FormButtons({
         type="submit"
         className="px-6 btn btn-blue gap-1 text-sm w-full md:w-80"
       >
-        <LoadText isLoading={isSubmitting}>Submit</LoadText>
+        <LoadText is_loading={isSubmitting}>Submit</LoadText>
       </button>
     </div>
   );

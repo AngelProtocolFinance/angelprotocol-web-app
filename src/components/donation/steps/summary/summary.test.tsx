@@ -150,8 +150,8 @@ describe("summary step", () => {
   });
 
   const user: Partial<UserV2> = {
-    lastName: "last",
-    firstName: "first",
+    last_name: "last",
+    first_name: "first",
     email: "first@last.mail",
   };
 

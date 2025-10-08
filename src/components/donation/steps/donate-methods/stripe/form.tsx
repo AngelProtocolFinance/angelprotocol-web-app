@@ -43,9 +43,9 @@ export function Form(props: Props) {
       />
       <CurrencySelector
         currencies={{
-          isLoading: currency.isLoading,
-          isFetching: currency.isValidating,
-          isError: !!currency.error,
+          is_loading: currency.isLoading,
+          is_fetching: currency.isValidating,
+          is_error: !!currency.error,
           data: currency.data?.all,
         }}
         label="Currency"

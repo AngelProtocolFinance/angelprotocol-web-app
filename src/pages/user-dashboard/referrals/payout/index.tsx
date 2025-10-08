@@ -29,7 +29,7 @@ export default function Payout() {
             encType: "text/plain",
           })
         }
-        isLoading={fetcher.state !== "idle"}
+        is_loading={fetcher.state !== "idle"}
       />
       {prompt && <Prompt {...prompt} onClose={() => setPrompt(undefined)} />}
     </>

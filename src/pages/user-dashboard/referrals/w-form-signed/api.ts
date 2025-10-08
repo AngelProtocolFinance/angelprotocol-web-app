@@ -1,5 +1,5 @@
 import { type LoaderFunctionArgs, data } from "react-router";
-import { type UserV2, isError } from "types/auth";
+import { type UserV2, is_error } from "types/auth";
 import { cognito, to_auth } from ".server/auth";
 import type { Stored } from ".server/auth/session";
 import { weld_data_fn } from ".server/registration/weld-data";
@@ -36,16 +36,16 @@ async function commit_wform(
 ): Promise<(UserV2 & { commit: string }) | null> {
   if (!doc_eid_param) return null;
 
-  const res = await cognito.updateUserAttributes(
+  const res = await cognito.update_user_attributes(
     [{ Name: "custom:w_form", Value: doc_eid_param }],
-    user.accessToken
+    user.token_access
   );
-  if (isError(res)) {
+  if (is_error(res)) {
     console.error("Error updating user attributes:", res.message);
     return null;
   }
   const commitment = await cognito.refresh(sesssion);
-  if (isError(commitment)) {
+  if (is_error(commitment)) {
     console.error("Error refreshing session:", commitment.message);
     return null;
   }

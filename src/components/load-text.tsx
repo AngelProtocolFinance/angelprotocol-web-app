@@ -3,10 +3,10 @@ import type { PropsWithChildren } from "react";
 
 export function LoadText({
   text = "Submitting...",
-  isLoading,
+  is_loading,
   children,
-}: PropsWithChildren<{ isLoading?: boolean; text?: string }>) {
-  return isLoading ? (
+}: PropsWithChildren<{ is_loading?: boolean; text?: string }>) {
+  return is_loading ? (
     <>
       <LoaderCircle className="inline animate-spin mr-1 bottom-px relative" />
       {text}

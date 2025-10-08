@@ -19,7 +19,7 @@ export const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     forwardRef
   ) => {
     const ref = useRef<HTMLImageElement>(null);
-    const [isError, setError] = useState(false);
+    const [is_error, setError] = useState(false);
 
     // https://legacy.reactjs.org/docs/hooks-reference.html#useimperativehandle
     useImperativeHandle<HTMLImageElement | null, HTMLImageElement | null>(
@@ -27,34 +27,34 @@ export const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       () => ref.current
     );
 
-    if ((!props.src && !isSrcLoading) || isError) {
+    if ((!props.src && !isSrcLoading) || is_error) {
       return <ImagePlaceholder className={className} />;
     }
 
     /**
      *
-     * Using `ref.current.complete` instead of some internal `isLoading` state to check if image
+     * Using `ref.current.complete` instead of some internal `is_loading` state to check if image
      * was already loaded as it maintains state on re-render.
      *
-     * Were we to use some `isLoading` state, then `Image` would flicker on every render.
+     * Were we to use some `is_loading` state, then `Image` would flicker on every render.
      *
      * Explanation for the flicker:
      * 1. Let's assume the image was already loaded and rendered, but the user navigated away from
      *    the page/component that displayed it.
      * 2. The user decides to navigate back to the page/component with the loaded image.
-     * 3. As the default `isLoading` state is `true`, the `img` component is hidden and
+     * 3. As the default `is_loading` state is `true`, the `img` component is hidden and
      *    `ContentLoader` component is displayed.
      * 4. As  the image is already loaded and cached, the `img.onLoad` triggers immediately and
-     *    updates `isLoading` to `false` triggering a new render
+     *    updates `is_loading` to `false` triggering a new render
      * 5. Component `Image` flickers as it transitions from displaying `ContentLoader` to displaying `img`
      *
      */
-    const isLoading = !ref.current?.complete && isSrcLoading;
-    const commonClasses = `${className} ${isLoading ? "hidden" : ""}`;
+    const is_loading = !ref.current?.complete && isSrcLoading;
+    const commonClasses = `${className} ${is_loading ? "hidden" : ""}`;
 
     return (
       <>
-        {isLoading && <ContentLoader className={className} />}
+        {is_loading && <ContentLoader className={className} />}
         {/**
          *
          * Setting the logic to add `hidden` class name is necessary on both

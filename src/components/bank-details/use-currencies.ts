@@ -19,5 +19,11 @@ export function use_currencies(): QueryState<WiseCurrencyOption[]> {
     "/api/wise/v1/currencies",
     get_currencies
   );
-  return { data, isLoading, isFetching: isValidating, isError: !!error, error };
+  return {
+    data,
+    is_loading: isLoading,
+    is_fetching: isValidating,
+    is_error: !!error,
+    error,
+  };
 }

@@ -3,7 +3,7 @@ import type { UserV2 } from "types/auth";
 import type { SessionData, Stored } from "./session";
 
 export class Util {
-  protected toUser(data: SessionData): UserV2 {
+  protected to_user(data: SessionData): UserV2 {
     const {
       endows = "",
       funds = "",
@@ -12,15 +12,15 @@ export class Util {
     }: any = decodeJwt(data.token_id);
 
     return {
-      idToken: data.token_id,
-      accessToken: data.token_access,
-      refreshToken: data.token_refresh,
+      token_id: data.token_id,
+      token_access: data.token_access,
+      token_refresh: data.token_refresh,
       groups,
       endowments: endows.split(",").map(Number) ?? [],
       funds: funds.split(",") ?? [],
       email: p.email,
-      firstName: p.given_name,
-      lastName: p.family_name,
+      first_name: p.given_name,
+      last_name: p.family_name,
       avatar: p["custom:avatar"],
       currency: p["custom:currency"],
       referral_id: p["custom:referral_id"],

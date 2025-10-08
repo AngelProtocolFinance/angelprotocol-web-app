@@ -169,9 +169,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     // save stripe customer id to user
     if (user && user.email === intent.donor.email && !user.stripe_customer_id) {
       await cognito
-        .updateUserAttributes(
+        .update_user_attributes(
           [{ Name: "custom:stripe_customer_id", Value: customer_id }],
-          user.accessToken
+          user.token_access
         )
         .catch(console.error);
     }

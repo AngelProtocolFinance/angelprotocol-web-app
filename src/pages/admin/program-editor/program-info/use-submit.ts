@@ -27,5 +27,5 @@ export default function useSubmit(
     });
   };
 
-  return { submit, isLoading: fetcher.state !== "idle" };
+  return { submit, is_loading: fetcher.state !== "idle" };
 }

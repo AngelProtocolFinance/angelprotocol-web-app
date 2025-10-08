@@ -20,14 +20,14 @@ export type AuthenticatedUser = {
 export type CognitoGroup = "ap-admin"; //| future ;
 
 export type UserV2 = {
-  idToken: string;
-  accessToken: string;
-  refreshToken: string;
+  token_id: string;
+  token_access: string;
+  token_refresh: string;
   groups: CognitoGroup[];
   endowments: number[];
   funds: string[];
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   referral_id: string;
   email: string;
   /** image url */
@@ -48,7 +48,7 @@ export interface AuthError<T extends string = string> {
   message: string;
 }
 
-export const isError = (data: any): data is AuthError => {
+export const is_error = (data: any): data is AuthError => {
   return !!data.__type;
 };
 

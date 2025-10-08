@@ -25,7 +25,7 @@ export default function Page({ loaderData: data }: Route.ComponentProps) {
 
 function Content(props: LoaderData) {
   const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
+  const is_loading = navigation.state === "loading";
 
   return (
     <DialogPanel className="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6 text-center">
@@ -44,7 +44,7 @@ function Content(props: LoaderData) {
       </a>
 
       <Link
-        aria-disabled={isLoading}
+        aria-disabled={is_loading}
         className="w-full max-w-[26.25rem] justify-self-center btn btn-blue text-sm mt-4"
         to="../payout"
       >

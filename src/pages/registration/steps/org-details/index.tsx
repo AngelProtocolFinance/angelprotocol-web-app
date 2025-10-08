@@ -168,7 +168,7 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
           type="submit"
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
-          <LoadText isLoading={fetcher.state !== "idle"}>Continue</LoadText>
+          <LoadText is_loading={fetcher.state !== "idle"}>Continue</LoadText>
         </button>
       </div>
     </form>

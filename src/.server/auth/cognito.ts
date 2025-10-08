@@ -55,12 +55,12 @@ export interface RefreshedUser extends UserV2 {
 class Storage extends Util {
   /** request of cookie header */
   async retrieve(request: Request | string | null): Promise<Auth> {
-    const cookieHeader =
+    const cookie_header =
       typeof request === "string" || !request
         ? request
         : request.headers.get("cookie");
 
-    const session = await getSession(cookieHeader);
+    const session = await getSession(cookie_header);
     const token_id = session.get("token_id");
     const token_access = session.get("token_access");
     const token_refresh = session.get("token_refresh");
@@ -77,7 +77,7 @@ class Storage extends Util {
     }
 
     return {
-      user: this.toUser({
+      user: this.to_user({
         token_id: token_id,
         token_access: token_access,
         token_refresh: token_refresh,
@@ -112,7 +112,7 @@ class Cognito extends Storage {
     return JSON.stringify({ ...content, ClientId: this.config.client_id });
   }
 
-  private async deliveryDetails(res: Response) {
+  private async delivery_details(res: Response) {
     if (res.ok)
       return res
         .json()
@@ -174,7 +174,7 @@ class Cognito extends Storage {
     session.set("token_refresh", session.get("token_refresh")!);
     session.set("token_expiry", this.expiry(r.ExpiresIn));
 
-    const updated_user = this.toUser(session.data as any);
+    const updated_user = this.to_user(session.data as any);
     const refreshed: RefreshedUser = {
       ...updated_user,
       commit: await commitSession(session),
@@ -207,10 +207,10 @@ class Cognito extends Storage {
           { Name: "preferred_username", Value: ref_id },
         ],
       }),
-    }).then(this.deliveryDetails);
+    }).then(this.delivery_details);
   }
 
-  async confirmSignup(username: string, code: string) {
+  async signup_confirm(username: string, code: string) {
     return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("ConfirmSignUp"),
@@ -224,7 +224,7 @@ class Cognito extends Storage {
     });
   }
 
-  async resendConfirmationCode(username: string) {
+  async resend_confirmation_code(username: string) {
     return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("ResendConfirmationCode"),
@@ -237,17 +237,17 @@ class Cognito extends Storage {
     });
   }
 
-  async forgotPassword(username: string) {
+  async forgot_password(username: string) {
     return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("ForgotPassword"),
       body: this.body({
         Username: username,
       }),
-    }).then(this.deliveryDetails);
+    }).then(this.delivery_details);
   }
 
-  async confirmForgotPassword(
+  async forgot_password_confirm(
     username: string,
     newPassword: string,
     code: string
@@ -266,7 +266,7 @@ class Cognito extends Storage {
     });
   }
 
-  async signOut(session: Stored): Promise<string | AuthError> {
+  async sign_out(session: Stored): Promise<string | AuthError> {
     const res = await fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("GlobalSignOut"),
@@ -283,7 +283,7 @@ class Cognito extends Storage {
     return res.json() as any;
   }
 
-  async updateUserAttributes(attributes: object[], accessToken: string) {
+  async update_user_attributes(attributes: object[], accessToken: string) {
     return fetch(this.config.endpoint, {
       method: "POST",
       headers: this.headers("UpdateUserAttributes"),
@@ -306,7 +306,7 @@ class OAuth extends Storage {
     this.config = config;
   }
 
-  initiateUrl(state: string, base_url: string) {
+  initiate_url(state: string, base_url: string) {
     const scopes = [
       "email",
       "openid",

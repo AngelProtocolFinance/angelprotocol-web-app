@@ -60,7 +60,7 @@ export default function Banking() {
           verified
           FormButtons={FormButtons}
           onSubmit={submit}
-          isLoading={fetcher.state !== "idle"}
+          is_loading={fetcher.state !== "idle"}
         />
       </Group>
       {prompt && <Prompt {...prompt} onClose={() => setPrompt(undefined)} />}

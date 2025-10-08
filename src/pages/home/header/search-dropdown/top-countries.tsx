@@ -16,9 +16,9 @@ export function TopCountries() {
       <QueryLoader
         queryState={{
           data,
-          isLoading,
-          isError: !!error,
-          isFetching: isValidating,
+          is_loading: isLoading,
+          is_error: !!error,
+          is_fetching: isValidating,
         }}
         classes={{ container: "flex flex-wrap gap-2" }}
         messages={{

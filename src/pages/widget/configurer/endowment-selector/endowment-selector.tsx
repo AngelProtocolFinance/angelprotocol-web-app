@@ -9,10 +9,10 @@ import { Options } from "./options";
 interface Props {
   endow?: EndowmentOption;
   endows: EndowmentOption[];
-  isLoading?: boolean;
+  is_loading?: boolean;
 }
 
-export function EndowmentSelector({ endow, endows, isLoading }: Props) {
+export function EndowmentSelector({ endow, endows, is_loading }: Props) {
   const [params, setParams] = useSearchParams();
   const [search, set_search] = useState("");
 
@@ -24,7 +24,7 @@ export function EndowmentSelector({ endow, endows, isLoading }: Props) {
 
   return (
     <Combobox
-      disabled={isLoading}
+      disabled={is_loading}
       value={endow}
       onChange={(val) => {
         if (!val) return;

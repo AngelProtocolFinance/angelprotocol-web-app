@@ -20,7 +20,7 @@ export function UserMenu({ user, classes }: Props) {
   return (
     <div className={`${classes} text-gray`}>
       <p className="text-sm p-3 bg-blue-l4">
-        Welcome, {user.firstName || user.email}!
+        Welcome, {user.first_name || user.email}!
       </p>
       <div className="w-64 min-h-[5rem] p-5">
         <MenuItem

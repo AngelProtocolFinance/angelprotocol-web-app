@@ -22,7 +22,7 @@ export function PossiblyTaxExempt({ is_501c3_prev, is_501c3_init }: Props) {
   });
 
   const fetcher = useFetcher();
-  const isLoading = fetcher.state !== "idle";
+  const is_loading = fetcher.state !== "idle";
   const navigate = useNavigate();
 
   return (
@@ -71,18 +71,18 @@ export function PossiblyTaxExempt({ is_501c3_prev, is_501c3_init }: Props) {
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <NavLink
-          aria-disabled={isLoading}
+          aria-disabled={is_loading}
           to={`../${steps.org_details}`}
           className="py-3 min-w-[8rem] btn-outline btn text-sm"
         >
           Back
         </NavLink>
         <button
-          disabled={isLoading}
+          disabled={is_loading}
           type="submit"
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
-          <LoadText isLoading={isLoading}>Continue</LoadText>
+          <LoadText is_loading={is_loading}>Continue</LoadText>
         </button>
       </div>
     </form>

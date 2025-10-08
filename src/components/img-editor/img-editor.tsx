@@ -51,7 +51,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   });
 
   const styles = unpack(props.classes);
-  const isLoading = props.value === "loading";
+  const is_loading = props.value === "loading";
   const overlay = `before:content-[''] before:grid before:place-items-center before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 data-[loading="true"]:before:bg-blue-l5/90 data-[loading="true"]:before:content-['._._.'] before:text-xl before:font-bold `;
 
   async function handleSave(cropped: File) {
@@ -153,7 +153,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             </div>
             {
               /** only show controls if new file is uploaded */
-              (file || props.value === "invalid-type") && !isLoading && (
+              (file || props.value === "invalid-type") && !is_loading && (
                 <IconButton
                   disabled={props.disabled}
                   onClick={(e) => {

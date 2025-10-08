@@ -131,7 +131,7 @@ export function FsaForm(props: Props) {
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
           <LoadText
-            isLoading={is_submitting || is_redirecting}
+            is_loading={is_submitting || is_redirecting}
             text={is_submitting ? "Submitting.." : "Redirecting.."}
           >
             {props.o_fsa_signed_doc_url ? "Continue" : "Sign"}

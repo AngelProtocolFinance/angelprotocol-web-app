@@ -40,8 +40,8 @@ export function CurrencySelector<T extends CurrencyOption>({
 }: Props<T>) {
   const [query, setQuery] = useState("");
 
-  const isCurrencyLoading = is_query(currencies) && currencies.isLoading;
-  const isCurrencyError = is_query(currencies) && currencies.isError;
+  const isCurrencyLoading = is_query(currencies) && currencies.is_loading;
+  const isCurrencyError = is_query(currencies) && currencies.is_error;
 
   const style = unpack(props.classes);
 

@@ -28,9 +28,9 @@ export function CurrencyOptions({
       queryState={
         Array.isArray(currencies)
           ? {
-              isLoading: false,
-              isFetching: false,
-              isError: false,
+              is_loading: false,
+              is_fetching: false,
+              is_error: false,
               data: currencies,
             }
           : currencies

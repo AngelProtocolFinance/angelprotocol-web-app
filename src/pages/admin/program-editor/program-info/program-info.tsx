@@ -32,7 +32,7 @@ export default function ProgramInfo(props: IProgram) {
     control,
   });
 
-  const { submit, isLoading } = useSubmit(dirtyFields);
+  const { submit, is_loading } = useSubmit(dirtyFields);
 
   return (
     <Group title="Program information">
@@ -90,12 +90,12 @@ export default function ProgramInfo(props: IProgram) {
         />
         <button
           disabled={
-            !isDirty || isLoading || isSubmitting || image.value === "loading"
+            !isDirty || is_loading || isSubmitting || image.value === "loading"
           }
           type="submit"
           className="@lg:justify-self-end btn btn-blue py-2 text-sm"
         >
-          {isLoading || isSubmitting ? "Saving..." : "Save changes"}
+          {is_loading || isSubmitting ? "Saving..." : "Save changes"}
         </button>
       </Form>
     </Group>

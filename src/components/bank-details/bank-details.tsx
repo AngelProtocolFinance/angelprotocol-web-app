@@ -19,14 +19,14 @@ type Props = {
   FormButtons: IFormButtons;
   /** All errors should be handled inside `onSubmit` */
   onSubmit: OnSubmit;
-  isLoading: boolean;
+  is_loading: boolean;
   verified?: boolean;
 };
 
 export function BankDetails({
   FormButtons,
   onSubmit,
-  isLoading,
+  is_loading,
   verified,
 }: Props) {
   const currencies = use_currencies();
@@ -63,7 +63,7 @@ export function BankDetails({
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80", options: "text-sm" }}
-        disabled={isSubmitting || isLoading}
+        disabled={isSubmitting || is_loading}
         label="Select your bank account currency:"
         required
       />
@@ -91,7 +91,7 @@ export function BankDetails({
         verified={verified}
         amount={+debounced_amount}
         currency={currency.code}
-        disabled={isSubmitting || isLoading}
+        disabled={isSubmitting || is_loading}
         FormButtons={FormButtons}
         onSubmit={handleSubmit}
       />

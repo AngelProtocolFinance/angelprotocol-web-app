@@ -3,7 +3,7 @@ import { app_routes } from "constants/routes";
 import { type ActionFunction, redirect } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
 import type { IFormInvalid } from "types/action";
-import { type ISignUp, isError, sign_up } from "types/auth";
+import { type ISignUp, is_error, sign_up } from "types/auth";
 import { cognito, oauth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -16,7 +16,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (user) return redirect(redirect_to);
 
   if (fv.get("intent") === "oauth") {
-    return redirect(oauth.initiateUrl(redirect_to, from.origin));
+    return redirect(oauth.initiate_url(redirect_to, from.origin));
   }
 
   const p = await getValidatedFormData<ISignUp>(fv, valibotResolver(sign_up));
@@ -32,7 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
       "custom:user-type": is_npo ? "npo" : "donor",
     }
   );
-  if (isError(res)) {
+  if (is_error(res)) {
     return {
       receivedValues: p.receivedValues,
       errors: { email: { type: "value", message: res.message } },

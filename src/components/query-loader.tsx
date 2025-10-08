@@ -28,24 +28,24 @@ export function QueryLoader<T>({
   filterFn,
 }: Props<T>) {
   const { container = "" } = classes;
-  const { isLoading, isFetching, isError, data, error } = queryState;
+  const { is_loading, is_fetching, is_error, data, error } = queryState;
 
-  if (isLoading) {
+  if (is_loading) {
     return render_msg(
       (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
       messages.loading,
       container
     );
   }
-  if (isFetching && messages.fetching) {
+  if (is_fetching && messages.fetching) {
     return render_msg(
       (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
       messages.fetching,
       container
     );
   }
-  if (isError || (dataRequired && !data)) {
-    if (isError) console.error(error);
+  if (is_error || (dataRequired && !data)) {
+    if (is_error) console.error(error);
     return render_msg(
       (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,
       messages.error,

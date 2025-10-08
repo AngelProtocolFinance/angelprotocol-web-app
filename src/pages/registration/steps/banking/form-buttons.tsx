@@ -24,7 +24,7 @@ function Submit({ isSubmitting = false }) {
           type="submit"
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
-          <LoadText isLoading={isSubmitting}>Submit</LoadText>
+          <LoadText is_loading={isSubmitting}>Submit</LoadText>
         </button>
       </div>
     </div>

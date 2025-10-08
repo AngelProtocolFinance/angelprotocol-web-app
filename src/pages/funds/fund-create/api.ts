@@ -12,7 +12,7 @@ import {
 } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
 import type { IFormInvalid } from "types/action";
-import { isError } from "types/auth";
+import { is_error } from "types/auth";
 import { parse } from "valibot";
 import { evaluate } from "./evaluate";
 import { type FV, schema } from "./schema";
@@ -83,7 +83,9 @@ export const action: ActionFunction = async ({ request }) => {
   }
   const creator: ICreator | null = await (async (u, n) => {
     if (!n) {
-      const user_fullname = [u.firstName, u.lastName].filter(Boolean).join(" ");
+      const user_fullname = [u.first_name, u.last_name]
+        .filter(Boolean)
+        .join(" ");
       return {
         id: u.email,
         isBg: u.groups.includes("ap-admin"),
@@ -178,7 +180,7 @@ export const action: ActionFunction = async ({ request }) => {
   //delay to give room for credentials to be written in db
   await new Promise((r) => setTimeout(r, 500));
   const refreshed = await cognito.refresh(session);
-  const commit = isError(refreshed)
+  const commit = is_error(refreshed)
     ? undefined
     : { headers: { "set-cookie": refreshed.commit } };
 

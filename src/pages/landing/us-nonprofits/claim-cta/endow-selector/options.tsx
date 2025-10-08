@@ -36,9 +36,9 @@ export function Options({ searchText }: Props) {
     >
       <QueryLoader
         queryState={{
-          isLoading: endows.isLoading || isDebouncing,
-          isFetching: endows.isValidating,
-          isError: !!endows.error,
+          is_loading: endows.isLoading || isDebouncing,
+          is_fetching: endows.isValidating,
+          is_error: !!endows.error,
           data: endows.data?.items,
         }}
         messages={{

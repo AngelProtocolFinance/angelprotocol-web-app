@@ -30,7 +30,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
           disabled={isSubmitting}
           className="py-3 min-w-[8rem] btn btn-blue text-sm"
         >
-          <LoadText isLoading={isSubmitting}>Continue</LoadText>
+          <LoadText is_loading={isSubmitting}>Continue</LoadText>
         </button>
       </fetcher.Form>
     );
@@ -53,7 +53,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
           disabled={isSubmitting}
           className="min-w-[8rem] btn btn-blue text-sm"
         >
-          <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
+          <LoadText is_loading={isSubmitting}>Resubmit</LoadText>
         </button>
       </fetcher.Form>
     );

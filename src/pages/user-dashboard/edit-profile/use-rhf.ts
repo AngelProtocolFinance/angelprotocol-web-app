@@ -24,8 +24,8 @@ export function use_rhf(props: LoaderData) {
     resolver: valibotResolver(schema),
     values: {
       prefCurrency: props.pref || { code: "usd", min: 1, rate: 1 },
-      firstName: props.user.firstName ?? "",
-      lastName: props.user.lastName ?? "",
+      firstName: props.user.first_name ?? "",
+      lastName: props.user.last_name ?? "",
       avatar: props.user.avatar ?? "",
     },
   });

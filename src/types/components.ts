@@ -63,14 +63,14 @@ export const richtext_content = ({
 export interface QueryState<T> {
   error?: unknown;
   data?: T | undefined;
-  isLoading: boolean;
-  isFetching: boolean;
-  isError: boolean;
+  is_loading: boolean;
+  is_fetching: boolean;
+  is_error: boolean;
 }
 
 /** query loader */
 export function is_query<T>(val: T | QueryState<T>): val is QueryState<T> {
-  return "isLoading" in (val as any) && "isFetching" in (val as any);
+  return "is_loading" in (val as any) && "is_fetching" in (val as any);
 }
 export type RichTextContent = v.InferOutput<
   ReturnType<typeof richtext_content>

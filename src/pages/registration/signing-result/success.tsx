@@ -13,7 +13,7 @@ export default function Success({
   const { reg } = useRouteLoaderData("reg$Id") as Reg$IdData;
   const step = new Progress(reg).step;
 
-  const isLoading = navigation.state === "loading";
+  const is_loading = navigation.state === "loading";
 
   return (
     <>
@@ -31,11 +31,11 @@ export default function Success({
         <span className="uppercase text-sm font-semibold">download</span>
       </a>
       <Link
-        aria-disabled={isLoading}
+        aria-disabled={is_loading}
         className="w-full max-w-[26.25rem] btn btn-blue text-sm mt-4"
         to={`${app_routes.register}/${reg.id}/${next_step[step]}`}
       >
-        {isLoading ? "Loading..." : "Continue"}
+        {is_loading ? "Loading..." : "Continue"}
       </Link>
     </>
   );
