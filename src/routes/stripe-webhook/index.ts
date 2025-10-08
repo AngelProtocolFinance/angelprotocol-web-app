@@ -34,9 +34,10 @@ export const action: ActionFunction = async ({
   // Event handlers
   try {
     switch (event.type) {
-      case "customer.subscription.deleted":
+      case "customer.subscription.deleted": {
         const res = await subsdb.del(event.data.object.id);
         return resp.json(res.$metadata);
+      }
       case "payment_intent.succeeded":
         await handle_intent_succeeded(event.data, base_url);
         break;

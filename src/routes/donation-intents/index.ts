@@ -16,7 +16,7 @@ import { get_customer_id } from "./stripe/customer-id";
 import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { cognito } from ".server/auth";
-import { PutCommand, apes, onholddb } from ".server/aws/db";
+import { onholddb } from ".server/aws/db";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
 import { aws_monitor, chariot, np } from ".server/sdks";

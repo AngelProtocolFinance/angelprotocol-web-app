@@ -38,7 +38,6 @@
       "correctness": {
         "useExhaustiveDependencies": "warn",
         "noPrecisionLoss": "off",
-        "noSwitchDeclarations": "off",
         "noChildrenProp": "off",
         "useJsxKeyInIterable": "off"
       },

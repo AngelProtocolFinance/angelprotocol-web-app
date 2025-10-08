@@ -9,12 +9,13 @@ export async function payment_method(id: string): Promise<string> {
     case "amazon_pay":
       payment = "Amazon Pay";
       break;
-    case "card":
+    case "card": {
       const funding = pms.card?.funding;
       if (funding === "credit") payment = "Credit Card";
       else if (funding === "debit") payment = "Debit Card";
       else payment = "Card";
       break;
+    }
     case "cashapp":
       payment = "Cash App";
       break;
