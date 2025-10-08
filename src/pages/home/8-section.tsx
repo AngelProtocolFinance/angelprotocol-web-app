@@ -1,4 +1,4 @@
-import david_and_goliath from "assets/images/david-and-goliath.png";
+import laira_pulling_woman_up from "assets/images/laira-pulling-woman-up.png";
 import { APP_NAME } from "constants/env";
 
 export function Section8({ classes = "" }) {
@@ -35,7 +35,7 @@ export function Section8({ classes = "" }) {
       </div>
       <img
         width={500}
-        src={david_and_goliath}
+        src={laira_pulling_woman_up}
         className="max-w-xl xl:max-w-auto order-1 xl:order-2 w-full self-center"
         alt="David and Goliath illustration representing how smaller nonprofits can compete"
       />
