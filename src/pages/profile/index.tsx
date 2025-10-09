@@ -9,9 +9,7 @@ import type { Route } from "./+types";
 import { Body } from "./body/body";
 
 export { loader } from "./api";
-export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>({
-  key: "profile",
-});
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>({});
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   if (!d) return [];

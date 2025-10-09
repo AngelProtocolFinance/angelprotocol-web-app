@@ -1,8 +1,8 @@
 import type { IProgramDb } from "@better-giving/endowment";
 import { program_id } from "@better-giving/endowment/schema";
-import { adminRoutes } from "constants/routes";
 import { redirect } from "react-router";
 import { parse } from "valibot";
+import { routes } from "../routes";
 import type { Route } from "./+types";
 import { npodb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
@@ -37,5 +37,5 @@ export const action = async (x: Route.ActionArgs) => {
     milestones: [],
   });
 
-  return redirect(`../${adminRoutes.program_editor}/${id}`);
+  return redirect(`../${routes.program_editor}/${id}`);
 };

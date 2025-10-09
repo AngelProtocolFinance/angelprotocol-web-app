@@ -1,9 +1,9 @@
 import { imgEditorStyles } from "components/img-editor";
 import { richTextStyles } from "components/rich-text";
-import { adminRoutes } from "constants/routes";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import { routes } from "../routes";
 import type { Route } from "./+types";
 import Form from "./form";
 
@@ -20,7 +20,7 @@ function Page({ loaderData: program }: Route.ComponentProps) {
   return (
     <>
       <Link
-        to={`../${adminRoutes.programs}`}
+        to={`../${routes.programs}`}
         className="flex items-center gap-2 text-blue-d1 hover:text-blue"
       >
         <ChevronLeft />

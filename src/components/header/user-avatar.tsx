@@ -9,7 +9,7 @@ interface Props {
 export function UserAvatar({ classes = "", avatar }: Props) {
   return (
     <NavLink
-      to={`${href("/dashboard")}/edit-profile`}
+      to={href("/dashboard/edit-profile")}
       className={`[&:is(.pending)]:grayscale ${classes}`}
     >
       {avatar ? (
