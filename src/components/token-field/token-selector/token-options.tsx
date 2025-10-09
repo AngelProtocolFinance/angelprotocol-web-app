@@ -22,24 +22,25 @@ import type { Token } from "../types";
 import type { OnTokenChange } from "./types";
 
 type Props = {
-  onChange: OnTokenChange;
+  on_change: OnTokenChange;
   token: IToken;
   classes?: string;
+  amnt: string;
 };
 const container =
   "w-56 border border-gray-l3 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-hidden";
-export function TokenOptions({ onChange, token }: Props) {
+export function TokenOptions({ on_change, token, amnt }: Props) {
   return (
     <PopoverPanel
       anchor={{ to: "bottom end", gap: 8, offset: 20 }}
       className={container}
     >
-      <TokenCombobox token={token} onChange={onChange} />
+      <TokenCombobox token={token} on_change={on_change} amnt={amnt} />
     </PopoverPanel>
   );
 }
 
-interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {}
+interface ITokenCombobox extends Pick<Props, "on_change" | "token" | "amnt"> {}
 
 const tokens_fuse = new Fuse<IToken>(tokens_list, {
   keys: ["name", "code", "network", "symbol"],
@@ -54,7 +55,7 @@ const token_ev = (state: Token.State) => {
   );
 };
 
-function TokenCombobox({ token, onChange }: ITokenCombobox) {
+function TokenCombobox({ token, on_change, amnt }: ITokenCombobox) {
   const [search_txt, set_search_txt] = useState("");
 
   const filtered = useMemo(
@@ -84,7 +85,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
             const {
               [tkn.cg_id]: { usd: rate },
             } = await res.json();
-            onChange({ ...tkn, amount: "", min: 1 / rate, rate });
+            on_change({ ...tkn, amount: amnt, min: 1 / rate, rate });
             return token_ev("ok");
           }
 
@@ -106,7 +107,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
           // - 2.5% spread in case server estimate is not the same
           const adjusted = gtBgMin * 1.03;
 
-          onChange({ ...tkn, amount: "", min: adjusted, rate });
+          on_change({ ...tkn, amount: amnt, min: adjusted, rate });
           token_ev("ok");
         } catch (err) {
           console.error(err);
@@ -139,7 +140,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                 className={
                   "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) cursor-pointer"
                 }
-                value={{ ...token, amount: "" }}
+                value={{ ...token, amount: amnt }}
               >
                 <Image
                   src={logo_url(token.logo, is_custom(token.id))}

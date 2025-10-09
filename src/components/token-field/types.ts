@@ -9,13 +9,13 @@ type Classes = {
 export type Props = {
   token: TokenWithDetails;
   error?: string;
-  onChange: (token: TokenWithDetails) => void;
+  on_change: (token: TokenWithDetails) => void;
   label: string;
   classes?: Classes;
   disabled?: boolean;
 
-  withBalance?: true;
-  withMininum?: true;
+  with_bal?: true;
+  with_min?: true;
 };
 
 export namespace Token {

@@ -29,14 +29,14 @@ export function Form(props: CryptoFormStep) {
       <TokenField
         ref={token.ref}
         token={token.value}
-        onChange={token.onChange}
+        on_change={token.onChange}
         error={errors.token}
         classes={{
           input: "field-input-donate",
         }}
-        withBalance
         label="Donation amount"
-        withMininum
+        with_bal
+        with_min
       />
 
       {token.value.id && token.value.rate && (

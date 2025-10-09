@@ -12,71 +12,73 @@ const multipliable = (amount: string) =>
 
 const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
   const style = unpack(props.classes);
-  const [tokenState, setTokenState] = useState<Token.State>("ok");
+  const [token_state, set_token_state] = useState<Token.State>("ok");
   useEffect(() => {
     const eventName = "crypto-token-event" satisfies Token.Event.Name as string;
     const handler = (ev: CustomEvent<Token.Event.Detail>) =>
-      setTokenState(ev.detail.state);
+      set_token_state(ev.detail.state);
     window.addEventListener(eventName, handler as any);
     return () => {
       window.removeEventListener(eventName, handler as any);
     };
   }, []);
 
+  const m = multipliable(props.token.amount);
+  const $ = m && props.token.code ? m * props.token.rate : 0;
+
   return (
     <div className={`grid ${style.container}`}>
-      <div className="flex items-center gap-2">
-        <label
-          htmlFor="amount"
-          className={`font-semibold mr-auto mb-2 after:content-['_*'] after:text-red ${style.label}`}
-        >
-          {props.label}
-        </label>
-        <span className="text-gray text-sm mr-1">
-          {tokenState === "ok"
-            ? `$ ${humanize(
-                props.token.rate * multipliable(props.token.amount),
-                2
-              )}`
-            : "$ --"}
-        </span>
-      </div>
-
-      <div className="relative">
-        <input
-          ref={ref}
-          value={props.token.amount}
-          onChange={(e) =>
-            props.onChange({ ...props.token, amount: e.target.value })
-          }
-          aria-invalid={!!props.error}
-          disabled={props.disabled || tokenState === "loading"}
-          autoComplete="off"
-          id="amount"
-          type="text"
-          placeholder="Enter amount"
-          className={`field-input h-full ${style.input}`}
-        />
-        <TokenSelector
-          classes="absolute top-1/2 -translate-y-1/2 right-4"
-          tokenState={tokenState}
-          token={props.token}
-          onChange={props.onChange}
-        />
-      </div>
-      {props.error && (
-        <p data-error className="peer text-red text-xs text-left mt-1.5">
-          {props.error}
-        </p>
-      )}
-      {props.withMininum && props.token.min !== 0 && (
-        <p className="text-xs mt-2 peer-data-[error=true]:mt-0">
+      <label
+        htmlFor="amount"
+        className={`font-semibold mr-auto after:content-['_*'] after:text-red ${style.label}`}
+      >
+        {props.label}
+      </label>
+      {props.with_min && props.token.min !== 0 ? (
+        <p className="text-xs my-0.5">
           Minimum amount: {props.token.symbol}{" "}
           {round_to_cents(
             props.token.min,
             props.token.rate,
             props.token.precision
           )}
+        </p>
+      ) : (
+        <div className="py-1" />
+      )}
+      {/** match input text, and append $ value */}
+      <div className="relative">
+        {$ ? (
+          <div className="absolute top-1/2 -translate-y-1/2 left-4 select-none">
+            <span className="invisible mr-2">{props.token.amount}</span>{" "}
+            <span className="text-gray text-sm">~${humanize($)}</span>
+          </div>
+        ) : null}
+        <input
+          ref={ref}
+          value={props.token.amount}
+          onChange={(e) =>
+            props.on_change({ ...props.token, amount: e.target.value })
+          }
+          aria-invalid={!!props.error}
+          disabled={props.disabled || token_state === "loading"}
+          autoComplete="off"
+          id="amount"
+          type="text"
+          placeholder="Enter amount"
+          className={`field-input h-full ${style.input}`}
+        />
+
+        <TokenSelector
+          classes="absolute top-1/2 -translate-y-1/2 right-4"
+          token_state={token_state}
+          token={props.token}
+          on_change={props.on_change}
+        />
+      </div>
+      {props.error && (
+        <p data-error className="peer text-red text-xs text-left mt-1.5">
+          {props.error}
         </p>
       )}
     </div>

@@ -144,7 +144,7 @@ describe("Crypto form: initial load", () => {
     expect(amountInput).toHaveFocus();
 
     //inputs amount but not selected token
-    await userEvent.type(amountInput, "10");
+    await userEvent.type(amountInput, "0.5");
     await userEvent.click(continueBtn);
     //inputs amount but not selected token
     expect(screen.getByRole("paragraph")).toHaveTextContent(/select token/i);
@@ -161,14 +161,6 @@ describe("Crypto form: initial load", () => {
     await userEvent.click(tokenOptions[0]); //Bitcoin
 
     //token is loading, to get min amount
-
-    //details of selected token best tested in some `TokenSelector.test.tsx`
-    //when selecting token, amount is reset to `""`, as different tokens have different nominal value
-    expect(screen.getByText(/required/i)).toBeInTheDocument();
-
-    //user now inputs amount but less than minimum
-    await userEvent.click(amountInput);
-    await userEvent.type(amountInput, "0.5");
 
     expect(await screen.findByText(/less than minimum/i)).toBeInTheDocument();
 
