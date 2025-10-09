@@ -3,7 +3,7 @@ import {
   donor_title,
   frequency,
 } from "@better-giving/donation/schema";
-import { $int_gte1 } from "@better-giving/schemas";
+import { $int_gte1, $req } from "@better-giving/schemas";
 
 export {
   donation_source,
@@ -15,15 +15,14 @@ export {
 import * as v from "valibot";
 
 export const str = v.pipe(v.string(), v.trim());
-export const required_str = v.pipe(str, v.nonEmpty("required"));
 
 export const donor_address = v.object({
-  street: required_str,
-  city: required_str,
-  state: v.optional(required_str),
-  zip_code: required_str,
+  street: $req,
+  city: $req,
+  state: v.optional($req),
+  zip_code: $req,
   /** country name */
-  country: required_str,
+  country: $req,
   uk_gift_aid: v.optional(v.boolean()),
 });
 
@@ -44,7 +43,7 @@ export const donor = v.object({
   address: v.optional(donor_address),
   public_msg: v.optional(
     v.pipe(
-      required_str,
+      $req,
       v.maxLength(
         donor_public_msg_max_length,
         (x) => `max ${x.requirement} characters`
@@ -53,7 +52,7 @@ export const donor = v.object({
   ),
   msg_to_npo: v.optional(
     v.pipe(
-      required_str,
+      $req,
       v.maxLength(
         donor_msg_to_npo_max_length,
         (x) => `max ${x.requirement} characters`
@@ -69,7 +68,7 @@ const money = v.pipe(v.number(), v.minValue(0));
 
 export const amount = v.object({
   amount: money,
-  currency: v.pipe(required_str, v.toUpperCase()),
+  currency: v.pipe($req, v.toUpperCase()),
   tip: money,
   fee_allowance: money,
 });
@@ -80,7 +79,7 @@ export const uuid = v.pipe(str, v.uuid());
 
 export const program = v.object({
   id: uuid,
-  name: required_str,
+  name: $req,
 });
 
 export type Program = v.InferOutput<typeof program>;
@@ -91,8 +90,8 @@ export type Recipient = v.InferOutput<typeof recipient>;
 
 export const from_msg_max_length = 250;
 export const tribute_notif = v.object({
-  to_email: v.pipe(required_str, v.email("invalid email")),
-  to_fullname: required_str,
+  to_email: v.pipe($req, v.email("invalid email")),
+  to_fullname: $req,
   from_msg: v.pipe(
     str,
     v.maxLength(from_msg_max_length, (x) => `max ${x.requirement} characters`)
@@ -102,7 +101,7 @@ export const tribute_notif = v.object({
 export type TributeNotif = v.InferOutput<typeof tribute_notif>;
 
 export const tribute = v.object({
-  full_name: required_str,
+  full_name: $req,
   notif: v.optional(tribute_notif),
 });
 
