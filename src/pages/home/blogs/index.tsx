@@ -1,11 +1,11 @@
 import { posts } from "api/get/wp-posts";
 import use_embla_carousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import { BlogCard, Skeleton } from "./blog-card";
 
 export const Blogs = ({ classes = "" }) => {
-  const { data } = useSWR(["posts", "1"], ([, page]) => posts(+page));
+  const { data } = use_swr(["posts", "1"], ([, page]) => posts(+page));
 
   const [embla_ref, embla_api] = use_embla_carousel({
     loop: true,

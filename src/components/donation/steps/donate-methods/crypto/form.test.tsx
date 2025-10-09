@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockTokens } from "services/apes/mock";
+import { mock_tokens } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
 import type { CryptoFormStep, Init } from "../../types";
@@ -78,7 +78,7 @@ describe("Crypto form: initial load", () => {
       init,
       details: {
         method: "crypto",
-        token: { ...mockTokens[1], amount, min: 1, rate: 1 },
+        token: { ...mock_tokens[1], amount, min: 1, rate: 1 },
         program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;

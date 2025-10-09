@@ -1,4 +1,4 @@
-import tokens from "@better-giving/assets/tokens/map";
+import { tokens_map } from "@better-giving/assets/tokens";
 import type { NP } from "@better-giving/nowpayments/types";
 import { type Settled, to_final } from "../../../helpers/donation";
 import { onholddb } from ".server/aws/db";
@@ -18,7 +18,7 @@ export const handle_settled = async (
 
   if (!order) throw `Record ${payment.order_id} not found!`;
   const { rate: outcomeRate } = await np.estimate(payment.outcome_currency);
-  const outcome_token = tokens[payment.outcome_currency.toUpperCase()];
+  const outcome_token = tokens_map[payment.outcome_currency.toUpperCase()];
   /** all in usd */
   const settlement: Settled = {
     net: payment.outcome_amount * outcomeRate,

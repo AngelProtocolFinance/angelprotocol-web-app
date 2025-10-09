@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useState } from "react";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { INpoMetrics } from "types/npo-sf-metrics";
 import { SfPerChart } from "./sf-perf-chart";
 
@@ -14,7 +14,7 @@ const fetcher = (path: string) =>
 
 export function SfPerf({ id, classes = "" }: Props) {
   const [expanded, expand] = useState(false);
-  const { data = { points: [], total_return: 0 } } = useSWR(
+  const { data = { points: [], total_return: 0 } } = use_swr(
     `/api/npo/${id}/sf-metrics`,
     fetcher
   );

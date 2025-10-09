@@ -7,7 +7,7 @@ import {
 } from "@headlessui/react";
 import { unpack } from "helpers/unpack";
 import { X } from "lucide-react";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { OptionType } from "types/components";
 import { DrawerIcon } from "../../../icon";
 
@@ -90,7 +90,7 @@ export function ProgramSelector({
 const fetcher = (path: string) =>
   fetch(path).then<IProgramDb[]>((res) => res.json());
 function Options({ endowId }: { endowId: number }) {
-  const { data, isLoading, error } = useSWR(
+  const { data, isLoading, error } = use_swr(
     `/api/npo/${endowId}/programs`,
     fetcher
   );

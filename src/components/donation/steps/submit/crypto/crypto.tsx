@@ -1,4 +1,4 @@
-import chains from "@better-giving/assets/chains";
+import { chains } from "@better-giving/assets/tokens";
 import { is_custom } from "@better-giving/assets/tokens";
 import { logo_url } from "constants/common";
 import { Image } from "../../../../image";

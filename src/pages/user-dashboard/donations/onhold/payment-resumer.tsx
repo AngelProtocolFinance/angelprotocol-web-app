@@ -1,4 +1,4 @@
-import tokens from "@better-giving/assets/tokens/map";
+import { tokens_map } from "@better-giving/assets/tokens";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
 import { type IPrompt, Prompt } from "components/prompt";
@@ -56,7 +56,7 @@ export function PaymentResumer({ payment_id, classes, amount }: Props) {
 }
 
 function QrModal(props: IQrModal) {
-  const token = tokens[props.currency];
+  const token = tokens_map[props.currency];
   return (
     <Modal
       open={true}

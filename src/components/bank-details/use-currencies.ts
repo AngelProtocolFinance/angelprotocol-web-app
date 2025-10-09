@@ -1,4 +1,4 @@
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { WiseCurrency } from "types/bank-details";
 import type { QueryState, WiseCurrencyOption } from "types/components";
 
@@ -15,7 +15,7 @@ async function get_currencies(path: string) {
 }
 
 export function use_currencies(): QueryState<WiseCurrencyOption[]> {
-  const { data, isLoading, isValidating, error } = useSWR(
+  const { data, isLoading, isValidating, error } = use_swr(
     "/api/wise/v1/currencies",
     get_currencies
   );

@@ -1,5 +1,5 @@
 import { wp } from "api/api";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { IMedia } from "types/wordpress";
 import { Image } from "./image";
 
@@ -10,7 +10,7 @@ export function Media(props: Props) {
     data: media,
     isLoading,
     error,
-  } = useSWR(`media/${props.id}`, (path) => {
+  } = use_swr(`media/${props.id}`, (path) => {
     return wp.get<IMedia>(path).json();
   });
 

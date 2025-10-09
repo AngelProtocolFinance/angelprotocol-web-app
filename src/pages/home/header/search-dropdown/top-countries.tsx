@@ -1,12 +1,12 @@
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
 import { NavLink, href } from "react-router";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 
 const fetcher = (path: string) => fetch(path).then<string[]>((x) => x.json());
 
 export function TopCountries() {
-  const { data, isLoading, error, isValidating } = useSWR(
+  const { data, isLoading, error, isValidating } = use_swr(
     "api/top-countries",
     fetcher
   );

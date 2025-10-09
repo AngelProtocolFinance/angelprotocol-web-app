@@ -3,7 +3,7 @@ import { Form as FieldSet, MaskedInput } from "components/form";
 import { currency as curr_mask } from "components/form/masks";
 import { useEffect } from "react";
 import { href } from "react-router";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { DBCurrency, UserCurrencies } from "types/currency";
 import { USD_CODE } from "../../common/constants";
 import { ContinueBtn } from "../../common/continue-btn";
@@ -16,7 +16,7 @@ import type { Props } from "./types";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: Props) {
-  const currency = useSWR(href("/api/currencies"), (path) =>
+  const currency = use_swr(href("/api/currencies"), (path) =>
     fetch(path).then<UserCurrencies>((res) => res.json())
   );
   const { set_state } = use_donation_state();

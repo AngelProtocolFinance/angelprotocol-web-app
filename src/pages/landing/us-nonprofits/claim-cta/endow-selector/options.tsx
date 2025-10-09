@@ -3,7 +3,7 @@ import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { Image } from "components/image";
 import { QueryLoader } from "components/query-loader";
 import { use_debouncer } from "hooks/use-debouncer";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 
 type Props = {
   searchText: string;
@@ -24,7 +24,7 @@ export function Options({ searchText }: Props) {
     claimed: "false",
     fields: fields.join(","),
   };
-  const endows = useSWR(
+  const endows = use_swr(
     `/api/npos?${new URLSearchParams(params).toString()}`,
     fetcher
   );

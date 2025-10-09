@@ -1,12 +1,11 @@
-import { is_custom } from "@better-giving/assets/tokens";
+import { type IToken, is_custom } from "@better-giving/assets/tokens";
 import { Copier } from "components/copier";
 import { logo_url } from "constants/common";
 import { QRCodeSVG } from "qrcode.react";
-import type { TokenV2 } from "types/components";
 
 interface Props {
   classes?: string;
-  token: TokenV2;
+  token: IToken;
   recipient: string;
   extraId: string | null;
 }

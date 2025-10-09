@@ -1,5 +1,5 @@
 import type { Fetcher } from "swr";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type {
   AccountRequirements,
   CreateRecipientRequest,
@@ -48,7 +48,7 @@ const requirements: Fetcher<RequirementsOutput, Input | null> = async (
 };
 
 export function use_requirements(args: Input | null) {
-  const req = useSWR(args, requirements);
+  const req = use_swr(args, requirements);
 
   async function update_requirements(payload: ReqUpdateInput) {
     const res = await fetch(

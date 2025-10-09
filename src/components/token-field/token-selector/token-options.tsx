@@ -1,6 +1,9 @@
-import chains from "@better-giving/assets/chains";
-import prod_tokens, { is_custom } from "@better-giving/assets/tokens";
-import test_tokens from "@better-giving/assets/tokens/test";
+import {
+  type IToken,
+  chains,
+  is_custom,
+  tokens_list,
+} from "@better-giving/assets/tokens";
 import type { NP } from "@better-giving/nowpayments/types";
 import {
   CloseButton,
@@ -11,18 +14,16 @@ import {
   PopoverPanel,
 } from "@headlessui/react";
 import { logo_url } from "constants/common";
-import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
 import { SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
-import type { TokenV2 } from "types/components";
 import { Image } from "../../image";
 import type { Token } from "../types";
 import type { OnTokenChange } from "./types";
 
 type Props = {
   onChange: OnTokenChange;
-  token: TokenV2;
+  token: IToken;
   classes?: string;
 };
 const container =
@@ -40,11 +41,10 @@ export function TokenOptions({ onChange, token }: Props) {
 
 interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {}
 
-const tokens = IS_TEST ? test_tokens : prod_tokens;
-const tokensFuse = new Fuse<TokenV2>(tokens, {
+const tokens_fuse = new Fuse<IToken>(tokens_list, {
   keys: ["name", "code", "network", "symbol"],
 });
-const subset = tokens.slice(0, 10);
+const subset = tokens_list.slice(0, 10);
 const tokenEv = (state: Token.State) => {
   document.dispatchEvent(
     new CustomEvent<Token.Event.Detail>(
@@ -55,14 +55,14 @@ const tokenEv = (state: Token.State) => {
 };
 
 function TokenCombobox({ token, onChange }: ITokenCombobox) {
-  const [searchText, setSearchText] = useState("");
+  const [search_txt, set_search_txt] = useState("");
 
   const filtered = useMemo(
     () =>
-      !searchText
+      !search_txt
         ? subset
-        : tokensFuse.search(searchText, { limit: 10 }).map(({ item }) => item),
-    [searchText]
+        : tokens_fuse.search(search_txt, { limit: 10 }).map(({ item }) => item),
+    [search_txt]
   );
 
   return (
@@ -116,22 +116,22 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
     >
       <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded-sm mb-1 border border-gray-l3">
         <ComboboxInput
-          value={searchText}
+          value={search_txt}
           placeholder="Search..."
           className="text-left text-sm focus:outline-hidden bg-transparent"
-          onChange={(event) => setSearchText(event.target.value)}
+          onChange={(event) => set_search_txt(event.target.value)}
         />
         <SearchIcon size={20} />
       </div>
 
-      {filtered.length === 0 && searchText !== "" ? (
+      {filtered.length === 0 && search_txt !== "" ? (
         <div className="relative cursor-default select-none py-2 px-4 text-sm">
-          {searchText} not found
+          {search_txt} not found
         </div>
       ) : (
         <ComboboxOptions className="py-1 w-full" static>
           {({ option }) => {
-            const token = option as TokenV2;
+            const token = option as IToken;
             return (
               <ComboboxOption
                 as={CloseButton}

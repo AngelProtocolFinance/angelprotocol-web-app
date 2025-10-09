@@ -1,9 +1,9 @@
+import type { IToken } from "@better-giving/assets/tokens";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type { TokenV2 } from "types/components";
 import type { DBCurrency, UserCurrencies } from "types/currency";
 
-export const mockTokens: TokenV2[] = [
+export const mock_tokens: IToken[] = [
   {
     name: "Sample Token 1",
     code: "STK1",
@@ -54,7 +54,7 @@ export const handlers = [
     return HttpResponse.json([] satisfies string[]);
   }),
   http.get(endpoints.tokens, () => {
-    return HttpResponse.json(mockTokens);
+    return HttpResponse.json(mock_tokens);
   }),
 
   http.get(endpoints.fiatCurrencies, () => {

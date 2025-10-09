@@ -1,4 +1,4 @@
-import tokens_map from "@better-giving/assets/tokens/map";
+import { tokens_map } from "@better-giving/assets/tokens";
 import { resp } from "helpers/https";
 import type { LoaderFunction } from "react-router";
 import type { Payment } from "types/crypto";

@@ -1,9 +1,9 @@
-import chains from "@better-giving/assets/chains";
+import { chains } from "@better-giving/assets/tokens";
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
 import { round_to_cents } from "helpers/decimal";
 import { href, useNavigate } from "react-router";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
 import type { DonationIntent } from "types/donation-intent";
 import { ContinueBtn } from "../../common/continue-btn";
@@ -49,7 +49,7 @@ export function DirectMode({ donation, classes = "" }: Props) {
     };
   }
 
-  const { data, isLoading, error, isValidating } = useSWR(intent, fetcher);
+  const { data, isLoading, error, isValidating } = use_swr(intent, fetcher);
 
   const totalDisplayAmount = round_to_cents(
     +details.token.amount + (tip?.value ?? 0) + fee_allowance,

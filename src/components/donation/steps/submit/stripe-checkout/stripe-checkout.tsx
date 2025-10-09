@@ -2,7 +2,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { DonationIntent } from "types/donation-intent";
 import { currency } from "../../common/currency";
 import { Summary } from "../../common/summary";
@@ -49,7 +49,7 @@ export function StripeCheckout(props: StripeCheckoutStep) {
     };
   }
 
-  const { data, error, isLoading } = useSWR(intent, fetcher);
+  const { data, error, isLoading } = use_swr(intent, fetcher);
 
   return (
     <Summary

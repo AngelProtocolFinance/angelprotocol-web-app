@@ -3,7 +3,7 @@ import { Media } from "components/media";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
 import { Link, type LoaderFunctionArgs, href } from "react-router";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { IMedia, IPost, IUser } from "types/wordpress";
 import type { Route } from "./+types/post";
 
@@ -82,7 +82,7 @@ function Loaded(post: IPost) {
 }
 
 function Author(props: { id: number }) {
-  const { data } = useSWR(`users/${props.id}`, (path) =>
+  const { data } = use_swr(`users/${props.id}`, (path) =>
     wp.get<IUser>(path).json()
   );
   return data && <p className="text-gray text-sm">Author: {data.name}</p>;

@@ -1,6 +1,6 @@
 import laira from "assets/laira/laira-face.png";
 import { Image } from "components/image";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 
 interface Props {
   classes?: string;
@@ -18,7 +18,7 @@ const fetcher = ([, id, key]: [string, string, string | null]) =>
   );
 
 export function DonorMsgs({ classes = "", id }: Props) {
-  const { data, mutate, error } = useSWR(["txs", id, null], fetcher);
+  const { data, mutate, error } = use_swr(["txs", id, null], fetcher);
 
   if (error || !data) return null;
   const { items, next } = data;

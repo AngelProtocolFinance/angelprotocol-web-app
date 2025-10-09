@@ -1,11 +1,11 @@
-import type { Token } from "@better-giving/assets/tokens";
+import type { IToken } from "@better-giving/assets/tokens";
 import { donate_method_id } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
 
 import type { DBCurrency } from "types/currency";
 
-export interface TokenWithDetails extends Token {
+export interface TokenWithDetails extends IToken {
   amount: string;
   min: number;
   /** usd/unit */
@@ -87,7 +87,6 @@ export const donate_method = v.object({
 export type TDonateMethod = v.InferOutput<typeof donate_method>;
 
 //re-exports
-export type { Token as TokenV2 } from "@better-giving/assets/tokens";
 export type { DBCurrency } from "types/currency";
 
 export interface IPaginator<T> {

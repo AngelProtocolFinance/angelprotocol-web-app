@@ -5,7 +5,7 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { CheckIcon, ListFilterIcon, XIcon } from "lucide-react";
-import useSWR from "swr/immutable";
+import use_swr from "swr/immutable";
 import type { IFilter } from "./common";
 
 interface Props extends IFilter {
@@ -36,7 +36,7 @@ const getFilter = async (path: string) => {
 };
 
 export function Options(props: Props) {
-  const vals = useSWR(
+  const vals = use_swr(
     `/api/irs-npos-aggregates/${props._key}`,
     props.optsFn || getFilter
   );

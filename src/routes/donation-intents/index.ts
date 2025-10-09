@@ -1,5 +1,4 @@
-import { is_custom } from "@better-giving/assets/tokens";
-import tokens_map from "@better-giving/assets/tokens/map";
+import { is_custom, tokens_map } from "@better-giving/assets/tokens";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import { addDays, getUnixTime } from "date-fns";
 import { resp } from "helpers/https";
