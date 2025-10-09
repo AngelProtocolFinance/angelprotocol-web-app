@@ -54,9 +54,9 @@ function Fund({ loaderData }: Route.ComponentProps) {
           backgroundImage: `url('${fund.banner || fallback_banner}')`,
         }}
       />
-      <div className="xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
-        <div className="self-start z-10 grid gap-4 relative">
-          <div className="absolute -top-8 flex justify-between w-full">
+      <div className="group peer-hover:[&>div]:mt-1 xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
+        <div className="self-start -mt-12 md:-mt-24 transition-[margin] ease-in-out z-10 grid gap-4 relative">
+          <div className="absolute -top-8 flex items-center justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
               to="../fundraisers"
@@ -137,7 +137,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
         </div>
         <div
           id="info-card"
-          className="md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4"
+          className="-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg  p-4"
         >
           <DonateSection
             {...fund}
