@@ -1,7 +1,6 @@
-import { CurrencySelector } from "components/currency-selector";
 import { Form as FormContainer } from "components/form";
 import { MaskedInput } from "components/form";
-import { currency } from "components/form/masks";
+import { dollar } from "components/form/masks";
 import { usd_option } from "../../common/constants";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
@@ -23,27 +22,15 @@ export function Form(props: Props) {
       )}
       className="grid gap-4"
     >
-      <CurrencySelector
-        currencies={[usd_option]}
-        label="Currency"
-        // only one currency available, so can't change it
-        onChange={() => {}}
-        value={usd_option}
-        classes={{
-          label: "font-semibold text-base",
-          input: "field-input-donate",
-        }}
-        required
-      />
       <MaskedInput
         id="donation-amount"
         inputMode="decimal"
-        mask={currency.opts}
+        mask={dollar.opts}
         ref={rhf.amount.ref}
-        value={currency.mask(rhf.amount.value)}
-        onChange={(x) => rhf.amount.onChange(currency.unmask(x))}
+        value={rhf.amount.value ? dollar.mask(+rhf.amount.value) : ""}
+        onChange={(x) => rhf.amount.onChange(dollar.unmask(x))}
         label="Donation amount"
-        placeholder="Enter amount"
+        placeholder="$ Enter amount"
         classes={{
           label: " font-semibold text-base",
           input: "field-input-donate",

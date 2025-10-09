@@ -28,10 +28,7 @@ describe("DAF form test", () => {
       expect(screen.queryByText(/loading donate form/i)).toBeNull();
     });
 
-    const currencySelector = screen.getByRole("combobox");
-    expect(currencySelector).toHaveDisplayValue(/usd/i);
-
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
+    const amountInput = screen.getByPlaceholderText(/\$ enter amount/i);
     expect(amountInput).toHaveDisplayValue("");
   });
 
@@ -67,7 +64,7 @@ describe("DAF form test", () => {
     };
     render(<Form init={init} step="donate-form" details={details} />);
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    expect(amountInput).toHaveDisplayValue("100");
+    expect(amountInput).toHaveDisplayValue("$ 100");
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);

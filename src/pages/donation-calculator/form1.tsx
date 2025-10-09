@@ -24,7 +24,7 @@ export function Form1({ classes = "", state, setState }: Props) {
         inputMode="decimal"
         mask={dollar.opts}
         value={dollar.mask(state.amnt)}
-        onChange={(x) => setState({ ...state, amnt: dollar.unmask(x) })}
+        onChange={(x) => setState({ ...state, amnt: +dollar.unmask(x) })}
         label="Annual Online Donations"
         placeholder="$"
         classes={{
@@ -57,7 +57,7 @@ export function Form1({ classes = "", state, setState }: Props) {
         inputMode="decimal"
         mask={dollar.opts}
         value={dollar.mask(state.subsCost)}
-        onChange={(x) => setState({ ...state, subsCost: dollar.unmask(x) })}
+        onChange={(x) => setState({ ...state, subsCost: +dollar.unmask(x) })}
         label="Annual Platform Subscription Cost"
         placeholder="$"
         classes={{

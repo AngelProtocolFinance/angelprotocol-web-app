@@ -10,8 +10,6 @@ export function mask(num: number): string {
   return maskitoTransform(num.toString(), opts);
 }
 
-export function unmask(masked: string): number {
-  const cleaned = masked.replace("$ ", "").replace(/,/g, "");
-  if (!cleaned) return 0;
-  return Number.parseFloat(cleaned);
+export function unmask(masked: string): string {
+  return masked.replace("$ ", "").replace(/,/g, "");
 }
