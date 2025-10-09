@@ -280,7 +280,7 @@ export default [
   r("api/balances", "./routes/balances.ts"),
   r("api/chariot-webhook", "./routes/chariot-webhook/index.ts"),
   r("api/crypto-intents/:id", "./routes/crypto-intents.ts"),
-  r("api/currencies", "./routes/currencies/index.ts"),
+  r("api/currencies", "./routes/currencies.ts"),
   r("api/donation-intents/:type", "./routes/donation-intents/index.ts"),
   r("api/file-upload", "./routes/file-upload.ts"),
   r("api/nav-txs", "./routes/nav-txs.ts"),

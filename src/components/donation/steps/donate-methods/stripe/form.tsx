@@ -1,9 +1,10 @@
 import { CurrencySelector } from "components/currency-selector";
-import { Form as FormContainer, MaskedInput } from "components/form";
+import { Form as FieldSet, MaskedInput } from "components/form";
 import { currency as curr_mask } from "components/form/masks";
 import { useEffect } from "react";
+import { href } from "react-router";
 import useSWR from "swr/immutable";
-import type { DBCurrency } from "types/currency";
+import type { DBCurrency, UserCurrencies } from "types/currency";
 import { USD_CODE } from "../../common/constants";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
@@ -15,8 +16,8 @@ import type { Props } from "./types";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: Props) {
-  const currency = useSWR("/api/currencies", (path) =>
-    fetch(path).then((res) => res.json())
+  const currency = useSWR(href("/api/currencies"), (path) =>
+    fetch(path).then<UserCurrencies>((res) => res.json())
   );
   const { set_state } = use_donation_state();
   const rhf = use_rhf(props);
@@ -30,7 +31,7 @@ export function Form(props: Props) {
   }, [user_currency]);
 
   return (
-    <FormContainer
+    <FieldSet
       onSubmit={rhf.handleSubmit((fv) => {
         set_state((prev) => next_form_state(prev, { ...fv, method: "stripe" }));
       })}
@@ -101,7 +102,7 @@ export function Form(props: Props) {
       </p>
 
       <ContinueBtn className="mt-2" type="submit" />
-    </FormContainer>
+    </FieldSet>
   );
 }
 
