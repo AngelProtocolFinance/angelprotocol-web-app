@@ -83,7 +83,7 @@ const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
       </div>
 
       {props.error && (
-        <p data-error className="peer text-red text-xs text-left mt-1.5">
+        <p data-error className="peer text-red text-xs text-right mt-1.5">
           {props.error}
         </p>
       )}
