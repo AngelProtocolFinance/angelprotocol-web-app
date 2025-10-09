@@ -13,9 +13,6 @@ export type Props = {
   label: string;
   classes?: Classes;
   disabled?: boolean;
-
-  with_bal?: true;
-  with_min?: true;
 };
 
 export namespace Token {

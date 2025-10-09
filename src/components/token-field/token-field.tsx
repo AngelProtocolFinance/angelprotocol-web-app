@@ -35,7 +35,7 @@ const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
       >
         {props.label}
       </label>
-      {props.with_min && props.token.min !== 0 ? (
+      {props.token.min !== 0 ? (
         <p className="text-xs my-1">
           Minimum amount: {props.token.symbol}{" "}
           {round_to_cents(

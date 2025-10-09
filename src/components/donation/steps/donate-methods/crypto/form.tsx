@@ -32,8 +32,6 @@ export function Form(props: CryptoFormStep) {
         on_change={token.onChange}
         error={errors.token}
         label="Donation amount"
-        with_bal
-        with_min
       />
 
       {token.value.id && token.value.rate && (
