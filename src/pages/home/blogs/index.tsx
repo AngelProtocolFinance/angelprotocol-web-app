@@ -44,7 +44,7 @@ export const Blogs = ({ classes = "" }) => {
         <button
           type="button"
           onClick={() => embla_api?.scrollPrev()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 md:left-[15%]"
+          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 sm:left-[10%]"
           aria-label="Previous slide"
         >
           <ChevronLeft />
@@ -54,11 +54,11 @@ export const Blogs = ({ classes = "" }) => {
           className="overflow-hidden w-[70vw] md:w-[80vw] lg:w-[65vw] mx-auto"
           ref={embla_ref}
         >
-          <ul className="flex">
+          <ul className="flex items-stretch">
             {(data?.[0] || [1, 2, 3, 4, 5, 6]).map((blog, idx) => (
               <li
                 key={idx}
-                className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-2.5"
+                className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-2.5 grid"
               >
                 {typeof blog === "number" ? (
                   <Skeleton />
@@ -73,7 +73,7 @@ export const Blogs = ({ classes = "" }) => {
         <button
           type="button"
           onClick={() => embla_api?.scrollNext()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-10 md:right-[15%]"
+          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-10 sm:right-[10%]"
           aria-label="Next slide"
         >
           <ChevronRight />

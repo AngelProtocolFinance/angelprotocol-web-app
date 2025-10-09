@@ -5,11 +5,11 @@ import type { IPost } from "types/wordpress";
 
 export const BlogCard = (props: IPost) => {
   return (
-    <div className="relative hover:border-blue h-[27rem] has-[.pending]:grayscale grid gap-3 pb-5 rounded-3xl bg-white">
+    <div className="relative hover:border-blue-l2 has-[.pending]:grayscale grid grid-rows-subgrid row-span-4 gap-3 pb-5 rounded-3xl bg-white border border-gray-l3">
       <Media
         sizes="(max-width: 640px) 100vw, 33vw"
         id={props.featured_media}
-        classes="rounded-t-[18px] object-fill object-center h-44"
+        classes="rounded-t-3xl object-contain object-center w-full"
       />
       <h3
         className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2 px-6"
