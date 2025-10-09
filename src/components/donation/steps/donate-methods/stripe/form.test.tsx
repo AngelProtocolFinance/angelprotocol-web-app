@@ -2,7 +2,6 @@ import { beforeEach } from "node:test";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_usd } from "services/apes/mock";
-import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import { stb } from "../../__tests__/test-data";
 import type { Init, StripeDonationDetails } from "../../types";
@@ -68,16 +67,12 @@ describe("Stripe form test", () => {
       currency: mock_usd,
       frequency: "recurring",
       method: "stripe",
-      program: { value: mockPrograms[0].id, label: mockPrograms[0].title },
     };
     const Stub = stb(<Form step="donate-form" init={init} details={details} />);
     render(<Stub />);
 
     const amountInput = await screen.findByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("60");
-
-    const selectedProgram = screen.getByText(/program 1/i);
-    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);

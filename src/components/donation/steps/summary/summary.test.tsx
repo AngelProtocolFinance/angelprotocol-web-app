@@ -22,7 +22,6 @@ const one_time_stripe_details: StripeDonationDetails = {
   frequency: "one-time",
   amount: "100.00",
   currency: { code: "usd", min: 1, rate: 1 },
-  program: { value: "prog_789", label: "Education Initiative" },
 };
 
 const donor: Donor = {
@@ -138,7 +137,6 @@ describe("summary step", () => {
   const crypto_details: CryptoDonationDetails = {
     method: "crypto",
     token: { ...init_token_option, amount: "100", cg_id: "wagmi" },
-    program: props.details.program,
   };
   test("crypto amount + dollar amount", async () => {
     const Stub = stb(<Summary {...props} details={crypto_details} />);

@@ -42,12 +42,7 @@ export function DirectMode({ donation, classes = "" }: Props) {
     tribute,
   };
 
-  if (details.program.value) {
-    intent.program = {
-      id: details.program.value,
-      name: details.program.label,
-    };
-  }
+  if (init.program) intent.program = init.program;
 
   const { data, isLoading, error, isValidating } = use_swr(intent, fetcher);
 

@@ -8,7 +8,6 @@ import type { DBCurrency, UserCurrencies } from "types/currency";
 import { USD_CODE } from "../../common/constants";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
-import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import { next_form_state } from "../helpers";
 import { Frequency } from "./frequency";
@@ -83,16 +82,6 @@ export function Form(props: Props) {
           rate={rhf.currency.value.rate}
           increments={props.init.config?.increments}
           precision={0}
-        />
-      )}
-
-      {(props.init.recipient.progDonationsAllowed ?? true) && (
-        // program not allowed for fund (id string)
-        <ProgramSelector
-          endowId={+props.init.recipient.id}
-          classes="mt-4"
-          program={rhf.program.value}
-          onChange={rhf.program.onChange}
         />
       )}
 

@@ -60,7 +60,6 @@ describe("DAF form test", () => {
       method: "daf",
       amount: "100",
       currency: { code: USD_CODE, rate: 1, min: 1 },
-      program: { label: "", value: "" },
     };
     render(<Form init={init} step="donate-form" details={details} />);
     const amountInput = screen.getByPlaceholderText(/enter amount/i);

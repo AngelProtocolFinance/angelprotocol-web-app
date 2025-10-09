@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_tokens } from "services/apes/mock";
-import { mockPrograms } from "services/aws/programs/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
 import type { CryptoFormStep, Init } from "../../types";
 import { Form } from "./form";
@@ -79,16 +78,12 @@ describe("Crypto form: initial load", () => {
       details: {
         method: "crypto",
         token: { ...mock_tokens[1], amount, min: 1, rate: 1 },
-        program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;
     render(<Form {...state} />);
 
     const amountInput = screen.getByDisplayValue(amount);
     expect(amountInput).toBeInTheDocument();
-
-    const selectedProgram = screen.getByText(/program 1/i);
-    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);

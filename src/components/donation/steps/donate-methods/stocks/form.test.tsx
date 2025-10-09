@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import type { Init, StocksDonationDetails } from "../../types";
 import { Form } from "./form";
@@ -26,11 +25,6 @@ describe("stocks form test", () => {
 
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("");
-
-    const programSelector = screen.getByLabelText(
-      /select a program to donate to/i
-    );
-    expect(programSelector).toBeInTheDocument();
   });
   test("initial blank state: program donations now allowed", () => {
     const init: Init = {
@@ -59,7 +53,6 @@ describe("stocks form test", () => {
       method: "stocks",
       symbol: "BG",
       num_shares: "10",
-      program: { value: mockPrograms[1].id, label: mockPrograms[1].title },
     };
     render(<Form init={init} step="donate-form" details={details} />);
     const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
@@ -68,8 +61,6 @@ describe("stocks form test", () => {
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("10");
 
-    const selectedProgram = screen.getByText(/program 2/i);
-    expect(selectedProgram).toBeInTheDocument();
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
     expect(mocked_set_state).toHaveBeenCalledOnce();

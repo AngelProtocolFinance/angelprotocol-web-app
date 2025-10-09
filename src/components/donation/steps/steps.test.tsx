@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import { stb } from "./__tests__/test-data";
-import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
 
@@ -11,7 +10,6 @@ const stripeDonation: StripeDonationDetails = {
   amount: "100",
   currency: { code: "usd", min: 1, rate: 1 },
   frequency: "recurring",
-  program: DEFAULT_PROGRAM,
 };
 
 describe("donation flow", () => {

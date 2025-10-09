@@ -4,7 +4,6 @@ import { dollar } from "components/form/masks";
 import { usd_option } from "../../common/constants";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
-import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import { next_form_state } from "../helpers";
 import type { Props } from "./types";
@@ -49,15 +48,6 @@ export function Form(props: Props) {
         classes="mb-4"
         precision={0}
       />
-
-      {(props.init.recipient.progDonationsAllowed ?? true) && (
-        // program not allowed for fund (id string)
-        <ProgramSelector
-          endowId={+props.init.recipient.id}
-          program={rhf.program.value}
-          onChange={rhf.program.onChange}
-        />
-      )}
 
       <p className="text-sm text-gray-d4 dark:text-gray mt-4">
         Please click the button below and follow the instructions provided to
