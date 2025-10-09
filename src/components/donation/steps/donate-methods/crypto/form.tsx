@@ -31,9 +31,6 @@ export function Form(props: CryptoFormStep) {
         token={token.value}
         on_change={token.onChange}
         error={errors.token}
-        classes={{
-          input: "field-input-donate",
-        }}
         label="Donation amount"
         with_bal
         with_min

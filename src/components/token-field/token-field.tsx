@@ -35,7 +35,7 @@ const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
         {props.label}
       </label>
       {props.with_min && props.token.min !== 0 ? (
-        <p className="text-xs my-0.5">
+        <p className="text-xs my-1">
           Minimum amount: {props.token.symbol}{" "}
           {round_to_cents(
             props.token.min,
@@ -46,36 +46,41 @@ const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
       ) : (
         <div className="py-1" />
       )}
-      {/** match input text, and append $ value */}
-      <div className="relative">
-        {$ ? (
-          <div className="absolute top-1/2 -translate-y-1/2 left-4 select-none">
-            <span className="invisible mr-2">{props.token.amount}</span>{" "}
-            <span className="text-gray text-sm">~${humanize($)}</span>
-          </div>
-        ) : null}
-        <input
-          ref={ref}
-          value={props.token.amount}
-          onChange={(e) =>
-            props.on_change({ ...props.token, amount: e.target.value })
-          }
-          aria-invalid={!!props.error}
-          disabled={props.disabled || token_state === "loading"}
-          autoComplete="off"
-          id="amount"
-          type="text"
-          placeholder="Enter amount"
-          className={`field-input h-full ${style.input}`}
-        />
 
+      <div className="grid grid-cols-[auto_1fr] field-input-container rounded-lg pr-5 divide-x divide-gray-l3">
         <TokenSelector
-          classes="absolute top-1/2 -translate-y-1/2 right-4"
+          classes=""
           token_state={token_state}
           token={props.token}
           on_change={props.on_change}
         />
+        {/** match input text, and append $ value */}
+        <div className="relative h-full w-full">
+          <input
+            ref={ref}
+            value={props.token.amount}
+            onChange={(e) =>
+              props.on_change({ ...props.token, amount: e.target.value })
+            }
+            aria-invalid={!!props.error}
+            disabled={props.disabled || token_state === "loading"}
+            autoComplete="off"
+            id="amount"
+            type="text"
+            placeholder="Enter amount"
+            className={`z-10 outline-none w-full h-full ${style.input} bg-transparent placeholder:font-medium text-base pl-2 py-[13px]`}
+          />
+          {$ ? (
+            <div className="absolute top-1/2 -translate-y-1/2 left-2 select-none">
+              <span className="invisible mr-1 text-base">
+                {props.token.amount}
+              </span>{" "}
+              <span className="text-gray text-sm">~${humanize($)}</span>
+            </div>
+          ) : null}
+        </div>
       </div>
+
       {props.error && (
         <p data-error className="peer text-red text-xs text-left mt-1.5">
           {props.error}

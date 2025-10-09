@@ -31,10 +31,7 @@ const container =
   "w-56 border border-gray-l3 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-hidden";
 export function TokenOptions({ on_change, token, amnt }: Props) {
   return (
-    <PopoverPanel
-      anchor={{ to: "bottom end", gap: 8, offset: 20 }}
-      className={container}
-    >
+    <PopoverPanel anchor={{ to: "bottom start" }} className={container}>
       <TokenCombobox token={token} on_change={on_change} amnt={amnt} />
     </PopoverPanel>
   );

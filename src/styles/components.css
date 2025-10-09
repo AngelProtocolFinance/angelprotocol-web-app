@@ -158,6 +158,40 @@
     }
   }
 
+  .field-input-container {
+    width: 100%;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm) /* 0.875rem = 14px */;
+    line-height: var(
+      --tw-leading,
+      var(--text-sm--line-height) /* calc(1.25 / 0.875) ≈ 1.4286 */
+    );
+    background: transparent;
+    border: 1px solid var(--color-gray-l3);
+    color: var(--color-gray-d4);
+
+    &:has(input:focus) {
+      outline: solid;
+      outline-width: 2px;
+      outline-color: var(--accent-primary);
+    }
+
+    &:has(input::placeholder) {
+      color: var(--color-gray);
+    }
+    &:has(input[aria-disabled="true"]),
+    &:has(input:disabled) {
+      pointer-events: none;
+      background-color: var(--color-gray-l5);
+      color: var(--color-gray);
+    }
+
+    &:has(input:invalid),
+    &:has(input[aria-invalid="true"]) {
+      @apply border-red;
+    }
+  }
+
   .field-err {
     text-align: right;
     font-size: var(--text-xs);
