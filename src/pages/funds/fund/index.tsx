@@ -137,7 +137,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
         </div>
         <div
           id="info-card"
-          className="-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg  p-4"
+          className="-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white shadow-2xl shadow-black/10 z-10 rounded-lg  p-4"
         >
           <DonateSection
             {...fund}
