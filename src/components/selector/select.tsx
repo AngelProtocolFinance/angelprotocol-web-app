@@ -63,7 +63,7 @@ function _Select<T extends string>(
             <>
               <span>{props.option_disp(props.value)}</span>
               <DrawerIcon
-                isOpen={open}
+                is_open={open}
                 size={20}
                 className="justify-self-end dark:text-gray shrink-0"
               />

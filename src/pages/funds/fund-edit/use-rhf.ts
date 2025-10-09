@@ -1,5 +1,5 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { toContent } from "components/rich-text";
+import { to_content } from "components/rich-text";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import type { IFund } from "types/fund";
 import { type FV, schema } from "./schema";
@@ -17,7 +17,7 @@ export function use_rhf(init: IFund) {
     resolver: valibotResolver(schema),
     values: {
       name: init.name,
-      description: toContent(init.description),
+      description: to_content(init.description),
       slug: init.slug ?? "",
       target:
         init.target === "0"

@@ -42,7 +42,7 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
       <ComboboxButton>
         {({ open }) => (
           <DrawerIcon
-            isOpen={open}
+            is_open={open}
             size={16}
             className="absolute top-1/2 -translate-y-1/2 right-4"
           />

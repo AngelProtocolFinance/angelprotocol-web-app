@@ -1,7 +1,11 @@
-import { app_routes } from "constants/routes";
 import { CircleAlert } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { NavLink, isRouteErrorResponse, useRouteError } from "react-router";
+import {
+  NavLink,
+  href,
+  isRouteErrorResponse,
+  useRouteError,
+} from "react-router";
 import { DefaultFallback } from "./default-fallback";
 
 export function ErrorElement() {
@@ -29,7 +33,7 @@ export function ErrorElement() {
             The resource you requested was not found
           </p>
           <NavLink
-            to={app_routes.marketplace}
+            to={href("/marketplace")}
             className="btn btn-outline text-sm px-6 py-2 rounded-full"
           >
             Back

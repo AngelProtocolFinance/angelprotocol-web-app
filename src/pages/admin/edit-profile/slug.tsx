@@ -1,9 +1,8 @@
-import { app_routes } from "constants/routes";
 import type { ReactNode } from "react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 const gen_link = (slug: string, base_url: string) =>
-  `${base_url}${app_routes.marketplace}/${slug}`;
+  `${base_url}${href("/marketplace/:id", { id: slug })}`;
 
 interface Props {
   init_slug?: string;

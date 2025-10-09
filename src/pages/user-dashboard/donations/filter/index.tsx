@@ -67,7 +67,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
               Filter
             </div>
             <DrawerIcon
-              isOpen={open}
+              is_open={open}
               className="hidden @5xl:inline"
               size={21}
             />

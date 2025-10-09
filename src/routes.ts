@@ -234,7 +234,7 @@ export default [
       r("success", bank_app.$("success-prompt.tsx")._),
     ]),
     r("register", reg.$("layout.tsx")._, [
-      index(reg.$("sign-up/index.ts")._),
+      index(reg.$("sign-up.tsx")._),
       r("success", reg.$("success.tsx")._),
       r("welcome", reg.$("welcome.tsx")._),
       r("resume", reg.$("resume/index.tsx")._),

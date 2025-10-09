@@ -4,11 +4,10 @@ import { ExtLink } from "components/ext-link";
 import { Input, PasswordInput, RmxForm } from "components/form";
 import { Image } from "components/image";
 import { Separator } from "components/separator";
-import { app_routes } from "constants/routes";
 import { search } from "helpers/https";
 import { metas } from "helpers/seo";
 import { Mail } from "lucide-react";
-import { Link, data, redirect, useNavigation } from "react-router";
+import { Link, data, href, redirect, useNavigation } from "react-router";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import type { ActionData, IFormInvalid } from "types/action";
 import { type ISignIn, is_error, sign_in } from "types/auth";
@@ -19,7 +18,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   try {
     const from = new URL(request.url);
     const redirect_to =
-      from.searchParams.get("redirect") || app_routes.marketplace;
+      from.searchParams.get("redirect") || href("/marketplace");
     const { user } = await cognito.retrieve(request);
     if (user) return redirect(redirect_to);
 
@@ -44,7 +43,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     if (is_error(res)) {
       if (res.__type === "UserNotConfirmedException") {
         const to = new URL(from);
-        to.pathname = `${app_routes.signup}/confirm`;
+        to.pathname = href("/signup/confirm");
         to.searchParams.set("email", payload.data.email);
         to.searchParams.set("redirect", redirect_to);
         return redirect(to.toString());
@@ -66,7 +65,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { user } = await cognito.retrieve(request);
   const { redirect: to } = search(request);
-  if (user) return redirect(to || app_routes.marketplace);
+  if (user) return redirect(to || href("/marketplace"));
   return to || "/";
 };
 
@@ -133,7 +132,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
             placeholder="Password"
           />
           <Link
-            to={`${app_routes.reset_password}?redirect=${to}`}
+            to={`${href("/login/reset")}?redirect=${to}`}
             className="font-medium text-gray hover:text-gray-d1 active:text-gray-d2 text-xs sm:text-sm justify-self-end hover:underline"
           >
             Forgot password?
@@ -150,7 +149,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={`${app_routes.signup}?redirect=${to}`}
+            to={`${href("/signup")}?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={is_submitting}
           >
@@ -161,21 +160,21 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
       <span className="text-xs sm:text-sm text-center w-80">
         By signing in, you agree to our{" "}
         <ExtLink
-          href={app_routes.privacy_policy}
+          href={href("/privacy-policy")}
           className="text-blue hover:text-blue-l2"
         >
           Privacy Policy
         </ExtLink>
         ,{" "}
         <ExtLink
-          href={app_routes.terms_donors}
+          href={href("/terms-of-use")}
           className="text-blue hover:text-blue-l2"
         >
           Terms of Use (Donors)
         </ExtLink>
         , and{" "}
         <ExtLink
-          href={app_routes.terms_nonprofits}
+          href={href("/terms-of-use-npo")}
           className="text-blue hover:text-blue-l2"
         >
           Terms of Use (Nonprofits)

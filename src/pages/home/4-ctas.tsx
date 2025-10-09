@@ -2,9 +2,8 @@ import girl_pointing_up from "assets/landing/girl-pointing-up.webp";
 import girl_using_phone from "assets/landing/girl-using-phone.webp";
 import girl_watering_plant from "assets/landing/girl-watering-plant.webp";
 import hand_payment_methods from "assets/landing/hand-payment-methods.webp";
-import { app_routes } from "constants/routes";
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 interface IBlurImg {
   classes?: string;
@@ -63,7 +62,7 @@ export function Ctas({ classes = "" }) {
             easy embedding to lift completion and grow monthly donors.
           </p>
           <Link
-            to={`${app_routes.register}/welcome`}
+            to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -98,7 +97,7 @@ export function Ctas({ classes = "" }) {
             guaranteed).
           </p>
           <Link
-            to={`${app_routes.register}/welcome`}
+            to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -123,7 +122,7 @@ export function Ctas({ classes = "" }) {
             benefits for your donors.
           </p>
           <Link
-            to={`${app_routes.register}/welcome`}
+            to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -159,7 +158,7 @@ export function Ctas({ classes = "" }) {
             checkout so you don't pay platform fees or fund-management fees.
           </p>
           <Link
-            to={`${app_routes.register}/welcome`}
+            to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
             Join us today!
@@ -187,7 +186,7 @@ export function Cta({ classes = "" }: ICta) {
           embedding to lift completion and grow monthly donors.
         </p>
         <Link
-          to={`${app_routes.register}/welcome`}
+          to={href("/register/welcome")}
           className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
           Join us today!

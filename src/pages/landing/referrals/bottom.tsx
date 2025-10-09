@@ -1,6 +1,5 @@
-import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export function Bottom({ classes = "" }) {
   return (
@@ -16,7 +15,7 @@ export function Bottom({ classes = "" }) {
         force for good.
       </p>
       <Link
-        to={`${app_routes.signup}?redirect=${app_routes.user_dashboard}/referrals`}
+        to={`${href("/signup")}?redirect=${href("/dashboard/referrals")}`}
         className="btn-blue text-balance justify-self-center w-fit mx-auto group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >
         Get Your Referral Link Now

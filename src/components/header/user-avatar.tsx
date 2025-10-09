@@ -1,6 +1,5 @@
-import { app_routes } from "constants/routes";
 import { CircleUserRound } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 
 interface Props {
   avatar: string | undefined;
@@ -10,7 +9,7 @@ interface Props {
 export function UserAvatar({ classes = "", avatar }: Props) {
   return (
     <NavLink
-      to={`${app_routes.user_dashboard}/edit-profile`}
+      to={href("/dashboard/edit-profile")}
       className={`[&:is(.pending)]:grayscale ${classes}`}
     >
       {avatar ? (

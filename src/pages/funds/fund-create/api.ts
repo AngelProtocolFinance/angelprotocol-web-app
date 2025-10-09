@@ -1,13 +1,12 @@
 import { Txs } from "@better-giving/db";
-import { npo } from "@better-giving/endowment/schema";
 import type { IFund, IFundSettings } from "@better-giving/fundraiser";
 import { $int_gte1 } from "@better-giving/schemas";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { adminRoutes, app_routes } from "constants/routes";
 import { resp, search } from "helpers/https";
 import {
   type ActionFunction,
   type LoaderFunctionArgs,
+  href,
   redirect,
 } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
@@ -185,8 +184,8 @@ export const action: ActionFunction = async ({ request }) => {
     : { headers: { "set-cookie": refreshed.commit } };
 
   if (npo_owner) {
-    const to = `${app_routes.admin}/${npo_owner}/${adminRoutes.funds}`;
+    const to = href("/admin/:id/funds", { id: npo_owner.toString() });
     return redirect(to, commit);
   }
-  return redirect(`${app_routes.user_dashboard}/funds`, commit);
+  return redirect(href("/dashboard/funds"), commit);
 };

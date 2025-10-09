@@ -1,8 +1,7 @@
 import { Cells } from "components/table-section";
-import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, round_to_cents } from "helpers/decimal";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import { AmountFlow } from "./amount-flow";
 import { Fees } from "./fees";
 import type { IRow } from "./helpers";
@@ -17,7 +16,10 @@ export function Row(props: IRow & { has_more?: boolean; classes?: string }) {
       {props.program_id ? (
         <Link
           className="text-blue hover:text-blue-d1"
-          to={`${app_routes.marketplace}/${props.recipient_id}/program/${props.program_id}`}
+          to={href("/marketplace/:id/program/:programId", {
+            id: props.recipient_id.toString(),
+            programId: props.program_id,
+          })}
         >
           {props.program_name}
         </Link>

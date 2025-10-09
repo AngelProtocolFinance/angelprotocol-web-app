@@ -1,7 +1,7 @@
 import type { INpo } from "@better-giving/endowment";
 import { Copier } from "components/copier";
-import { app_routes } from "constants/routes";
 import { clean_object } from "helpers/clean-object";
+import { href } from "react-router";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 type Props = {
@@ -11,10 +11,10 @@ type Props = {
   base_url: string;
 };
 export function Snippet({ classes = "", config, endow, base_url }: Props) {
-  const widgetURL = widgetURLfn(config, base_url, endow?.id);
-  const iframeURL = endow?.id
+  const widget_url = widget_url_fn(config, base_url, endow?.id);
+  const iframe_url = endow?.id
     ? /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
-      `<iframe src="${widgetURL}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`
+      `<iframe src="${widget_url}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`
     : "Please select organization";
 
   return (
@@ -24,11 +24,11 @@ export function Snippet({ classes = "", config, endow, base_url }: Props) {
       </h2>
       <div className="flex items-center justify-center gap-x-4 max-w-xl px-10 rounded-sm bg-gray-l3 dark:bg-blue-d4 @4xl/widget:mx-auto">
         <div className="w-full text-sm sm:text-base font-mono break-all py-4">
-          {iframeURL}
+          {iframe_url}
         </div>
         <Copier
           classes={{ icon: "w-10 h-10 hover:text-blue-d1" }}
-          text={iframeURL}
+          text={iframe_url}
         />
       </div>
     </div>
@@ -36,7 +36,7 @@ export function Snippet({ classes = "", config, endow, base_url }: Props) {
 }
 
 //create URLSearchParams from config
-const widgetURLfn = (config: WidgetConfig, base_url: string, endowId = 0) => {
+const widget_url_fn = (config: WidgetConfig, base_url: string, npo_id = 0) => {
   const params: Required<WidgetURLSearchParams> = {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     methods: config.methods
@@ -55,6 +55,6 @@ const widgetURLfn = (config: WidgetConfig, base_url: string, endowId = 0) => {
       .join(","),
   };
   return `${
-    base_url + app_routes.donate_widget
-  }/${endowId}?${new URLSearchParams(clean_object(params)).toString()}`;
+    base_url + href("/donate-widget")
+  }/${npo_id}?${new URLSearchParams(clean_object(params)).toString()}`;
 };

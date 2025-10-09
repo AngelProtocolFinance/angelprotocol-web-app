@@ -36,7 +36,7 @@ export function TokenSelector({
                 size={20}
               />
             ) : (
-              <DrawerIcon isOpen={open} size={20} />
+              <DrawerIcon is_open={open} size={20} />
             )}
           </>
         )}

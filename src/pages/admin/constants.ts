@@ -1,4 +1,3 @@
-import { adminRoutes } from "constants/routes";
 import type { LinkGroup } from "layout/dashboard";
 import {
   Blocks,
@@ -16,14 +15,15 @@ import {
   UsersRound,
   Wallet,
 } from "lucide-react";
+import { routes } from "./routes";
 
-const { program_editor: _pe, ...sidebarRoutes } = adminRoutes;
+const { program_editor: _pe, ...sidebar_routes } = routes;
 
 const linkGroup1: LinkGroup = {
   links: [
     {
       title: "Dashboard",
-      to: sidebarRoutes.dashboard,
+      to: sidebar_routes.dashboard,
       icon: {
         fn: LayoutDashboard,
         size: 20,
@@ -32,7 +32,7 @@ const linkGroup1: LinkGroup = {
     },
     {
       title: "Donations",
-      to: sidebarRoutes.donations,
+      to: sidebar_routes.donations,
       icon: {
         fn: CircleDollarSign,
         size: 22,
@@ -40,7 +40,7 @@ const linkGroup1: LinkGroup = {
     },
     {
       title: "Savings",
-      to: sidebarRoutes.savings,
+      to: sidebar_routes.savings,
       icon: {
         fn: PiggyBankIcon,
         size: 22,
@@ -48,7 +48,7 @@ const linkGroup1: LinkGroup = {
     },
     {
       title: "Investments",
-      to: sidebarRoutes.investments,
+      to: sidebar_routes.investments,
       icon: {
         fn: SproutIcon,
         size: 22,
@@ -62,7 +62,7 @@ const linkGroup2: LinkGroup = {
   links: [
     {
       title: "Edit Profile",
-      to: sidebarRoutes.edit_profile,
+      to: sidebar_routes.edit_profile,
       icon: {
         fn: CircleUserRound,
         size: 20.5,
@@ -70,7 +70,7 @@ const linkGroup2: LinkGroup = {
     },
     {
       title: "Programs",
-      to: sidebarRoutes.programs,
+      to: sidebar_routes.programs,
       icon: {
         fn: ListCheck,
         size: 22,
@@ -78,7 +78,7 @@ const linkGroup2: LinkGroup = {
     },
     {
       title: "Media",
-      to: sidebarRoutes.media,
+      to: sidebar_routes.media,
       icon: {
         fn: Image,
         size: 20,
@@ -86,7 +86,7 @@ const linkGroup2: LinkGroup = {
     },
     {
       title: "Banking",
-      to: sidebarRoutes.banking,
+      to: sidebar_routes.banking,
       icon: {
         fn: Wallet,
         size: 20,
@@ -116,7 +116,7 @@ const linkGroup3: LinkGroup = {
     },
     {
       title: "Donation Form Builder",
-      to: sidebarRoutes.form_builder,
+      to: sidebar_routes.form_builder,
       icon: {
         fn: Blocks,
         size: 25,
@@ -124,7 +124,7 @@ const linkGroup3: LinkGroup = {
     },
     {
       title: "Fundraisers",
-      to: sidebarRoutes.funds,
+      to: sidebar_routes.funds,
       icon: {
         fn: Heart,
         size: 21,
@@ -132,7 +132,7 @@ const linkGroup3: LinkGroup = {
     },
     {
       title: "Integrations",
-      to: sidebarRoutes.integrations,
+      to: sidebar_routes.integrations,
       icon: {
         fn: PlugZap,
         size: 23,
@@ -140,7 +140,7 @@ const linkGroup3: LinkGroup = {
     },
     {
       title: "Referrals",
-      to: sidebarRoutes.referrals,
+      to: sidebar_routes.referrals,
       icon: {
         fn: MegaphoneIcon,
         size: 22,

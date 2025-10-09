@@ -82,7 +82,7 @@ export default function Filter({
             <div className="uppercase font-semibold text-[0.9375rem] ">
               Filter
             </div>
-            <DrawerIcon isOpen={open} className="hidden lg:inline" size={21} />
+            <DrawerIcon is_open={open} className="hidden lg:inline" size={21} />
           </>
         )}
       </PopoverButton>

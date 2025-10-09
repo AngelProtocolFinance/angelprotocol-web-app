@@ -62,7 +62,7 @@ export default function Sorter() {
             <>
               <span className="uppercase">{activeSortName}</span>
               {!isSortKeySelected && (
-                <DrawerIcon isOpen={open} size={20} className="mr-3" />
+                <DrawerIcon is_open={open} size={20} className="mr-3" />
               )}
             </>
           )}

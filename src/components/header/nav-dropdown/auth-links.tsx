@@ -1,6 +1,5 @@
 import { MenuItem } from "@headlessui/react";
-import { app_routes } from "constants/routes";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import { styles } from "./common";
 
 interface Props {
@@ -13,7 +12,7 @@ export function AuthLinks({ to, classes = "" }: Props) {
     <>
       <MenuItem>
         <NavLink
-          to={`${app_routes.signin}?redirect=${to}`}
+          to={`${href("/login")}?redirect=${to}`}
           className={`${styles} ${classes}`}
         >
           Login
@@ -22,7 +21,7 @@ export function AuthLinks({ to, classes = "" }: Props) {
 
       <MenuItem>
         <NavLink
-          to={`${app_routes.signup}?redirect=${to}`}
+          to={`${href("/signup")}?redirect=${to}`}
           className={`${styles} ${classes}`}
         >
           Sign up

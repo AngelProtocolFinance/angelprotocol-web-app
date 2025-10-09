@@ -1,6 +1,5 @@
 import { $int_gte1 } from "@better-giving/schemas";
 import { Footer } from "components/footer";
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
@@ -59,7 +58,7 @@ export default function AdminLayout({
     <div className="grid">
       <Header classes="sticky z-40 top-[-1px]" />
       <Layout
-        rootRoute={`${app_routes.admin}/:id/`}
+        rootRoute="/admin/:id/"
         linkGroups={linkGroups}
         sidebarHeader={<SidebarHeader {...data.endow} />}
       />

@@ -4,7 +4,7 @@ import { Field, Label } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { ImgEditor, imgEditorStyles } from "components/img-editor";
 import { Increments } from "components/increments";
-import { RichText, richTextStyles } from "components/rich-text";
+import { RichText, richtext_styles } from "components/rich-text";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray } from "react-hook-form";
 import { type LinksFunction, useFetcher } from "react-router";
@@ -18,7 +18,7 @@ import { type FV, MAX_DESCRIPTION_CHAR } from "./schema";
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
 export const links: LinksFunction = () => [
-  ...richTextStyles,
+  ...richtext_styles,
   ...imgEditorStyles,
 ];
 

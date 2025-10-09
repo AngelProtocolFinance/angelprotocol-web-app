@@ -1,11 +1,10 @@
 import type { IFundItem } from "@better-giving/fundraiser";
 import { FundCreator, FundStatus, status_fn } from "components/fundraiser";
 import { Target, to_target } from "components/target";
-import { app_routes } from "constants/routes";
 import { fromUnixTime } from "date-fns";
 import { use_action_result } from "hooks/use-action-result";
 import { LoaderCircle, Split } from "lucide-react";
-import { Link, NavLink, useFetcher } from "react-router";
+import { Link, NavLink, href, useFetcher } from "react-router";
 import type { ActionData } from "types/action";
 
 interface Props extends IFundItem {
@@ -42,7 +41,7 @@ export const FundItem = (props: Props) => {
       </div>
 
       <Link
-        to={`${app_routes.funds}/${props.id}`}
+        to={href("/fundraisers/:fundId", { fundId: props.id })}
         className="mt-4 font-semibold text-gray hover:text-blue-d1 "
       >
         {props.name}
@@ -93,7 +92,7 @@ export const FundItem = (props: Props) => {
           className={`btn btn btn-blue rounded-full text-xs px-6 py-2 ${
             props.isEditor ? "" : "invisible"
           }`}
-          to={`${app_routes.funds}/${props.id}/edit`}
+          to={href("/fundraisers/:fundId/edit", { fundId: props.id })}
         >
           Edit
         </NavLink>

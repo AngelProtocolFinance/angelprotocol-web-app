@@ -4,10 +4,9 @@ import { ExtLink } from "components/ext-link";
 import { DappLogo } from "components/image";
 import { Info } from "components/status";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
-import { app_routes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { metas } from "helpers/seo";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
 import FAQ from "./faq";
@@ -33,7 +32,7 @@ function Page({ loaderData: { fund } }: Route.ComponentProps) {
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
         <DappLogo classes="h-12" />
         <Link
-          to={`${app_routes.funds}/${fund.id}`}
+          to={href("/fundraisers/:fundId", { fundId: fund.id })}
           className="font-semibold  hover:text-blue-d1"
         >
           Cancel

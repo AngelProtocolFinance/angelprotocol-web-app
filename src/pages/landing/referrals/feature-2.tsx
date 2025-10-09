@@ -2,10 +2,9 @@ import laira_heart from "assets/laira/laira-heart.webp";
 import laira_laptop from "assets/laira/laira-laptop.webp";
 import laira_shake_hands from "assets/laira/laira-shaking-hands.webp";
 import { Image } from "components/image";
-import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
 
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 type TListItem = {
   title1: string;
@@ -56,8 +55,8 @@ export function Feature2({ className = "" }) {
       </ul>
       <Link
         to={{
-          pathname: app_routes.signup,
-          search: `?redirect=${app_routes.user_dashboard}/referrals`,
+          pathname: href("/signup"),
+          search: `?redirect=${href("/dashboard/referrals")}`,
         }}
         className="btn-blue mt-8 justify-self-center col-span-full ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >

@@ -1,8 +1,8 @@
 import type { IProgramDb } from "@better-giving/endowment";
 import { Image } from "components/image";
 import { LoaderRing } from "components/loader-ring";
-import { adminRoutes } from "constants/routes";
 import { Link, useFetcher } from "react-router";
+import { routes } from "../routes";
 
 export function Program(props: IProgramDb) {
   const fetcher = useFetcher();
@@ -40,7 +40,7 @@ export function Program(props: IProgramDb) {
             delete
           </button>
           <Link
-            to={`../${adminRoutes.program_editor}/${props.id}`}
+            to={`../${routes.program_editor}/${props.id}`}
             className="btn-outline btn w-24 py-2 text-sm"
           >
             edit

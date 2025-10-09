@@ -1,24 +1,19 @@
+import { ContentLoader } from "components/content-loader";
 import { DonorMsgs } from "components/donor-msgs";
 import { RichText } from "components/rich-text";
-import { richTextStyles } from "components/rich-text";
-import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import { Target, to_target } from "components/target";
+import { Suspense } from "react";
+import { Await, useOutletContext } from "react-router";
+import type { Route } from "../../+types";
 import { Container } from "../common/container";
-import type { Route } from "./+types";
 import { DetailsColumn } from "./details-column";
 import { Fundraisers } from "./fundraisers";
 import Media from "./media";
 import Programs from "./programs";
 
-export { loader } from "./api";
-export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>({
-  key: "profile-general-info",
-});
-export { ErrorBoundary } from "components/error";
-export const links: Route.LinksFunction = () => [...richTextStyles];
-
-export default CacheRoute(Page);
-export function Page({ loaderData, params }: Route.ComponentProps) {
-  const { npo, programs, media, funds, bal_ltd } = loaderData;
+export default function Page() {
+  const x = useOutletContext<Route.ComponentProps["loaderData"]>();
+  const { npo, programs, media, funds, bal } = x;
 
   return (
     <div className="order-4 lg:col-span-2 grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
@@ -30,23 +25,59 @@ export function Page({ loaderData, params }: Route.ComponentProps) {
             readOnly
           />
         </Container>
-        {programs.length > 0 ? (
-          <Container title="Programs">
-            <Programs programs={programs} />
-          </Container>
-        ) : null}
+        <Suspense fallback={<ContentLoader className="h-40" />}>
+          <Await resolve={programs}>
+            {(p) =>
+              p.length > 0 ? (
+                <Container title="Programs">
+                  <Programs programs={p} />
+                </Container>
+              ) : null
+            }
+          </Await>
+        </Suspense>
 
-        {media.length > 0 ? (
-          <Container title="Media">{<Media media={media} />}</Container>
-        ) : null}
-        <DonorMsgs id={params.id} />
+        <Suspense fallback={<ContentLoader className="h-40" />}>
+          <Await resolve={media}>
+            {(m) =>
+              m.length > 0 ? (
+                <Container title="Media">
+                  <Media media={m} />
+                </Container>
+              ) : null
+            }
+          </Await>
+        </Suspense>
+
+        <DonorMsgs id={npo.id.toString()} />
       </div>
       <DetailsColumn
-        bal_ltd={bal_ltd}
+        target={
+          <Suspense fallback={<ContentLoader className="h-40 mt-4" />}>
+            <Await resolve={bal}>
+              {(b) =>
+                npo.target && (
+                  <Target
+                    text={<Target.Text classes="mb-2" />}
+                    progress={b.ltd}
+                    target={to_target(npo.target)}
+                    classes="-mb-5 mt-4"
+                  />
+                )
+              }
+            </Await>
+          </Suspense>
+        }
         npo={npo}
         classes="self-start lg:sticky lg:top-[5.5rem]"
         fundraisers={
-          funds.length > 0 ? <Fundraisers classes="mt-4" funds={funds} /> : null
+          <Suspense fallback={<ContentLoader className="h-40 mt-4" />}>
+            <Await resolve={funds}>
+              {(f) =>
+                f.length > 0 ? <Fundraisers classes="mt-4" funds={f} /> : null
+              }
+            </Await>
+          </Suspense>
         }
       />
     </div>

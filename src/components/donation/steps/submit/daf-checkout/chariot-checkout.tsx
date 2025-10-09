@@ -4,13 +4,12 @@ import { ErrorBoundaryClass } from "components/error";
 import { CheckField, Form } from "components/form";
 import { type IPrompt, Prompt } from "components/prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
-import { app_routes } from "constants/routes";
 import { error_prompt } from "helpers/error-prompt";
 import { Eraser, PenToolIcon } from "lucide-react";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { href, useNavigate } from "react-router";
 import type { DonationIntent } from "types/donation-intent";
 import {
   donor,
@@ -346,7 +345,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
               setPrompt(undefined);
 
               const search = `?name=${encodeURIComponent(props.init.recipient.name)}&id=${props.init.recipient.id}`;
-              navigate(`${app_routes.donate_thanks}${search}`);
+              navigate(`${href("/donate-thanks")}${search}`);
             } catch (err) {
               setPrompt(error_prompt(err, { context: "processing donation" }));
             } finally {

@@ -9,13 +9,13 @@ interface IVideos extends UseFieldArrayReturn<FV, "videos", "id"> {
   classes?: string;
 }
 export function Videos({ classes = "", ...props }: IVideos) {
-  const [open, setOpen] = useState(false);
+  const [open, set_open] = useState(false);
   return (
     <div className={`grid content-start @container ${classes}`}>
       <div className="flex gap-x-2 items-center">
         <label className="label font-medium">Videos</label>
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => set_open(true)}
           type="button"
           className="text-green"
         >
@@ -28,10 +28,10 @@ export function Videos({ classes = "", ...props }: IVideos) {
       </p>
       <VideoModal
         open={open}
-        setOpen={setOpen}
+        set_open={set_open}
         onSubmit={(url) => {
           props.append({ url });
-          setOpen(false);
+          set_open(false);
         }}
       />
       <List {...props} />

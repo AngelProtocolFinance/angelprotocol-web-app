@@ -5,15 +5,14 @@ import { DonorMsgs } from "components/donor-msgs";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, status_fn } from "components/fundraiser";
 import { Image } from "components/image";
-import { RichText, richTextStyles, toText } from "components/rich-text";
+import { RichText, richtext_styles, toText } from "components/rich-text";
 import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { unpack } from "helpers/unpack";
 import { ArrowLeft } from "lucide-react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { IFund } from "types/fund";
 import type { Route } from "./+types";
@@ -23,7 +22,7 @@ import { Video } from "./video";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export const links: Route.LinksFunction = () => [...richTextStyles];
+export const links: Route.LinksFunction = () => [...richtext_styles];
 
 export const meta: Route.MetaFunction = ({ loaderData: d, location: l }) => {
   if (!d) return [];
@@ -57,7 +56,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
       />
       <div className="group peer-hover:[&>div]:mt-1 xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
         <div className="self-start -mt-12 md:-mt-24 transition-[margin] ease-in-out z-10 grid gap-4 relative">
-          <div className="absolute -top-8 flex justify-between w-full">
+          <div className="absolute -top-8 flex items-center justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
               to="../fundraisers"
@@ -138,7 +137,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
         </div>
         <div
           id="info-card"
-          className="md:-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4"
+          className="-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg  p-4"
         >
           <DonateSection
             {...fund}
@@ -160,7 +159,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
                   width={50}
                 />
                 <Link
-                  to={`${app_routes.marketplace}/${m.id}`}
+                  to={href("/marketplace/:id", { id: m.id.toString() })}
                   className="font-bold  text-gray hover:text-blue-d1"
                 >
                   {m.name}
@@ -203,7 +202,7 @@ function DonateSection(props: IDonateSection) {
             props.donation_total_usd
           ).active
         }
-        to={`${app_routes.funds}/${props.id}/donate`}
+        to={href("/donate-fund/:fundId", { fundId: props.id })}
         className={`w-full btn btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >
         Donate now

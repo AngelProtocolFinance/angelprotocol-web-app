@@ -1,8 +1,7 @@
 import banner from "assets/images/bg-banner.webp";
 import { APP_NAME } from "constants/env";
-import { app_routes } from "constants/routes";
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 const MLink = motion.create(Link);
 
@@ -50,7 +49,7 @@ const Hero = ({ classes = "" }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
-        to={`${app_routes.register}/welcome`}
+        to={href("/register/welcome")}
         className="btn-blue justify-self-center mt-8 active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >
         Join us today!

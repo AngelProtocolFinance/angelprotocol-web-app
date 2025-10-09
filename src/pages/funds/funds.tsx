@@ -1,10 +1,9 @@
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { use_paginator } from "hooks/use-paginator";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
-import { NavLink, useSearchParams } from "react-router";
+import { NavLink, href, useSearchParams } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 
 import type { Route } from "./+types/funds";
@@ -66,7 +65,7 @@ function Funds({ loaderData: page1 }: Route.ComponentProps) {
             />
           </div>
           <NavLink
-            to={`${app_routes.funds}/new`}
+            to={href("/fundraisers/new")}
             className="btn btn-blue text-sm rounded-lg px-6 normal-case"
           >
             Create Fundraiser

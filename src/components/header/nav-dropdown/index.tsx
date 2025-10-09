@@ -4,10 +4,9 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { app_routes } from "constants/routes";
-import { ChevronDown, CornerDownRight, MenuIcon } from "lucide-react";
+import { ChevronDown, MenuIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { UserMenu } from "../user-menu";
 import { styler } from "./common";
@@ -45,35 +44,35 @@ export function NavDropdown({ user, auth_links }: Props) {
       >
         <div className="p-5 grid gap-y-2 w-80">
           <MenuItem>
-            <NavLink to={app_routes.home} end className={styler}>
+            <NavLink to={href("/")} end className={styler}>
               Home
             </NavLink>
           </MenuItem>
           <MenuItem>
             <NavLink
-              to={app_routes.register + (user ? "/" : "/welcome")}
+              to={user ? href("/register") : href("/register/welcome")}
               className={styler}
             >
               Register nonprofit
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={app_routes.marketplace} className={styler}>
+            <NavLink to={href("/marketplace")} className={styler}>
               Marketplace
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={app_routes.funds} className={styler} end>
+            <NavLink to={href("/fundraisers")} className={styler} end>
               Fundraisers
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={app_routes.blog} className={styler}>
+            <NavLink to={href("/blog")} className={styler}>
               Blog
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to="referral-program" className={styler}>
+            <NavLink to={href("/referral-program")} className={styler}>
               Referral Program
             </NavLink>
           </MenuItem>

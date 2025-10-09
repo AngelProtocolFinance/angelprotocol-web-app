@@ -6,7 +6,7 @@ export {
   is_fund,
 } from "./steps/types";
 export { Steps } from "./steps";
-export { ShareContainer as Share } from "./steps/share";
+export { Share } from "./steps/share";
 export { StepsCarousel } from "./steps-carousel";
 export { ProgramSelector } from "./steps/common/program-selector";
 export {

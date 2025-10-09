@@ -1,9 +1,8 @@
 import { Cells, TableSection } from "components/table-section";
-import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { centsDecimals, humanize, round_to_cents } from "helpers/decimal";
 import { ArrowDownToLine } from "lucide-react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import type { IPaginator } from "types/components";
 import { LoadMoreBtn } from "../load-more-btn";
 import type { IRow } from "./helpers";
@@ -50,7 +49,9 @@ export function Table({
               <>{row.date ? toPP(row.date) : "--"}</>
               <div>
                 <Link
-                  to={`${app_routes.marketplace}/${row.recipient_name}`}
+                  to={href("/marketplace/:id", {
+                    id: row.recipient_id.toString(),
+                  })}
                   className="flex items-center justify-between gap-1 text-blue hover:text-blue-d1"
                 >
                   <span className="truncate max-w-[12rem]">
@@ -60,7 +61,10 @@ export function Table({
                 {row.program_id && (
                   <Link
                     className="text-blue hover:text-blue-d1"
-                    to={`${app_routes.profile}/${row.recipient_id}/program/${row.program_id}`}
+                    to={href("/marketplace/:id/program/:programId", {
+                      id: row.recipient_id.toString(),
+                      programId: row.program_id,
+                    })}
                   >
                     {row.program_name}
                   </Link>

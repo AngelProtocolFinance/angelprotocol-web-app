@@ -1,8 +1,8 @@
 import { Footer } from "components/footer";
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import Layout from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
+import { href } from "react-router";
 import type { Route } from "./+types/layout";
 import { linkGroups } from "./constants";
 import { Header } from "./header";
@@ -32,7 +32,7 @@ export default function Page({ loaderData: user }: Route.ComponentProps) {
     <div className="grid">
       <Header classes="sticky z-40 top-[-1px]" />
       <Layout
-        rootRoute={app_routes.fund_management}
+        rootRoute={href("/fund-management")}
         linkGroups={linkGroups}
         //dummy header
         sidebarHeader={<div className="h-5" />}

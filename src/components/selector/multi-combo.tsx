@@ -99,7 +99,7 @@ function _MultiCombo<T extends string>(
                 : "absolute inset-0 flex justify-end items-center pr-4 rounded-sm active:ring-2 ring-blue-d1 ring-offset-1"
             }`}
           >
-            {({ open }) => <DrawerIcon isOpen={open} size={20} className="" />}
+            {({ open }) => <DrawerIcon is_open={open} size={20} className="" />}
           </ComboboxButton>
         </div>
         <ComboboxOptions className={`selector-opts ${cls.options}`}>

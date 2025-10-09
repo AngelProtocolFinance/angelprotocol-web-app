@@ -1,7 +1,6 @@
 import { Video, videos } from "components/video/video";
 import { BOOK_A_DEMO } from "constants/env";
-import { app_routes } from "constants/routes";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export function Hero({ className = "" }) {
   return (
@@ -25,7 +24,7 @@ export function Hero({ className = "" }) {
 
         <div className="flex flex-col @sm:flex-row justify-center @6xl:justify-start items-center gap-6">
           <Link
-            to={app_routes.register}
+            to={href("/register/welcome")}
             className="btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  uppercase font-bold shadow-2xl rounded-full"
           >
             Start today

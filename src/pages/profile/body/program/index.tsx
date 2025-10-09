@@ -3,14 +3,14 @@ import { to_usd } from "helpers/to-usd";
 import { Container } from "../common/container";
 import { Milestones } from "./milestones";
 
-import { richTextStyles } from "components/rich-text";
+import { richtext_styles } from "components/rich-text";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
 
 export { ErrorBoundary } from "components/error";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
-export const links: Route.LinksFunction = () => [...richTextStyles];
+export const links: Route.LinksFunction = () => [...richtext_styles];
 
 export default CacheRoute(Page);
 function Page({ loaderData: prog }: Route.ComponentProps) {

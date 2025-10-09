@@ -10,7 +10,7 @@ interface IVideoModal {
   onSubmit: (url: string) => void;
   initUrl?: string;
   open: boolean;
-  setOpen: (open: boolean) => void;
+  set_open: (open: boolean) => void;
 }
 
 export function VideoModal(props: IVideoModal) {
@@ -26,7 +26,7 @@ export function VideoModal(props: IVideoModal) {
   return (
     <Modal
       open={props.open}
-      onClose={() => props.setOpen(false)}
+      onClose={() => props.set_open(false)}
       classes="fixed-center z-10 grid text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <form
@@ -35,7 +35,7 @@ export function VideoModal(props: IVideoModal) {
           e.preventDefault();
           e.stopPropagation();
           handleSubmit((data) => props.onSubmit(data.url))();
-          props.setOpen(false);
+          props.set_open(false);
         }}
       >
         <div className="relative">
@@ -43,7 +43,7 @@ export function VideoModal(props: IVideoModal) {
             {props.initUrl ? "Edit" : "Add"} video
           </p>
           <button
-            onClick={() => props.setOpen(false)}
+            onClick={() => props.set_open(false)}
             className="border border-gray-l3 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l2 dark:disabled:text-gray-d3 dark:disabled:border-gray-d3"
           >
             <X size={24} />
@@ -64,7 +64,7 @@ export function VideoModal(props: IVideoModal) {
           <button
             type="button"
             className="btn-outline btn text-sm px-8 py-2"
-            onClick={() => props.setOpen(false)}
+            onClick={() => props.set_open(false)}
           >
             Cancel
           </button>

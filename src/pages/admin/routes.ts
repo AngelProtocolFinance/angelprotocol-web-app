@@ -1,4 +1,17 @@
-export const settings = {
-  index: ".",
-  edit: "edit",
-};
+export const routes = {
+  dashboard: "dashboard",
+  edit_profile: "edit-profile",
+  programs: "programs",
+  program_editor: "program-editor",
+  banking: "banking",
+  form_builder: "form-builder",
+  donations: "donations",
+  settings: "settings",
+  members: "members",
+  media: "media",
+  funds: "funds",
+  integrations: "integrations",
+  referrals: "referrals",
+  savings: "savings",
+  investments: "investments",
+} as const;

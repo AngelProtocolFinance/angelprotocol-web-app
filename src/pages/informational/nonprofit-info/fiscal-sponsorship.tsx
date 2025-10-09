@@ -1,6 +1,5 @@
 import { Image } from "components/image";
-import { app_routes } from "constants/routes";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import fiscalsponsorshipImg from "./images/fiscal-sponsorship.webp";
 
 export function FiscalSponsorship({ className = "" }) {
@@ -29,7 +28,7 @@ export function FiscalSponsorship({ className = "" }) {
         </p>
 
         <Link
-          to={app_routes.register}
+          to={href("/register/welcome")}
           className="justify-self-center text-center @6xl:justify-self-start btn btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50 uppercase"
         >
           Unlock a new world of donors

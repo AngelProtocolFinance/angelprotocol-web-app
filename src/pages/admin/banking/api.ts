@@ -1,7 +1,7 @@
 import { new_bank as schema } from "@better-giving/banking-applications/schema";
-import { adminRoutes } from "constants/routes";
 import { type ActionFunction, redirect } from "react-router";
 import * as v from "valibot";
+import { routes } from "../routes";
 import { bappdb } from ".server/aws/db";
 import { admin_checks, is_resp } from ".server/utils";
 
@@ -14,5 +14,5 @@ export const action: ActionFunction = async (args) => {
 
   await bappdb.bapp_put({ ...x, rejectionReason: "" });
 
-  return redirect(`../${adminRoutes.banking}`);
+  return redirect(`../${routes.banking}`);
 };

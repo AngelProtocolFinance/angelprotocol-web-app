@@ -1,11 +1,14 @@
 import { Separator } from "components/separator";
 import { APP_NAME } from "constants/env";
-import { reg_routes } from "constants/routes";
 import { Link, useFetcher } from "react-router";
+import { routes } from "./routes";
 
 const NEED_HELP_ARTICLE_ID = 6628120;
 
-export default function Form({ classes = "" }: { classes?: string }) {
+export { ErrorBoundary } from "components/error";
+export { new_application as action } from "./api";
+
+export default function Page({ classes = "" }: { classes?: string }) {
   const fetcher = useFetcher();
 
   const openIntercomHelp = () => {
@@ -34,7 +37,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
 
-      <Link className="btn-outline btn text-sm" to={reg_routes.resume}>
+      <Link className="btn-outline btn text-sm" to={routes.resume}>
         Resume your registration
       </Link>
 

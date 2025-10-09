@@ -1,7 +1,6 @@
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
-import { app_routes } from "constants/routes";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import useSWR from "swr/immutable";
 
 const fetcher = (path: string) => fetch(path).then<string[]>((x) => x.json());
@@ -40,7 +39,7 @@ export function TopCountries() {
                 key={country}
                 className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
-                  pathname: app_routes.marketplace,
+                  pathname: href("/marketplace"),
                   search: new URLSearchParams({
                     countries: country,
                   }).toString(),

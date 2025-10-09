@@ -1,15 +1,15 @@
 import { ChevronDown, type LucideProps } from "lucide-react";
 
 export function DrawerIcon({
-  isOpen,
+  is_open,
   className,
   ...props
-}: LucideProps & { isOpen: boolean }) {
+}: LucideProps & { is_open: boolean }) {
   return (
     <ChevronDown
       {...props}
       className={`transition transform ease-in-out ${
-        isOpen ? "rotate-180" : "rotate-0"
+        is_open ? "rotate-180" : "rotate-0"
       } ${className}`}
     />
   );

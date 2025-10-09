@@ -14,7 +14,7 @@ const BYTES_IN_MB = 1e6;
 
 function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   const [file, setFile] = useState<File>();
-  const [openCropper, setOpenCropper] = useState(false);
+  const [open_cropper, set_open_cropper] = useState(false);
 
   const preview = useMemo(
     () =>
@@ -41,7 +41,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
     }
 
     setFile(newFile);
-    setOpenCropper(true);
+    set_open_cropper(true);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -56,7 +56,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
   async function handleSave(cropped: File) {
     setFile(cropped);
-    setOpenCropper(false);
+    set_open_cropper(false);
     if (props.spec.max_size && cropped.size > props.spec.max_size) {
       return props.on_change("exceeds-size");
     }
@@ -100,13 +100,13 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           classes={
             props.spec.rounded ? "[&_.cropper-view-box]:rounded-full" : ""
           }
-          isOpen={openCropper}
+          is_open={open_cropper}
           input={file}
           aspect={props.spec.aspect}
           onSave={handleSave}
           onClose={() => {
             setFile(undefined);
-            setOpenCropper(false);
+            set_open_cropper(false);
           }}
         />
       )}
@@ -169,7 +169,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
               <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
-                  setOpenCropper(true);
+                  set_open_cropper(true);
                 }}
                 disabled={props.disabled}
               >

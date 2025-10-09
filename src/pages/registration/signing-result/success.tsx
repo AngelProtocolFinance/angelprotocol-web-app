@@ -1,7 +1,6 @@
 import { Progress } from "@better-giving/reg/progress";
-import { app_routes } from "constants/routes";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
-import { Link, useNavigation, useRouteLoaderData } from "react-router";
+import { Link, href, useNavigation, useRouteLoaderData } from "react-router";
 import { next_step } from "../routes";
 import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";
@@ -33,7 +32,9 @@ export default function Success({
       <Link
         aria-disabled={is_loading}
         className="w-full max-w-[26.25rem] btn btn-blue text-sm mt-4"
-        to={`${app_routes.register}/${reg.id}/${next_step[step]}`}
+        to={`${href("/register/:regId", {
+          regId: reg.id,
+        })}/${next_step[step]}`}
       >
         {is_loading ? "Loading..." : "Continue"}
       </Link>

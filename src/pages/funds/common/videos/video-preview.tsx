@@ -11,17 +11,17 @@ interface IVideoPreview extends Video {
 }
 
 export function VideoPreview(props: IVideoPreview) {
-  const [open, setOpen] = useState(false);
+  const [open, set_open] = useState(false);
   return (
     <div className="text-gray-d4">
       <VideoModal
         open={open}
-        setOpen={setOpen}
+        set_open={set_open}
         onSubmit={(url) => props.onEdit(url, props.idx)}
         initUrl={props.url}
       />
       <div className="flex justify-end mb-1">
-        <CRUDBtn onClick={() => setOpen(true)}>
+        <CRUDBtn onClick={() => set_open(true)}>
           <Pencil size={12} />
         </CRUDBtn>
         <CRUDBtn onClick={() => props.onDelete(props.idx)}>

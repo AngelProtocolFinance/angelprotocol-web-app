@@ -4,10 +4,9 @@ import { Input, PasswordInput, RmxForm } from "components/form";
 import { Image } from "components/image";
 import { Separator } from "components/separator";
 import { APP_NAME } from "constants/env";
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { Mail } from "lucide-react";
-import { Link, type MetaDescriptor, useNavigation } from "react-router";
+import { Link, type MetaDescriptor, href, useNavigation } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 import type { ISignUp } from "types/auth";
 import type { Route } from "./+types/signup-form";
@@ -33,7 +32,7 @@ const context: { [id: string]: Context } = {
     title: "Philanthropy for Everyone",
     description: "Sign up to register and manage your nonprofit.",
     terms: [
-      { to: app_routes.terms_nonprofits, title: "Terms of Use (Nonprofits)" },
+      { to: href("/terms-of-use-npo"), title: "Terms of Use (Nonprofits)" },
     ],
   },
 
@@ -41,7 +40,10 @@ const context: { [id: string]: Context } = {
     title: "Empower More Nonprofits",
     description: `Sign up to refer organizations to ${APP_NAME} and help them grow their impact make a difference with every connection.`,
     terms: [
-      { to: app_routes.terms_referrals, title: "Terms of Use (Referrals)" },
+      {
+        to: href("/terms-of-use-referrals"),
+        title: "Terms of Use (Referrals)",
+      },
     ],
     meta: metas({
       title: "Sign Up Referral | Better Giving",
@@ -54,16 +56,15 @@ const context: { [id: string]: Context } = {
     description:
       "Sign up to support 18000+ causes or register and manage your nonprofit.",
     terms: [
-      { to: app_routes.terms_donors, title: "Terms of Use (Donors)" },
-      { to: app_routes.terms_nonprofits, title: "Terms of Use (Nonprofits)" },
+      { to: href("/terms-of-use"), title: "Terms of Use (Donors)" },
+      { to: href("/terms-of-use-npo"), title: "Terms of Use (Nonprofits)" },
     ],
   },
 };
 
 const get_context = (to: string): Context => {
-  if (to.startsWith(app_routes.register)) return context.registration;
-  if (to.startsWith(`${app_routes.user_dashboard}/referrals`))
-    return context.referrals;
+  if (to.startsWith(href("/register"))) return context.registration;
+  if (to.startsWith(href("/dashboard/referrals"))) return context.referrals;
   return context.fallback;
 };
 
@@ -169,7 +170,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
-            to={`${app_routes.signin}?redirect=${to}`}
+            to={`${href("/login")}?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={is_submitting}
           >
@@ -181,7 +182,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
       <span className="text-xs sm:text-sm text-center w-80">
         By signing up, you agree to our{" "}
         <ExtLink
-          href={app_routes.privacy_policy}
+          href={href("/privacy-policy")}
           className="text-blue hover:text-blue-l2"
         >
           Privacy Policy
@@ -189,7 +190,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
         , {!terms_1 && " and  "}
         {terms_0 && (
           <ExtLink
-            href={app_routes.terms_donors}
+            href={href("/terms-of-use")}
             className="text-blue hover:text-blue-l2"
           >
             {terms_0.title}

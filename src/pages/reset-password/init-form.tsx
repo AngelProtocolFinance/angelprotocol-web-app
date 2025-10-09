@@ -1,8 +1,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Input } from "components/form";
-import { app_routes } from "constants/routes";
 import { Mail } from "lucide-react";
-import { Link, useFetcher } from "react-router";
+import { Link, href, useFetcher } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 import { type IEmailSchema, email_schema } from "./schema";
 
@@ -48,7 +47,7 @@ export default function InitForm(props: Props) {
       </button>
 
       <Link
-        to={`${app_routes.signin}?redirect=${props.to}`}
+        to={`${href("/login")}?redirect=${props.to}`}
         className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm font-medium underline text-center"
         aria-disabled={fetcher.state !== "idle"}
       >

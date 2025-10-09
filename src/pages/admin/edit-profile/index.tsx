@@ -1,5 +1,5 @@
 import { imgEditorStyles } from "components/img-editor";
-import { richTextStyles, toContent } from "components/rich-text";
+import { richtext_styles, to_content } from "components/rich-text";
 import { sans_https } from "helpers/https";
 import type { LinksFunction } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
@@ -10,7 +10,7 @@ import type { FV } from "./schema";
 export { loader, action } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export const links: LinksFunction = () => [
-  ...richTextStyles,
+  ...richtext_styles,
   ...imgEditorStyles,
 ];
 
@@ -41,7 +41,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
     hq_country: endow.hq_country,
     sdgs: endow.sdgs.map((x) => x.toString()),
     active_in_countries: endow.active_in_countries,
-    overview: toContent(endow.overview),
+    overview: to_content(endow.overview),
   };
 
   return (

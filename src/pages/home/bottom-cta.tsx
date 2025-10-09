@@ -1,8 +1,7 @@
 import laira_waiving from "assets/laira/laira-waiving.webp";
 import { Image } from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
-import { app_routes } from "constants/routes";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export function BottomCta({ className = "" }) {
   return (
@@ -18,7 +17,7 @@ export function BottomCta({ className = "" }) {
         </h3>
         <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-6">
           <Link
-            to={`${app_routes.register}/welcome`}
+            to={href("/register/welcome")}
             className="btn-blue active:translate-x-1 font-bold shadow-2xl rounded-full px-6 py-2 md:px-10 md:py-5"
           >
             Join us today!

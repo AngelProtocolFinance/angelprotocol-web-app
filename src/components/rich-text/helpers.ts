@@ -1,7 +1,7 @@
 import Delta from "quill-delta";
 import type { RichTextContent } from "types/components";
 
-export const toDelta = (json: string): Delta => {
+export const to_delta = (json: string): Delta => {
   try {
     return new Delta(JSON.parse(json));
   } catch (_) {
@@ -9,8 +9,8 @@ export const toDelta = (json: string): Delta => {
   }
 };
 
-export const toContent = (json: string | undefined): RichTextContent => {
-  const delta = toDelta(json || "");
+export const to_content = (json: string | undefined): RichTextContent => {
+  const delta = to_delta(json || "");
   return {
     length: delta.length() - 1,
     value: json || "",
@@ -18,7 +18,7 @@ export const toContent = (json: string | undefined): RichTextContent => {
 };
 
 export function toText(json: string | undefined) {
-  return toDelta(json ?? "").ops.reduce((text, op) => {
+  return to_delta(json ?? "").ops.reduce((text, op) => {
     if (typeof op.insert === "string") {
       return text + op.insert;
     }

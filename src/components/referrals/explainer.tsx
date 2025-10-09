@@ -11,7 +11,7 @@ import {
   MessageCircleQuestionIcon as QuestionMarkCircleIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export function Explainer({ classes = "" }) {
   const [isMobile, setIsMobile] = useState(true);
@@ -99,7 +99,7 @@ export function Explainer({ classes = "" }) {
                 <div className="flex flex-wrap gap-4 mt-4">
                   <Link
                     target="_blank"
-                    to="/terms-of-use-referrals"
+                    to={href("/terms-of-use-referrals")}
                     className="inline-flex items-center text-blue-d1 text-sm hover:text-blue-d2 font-medium"
                   >
                     <LinkIcon className="h-4 w-4 mr-1" />
@@ -122,7 +122,7 @@ export function Explainer({ classes = "" }) {
               <span className="text-sm font-medium mr-1">
                 {open ? "Show less" : "Read more"}
               </span>
-              <DrawerIcon isOpen={open} size={18} />
+              <DrawerIcon is_open={open} size={18} />
             </DisclosureButton>
           </>
         )}

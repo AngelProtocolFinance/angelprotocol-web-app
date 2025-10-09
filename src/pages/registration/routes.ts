@@ -17,3 +17,12 @@ export const next_step: { [K in Progress["step"]]: string } = {
   5: steps.summary,
   6: steps.summary,
 };
+
+export enum routes {
+  index = "",
+  resume = "resume",
+  success = "success",
+  welcome = "welcome",
+  sign_notice = "sign-notice",
+  sign_result = "sign-result",
+}

@@ -1,8 +1,7 @@
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import type { PropsWithChildren } from "react";
 import type {} from "react-router";
-import { Link, type MetaFunction } from "react-router";
+import { Link, type MetaFunction, href } from "react-router";
 const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>
 );
@@ -191,10 +190,10 @@ export default function TermsDonors() {
             Your personally identifiable information (“PII”), including your
             name, email address and physical address will be handled in
             accordance with our{" "}
-            <Link to={app_routes.privacy_policy}>Privacy Policy</Link>, and
-            unless you have elected to donate anonymously, may be shared with
-            the NPO(s). We use commercially reasonable safeguards to preserve
-            the integrity and security of your PII. However, we cannot guarantee
+            <Link to={href("/privacy-policy")}>Privacy Policy</Link>, and unless
+            you have elected to donate anonymously, may be shared with the
+            NPO(s). We use commercially reasonable safeguards to preserve the
+            integrity and security of your PII. However, we cannot guarantee
             that unauthorized third parties will never be able to obtain or use
             your PII or aggregate data for improper purposes. You acknowledge
             that you provide your PII and aggregate data at your own risk.

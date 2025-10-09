@@ -5,7 +5,7 @@ const Quill =
     : await import("quill").then((x) => x.default);
 
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import { toDelta } from "./helpers";
+import { to_delta } from "./helpers";
 import type { Props } from "./types";
 
 type El = Pick<HTMLDivElement, "focus">;
@@ -35,7 +35,7 @@ const Editor = forwardRef<El, Props>(({ classes, ...props }, ref) => {
         });
 
         quillRef.current = quill;
-        quill.setContents(toDelta(props.content.value));
+        quill.setContents(to_delta(props.content.value));
 
         if (props.readOnly) return;
 
