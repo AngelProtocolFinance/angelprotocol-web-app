@@ -1,3 +1,4 @@
+import { resp } from "helpers/https";
 import type { LoaderFunction } from "react-router";
 import { env, np_envs } from ".server/env";
 
@@ -12,7 +13,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   to.pathname = params["*"]!;
   to.search = from.searchParams.toString();
 
-  return fetch(to, {
+  const res = await fetch(to, {
     headers: { "x-api-key": np_envs.apiToken },
-  }).then((res) => res.json());
+  });
+  const json = await res.json();
+  return resp.json(json, res.status);
 };
