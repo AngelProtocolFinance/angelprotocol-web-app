@@ -9,7 +9,6 @@ import type { CryptoFormStep } from "../../types";
 import type { DonateValues as DV } from "./types";
 
 const initial: DV = {
-  program: { label: "", value: "" },
   token: init_token_option,
 };
 
@@ -33,11 +32,6 @@ export function use_rhf(props: Props) {
     ),
   });
 
-  const { field: program } = useController<DV, "program">({
-    control: control,
-    name: "program",
-  });
-
   const { field: token } = useController<DV, "token">({
     control: control,
     name: "token",
@@ -54,7 +48,6 @@ export function use_rhf(props: Props) {
   };
 
   return {
-    program,
     reset,
     setValue,
     handleSubmit,

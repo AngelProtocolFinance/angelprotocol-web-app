@@ -2,7 +2,6 @@ import { DONATION_INCREMENTS } from "constants/common";
 import { TokenField } from "../../../../token-field";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
-import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import type { CryptoFormStep } from "../../types";
 import { next_form_state } from "../helpers";
@@ -12,8 +11,7 @@ import { use_rhf } from "./use-rhf";
 export function Form(props: CryptoFormStep) {
   const { set_state } = use_donation_state();
 
-  const { handleSubmit, reset, program, token, errors, on_increment } =
-    use_rhf(props);
+  const { handleSubmit, reset, token, errors, on_increment } = use_rhf(props);
 
   function submit(fv: DonateValues) {
     set_state((prev) => next_form_state(prev, { ...fv, method: "crypto" }));
@@ -46,16 +44,6 @@ export function Form(props: CryptoFormStep) {
             const v = +i.value / token.value.rate ** 2;
             return { ...i, value: v.toString() };
           })}
-        />
-      )}
-
-      {(props.init.recipient.progDonationsAllowed ?? true) && (
-        // program not allowed for fund (id string)
-        <ProgramSelector
-          endowId={+props.init.recipient.id}
-          classes="my-2"
-          program={program.value}
-          onChange={program.onChange}
         />
       )}
 

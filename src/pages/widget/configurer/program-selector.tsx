@@ -5,11 +5,11 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import { DrawerIcon } from "components/icon";
 import { unpack } from "helpers/unpack";
 import { X } from "lucide-react";
 import use_swr from "swr/immutable";
 import type { OptionType } from "types/components";
-import { DrawerIcon } from "../../../icon";
 
 type Props = {
   classes?: string | { container?: string; label?: string };

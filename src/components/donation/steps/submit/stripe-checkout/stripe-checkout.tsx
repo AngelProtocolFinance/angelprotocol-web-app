@@ -42,12 +42,7 @@ export function StripeCheckout(props: StripeCheckoutStep) {
     tribute,
   };
 
-  if (details.program.value) {
-    intent.program = {
-      id: details.program.value,
-      name: details.program.label,
-    };
-  }
+  if (init.program) intent.program = init.program;
 
   const { data, error, isLoading } = use_swr(intent, fetcher);
 
@@ -67,7 +62,6 @@ export function StripeCheckout(props: StripeCheckoutStep) {
             }
           : undefined
       }
-      program={details.program}
     >
       <ErrorBoundaryClass>
         {isLoading ? (

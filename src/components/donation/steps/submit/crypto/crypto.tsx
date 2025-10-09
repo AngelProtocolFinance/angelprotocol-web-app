@@ -47,7 +47,6 @@ export function Crypto(props: CryptoSubmitStep) {
           </dl>
         </>
       }
-      program={props.details.program}
     >
       <DirectMode donation={props} classes="mt-4" />
       <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
