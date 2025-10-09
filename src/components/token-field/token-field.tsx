@@ -13,6 +13,7 @@ const multipliable = (amount: string) =>
 const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
   const style = unpack(props.classes);
   const [token_state, set_token_state] = useState<Token.State>("ok");
+
   useEffect(() => {
     const eventName = "crypto-token-event" satisfies Token.Event.Name as string;
     const handler = (ev: CustomEvent<Token.Event.Detail>) =>
@@ -68,10 +69,10 @@ const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
             id="amount"
             type="text"
             placeholder="Enter amount"
-            className={`z-10 outline-none w-full h-full ${style.input} bg-transparent placeholder:font-medium text-base pl-2 py-[13px]`}
+            className={`outline-none w-full h-full ${style.input} bg-transparent placeholder:font-medium text-base pl-2 py-[13px]`}
           />
           {$ ? (
-            <div className="absolute top-1/2 -translate-y-1/2 left-2 select-none">
+            <div className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-2">
               <span className="invisible mr-1 text-base">
                 {props.token.amount}
               </span>{" "}
