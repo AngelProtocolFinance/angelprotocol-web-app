@@ -45,7 +45,7 @@ const tokens_fuse = new Fuse<IToken>(tokens_list, {
   keys: ["name", "code", "network", "symbol"],
 });
 const subset = tokens_list.slice(0, 10);
-const tokenEv = (state: Token.State) => {
+const token_ev = (state: Token.State) => {
   document.dispatchEvent(
     new CustomEvent<Token.Event.Detail>(
       "crypto-token-event" satisfies Token.Event.Name,
@@ -73,7 +73,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
       onChange={async (tkn) => {
         if (!tkn) return;
         try {
-          tokenEv("loading");
+          token_ev("loading");
 
           if (is_custom(tkn.id)) {
             //get usd rate from coingecko
@@ -85,7 +85,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
               [tkn.cg_id]: { usd: rate },
             } = await res.json();
             onChange({ ...tkn, amount: "", min: 1 / rate, rate });
-            return tokenEv("ok");
+            return token_ev("ok");
           }
 
           const res = await fetch(
@@ -107,10 +107,10 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
           const adjusted = gtBgMin * 1.03;
 
           onChange({ ...tkn, amount: "", min: adjusted, rate });
-          tokenEv("ok");
+          token_ev("ok");
         } catch (err) {
           console.error(err);
-          tokenEv("error");
+          token_ev("error");
         }
       }}
     >
