@@ -51,7 +51,7 @@ export function ReferralId({ classes = "", ...p }: Props) {
         By sharing your referral link or code, you agree to our{" "}
         <Link
           target="_blank"
-          to="/terms-of-use-referrals"
+          to={href("/terms-of-use-referrals")}
           className="text-blue hover:text-blue-d1"
         >
           Referral Program Terms of Use

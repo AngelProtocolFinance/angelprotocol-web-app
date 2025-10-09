@@ -72,7 +72,7 @@ export function NavDropdown({ user, auth_links }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to="referral-program" className={styler}>
+            <NavLink to={href("/referral-program")} className={styler}>
               Referral Program
             </NavLink>
           </MenuItem>
