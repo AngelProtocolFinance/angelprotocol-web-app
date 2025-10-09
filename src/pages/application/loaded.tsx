@@ -4,7 +4,7 @@ import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link, NavLink, Outlet, href } from "react-router";
 import type { V2RecipientAccount } from "types/bank-details";
-import Container from "./container";
+import { Container } from "./container";
 
 export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
   const prev_verdict =

@@ -6,7 +6,7 @@ type Props = PropsWithChildren<{
   classes?: string;
 }>;
 
-export default function Container({ title, children, classes = "" }: Props) {
+export function Container({ title, children, classes = "" }: Props) {
   const [is_open, set_open] = useState(true);
 
   return (
