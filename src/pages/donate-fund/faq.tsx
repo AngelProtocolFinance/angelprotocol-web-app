@@ -29,7 +29,7 @@ export default function FAQ({ classes = "", endowId }: Props) {
                 >
                   {faq.question}
                 </span>
-                <DrawerIcon size={18} isOpen={open} className="shrink-0" />
+                <DrawerIcon size={18} is_open={open} className="shrink-0" />
               </DisclosureButton>
               {open && (
                 <DisclosurePanel

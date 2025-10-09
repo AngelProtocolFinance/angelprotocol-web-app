@@ -13,7 +13,7 @@ export function Docs({ classes = "" }) {
       >
         <Info size={20} className="text-gray" />
         <h3 className="text-lg sm:text-xl font-bold">Calculation Details</h3>
-        <DrawerIcon size={20} isOpen={isExpanded} className="ml-auto" />
+        <DrawerIcon size={20} is_open={isExpanded} className="ml-auto" />
       </div>
 
       {isExpanded && (

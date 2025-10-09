@@ -28,7 +28,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
     d && d.id
       ? is_fund(d.id)
         ? `${BASE_URL}${href("/fundraisers/:fundId/donate", { fundId: d.id })}`
-        : `${BASE_URL}${href("/marketplace/:id", { id: d.id })}`
+        : `${BASE_URL}${href("/donate/:id", { id: d.id })}`
       : undefined;
 
   return metas({

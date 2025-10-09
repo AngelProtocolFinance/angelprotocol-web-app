@@ -80,7 +80,7 @@ export function CurrencySelector<T extends CurrencyOption>({
               <LoaderCircle className="text-gray animate-spin" size={20} />
             ) : (
               <DrawerIcon
-                isOpen={open}
+                is_open={open}
                 size={20}
                 className={`${isCurrencyError ? "text-red" : ""}`}
                 aria-hidden

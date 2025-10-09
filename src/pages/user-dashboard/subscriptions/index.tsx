@@ -22,7 +22,7 @@ function Page({ loaderData: { subs } }: Route.ComponentProps) {
           <Link
             to={
               s.recipient.type === "fund"
-                ? href("/fundraisers")
+                ? href("/fundraisers/:fundId", { fundId: s.recipient.id })
                 : href("/marketplace/:id", { id: s.recipient.id })
             }
             className="text-blue hover:text-blue-d1"

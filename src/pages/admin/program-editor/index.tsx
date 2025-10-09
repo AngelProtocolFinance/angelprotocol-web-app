@@ -1,5 +1,5 @@
 import { imgEditorStyles } from "components/img-editor";
-import { richTextStyles } from "components/rich-text";
+import { richtext_styles } from "components/rich-text";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
@@ -8,7 +8,7 @@ import type { Route } from "./+types";
 import Form from "./form";
 
 export const links: Route.LinksFunction = () => [
-  ...richTextStyles,
+  ...richtext_styles,
   ...imgEditorStyles,
 ];
 export { loader, action } from "./api";

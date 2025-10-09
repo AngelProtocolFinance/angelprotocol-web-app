@@ -3,7 +3,7 @@ import { CircleAlert } from "lucide-react";
 import { Form } from "./form";
 
 import { imgEditorStyles } from "components/img-editor";
-import { richTextStyles } from "components/rich-text";
+import { richtext_styles } from "components/rich-text";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
 
@@ -11,7 +11,7 @@ export { ErrorBoundary } from "components/error";
 export { loader, action } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export const links: Route.LinksFunction = () => [
-  ...richTextStyles,
+  ...richtext_styles,
   ...imgEditorStyles,
 ];
 export default CacheRoute(Page);

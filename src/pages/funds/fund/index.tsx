@@ -5,7 +5,7 @@ import { DonorMsgs } from "components/donor-msgs";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, status_fn } from "components/fundraiser";
 import { Image } from "components/image";
-import { RichText, richTextStyles, toText } from "components/rich-text";
+import { RichText, richtext_styles, toText } from "components/rich-text";
 import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { APP_NAME, BASE_URL } from "constants/env";
@@ -22,7 +22,7 @@ import { Video } from "./video";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
-export const links: Route.LinksFunction = () => [...richTextStyles];
+export const links: Route.LinksFunction = () => [...richtext_styles];
 
 export const meta: Route.MetaFunction = ({ loaderData: d, location: l }) => {
   if (!d) return [];
@@ -54,8 +54,8 @@ function Fund({ loaderData }: Route.ComponentProps) {
           backgroundImage: `url('${fund.banner || fallback_banner}')`,
         }}
       />
-      <div className="group peer-hover:[&>div]:mt-1 xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
-        <div className="self-start -mt-12 md:-mt-24 transition-[margin] ease-in-out z-10 grid gap-4 relative">
+      <div className="xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
+        <div className="self-start z-10 grid gap-4 relative">
           <div className="absolute -top-8 flex justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
@@ -137,7 +137,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
         </div>
         <div
           id="info-card"
-          className="md:-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4"
+          className="md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4"
         >
           <DonateSection
             {...fund}

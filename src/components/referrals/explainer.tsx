@@ -122,7 +122,7 @@ export function Explainer({ classes = "" }) {
               <span className="text-sm font-medium mr-1">
                 {open ? "Show less" : "Read more"}
               </span>
-              <DrawerIcon isOpen={open} size={18} />
+              <DrawerIcon is_open={open} size={18} />
             </DisclosureButton>
           </>
         )}

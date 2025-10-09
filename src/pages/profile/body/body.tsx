@@ -4,16 +4,18 @@ import { ExtLink } from "components/ext-link";
 import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { Globe, MapPin } from "lucide-react";
-import { NavLink, href } from "react-router";
+import { Await, NavLink, href } from "react-router";
 
 import type { IPrettyBalance } from "@better-giving/balance";
 import type { INpo } from "@better-giving/endowment";
+import { ContentLoader } from "components/content-loader";
+import { Suspense } from "react";
 import type { DetailedUser } from "types/auth";
 
 interface Props {
-  bal: IPrettyBalance;
-  npo: INpo;
+  bal: Promise<IPrettyBalance>;
   user: DetailedUser | undefined;
+  npo: INpo;
   classes?: string;
   children?: React.ReactNode;
 }
@@ -41,13 +43,22 @@ export function Body({ classes = "", npo, user, children, bal }: Props) {
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
-          {npo.target && (
-            <Target
-              text={<Target.Text classes="mb-2" />}
-              progress={bal.ltd}
-              target={to_target(npo.target)}
-            />
-          )}
+          <Suspense
+            fallback={<ContentLoader className="h-15 lg:h-full w-60 lg:w-40" />}
+          >
+            <Await resolve={bal}>
+              {(b) =>
+                npo.target && (
+                  <Target
+                    text={<Target.Text classes="mb-2" />}
+                    progress={b.ltd}
+                    target={to_target(npo.target)}
+                  />
+                )
+              }
+            </Await>
+          </Suspense>
+
           <NavLink
             to={href("/donate/:id", {
               id: npo.id.toString(),

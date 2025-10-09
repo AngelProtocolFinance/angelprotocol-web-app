@@ -29,7 +29,7 @@ export function FAQ({ classes = "" }) {
             </span>
             <DrawerIcon
               size={18}
-              isOpen={false}
+              is_open={false}
               className="shrink-0 group-data-open:rotate-180"
             />
           </DisclosureButton>

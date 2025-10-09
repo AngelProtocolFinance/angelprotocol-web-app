@@ -46,7 +46,7 @@ export function EndowmentSelector({ endow, endows, is_loading }: Props) {
       />
 
       <ComboboxButton className="absolute top-1/2 -translate-y-1/2 right-4">
-        {({ open }) => <DrawerIcon isOpen={open} size={20} />}
+        {({ open }) => <DrawerIcon is_open={open} size={20} />}
       </ComboboxButton>
 
       <Options search_text={search} init_opts={endows} />

@@ -1,6 +1,7 @@
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import { Image } from "components/image";
+import { richtext_styles } from "components/rich-text";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
 import { Outlet } from "react-router";
@@ -11,6 +12,7 @@ import { Body } from "./body/body";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>({});
 
+export const links: Route.LinksFunction = () => [...richtext_styles];
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   if (!d) return [];
   return metas({
@@ -40,7 +42,7 @@ function Page({ loaderData: d }: Route.ComponentProps) {
       </div>
 
       <Body npo={d.npo} user={d.user} bal={d.bal}>
-        <Outlet />
+        <Outlet context={d} />
       </Body>
     </section>
   );

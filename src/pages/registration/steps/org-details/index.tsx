@@ -121,7 +121,7 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
             </span>
           ) : (
             <DrawerIcon
-              isOpen={open}
+              is_open={open}
               size={20}
               className="justify-self-end dark:text-gray shrink-0"
             />

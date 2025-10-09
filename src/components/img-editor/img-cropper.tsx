@@ -5,7 +5,7 @@ import Cropper, { type ReactCropperElement } from "react-cropper";
 
 type Props = {
   classes?: string;
-  isOpen: boolean;
+  is_open: boolean;
   onClose(): void;
   input: File;
   aspect: [number, number];
@@ -16,7 +16,7 @@ export function ImgCropper({
   input,
   aspect: [x, y],
   onSave,
-  isOpen,
+  is_open,
   onClose,
   classes = "",
 }: Props) {
@@ -38,7 +38,7 @@ export function ImgCropper({
   }
 
   return (
-    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+    <Dialog open={is_open} onClose={onClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-closed:opacity-0" />
       <DialogPanel
         className={`${classes} grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-xs`}

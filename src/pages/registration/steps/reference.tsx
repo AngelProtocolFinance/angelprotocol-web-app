@@ -38,7 +38,7 @@ export default function Reference({ id, classes = "" }: Props) {
           }}
           className="absolute -right-1 top-1/2 transform -translate-y-1/2 md:hidden"
         >
-          <DrawerIcon isOpen={isTooltipOpen} size={20} />
+          <DrawerIcon is_open={isTooltipOpen} size={20} />
         </button>
       </div>
       {isTooltipOpen && (

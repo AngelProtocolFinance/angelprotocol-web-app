@@ -100,7 +100,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           classes={
             props.spec.rounded ? "[&_.cropper-view-box]:rounded-full" : ""
           }
-          isOpen={open_cropper}
+          is_open={open_cropper}
           input={file}
           aspect={props.spec.aspect}
           onSave={handleSave}

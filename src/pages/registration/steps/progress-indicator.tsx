@@ -28,9 +28,9 @@ export function ProgressIndicator({ step, classes = "" }: Props) {
   use_handle_screen_resize(
     (screen: number, ref) => {
       const isOnDesktop = screen >= SCREEN_BREAKPOINTS.md;
-      if (isOnDesktop !== ref.isOpen) {
+      if (isOnDesktop !== ref.is_open) {
         setIsOtherStepsShown(isOnDesktop);
-        ref.isOpen = isOnDesktop;
+        ref.is_open = isOnDesktop;
       }
 
       if (ref.isDesktop !== isOnDesktop) {
@@ -42,7 +42,7 @@ export function ProgressIndicator({ step, classes = "" }: Props) {
       should_attach_listener: true,
       should_call_onresize_onload: true,
       debounce_time: 150,
-      ref: { isOpen: isOtherStepsShown, isDesktop },
+      ref: { is_open: isOtherStepsShown, isDesktop },
     }
   );
 
@@ -82,7 +82,7 @@ export function ProgressIndicator({ step, classes = "" }: Props) {
       <div className="w-full relative">
         {topStep}
         <DrawerIcon
-          isOpen={isOtherStepsShown}
+          is_open={isOtherStepsShown}
           size={20}
           className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"
         />

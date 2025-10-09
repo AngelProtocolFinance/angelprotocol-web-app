@@ -7,8 +7,8 @@ import { Tags } from "./tags";
 
 interface Props {
   fundraisers?: ReactNode;
+  target?: ReactNode;
   npo: INpo;
-  bal_ltd: number;
   classes?: string;
 }
 
@@ -16,7 +16,7 @@ export function DetailsColumn({
   classes = "",
   fundraisers,
   npo,
-  bal_ltd,
+  target,
 }: Props) {
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -41,14 +41,7 @@ export function DetailsColumn({
           {npo.social_media_urls && (
             <Socials social_media_urls={npo.social_media_urls} />
           )}
-          {npo.target && (
-            <Target
-              text={<Target.Text classes="mb-2" />}
-              progress={bal_ltd}
-              target={to_target(npo.target)}
-              classes="-mb-5 mt-4"
-            />
-          )}
+          {target}
           <NavLink
             to={href("/donate/:id", { id: npo.id.toString() })}
             className="w-full btn btn-blue h-12 px-6 text-base lg:text-sm"

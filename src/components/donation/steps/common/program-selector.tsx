@@ -74,7 +74,7 @@ export function ProgramSelector({
               </div>
 
               <DrawerIcon
-                isOpen={open}
+                is_open={open}
                 size={20}
                 className="justify-self-end shrink-0"
               />
