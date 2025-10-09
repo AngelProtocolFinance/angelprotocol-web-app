@@ -1,6 +1,5 @@
 import { Popover, PopoverButton } from "@headlessui/react";
 import { CircleAlert, LoaderCircle } from "lucide-react";
-import { DrawerIcon } from "../../icon";
 import type { Props, Token } from "../types";
 import { TokenOptions } from "./token-options";
 

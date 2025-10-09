@@ -38,16 +38,16 @@ export function CurrencySelector<T extends CurrencyOption>({
   currencies,
   ...props
 }: Props<T>) {
-  const [query, setQuery] = useState("");
+  const [query, set_query] = useState("");
 
-  const isCurrencyLoading = is_query(currencies) && currencies.is_loading;
-  const isCurrencyError = is_query(currencies) && currencies.is_error;
+  const is_currency_loading = is_query(currencies) && currencies.is_loading;
+  const is_currency_error = is_query(currencies) && currencies.is_error;
 
   const style = unpack(props.classes);
 
   return (
     <Field
-      disabled={props.disabled || isCurrencyLoading || isCurrencyError}
+      disabled={props.disabled || is_currency_loading || is_currency_error}
       className={style.container}
     >
       <Label
@@ -71,18 +71,18 @@ export function CurrencySelector<T extends CurrencyOption>({
               ? `${currency.code.toUpperCase()} - ${currency.name}`
               : currency.code.toUpperCase()
           }
-          onChange={(event) => setQuery(event.target.value)}
+          onChange={(event) => set_query(event.target.value)}
           spellCheck={false}
         />
         <ComboboxButton className="flex items-center absolute inset-y-0 right-4">
           {({ open }) =>
-            isCurrencyLoading ? (
+            is_currency_loading ? (
               <LoaderCircle className="text-gray animate-spin" size={20} />
             ) : (
               <DrawerIcon
                 is_open={open}
                 size={20}
-                className={`${isCurrencyError ? "text-red" : ""}`}
+                className={`${is_currency_error ? "text-red" : ""}`}
                 aria-hidden
               />
             )

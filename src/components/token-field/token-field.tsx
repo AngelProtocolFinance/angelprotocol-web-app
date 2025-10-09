@@ -69,7 +69,7 @@ const Field: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
             id="amount"
             type="text"
             placeholder="Enter amount"
-            className={`outline-none w-full h-full ${style.input} bg-transparent placeholder:font-medium text-base pl-2 py-[13px]`}
+            className={`outline-none w-full h-full ${style.input} bg-transparent placeholder:font-medium text-base pl-2 py-[13px] font-semibold`}
           />
           {$ ? (
             <div className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-2">
