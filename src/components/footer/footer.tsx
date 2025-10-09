@@ -35,12 +35,12 @@ export function Footer({ classes = "" }: Props) {
           >
             Privacy Policy
           </Link>
-          <Link
+          {/* <Link
             className="underline px-2 text-gray 2xl:border-r border-gray"
             to="#"
           >
             Security
-          </Link>
+          </Link> */}
           <Link
             className="underline px-2 text-gray @sm/links:text-nowrap order-5 @md/links:order-none "
             to={href("/terms-of-use")}
