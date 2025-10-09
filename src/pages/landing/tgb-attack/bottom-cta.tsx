@@ -1,9 +1,7 @@
 import logo from "assets/images/bg-logo.webp";
 import laira_pointing from "assets/laira/laira-pointing.webp";
 import { Image } from "components/image";
-
-import { app_routes } from "constants/routes";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export function BottomCta({ className = "" }) {
   return (
@@ -19,7 +17,7 @@ export function BottomCta({ className = "" }) {
         </h3>
         <div className="relative max-sm:justify-self-center">
           <Link
-            to={`${app_routes.register}/welcome`}
+            to={href("/register/welcome")}
             className="btn-blue active:translate-x-1  uppercase font-bold shadow-2xl rounded-full px-6 py-2 sm:px-10 sm:py-4"
           >
             Start today

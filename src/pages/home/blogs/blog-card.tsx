@@ -1,7 +1,6 @@
 import { ContentLoader } from "components/content-loader";
 import { Media } from "components/media";
-import { app_routes } from "constants/routes";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import type { IPost } from "types/wordpress";
 
 export const BlogCard = (props: IPost) => {
@@ -23,11 +22,11 @@ export const BlogCard = (props: IPost) => {
         dangerouslySetInnerHTML={{ __html: props.excerpt.rendered }}
       />
       <NavLink
-        to={`${app_routes.blog}/${props.slug}`}
+        to={href("/blog/:slug", { slug: props.slug })}
         className="absolute inset-0"
       />
       <NavLink
-        to={`${app_routes.blog}/${props.slug}`}
+        to={href("/blog/:slug", { slug: props.slug })}
         className="z-10 justify-self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
       >
         Read More

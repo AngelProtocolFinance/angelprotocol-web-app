@@ -1,8 +1,7 @@
 import laira_shake_hands_x2 from "assets/laira/laira-shaking-hands-x2.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
-import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export function Hero({ classes = "" }) {
   return (
@@ -22,7 +21,7 @@ export function Hero({ classes = "" }) {
       </p>
 
       <Link
-        to={app_routes.register}
+        to={href("/register/welcome")}
         className="btn-blue mt-10 isolate justify-self-center inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg  relative group active:translate-x-1 font-bold shadow-2xl"
       >
         <span className="ml-1 text-center">

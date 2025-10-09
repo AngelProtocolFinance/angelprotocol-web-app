@@ -1,5 +1,4 @@
-import { app_routes } from "constants/routes";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 
 interface Props {
   id: number;
@@ -9,7 +8,7 @@ interface Props {
 export function DonateButton({ classes = "", id }: Props) {
   return (
     <NavLink
-      to={`${app_routes.donate}/${id}`}
+      to={href("/donate/:id", { id: id.toString() })}
       className={`${classes} btn btn-blue h-12 px-6 text-base lg:text-sm`}
     >
       Donate now

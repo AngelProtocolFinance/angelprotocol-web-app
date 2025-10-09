@@ -1,5 +1,4 @@
 import { APP_NAME } from "constants/env";
-import { app_routes } from "constants/routes";
 import {
   BarChart2,
   CreditCard,
@@ -16,7 +15,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 const MLink = motion.create(Link);
 
@@ -145,7 +144,7 @@ export function Features({ classes = "" }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5 }}
-        to={`${app_routes.register}/welcome`}
+        to={href("/register/welcome")}
         className="text-center capitalize col-span-full justify-self-center btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg mt-4"
       >
         Explore all {APP_NAME} features

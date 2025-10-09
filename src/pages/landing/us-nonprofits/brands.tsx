@@ -20,5 +20,3 @@ export function Brands({ className = "" }) {
     </section>
   );
 }
-
-export default Brands;

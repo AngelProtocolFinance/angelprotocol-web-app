@@ -1,10 +1,9 @@
 import { Footer } from "components/footer";
 import { NavDropdown, UserAvatar } from "components/header";
 import { DappLogo } from "components/image";
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { use_root_data } from "hooks/use-root-data";
-import { Link, type MetaFunction } from "react-router";
+import { Link, type MetaFunction, href } from "react-router";
 import { Bottom } from "./bottom";
 import { Faq } from "./faq";
 import { Feature } from "./feature";
@@ -20,7 +19,6 @@ export const meta: MetaFunction = () =>
 
 export default function Referrals() {
   const user = use_root_data();
-  const to = `${app_routes.user_dashboard}/referrals`;
   return (
     <div className="w-full grid content-start pb-16 @container">
       <div
@@ -44,8 +42,8 @@ export default function Referrals() {
           {!user && (
             <Link
               to={{
-                pathname: app_routes.signup,
-                search: `?redirect=${to}`,
+                pathname: href("/signup"),
+                search: `?redirect=${href("/dashboard/referrals")}`,
               }}
               className="btn btn-blue max-xl:text-sm normal-case text-nowrap px-6 py-2 rounded-full"
             >

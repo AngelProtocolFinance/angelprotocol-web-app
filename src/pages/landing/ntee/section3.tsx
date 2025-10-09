@@ -1,4 +1,3 @@
-import { app_routes } from "constants/routes";
 import {
   ClockIcon,
   DollarSignIcon,
@@ -6,7 +5,7 @@ import {
   type LucideIcon,
   TriangleAlertIcon,
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 interface Props {
   classes?: string;
@@ -73,7 +72,7 @@ export function Section3({ classes = "" }: Props) {
         </p>
       </div>
       <Link
-        to={`${app_routes.register}/welcome`}
+        to={href("/register/welcome")}
         className="block mt-8 text-center justify-self-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  capitalize font-bold shadow-2xl rounded-xl"
       >
         Start Free

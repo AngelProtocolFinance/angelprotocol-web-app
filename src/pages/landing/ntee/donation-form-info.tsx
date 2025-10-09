@@ -4,9 +4,8 @@ import laira_like from "assets/laira/laira-like.webp";
 import laira_presentation from "assets/laira/laira-presentation.webp";
 import { StepsCarousel } from "components/donation";
 import { Image } from "components/image";
-import { app_routes } from "constants/routes";
 
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 type TListItem = {
   title: string;
@@ -63,7 +62,7 @@ export function DonationFormInfo({ className = "" }) {
         ))}
       </ul>
       <Link
-        to={`${app_routes.register}/welcome`}
+        to={href("/register/welcome")}
         className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  font-bold shadow-2xl rounded-xl justify-self-center col-span-full mt-8"
       >
         Start Free

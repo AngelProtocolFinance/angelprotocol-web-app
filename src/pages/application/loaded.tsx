@@ -1,14 +1,13 @@
 import type { IReg } from "@better-giving/reg";
 import { ExtLink } from "components/ext-link";
-import { app_routes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet, href } from "react-router";
 import type { V2RecipientAccount } from "types/bank-details";
 import Container from "./container";
 
 export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
-  const prevVerdict =
+  const prev_verdict =
     props.status === "03"
       ? "approved"
       : props.status === "04"
@@ -21,26 +20,29 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
     <>
       <h3 className="text-lg">{props.o_name}</h3>
       {claim && (
-        <ExtLink
+        <Link
+          target="_blank"
           className="-mt-7 justify-self-start text-sm rounded-sm text-blue-d1 hover:underline"
-          href={`${app_routes.marketplace}/${claim.id}`}
+          to={href("/marketplace/:id", { id: claim.id.toString() })}
         >
           Claim: {claim.name}, EIN: {claim.ein}
-        </ExtLink>
+        </Link>
       )}
-      {prevVerdict && (
+      {prev_verdict && (
         <div
           className={`${
-            prevVerdict === "approved" ? "bg-green" : "bg-red"
+            prev_verdict === "approved" ? "bg-green" : "bg-red"
           } text-white px-2 py-1 text-xs uppercase rounded justify-self-start -mt-3`}
         >
-          {prevVerdict === "approved" ? "Approved" : "Rejected"}
+          {prev_verdict === "approved" ? "Approved" : "Rejected"}
         </div>
       )}
       {props.status_approved_npo_id && (
         <NavLink
           className="text-blue-d1 [&:is(.pending)]:text-gray hover:underline block -mt-6 text-sm"
-          to={`${app_routes.marketplace}/${props.status_approved_npo_id}`}
+          to={href("/marketplace/:id", {
+            id: props.status_approved_npo_id.toString(),
+          })}
         >
           Endowment ID: {props.status_approved_npo_id}
         </NavLink>
@@ -110,13 +112,13 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
       </Container>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <NavLink
-          to={app_routes.applications}
+          to={href("/applications")}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-outline"
         >
           back
         </NavLink>
         <NavLink
-          aria-disabled={!!prevVerdict}
+          aria-disabled={!!prev_verdict}
           to={`rejected?org_name=${props.o_name}`}
           type="button"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-red"
@@ -125,7 +127,7 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
           reject
         </NavLink>
         <NavLink
-          aria-disabled={!!prevVerdict}
+          aria-disabled={!!prev_verdict}
           to={`approved?org_name=${props.o_name}`}
           type="button"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn btn-green"

@@ -1,8 +1,7 @@
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import type { PropsWithChildren } from "react";
 import type {} from "react-router";
-import { Link, type MetaFunction } from "react-router";
+import { Link, type MetaFunction, href } from "react-router";
 
 const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>
@@ -322,7 +321,7 @@ export default function TermsNonprofits() {
             </li>
             <li>
               Pursuant to our{" "}
-              <Link to={app_routes.privacy_policy}>Privacy Policy</Link>, we may
+              <Link to={href("/privacy-policy")}>Privacy Policy</Link>, we may
               disclose to you information about Donors, including name and
               contact information. You agree that we disclose this information
               to you only for the purpose of enabling you to acknowledge

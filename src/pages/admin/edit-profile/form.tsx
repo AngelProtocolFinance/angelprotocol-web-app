@@ -1,7 +1,6 @@
 import type { EndowDesignation } from "@better-giving/endowment";
 import type { OrgDesignation } from "@better-giving/schemas";
 import { Combo } from "components/combo";
-import { ExtLink } from "components/ext-link";
 import { Form as F, Field, Label, UrlInput } from "components/form";
 import { Group } from "components/group";
 import { DrawerIcon } from "components/icon";
@@ -13,9 +12,8 @@ import { Select } from "components/selector/select";
 import { Confirmed, Info } from "components/status";
 import { Toggle } from "components/toggle";
 import { countries, country_names } from "constants/countries";
-import { app_routes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { Outlet } from "react-router";
+import { Link, Outlet, href } from "react-router";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
 import { Slug } from "./slug";
@@ -330,12 +328,13 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
             Publish profile
           </Toggle>
 
-          <ExtLink
-            href={`${app_routes.marketplace}/${id}`}
+          <Link
+            target="_blank"
+            to={href("/marketplace/:id", { id: id.toString() })}
             className="text-blue-d1 hover:text-gray-d1 text-sm flex items-center gap-1"
           >
             View Profile
-          </ExtLink>
+          </Link>
         </div>
       </div>
 

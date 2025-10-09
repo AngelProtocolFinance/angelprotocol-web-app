@@ -1,9 +1,8 @@
 import laira_coin from "assets/laira/laira-coin.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
 import { Image } from "components/image";
-import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export const Top = ({ classes = "" }) => {
   return (
@@ -77,7 +76,7 @@ export const Top = ({ classes = "" }) => {
 
       <div className="mt-8 isolate z-10 justify-self-center relative">
         <Link
-          to={`${app_routes.register}/welcome`}
+          to={href("/register/welcome")}
           className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
         >
           Join Better Giving Today!

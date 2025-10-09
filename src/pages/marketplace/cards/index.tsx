@@ -1,6 +1,6 @@
 import type { IPaginator } from "types/components";
 import type { EndowCardsPage } from "types/npo";
-import Card from "./card";
+import { Card } from "./card";
 
 interface Props extends IPaginator<EndowCardsPage["items"][number]> {}
 

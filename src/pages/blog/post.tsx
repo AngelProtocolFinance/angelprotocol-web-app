@@ -1,9 +1,8 @@
 import { wp } from "api/api";
 import { Media } from "components/media";
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
-import { Link, type LoaderFunctionArgs } from "react-router";
+import { Link, type LoaderFunctionArgs, href } from "react-router";
 import useSWR from "swr/immutable";
 import type { IMedia, IPost, IUser } from "types/wordpress";
 import type { Route } from "./+types/post";
@@ -37,7 +36,7 @@ export default function Post({ loaderData: post }: Route.ComponentProps) {
   return (
     <div className={containerStyle}>
       <Link
-        to={app_routes.blog}
+        to={href("/blog")}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
       >
         <ChevronLeft className="text-[1em]" />

@@ -1,6 +1,5 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { app_routes } from "constants/routes";
-import { type ActionFunction, redirect } from "react-router";
+import { type ActionFunction, href, redirect } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
 import type { IFormInvalid } from "types/action";
 import { type ISignUp, is_error, sign_up } from "types/auth";
@@ -9,8 +8,7 @@ import { cognito, oauth } from ".server/auth";
 export const action: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
   const fv = await request.formData();
-  const redirect_to =
-    from.searchParams.get("redirect") || app_routes.marketplace;
+  const redirect_to = from.searchParams.get("redirect") || href("/marketplace");
 
   const { user } = await cognito.retrieve(request);
   if (user) return redirect(redirect_to);
@@ -22,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
   const p = await getValidatedFormData<ISignUp>(fv, valibotResolver(sign_up));
   if (p.errors) return p;
 
-  const is_npo = redirect_to.startsWith(app_routes.register);
+  const is_npo = redirect_to.startsWith(href("/register"));
   const res = await cognito.signup(
     p.data.email.toLowerCase(),
     p.data.password,

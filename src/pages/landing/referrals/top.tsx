@@ -2,9 +2,8 @@ import laira_shake_hands_x2 from "assets/laira/laira-shaking-hands-x2.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
 import { Image } from "components/image";
 import { APP_NAME } from "constants/env";
-import { app_routes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export function Top({ classes = "" }) {
   return (
@@ -76,8 +75,8 @@ export function Top({ classes = "" }) {
 
       <Link
         to={{
-          pathname: app_routes.signup,
-          search: `?redirect=${app_routes.user_dashboard}/referrals`,
+          pathname: href("/register/welcome"),
+          search: `?redirect=${href("/dashboard/referrals")}`,
         }}
         className="btn-blue mt-8 justify-self-center ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >

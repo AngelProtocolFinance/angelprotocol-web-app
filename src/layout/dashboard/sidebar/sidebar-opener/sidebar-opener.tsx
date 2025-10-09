@@ -28,7 +28,7 @@ export function SidebarOpener({
       <ToggleableSidebar
         open={open}
         linkGroups={linkGroups}
-        setOpen={set_open}
+        set_open={set_open}
       />
     </button>
   );

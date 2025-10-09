@@ -1,7 +1,6 @@
 import { BOOK_A_DEMO } from "constants/env";
-import { app_routes } from "constants/routes";
 import { CheckIcon } from "lucide-react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 const features = [
   "🎯 Zero platform fees - forever",
@@ -43,7 +42,7 @@ export function Section7({ classes = "" }: { classes?: string }) {
       </div>
       <div className="flex flex-col @xl:flex-row justify-center items-center gap-6 mt-10">
         <Link
-          to={`${app_routes.register}/welcome`}
+          to={href("/register/welcome")}
           className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  font-bold shadow-2xl rounded-xl"
         >
           Start Today - Free

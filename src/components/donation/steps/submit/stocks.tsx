@@ -1,12 +1,17 @@
 import { EMAIL_SUPPORT } from "constants/env";
-import { app_routes } from "constants/routes";
+import { href } from "react-router";
 import { BackBtn } from "../common/back-btn";
 import { use_donation_state } from "../context";
-import type { StockCheckoutStep } from "../types";
+import { type StockCheckoutStep, is_fund } from "../types";
 import { DonationTerms } from "./donation-terms";
 
 export function Stocks(props: StockCheckoutStep) {
-  const profile_url = `${window.location.origin}${app_routes.donate}/${props.init.recipient.id}`;
+  const id = props.init.recipient.id;
+  const path = is_fund(id)
+    ? href("/fundraisers/:fundId", { fundId: id })
+    : href("/marketplace/:id", { id: id });
+
+  const url = `${window.location.origin}${path}`;
   const { set_state } = use_donation_state();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
@@ -31,7 +36,7 @@ export function Stocks(props: StockCheckoutStep) {
         <p>Account name: Altruistic Partners Empowering Society, Inc</p>
         <p>
           Reference: [Internal Ref#, if needed] {props.init.recipient.name} (
-          {profile_url})
+          {url})
         </p>
       </div>
       <p className="text-sm mt-3 mb-1">
@@ -56,7 +61,7 @@ export function Stocks(props: StockCheckoutStep) {
       <a
         href={email_link(
           props.init.recipient.name,
-          profile_url,
+          url,
           +props.details.num_shares,
           props.details.symbol
         )}

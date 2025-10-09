@@ -1,9 +1,8 @@
 import type { IFundItem } from "@better-giving/fundraiser";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { Info } from "components/status";
-import { app_routes } from "constants/routes";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { UserV2 } from "types/auth";
 import type { Route } from "./+types";
@@ -43,7 +42,7 @@ function Page({ loaderData }: Route.ComponentProps) {
         {creatorType === "ours" && (
           <Link
             to={{
-              pathname: `${app_routes.funds}/new`,
+              pathname: href("/fundraisers/new"),
               search: `npo=${endow.id}`,
             }}
             className="btn btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4 col-span-full justify-self-start"

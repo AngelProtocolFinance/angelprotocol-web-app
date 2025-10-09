@@ -1,9 +1,8 @@
 import org_building from "assets/icons/org-building.svg";
 import { Image } from "components/image";
 import { Info, LoadingStatus } from "components/status";
-import { app_routes } from "constants/routes";
 import { categories } from "constants/unsdgs";
-import { Link, NavLink, useFetcher } from "react-router";
+import { Link, NavLink, href, useFetcher } from "react-router";
 import type { EndowCardsPage } from "types/npo";
 import { TopCountries } from "./top-countries";
 
@@ -29,7 +28,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
                 key={v.name}
                 className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
-                  pathname: app_routes.marketplace,
+                  pathname: href("/marketplace"),
                   search: new URLSearchParams({
                     sdgs: v.sdgs.join(),
                   }).toString(),
@@ -44,7 +43,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
 
           <NavLink
             className="text-blue-d1 [&:is(.pending)]:text-gray font-medium text-lg text-center mt-8 block"
-            to={app_routes.marketplace}
+            to={href("/marketplace")}
           >
             Explore all Causes
           </NavLink>
@@ -72,7 +71,7 @@ function SearchResult(props: ISearchResult) {
     <div className="flex flex-wrap items-center gap-4">
       {props.items.map((endow) => (
         <Link
-          to={`${app_routes.marketplace}/${endow.id}`}
+          to={href("/marketplace/:id", { id: endow.id.toString() })}
           key={endow.id}
           className="flex items-center gap-x-1 group/item"
         >
@@ -100,7 +99,7 @@ function SearchResult(props: ISearchResult) {
         <Link
           className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
           to={{
-            pathname: app_routes.marketplace,
+            pathname: href("/marketplace"),
             search: new URLSearchParams({
               query: props.query,
             }).toString(),

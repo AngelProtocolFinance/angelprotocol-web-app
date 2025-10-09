@@ -7,7 +7,7 @@ type Props = PropsWithChildren<{
 }>;
 
 export default function Container({ title, children, classes = "" }: Props) {
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, set_open] = useState(true);
 
   return (
     <div
@@ -15,7 +15,7 @@ export default function Container({ title, children, classes = "" }: Props) {
     >
       <div className="flex items-center gap-x-3 p-3">
         <button
-          onClick={() => setOpen((prev) => !prev)}
+          onClick={() => set_open((prev) => !prev)}
           className="flex items-center justify-center p-px w-6 h-6 border border-gray-l3 rounded-sm"
           aria-label="toggle section content's visibility"
         >

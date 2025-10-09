@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 export function Top({ classes = "" }) {
-  const [open, setOpen] = useState(false);
+  const [open, set_open] = useState(false);
   const navigate = useNavigate();
   const { state } = useHubspotDonCalculatorForm();
   return (
@@ -42,7 +42,7 @@ export function Top({ classes = "" }) {
             if (state !== "loaded") {
               return navigate("/donation-calculator");
             }
-            setOpen(true);
+            set_open(true);
           }}
           type="button"
           className="mt-8 shadow-xl capitalize shadow-black/10 btn btn-blue text-center lg:text-right justify-self-center lg:justify-self-end rounded-lg py-4 px-8 w-full md:w-auto"
@@ -53,7 +53,7 @@ export function Top({ classes = "" }) {
           <Modal
             classes="fixed-center z-10 grid text-gray-d4 bg-white w-[calc(100%-2.5rem)] max-w-4xl rounded-lg"
             open={open}
-            onClose={() => setOpen(false)}
+            onClose={() => set_open(false)}
           >
             <div
               className="hs-form-frame"

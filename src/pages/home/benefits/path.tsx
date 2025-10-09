@@ -1,8 +1,7 @@
-import { app_routes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import BenefitsCarousel from "./benefits-carousel";
 import Carousel from "./carousel";
 
@@ -30,11 +29,7 @@ const Path = () => {
       <BenefitsCarousel slides={benefits[path]} classes="max-lg:hidden" />
       <Carousel slides={benefits[path]} classes="lg:hidden" />
       <Link
-        to={
-          path === "nonprofits"
-            ? app_routes.nonprofit_info
-            : app_routes.donor_info
-        }
+        to={path === "nonprofits" ? href("/nonprofit") : href("/donor")}
         className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1  font-bold shadow-2xl rounded-full"
       >
         <span className="mr-1">Learn more</span>

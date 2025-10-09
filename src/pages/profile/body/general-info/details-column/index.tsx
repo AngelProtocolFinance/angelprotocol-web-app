@@ -1,8 +1,7 @@
 import type { INpo } from "@better-giving/endowment";
 import { Target, to_target } from "components/target";
-import { app_routes, reg_routes } from "constants/routes";
 import type { PropsWithChildren, ReactNode } from "react";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import Socials from "./socials";
 import { Tags } from "./tags";
 
@@ -51,7 +50,7 @@ export function DetailsColumn({
             />
           )}
           <NavLink
-            to={`${app_routes.donate}/${npo.id}`}
+            to={href("/donate/:id", { id: npo.id.toString() })}
             className="w-full btn btn-blue h-12 px-6 text-base lg:text-sm"
           >
             Donate now
@@ -59,7 +58,7 @@ export function DetailsColumn({
         </div>
         {npo.claimed === false && (
           <NavLink
-            to={`${app_routes.register}/${reg_routes.welcome}?claim=${npo.registration_number}`}
+            to={`${href("/register/welcome")}?claim=${npo.registration_number}`}
             className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l3 rounded-sm"
           >
             Claim this organization

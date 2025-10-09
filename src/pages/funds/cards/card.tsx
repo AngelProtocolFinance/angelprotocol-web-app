@@ -6,10 +6,9 @@ import { ShareButton } from "components/share-btn";
 import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { BASE_URL } from "constants/env";
-import { app_routes } from "constants/routes";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 
-export default function Card({
+export function Card({
   name,
   logo,
   banner,
@@ -22,7 +21,7 @@ export default function Card({
   return (
     <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none grid grid-rows-subgrid row-span-4">
       <NavLink
-        to={`${app_routes.funds}/${id}`}
+        to={href("/fundraisers/:fundId", { fundId: id })}
         className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l3 hover:border-blue-d1"
       >
         <div className="aspect-4/1 w-full relative">
@@ -68,10 +67,10 @@ export default function Card({
         <ShareButton
           classes="justify-self-start"
           orgName={name}
-          url={`${BASE_URL}${app_routes.funds}/${id}`}
+          url={`${BASE_URL}${href("/fundraisers/:fundId", { fundId: id })}`}
         />
         <NavLink
-          to={`${app_routes.funds}/${id}/donate`}
+          to={href("/donate-fund/:fundId", { fundId: id })}
           className="btn btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate

@@ -1,8 +1,7 @@
 import type { IDonationFinal } from "@better-giving/donation";
-import { app_routes } from "constants/routes";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import type { IPaginator } from "types/components";
 
 export interface Props extends IPaginator<IDonationFinal> {}
@@ -34,7 +33,12 @@ export function EarningsHistory({ items, classes = "", load_next }: Props) {
                   {p.transactionDate ? format(p.transactionDate, "PP") : ""}
                 </td>
                 <td>
-                  <Link to={`${app_routes.marketplace}/${p.endowmentId}`}>
+                  <Link
+                    to={href("/marketplace/:id", {
+                      id: p.endowmentId?.toString() ?? "",
+                    })}
+                    className="text-blue hover:text-blue-d1"
+                  >
                     {p.charityName}
                   </Link>
                 </td>

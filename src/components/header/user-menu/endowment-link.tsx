@@ -1,18 +1,28 @@
 import { MenuItem } from "@headlessui/react";
 import { Image } from "components/image";
-import { app_routes } from "constants/routes";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import type { INpoBookmark, IUserNpo2 } from "types/user";
 import { ContentLoader } from "../../content-loader";
 
 interface IBookmarkLink extends INpoBookmark {}
 export function BookmarkLink({ id, ...endow }: IBookmarkLink) {
-  return <_Link {...endow} id={id} to={`${app_routes.marketplace}/${id}`} />;
+  return (
+    <_Link
+      {...endow}
+      id={id}
+      to={href("/marketplace/:id", { id: id.toString() })}
+    />
+  );
 }
 
 export function EndowmentLink({ id, logo, name }: IUserNpo2) {
   return (
-    <_Link id={id} logo={logo} name={name} to={`${app_routes.admin}/${id}`} />
+    <_Link
+      id={id}
+      logo={logo}
+      name={name}
+      to={href("/admin/:id", { id: id.toString() })}
+    />
   );
 }
 

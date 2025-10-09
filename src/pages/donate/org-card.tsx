@@ -1,8 +1,7 @@
 import type { DonateData } from "api/donate-loader";
 import { Image } from "components/image";
 import { type TTarget, Target, to_target } from "components/target";
-import { app_routes } from "constants/routes";
-import { Await, Link } from "react-router";
+import { Await, Link, href } from "react-router";
 
 type Props = {
   id: number;
@@ -13,7 +12,7 @@ type Props = {
   classes?: string;
   balance: DonateData["balance"];
 };
-export default function OrgCard({ classes = "", balance, ...props }: Props) {
+export function OrgCard({ classes = "", balance, ...props }: Props) {
   return (
     <div
       className={`grid @xl/org-card:grid-cols-[3fr_2fr] gap-x-4 gap-y-6 p-4 md:bg-white rounded-lg md:border border-gray-l3 ${classes}`}
@@ -24,7 +23,7 @@ export default function OrgCard({ classes = "", balance, ...props }: Props) {
           className="size-14 border border-gray-l3 rounded-lg object-cover bg-white row-span-2"
         />
         <Link
-          to={`${app_routes.marketplace}/${props.id}`}
+          to={href("/marketplace/:id", { id: props.id.toString() })}
           className="hover:text-blue-d1 text-ellipsis overflow-hidden text-nowrap @xl/org-card:text-balance col-start-2 w-full"
         >
           {props.name}

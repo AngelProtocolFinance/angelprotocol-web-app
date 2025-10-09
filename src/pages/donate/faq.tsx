@@ -5,15 +5,14 @@ import {
 } from "@headlessui/react";
 import { ExtLink } from "components/ext-link";
 import { DrawerIcon } from "components/icon";
-import { app_routes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 interface Props {
   classes?: string;
 }
 
-export default function FAQ({ classes = "" }: Props) {
+export function FAQ({ classes = "" }: Props) {
   return (
     <div
       className={`${classes} md:bg-white md:border md:border-gray-l3 md:p-4 md:rounded-lg grid gap-2 md:gap-4`}
@@ -92,7 +91,7 @@ const faqs = [
       <p>
         To keep a permanent record of all your donations and print tax receipts,
         create your own personal user account{" "}
-        <Link to={app_routes.signup} className="text-blue hover:text-blue-l1">
+        <Link to={href("/signup")} className="text-blue hover:text-blue-l1">
           here
         </Link>
       </p>,

@@ -1,11 +1,10 @@
 import type { IReg, TStatus } from "@better-giving/reg";
 import { HeaderButton } from "components/header-button";
 import { Cells, TableSection } from "components/table-section";
-import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { use_sort } from "hooks/use-sort";
 import { Folder } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import type { IPaginator } from "types/components";
 import LoadMoreBtn from "./load-more-btn";
 
@@ -97,7 +96,7 @@ export function Table({
                 <Status status={row.status} />
               </td>
               <NavLink
-                to={`${app_routes.applications}/${row.id}`}
+                to={href("/applications/:id", { id: row.id })}
                 className="text-center w-full inline-block [&:is(.pending)]:text-gray hover:text-blue-d1"
               >
                 <Folder

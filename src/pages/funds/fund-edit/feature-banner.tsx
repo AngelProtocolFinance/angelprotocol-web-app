@@ -1,6 +1,5 @@
-import { ExtLink } from "components/ext-link";
 import { Confirmed, Info } from "components/status";
-import { app_routes } from "constants/routes";
+import { Link, href } from "react-router";
 
 interface Props {
   featured: boolean;
@@ -39,12 +38,13 @@ export function FeatureBanner({ classes = "", ...props }: Props) {
               ? "Unpublish"
               : "Publish"}
         </button>
-        <ExtLink
-          href={`${app_routes.funds}/${props.fundId}`}
+        <Link
+          target="_blank"
+          to={href("/fundraisers/:fundId", { fundId: props.fundId })}
           className="text-blue-d1 hover:text-gray-d1 text-sm flex items-center gap-1"
         >
           View
-        </ExtLink>
+        </Link>
       </div>
     </div>
   );

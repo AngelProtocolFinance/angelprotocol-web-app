@@ -5,20 +5,20 @@ import type { LinkGroup } from "../types";
 interface Props {
   linkGroups: LinkGroup[];
   open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  set_open: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function ToggleableSidebar({ linkGroups, setOpen, open }: Props) {
+export function ToggleableSidebar({ linkGroups, set_open, open }: Props) {
   return (
     <Modal
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={() => set_open(false)}
       classes="fixed top-0 left-0 z-20 h-full"
     >
       <Sidebar
         className="overflow-y-auto scroller"
         linkGroups={linkGroups}
-        onChange={() => setOpen(false)}
+        onChange={() => set_open(false)}
       />
     </Modal>
   );

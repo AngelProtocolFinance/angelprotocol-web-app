@@ -1,8 +1,7 @@
 import type { IFund } from "@better-giving/fundraiser";
 import { FundStatus, status_fn } from "components/fundraiser";
 import { Target, to_target } from "components/target";
-import { app_routes } from "constants/routes";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 export const Fund = (props: IFund) => {
   const status = status_fn(
@@ -32,7 +31,7 @@ export const Fund = (props: IFund) => {
       </div>
 
       <Link
-        to={`${app_routes.funds}/${props.id}`}
+        to={href("/fundraisers/:fundId", { fundId: props.id })}
         className="mt-4 font-semibold text-gray hover:text-blue-d1 "
       >
         {props.name}
@@ -47,7 +46,7 @@ export const Fund = (props: IFund) => {
       <Link
         aria-disabled={!status.active}
         className="btn btn btn-blue rounded-full text-xs px-6 py-2 justify-self-end mt-6"
-        to={`${app_routes.funds}/${props.id}/edit`}
+        to={href("/fundraisers/:fundId/edit", { fundId: props.id })}
       >
         Edit
       </Link>

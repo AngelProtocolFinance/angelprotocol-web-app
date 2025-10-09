@@ -1,12 +1,11 @@
 import { MenuItem } from "@headlessui/react";
-import { app_routes } from "constants/routes";
 import {
   Building2Icon,
   CircleDollarSign,
   LandmarkIcon,
   PieChartIcon,
 } from "lucide-react";
-import { Form, Link, useNavigation } from "react-router";
+import { Form, Link, href, useNavigation } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { Bookmarks } from "./bookmarks";
 import { Organizations } from "./organizations";
@@ -25,7 +24,7 @@ export function UserMenu({ user, classes }: Props) {
       <div className="w-64 min-h-[5rem] p-5">
         <MenuItem
           as={Link}
-          to={`${app_routes.user_dashboard}/donations`}
+          to={href("/dashboard/donations")}
           className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
           <CircleDollarSign size={18} />
@@ -38,7 +37,7 @@ export function UserMenu({ user, classes }: Props) {
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
-              to={app_routes.applications}
+              to={href("/applications")}
               className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
               <Building2Icon size={18} />
@@ -48,7 +47,7 @@ export function UserMenu({ user, classes }: Props) {
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
-              to={app_routes.banking_applications}
+              to={href("/banking-applications")}
               className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
               <LandmarkIcon size={18} />
@@ -58,7 +57,7 @@ export function UserMenu({ user, classes }: Props) {
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
-              to={app_routes.fund_management}
+              to={href("/fund-management")}
               className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
               <PieChartIcon size={16} />

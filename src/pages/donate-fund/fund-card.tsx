@@ -1,8 +1,7 @@
 import { Image } from "components/image";
 import { toText } from "components/rich-text";
 import { type TTarget, Target, to_target } from "components/target";
-import { app_routes } from "constants/routes";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 type Props = {
   id: string;
@@ -24,7 +23,7 @@ export function FundCard({ classes = "", ...props }: Props) {
           className="size-14 border border-gray-l3 rounded-lg object-cover bg-white row-span-2"
         />
         <Link
-          to={`${app_routes.funds}/${props.id}`}
+          to={href("/fundraisers/:fundId", { fundId: props.id })}
           className="hover:text-blue-d1 text-ellipsis overflow-hidden text-nowrap @xl/fund-card:text-balance col-start-2 w-full"
         >
           {props.name}

@@ -3,9 +3,8 @@ import { Breadcrumbs } from "components/breadcrumbs";
 import { ExtLink } from "components/ext-link";
 import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
-import { app_routes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 
 import type { IPrettyBalance } from "@better-giving/balance";
 import type { INpo } from "@better-giving/endowment";
@@ -30,10 +29,15 @@ export function Body({ classes = "", npo, user, children, bal }: Props) {
           items={[
             {
               title: "Marketplace",
-              to: `${app_routes.marketplace}/${npo.id}`,
+              to: href("/marketplace"),
               end: true,
             },
-            { title: npo.name, to: `${app_routes.marketplace}/${npo.id}` },
+            {
+              title: npo.name,
+              to: href("/marketplace/:id", {
+                id: npo.id.toString(),
+              }),
+            },
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
@@ -45,7 +49,9 @@ export function Body({ classes = "", npo, user, children, bal }: Props) {
             />
           )}
           <NavLink
-            to={`${app_routes.donate}/${npo.id}`}
+            to={href("/donate/:id", {
+              id: npo.id.toString(),
+            })}
             className="btn btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now

@@ -1,8 +1,7 @@
 import { Breadcrumbs } from "components/breadcrumbs";
-import { app_routes } from "constants/routes";
 import { use_paginator } from "hooks/use-paginator";
 import { Plus } from "lucide-react";
-import { NavLink, Outlet, useSearchParams } from "react-router";
+import { NavLink, Outlet, href, useSearchParams } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types/videos";
 import { List, NoVideo } from "./list";
@@ -35,7 +34,7 @@ function Page({ loaderData: page1, params }: Route.ComponentProps) {
         items={[
           {
             title: "Media",
-            to: `${app_routes.admin}/${params.id}/media`,
+            to: href("/admin/:id/media", { id: params.id }),
             end: true,
           },
           {

@@ -1,9 +1,9 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { app_routes } from "constants/routes";
 import { search } from "helpers/https";
 import {
   type ActionFunction,
   type LoaderFunctionArgs,
+  href,
   redirect,
 } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
@@ -14,10 +14,10 @@ import { cognito } from ".server/auth";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { user } = await cognito.retrieve(request);
-  if (user) return redirect(app_routes.marketplace);
+  if (user) return redirect(href("/marketplace"));
 
   const { email } = search(request);
-  if (!email) return redirect(app_routes.signup);
+  if (!email) return redirect(href("/signup"));
 
   return email;
 };
@@ -51,6 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
 
   from.searchParams.delete("email");
   const to = new URL(from);
-  to.pathname = `${app_routes.signup}/success`;
+  to.pathname = href("/signup/success");
   return redirect(to.toString());
 };

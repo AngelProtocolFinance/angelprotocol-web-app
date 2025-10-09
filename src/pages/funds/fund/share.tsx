@@ -70,15 +70,15 @@ interface IShare extends SocialMedia {
   url: string;
 }
 function ShareBtn(props: IShare) {
-  const [open, setOpen] = useState(false);
+  const [open, set_open] = useState(false);
 
   return (
     <button
-      onClick={() => setOpen(true)}
+      onClick={() => set_open(true)}
       className="relative size-10 grid place-items-center"
     >
       <img src={props.src} width={props.size} className="absolute-center" />
-      <Prompt {...props} open={open} setOpen={(o) => setOpen(o)} />
+      <Prompt {...props} open={open} set_open={(o) => set_open(o)} />
     </button>
   );
 }
@@ -87,9 +87,9 @@ interface IPrompt extends SocialMedia {
   url: string;
   recipientName: string;
   open: boolean;
-  setOpen: (open: boolean) => void;
+  set_open: (open: boolean) => void;
 }
-function Prompt({ recipientName, open, setOpen, url, ...social }: IPrompt) {
+function Prompt({ recipientName, open, set_open, url, ...social }: IPrompt) {
   //shareText will always hold some value
   const [shareText, setShareText] = useState("");
   const msgRef = useCallback((node: HTMLParagraphElement | null) => {
@@ -101,13 +101,13 @@ function Prompt({ recipientName, open, setOpen, url, ...social }: IPrompt) {
   return (
     <Modal
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={() => set_open(false)}
       classes="grid content-start fixed-center z-20 border border-gray-l3 bg-gray-l6 dark:bg-blue-d5 text-gray-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded-sm overflow-hidden"
     >
       <div className="grid place-items-center relative h-16  font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l3">
         Share on {social.title}
         <button
-          onClick={() => setOpen(false)}
+          onClick={() => set_open(false)}
           className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-gray-l3 rounded-sm "
         >
           <X className="absolute-center" width={35} />

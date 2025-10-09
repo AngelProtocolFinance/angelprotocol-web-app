@@ -4,16 +4,15 @@ import { ExtLink } from "components/ext-link";
 import { DappLogo } from "components/image";
 import { INTERCOM_HELP } from "constants/env";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { app_routes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { metas } from "helpers/seo";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import FAQ from "./faq";
-import OrgCard from "./org-card";
-export { loader } from "api/donate-loader";
 import type { Route } from "./+types";
+import { FAQ } from "./faq";
+import { OrgCard } from "./org-card";
 
+export { loader } from "api/donate-loader";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
@@ -35,7 +34,7 @@ function Page({ loaderData }: Route.ComponentProps) {
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
         <DappLogo classes="h-12" />
         <Link
-          to={`${app_routes.marketplace}/${endow.id}`}
+          to={href("/marketplace/:id", { id: endow.id.toString() })}
           className="font-semibold  hover:text-blue-d1"
         >
           Cancel

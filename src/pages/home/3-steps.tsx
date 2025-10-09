@@ -3,9 +3,8 @@ import laira2 from "assets/laira/laira2.png";
 import laira3 from "assets/laira/laira3.png";
 import { Image } from "components/image";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
-import { app_routes } from "constants/routes";
 import { motion } from "motion/react";
-import { Link } from "react-router";
+import { Link, href } from "react-router";
 
 type TListItem = {
   title1: string;
@@ -76,7 +75,7 @@ export function Steps({ classes = "" }) {
         transition={{ duration: 0.6, delay: 0.5 }}
       >
         <Link
-          to={`${app_routes.register}/welcome`}
+          to={href("/register/welcome")}
           className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
           Join us today!

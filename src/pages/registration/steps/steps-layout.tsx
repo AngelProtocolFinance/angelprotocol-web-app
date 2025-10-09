@@ -1,7 +1,6 @@
 import { Progress } from "@better-giving/reg/progress";
 import { ExtLink } from "components/ext-link";
-import { app_routes } from "constants/routes";
-import { Outlet, useRouteLoaderData } from "react-router";
+import { Outlet, href, useRouteLoaderData } from "react-router";
 import type { Reg$IdData } from "../types";
 import { ProgressIndicator } from "./progress-indicator";
 import Reference from "./reference";
@@ -19,7 +18,7 @@ export default function Layout() {
           Claiming{" "}
           <ExtLink
             className="font-bold text-gray-d4 hover:underline"
-            href={`${app_routes.marketplace}/${reg.claim.id}`}
+            href={href("/marketplace/:id", { id: reg.claim.id.toString() })}
           >
             {reg.claim.name}
           </ExtLink>

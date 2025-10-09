@@ -1,9 +1,8 @@
 import type { TStatus } from "@better-giving/banking-applications";
 import { Cells, TableSection } from "components/table-section";
-import { app_routes } from "constants/routes";
 import { toPP } from "helpers/date";
 import { Folder } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import LoadMoreBtn from "./load-more-btn";
 import type { TableProps } from "./types";
 
@@ -54,7 +53,7 @@ export function Table({
                 <Status status={row.status} />
               </td>
               <NavLink
-                to={`${app_routes.banking_applications}/${row.id}`}
+                to={href("/banking-applications/:id", { id: row.id })}
                 className="text-center w-full inline-block hover:text-blue-d1 [&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none"
               >
                 <Folder

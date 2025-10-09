@@ -9,11 +9,10 @@ import { RichText, richTextStyles, toText } from "components/rich-text";
 import { Target, to_target } from "components/target";
 import { VerifiedIcon } from "components/verified-icon";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { app_routes } from "constants/routes";
 import { metas } from "helpers/seo";
 import { unpack } from "helpers/unpack";
 import { ArrowLeft } from "lucide-react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { IFund } from "types/fund";
 import type { Route } from "./+types";
@@ -160,7 +159,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
                   width={50}
                 />
                 <Link
-                  to={`${app_routes.marketplace}/${m.id}`}
+                  to={href("/marketplace/:id", { id: m.id.toString() })}
                   className="font-bold  text-gray hover:text-blue-d1"
                 >
                   {m.name}
@@ -203,7 +202,7 @@ function DonateSection(props: IDonateSection) {
             props.donation_total_usd
           ).active
         }
-        to={`${app_routes.funds}/${props.id}/donate`}
+        to={href("/donate-fund/:fundId", { fundId: props.id })}
         className={`w-full btn btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >
         Donate now
