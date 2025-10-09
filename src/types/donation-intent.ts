@@ -3,6 +3,7 @@ import {
   donor_title,
   frequency,
 } from "@better-giving/donation/schema";
+import { $int_gte1 } from "@better-giving/schemas";
 
 export {
   donation_source,
@@ -75,13 +76,6 @@ export const amount = v.object({
 
 export type Amount = v.InferOutput<typeof amount>;
 
-export const endow_id = v.pipe(
-  str,
-  v.transform((x) => +x),
-  v.number(),
-  v.integer(),
-  v.minValue(1)
-);
 export const uuid = v.pipe(str, v.uuid());
 
 export const program = v.object({
@@ -91,7 +85,7 @@ export const program = v.object({
 
 export type Program = v.InferOutput<typeof program>;
 
-export const recipient = v.union([endow_id, uuid]);
+export const recipient = v.union([$int_gte1, uuid]);
 
 export type Recipient = v.InferOutput<typeof recipient>;
 
