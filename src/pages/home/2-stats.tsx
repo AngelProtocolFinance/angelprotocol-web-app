@@ -47,7 +47,7 @@ export function Stats({ classes = "" }) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
+        transition={{ type: "spring" }}
       >
         <CountUp end={6} suffix=" Million+" />
         <p className="max-w-md text-center mt-2 text-lg">
@@ -60,7 +60,7 @@ export function Stats({ classes = "" }) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ type: "spring", delay: 0.1 }}
       >
         <CountUp end={24} suffix="%" />
         <p className="max-w-md text-center mt-2 text-lg">
@@ -73,7 +73,7 @@ export function Stats({ classes = "" }) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ type: "spring", delay: 0.2 }}
       >
         <CountUp end={18000} suffix="+" />
         <p className="max-w-md text-center mt-2 text-lg">

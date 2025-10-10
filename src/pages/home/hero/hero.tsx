@@ -21,7 +21,7 @@ const Hero = ({ classes = "" }) => {
         className="text-sm md:text-lg uppercase font-bold text-center mb-5 tracking-wider"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={{ type: "spring", delay: 0.1 }}
       >
         By a nonprofit, for nonprofits
       </motion.p>
@@ -29,7 +29,7 @@ const Hero = ({ classes = "" }) => {
         className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-8 px-6 "
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ type: "spring", delay: 0.2 }}
       >
         Raise more this quarter, <br /> Grow funds together
       </motion.h1>
@@ -37,7 +37,7 @@ const Hero = ({ classes = "" }) => {
         className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center text-pretty sm:text-balance"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ type: "spring", delay: 0.3 }}
       >
         When you sign up, you're a {APP_NAME} Member, no extra steps, no fees.
         Our high-converting donation flow lifts completed gifts and monthly
@@ -48,7 +48,7 @@ const Hero = ({ classes = "" }) => {
       <MLink
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        transition={{ type: "spring", delay: 0.4 }}
         to={href("/register/welcome")}
         className="btn-blue justify-self-center mt-8 active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >

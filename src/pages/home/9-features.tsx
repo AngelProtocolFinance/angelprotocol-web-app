@@ -111,7 +111,7 @@ export function Features({ classes = "" }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5 }}
+        transition={{ type: "spring" }}
       >
         Features
       </motion.p>
@@ -120,7 +120,7 @@ export function Features({ classes = "" }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5, delay: 0.1 }}
+        transition={{ type: "spring", delay: 0.1 }}
       >
         <h2
           id="features-heading"
@@ -143,7 +143,7 @@ export function Features({ classes = "" }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.5 }}
+        transition={{ type: "spring" }}
         to={href("/register/welcome")}
         className="text-center capitalize col-span-full justify-self-center btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg mt-4"
       >
@@ -160,7 +160,7 @@ function Feature(props: IFeature & { index: number }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.4, delay: (props.index % 6) * 0.05 }}
+      transition={{ type: "spring", delay: (props.index % 6) * 0.05 }}
     >
       <div className="flex items-center gap-x-2">
         {props.icon}

@@ -20,7 +20,7 @@ export function Partners({ classes = "" }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
+        transition={{ type: "spring" }}
       >
         Join <span className="font-semibold text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
@@ -35,6 +35,7 @@ export function Partners({ classes = "" }) {
           style={{ y: 0 }}
           animate={{ y: "-50%" }}
           transition={{
+            type: "tween",
             duration: 60,
             repeat: Number.POSITIVE_INFINITY,
             ease: "linear",

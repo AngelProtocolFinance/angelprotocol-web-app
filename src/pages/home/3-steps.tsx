@@ -43,7 +43,7 @@ export function Steps({ classes = "" }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
+        transition={{ type: "spring" }}
       >
         Easy as 1-2-3
       </motion.h3>
@@ -58,7 +58,7 @@ export function Steps({ classes = "" }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, delay: 0.4 }}
+        transition={{ type: "spring", delay: 0.4 }}
       >
         We pride ourselves in helping fellow nonprofits like yours{" "}
         <span className="font-bold">save money</span> with free donation
@@ -72,7 +72,7 @@ export function Steps({ classes = "" }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, delay: 0.5 }}
+        transition={{ type: "spring", delay: 0.5 }}
       >
         <Link
           to={href("/register/welcome")}
@@ -98,7 +98,7 @@ function ListItem(props: TListItem & { index: number }) {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: props.index * 0.1 }}
+      transition={{ type: "spring", delay: props.index * 0.1 }}
     >
       <Image
         src={props.image.src}

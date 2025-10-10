@@ -17,7 +17,7 @@ function BlurImg({ classes, url, index = 0 }: IBlurImg) {
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ type: "spring", delay: index * 0.1 }}
       role="presentation"
       aria-hidden="true"
     >
@@ -49,7 +49,7 @@ export function Ctas({ classes = "" }) {
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring" }}
         >
           <h3 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
             We help you raise more.
@@ -85,7 +85,7 @@ export function Ctas({ classes = "" }) {
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring" }}
         >
           <h3 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
             We grow what you raise.
@@ -110,7 +110,7 @@ export function Ctas({ classes = "" }) {
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring" }}
         >
           <h3 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
             We unlock larger gifts.
@@ -145,7 +145,7 @@ export function Ctas({ classes = "" }) {
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
+          transition={{ type: "spring" }}
         >
           <h3 className="text-2xl md:text-3xl text-blue mb-2 max-md:text-center">
             We don't take a cut.

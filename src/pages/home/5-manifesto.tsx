@@ -13,7 +13,7 @@ export function Manifesto({ classes = "" }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7 }}
+        transition={{ type: "spring" }}
       >
         <div className="max-xl:hidden absolute -left-32 isolate -bottom-5">
           <img src={laira_pointing} width={120} className="z-10 max-sm:w-24" />
