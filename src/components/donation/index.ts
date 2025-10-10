@@ -8,7 +8,7 @@ export {
 export { Steps } from "./steps";
 export { Share } from "./steps/share";
 export { StepsCarousel } from "./steps-carousel";
-export { ProgramSelector } from "./steps/common/program-selector";
+export { ProgramSelector } from "../../pages/widget/configurer/program-selector";
 export {
   DEFAULT_PROGRAM,
   init_details,

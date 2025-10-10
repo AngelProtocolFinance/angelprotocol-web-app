@@ -43,16 +43,7 @@ export const program_opt = v.object({
 
 export interface ProgramOption extends v.InferOutput<typeof program_opt> {}
 
-type BaseDonationDetails = {
-  /** value is "" if no program is selected   */
-  program: OptionType<string>;
-};
-
-export const base_donation_details = v.object({
-  program: program_opt,
-});
-
-export type CryptoDonationDetails = BaseDonationDetails & {
+export type CryptoDonationDetails = {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
   token: TokenWithDetails;
 };
@@ -68,7 +59,6 @@ export const amount = v.lazy((x) => {
 });
 
 export const fiat_donation_details = v.object({
-  ...base_donation_details.entries,
   amount,
   currency: db_currency,
 });
@@ -99,7 +89,7 @@ export interface StripeDonationDetails
   method: Extract<DonateMethodId, "stripe">;
 }
 
-export type StocksDonationDetails = BaseDonationDetails & {
+export type StocksDonationDetails = {
   method: Extract<DonateMethodId, "stocks">;
   symbol: string;
   num_shares: string;
@@ -147,6 +137,10 @@ export type Init = {
   source: DonationSource;
   mode: Mode;
   recipient: DonationRecipient;
+  program?: {
+    name: string;
+    id: string;
+  };
   config: Config | null;
 };
 

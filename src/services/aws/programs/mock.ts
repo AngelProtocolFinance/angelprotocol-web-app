@@ -1,7 +1,7 @@
 import type { IProgram } from "@better-giving/endowment";
 import { http, HttpResponse } from "msw";
 
-export const mockPrograms: IProgram[] = [
+export const mock_programs: IProgram[] = [
   {
     id: "program-1",
     title: "Program 1",
@@ -18,6 +18,6 @@ export const mockPrograms: IProgram[] = [
 
 export const handlers = [
   http.get("api/npo/:id/programs", () => {
-    return HttpResponse.json(mockPrograms);
+    return HttpResponse.json(mock_programs);
   }),
 ];

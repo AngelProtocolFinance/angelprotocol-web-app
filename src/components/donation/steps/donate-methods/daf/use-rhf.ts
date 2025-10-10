@@ -10,7 +10,6 @@ export function use_rhf(props: Props) {
   const initial: FV = {
     amount: "",
     currency: usd_option,
-    program: { label: "", value: "" },
   };
 
   const {
@@ -24,11 +23,6 @@ export function use_rhf(props: Props) {
   } = useForm<FV>({
     defaultValues: props.details || initial,
     resolver: valibotResolver(daf_donation_details),
-  });
-
-  const { field: program } = useController<FV, "program">({
-    control: control,
-    name: "program",
   });
 
   const { field: amount } = useController({
@@ -49,7 +43,6 @@ export function use_rhf(props: Props) {
     errors,
     //controllers
     amount,
-    program,
     //utils
     on_increment,
   };

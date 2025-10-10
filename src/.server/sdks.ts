@@ -5,7 +5,7 @@ import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
 import { Client, Receiver } from "@upstash/qstash";
 import Stripe from "stripe";
-import type { Fetcher } from "types/http";
+import type { Fetcher } from "types/api";
 import {
   anvil_envs,
   chariot_envs,

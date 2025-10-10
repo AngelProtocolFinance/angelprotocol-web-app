@@ -52,17 +52,15 @@ export const init_details = (
       return {
         method: "crypto",
         token: init_token_option,
-        program,
       };
     }
     case "daf": {
-      return { method: "daf", amount: "", currency: usd_option, program };
+      return { method: "daf", amount: "", currency: usd_option };
     }
     case "stocks": {
       return {
         method: "stocks",
         num_shares: "",
-        program,
         symbol: "",
       };
     }
@@ -72,7 +70,6 @@ export const init_details = (
         amount: "",
         currency: usd_option,
         frequency: "recurring",
-        program,
       };
     }
   }
