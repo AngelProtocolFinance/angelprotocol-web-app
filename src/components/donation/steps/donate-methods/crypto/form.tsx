@@ -1,5 +1,7 @@
 import { DONATION_INCREMENTS } from "constants/common";
-import { TokenField } from "../../../../token-field";
+import { href } from "react-router";
+import use_swr from "swr/immutable";
+import { TokenField, TokenSelector } from "../../../../token-field";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
 import { use_donation_state } from "../../context";
@@ -7,6 +9,7 @@ import type { CryptoFormStep } from "../../types";
 import { next_form_state } from "../helpers";
 import type { DonateValues } from "./types";
 import { use_rhf } from "./use-rhf";
+import type { ITokenMin } from "types/api";
 
 export function Form(props: CryptoFormStep) {
   const { set_state } = use_donation_state();
@@ -18,6 +21,18 @@ export function Form(props: CryptoFormStep) {
     reset();
   }
 
+  const { data, error, isLoading, mutate } = use_swr(
+    href("/api/tokens/:id/min_usd", { id: token.value.id }),
+    (p) => fetch(p).then<ITokenMin>((res) => res.json())
+  );
+
+  const selctor = (
+    <TokenSelector
+      octor
+      btn={isLoading ? "loading" : error || !data ? "error" : q}
+    />
+  );
+
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -26,8 +41,8 @@ export function Form(props: CryptoFormStep) {
     >
       <TokenField
         ref={token.ref}
-        token={token.value}
-        on_change={token.onChange}
+        amount={token.value.amount}
+        on_change={(x) => token.onChange({ ...token.value, amount: x })}
         error={errors.token}
         label="Donation amount"
       />
