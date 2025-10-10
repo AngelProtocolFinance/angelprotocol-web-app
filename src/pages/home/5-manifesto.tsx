@@ -1,4 +1,5 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import alliance_member_badge from "assets/images/alliance-member-badge.png";
 import laira_pointing from "assets/laira/laira-pointing.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
 import { APP_NAME } from "constants/env";
@@ -99,15 +100,20 @@ export function Manifesto({ classes = "" }) {
               </ul>
             </TabPanel>
 
-            <TabPanel className="">
-              <p className="text-lg xl:text-xl mb-4 font-bold">
+            <TabPanel className="grid grid-cols-2 @container/panel">
+              <p className="text-lg xl:text-xl mb-4 font-bold col-span-full">
                 Member Reciprocity (light, but important):
               </p>
-              <ul className="space-y-2 text-gray xl:text-lg list-decimal list-inside">
+              <ul className="@max-2xl/panel:col-span-full space-y-2 text-gray xl:text-lg list-decimal list-inside">
                 <li>Show the badge.</li>
                 <li>Share one win each year (we'll help write it).</li>
                 <li>Invite a peer via your referral link.</li>
               </ul>
+              <img
+                src={alliance_member_badge}
+                width={240}
+                className="self-start @2xl/panel:-mt-28 @max-2xl/panel:col-start-1 @max-2xl/panel:col-span-full @max-2xl/panel:w-40 @max-2xl/panel:mt-6 justify-self-center"
+              />
             </TabPanel>
           </TabPanels>
         </TabGroup>
