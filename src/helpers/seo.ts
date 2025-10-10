@@ -17,6 +17,7 @@ export const metas = ({
 }: Meta): MetaDescriptor[] => [
   { title },
   { name: "description", content: description },
+  { property: "og:site_name", content: APP_NAME },
   { property: "og:url", content: url },
   { property: "og:type", content: "website" },
   { property: "og:title", content: title },

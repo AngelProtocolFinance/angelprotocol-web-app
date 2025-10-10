@@ -1,4 +1,3 @@
-import bg_logo from "assets/images/bg-logo.webp?url";
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
 import { metas } from "helpers/seo";
@@ -30,7 +29,6 @@ export const meta: Route.MetaFunction = () =>
     title: "Fundraising Platform for Nonprofits | Better Giving",
     description:
       "Raise more this quarter and grow funds together. Better Giving offers free, high-converting donation forms, savings, and fund growth tools—no platform or management fees.",
-    image: bg_logo,
   });
 
 export default CacheRoute(Page);
