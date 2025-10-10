@@ -120,3 +120,4 @@ export const hubspot_envs = {
   subs_form_id: _var("HUBSPOT_SUBS_FORM_ID"),
   portal_id: _var("HUBSPOT_PORTAL_ID"),
 };
+export const openexchange_app_id = _var("OPENEXCHANGE_APP_ID");

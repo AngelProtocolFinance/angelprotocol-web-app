@@ -1,4 +1,4 @@
-import type { TokenWithDetails } from "types/components";
+import type { ReactNode } from "react";
 
 type Classes = {
   container?: string;
@@ -6,21 +6,14 @@ type Classes = {
   input?: string;
 };
 
-export type Props = {
-  token: TokenWithDetails;
-  error?: string;
-  on_change: (token: TokenWithDetails) => void;
+export interface ITokenField {
   label: string;
-  classes?: Classes;
+  amount: string;
+  amount_usd: number;
+  on_change: (v: string) => void;
+  selector?: ReactNode;
+  min_amount?: ReactNode;
+  error?: string;
   disabled?: boolean;
-};
-
-export namespace Token {
-  export type State = "loading" | "error" | "ok";
-  export namespace Event {
-    export interface Detail {
-      state: State;
-    }
-    export type Name = "crypto-token-event";
-  }
+  classes?: Classes;
 }
