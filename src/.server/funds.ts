@@ -5,7 +5,7 @@ import type {
   IFundsSearchObj,
 } from "@better-giving/fundraiser";
 import { env } from "./env";
-import { typesense_funds } from "./sdks";
+import { typesense } from "./sdks";
 
 const HITS_PER_PAGE = 25;
 
@@ -40,8 +40,10 @@ export const get_funds = async ({
 
   // Make request to Typesense
 
-  const res = await typesense_funds.get("documents/search", {
-    searchParams: search_params,
+  const res = await typesense((x) => {
+    x.search = search_params.toString();
+    x.pathname = "collections/funds/documents/search";
+    return x;
   });
 
   if (!res.ok) throw res;
@@ -99,8 +101,10 @@ export const get_funds_npo_memberof = async (
   });
 
   // Make request to Typesense
-  const res = await typesense_funds.get("documents/search", {
-    searchParams: search_params,
+  const res = await typesense((x) => {
+    x.search = search_params.toString();
+    x.pathname = "collections/funds/documents/search";
+    return x;
   });
 
   if (!res.ok) throw res;

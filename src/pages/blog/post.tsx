@@ -1,28 +1,39 @@
-import { wp } from "api/api";
+import { wp } from "api/wp";
 import { Media } from "components/media";
 import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
-import { Link, type LoaderFunctionArgs, href } from "react-router";
+import { Link, href } from "react-router";
 import use_swr from "swr/immutable";
 import type { IMedia, IPost, IUser } from "types/wordpress";
 import type { Route } from "./+types/post";
 
-const containerStyle = "w-full px-5 max-w-4xl mx-auto pb-4";
+const container_style = "w-full px-5 max-w-4xl mx-auto pb-4";
 
 interface IPostDetailed extends IPost {
   media: IMedia;
   authorName: string;
 }
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const [post] = await wp.get<IPost[]>(`posts?slug=${params.slug}`).json();
+export const loader = async ({ params }: Route.LoaderArgs) => {
+  const [post] = await wp((x, p) => {
+    x.pathname = p("posts");
+    x.searchParams.set("slug", params.slug);
+    return x;
+  }).then<IPost[]>((res) => res.json());
 
   if (!post) throw new Response("Not Found", { status: 404 });
 
-  const media = wp.get<IMedia>(`media/${post.featured_media}`).json();
-  const author = wp.get<IUser>(`users/${post.author}`).json();
-  const [m, a] = await Promise.all([media, author]);
-  return { ...post, media: m, authorName: a.name } satisfies IPostDetailed;
+  const media = await wp((x, p) => {
+    x.pathname = p(`media/${post.featured_media}`);
+    return x;
+  }).then<IMedia>((res) => res.json());
+
+  const author = await wp((x, p) => {
+    x.pathname = p(`users/${post.author}`);
+    return x;
+  }).then<IUser>((res) => res.json());
+
+  return { ...post, media, authorName: author.name } satisfies IPostDetailed;
 };
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
@@ -34,7 +45,7 @@ export { ErrorBoundary } from "components/error";
 
 export default function Post({ loaderData: post }: Route.ComponentProps) {
   return (
-    <div className={containerStyle}>
+    <div className={container_style}>
       <Link
         to={href("/blog")}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
@@ -82,8 +93,11 @@ function Loaded(post: IPost) {
 }
 
 function Author(props: { id: number }) {
-  const { data } = use_swr(`users/${props.id}`, (path) =>
-    wp.get<IUser>(path).json()
-  );
+  const { data } = use_swr(`users/${props.id}`, async (path) => {
+    return wp((x, p) => {
+      x.pathname = p(path);
+      return x;
+    }).then<IUser | null>((res) => (res.ok ? res.json() : null));
+  });
   return data && <p className="text-gray text-sm">Author: {data.name}</p>;
 }

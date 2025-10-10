@@ -3,7 +3,7 @@ import { setupServer } from "msw/node";
 import "@testing-library/jest-dom";
 import { handlers as programsHandlers } from "services/aws/programs/mock";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
-import { postsMock } from "./api/get/wp-posts";
+import { posts_mock } from "./api/get/wp-posts";
 import { handlers as apesHandlers } from "./services/apes/mock";
 import { handlers as apiHandlers } from "./services/api/mock";
 import { handlers as awsHandlers } from "./services/aws/mock";
@@ -62,7 +62,7 @@ export const mswServer = setupServer(
   ...apesHandlers,
   ...apiHandlers,
   ...awsHandlers,
-  ...[postsMock]
+  ...[posts_mock]
 );
 
 // Start server before all tests

@@ -1,6 +1,6 @@
 import type { INposPage, INposSearchObj } from "@better-giving/endowment";
 import { env } from "./env";
-import { typesense_npos } from "./sdks";
+import { typesense } from "./sdks";
 
 const HITS_PER_PAGE = 20;
 
@@ -24,8 +24,10 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
     search_params.set("include_fields", fields.join(","));
   }
 
-  const res = await typesense_npos.get("documents/search", {
-    searchParams: search_params,
+  const res = await typesense((x) => {
+    x.search = search_params.toString();
+    x.pathname = "collections/npos/documents/search";
+    return x;
   });
 
   if (!res.ok)
@@ -35,7 +37,7 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
       pages: 1,
     };
 
-  const result = await res.json<any>();
+  const result = await res.json();
   const hits = result.hits || [];
   const found = result.found || 0;
 

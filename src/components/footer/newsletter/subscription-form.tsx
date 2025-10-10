@@ -25,7 +25,7 @@ export function SubscriptionForm() {
         <p className="empty:hidden w-full text-red-d2 text-left mt-0.5 text-xs">
           {errors.email?.message}
         </p>
-        {fetcher.data === "success" && <SuccessMessage />}
+        {fetcher.data === "success" && <SuccessMessage classes="mt-0.5" />}
         {fetcher.data === "error" && (
           <p className="text-xs text-red mt-0.5">Failed to subscribe</p>
         )}
@@ -43,14 +43,14 @@ export function SubscriptionForm() {
   );
 }
 
-function SuccessMessage() {
+function SuccessMessage({ classes = "" }) {
   return (
-    <span className="flex gap-1 w-full text-xs">
-      <Check size={14} />
-      <p>
+    <p className={`${classes} w-full text-xs`}>
+      <Check size={14} className="stroke-green inline bottom-1 mr-0.5" />
+      <span className="text-green-d1">
         The form was sent successfully. By doing so, you have agreed to our
         privacy policy
-      </p>
-    </span>
+      </span>
+    </p>
   );
 }
