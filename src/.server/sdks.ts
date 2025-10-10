@@ -4,13 +4,15 @@ import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
 import { Client, Receiver } from "@upstash/qstash";
-import ky from "ky";
 import Stripe from "stripe";
+import type { Fetcher } from "types/http";
 import {
   anvil_envs,
   chariot_envs,
+  coingecko_api_key,
   discord_envs,
   env,
+  hubspot_envs,
   np_envs,
   qtash_envs,
   stripe_envs,
@@ -41,18 +43,37 @@ export const anvil = new Anvil({
   apiKey: anvil_envs.api_key,
 });
 
-const typesense = ky.create({
-  prefixUrl: typesense_envs.endpoint,
-  headers: {
-    "x-typesense-api-key": typesense_envs.api_key,
-    "content-type": "application/json",
-  },
-  throwHttpErrors: false,
-});
+export const coingecko: Fetcher = (url_fn, init_fn) => {
+  const x = new URL("https://api.coingecko.com");
+  const h = new Headers({
+    "x-cg-demo-api-key": coingecko_api_key,
+    accept: "application/json",
+  });
+  return fetch(
+    url_fn(x, (p) => p),
+    init_fn?.(h) || { headers: h }
+  );
+};
 
-export const typesense_funds = typesense.extend((x) => ({
-  prefixUrl: `${x.prefixUrl}/collections/funds`,
-}));
-export const typesense_npos = typesense.extend((x) => ({
-  prefixUrl: `${x.prefixUrl}/collections/npos`,
-}));
+export const typesense: Fetcher = (url_fn, init_fn) => {
+  const x = new URL(typesense_envs.endpoint);
+  const h = new Headers({
+    "x-typesense-api-key": typesense_envs.api_key,
+    accept: "application/json",
+  });
+  return fetch(
+    url_fn(x, (p) => p),
+    init_fn?.(h) || { headers: h }
+  );
+};
+
+export const hubspot_forms: Fetcher = (url_fn, init_fn) => {
+  const x = new URL(hubspot_envs.forms_api);
+  const h = new Headers({
+    authorization: `Bearer ${hubspot_envs.access_token}`,
+  });
+  return fetch(
+    url_fn(x, (p) => p),
+    init_fn?.(h) || { headers: h }
+  );
+};

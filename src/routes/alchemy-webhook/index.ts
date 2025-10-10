@@ -3,8 +3,8 @@ import type { Alert } from "@better-giving/helpers/discord";
 import { resp } from "helpers/https";
 import type { Route } from "./+types";
 import type { IPayload, IPriceByKey, TAlchemyChainId } from "./types";
-import { coingecko_api_key, deposit_addrs_envs } from ".server/env";
-import { aws_monitor } from ".server/sdks";
+import { deposit_addrs_envs } from ".server/env";
+import { aws_monitor, coingecko } from ".server/sdks";
 
 const cg_platform_ids: { [key in TAlchemyChainId]: string } = {
   "eth-mainnet": "ethereum",
@@ -46,13 +46,11 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 
     // fetch usd_rate
     const platform = cg_platform_ids[chain_id];
-    const path = `api/v3/simple/token_price/${platform}?contract_addresses=${contract}&vs_currencies=usd`;
-    const cg_res = await fetch(`https://api.coingecko.com/${path}`, {
-      headers: {
-        accept: "application/json",
-        "x-cg-demo-api-key": coingecko_api_key,
-      },
+    const cg_res = await coingecko((x) => {
+      x.pathname = `api/v3/simple/token_price/${platform}?contract_addresses=${contract}&vs_currencies=usd`;
+      return x;
     });
+
     if (!cg_res.ok) {
       console.error(`cg fetch failed: ${cg_res.statusText}`);
       continue;

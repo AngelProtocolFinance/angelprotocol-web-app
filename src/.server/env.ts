@@ -113,3 +113,10 @@ export const deposit_addrs_envs = (chain: string) => {
 export const bg_npo_id = Number.parseInt(_var("BG_NPO_ID"));
 
 export const cron_secret = _var("CRON_SECRET");
+
+export const hubspot_envs = {
+  access_token: _var("HUBSPOT_ACCESS_TOKEN"),
+  forms_api: _var("HUBSPOT_FORMS_API"),
+  subs_form_id: _var("HUBSPOT_SUBS_FORM_ID"),
+  portal_id: _var("HUBSPOT_PORTAL_ID"),
+};

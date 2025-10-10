@@ -176,9 +176,6 @@ importers:
       jose:
         specifier: 5.9.2
         version: 5.9.2
-      ky:
-        specifier: 1.7.2
-        version: 1.7.2
       lodash:
         specifier: 4.17.21
         version: 4.17.21
@@ -2943,10 +2940,6 @@ packages:
 
   ksuid@3.0.0:
     resolution: {integrity: sha512-81CkBGn/06ZVAjGvFZi6fVG8VcPeMH0JpJ4V1Z9VwrMMaGIeAjY4jrVdrIcxhL9I2ZUU6t5uiyswcmkk+KZegA==}
-
-  ky@1.7.2:
-    resolution: {integrity: sha512-OzIvbHKKDpi60TnF9t7UUVAF1B4mcqc02z5PIvrm08Wyb+yOcz63GRvEuVxNT18a9E1SrNouhB4W2NNLeD7Ykg==}
-    engines: {node: '>=18'}
 
   lefthook-darwin-arm64@1.13.0:
     resolution: {integrity: sha512-mhD4zOj2VRx34tptEc/lP643n5YAAVP95f/TiP6geQz4kpLwUrsTwQxzoXUIauU2DGSNbFtp9hVSE++0e4ESEA==}
@@ -7183,8 +7176,6 @@ snapshots:
   ksuid@3.0.0:
     dependencies:
       base-convert-int-array: 1.0.1
-
-  ky@1.7.2: {}
 
   lefthook-darwin-arm64@1.13.0:
     optional: true

@@ -1,4 +1,4 @@
-import { wp } from "api/api";
+import { wp } from "api/wp";
 import use_swr from "swr/immutable";
 import type { IMedia } from "types/wordpress";
 import { Image } from "./image";
@@ -11,7 +11,10 @@ export function Media(props: Props) {
     isLoading,
     error,
   } = use_swr(`media/${props.id}`, (path) => {
-    return wp.get<IMedia>(path).json();
+    return wp((x, p) => {
+      x.pathname = p(path);
+      return x;
+    }).then<IMedia>((res) => res.json());
   });
 
   if (!media || isLoading || error) {
