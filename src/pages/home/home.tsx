@@ -1,6 +1,5 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
-import { metas } from "helpers/seo";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types/home";
 import { Partners } from "./1-partners";
@@ -23,13 +22,6 @@ import { Testimonials } from "./testimonials";
 // import { Video } from "./video";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
-
-export const meta: Route.MetaFunction = () =>
-  metas({
-    title: "Fundraising Platform for Nonprofits | Better Giving",
-    description:
-      "Raise more this quarter and grow funds together. Better Giving offers free, high-converting donation forms, savings, and fund growth tools—no platform or management fees.",
-  });
 
 export default CacheRoute(Page);
 function Page({ loaderData: page1 }: Route.ComponentProps) {

@@ -10,8 +10,8 @@ interface Meta {
 }
 
 export const metas = ({
-  title = `Support an impact organization - ${APP_NAME}`,
-  description = `${APP_NAME} provides impact stakeholders with the tools to fundraise, coordinate, and invest capital.`,
+  title = `Fundraising Platform for Nonprofits - ${APP_NAME}`,
+  description = `Raise more this quarter and grow funds together. ${APP_NAME} offers free, high-converting donation forms, savings, and fund growth tools—no platform or management fees.`,
   image = SEO_IMAGE,
   url = BASE_URL,
 }: Meta): MetaDescriptor[] => [
