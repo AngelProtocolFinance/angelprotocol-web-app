@@ -109,10 +109,13 @@ export function Manifesto({ classes = "" }) {
                 <li>Share one win each year (we'll help write it).</li>
                 <li>Invite a peer via your referral link.</li>
               </ul>
-              <img
+              <motion.img
                 src={alliance_member_badge}
                 width={240}
                 className="self-start @2xl/panel:-mt-28 @max-2xl/panel:col-start-1 @max-2xl/panel:col-span-full @max-2xl/panel:w-40 @max-2xl/panel:mt-6 justify-self-center"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
               />
             </TabPanel>
           </TabPanels>
