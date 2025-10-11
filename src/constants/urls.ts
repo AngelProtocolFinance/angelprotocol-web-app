@@ -26,3 +26,6 @@ export const socials = {
 
 export const referrals_hub =
   "https://intercom.help/better-giving/en/collections/13341032-referral-program-resource-hub ";
+
+export const blob = (path: string) =>
+  `https://elktqtbc25yfiipw.public.blob.vercel-storage.com/${path}`;

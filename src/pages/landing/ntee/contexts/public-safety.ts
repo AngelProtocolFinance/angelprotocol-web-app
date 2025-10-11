@@ -1,3 +1,4 @@
+import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const public_safety: PageContext = {
@@ -10,8 +11,7 @@ export const public_safety: PageContext = {
   },
   red_copy:
     "Every dollar lost is a fire alarm unfunded, a training skipped, a neighborhood left exposed.",
-  hero: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/public-safety-hero.png",
-  left: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/public-safety-left.png",
-  right:
-    "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/public-safety-right.png",
+  hero: blob("public-safety-hero.png"),
+  left: blob("public-safety-left.png"),
+  right: blob("public-safety-right.png"),
 };

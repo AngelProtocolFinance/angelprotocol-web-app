@@ -1,3 +1,4 @@
+import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const religious_organizations: PageContext = {
@@ -10,8 +11,7 @@ export const religious_organizations: PageContext = {
   },
   red_copy:
     "Every dollar lost is a family turned away, a shelter at capacity, a basic need unmet.",
-  hero: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/religious-organizations-hero.png",
-  left: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/religious-organizations-left.png",
-  right:
-    "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/religious-organizations-right.png",
+  hero: blob("religious-organizations-hero.png"),
+  left: blob("religious-organizations-left.png"),
+  right: blob("religious-organizations-right.png"),
 };

@@ -1,3 +1,4 @@
+import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const human_services: PageContext = {
@@ -10,8 +11,7 @@ export const human_services: PageContext = {
   },
   red_copy:
     "Every dollar lost is a family turned away, a shelter at capacity, a basic need unmet.",
-  hero: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/human-services-hero.png",
-  left: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/human-services-left.png",
-  right:
-    "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/human-services-right.png",
+  hero: blob("human-services-hero.png"),
+  left: blob("human-services-left.png"),
+  right: blob("human-services-right.png"),
 };

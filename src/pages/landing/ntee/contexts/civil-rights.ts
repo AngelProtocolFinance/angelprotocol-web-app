@@ -1,3 +1,4 @@
+import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const civil_rights: PageContext = {
@@ -10,8 +11,7 @@ export const civil_rights: PageContext = {
   },
   red_copy:
     "Every dollar lost is a movement underfunded, a rally unorganized, a right left unprotected.",
-  hero: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/civil-rights-hero.png",
-  left: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/civil-rights-left.png",
-  right:
-    "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/civil-rights-right.png",
+  hero: blob("civil-rights-hero.png"),
+  left: blob("civil-rights-left.png"),
+  right: blob("civil-rights-right.png"),
 };

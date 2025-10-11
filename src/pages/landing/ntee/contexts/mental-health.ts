@@ -1,3 +1,4 @@
+import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const mental_health: PageContext = {
@@ -10,7 +11,7 @@ export const mental_health: PageContext = {
   },
   red_copy:
     "Every dollar lost to fees means a check-up delayed, a prescription unfilled, a preventable illness left to grow.",
-  hero: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/F%20-%20Mental%20Health%20%26%20Crisis%20Intervention.png",
-  left: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/Left.png",
-  right: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/Right.png",
+  hero: blob("F%20-%20Mental%20Health%20%26%20Crisis%20Intervention.png"),
+  left: blob("Left.png"),
+  right: blob("Right.png"),
 };
