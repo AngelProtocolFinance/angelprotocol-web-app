@@ -13,16 +13,16 @@ type Embla = NonNullable<UseEmblaCarouselType[1]>;
 
 interface DotButtonProps {
   selected: boolean;
-  onClick: () => void;
+  on_click: () => void;
 }
 
-const DotButton: FC<DotButtonProps> = ({ selected, onClick }) => (
+const DotButton: FC<DotButtonProps> = ({ selected, on_click }) => (
   <button
     className={`w-2 h-2 rounded-full border-blue-d1 border mx-1 transition-all ${
       selected ? "bg-blue-d1" : ""
     }`}
     type="button"
-    onClick={onClick}
+    onClick={on_click}
     aria-label="Navigation dot"
   />
 );
@@ -40,23 +40,23 @@ export function StepsCarousel({
     skipSnaps: false,
   });
 
-  const [idx, setIdx] = useState(0);
-  const [snaps, setSnaps] = useState<number[]>([]);
+  const [idx, set_idx] = useState(0);
+  const [snaps, set_snaps] = useState<number[]>([]);
 
   useEffect(() => {
     if (!embla) return;
-    const onInit = (mbl: Embla) => setSnaps(mbl.scrollSnapList());
-    const onSelect = (mbl: Embla) => setIdx(mbl.selectedScrollSnap());
-    onInit(embla);
-    onSelect(embla);
-    embla.on("reInit", onInit);
-    embla.on("reInit", onSelect);
-    embla.on("select", onSelect);
+    const on_init = (mbl: Embla) => set_snaps(mbl.scrollSnapList());
+    const on_select = (mbl: Embla) => set_idx(mbl.selectedScrollSnap());
+    on_init(embla);
+    on_select(embla);
+    embla.on("reInit", on_init);
+    embla.on("reInit", on_select);
+    embla.on("select", on_select);
 
     return () => {
-      embla.off("reInit", onInit);
-      embla.off("reInit", onSelect);
-      embla.off("select", onSelect);
+      embla.off("reInit", on_init);
+      embla.off("reInit", on_select);
+      embla.off("select", on_select);
     };
   }, [embla]);
 
@@ -81,7 +81,7 @@ export function StepsCarousel({
           <DotButton
             key={i}
             selected={i === idx}
-            onClick={() => embla?.scrollTo(i)}
+            on_click={() => embla?.scrollTo(i)}
           />
         ))}
       </div>
