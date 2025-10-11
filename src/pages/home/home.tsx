@@ -2,9 +2,9 @@
 import { Footer } from "components/footer";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import { Partners } from "../@sections/partners";
+import { Steps } from "../@sections/steps";
 import type { Route } from "./+types/home";
 import { Stats } from "./2-stats";
-import { Steps } from "./3-steps";
 import { Ctas } from "./4-ctas";
 import { Manifesto } from "./5-manifesto";
 import { Section6 } from "./6-section";
