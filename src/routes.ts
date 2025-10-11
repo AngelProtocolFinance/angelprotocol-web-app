@@ -63,6 +63,7 @@ export default [
   r("form-builder", widget.$("form-builder-layout.tsx")._, [
     index(widget.$("index.tsx")._, { id: "public-form-builder" }),
   ]),
+  r("donation-forms", pages.$("donation-forms/index.tsx")._),
 
   r("admin/:id", admin.$("layout.tsx")._, { id: "admin" }, [
     index(admin.$("redirect.ts")._),

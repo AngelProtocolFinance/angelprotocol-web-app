@@ -1,8 +1,8 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import { Partners } from "../@sections/partners";
 import type { Route } from "./+types/home";
-import { Partners } from "./1-partners";
 import { Stats } from "./2-stats";
 import { Steps } from "./3-steps";
 import { Ctas } from "./4-ctas";
