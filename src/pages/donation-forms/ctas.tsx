@@ -1,3 +1,4 @@
+import { BOOK_A_DEMO } from "constants/env";
 import { blob } from "constants/urls";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
@@ -28,12 +29,24 @@ export function Ctas({ classes = "" }) {
             a simple process for your donors, resulting in more completed gifts
             and more recurring donors.
           </p>
-          <Link
-            to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
-          >
-            Join us today!
-          </Link>
+          <div className="justify-self-center md:justify-self-start">
+            <Link
+              to={href("/register/welcome")}
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            >
+              Join us today!
+            </Link>
+            <div className="md:ml-3 max-md:text-center mt-2">
+              or,{" "}
+              <Link
+                target="_blank"
+                to={BOOK_A_DEMO}
+                className="text-sm indent-3 mt-2 underline hover:text-blue-d1"
+              >
+                get a demo
+              </Link>
+            </div>
+          </div>
         </motion.div>
         <img
           src={images[0]}
@@ -62,12 +75,24 @@ export function Ctas({ classes = "" }) {
             with no extra tools or portals. Every option is included so you
             capture more, and larger, gifts automatically.
           </p>
-          <Link
-            to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
-          >
-            Join us today!
-          </Link>
+          <div className="justify-self-center md:justify-self-start">
+            <Link
+              to={href("/register/welcome")}
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            >
+              Join us today!
+            </Link>
+            <div className="md:ml-3 max-md:text-center mt-2">
+              or,{" "}
+              <Link
+                target="_blank"
+                to={BOOK_A_DEMO}
+                className="text-sm indent-3 mt-2 underline hover:text-blue-d1"
+              >
+                get a demo
+              </Link>
+            </div>
+          </div>
         </motion.div>
       </article>
       <article className="grid md:grid-cols-2 items-center">
@@ -87,12 +112,24 @@ export function Ctas({ classes = "" }) {
             included automatically, building donor relationships and
             establishing trust.
           </p>
-          <Link
-            to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
-          >
-            Join us today!
-          </Link>
+          <div className="justify-self-center md:justify-self-start">
+            <Link
+              to={href("/register/welcome")}
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            >
+              Join us today!
+            </Link>
+            <div className="md:ml-3 max-md:text-center mt-2">
+              or,{" "}
+              <Link
+                target="_blank"
+                to={BOOK_A_DEMO}
+                className="text-sm indent-3 mt-2 underline hover:text-blue-d1"
+              >
+                get a demo
+              </Link>
+            </div>
+          </div>
         </motion.div>
         <img
           src={images[2]}
@@ -121,12 +158,24 @@ export function Ctas({ classes = "" }) {
             savings or choose our Sustainability Fund for long-term growth.
             Either way, your funds stay accessible and productive.
           </p>
-          <Link
-            to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
-          >
-            Join us today!
-          </Link>
+          <div className="justify-self-center md:justify-self-start">
+            <Link
+              to={href("/register/welcome")}
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            >
+              Join us today!
+            </Link>
+            <div className="md:ml-3 max-md:text-center mt-2">
+              or,{" "}
+              <Link
+                target="_blank"
+                to={BOOK_A_DEMO}
+                className="text-sm indent-3 mt-2 underline hover:text-blue-d1"
+              >
+                get a demo
+              </Link>
+            </div>
+          </div>
         </motion.div>
       </article>
     </section>
