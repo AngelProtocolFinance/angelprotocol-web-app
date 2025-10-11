@@ -1,3 +1,4 @@
+import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const community_improvement: PageContext = {
@@ -10,8 +11,7 @@ export const community_improvement: PageContext = {
   },
   red_copy:
     "Every dollar lost is a playground never fixed, a program unfunded, a voice left unheard at city hall.",
-  hero: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/community-improvement-hero.png",
-  left: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/community-improvement-left.png",
-  right:
-    "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/community-improvement-right.png",
+  hero: blob("community-improvement-hero.png"),
+  left: blob("community-improvement-left.png"),
+  right: blob("community-improvement-right.png"),
 };

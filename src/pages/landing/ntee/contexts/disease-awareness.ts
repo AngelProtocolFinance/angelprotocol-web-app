@@ -1,3 +1,4 @@
+import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const disease_awareness: PageContext = {
@@ -10,8 +11,7 @@ export const disease_awareness: PageContext = {
   },
   red_copy:
     "Every dollar lost is a lab left underfunded, a discovery shelved, a cure that stays out of reach.",
-  hero: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/disease-awareness-hero.png",
-  left: "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/disease-awareness-left.png",
-  right:
-    "https://elktqtbc25yfiipw.public.blob.vercel-storage.com/disease-awareness-right.png",
+  hero: blob("disease-awareness-hero.png"),
+  left: blob("disease-awareness-left.png"),
+  right: blob("disease-awareness-right.png"),
 };

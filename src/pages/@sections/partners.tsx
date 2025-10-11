@@ -1,7 +1,7 @@
+import { blob } from "constants/urls";
 import { motion } from "motion/react";
 
-const logo_url = (num: number) =>
-  `https://elktqtbc25yfiipw.public.blob.vercel-storage.com/partners/${num}.svg`;
+const logo_url = (num: number) => blob(`partners/${num}.svg`);
 
 const partners = Array.from({ length: 76 }, (_, i) => ({
   id: i + 1,
