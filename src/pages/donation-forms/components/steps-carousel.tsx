@@ -85,7 +85,7 @@ export function StepsCarousel({
           />
         ))}
       </div>
-      <div className="absolute grid top-3/4 -right-20 z-10">
+      <div className="max-md:hidden absolute grid top-3/4 -right-20 z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="41"

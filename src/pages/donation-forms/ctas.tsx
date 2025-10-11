@@ -10,7 +10,7 @@ const images = Array.from({ length: 4 }, (_, i) =>
 export function Ctas({ classes = "" }) {
   return (
     <section
-      className={`${classes} grid gap-y-20 md:gap-y-32 px-5 md:px-24 py-16`}
+      className={`${classes} grid gap-y-20 md:gap-y-32 px-5 md:px-24 py-14 md:py-28`}
       aria-label="Key benefits"
     >
       <article className="grid md:grid-cols-2 items-center">
