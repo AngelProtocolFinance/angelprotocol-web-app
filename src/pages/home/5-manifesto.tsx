@@ -1,4 +1,5 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import alliance_member_badge_rect from "assets/images/alliance-member-badge-rectangle.png";
 import alliance_member_badge from "assets/images/alliance-member-badge.png";
 import laira_pointing from "assets/laira/laira-pointing.webp";
 import laira_yellow from "assets/laira/laira-yellow.webp";
@@ -109,14 +110,24 @@ export function Manifesto({ classes = "" }) {
                 <li>Share one win each year (we'll help write it).</li>
                 <li>Invite a peer via your referral link.</li>
               </ul>
-              <motion.img
-                src={alliance_member_badge}
-                width={240}
-                className="self-start @2xl/panel:-mt-28 @max-2xl/panel:col-start-1 @max-2xl/panel:col-span-full @max-2xl/panel:w-40 @max-2xl/panel:mt-6 justify-self-center"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              />
+              <div className="flex gap-4 flex-wrap justify-center @max-2xl/panel:justify-center self-start @2xl/panel:-mt-28 @max-2xl/panel:col-start-1 @max-2xl/panel:col-span-full @max-2xl/panel:mt-6 w-full">
+                <motion.img
+                  src={alliance_member_badge}
+                  width={240}
+                  className="relative -left-1"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                />
+                <motion.img
+                  className="@2xl/panel:hidden object-contain relative bottom-2 -right-2"
+                  src={alliance_member_badge_rect}
+                  width={270}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                />
+              </div>
             </TabPanel>
           </TabPanels>
         </TabGroup>
