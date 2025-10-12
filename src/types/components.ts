@@ -5,10 +5,9 @@ import * as v from "valibot";
 
 import type { DBCurrency } from "types/currency";
 
-export interface TokenWithDetails extends IToken {
+export interface ITokenFv extends IToken {
   amount: string;
   min: number;
-  /** usd/unit */
   rate: number;
 }
 //selector

@@ -1,7 +1,7 @@
 import type {
   OptionType,
   RichTextContent,
-  TokenWithDetails as TWD,
+  ITokenFv as TWD,
 } from "types/components";
 import {
   type NumberSchema,
@@ -14,7 +14,6 @@ import {
   object,
   string,
 } from "yup";
-import { requiredString } from "./string";
 import type { SchemaShape } from "./types";
 
 /**
@@ -23,7 +22,7 @@ import type { SchemaShape } from "./types";
  *
  * See https://github.com/jquense/yup?tab=readme-ov-file#number
  */
-export const stringNumber = (
+export const str_num = (
   str: (schema: StringSchema) => StringSchema,
   num: (schema: NumberSchema) => NumberSchema
 ) =>
@@ -41,26 +40,26 @@ export function schema<T extends object>(shape: SchemaShape<T>) {
 
 type Key = keyof TWD;
 type Min = TWD["min"];
-const minKey: Key = "min";
+const min_key: Key = "min";
 
-export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
+export const token_shape = (withMin = true): SchemaShape<TWD> => ({
   id: string().required("select token"),
-  amount: stringNumber(
+  amount: str_num(
     (s) => s.required("required"),
     (num) =>
       num
         .positive("invalid: must be greater than zero ")
-        .when([minKey], (values, schema) => {
-          const [minAmount] = values as [Min];
-          return withMin && !!minAmount
-            ? schema.min(minAmount || 0, "less than minimum")
+        .when([min_key], (values, schema) => {
+          const [min_amount] = values as [Min];
+          return withMin && !!min_amount
+            ? schema.min(min_amount || 0, "less than minimum")
             : schema;
         })
         .test((val, context) => {
           if (!val) return true;
-          const numDecimals = val.toString().split(".").at(1)?.length ?? 0;
+          const num_decials = val.toString().split(".").at(1)?.length ?? 0;
           const precision = context.parent.precision;
-          if (numDecimals <= precision) return true;
+          if (num_decials <= precision) return true;
           return new ValidationError(
             `can't be more than ${precision} decimals`,
             precision,
@@ -69,12 +68,6 @@ export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
         })
   ),
 });
-
-export const optionType = ({ required } = { required: false }) =>
-  object<any, SchemaShape<OptionType<string>>>({
-    label: required ? requiredString : string(),
-    value: required ? requiredString : string(),
-  });
 
 export function richtext_content(
   options: {

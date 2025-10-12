@@ -5,6 +5,7 @@ import { centsDecimals, humanize } from "helpers/decimal";
 export type OnIncrement = (increment: number) => void;
 
 interface Props {
+  disabled?: boolean;
   rate: number;
   precision?: number;
   code: string;
@@ -34,6 +35,7 @@ interface IIncrementer extends Props {
 }
 
 function Incrementer({
+  disabled,
   rate,
   inc,
   code,
@@ -43,9 +45,10 @@ function Incrementer({
   const value = rate * +inc.value;
   return (
     <button
+      disabled={disabled}
       data-testid="incrementer"
       type="button"
-      className="grid group/incrementer has-data-label:grid-rows-subgrid gap-y-1 row-span-2 rounded-lg p-2 bg-(--accent-primary)"
+      className="grid group/incrementer has-data-label:grid-rows-subgrid gap-y-1 row-span-2 rounded-lg p-2 bg-(--accent-primary) disabled:bg-gray-l2"
       onClick={() => on_increment(value)}
     >
       <span className="text-left text-sm font-medium text-white group-active/incrementer:translate-x-1">

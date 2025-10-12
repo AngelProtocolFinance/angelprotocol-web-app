@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { centsDecimals, roundDown } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
-import { schema, tokenShape } from "schemas/shape";
+import { schema, token_shape } from "schemas/shape";
 import { object } from "yup";
 import { init_token_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
@@ -26,7 +26,7 @@ export function use_rhf(props: Props) {
     defaultValues: props.details || initial,
     resolver: yupResolver(
       schema<DV>({
-        token: object(tokenShape()),
+        token: object(token_shape()),
         //no need to validate split, restricted by slider
       })
     ),

@@ -1,6 +1,6 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
-import type { OptionType, TokenWithDetails } from "types/components";
+import type { ITokenFv } from "types/components";
 import { db_currency } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
 export {
@@ -45,7 +45,7 @@ export interface ProgramOption extends v.InferOutput<typeof program_opt> {}
 
 export type CryptoDonationDetails = {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
-  token: TokenWithDetails;
+  token: ITokenFv;
 };
 
 export const amount = v.lazy((x) => {

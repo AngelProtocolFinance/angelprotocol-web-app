@@ -8,7 +8,7 @@ export type Fetcher = (
   init_fn?: InitFunc
 ) => Promise<Response>;
 
-export interface ITokenMin {
+export interface ITokenEstimate {
   min: number;
   /** usd/unit */
   rate: number;

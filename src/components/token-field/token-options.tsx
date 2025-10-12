@@ -36,7 +36,7 @@ function TokenCombobox(x: ITokenCombobox) {
     <Combobox
       value={x.value}
       virtual={{ options: x.opts }}
-      onChange={x.on_change}
+      onChange={(v) => v && x.on_change(v)}
     >
       <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded-sm mb-1 border border-gray-l3">
         <ComboboxInput

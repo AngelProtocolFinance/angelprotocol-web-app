@@ -1,6 +1,6 @@
 import { is_custom, tokens_map } from "@better-giving/assets/tokens";
 import { resp } from "helpers/https";
-import type { ITokenMin } from "types/api";
+import type { ITokenEstimate } from "types/api";
 import type { Route } from "./+types/token-min-usd";
 import { coingecko, np } from ".server/sdks";
 
@@ -20,7 +20,7 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
       [tkn.cg_id]: { usd: rate },
     } = await res.json();
 
-    return resp.json({ min: 1 / rate, rate } satisfies ITokenMin);
+    return resp.json({ min: 1 / rate, rate } satisfies ITokenEstimate);
   }
 
   const { min, min_usd, rate } = await np.estimate(tkn.code);
@@ -33,5 +33,5 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
    - 2.5% spread in case server estimate is not the same
    */
   const adjusted = gt_bg_min * 1.03;
-  return resp.json({ min: adjusted, rate } satisfies ITokenMin);
+  return resp.json({ min: adjusted, rate } satisfies ITokenEstimate);
 };

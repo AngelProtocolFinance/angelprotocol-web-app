@@ -11,8 +11,7 @@ import Fuse from "fuse.js";
 import { round_to_cents } from "helpers/decimal";
 import { useMemo, useState } from "react";
 import { href } from "react-router";
-import use_swr from "swr/immutable";
-import type { ITokenMin } from "types/api";
+import type { ITokenEstimate } from "types/api";
 import {
   TokenField,
   TokenOptions,
@@ -23,7 +22,7 @@ import { Incrementers } from "../../common/incrementers";
 import { use_donation_state } from "../../context";
 import type { CryptoFormStep } from "../../types";
 import { next_form_state } from "../helpers";
-import type { DonateValues } from "./types";
+import type { DonateValues, TTokenState } from "./types";
 import { use_rhf } from "./use-rhf";
 
 const tokens_fuse = new Fuse<IToken>(tokens_list, {
@@ -32,6 +31,7 @@ const tokens_fuse = new Fuse<IToken>(tokens_list, {
 const subset = tokens_list.slice(0, 10).map((x) => x.code);
 
 export function Form(props: CryptoFormStep) {
+  const [token_state, set_token_state] = useState<TTokenState>("Select token");
   const [token_q, set_token_q] = useState("");
   const filtered = useMemo(
     () =>
@@ -51,18 +51,6 @@ export function Form(props: CryptoFormStep) {
     set_state((prev) => next_form_state(prev, { ...fv, method: "crypto" }));
     reset();
   }
-
-  const { data, error, isLoading } = use_swr(
-    token.value.code
-      ? href("/api/tokens/:code/min-usd", { code: token.value.code })
-      : null,
-    (p) => fetch(p).then<ITokenMin>((res) => res.json()),
-    {
-      onSuccess: (x) => {
-        token.onChange({ ...token.value, rate: x.rate, min: x.min });
-      },
-    }
-  );
 
   const opts = (
     <TokenOptions
@@ -99,30 +87,28 @@ export function Form(props: CryptoFormStep) {
       opts={filtered}
       on_change={async (c) => {
         const t = tokens_map[c];
-        token.onChange({ ...token.value, ...t });
+        try {
+          set_token_state("loading");
+          const res = await fetch(
+            href("/api/tokens/:code/min-usd", { code: c })
+          );
+          if (!res.ok) throw res;
+          const { rate, min }: ITokenEstimate = await res.json();
+          set_token_state(
+            <span style={{ color: t.color }} className="font-semibold">
+              {t.symbol}
+            </span>
+          );
+          token.onChange({ ...token.value, ...t, rate, min });
+        } catch (err) {
+          console.error(err);
+          set_token_state("error");
+        }
       }}
     />
   );
 
-  const selector = (
-    <TokenSelector
-      options={opts}
-      btn={
-        isLoading ? (
-          "loading"
-        ) : error ? (
-          "error"
-        ) : (
-          <span
-            style={{ color: token.value.color }}
-            className={`${token.value.code ? "font-semibold" : ""}`}
-          >
-            {token.value.symbol}
-          </span>
-        )
-      }
-    />
-  );
+  const selector = <TokenSelector options={opts} btn={token_state} />;
 
   return (
     <form
@@ -134,7 +120,7 @@ export function Form(props: CryptoFormStep) {
         selector={selector}
         ref={token.ref}
         amount={token.value.amount}
-        amount_usd={(data?.rate ?? 0) * +token.value.amount}
+        amount_usd={token.value.rate * +token.value.amount}
         on_change={(x) => token.onChange({ ...token.value, amount: x })}
         error={errors.token}
         label="Donation amount"
@@ -154,8 +140,9 @@ export function Form(props: CryptoFormStep) {
         }
       />
 
-      {token.value.code && token.value.rate && (
+      {token.value.code && (
         <Incrementers
+          disabled={token_state === "error" || token_state === "loading"}
           on_increment={on_increment}
           code={token.value.symbol}
           rate={token.value.rate}
@@ -169,7 +156,11 @@ export function Form(props: CryptoFormStep) {
         />
       )}
 
-      <ContinueBtn disabled={!!error} className="mt-auto" type="submit" />
+      <ContinueBtn
+        disabled={token_state === "error" || token_state === "loading"}
+        className="mt-auto"
+        type="submit"
+      />
     </form>
   );
 }

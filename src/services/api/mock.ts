@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { href } from "react-router";
-import type { ITokenMin } from "types/api";
+import type { ITokenEstimate } from "types/api";
 
 export const fiatDonationIntentCreationErrorHandler = http.post(
   "/api/donation-intents/stripe",
@@ -16,6 +16,6 @@ export const handlers = [
     });
   }),
   http.get(href("/api/tokens/:code/min-usd", { code: ":code" }), () => {
-    return HttpResponse.json({ min: 1, rate: 1 } satisfies ITokenMin);
+    return HttpResponse.json({ min: 1, rate: 1 } satisfies ITokenEstimate);
   }),
 ];
