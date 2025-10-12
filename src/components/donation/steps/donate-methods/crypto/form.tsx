@@ -54,7 +54,7 @@ export function Form(props: CryptoFormStep) {
 
   const { data, error, isLoading } = use_swr(
     token.value.code
-      ? href("/api/tokens/:code/min_usd", { code: token.value.code })
+      ? href("/api/tokens/:code/min-usd", { code: token.value.code })
       : null,
     (p) => fetch(p).then<ITokenMin>((res) => res.json()),
     {
@@ -154,7 +154,7 @@ export function Form(props: CryptoFormStep) {
         }
       />
 
-      {token.value.id && token.value.rate && (
+      {token.value.code && token.value.rate && (
         <Incrementers
           on_increment={on_increment}
           code={token.value.symbol}

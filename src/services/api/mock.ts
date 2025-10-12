@@ -15,7 +15,7 @@ export const handlers = [
       clientSecret: "fake_intent_id",
     });
   }),
-  http.get(href("/api/tokens/:code/min_usd", { code: ":code" }), () => {
+  http.get(href("/api/tokens/:code/min-usd", { code: ":code" }), () => {
     return HttpResponse.json({ min: 1, rate: 1 } satisfies ITokenMin);
   }),
 ];
