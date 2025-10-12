@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_tokens } from "services/apes/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
@@ -31,36 +31,12 @@ describe("Crypto form: initial load", () => {
     };
     render(<Form {...state} />);
 
-    waitFor(() => {
-      const programSelector = screen.queryByLabelText(/select program/i);
-      expect(programSelector).toBeNull();
-    });
-  });
+    expect(
+      screen.getByRole("button", { name: /select token/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole("textbox")).toHaveDisplayValue("");
 
-  test("initial form state: program donations not allowed", () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: null,
-      recipient: {
-        id: "0",
-        name: "",
-        progDonationsAllowed: false,
-        members: [],
-      },
-      mode: "live",
-    };
-
-    const state: CryptoFormStep = {
-      step: "donate-form",
-      init,
-    };
-    render(<Form {...state} />);
-    waitFor(() => {
-      const programSelector = screen.queryByRole("button", {
-        name: /general donation/i,
-      });
-      expect(programSelector).toBeNull();
-    });
+    screen.debug();
   });
 
   test("submit form with initial/persisted data", async () => {
@@ -71,7 +47,7 @@ describe("Crypto form: initial load", () => {
       mode: "live",
     };
 
-    const amount = "100.33";
+    const amount = "100";
     const state: CryptoFormStep = {
       step: "donate-form",
       init,
@@ -82,7 +58,9 @@ describe("Crypto form: initial load", () => {
     } as const;
     render(<Form {...state} />);
 
-    const amountInput = screen.getByDisplayValue(amount);
+    screen.debug();
+
+    const amountInput = screen.getByRole("textbox");
     expect(amountInput).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });

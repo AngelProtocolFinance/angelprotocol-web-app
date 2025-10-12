@@ -1,7 +1,23 @@
-import { DONATION_INCREMENTS } from "constants/common";
+import {
+  type IToken,
+  chains,
+  is_custom,
+  tokens_list,
+  tokens_map,
+} from "@better-giving/assets/tokens";
+import { CloseButton, ComboboxOption } from "@headlessui/react";
+import { DONATION_INCREMENTS, logo_url } from "constants/common";
+import Fuse from "fuse.js";
+import { round_to_cents } from "helpers/decimal";
+import { useMemo, useState } from "react";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
-import { TokenField, TokenSelector } from "../../../../token-field";
+import type { ITokenMin } from "types/api";
+import {
+  TokenField,
+  TokenOptions,
+  TokenSelector,
+} from "../../../../token-field";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
 import { use_donation_state } from "../../context";
@@ -9,9 +25,24 @@ import type { CryptoFormStep } from "../../types";
 import { next_form_state } from "../helpers";
 import type { DonateValues } from "./types";
 import { use_rhf } from "./use-rhf";
-import type { ITokenMin } from "types/api";
+
+const tokens_fuse = new Fuse<IToken>(tokens_list, {
+  keys: ["name", "code", "network", "symbol"],
+});
+const subset = tokens_list.slice(0, 10).map((x) => x.code);
 
 export function Form(props: CryptoFormStep) {
+  const [token_q, set_token_q] = useState("");
+  const filtered = useMemo(
+    () =>
+      !token_q
+        ? subset
+        : tokens_fuse
+            .search(token_q, { limit: 10 })
+            .map(({ item }) => item.code),
+    [token_q]
+  );
+
   const { set_state } = use_donation_state();
 
   const { handleSubmit, reset, token, errors, on_increment } = use_rhf(props);
@@ -21,15 +52,75 @@ export function Form(props: CryptoFormStep) {
     reset();
   }
 
-  const { data, error, isLoading, mutate } = use_swr(
-    href("/api/tokens/:id/min_usd", { id: token.value.id }),
-    (p) => fetch(p).then<ITokenMin>((res) => res.json())
+  const { data, error, isLoading } = use_swr(
+    token.value.code
+      ? href("/api/tokens/:code/min_usd", { code: token.value.code })
+      : null,
+    (p) => fetch(p).then<ITokenMin>((res) => res.json()),
+    {
+      onSuccess: (x) => {
+        token.onChange({ ...token.value, rate: x.rate, min: x.min });
+      },
+    }
   );
 
-  const selctor = (
+  const opts = (
+    <TokenOptions
+      q={token_q}
+      on_q_change={(x) => set_token_q(x)}
+      opt_disp={(code) => {
+        const t = tokens_map[code];
+        return (
+          <ComboboxOption
+            as={CloseButton}
+            key={code}
+            className={
+              "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) cursor-pointer"
+            }
+            value={code}
+          >
+            <img
+              src={logo_url(t.logo, is_custom(t.id))}
+              className="w-6 h-6 rounded-full row-span-2"
+            />
+
+            <span className="text-sm">{t.symbol}</span>
+
+            <p
+              style={{ color: t.color }}
+              className="text-xs col-start-2 text-left"
+            >
+              {chains[t.network].name}
+            </p>
+          </ComboboxOption>
+        );
+      }}
+      value={token.value.code}
+      opts={filtered}
+      on_change={async (c) => {
+        const t = tokens_map[c];
+        token.onChange({ ...token.value, ...t });
+      }}
+    />
+  );
+
+  const selector = (
     <TokenSelector
-      octor
-      btn={isLoading ? "loading" : error || !data ? "error" : q}
+      options={opts}
+      btn={
+        isLoading ? (
+          "loading"
+        ) : error ? (
+          "error"
+        ) : (
+          <span
+            style={{ color: token.value.color }}
+            className={`${token.value.code ? "font-semibold" : ""}`}
+          >
+            {token.value.symbol}
+          </span>
+        )
+      }
     />
   );
 
@@ -40,11 +131,27 @@ export function Form(props: CryptoFormStep) {
       autoComplete="off"
     >
       <TokenField
+        selector={selector}
         ref={token.ref}
         amount={token.value.amount}
+        amount_usd={(data?.rate ?? 0) * +token.value.amount}
         on_change={(x) => token.onChange({ ...token.value, amount: x })}
         error={errors.token}
         label="Donation amount"
+        min_amount={
+          token.value.min ? (
+            <p className="text-xs my-1">
+              Minimum amount: {token.value.symbol}{" "}
+              {round_to_cents(
+                token.value.min,
+                token.value.rate,
+                token.value.precision
+              )}
+            </p>
+          ) : (
+            <div className="py-1" />
+          )
+        }
       />
 
       {token.value.id && token.value.rate && (
@@ -62,7 +169,7 @@ export function Form(props: CryptoFormStep) {
         />
       )}
 
-      <ContinueBtn className="mt-auto" type="submit" />
+      <ContinueBtn disabled={!!error} className="mt-auto" type="submit" />
     </form>
   );
 }

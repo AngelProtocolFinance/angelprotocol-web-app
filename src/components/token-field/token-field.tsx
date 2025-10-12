@@ -9,13 +9,14 @@ const Field: React.ForwardRefRenderFunction<El, ITokenField> = (props, ref) => {
   const style = unpack(props.classes);
 
   return (
-    <div className={`grid ${style.container} gap-y-1`}>
+    <div className={`grid ${style.container}`}>
       <label
         htmlFor="amount"
         className={`font-semibold mr-auto after:content-['_*'] after:text-red ${style.label}`}
       >
         {props.label}
       </label>
+      {props.min_amount}
 
       <div className="grid grid-cols-[auto_1fr] field-input-container rounded-lg pr-5 divide-x divide-gray-l3">
         {props.selector}

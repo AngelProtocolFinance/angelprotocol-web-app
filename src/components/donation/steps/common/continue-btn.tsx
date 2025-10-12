@@ -13,7 +13,7 @@ export function ContinueBtn({
     <button
       {...props}
       type={type}
-      className={`btn btn-blue bg-(--accent-primary) hover:enabled:bg-(--accent-primary) btn-donate ${className}`}
+      className={`btn btn-blue enabled:bg-(--accent-primary) btn-donate ${className}`}
     >
       <span className="mr-4">{text}</span>
       <ArrowRight size={18} />
