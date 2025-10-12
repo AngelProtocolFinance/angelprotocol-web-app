@@ -31,7 +31,11 @@ const tokens_fuse = new Fuse<IToken>(tokens_list, {
 const subset = tokens_list.slice(0, 10).map((x) => x.code);
 
 export function Form(props: CryptoFormStep) {
-  const [token_state, set_token_state] = useState<TTokenState>("Select token");
+  const [token_state, set_token_state] = useState<TTokenState>(
+    <span className="font-bold uppercase text-xs animate-pulse">
+      Select token
+    </span>
+  );
   const [token_q, set_token_q] = useState("");
   const filtered = useMemo(
     () =>
