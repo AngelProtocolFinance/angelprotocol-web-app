@@ -1,7 +1,6 @@
 import { CurrencySelector } from "components/currency-selector";
 import { Form as FieldSet, MaskedInput } from "components/form";
 import { currency as curr_mask } from "components/form/masks";
-import { useEffect } from "react";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
 import type { DBCurrency, UserCurrencies } from "types/currency";
@@ -15,19 +14,19 @@ import type { Props } from "./types";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: Props) {
-  const currency = use_swr(href("/api/currencies"), (path) =>
-    fetch(path).then<UserCurrencies>((res) => res.json())
-  );
   const { set_state } = use_donation_state();
   const rhf = use_rhf(props);
 
-  const user_currency = currency.data?.pref;
-  //biome-ignore lint:
-  useEffect(() => {
-    if (user_currency && !props.details?.currency) {
-      rhf.currency.onChange(user_currency);
+  const currency = use_swr(
+    href("/api/currencies"),
+    (path) => fetch(path).then<UserCurrencies>((res) => res.json()),
+    {
+      onSuccess: (data) => {
+        if (!data.pref) return;
+        rhf.currency.onChange(data.pref);
+      },
     }
-  }, [user_currency]);
+  );
 
   return (
     <FieldSet
