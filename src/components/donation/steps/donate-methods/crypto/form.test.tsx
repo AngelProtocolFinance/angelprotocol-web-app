@@ -31,12 +31,8 @@ describe("Crypto form: initial load", () => {
     };
     render(<Form {...state} />);
 
-    expect(
-      screen.getByRole("button", { name: /select token/i })
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/select token/i)).toBeInTheDocument();
     expect(screen.getByRole("textbox")).toHaveDisplayValue("");
-
-    screen.debug();
   });
 
   test("submit form with initial/persisted data", async () => {
@@ -57,8 +53,6 @@ describe("Crypto form: initial load", () => {
       },
     } as const;
     render(<Form {...state} />);
-
-    screen.debug();
 
     const amountInput = screen.getByRole("textbox");
     expect(amountInput).toBeInTheDocument();
@@ -123,7 +117,7 @@ describe("Crypto form: initial load", () => {
     expect(screen.getByRole("paragraph")).toHaveTextContent(/select token/i);
 
     //user selects token
-    const tokenSelector = screen.getByRole("button", { name: /select token/i });
+    const tokenSelector = screen.getByPlaceholderText(/select token/i);
     await userEvent.click(tokenSelector);
 
     const tokenOptions = screen.getAllByRole("option");

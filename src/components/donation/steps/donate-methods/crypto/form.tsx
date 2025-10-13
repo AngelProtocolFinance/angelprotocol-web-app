@@ -6,17 +6,14 @@ import {
   tokens_map,
 } from "@better-giving/assets/tokens";
 import { CloseButton, ComboboxOption } from "@headlessui/react";
+import { TokenCombobox } from "components/token-field/token-combobox";
 import { DONATION_INCREMENTS, logo_url } from "constants/common";
 import Fuse from "fuse.js";
 import { round_to_cents } from "helpers/decimal";
 import { useMemo, useState } from "react";
 import { href } from "react-router";
 import type { ITokenEstimate } from "types/api";
-import {
-  TokenField,
-  TokenOptions,
-  TokenSelector,
-} from "../../../../token-field";
+import { TokenField, btn_disp } from "../../../../token-field";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
 import { use_donation_state } from "../../context";
@@ -31,11 +28,7 @@ const tokens_fuse = new Fuse<IToken>(tokens_list, {
 const subset = tokens_list.slice(0, 10).map((x) => x.code);
 
 export function Form(props: CryptoFormStep) {
-  const [token_state, set_token_state] = useState<TTokenState>(
-    <span className="font-bold uppercase text-xs animate-pulse">
-      Select token
-    </span>
-  );
+  const [token_state, set_token_state] = useState<TTokenState>(undefined);
   const [token_q, set_token_q] = useState("");
   const filtered = useMemo(
     () =>
@@ -56,12 +49,17 @@ export function Form(props: CryptoFormStep) {
     reset();
   }
 
-  const opts = (
-    <TokenOptions
+  const combobox = (
+    <TokenCombobox
+      classes="[&:has(:placeholder-shown)]:w-34 w-24"
+      disabled={token_state === "loading"}
       q={token_q}
       on_q_change={(x) => set_token_q(x)}
+      btn_disp={(open) => btn_disp(open, token_state)}
+      input_disp={(code) => tokens_map[code]?.symbol || ""}
       opt_disp={(code) => {
         const t = tokens_map[code];
+
         return (
           <ComboboxOption
             as={CloseButton}
@@ -92,17 +90,14 @@ export function Form(props: CryptoFormStep) {
       on_change={async (c) => {
         const t = tokens_map[c];
         try {
+          token.onChange({ ...t, amount: token.value.amount });
           set_token_state("loading");
           const res = await fetch(
             href("/api/tokens/:code/min-usd", { code: c })
           );
           if (!res.ok) throw res;
           const { rate, min }: ITokenEstimate = await res.json();
-          set_token_state(
-            <span style={{ color: t.color }} className="font-semibold">
-              {t.symbol}
-            </span>
-          );
+          set_token_state(undefined);
           token.onChange({ ...token.value, ...t, rate, min });
         } catch (err) {
           console.error(err);
@@ -112,8 +107,6 @@ export function Form(props: CryptoFormStep) {
     />
   );
 
-  const selector = <TokenSelector options={opts} btn={token_state} />;
-
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -121,7 +114,7 @@ export function Form(props: CryptoFormStep) {
       autoComplete="off"
     >
       <TokenField
-        selector={selector}
+        selector={combobox}
         ref={token.ref}
         amount={token.value.amount}
         amount_usd={token.value.rate * +token.value.amount}
@@ -144,7 +137,7 @@ export function Form(props: CryptoFormStep) {
         }
       />
 
-      {token.value.code && (
+      {token.value.code && !token_state && (
         <Incrementers
           disabled={token_state === "error" || token_state === "loading"}
           on_increment={on_increment}

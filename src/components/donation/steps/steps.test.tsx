@@ -149,13 +149,9 @@ describe("donation flow", () => {
     await userEvent.click(cryptoTab);
 
     //select token
-    const tokenSelectorOpener = screen.getByRole("button", {
-      name: /select token/i,
-    });
-    await userEvent.click(tokenSelectorOpener);
+    const token_selector = screen.getByPlaceholderText(/select token/i);
     //wait for token dropdown to load
-    const tokenSearchInput = await screen.findByPlaceholderText("Search...");
-    await userEvent.click(tokenSearchInput);
+    await userEvent.click(token_selector);
     const tokenOptions = screen.getAllByRole("option");
     await userEvent.click(tokenOptions[0]);
 

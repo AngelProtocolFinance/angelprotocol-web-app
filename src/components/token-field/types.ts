@@ -17,3 +17,5 @@ export interface ITokenField {
   disabled?: boolean;
   classes?: Classes;
 }
+
+export type TTokenState = "loading" | "error" | undefined;
