@@ -1,7 +1,7 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
 import type { ITokenFv } from "types/components";
-import { db_currency } from "types/currency";
+import { currency_fv } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
 export {
   type Tribute,
@@ -60,7 +60,7 @@ export const amount = v.lazy((x) => {
 
 export const fiat_donation_details = v.object({
   amount,
-  currency: db_currency,
+  currency: currency_fv,
 });
 
 export interface FiatDonationDetails

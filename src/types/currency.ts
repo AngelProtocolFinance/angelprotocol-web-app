@@ -1,6 +1,6 @@
 import * as v from "valibot";
 
-export const db_currency = v.object({
+export const currency_fv = v.object({
   /** lowercase */
   code: v.string(),
   /** unit per usd, wise currency doesn't have rate */
@@ -8,9 +8,9 @@ export const db_currency = v.object({
   min: v.number(),
 });
 
-export interface DBCurrency extends v.InferOutput<typeof db_currency> {}
+export interface ICurrencyFv extends v.InferOutput<typeof currency_fv> {}
 
-export interface UserCurrencies {
-  pref?: DBCurrency;
-  all: DBCurrency[];
+export interface ICurrenciesFv {
+  pref?: ICurrencyFv;
+  all: ICurrencyFv[];
 }

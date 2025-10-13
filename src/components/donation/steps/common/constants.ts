@@ -1,5 +1,5 @@
 import type { DonateMethodId } from "@better-giving/endowment";
-import type { DBCurrency, ITokenFv, OptionType } from "types/components";
+import type { ICurrencyFv, ITokenFv, OptionType } from "types/components";
 import type {
   DonationDetails,
   DonationState,
@@ -28,7 +28,7 @@ export const init_token_option: ITokenFv = {
 };
 
 export const USD_CODE = "usd";
-export const usd_option: DBCurrency = { code: USD_CODE, min: 1, rate: 1 };
+export const usd_option: ICurrencyFv = { code: USD_CODE, min: 1, rate: 1 };
 
 export const init_details = (
   methodId: DonateMethodId,

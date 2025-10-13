@@ -3,7 +3,7 @@ import { donate_method_id } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
 
-import type { DBCurrency } from "types/currency";
+import type { ICurrencyFv } from "types/currency";
 
 export interface ITokenFv extends IToken {
   amount: string;
@@ -24,7 +24,7 @@ export interface WiseCurrencyOption
   extends v.InferOutput<typeof wise_currency_option> {}
 
 export type CurrencyOption =
-  | DBCurrency
+  | ICurrencyFv
   | { name: string; code: string; rate: null };
 /**
  * Rich text strings contain not only the user input itself, but is a
@@ -86,7 +86,7 @@ export const donate_method = v.object({
 export type TDonateMethod = v.InferOutput<typeof donate_method>;
 
 //re-exports
-export type { DBCurrency } from "types/currency";
+export type { ICurrencyFv } from "types/currency";
 
 export interface IPaginator<T> {
   items: T[];

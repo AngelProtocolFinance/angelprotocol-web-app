@@ -3,7 +3,7 @@ import { Form as FieldSet, MaskedInput } from "components/form";
 import { currency as curr_mask } from "components/form/masks";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
-import type { DBCurrency, UserCurrencies } from "types/currency";
+import type { ICurrenciesFv, ICurrencyFv } from "types/currency";
 import { USD_CODE } from "../../common/constants";
 import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
@@ -19,7 +19,7 @@ export function Form(props: Props) {
 
   const currency = use_swr(
     href("/api/currencies"),
-    (path) => fetch(path).then<UserCurrencies>((res) => res.json()),
+    (path) => fetch(path).then<ICurrenciesFv>((res) => res.json()),
     {
       onSuccess: (data) => {
         if (!data.pref) return;
@@ -94,7 +94,7 @@ export function Form(props: Props) {
   );
 }
 
-function createTooltip({ code, min }: DBCurrency): string | undefined {
+function createTooltip({ code, min }: ICurrencyFv): string | undefined {
   if (!min) return undefined;
   return code === USD_CODE
     ? "The minimum donation amount is 1 USD"
