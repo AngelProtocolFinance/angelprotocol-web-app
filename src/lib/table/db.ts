@@ -16,7 +16,7 @@ export class Table extends Db {
       TableName: Table.table_name,
       Key: this.key_currency_map(to),
     });
-    return this.client.send(cmd).then(this.sans_keys<ICurrencyFvMap>);
+    return this.client.send(cmd).then(({ Item: i }) => this.sans_keys(i!));
   }
 
   async currency_map_put(data: ICurrencyFvMap, to: TEquivalent) {

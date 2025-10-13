@@ -17,7 +17,7 @@ export const init_token_option: ITokenFv = {
   min: 0,
   code: "",
   name: "",
-  symbol: "Select token",
+  symbol: "",
   id: "",
   amount: "",
   network: "",

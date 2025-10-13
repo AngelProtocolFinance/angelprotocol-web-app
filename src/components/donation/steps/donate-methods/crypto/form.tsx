@@ -25,7 +25,7 @@ import { use_rhf } from "./use-rhf";
 const tokens_fuse = new Fuse<IToken>(tokens_list, {
   keys: ["name", "code", "network", "symbol"],
 });
-const subset = tokens_list.slice(0, 10).map((x) => x.code);
+const subset = tokens_list.slice(0, 10);
 
 export function Form(props: CryptoFormStep) {
   const [token_state, set_token_state] = useState<TTokenState>(undefined);
@@ -34,9 +34,7 @@ export function Form(props: CryptoFormStep) {
     () =>
       !token_q
         ? subset
-        : tokens_fuse
-            .search(token_q, { limit: 10 })
-            .map(({ item }) => item.code),
+        : tokens_fuse.search(token_q, { limit: 10 }).map((x) => x.item),
     [token_q]
   );
 
@@ -56,18 +54,16 @@ export function Form(props: CryptoFormStep) {
       q={token_q}
       on_q_change={(x) => set_token_q(x)}
       btn_disp={(open) => btn_disp(open, token_state)}
-      input_disp={(code) => tokens_map[code]?.symbol || ""}
-      opt_disp={(code) => {
-        const t = tokens_map[code];
-
+      input_disp={(t) => t.symbol}
+      opt_disp={(t) => {
         return (
           <ComboboxOption
             as={CloseButton}
-            key={code}
+            key={t.code}
             className={
-              "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) cursor-pointer"
+              "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) data-selected:pointer-events-none cursor-pointer"
             }
-            value={code}
+            value={t}
           >
             <img
               src={logo_url(t.logo, is_custom(t.id))}
@@ -85,15 +81,14 @@ export function Form(props: CryptoFormStep) {
           </ComboboxOption>
         );
       }}
-      value={token.value.code}
+      value={token.value}
       opts={filtered}
-      on_change={async (c) => {
-        const t = tokens_map[c];
+      on_change={async (t) => {
         try {
           token.onChange({ ...t, amount: token.value.amount });
           set_token_state("loading");
           const res = await fetch(
-            href("/api/tokens/:code/min-usd", { code: c })
+            href("/api/tokens/:code/min-usd", { code: t.code })
           );
           if (!res.ok) throw res;
           const { rate, min }: ITokenEstimate = await res.json();
