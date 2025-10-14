@@ -20,7 +20,7 @@ export function Payout({ classes = "", ...p }: Props) {
           <span className="text-xs uppercase  text-shadow-white text-shadow">
             total
           </span>
-          <span className="font-bold text-shadow-white text-shadow">
+          <span className="font-semibold text-shadow-white text-shadow">
             ${humanize(p.bal_cash)}
           </span>
         </div>

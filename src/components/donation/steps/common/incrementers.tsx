@@ -51,7 +51,7 @@ function Incrementer({
       className="grid group/incrementer has-data-label:grid-rows-subgrid gap-y-1 row-span-2 rounded-lg p-2 bg-(--accent-primary) disabled:bg-gray-l2"
       onClick={() => on_increment(value)}
     >
-      <span className="text-left text-sm font-medium text-white group-active/incrementer:translate-x-1">
+      <span className="text-left text-sm  text-white group-active/incrementer:translate-x-1">
         +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}
       </span>
       {inc.label && (

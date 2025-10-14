@@ -39,8 +39,8 @@ export function Panel(props: Props) {
 
       {props.from ? (
         <div>
-          <p className="text-gray text-sm font-semibold">Balance</p>
-          <p className="text-lg font-semibold text-gray-l1">
+          <p className="text-gray text-sm  font-medium">Balance</p>
+          <p className="text-lg  font-medium text-gray-l1">
             ${humanize(props.bals[source.value])}
           </p>
         </div>
@@ -49,11 +49,11 @@ export function Panel(props: Props) {
           <p className=" justify-self-end">
             <span className="text-gray text-xs mr-1">from</span>
             {source.value === "liq" ? (
-              <span className="text-amber font-semibold">Savings</span>
+              <span className="text-amber  font-medium">Savings</span>
             ) : (
-              <span className="text-green font-semibold">Investments</span>
+              <span className="text-green  font-medium">Investments</span>
             )}
-            <span className="text-sm font-semibold text-gray-l1 ml-2">
+            <span className="text-sm  font-medium text-gray-l1 ml-2">
               ${humanize(props.bals[source.value])}
             </span>
           </p>
@@ -81,9 +81,9 @@ export function Panel(props: Props) {
           <p className=" justify-self-start">
             <span className="text-gray text-xs mr-1">to</span>
             {source.value === "liq" ? (
-              <span className="text-green font-semibold">Investments</span>
+              <span className="text-green  font-medium">Investments</span>
             ) : (
-              <span className="text-amber font-semibold">Savings</span>
+              <span className="text-amber  font-medium">Savings</span>
             )}
           </p>
         </div>
@@ -111,7 +111,7 @@ export function Panel(props: Props) {
 
       <button
         disabled={props.is_submitting || !isDirty}
-        className="text-sm btn-blue rounded-sm p-4  uppercase font-bold mt-8"
+        className="text-sm btn-blue rounded-sm p-4  uppercase font-semibold mt-8"
       >
         {props.is_submitting ? "Submitting..." : "Submit"}
       </button>

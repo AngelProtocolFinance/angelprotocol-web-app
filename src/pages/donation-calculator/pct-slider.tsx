@@ -15,7 +15,7 @@ export function PctSlider({ classes = "", ...p }: ProcessingFeeSliderProps) {
   return (
     <div className={`w-full max-w-md ${classes}`}>
       <div className="flex items-center mb-2 gap-x-1">
-        <p className="font-semibold">{p.label}</p>
+        <p className=" font-medium">{p.label}</p>
         {p.tooltip && (
           <Tooltip
             tip={
@@ -45,7 +45,7 @@ export function PctSlider({ classes = "", ...p }: ProcessingFeeSliderProps) {
             <Slider.Thumb className="block size-4 rounded-full border-2 border-blue bg-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-blue focus-visible:ring-opacity-75" />
           </Slider.Root>
         </div>
-        <div className="text-right  font-semibold">
+        <div className="text-right   font-medium">
           {(p.value * 100).toFixed(1)}%
         </div>
       </div>

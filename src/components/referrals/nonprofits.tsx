@@ -39,9 +39,9 @@ export function Nonprofits({ classes = "", npos }: Props) {
           <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l3 divide-y divide-gray-l3">
             <thead>
               <tr>
-                <th className="font-medium text-sm text-gray">Name</th>
-                <th className="font-medium text-sm text-gray">Earnings</th>
-                <th className="font-medium text-sm text-gray">Status</th>
+                <th className=" text-sm text-gray">Name</th>
+                <th className=" text-sm text-gray">Earnings</th>
+                <th className=" text-sm text-gray">Status</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>

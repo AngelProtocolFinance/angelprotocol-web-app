@@ -28,7 +28,7 @@ function Content(props: LoaderData) {
   return (
     <DialogPanel className="fixed-center z-10 grid text-gray-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6">
       <div className="text-center mb-6">
-        <h2 className="text-xl font-bold mb-2">Tax Forms Required</h2>
+        <h2 className="text-xl font-semibold mb-2">Tax Forms Required</h2>
         <p className="text-gray">
           To receive payout, kindly fill out the appropriate tax form
         </p>
@@ -39,7 +39,7 @@ function Content(props: LoaderData) {
           href={props.w9_url}
           className="w-full block p-4 border border-gray-l3 rounded-lg hover:bg-gray-l4 transition-colors text-left"
         >
-          <div className="font-semibold text-gray-d4">For US Residents</div>
+          <div className=" font-medium text-gray-d4">For US Residents</div>
           <div className="text-sm text-gray">
             Complete this W-9 tax status form
           </div>
@@ -49,7 +49,7 @@ function Content(props: LoaderData) {
           href={props.w8ben_url}
           className="w-full block p-4 border border-gray-l3 rounded-lg hover:bg-gray-l4 transition-colors text-left"
         >
-          <div className="font-semibold text-gray-d4">For Non-US Residents</div>
+          <div className=" font-medium text-gray-d4">For Non-US Residents</div>
           <div className="text-sm text-gray">
             Complete this W-8BEN tax status form
           </div>

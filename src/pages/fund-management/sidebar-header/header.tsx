@@ -14,7 +14,7 @@ export default function Loader({ name, logo = flying_character }: Endow) {
       <div className="flex justify-between">
         <Image className="w-14 h-14" src={logo || flying_character} />
       </div>
-      <h5 className="text-sm font-bold truncate mt-2">{name}</h5>
+      <h5 className="text-sm font-semibold truncate mt-2">{name}</h5>
     </div>
   );
 }

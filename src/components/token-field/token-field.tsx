@@ -12,7 +12,7 @@ const Field: React.ForwardRefRenderFunction<El, ITokenField> = (props, ref) => {
     <div className={`grid gap-y-1 ${style.container}`}>
       <label
         htmlFor="amount"
-        className={`font-semibold mr-auto after:content-['_*'] after:text-red ${style.label}`}
+        className={` font-medium mr-auto after:content-['_*'] after:text-red ${style.label}`}
       >
         {props.label}
       </label>
@@ -32,7 +32,7 @@ const Field: React.ForwardRefRenderFunction<El, ITokenField> = (props, ref) => {
             id="amount"
             type="text"
             placeholder="Enter amount"
-            className={`outline-none w-full h-full ${style.input} bg-transparent placeholder:font-medium text-base pl-2 py-[13px] font-semibold`}
+            className={`outline-none w-full h-full ${style.input} bg-transparent placeholder: text-base pl-2 py-[13px]  font-medium`}
           />
           {props.amount_usd ? (
             <div className="pointer-events-none absolute top-1/2 -translate-y-1/2 left-2">

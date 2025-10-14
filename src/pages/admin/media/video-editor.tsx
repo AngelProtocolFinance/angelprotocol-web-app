@@ -54,7 +54,7 @@ function Content(props: IProps) {
       onSubmit={handleSubmit}
     >
       <div className="relative">
-        <p className="text-xl capitalize font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
+        <p className="text-xl capitalize font-semibold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           {props.action} video
         </p>
         <Link

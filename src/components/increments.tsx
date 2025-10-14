@@ -30,16 +30,16 @@ export function Increments({
       className={`${classes} grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2`}
     >
       <div className="flex items-center gap-2 col-span-3">
-        <p className="font-bold text-base">Donation increments</p>
-        <button type="button" className="text-base font-bold text-green">
+        <p className="font-semibold text-base">Donation increments</p>
+        <button type="button" className="text-base font-semibold text-green">
           <Plus size={17} strokeWidth={3} onClick={() => onAdd("")} />
         </button>
       </div>
       <p className="text-xs text-red empty:hidden col-span-3">{countError}</p>
       {fields.length > 0 && (
         <div className="grid grid-cols-subgrid col-span-3">
-          <div className="text-xs font-bold">Amount</div>
-          <div className="text-xs font-bold">Description</div>
+          <div className="text-xs font-semibold">Amount</div>
+          <div className="text-xs font-semibold">Description</div>
         </div>
       )}
       <div className="mt-2 grid grid-cols-subgrid gap-y-6 col-span-3">

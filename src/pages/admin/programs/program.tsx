@@ -21,7 +21,7 @@ export function Program(props: IProgramDb) {
           alt="program banner"
           className="w-10 aspect-square object-cover"
         />
-        <p className="font-bold">{props.title}</p>
+        <p className="font-semibold">{props.title}</p>
       </div>
 
       {isDeleting ? (

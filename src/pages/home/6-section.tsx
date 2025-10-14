@@ -26,7 +26,7 @@ export function Section6({ classes = "" }) {
 
         <Link
           to={href("/register/welcome")}
-          className="btn btn-blue justify-self-center normal-case xl:justify-self-start px-10 py-3 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn btn-blue justify-self-center normal-case xl:justify-self-start px-10 py-3 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-semibold shadow-2xl rounded-full"
         >
           Join us today!
         </Link>

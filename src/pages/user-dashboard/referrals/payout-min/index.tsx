@@ -72,7 +72,7 @@ function Content(props: IContent) {
       <h4 className="mb-2">Payout threshold</h4>
 
       <Field className="grid my-4">
-        <Label className="font-semibold mb-1">
+        <Label className=" font-medium mb-1">
           Amount
           <span className="text-red"> *</span>
         </Label>
@@ -87,7 +87,7 @@ function Content(props: IContent) {
       </Field>
       <button
         disabled={fetcher.state !== "idle" || !isDirty}
-        className="text-sm btn-blue rounded-full px-4 py-2  uppercase font-bold"
+        className="text-sm btn-blue rounded-full px-4 py-2  uppercase font-semibold"
       >
         {fetcher.state !== "idle" ? "Submitting..." : "Submit"}
       </button>

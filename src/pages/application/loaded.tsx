@@ -49,7 +49,7 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
       )}
       {props.status_rejected_reason && (
         <div className="flex max-sm:flex-col gap-x-4">
-          <span className="text-sm font-semibold uppercase">
+          <span className="text-sm  font-medium uppercase">
             Rejection reason:
           </span>
           <span className="uppercase text-sm">
@@ -58,11 +58,11 @@ export default function Loaded(props: IReg & { bank: V2RecipientAccount }) {
         </div>
       )}
       <div className="flex max-sm:flex-col gap-x-4">
-        <span className="text-sm font-semibold uppercase">Application ID:</span>
+        <span className="text-sm  font-medium uppercase">Application ID:</span>
         <span className="text-sm">{props.id}</span>
       </div>
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
-        <span className="text-sm font-semibold uppercase">Date submitted:</span>
+        <span className="text-sm  font-medium uppercase">Date submitted:</span>
         <span className="uppercase text-sm">
           {new Date(props.updated_at).toLocaleDateString()}
         </span>
@@ -160,7 +160,7 @@ type Props = PropsWithChildren<{
 function Row(props: Props) {
   return (
     <>
-      <dt className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs font-semibold uppercase">
+      <dt className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs  font-medium uppercase">
         {props.label}
       </dt>
       <div

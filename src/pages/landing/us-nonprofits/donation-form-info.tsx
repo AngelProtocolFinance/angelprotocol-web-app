@@ -78,9 +78,7 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         height={props.image.height}
       />
-      <h6 className="text-lg font-medium @6xl:text-xl text-gray-d4">
-        {props.title}
-      </h6>
+      <h6 className="text-lg  @6xl:text-xl text-gray-d4">{props.title}</h6>
       <p className="text-lg @6xl:text-xl text-gray">{props.description}</p>
     </li>
   );

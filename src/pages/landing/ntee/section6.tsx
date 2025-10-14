@@ -51,7 +51,7 @@ export function Section6({ classes = "" }: { classes?: string }) {
               <CircleQuestionMark className="text-blue" size={30} />
             </div>
             <div className="ml-4">
-              <h4 className="text-2xl @max-3xl:text-center font-semibold">
+              <h4 className="text-2xl @max-3xl:text-center  font-medium">
                 <span className="hidden @xl:inline">Q: </span>
                 {item.title}
               </h4>
@@ -65,7 +65,7 @@ export function Section6({ classes = "" }: { classes?: string }) {
       <div className="grid pt-8 mt-8">
         <ExtLink
           href={INTERCOM_HELP}
-          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg  font-medium"
         >
           <span>Complete FAQs</span>
           <ArrowRight size={15} />
@@ -78,7 +78,7 @@ export function Section6({ classes = "" }: { classes?: string }) {
             }
             window.open(INTERCOM_HELP, "_blank");
           }}
-          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg  font-medium"
         >
           Need additional support? Live Chat.
         </button>

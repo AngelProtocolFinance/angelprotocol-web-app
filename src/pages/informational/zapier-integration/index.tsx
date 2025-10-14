@@ -4,7 +4,7 @@ export default function Component() {
   return (
     <div className="xl:container xl:mx-auto px-5">
       <div className="p-4 sm:p-6 border-b border-gray-l3">
-        <h1 className="text-xl sm:text-2xl font-bold text-blue-d1">
+        <h1 className="text-xl sm:text-2xl font-semibold text-blue-d1">
           Using the Better Giving - Zapier Integration
         </h1>
       </div>
@@ -15,13 +15,11 @@ export default function Component() {
               key={index}
               className="flex flex-col sm:flex-row sm:items-start gap-4"
             >
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-l2 flex items-center justify-center text-blue-d1 font-bold">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-l2 flex items-center justify-center text-blue-d1 font-semibold">
                 {index + 1}
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-medium text-blue-d2">
-                  {step.title}
-                </h3>
+                <h3 className="text-lg  text-blue-d2">{step.title}</h3>
                 <div className="mt-2 text-gray-d1  space-y-4">
                   {step.content}
                 </div>
@@ -36,7 +34,7 @@ export default function Component() {
               <AlertCircle className="h-5 w-5 text-blue" />
             </div>
             <div>
-              <h3 className="text-sm font-medium text-blue-d1">
+              <h3 className="text-sm  text-blue-d1">
                 Questions? Need assistance?
               </h3>
               <p className="mt-1 text-sm text-blue-d2">
@@ -84,7 +82,7 @@ const steps = [
           and navigate to the API section to find your API key.
         </p>
         <div className="p-4 bg-amber-l5 border-l-4 border-amber rounded-r-lg">
-          <h4 className="text-sm font-medium text-amber-d1">Important</h4>
+          <h4 className="text-sm  text-amber-d1">Important</h4>
           <p className="mt-1 text-sm text-amber">
             Keep your API key secure. Do not share it with anyone who
             shouldn&apos;t have access to your Better Giving account.

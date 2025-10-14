@@ -76,7 +76,7 @@ export function Section5({ classes = "" }: { classes?: string }) {
               {item.icon}
             </div>
             <div className="ml-4">
-              <h4 className="text-2xl @max-3xl:text-center font-semibold relative">
+              <h4 className="text-2xl @max-3xl:text-center  font-medium relative">
                 <span className="absolute -left-8 text-2xl hidden @3xl:block">
                   {item.emoji}
                 </span>
@@ -85,7 +85,7 @@ export function Section5({ classes = "" }: { classes?: string }) {
               <p className="mt-2 text-lg  @max-3xl:text-center">
                 {item.description}
               </p>
-              <p className="mt-1 italic font-semibold text-blue-l1  @max-3xl:text-center">
+              <p className="mt-1 italic  font-medium text-blue-l1  @max-3xl:text-center">
                 {item.result}
               </p>
             </div>

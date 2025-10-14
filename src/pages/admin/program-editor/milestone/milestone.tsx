@@ -44,7 +44,7 @@ export default function Milestone(props: Props) {
       className="border border-gray-l3 rounded-sm overflow-hidden"
     >
       <div className="relative py-3 px-4 text-center bg-blue-l5 dark:bg-blue-d7">
-        <span className="text-xl font-bold ">{props.title}</span>
+        <span className="text-xl font-semibold ">{props.title}</span>
         <DisclosureButton className="absolute right-4 top-1/2 -translate-y-1/2">
           {({ open }) => <DrawerIcon is_open={open} size={20} />}
         </DisclosureButton>

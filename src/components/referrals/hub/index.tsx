@@ -77,7 +77,7 @@ export const Hub = ({ classes = "" }: Props) => {
                 <Link
                   target="_blank"
                   to={card.to}
-                  className="  text-blue hover:text-blue-d1 mt-2 text-center font-semibold text-nowrap"
+                  className="  text-blue hover:text-blue-d1 mt-2 text-center  font-medium text-nowrap"
                 >
                   {card.title}
                 </Link>

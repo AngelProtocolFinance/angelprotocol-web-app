@@ -101,10 +101,10 @@ export default function Component() {
             <table className="min-w-full divide-y divide-gray-l3">
               <thead className="bg-gray-l4">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs  font-medium text-gray-d2 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs   text-gray-d2 uppercase tracking-wider">
                     YYWW
                   </th>
-                  <th className="px-6 py-3 text-left text-xs  font-medium text-gray-d2 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs   text-gray-d2 uppercase tracking-wider">
                     Date & Time Range
                   </th>
                 </tr>
@@ -124,7 +124,7 @@ export default function Component() {
                             : "bg-gray-l5"
                     }
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-d1">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-d1">
                       {w.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray">

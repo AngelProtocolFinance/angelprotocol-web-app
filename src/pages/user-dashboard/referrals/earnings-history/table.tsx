@@ -11,10 +11,10 @@ export function EarningsHistory({ items, classes = "", load_next }: Props) {
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
         <thead>
           <tr>
-            <th className="font-medium text-sm text-gray">Date</th>
-            <th className="font-medium text-sm text-gray">NPO</th>
-            <th className="font-medium text-sm text-gray">Amount</th>
-            <th className="font-medium text-sm text-gray">Status</th>
+            <th className=" text-sm text-gray">Date</th>
+            <th className=" text-sm text-gray">NPO</th>
+            <th className=" text-sm text-gray">Amount</th>
+            <th className=" text-sm text-gray">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -46,7 +46,7 @@ export function EarningsHistory({ items, classes = "", load_next }: Props) {
                 <td>${humanize(amnt)}</td>
                 <td>
                   <div
-                    className={`${status === "pending" ? "bg-gray" : "bg-green"} text-white text-xs font-semibold px-2 py-0.5  rounded-sm inline-block`}
+                    className={`${status === "pending" ? "bg-gray" : "bg-green"} text-white text-xs  font-medium px-2 py-0.5  rounded-sm inline-block`}
                   >
                     {status}
                   </div>

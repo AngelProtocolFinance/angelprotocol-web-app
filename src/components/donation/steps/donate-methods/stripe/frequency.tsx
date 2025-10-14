@@ -22,7 +22,7 @@ export function Frequency({ value, onChange, error }: Props) {
       onChange={onChange}
       className="@container/frequency"
     >
-      <label className="mb-2 block font-semibold ">
+      <label className="mb-2 block  font-medium ">
         Frequency <span className="text-red">*</span>
       </label>
       <div className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex">

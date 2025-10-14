@@ -44,7 +44,7 @@ const all_method_ids: DonateMethodId[] = ["stripe", "daf", "stocks", "crypto"];
 const tab_classes = (selected: boolean) =>
   `${
     selected
-      ? "font-medium bg-(--accent-secondary) text-gray-d4"
+      ? " bg-(--accent-secondary) text-gray-d4"
       : "border border-gray-l3 @xl/steps:border-none text-gray"
   }  flex items-center gap-2 p-2 @xl/steps:px-3 @xl/steps:py-[1.15rem] @xl/steps:grid @xl/steps:grid-cols-subgrid @xl/steps:col-span-2 focus:outline-hidden @xl/steps:w-full rounded @xl/steps:rounded-none`;
 
@@ -69,7 +69,7 @@ export function DonateMethods(props: FormStep) {
       className="grid @xl/steps:grid-cols-[auto_1fr]"
       defaultIndex={tab_idx_found === -1 ? 0 : tab_idx_found}
     >
-      <Label className="p-4 pb-0 col-span-full @xl/steps:hidden font-bold">
+      <Label className="p-4 pb-0 col-span-full @xl/steps:hidden font-semibold">
         Payment method
       </Label>
       <TabList className="grid @md/steps:grid-cols-2 gap-2 @xl/steps:gap-0 p-4 @xl/steps:p-0 @xl/steps:grid-cols-[auto_1fr] @[42rem]/steps:min-w-48 content-start @xl/steps:divide-y @xl/steps:divide-white @xl/steps:border-r border-gray-l3">

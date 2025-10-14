@@ -19,12 +19,12 @@ export function Table({
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
         <thead className="bg-blue-l5">
           <tr>
-            <th className="font-medium text-sm text-gray">Date</th>
-            <th className="font-medium text-sm text-gray">Description</th>
-            <th className="font-medium text-sm text-gray">Requestor</th>
-            <th className="font-medium text-sm text-gray">Units</th>
-            <th className="font-medium text-sm text-gray">Price</th>
-            <th className="font-medium text-sm text-gray">Value</th>
+            <th className=" text-sm text-gray">Date</th>
+            <th className=" text-sm text-gray">Description</th>
+            <th className=" text-sm text-gray">Requestor</th>
+            <th className=" text-sm text-gray">Units</th>
+            <th className=" text-sm text-gray">Price</th>
+            <th className=" text-sm text-gray">Value</th>
             <th />
           </tr>
         </thead>
@@ -44,13 +44,13 @@ export function Table({
                   <div className="flex items-center gap-x-2">
                     <NavLink
                       to={`${r.id}/approve`}
-                      className="btn-green text-xs uppercase font-bold px-2 py-1 rounded-xs"
+                      className="btn-green text-xs uppercase font-semibold px-2 py-1 rounded-xs"
                     >
                       Approve
                     </NavLink>
                     <NavLink
                       to={`${r.id}/reject`}
-                      className="btn-red text-xs uppercase font-bold px-2 py-1 rounded-xs"
+                      className="btn-red text-xs uppercase font-semibold px-2 py-1 rounded-xs"
                     >
                       Reject
                     </NavLink>

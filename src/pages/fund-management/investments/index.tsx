@@ -50,19 +50,19 @@ function Page({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <h3 className="font-bold text-2xl mb-4">Investments</h3>
+      <h3 className="font-semibold text-2xl mb-4">Investments</h3>
       <div className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-lg">
           <p className="text-gray text-sm mb-2">Portfolio Value</p>
-          <p className="text-3xl font-bold">${humanize(ltd.value)}</p>
+          <p className="text-3xl font-semibold">${humanize(ltd.value)}</p>
         </div>
         <div className="bg-white">
           <p className="text-gray text-sm mb-2">Portfolio Units</p>
-          <p className="text-3xl font-bold">{humanize(ltd.units)}</p>
+          <p className="text-3xl font-semibold">{humanize(ltd.units)}</p>
         </div>
       </div>
 
-      <h4 className="font-bold text-lg mb-4 mt-8">NAV Price & Units</h4>
+      <h4 className="font-semibold text-lg mb-4 mt-8">NAV Price & Units</h4>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={line_data}
@@ -115,7 +115,7 @@ function Page({ loaderData }: Route.ComponentProps) {
         }}
       />
       <div className="flex items-center gap-x-2 mt-8">
-        <h4 className="font-bold text-lg">Portfolio Composition</h4>
+        <h4 className="font-semibold text-lg">Portfolio Composition</h4>
         <NavLink
           replace
           preventScrollReset
@@ -151,12 +151,12 @@ function Page({ loaderData }: Route.ComponentProps) {
         <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
           <thead>
             <tr>
-              <th className="font-medium text-sm text-gray">Symbol</th>
-              <th className="font-medium text-sm text-gray">Units</th>
-              <th className="font-medium text-sm text-gray">Price</th>
-              <th className="font-medium text-sm text-gray">Price Date</th>
-              <th className="font-medium text-sm text-gray">Value</th>
-              <th className="font-medium text-sm text-gray">%</th>
+              <th className=" text-sm text-gray">Symbol</th>
+              <th className=" text-sm text-gray">Units</th>
+              <th className=" text-sm text-gray">Price</th>
+              <th className=" text-sm text-gray">Price Date</th>
+              <th className=" text-sm text-gray">Value</th>
+              <th className=" text-sm text-gray">%</th>
             </tr>
           </thead>
           <tbody>
@@ -164,7 +164,7 @@ function Page({ loaderData }: Route.ComponentProps) {
               <tr key={t.id} className="text-sm text-gray-d4">
                 <td
                   style={{ color: ticker_colors[t.id] || "#64748b" }}
-                  className="font-bold"
+                  className="font-semibold"
                 >
                   {t.id}
                 </td>
@@ -173,14 +173,16 @@ function Page({ loaderData }: Route.ComponentProps) {
                 <td className="text-right">
                   {t.price_date ? format(new Date(t.price_date), "PP") : "-"}
                 </td>
-                <td className="text-right font-bold">${humanize(t.value)}</td>
+                <td className="text-right font-semibold">
+                  ${humanize(t.value)}
+                </td>
                 <td className="text-right">{humanize(t.pct)}%</td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        <h5 className="font-bold text-md mt-8 mb-2">
+        <h5 className="font-semibold text-md mt-8 mb-2">
           Top Holders{" "}
           <span className="text-sm text-gray">( of {num_holders} )</span>
         </h5>
@@ -188,9 +190,9 @@ function Page({ loaderData }: Route.ComponentProps) {
           <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
             <thead>
               <tr>
-                <th className="font-medium text-sm text-gray">Holder</th>
-                <th className="font-medium text-sm text-gray">Units</th>
-                <th className="font-medium text-sm text-gray">Value</th>
+                <th className=" text-sm text-gray">Holder</th>
+                <th className=" text-sm text-gray">Units</th>
+                <th className=" text-sm text-gray">Value</th>
               </tr>
             </thead>
             <tbody>
@@ -200,7 +202,7 @@ function Page({ loaderData }: Route.ComponentProps) {
                     <NpoName id={holder} />
                   </td>
                   <td className="text-right">{humanize(units)}</td>
-                  <td className="text-right font-bold">
+                  <td className="text-right font-semibold">
                     ${humanize(units * ltd.price)}
                   </td>
                 </tr>

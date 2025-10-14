@@ -29,9 +29,9 @@ export function Table({
           <tr>
             <th /> {/** icons */}
             <th />
-            <th className="font-medium text-sm text-gray">Amount</th>
-            <th className="font-medium text-sm text-gray">Date</th>
-            <th className="font-medium text-sm text-gray">Status</th>
+            <th className=" text-sm text-gray">Amount</th>
+            <th className=" text-sm text-gray">Date</th>
+            <th className=" text-sm text-gray">Status</th>
           </tr>
         </thead>
         <tbody>

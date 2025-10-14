@@ -43,7 +43,7 @@ function Content() {
       method="POST"
       className="w-full grid gap-4"
     >
-      <h4 className="text-center text-xl font-bold mb-4">Invite User</h4>
+      <h4 className="text-center text-xl font-semibold mb-4">Invite User</h4>
       <Field
         {...register("email")}
         label="Email"

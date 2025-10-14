@@ -12,14 +12,16 @@ export function Docs({ classes = "" }) {
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <Info size={20} className="text-gray" />
-        <h3 className="text-lg sm:text-xl font-bold">Calculation Details</h3>
+        <h3 className="text-lg sm:text-xl font-semibold">
+          Calculation Details
+        </h3>
         <DrawerIcon size={20} is_open={isExpanded} className="ml-auto" />
       </div>
 
       {isExpanded && (
         <div className="mt-8 space-y-8">
           <section>
-            <h4 className="font-semibold mb-4">Better Giving Platform</h4>
+            <h4 className=" font-medium mb-4">Better Giving Platform</h4>
             <ul className="space-y-4 list-disc pl-6">
               <li className="text-gray">
                 Better Giving doesn't charge processing fees, but third-party
@@ -37,7 +39,7 @@ export function Docs({ classes = "" }) {
           </section>
 
           <section>
-            <h4 className="font-semibold mb-4">Donation Type Calculation</h4>
+            <h4 className=" font-medium mb-4">Donation Type Calculation</h4>
             <p className="text-gray mb-4">
               These are approximate percentages for U.S.-based nonprofits,
               annualized and projected for 2025 based on trends. Our
@@ -63,7 +65,7 @@ export function Docs({ classes = "" }) {
           </section>
 
           <section>
-            <h4 className="font-semibold mb-4">Investment Returns</h4>
+            <h4 className=" font-medium mb-4">Investment Returns</h4>
             <ul className="space-y-4 list-disc pl-6">
               <li className="text-gray">Savings Account: 4% annual yield</li>
               <li className="text-gray">

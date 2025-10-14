@@ -41,7 +41,7 @@ export function Earnings({
         <div className="p-6 @container">
           <div className="flex flex-wrap items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-2 flex-wrap">
-              <div className="text-2xl font-bold text-gray-d4">
+              <div className="text-2xl font-semibold text-gray-d4">
                 ${humanize(pendings.total)}
               </div>
               <p className="text-sm text-gray mt-1">
@@ -61,7 +61,7 @@ export function Earnings({
                 size={20}
                 className=" @max-lg:hidden hidden @lg:group-hover:block group-active:translate-x-0.5"
               />
-              <div className="text-xl font-bold text-gray-d">
+              <div className="text-xl font-semibold text-gray-d">
                 ${humanize(payout_ltd)}
               </div>
               <span className="text-sm mt-1">paid out</span>
@@ -71,7 +71,7 @@ export function Earnings({
             <div className="mt-4">
               <p className="text-sm text-gray">Payout threshold</p>
               <div className="flex gap-x-1 items-center">
-                <p className="font-semibold text-amber-d1">
+                <p className=" font-medium text-amber-d1">
                   ${humanize(payout_min)}
                 </p>
                 <Link

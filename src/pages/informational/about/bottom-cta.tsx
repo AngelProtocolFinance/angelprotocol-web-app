@@ -19,13 +19,13 @@ export function BottomCta({ className = "" }) {
         <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-6">
           <Link
             to={href("/register/welcome")}
-            className="active:translate-x-1 btn-blue  uppercase font-bold shadow-2xl rounded-full px-8 py-3 md:px-12 md:py-6"
+            className="active:translate-x-1 btn-blue  uppercase font-semibold shadow-2xl rounded-full px-8 py-3 md:px-12 md:py-6"
           >
             Start today
           </Link>
           <Link
             to={BOOK_A_DEMO}
-            className="bg-white shadow-2xl hover:shadow-white/40 active:translate-x-1 text-blue-d1  uppercase font-bold rounded-full px-8 py-3 md:px-12 md:py-6"
+            className="bg-white shadow-2xl hover:shadow-white/40 active:translate-x-1 text-blue-d1  uppercase font-semibold rounded-full px-8 py-3 md:px-12 md:py-6"
           >
             Book a Demo
           </Link>

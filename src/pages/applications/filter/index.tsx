@@ -36,7 +36,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
         {({ open }) => (
           <>
             <FilterIcon className="lg:hidden mr-1" size={16} />
-            <div className="uppercase font-semibold text-[0.9375rem] ">
+            <div className="uppercase  font-medium text-[0.9375rem] ">
               Filter
             </div>
             <DrawerIcon is_open={open} className="hidden lg:inline" size={21} />

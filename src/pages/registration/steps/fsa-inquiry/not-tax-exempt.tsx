@@ -17,7 +17,7 @@ export function NotTaxExempt({ country, is_fsa_prev }: Props) {
     <div className="w-full">
       <p className="text-sm text-gray dark:text-gray leading-relaxed">
         Great news: Nonprofit Organizations in{" "}
-        <span className="font-semibold">{country}</span> can now take advantage
+        <span className=" font-medium">{country}</span> can now take advantage
         of {APP_NAME}’s Fiscal Sponsorship service.
       </p>
       <p className="text-sm text-gray dark:text-gray leading-relaxed mt-4">

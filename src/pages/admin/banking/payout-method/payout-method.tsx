@@ -121,7 +121,7 @@ type Props = PropsWithChildren<{
 function Row(props: Props) {
   return (
     <>
-      <dt className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs font-semibold uppercase">
+      <dt className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs  font-medium uppercase">
         {props.label}
       </dt>
       <div

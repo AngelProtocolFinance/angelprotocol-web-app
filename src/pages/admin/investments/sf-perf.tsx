@@ -24,7 +24,7 @@ export function SfPerf({ id, classes = "" }: Props) {
       <button
         type="button"
         onClick={() => expand(true)}
-        className={`text-xs font-semibold rounded-sm focus:outline-none  ${
+        className={`text-xs  font-medium rounded-sm focus:outline-none  ${
           data.total_return > 0
             ? "text-green"
             : data.total_return < 0

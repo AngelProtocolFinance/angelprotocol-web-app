@@ -16,7 +16,7 @@ export function Group({
     >
       {title && <h3 className="text-2xl">{title}</h3>}
       {description && (
-        <p className="-mt-4 text-lg font-semibold">{description}</p>
+        <p className="-mt-4 text-lg  font-medium">{description}</p>
       )}
       {children}
     </div>

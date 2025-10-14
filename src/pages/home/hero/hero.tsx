@@ -34,7 +34,7 @@ const Hero = ({ classes = "" }) => {
         Raise more this quarter, <br /> Grow funds together
       </motion.h1>
       <motion.p
-        className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center sm:text-balance"
+        className="px-6  text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center sm:text-balance"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.3 }}
@@ -50,7 +50,7 @@ const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.4 }}
         to={href("/register/welcome")}
-        className="justify-self-center mt-8 btn-blue active:translate-x-1 items-center font-bold shadow-2xl inline-flex px-10 py-3 gap-1 rounded-full text-lg "
+        className="justify-self-center mt-8 btn-blue active:translate-x-1 items-center font-semibold shadow-2xl inline-flex px-10 py-3 gap-1 rounded-full text-lg "
       >
         Join us today!
       </MLink>

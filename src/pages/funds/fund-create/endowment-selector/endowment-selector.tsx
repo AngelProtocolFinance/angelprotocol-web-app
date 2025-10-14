@@ -27,7 +27,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
 
   return (
     <Field className={props.classes ?? "relative"}>
-      <Label className="block text-sm font-medium mb-2">
+      <Label className="block text-sm  mb-2">
         I want to raise funds for … <span className="text-red">*</span>
       </Label>
       <Combobox
@@ -98,7 +98,7 @@ interface ISelectedOption extends EndowOption {
 
 function SelectedOption({ onDeselect, ...props }: ISelectedOption) {
   return (
-    <div className="flex items-center px-3 gap-2 h-10 border border-gray-l3 rounded-sm font-semibold text-gray dark:text-gray">
+    <div className="flex items-center px-3 gap-2 h-10 border border-gray-l3 rounded-sm  font-medium text-gray dark:text-gray">
       <Image src={props.logo} className="w-8" />
       <span className="max-w-[200px] truncate">{props.name}</span>
       <button

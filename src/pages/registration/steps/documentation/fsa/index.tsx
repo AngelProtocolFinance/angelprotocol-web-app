@@ -69,7 +69,7 @@ export function FsaForm(props: Props) {
         {...register("o_registration_number")}
         label="Registration number (numbers and letters only)"
         required
-        classes={{ container: "mb-6 mt-10", label: "font-semibold" }}
+        classes={{ container: "mb-6 mt-10", label: " font-medium" }}
         placeholder="e.g. xxxxxxxxxxxx"
         error={errors.o_registration_number?.message}
       />
@@ -77,7 +77,7 @@ export function FsaForm(props: Props) {
       <FileDropzone
         className="mt-10"
         label={
-          <Label className="mb-2 font-semibold" required>
+          <Label className="mb-2  font-medium" required>
             Proof of registration as a 501(c)(3) nonprofit or equivalent
           </Label>
         }

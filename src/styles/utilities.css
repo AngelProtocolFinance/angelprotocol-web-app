@@ -43,7 +43,7 @@
 }
 
 @utility field-input-donate {
-  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+  @apply rounded-lg text-base py-[13px] px-5  font-medium placeholder:font-medium;
   &:enabled:focus {
     @apply ring-[color:var(--accent-primary)];
   }
@@ -82,5 +82,5 @@
 }
 
 @utility pre-heading {
-  @apply text-sm md:text-lg font-bold;
+  @apply text-sm md:text-lg font-semibold;
 }

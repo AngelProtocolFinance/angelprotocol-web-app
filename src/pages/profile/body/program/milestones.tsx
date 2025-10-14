@@ -47,7 +47,7 @@ function Milestone(m: IMilestone) {
       <p className="mt-4 pl-6 sm:pl-8 mb-3 text-gray dark:text-gray text-xs">
         {new Date(m.date).toLocaleDateString()}
       </p>
-      <h6 className="pl-6 sm:pl-8 font-bold mb-3 relative">
+      <h6 className="pl-6 sm:pl-8 font-semibold mb-3 relative">
         {m.title}
         <span className="bg-white dark:bg-blue-d6 w-4 h-6 absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
         <span

@@ -29,7 +29,7 @@ function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
   }, [isInView, end]);
 
   return (
-    <p ref={ref} className="text-3xl text-center font-bold text-blue">
+    <p ref={ref} className="text-3xl text-center font-semibold text-blue">
       {count.toLocaleString()}
       {suffix}
     </p>

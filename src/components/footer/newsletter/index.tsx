@@ -11,10 +11,7 @@ export function Newsletter({ classes = "" }) {
         <p className="text-[12px] text-gray-d4 text-justify text-pretty">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
-          <Link
-            to={href("/privacy-policy")}
-            className="font-medium underline text-black"
-          >
+          <Link to={href("/privacy-policy")} className=" underline text-black">
             Privacy Policy
           </Link>
         </p>

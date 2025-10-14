@@ -21,7 +21,7 @@ export default function Step({
     >
       <p className="mr-auto text-left">{title[num]}</p>
 
-      <p className="text-green font-semibold max-sm:row-start-2">{status}</p>
+      <p className="text-green  font-medium max-sm:row-start-2">{status}</p>
 
       <NavLink
         to={`../${num}`}

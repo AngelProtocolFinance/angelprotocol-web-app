@@ -6,7 +6,7 @@ import { Link, href } from "react-router";
 export function Hero({ classes = "" }) {
   return (
     <section className={`${classes} grid pb-48 pt-32`}>
-      <p className="text-blue-d1 text-sm md:text-lg  uppercase font-bold text-center mb-5 tracking-wider">
+      <p className="text-blue-d1 text-sm md:text-lg  uppercase font-semibold text-center mb-5 tracking-wider">
         No nonprofit left behind
       </p>
       <h1 className="mx-auto text-3xl/tight md:text-4xl/tight lg:text-4.5xl/tight text-center text-balance   mb-10 mt-4 px-6">
@@ -22,7 +22,7 @@ export function Hero({ classes = "" }) {
 
       <Link
         to={href("/register/welcome")}
-        className="btn-blue mt-10 isolate justify-self-center inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg  relative group active:translate-x-1 font-bold shadow-2xl"
+        className="btn-blue mt-10 isolate justify-self-center inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg  relative group active:translate-x-1 font-semibold shadow-2xl"
       >
         <span className="ml-1 text-center">
           Join the Fundraising Revolution

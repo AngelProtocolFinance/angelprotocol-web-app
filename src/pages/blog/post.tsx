@@ -48,7 +48,7 @@ export default function Post({ loaderData: post }: Route.ComponentProps) {
     <div className={container_style}>
       <Link
         to={href("/blog")}
-        className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
+        className="flex items-center gap-2  text-blue-d1 hover:text-blue mt-6"
       >
         <ChevronLeft className="text-[1em]" />
         <span>Go Back</span>

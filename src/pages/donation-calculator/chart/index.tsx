@@ -31,7 +31,7 @@ export function Chart({ classes = "", ...v }: Props) {
     <div
       className={`${classes} p-6 rounded-lg grid content-start bg-white @container`}
     >
-      <h1 className="text-lg sm:text-xl font-bold mb-4 text-blue-d1">
+      <h1 className="text-lg sm:text-xl font-semibold mb-4 text-blue-d1">
         {yrs}-Year Financial Advantage
       </h1>
 
@@ -90,9 +90,7 @@ export function Chart({ classes = "", ...v }: Props) {
       </div>
 
       <div className="mt-4 p-4 bg-blue-l5 rounded-lg">
-        <h3 className="font-medium text-blue-d3 mb-2">
-          The Power of Compound Growth
-        </h3>
+        <h3 className=" text-blue-d3 mb-2">The Power of Compound Growth</h3>
         <p className="text-sm text-blue-d2">
           This {yrs}-year projection demonstrates how Better Giving's integrated
           approach compounds over time. By Year {yrs}, your organization could

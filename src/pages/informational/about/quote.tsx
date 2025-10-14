@@ -34,7 +34,7 @@ export function Quote({ className = "" }) {
           alt="quotation mark"
           className="justify-self-start w-18 lg:w-24 mb-6 -mt-24"
         />
-        <blockquote className="text-xl sm:text-2xl font-medium text-gray italic mb-2 ">
+        <blockquote className="text-xl sm:text-2xl  text-gray italic mb-2 ">
           Our mission is to give every nonprofit, everywhere, free access to the
           financial tools they need to grow and thrive. <br />
           <br />

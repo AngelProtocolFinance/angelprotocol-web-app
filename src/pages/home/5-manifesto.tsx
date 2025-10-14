@@ -51,42 +51,44 @@ export function Manifesto({ classes = "" }) {
 
         <TabGroup className="mt-4">
           <TabList className="flex mb-2 gap-x-1">
-            <Tab className="focus:outline-none px-4 pb-2 font-bold text-lg data-selected:border-blue border-b-2 border-gray-l3">
+            <Tab className="focus:outline-none px-4 pb-2 font-semibold text-lg data-selected:border-blue border-b-2 border-gray-l3">
               Your Rights
             </Tab>
-            <Tab className="focus:outline-none px-4 pb-2 font-bold text-lg data-selected:border-blue border-b-2 border-gray-l3">
+            <Tab className="focus:outline-none px-4 pb-2 font-semibold text-lg data-selected:border-blue border-b-2 border-gray-l3">
               Your Benefits
             </Tab>
-            <Tab className="focus:outline-none px-4 pb-2 font-bold text-lg data-selected:border-blue border-b-2 border-gray-l3">
+            <Tab className="focus:outline-none px-4 pb-2 font-semibold text-lg data-selected:border-blue border-b-2 border-gray-l3">
               Your Part
             </Tab>
           </TabList>
 
           <TabPanels className="mt-6">
             <TabPanel className="">
-              <p className="text-lg xl:text-xl mb-4 font-bold">
+              <p className="text-lg xl:text-xl mb-4 font-semibold">
                 The {APP_NAME} Manifesto — your three rights:
               </p>
               <ul className="space-y-2 text-gray xl:text-lg list-disc list-inside">
                 <li>
-                  <span className="font-bold">Financial Self-Sufficiency</span>:
-                  grow durable reserves; access tools for long-term stability.
+                  <span className="font-semibold">
+                    Financial Self-Sufficiency
+                  </span>
+                  : grow durable reserves; access tools for long-term stability.
                 </li>
                 <li>
-                  <span className="font-bold">Equal Opportunity</span>: fair
+                  <span className="font-semibold">Equal Opportunity</span>: fair
                   access to modern fundraising & finance, regardless of size,
                   location, or cause.
                 </li>
                 <li>
-                  <span className="font-bold">Organizational Autonomy</span>:
-                  independence to allocate funds and reduce admin drag on your
+                  <span className="font-semibold">Organizational Autonomy</span>
+                  : independence to allocate funds and reduce admin drag on your
                   terms.
                 </li>
               </ul>
             </TabPanel>
 
             <TabPanel className="">
-              <p className="text-lg xl:text-xl mb-4 font-bold">
+              <p className="text-lg xl:text-xl mb-4 font-semibold">
                 Member Benefits (always included):
               </p>
               <ul className="space-y-2 text-gray xl:text-lg list-disc list-inside">
@@ -102,7 +104,7 @@ export function Manifesto({ classes = "" }) {
             </TabPanel>
 
             <TabPanel className="grid grid-cols-2 @container/panel">
-              <p className="text-lg xl:text-xl mb-4 font-bold col-span-full">
+              <p className="text-lg xl:text-xl mb-4 font-semibold col-span-full">
                 Member Reciprocity (light, but important):
               </p>
               <ul className="@max-2xl/panel:col-span-full space-y-2 text-gray xl:text-lg list-decimal list-inside">

@@ -79,7 +79,7 @@ function Content(props: IContent) {
 
       <button
         disabled={fetcher.state !== "idle" || !isDirty}
-        className="text-sm btn-blue rounded-full px-4 py-2  uppercase font-bold"
+        className="text-sm btn-blue rounded-full px-4 py-2  uppercase font-semibold"
       >
         {fetcher.state !== "idle" ? "Submitting..." : "Submit"}
       </button>

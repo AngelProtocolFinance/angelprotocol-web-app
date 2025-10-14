@@ -37,7 +37,7 @@ export function DonorMsgs({ classes = "", id }: Props) {
 
   return (
     <div className={`${classes} w-full rounded-sm @container`}>
-      <h2 className="text-xl font-bold mb-2">Donors</h2>
+      <h2 className="text-xl font-semibold mb-2">Donors</h2>
       <div className="grid gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-4">
         {items.map((donor) => (
           <div
@@ -53,7 +53,7 @@ export function DonorMsgs({ classes = "", id }: Props) {
             />
 
             <div>
-              <p className="text-nowrap text-sm font-semibold">
+              <p className="text-nowrap text-sm  font-medium">
                 {donor.donor_name}
               </p>
               {donor.donor_message && (
@@ -68,7 +68,7 @@ export function DonorMsgs({ classes = "", id }: Props) {
         <button
           type="button"
           onClick={() => load(next)}
-          className="text-blue font-medium mt-4 hover:text-blue-d1"
+          className="text-blue  mt-4 hover:text-blue-d1"
         >
           View more
         </button>

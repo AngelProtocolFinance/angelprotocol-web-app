@@ -72,7 +72,7 @@ function Page({ loaderData: data }: Route.ComponentProps) {
             {active_filters}
           </div>
         )}
-        <div className="font-bold my-2 flex items-center gap-x-2">
+        <div className="font-semibold my-2 flex items-center gap-x-2">
           <p>found: {data.num_items}</p>
           {data.num_items > 0 && (
             <a

@@ -42,7 +42,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
           <TopCountries />
 
           <NavLink
-            className="text-blue-d1 [&:is(.pending)]:text-gray font-medium text-lg text-center mt-8 block"
+            className="text-blue-d1 [&:is(.pending)]:text-gray  text-lg text-center mt-8 block"
             to={href("/marketplace")}
           >
             Explore all Causes
@@ -97,7 +97,7 @@ function SearchResult(props: ISearchResult) {
       ))}
       {props.page < props.pages && (
         <Link
-          className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
+          className="w-full text-blue-d1  text-lg text-center mt-8 block"
           to={{
             pathname: href("/marketplace"),
             search: new URLSearchParams({

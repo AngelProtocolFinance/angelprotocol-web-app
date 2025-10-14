@@ -91,7 +91,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
   return (
     <div className="grid justify-items-center gap-3.5">
       <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl">
-        <h3 className="text-center text-2xl font-bold text-gray-d4">
+        <h3 className="text-center text-2xl font-semibold text-gray-d4">
           {ctx.title}
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
@@ -106,13 +106,13 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
             type="submit"
           >
             <Image src={googleIcon} height={18} width={18} />
-            <span className="normal-case  font-semibold text-gray-d4">
+            <span className="normal-case   font-medium text-gray-d4">
               Sign Up with Google
             </span>
           </button>
         </RmxForm>
 
-        <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-gray-l2 after:bg-gray-l2 font-medium text-[13px] text-gray">
+        <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-gray-l2 after:bg-gray-l2  text-[13px] text-gray">
           OR
         </Separator>
 
@@ -162,7 +162,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
           disabled={is_submitting}
           form={form_id}
           type="submit"
-          className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
+          className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-semibold w-full my-8"
         >
           {is_submitting ? "Submitting..." : "Sign up"}
         </button>
@@ -171,7 +171,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
           Already have an account?
           <Link
             to={`${href("/login")}?redirect=${to}`}
-            className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
+            className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray  underline"
             aria-disabled={is_submitting}
           >
             Login

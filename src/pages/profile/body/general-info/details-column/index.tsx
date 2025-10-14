@@ -52,7 +52,7 @@ export function DetailsColumn({
         {npo.claimed === false && (
           <NavLink
             to={`${href("/register/welcome")}?claim=${npo.registration_number}`}
-            className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l3 rounded-sm"
+            className="max-lg:text-center block mt-4  text-blue-d1 hover:underline p-8 border border-gray-l3 rounded-sm"
           >
             Claim this organization
           </NavLink>
@@ -66,7 +66,7 @@ export function DetailsColumn({
 function Detail(props: PropsWithChildren<{ title: string }>) {
   return (
     <div className="flex flex-col justify-center items-start gap-2 w-full">
-      <p className=" font-bold text-xs tracking-wider uppercase">
+      <p className=" font-semibold text-xs tracking-wider uppercase">
         {props.title}
       </p>
       <span className="font-normal text-base text-gray dark:text-gray">

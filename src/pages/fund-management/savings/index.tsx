@@ -42,14 +42,14 @@ function Page({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <h3 className="font-bold text-2xl mb-4">Savings</h3>
+      <h3 className="font-semibold text-2xl mb-4">Savings</h3>
 
       <div className="bg-white">
         <p className="text-gray text-sm mb-2">Total Value</p>
-        <p className="text-3xl font-bold">${humanize(ltd.total)}</p>
+        <p className="text-3xl font-semibold">${humanize(ltd.total)}</p>
       </div>
 
-      <h4 className="font-bold text-lg mb-4 mt-8 capitalize">
+      <h4 className="font-semibold text-lg mb-4 mt-8 capitalize">
         Total savings balance
       </h4>
       <ResponsiveContainer width="100%" height={300}>
@@ -91,7 +91,7 @@ function Page({ loaderData }: Route.ComponentProps) {
       />
 
       <div className="flex items-center gap-x-2 mt-8 mb-4">
-        <h4 className="font-bold text-lg">Recent interests</h4>
+        <h4 className="font-semibold text-lg">Recent interests</h4>
         <NavLink
           replace
           preventScrollReset
@@ -113,7 +113,7 @@ function Page({ loaderData }: Route.ComponentProps) {
       />
 
       <div className="overflow-x-auto">
-        <h5 className="font-bold text-md mt-8 mb-2">
+        <h5 className="font-semibold text-md mt-8 mb-2">
           Top savers{" "}
           <span className="text-sm text-gray">( of {num_holders} )</span>
         </h5>
@@ -121,8 +121,8 @@ function Page({ loaderData }: Route.ComponentProps) {
           <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
             <thead>
               <tr>
-                <th className="font-medium text-sm text-gray">Name</th>
-                <th className="font-medium text-sm text-gray">Balance</th>
+                <th className=" text-sm text-gray">Name</th>
+                <th className=" text-sm text-gray">Balance</th>
               </tr>
             </thead>
             <tbody>

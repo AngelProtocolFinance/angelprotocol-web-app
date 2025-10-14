@@ -41,7 +41,7 @@ export default function Component() {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
+      <h3 className="font-semibold text-2xl mb-4">Dashboard</h3>
       <div className="flex items-center gap-2">
         <p className="mt-4 text-gray">
           Your new dashboard experience is underway
@@ -57,7 +57,7 @@ export default function Component() {
       </p>
       <p className="text-gray text-sm mt-4">
         Changes are expected to be live in{" "}
-        <span className="text-md font-bold">{formatTime(time)}</span>
+        <span className="text-md font-semibold">{formatTime(time)}</span>
       </p>
     </div>
   );

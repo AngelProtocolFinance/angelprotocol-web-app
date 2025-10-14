@@ -30,7 +30,7 @@ export function Top({ classes = "" }) {
           Thousands of dollars are slipping through the cracks every year – lost
           to fees, idle cash, and outdated donation methods.
         </p>
-        <p className="mb-4 text-gray-d4 font-semibold text-lg max-lg:text-center text-right mt-4">
+        <p className="mb-4 text-gray-d4  font-medium text-lg max-lg:text-center text-right mt-4">
           The longer you wait, the more you miss.
         </p>
         <div className="mb-4 text-gray-d4 text-lg max-lg:text-center text-right">

@@ -58,7 +58,7 @@ export function Feature2({ className = "" }) {
           pathname: href("/signup"),
           search: `?redirect=${href("/dashboard/referrals")}`,
         }}
-        className="btn-blue mt-8 justify-self-center col-span-full ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
+        className="btn-blue mt-8 justify-self-center col-span-full ml-1 group active:translate-x-1 font-semibold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >
         Get Your Link Now
         <ArrowRight size={18} className="group-hover:translate-x-1" />
@@ -77,10 +77,10 @@ export function ListItem(props: TListItem) {
         alt={props.image.alt}
         className="mb-4"
       />
-      <h4 className="text-center  font-medium text-2xl text-gray-d1 px-8">
+      <h4 className="text-center   text-2xl text-gray-d1 px-8">
         {props.title1}
       </h4>
-      <h5 className="py-4 text-center font-medium  text-lg @6xl:text-xl text-gray border-b-[3px] border-blue-d1 mb-7 px-8">
+      <h5 className="py-4 text-center   text-lg @6xl:text-xl text-gray border-b-[3px] border-blue-d1 mb-7 px-8">
         {props.title2}
       </h5>
       <p className="text-center text-lg @6xl:text-xl text-gray">

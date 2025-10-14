@@ -26,7 +26,7 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
 
   return (
     <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl">
-      <h3 className="text-center text-xl sm:text-2xl font-bold text-gray-d4">
+      <h3 className="text-center text-xl sm:text-2xl font-semibold text-gray-d4">
         Verify your account
       </h3>
       <p className="text-center font-normal max-sm:text-sm mt-2">
@@ -57,7 +57,7 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
           type="submit"
           name="intent"
           value="resend-otp"
-          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
+          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-semibold underline"
           disabled={counter > 0 || fetcher.state === "submitting"}
         >
           Resend code
@@ -68,7 +68,7 @@ export default function Page({ loaderData: email }: Route.ComponentProps) {
         disabled={fetcher.state === "submitting"}
         form={form_id}
         type="submit"
-        className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full mt-5"
+        className="flex-center btn-blue h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-semibold w-full mt-5"
       >
         Verify account
       </button>

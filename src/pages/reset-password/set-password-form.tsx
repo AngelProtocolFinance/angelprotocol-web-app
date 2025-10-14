@@ -29,7 +29,7 @@ export default function SetPasswordForm(props: Props) {
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl"
     >
       <input type="hidden" name="email" value={props.recipient.recipient_raw} />
-      <h3 className="text-center text-xl sm:text-2xl font-bold text-gray-d4">
+      <h3 className="text-center text-xl sm:text-2xl font-semibold text-gray-d4">
         Set new password
       </h3>
       <section className="text-center font-normal max-sm:text-sm mt-2">
@@ -43,7 +43,7 @@ export default function SetPasswordForm(props: Props) {
             name="intent"
             value="edit-email"
             type="submit"
-            className="text-center text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline hover:cursor-pointer"
+            className="text-center text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-semibold underline hover:cursor-pointer"
           >
             Edit email
           </button>
@@ -67,7 +67,7 @@ export default function SetPasswordForm(props: Props) {
             name="intent"
             value="resend-otp"
             type="submit"
-            className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
+            className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-semibold underline"
             disabled={counter > 0 || fetcher.state !== "idle"}
           >
             Resend code
@@ -102,7 +102,7 @@ export default function SetPasswordForm(props: Props) {
         value="confirm"
         disabled={fetcher.state !== "idle"}
         type="submit"
-        className="mt-6 w-full h-12 sm:h-[52px] flex-center btn-blue rounded-full normal-case sm:text-lg font-bold"
+        className="mt-6 w-full h-12 sm:h-[52px] flex-center btn-blue rounded-full normal-case sm:text-lg font-semibold"
       >
         Confirm
       </button>

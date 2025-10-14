@@ -101,7 +101,7 @@ export function StepsCarousel({
             />
           </g>
         </svg>
-        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-gray-d4">
+        <p className="font-gochi max-w-[70%] text-center text-lg  text-gray-d4">
           Do&nbsp;Swipe!
         </p>
       </div>

@@ -154,7 +154,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
               <button
                 onClick={() => set_with_donor_msg((p) => !p)}
                 type="button"
-                className={`${with_donor_msg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"} font-semibold normal-case flex items-center gap-x-1 text-xs`}
+                className={`${with_donor_msg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"}  font-medium normal-case flex items-center gap-x-1 text-xs`}
               >
                 {with_donor_msg ? (
                   <Eraser size={12} className="shrink-0" />
@@ -177,7 +177,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
               <textarea
                 {...register("public_msg")}
                 aria-invalid={!!errors.public_msg?.message}
-                className="field-input w-full text-base font-semibold"
+                className="field-input w-full text-base  font-medium"
               />
               <p className="text-red text-xs empty:hidden text-right">
                 {errors.public_msg?.message}
@@ -204,7 +204,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
               <textarea
                 {...register("msg_to_npo")}
                 aria-invalid={!!errors.msg_to_npo?.message}
-                className="field-input w-full text-base font-semibold"
+                className="field-input w-full text-base  font-medium"
               />
               <p className="text-red text-xs empty:hidden text-right">
                 {errors.msg_to_npo?.message}

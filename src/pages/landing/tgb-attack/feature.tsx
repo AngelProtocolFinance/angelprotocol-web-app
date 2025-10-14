@@ -83,7 +83,7 @@ function ListItem(props: TListItem) {
         alt={props.image.alt}
         className="pb-2"
       />
-      <h5 className="pb-2 text-center font-medium  @6xl:text-lg text-blue-d1 border-b-2 border-blue-d1 mb-4 px-8">
+      <h5 className="pb-2 text-center   @6xl:text-lg text-blue-d1 border-b-2 border-blue-d1 mb-4 px-8">
         {props.title1}
       </h5>
       <p className="text-center text-lg @6xl:text-xl text-gray">

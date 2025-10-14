@@ -59,7 +59,7 @@ export function Form(props: StockFormStep) {
         label="Symbol name of share"
         placeholder="Ex. AAPL"
         classes={{
-          label: " font-semibold text-base",
+          label: "  font-medium text-base",
           input: "field-input-donate",
         }}
       />
@@ -72,7 +72,7 @@ export function Form(props: StockFormStep) {
         placeholder="Enter quantity"
         classes={{
           container: "mt-6",
-          label: " font-semibold text-base",
+          label: "  font-medium text-base",
           input: "field-input-donate",
         }}
       />

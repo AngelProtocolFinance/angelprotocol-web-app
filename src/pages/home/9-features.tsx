@@ -145,7 +145,7 @@ export function Features({ classes = "" }) {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring" }}
         to={href("/register/welcome")}
-        className="text-center capitalize col-span-full justify-self-center btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg mt-4"
+        className="text-center capitalize col-span-full justify-self-center btn-blue ml-1 group active:translate-x-1 font-semibold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg mt-4"
       >
         Explore all {APP_NAME} features
       </MLink>
@@ -164,7 +164,7 @@ function Feature(props: IFeature & { index: number }) {
     >
       <div className="flex items-center gap-x-2">
         {props.icon}
-        <h3 className="font-bold text-sm ">{props.title}</h3>
+        <h3 className="font-semibold text-sm ">{props.title}</h3>
       </div>
       <p className="text-gray-d1">{props.body}</p>
     </motion.li>

@@ -87,7 +87,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         onSubmit={handleSubmit}
         className="grid border border-gray-l3 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
-        <h4 className="font-bold text-xl mb-4">Create your fundraiser</h4>
+        <h4 className="font-semibold text-xl mb-4">Create your fundraiser</h4>
 
         <Field
           {...register("name")}
@@ -95,9 +95,9 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
           sub="A great name will attract more donors"
           required
           error={errors.name?.message}
-          classes={{ label: "font-medium text-left" }}
+          classes={{ label: " text-left" }}
         />
-        <label className="label font-medium mt-4 mb-1" data-required>
+        <label className="label  mt-4 mb-1" data-required>
           Description
         </label>
         <RichText
@@ -210,7 +210,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
                   <Input
                     type="number"
                     {...register(`increments.${idx}.value`)}
-                    className="w-full h-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                    className="w-full h-full  outline-blue-d1 rounded-sm text-sm  bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                   />
                 </div>
 
@@ -222,7 +222,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
                 <Textarea
                   {...register(`increments.${idx}.label`)}
                   rows={2}
-                  className="w-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                  className="w-full  outline-blue-d1 rounded-sm text-sm  bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                 />
                 <p
                   data-error={!!errors.increments?.[idx]?.label?.message}
@@ -247,7 +247,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         <button
           disabled={is_uploading || is_submitting}
           type="submit"
-          className="mt-8 btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"
+          className="mt-8 btn btn-blue text-sm  px-4 py-2 justify-self-end"
         >
           Create Fund
         </button>

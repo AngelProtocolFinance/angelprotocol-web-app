@@ -44,7 +44,7 @@ type ShareProps = {
 export function Share(props: ShareProps) {
   return (
     <div className={`${props.className ?? ""} grid py-2`}>
-      <h2 className="w-full pt-2 font-bold text-blue-d1 mb-2">
+      <h2 className="w-full pt-2 font-semibold text-blue-d1 mb-2">
         Spread the word!
       </h2>
       <p className="text-gray text-sm max-w-sm">
@@ -104,7 +104,7 @@ function Prompt({ recipientName, open, set_open, url, ...social }: IPrompt) {
       onClose={() => set_open(false)}
       classes="grid content-start fixed-center z-20 border border-gray-l3 bg-gray-l6 dark:bg-blue-d5 text-gray-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded-sm overflow-hidden"
     >
-      <div className="grid place-items-center relative h-16  font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l3">
+      <div className="grid place-items-center relative h-16  font-semibold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l3">
         Share on {social.title}
         <button
           onClick={() => set_open(false)}
@@ -117,8 +117,8 @@ function Prompt({ recipientName, open, set_open, url, ...social }: IPrompt) {
         ref={msgRef}
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l3 rounded-sm"
       >
-        Donate to <span className="font-bold">{recipientName}</span> fundraiser
-        on <span className="font-bold">{social.handle}</span>!{" "}
+        Donate to <span className="font-semibold">{recipientName}</span>{" "}
+        fundraiser on <span className="font-semibold">{social.handle}</span>!{" "}
         {
           "Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever."
         }

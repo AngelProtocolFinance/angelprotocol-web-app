@@ -19,7 +19,7 @@ function Page({ loaderData }: Route.ComponentProps) {
   const { bal_lock, id, ...btxs_page1 } = loaderData;
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <div className="font-bold text-2xl mb-4 flex items-baseline gap-x-2">
+      <div className="font-semibold text-2xl mb-4 flex items-baseline gap-x-2">
         <h3>Investments</h3>{" "}
         <Tooltip
           tip={
@@ -40,7 +40,7 @@ function Page({ loaderData }: Route.ComponentProps) {
           <CircleHelp size={16} className="text-gray ml-1" />
         </Tooltip>
       </div>
-      <div className="text-xl  font-semibold border border-gray-l4 p-4 rounded">
+      <div className="text-xl   font-medium border border-gray-l4 p-4 rounded">
         ${humanize(bal_lock)} <SfPerf id={id} />
       </div>
       <div className="flex items-center gap-4 mt-4">

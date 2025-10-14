@@ -18,7 +18,7 @@ export function FAQ({ classes = "" }) {
       {faqs.map((faq) => (
         <Disclosure as="div" key={faq.id} className="p-4">
           <DisclosureButton className="group flex items-center justify-between gap-2 w-full">
-            <span className="text-left group-data-open:font-semibold">
+            <span className="text-left group-data-open: font-medium">
               {faq.question}
             </span>
             <DrawerIcon
@@ -40,7 +40,7 @@ export function FAQ({ classes = "" }) {
       <div className="grid pt-8">
         <ExtLink
           href={INTERCOM_HELP}
-          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg  font-medium"
         >
           <span>Complete FAQs</span>
           <ArrowRight size={15} />
@@ -53,7 +53,7 @@ export function FAQ({ classes = "" }) {
             }
             window.open(INTERCOM_HELP, "_blank");
           }}
-          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg  font-medium"
         >
           Need additional support? Live Chat.
         </button>

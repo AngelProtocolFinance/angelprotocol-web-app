@@ -53,7 +53,7 @@ export default function Page({ loaderData: recipient }: Route.ComponentProps) {
       >
         <Image src={char} />
       </div>
-      <p className="uppercase mb-2 font-bold text-xs text-blue-d1 text-center">
+      <p className="uppercase mb-2 font-semibold text-xs text-blue-d1 text-center">
         Donation Successful
       </p>
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
@@ -61,7 +61,7 @@ export default function Page({ loaderData: recipient }: Route.ComponentProps) {
       </h3>
       <p className="text-center text-gray">
         We'll process your donation to{" "}
-        <span className="font-bold">
+        <span className="font-semibold">
           {recipient?.name ?? "the nonprofit you specified"}
         </span>{" "}
         as soon as the payment has cleared.

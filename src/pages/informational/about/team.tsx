@@ -185,7 +185,7 @@ function Member({ bio: [tagline, ...more], ...props }: IMember) {
         </div>
       </div>
       <div className="self-end w-full max-md:mt-4">
-        <p className="text-blue max-md:mt-2 uppercase font-bold text-lg max-md:text-center">
+        <p className="text-blue max-md:mt-2 uppercase font-semibold text-lg max-md:text-center">
           {props.name}
         </p>
         <p className="text-lg max-md:text-center">{props.title}</p>

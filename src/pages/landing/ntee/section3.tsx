@@ -46,7 +46,7 @@ export function Section3({ classes = "" }: Props) {
       <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
         Keep <span className="text-blue">Every Dollar</span>.
       </h2>
-      <p className="text-xl @6xl:text-2xl mb-6  @6xl:leading-tight capitalize text-gray-d1 font-medium text-center text-balance">
+      <p className="text-xl @6xl:text-2xl mb-6  @6xl:leading-tight capitalize text-gray-d1  text-center text-balance">
         Zero fees. Zero admin. Just funding for your mission.
       </p>
       <div className="grid @6xl:grid-cols-2 gap-4">
@@ -64,16 +64,16 @@ export function Section3({ classes = "" }: Props) {
         ))}
       </div>
       <div className="text-balance bg-blue-l5 mt-16 p-8 rounded-xl rounded-tl-none rounded-bl-none">
-        <p className="text-2xl text-center @6xl:text-3xl @6xl:leading-tight mt-4 font-semibold">
+        <p className="text-2xl text-center @6xl:text-3xl @6xl:leading-tight mt-4  font-medium">
           Result:
         </p>
-        <p className="text-xl text-blue text-center @6xl:text-2xl @6xl:leading-tight mt-4 font-semibold">
+        <p className="text-xl text-blue text-center @6xl:text-2xl @6xl:leading-tight mt-4  font-medium">
           More funding. Less stress. Real growth.
         </p>
       </div>
       <Link
         to={href("/register/welcome")}
-        className="block mt-8 text-center justify-self-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  capitalize font-bold shadow-2xl rounded-xl"
+        className="block mt-8 text-center justify-self-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  capitalize font-semibold shadow-2xl rounded-xl"
       >
         Start Free
       </Link>

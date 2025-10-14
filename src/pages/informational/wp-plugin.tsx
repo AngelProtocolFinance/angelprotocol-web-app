@@ -86,7 +86,7 @@ export default function WpPlugin() {
               >
                 <Cells
                   type="th"
-                  cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
+                  cellClass="px-3 py-4 text-xs uppercase  font-medium text-left first:rounded-tl last:rounded-tr"
                 >
                   <>Name</>
                   <>Description</>

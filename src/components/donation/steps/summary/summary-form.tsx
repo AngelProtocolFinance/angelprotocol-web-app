@@ -97,7 +97,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
       className={`grid grid-cols-2 gap-x-4 ${classes}`}
     >
       <Select
-        label={<span className="font-semibold text-base ">Title</span>}
+        label={<span className=" font-medium text-base ">Title</span>}
         value={title.value}
         onChange={title.onChange}
         options={donor_titles as any}
@@ -113,7 +113,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         placeholder="First Name"
         required
         classes={{
-          label: "font-semibold text-base ",
+          label: " font-medium text-base ",
           input: "field-input-donate",
         }}
         error={errors.first_name?.message}
@@ -124,7 +124,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         placeholder="Last Name"
         classes={{
           input: "field-input-donate",
-          label: "font-semibold text-base  invisible",
+          label: " font-medium text-base  invisible",
         }}
         error={errors.last_name?.message}
       />
@@ -133,7 +133,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         label="Your company name"
         placeholder="Company name"
         classes={{
-          label: "font-semibold text-base ",
+          label: " font-medium text-base ",
           container: "col-span-full mt-4",
           input: "field-input-donate",
         }}
@@ -144,7 +144,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
         label="Your email"
         placeholder="Email address"
         classes={{
-          label: "font-semibold text-base ",
+          label: " font-medium text-base ",
           container: "col-span-full my-4",
           input: "field-input-donate",
         }}
@@ -166,7 +166,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
           <button
             onClick={() => set_with_donor_msg((p) => !p)}
             type="button"
-            className={`${with_donor_msg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"} font-semibold normal-case flex items-center gap-x-1 text-xs`}
+            className={`${with_donor_msg ? "text-red-l1" : "text-(--accent-primary) hover:enabled:text-(--accent-primary)"}  font-medium normal-case flex items-center gap-x-1 text-xs`}
           >
             {with_donor_msg ? (
               <Eraser size={12} className="shrink-0" />
@@ -189,7 +189,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
           <textarea
             {...register("public_msg")}
             aria-invalid={!!errors.public_msg?.message}
-            className="field-input w-full text-base font-semibold"
+            className="field-input w-full text-base  font-medium"
           />
           <p className="text-red text-xs empty:hidden text-right">
             {errors.public_msg?.message}
@@ -220,7 +220,7 @@ export function SummaryForm({ classes = "", ...props }: Props) {
           <textarea
             {...register("msg_to_npo")}
             aria-invalid={!!errors.msg_to_npo?.message}
-            className="field-input w-full text-base font-semibold"
+            className="field-input w-full text-base  font-medium"
           />
           <p className="text-red text-xs empty:hidden text-right">
             {errors.msg_to_npo?.message}

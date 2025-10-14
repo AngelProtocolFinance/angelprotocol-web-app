@@ -93,7 +93,7 @@ export function Body({
             </div>
             <p className="w-full font-normal text-lg">{npo.tagline}</p>
           </div>
-          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full  font-medium text-base">
             {npo.hq_country && (
               <span className="flex items-center gap-2 uppercase">
                 <MapPin className="text-blue-d1" size={20} />

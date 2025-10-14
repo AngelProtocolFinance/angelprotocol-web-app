@@ -31,10 +31,11 @@ export function NoVideo({ classes = "" }) {
       className={`bg-white ${classes} grid justify-items-center rounded-sm border border-gray-l3 px-4 py-16`}
     >
       <Image className="text-gray text-2xl mb-6" />
-      <p className="font-bold mb-2">Start by adding your first video</p>
+      <p className="font-semibold mb-2">Start by adding your first video</p>
       <p className="text-sm text-gray">
         You have no videos. To add one, use the{" "}
-        <span className="text-gray-d4 font-bold">Add video</span> button above.
+        <span className="text-gray-d4 font-semibold">Add video</span> button
+        above.
       </p>
     </div>
   );

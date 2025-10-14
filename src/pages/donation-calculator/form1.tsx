@@ -28,7 +28,7 @@ export function Form1({ classes = "", state, setState }: Props) {
         label="Annual Online Donations"
         placeholder="$"
         classes={{
-          label: "label text-base font-semibold",
+          label: "label text-base  font-medium",
           input: "field-input text-base",
           container: "mb-4",
         }}
@@ -61,7 +61,7 @@ export function Form1({ classes = "", state, setState }: Props) {
         label="Annual Platform Subscription Cost"
         placeholder="$"
         classes={{
-          label: "label text-base font-semibold",
+          label: "label text-base  font-medium",
           input: "field-input text-base",
           container: "mt-6",
         }}
@@ -80,7 +80,7 @@ export function Form1({ classes = "", state, setState }: Props) {
             type="checkbox"
             className="accent-blue-d1 relative inline mr-2 top-px size-3.5"
           />
-          <Label className="font-semibold ">
+          <Label className=" font-medium ">
             Donors can cover processing fees
           </Label>
         </div>
@@ -90,7 +90,7 @@ export function Form1({ classes = "", state, setState }: Props) {
         </Description>
       </Field>
 
-      <p className="mt-6 font-semibold ">
+      <p className="mt-6  font-medium ">
         Donation types currently accepted
         <Tooltip
           tip={

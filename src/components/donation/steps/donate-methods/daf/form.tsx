@@ -31,7 +31,7 @@ export function Form(props: Props) {
         label="Donation amount"
         placeholder="$ Enter amount"
         classes={{
-          label: " font-semibold text-base",
+          label: "  font-medium text-base",
           input: "field-input-donate",
           container: "mt-1",
         }}

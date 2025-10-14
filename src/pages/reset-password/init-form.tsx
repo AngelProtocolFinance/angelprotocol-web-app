@@ -23,7 +23,7 @@ export default function InitForm(props: Props) {
       onSubmit={handleSubmit}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl"
     >
-      <h3 className="text-center text-xl sm:text-2xl font-bold text-gray-d4">
+      <h3 className="text-center text-xl sm:text-2xl font-semibold text-gray-d4">
         Reset your Password
       </h3>
       <p className="mt-2 text-center font-normal max-sm:text-sm">
@@ -41,14 +41,14 @@ export default function InitForm(props: Props) {
       <button
         disabled={fetcher.state !== "idle"}
         type="submit"
-        className="mt-6 w-full h-12 sm:h-[52px] flex-center btn-blue rounded-full normal-case sm:text-lg font-bold"
+        className="mt-6 w-full h-12 sm:h-[52px] flex-center btn-blue rounded-full normal-case sm:text-lg font-semibold"
       >
         Send Code
       </button>
 
       <Link
         to={`${href("/login")}?redirect=${props.to}`}
-        className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm font-medium underline text-center"
+        className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm  underline text-center"
         aria-disabled={fetcher.state !== "idle"}
       >
         Back to Sign in

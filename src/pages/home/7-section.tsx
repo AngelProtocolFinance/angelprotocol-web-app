@@ -8,7 +8,7 @@ export function Section7({ classes = "" }) {
     >
       <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
         <LayoutPanelLeftIcon aria-hidden="true" />
-        <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
+        <h3 className="mt-2 capitalize text-center font-semibold text-lg md:text-xl">
           All-in one donation form
         </h3>
         <p className="text-center mt-4 text-lg">
@@ -18,7 +18,7 @@ export function Section7({ classes = "" }) {
       </article>
       <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
         <SproutIcon className="stroke-green" size={26} aria-hidden="true" />
-        <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
+        <h3 className="mt-2 capitalize text-center font-semibold text-lg md:text-xl">
           Sustainability fund management
         </h3>
         <p className="text-center mt-4 text-lg">
@@ -28,7 +28,7 @@ export function Section7({ classes = "" }) {
       </article>
       <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
         <GlobeIcon className="stroke-blue" aria-hidden="true" />
-        <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
+        <h3 className="mt-2 capitalize text-center font-semibold text-lg md:text-xl">
           Fiscal sponsorship
         </h3>
         <p className="text-center mt-4 text-lg">

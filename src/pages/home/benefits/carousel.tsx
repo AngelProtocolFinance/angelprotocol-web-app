@@ -16,10 +16,10 @@ const Carousel = ({ slides, classes = "" }: Props) => {
               alt="Visual representation of benefit"
               className="size-56 mb-8"
             />
-            <p className=" text-lg text-center md:text-xl text-black font-bold">
+            <p className=" text-lg text-center md:text-xl text-black font-semibold">
               {slide.title}
             </p>
-            <p className="text-center md:text-lg text-black font-bold mb-3">
+            <p className="text-center md:text-lg text-black font-semibold mb-3">
               {slide.title2}
             </p>
             <p className="md:text-xl text-center text-gray-d1">

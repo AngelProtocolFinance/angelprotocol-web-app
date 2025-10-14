@@ -99,13 +99,13 @@ export function ProbSol({ className = "" }) {
           <table className="w-full border-collapse">
             <thead className="bg-gray-50">
               <tr className="border-b border-gray-l3">
-                <th className="text-left font-semibold pb-2">
+                <th className="text-left  font-medium pb-2">
                   <div className="text-lg flex items-center gap-2 text-red">
                     <X className="text-red" strokeWidth={3} />
                     Problem
                   </div>
                 </th>
-                <th className="text-left font-semibold pb-2 pl-4 @container/solution">
+                <th className="text-left  font-medium pb-2 pl-4 @container/solution">
                   <div className="text-lg flex items-center gap-2 text-blue-d1">
                     <Heart className="shrink-0" />
                     <span className="">Better Giving Solution</span>
@@ -117,7 +117,7 @@ export function ProbSol({ className = "" }) {
               {solutions.map((solution, index) => (
                 <>
                   <tr>
-                    <td className="font-bold text-sm py-2 ">
+                    <td className="font-semibold text-sm py-2 ">
                       {solution.problem}
                     </td>
                     <td />

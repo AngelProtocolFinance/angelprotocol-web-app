@@ -57,7 +57,7 @@ function Page({ loaderData: data }: Route.ComponentProps) {
     >
       <h2 className="text-3xl mb-6">User Profile</h2>
 
-      <Label className="text-base font-medium mb-2">Avatar</Label>
+      <Label className="text-base  mb-2">Avatar</Label>
       <ImgEditor
         spec={avatar_spec}
         value={rhf.avatar.value}
@@ -81,7 +81,7 @@ function Page({ loaderData: data }: Route.ComponentProps) {
         label="Default currency"
         onChange={rhf.prefCurrency.onChange}
         value={rhf.prefCurrency.value}
-        classes={{ label: "font-medium text-base", container: "mt-16" }}
+        classes={{ label: " text-base", container: "mt-16" }}
         required
       />
 

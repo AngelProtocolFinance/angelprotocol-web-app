@@ -74,9 +74,7 @@ function Row(props: IRow) {
     <div className="flex items-center border border-gray-l3 rounded p-4">
       {props.icon}
       {props.title}
-      <span className="ml-12 text-gray font-medium text-sm ">
-        {props.pct ?? 50} %
-      </span>
+      <span className="ml-12 text-gray  text-sm ">{props.pct ?? 50} %</span>
     </div>
   );
 }

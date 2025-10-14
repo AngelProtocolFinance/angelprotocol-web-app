@@ -55,7 +55,7 @@ export function Ctas({ classes = "" }) {
             We help you raise more.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">
+            <span className="font-semibold">
               Conversion-optimized donation flow
             </span>
             : fewer clicks, express checkout, all gift types in one form—plus
@@ -63,7 +63,7 @@ export function Ctas({ classes = "" }) {
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-semibold shadow-2xl rounded-full"
           >
             Join us today!
           </Link>
@@ -91,14 +91,16 @@ export function Ctas({ classes = "" }) {
             We grow what you raise.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">Let your donations work for you</span>:
-            High-yield savings (FDIC-insured) and a managed option averaging
+            <span className="font-semibold">
+              Let your donations work for you
+            </span>
+            : High-yield savings (FDIC-insured) and a managed option averaging
             over 20% annually across the last 5 years (past performance isn't
             guaranteed).
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-semibold shadow-2xl rounded-full"
           >
             Join us today!
           </Link>
@@ -116,14 +118,14 @@ export function Ctas({ classes = "" }) {
             We unlock larger gifts.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">Stop turning donors away</span>: Accept
-            stock & crypto in the same secure flow—no extra systems, no added
-            admin, no extra cost, just cash in your bank account and tax
+            <span className="font-semibold">Stop turning donors away</span>:
+            Accept stock & crypto in the same secure flow—no extra systems, no
+            added admin, no extra cost, just cash in your bank account and tax
             benefits for your donors.
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-semibold shadow-2xl rounded-full"
           >
             Join us today!
           </Link>
@@ -151,7 +153,7 @@ export function Ctas({ classes = "" }) {
             We don't take a cut.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">
+            <span className="font-semibold">
               Entirely free, all features included
             </span>
             : Processing is funded by optional donor infrastructure gifts at
@@ -159,7 +161,7 @@ export function Ctas({ classes = "" }) {
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-semibold shadow-2xl rounded-full"
           >
             Join us today!
           </Link>
@@ -181,13 +183,15 @@ export function Cta({ classes = "" }: ICta) {
           We help you raise more
         </h4>
         <p className="md:text-lg mb-4">
-          <span className="font-bold">Conversion-optimized donation flow</span>:
-          fewer clicks, express checkout, all gift types in one form—plus easy
+          <span className="font-semibold">
+            Conversion-optimized donation flow
+          </span>
+          : fewer clicks, express checkout, all gift types in one form—plus easy
           embedding to lift completion and grow monthly donors.
         </p>
         <Link
           to={href("/register/welcome")}
-          className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-semibold shadow-2xl rounded-full"
         >
           Join us today!
         </Link>

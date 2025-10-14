@@ -36,7 +36,7 @@ export function ProgramSelector({
     >
       {program.value && (
         <div className="">
-          <p className="text-gray-d4 font-semibold mb-2">
+          <p className="text-gray-d4  font-medium mb-2">
             I'd like to donate to the
           </p>
           <p className="justify-between border border-gray-l3 rounded-lg p-3.5 flex items-center">
@@ -54,7 +54,7 @@ export function ProgramSelector({
       {!program.value && (
         <label
           htmlFor="select-program"
-          className={`${styles.label} block font-semibold  mb-2 text-gray-d4`}
+          className={`${styles.label} block  font-medium  mb-2 text-gray-d4`}
         >
           Select a program to donate to{" "}
           <span className="text-xs text-gray">( optional )</span>

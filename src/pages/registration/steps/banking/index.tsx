@@ -43,7 +43,7 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
         </h2>
 
         <p className="mt-6 mb-1">
-          <span className="uppercase text-sm font-semibold">account id: </span>
+          <span className="uppercase text-sm  font-medium">account id: </span>
           <span className="text-gray ">{reg.o_bank_id}</span>
         </p>
         <ExtLink

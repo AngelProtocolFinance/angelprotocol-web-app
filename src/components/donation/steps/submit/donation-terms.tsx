@@ -22,10 +22,5 @@ export function DonationTerms({ classes = "", endowName }: Props) {
 }
 
 const A: typeof ExtLink = ({ className, ...props }) => {
-  return (
-    <ExtLink
-      {...props}
-      className={`${className} font-medium hover:underline`}
-    />
-  );
+  return <ExtLink {...props} className={`${className}  hover:underline`} />;
 };

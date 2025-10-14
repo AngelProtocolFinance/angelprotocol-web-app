@@ -32,9 +32,7 @@ function Page({ loaderData: { subs } }: Route.ComponentProps) {
         </td>
         <td className="text-sm text-gray-d4">
           <div className="flex items-baseline gap-x-2">
-            <span className="text-xs text-gray-d1 font-semibold">
-              {s.denom}
-            </span>
+            <span className="text-xs text-gray-d1  font-medium">{s.denom}</span>
             <span>{humanize(s.amount, 2)}</span>
             {s.denom !== "USD" && (
               <span className="text-xs text-gray-d1">
@@ -74,11 +72,11 @@ function Page({ loaderData: { subs } }: Route.ComponentProps) {
           <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l3 divide-y divide-gray-l3">
             <thead>
               <tr>
-                <th className="font-medium text-sm text-gray">Recipient</th>
-                <th className="font-medium text-sm text-gray">Amount</th>
-                <th className="font-medium text-sm text-gray">Status</th>
-                <th className="font-medium text-sm text-gray">Next Payment</th>
-                <th className="font-medium text-sm text-gray">Actions</th>
+                <th className=" text-sm text-gray">Recipient</th>
+                <th className=" text-sm text-gray">Amount</th>
+                <th className=" text-sm text-gray">Status</th>
+                <th className=" text-sm text-gray">Next Payment</th>
+                <th className=" text-sm text-gray">Actions</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>

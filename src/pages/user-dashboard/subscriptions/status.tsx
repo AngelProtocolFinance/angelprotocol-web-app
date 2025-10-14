@@ -59,7 +59,7 @@ export function Status({ status, classes = "" }: IStatus) {
 
   return (
     <div
-      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${config.bgColor} ${config.textColor} ${classes}`}
+      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs  ${config.bgColor} ${config.textColor} ${classes}`}
     >
       <div className={`w-2 h-2 rounded-full ${config.dotColor}`} />
       {config.text}

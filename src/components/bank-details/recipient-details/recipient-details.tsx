@@ -48,7 +48,7 @@ function _RecipientDetails({
   if (requirements.length === 0 || error) {
     return (
       <Info classes="text-sm">
-        Target currency <span className="font-bold">{currency}</span> is not
+        Target currency <span className="font-semibold">{currency}</span> is not
         supported. Please use a bank account with a different currency.
       </Info>
     );

@@ -13,18 +13,18 @@ interface Props extends View {
 export function Result1({ classes = "", ...v }: Props) {
   return (
     <div className={`${classes} @container p-6`}>
-      <h3 className="text-lg sm:text-xl font-bold mb-4">
+      <h3 className="text-lg sm:text-xl font-semibold mb-4">
         Annual Impact Summary
       </h3>
 
       <div className="mb-6">
         <p className="text-gray">Current Online Donations</p>
-        <p className="text-lg sm:text-xl font-bold">{to_usd(v.amount)}</p>
+        <p className="text-lg sm:text-xl font-semibold">{to_usd(v.amount)}</p>
       </div>
 
       <div className="border-t border-gray-l3 my-6" />
 
-      <h3 className="text-lg sm:text-xl font-bold mb-4">
+      <h3 className="text-lg sm:text-xl font-semibold mb-4">
         Donation Processing Impact
       </h3>
 
@@ -33,7 +33,7 @@ export function Result1({ classes = "", ...v }: Props) {
           <p className="max-sm:text-sm text-gray mb-2">
             Current Amount Received
           </p>
-          <p className="text-lg sm:text-xl font-bold">
+          <p className="text-lg sm:text-xl font-semibold">
             <Usd relative={v.amount}>{v.ogNet}</Usd>{" "}
             <Usd parens classes="text-lg sm:text-xl">
               {-v.ogDeductions}
@@ -42,7 +42,7 @@ export function Result1({ classes = "", ...v }: Props) {
         </div>
         <div className="@md:p-5 pt-2">
           <p className="max-sm:text-sm text-gray mb-2">With Better Giving</p>
-          <p className="text-lg sm:text-xl font-bold">
+          <p className="text-lg sm:text-xl font-semibold">
             <Usd relative={v.ogNet}>{v.bgNet}</Usd>{" "}
             <Usd sign parens classes="text-lg sm:text-xl">
               {v.advantage}
@@ -51,14 +51,14 @@ export function Result1({ classes = "", ...v }: Props) {
         </div>
       </div>
 
-      <h3 className="text-lg sm:text-xl font-bold mb-4 text-balance">
+      <h3 className="text-lg sm:text-xl font-semibold mb-4 text-balance">
         Donation Processing Impact Details
       </h3>
 
       <div className="space-y-3 mb-6">
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
           <p className="max-sm:text-sm text-gray-d1">Fee Savings:</p>
-          <Usd sign classes="font-semibold">
+          <Usd sign classes=" font-medium">
             {v.feeSavings}
           </Usd>
         </div>
@@ -86,13 +86,13 @@ export function Result1({ classes = "", ...v }: Props) {
             </Tooltip>
           </p>
 
-          <Usd sign classes="font-semibold">
+          <Usd sign classes=" font-medium">
             {v.ogMissedFromDonTypes}
           </Usd>
         </div>
         <div className="flex gap-x-4 @max-md:flex-col justify-between @md:items-center">
           <p className="max-sm:text-sm text-gray-d1">Subscription cost</p>
-          <Usd sign classes="font-semibold">
+          <Usd sign classes=" font-medium">
             {v.ogSubsCost}
           </Usd>
         </div>
@@ -107,10 +107,10 @@ export function Result1({ classes = "", ...v }: Props) {
           <TrendingDown size={40} className="size-8 sm:size-10 text-red" />
         ) : null}
         <div>
-          <p className="sm:text-lg font-bold text-balance">
+          <p className="sm:text-lg font-semibold text-balance">
             Annual Donation Processing Impact
           </p>
-          <Usd classes="text-lg font-bold">{v.advantage}</Usd>
+          <Usd classes="text-lg font-semibold">{v.advantage}</Usd>
         </div>
         {v.advantage > 0 && (
           <Image

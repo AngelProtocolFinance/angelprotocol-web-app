@@ -17,12 +17,13 @@ export default function Layout() {
         >
           Claiming{" "}
           <ExtLink
-            className="font-bold text-gray-d4 hover:underline"
+            className="font-semibold text-gray-d4 hover:underline"
             href={href("/marketplace/:id", { id: reg.claim.id.toString() })}
           >
             {reg.claim.name}
           </ExtLink>
-          , EIN: <span className="font-bold text-gray-d4">{reg.claim.ein}</span>
+          , EIN:{" "}
+          <span className="font-semibold text-gray-d4">{reg.claim.ein}</span>
         </div>
       )}
       <ProgressIndicator

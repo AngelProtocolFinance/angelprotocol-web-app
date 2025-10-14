@@ -8,7 +8,7 @@ import { Link, href } from "react-router";
 export function Top({ classes = "" }) {
   return (
     <section className={`${classes} relative grid py-20`}>
-      <p className="text-sm md:text-lg  uppercase font-bold text-center mb-5 tracking-wider text-blue-d1">
+      <p className="text-sm md:text-lg  uppercase font-semibold text-center mb-5 tracking-wider text-blue-d1">
         Earn while supporting nonprofits
       </p>
       <h1 className="mx-auto text-3xl/tight md:text-4xl/tight lg:text-5xl/tight text-center text-pretty mb-6 px-6 ">
@@ -78,7 +78,7 @@ export function Top({ classes = "" }) {
           pathname: href("/register/welcome"),
           search: `?redirect=${href("/dashboard/referrals")}`,
         }}
-        className="btn-blue mt-8 justify-self-center ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
+        className="btn-blue mt-8 justify-self-center ml-1 group active:translate-x-1 font-semibold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
       >
         Become an Affiliate
         <ArrowRight size={18} className="group-hover:translate-x-1" />

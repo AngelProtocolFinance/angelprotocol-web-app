@@ -93,15 +93,15 @@ function Fund({ loaderData }: Route.ComponentProps) {
                 )}
               </div>
 
-              <h4 className="md:col-start-2 max-md:text-center  font-bold text-2xl w-full break-words">
+              <h4 className="md:col-start-2 max-md:text-center  font-semibold text-2xl w-full break-words">
                 {fund.name}
               </h4>
               <div className="pl-0.5">
-                <span className="text-sm font-medium text-gray mr-1">by</span>
+                <span className="text-sm  text-gray mr-1">by</span>
                 <FundCreator
                   name={fund.creator_name}
                   id={fund.creator_id}
-                  classes="font-medium text-gray-d1 inline"
+                  classes=" text-gray-d1 inline"
                 />
               </div>
               <DonateSection
@@ -144,7 +144,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
             classes={{ container: "max-md:hidden", link: "mb-4 order-first" }}
           />
 
-          <p className="text-gray mt-8 mb-2 font-bold uppercase text-xs">
+          <p className="text-gray mt-8 mb-2 font-semibold uppercase text-xs">
             Donations go to
           </p>
           <div className="grid gap-y-4 mb-4 grid-cols-[auto_1fr]">
@@ -160,7 +160,7 @@ function Fund({ loaderData }: Route.ComponentProps) {
                 />
                 <Link
                   to={href("/marketplace/:id", { id: m.id.toString() })}
-                  className="font-bold  text-gray hover:text-blue-d1"
+                  className="font-semibold  text-gray hover:text-blue-d1"
                 >
                   {m.name}
                 </Link>

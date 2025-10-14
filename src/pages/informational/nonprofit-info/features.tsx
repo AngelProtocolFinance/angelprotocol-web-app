@@ -129,7 +129,7 @@ function Feature(props: IFeature) {
     <div className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2">
       <div className="flex items-center gap-x-2">
         {props.icon}
-        <p className="font-bold text-sm ">{props.title}</p>
+        <p className="font-semibold text-sm ">{props.title}</p>
       </div>
       <p className="text-gray-d1">{props.body}</p>
     </div>

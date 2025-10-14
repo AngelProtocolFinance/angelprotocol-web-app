@@ -46,12 +46,12 @@ export function WhyBG({ className = "" }) {
       <div className="grid @3xl:grid-cols-2 items-center mb-14 p-3 rounded-lg">
         <Image src={sectionImg} width={320} className="justify-self-center" />
         <div className="">
-          <p className="border-b border-gray-l3 pb-2 text-2xl mb-4 mt-4 @3xl:mt-0 font-medium text-center @3xl:text-left">
+          <p className="border-b border-gray-l3 pb-2 text-2xl mb-4 mt-4 @3xl:mt-0  text-center @3xl:text-left">
             Investment Philosophy
           </p>
           <ul className="space-y-7">
             <li className="text-center @3xl:text-left">
-              <span className="block font-semibold mb-1">
+              <span className="block  font-medium mb-1">
                 50% Equity Exposure
               </span>{" "}
               <span className="text-gray">
@@ -60,7 +60,7 @@ export function WhyBG({ className = "" }) {
               </span>
             </li>
             <li className="text-center @3xl:text-left">
-              <span className="block font-semibold b-1">
+              <span className="block  font-medium b-1">
                 30% Fixed Income Stability
               </span>{" "}
               <span className="text-gray">
@@ -69,7 +69,7 @@ export function WhyBG({ className = "" }) {
               </span>
             </li>
             <li className="text-center @3xl:text-left">
-              <span className="block font-semibold mb-1">
+              <span className="block  font-medium mb-1">
                 15% Blockchain Assets
               </span>{" "}
               <span className="text-gray">
@@ -77,7 +77,7 @@ export function WhyBG({ className = "" }) {
               </span>
             </li>
             <li className="text-center @3xl:text-left">
-              <span className="block font-semibold mb-1">
+              <span className="block  font-medium mb-1">
                 5% Cash Flexibility
               </span>{" "}
               <span className="text-gray">
@@ -107,7 +107,7 @@ function ListItem(props: TListItem) {
   return (
     <li className="grid content-start @3xl:grid-rows-subgrid row-span-4 justify-items-center px-4">
       {props.icon}
-      <h5 className="text-center  font-medium text-xl @6xl:text-2xl text-gray-d1 mt-8">
+      <h5 className="text-center   text-xl @6xl:text-2xl text-gray-d1 mt-8">
         {props.title1}
       </h5>
       <h6 className="text-center self-center font-normal  text-lg @6xl:text-xl text-gray mb-4">

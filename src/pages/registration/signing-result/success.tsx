@@ -27,7 +27,7 @@ export default function Success({
         className="text-blue hover:text-blue-d1 active:text-blue-d2 mb-4 inline-block"
       >
         <ArrowDownToLine size={18} className="inline bottom-px relative mr-1" />
-        <span className="uppercase text-sm font-semibold">download</span>
+        <span className="uppercase text-sm  font-medium">download</span>
       </a>
       <Link
         aria-disabled={is_loading}

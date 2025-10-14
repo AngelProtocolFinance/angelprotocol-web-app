@@ -27,7 +27,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
                   className="size-60 object-cover object-center"
                   alt="Visual representation of the benefit"
                 />
-                <p className="mt-6 text-2xl  text-[#0D283A] w-full text-center font-bold">
+                <p className="mt-6 text-2xl  text-[#0D283A] w-full text-center font-semibold">
                   {slide.title}
                 </p>
                 <p className="text-xl text-gray-d1 w-full text-center font-medium">
@@ -75,7 +75,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
             />
           </g>
         </svg>
-        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-[#111]">
+        <p className="font-gochi max-w-[70%] text-center text-lg  text-[#111]">
           Scroll to know more
         </p>
       </div>

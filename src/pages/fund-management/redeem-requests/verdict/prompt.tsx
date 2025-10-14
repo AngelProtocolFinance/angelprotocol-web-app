@@ -38,7 +38,7 @@ function Content({ verdict }: Props) {
     >
       <input type="hidden" value={verdict} name="verdict" />
       <div className="relative w-full">
-        <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
+        <p className="sm:text-xl font-semibold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           Redeem units request
         </p>
         <Link
@@ -49,7 +49,7 @@ function Content({ verdict }: Props) {
           <X className="text-lg sm:text-2xl" />
         </Link>
       </div>
-      <p className="px-6 pb-4 text-center text-gray dark:text-gray-l2 mt-4 font-semibold">
+      <p className="px-6 pb-4 text-center text-gray dark:text-gray-l2 mt-4  font-medium">
         You are about to {verdict} this request.
       </p>
 

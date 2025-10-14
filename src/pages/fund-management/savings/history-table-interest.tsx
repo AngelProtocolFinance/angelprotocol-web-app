@@ -17,8 +17,8 @@ export function InterestHistoryTable({
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
         <thead className="bg-blue-l5">
           <tr>
-            <th className="font-medium text-sm text-gray">Date</th>
-            <th className="font-medium text-sm text-gray">Total</th>
+            <th className=" text-sm text-gray">Date</th>
+            <th className=" text-sm text-gray">Total</th>
           </tr>
         </thead>
         <tbody>

@@ -13,9 +13,9 @@ export function ReferralId({ classes = "", ...p }: Props) {
       className={`bg-gray-l5 p-6 rounded-xl border border-gray-l4 ${classes}`}
     >
       <div className="mb-4">
-        <div className="text-sm font-medium text-gray-l1 mb-1">REFERRAL ID</div>
+        <div className="text-sm  text-gray-l1 mb-1">REFERRAL ID</div>
         <div className="flex items-center">
-          <div className="text-xl font-semibold mr-2">{p.referral_id}</div>
+          <div className="text-xl  font-medium mr-2">{p.referral_id}</div>
           <Copier
             text={p.referral_id}
             classes={{
@@ -28,9 +28,7 @@ export function ReferralId({ classes = "", ...p }: Props) {
       </div>
 
       <div>
-        <div className="text-sm font-medium text-gray-l1 mb-1">
-          REFERRAL LINK
-        </div>
+        <div className="text-sm  text-gray-l1 mb-1">REFERRAL LINK</div>
         <div className="flex items-center">
           <p className="text-blue-l1 truncate max-w-xs font-mono">
             {p.base_url}

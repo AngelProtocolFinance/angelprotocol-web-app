@@ -34,7 +34,7 @@ export function Section7({ classes = "" }: { classes?: string }) {
                 strokeWidth={4}
               />
             </div>
-            <p className="text-white font-semibold @max-3xl:text-center @max-3xl:mt-4">
+            <p className="text-white  font-medium @max-3xl:text-center @max-3xl:mt-4">
               {x}
             </p>
           </div>
@@ -43,13 +43,13 @@ export function Section7({ classes = "" }: { classes?: string }) {
       <div className="flex flex-col @xl:flex-row justify-center items-center gap-6 mt-10">
         <Link
           to={href("/register/welcome")}
-          className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  font-bold shadow-2xl rounded-xl"
+          className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  font-semibold shadow-2xl rounded-xl"
         >
           Start Today - Free
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="capitalize text-center bg-white  text-blue-d1 active:translate-x-1 font-bold  rounded-xl px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-white/20"
+          className="capitalize text-center bg-white  text-blue-d1 active:translate-x-1 font-semibold  rounded-xl px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-white/20"
         >
           Questions? Chat with us
         </Link>

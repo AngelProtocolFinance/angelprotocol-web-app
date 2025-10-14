@@ -16,13 +16,13 @@ export function Partners({ classes = "" }) {
     >
       <motion.h2
         id="partners-heading"
-        className="font-medium text-3xl/tight md:text-3.5xl/tight text-gray-d4 text-center text-balance mb-8"
+        className=" text-3xl/tight md:text-3.5xl/tight text-gray-d4 text-center text-balance mb-8"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring" }}
       >
-        Join <span className="font-semibold text-blue">thousands</span> of
+        Join <span className=" font-medium text-blue">thousands</span> of
         nonprofits, faith charities, schools and universities
       </motion.h2>
 

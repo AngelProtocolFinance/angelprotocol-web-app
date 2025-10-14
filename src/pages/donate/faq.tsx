@@ -24,7 +24,7 @@ export function FAQ({ classes = "" }: Props) {
             <>
               <DisclosureButton className="flex items-start justify-between gap-2 mb-2 w-full">
                 <span
-                  className={`text-left text-sm ${open ? "font-semibold" : ""}`}
+                  className={`text-left text-sm ${open ? " font-medium" : ""}`}
                 >
                   {faq.question}
                 </span>
@@ -165,8 +165,8 @@ function Em({
         intensity === 1
           ? "font-medium"
           : intensity === 2
-            ? "font-semibold"
-            : "font-semibold text-gray-d4"
+            ? " font-medium"
+            : " font-medium text-gray-d4"
       } ${classes}`}
     >
       {children}

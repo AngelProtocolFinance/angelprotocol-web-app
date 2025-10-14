@@ -119,7 +119,7 @@ export function Explainer({ classes = "" }) {
             <DisclosureButton
               className={`flex items-center justify-center text-blue-d1  ${open ? "mt-4" : "mt-2"}`}
             >
-              <span className="text-sm font-medium mr-1">
+              <span className="text-sm  mr-1">
                 {open ? "Show less" : "Read more"}
               </span>
               <DrawerIcon is_open={open} size={18} />

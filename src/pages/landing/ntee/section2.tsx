@@ -12,7 +12,7 @@ export function Section2({ classes = "", copy }: Props) {
         You could be <span className="text-red">losing $3,000+</span> every
         year.
       </h2>
-      <p className="text-xl @6xl:text-2xl @6xl:leading-tight  mb-6 capitalize text-gray-d1 font-medium text-center text-balance">
+      <p className="text-xl @6xl:text-2xl @6xl:leading-tight  mb-6 capitalize text-gray-d1  text-center text-balance">
         Every donation shouldn't cost you money.
       </p>
       <div className="grid @6xl:grid-cols-3 gap-4">
@@ -50,7 +50,7 @@ export function Section2({ classes = "", copy }: Props) {
       </div>
       <div className="text-balance text-center bg-red-l5 mt-16 p-8 border-l-8 border-red rounded-xl rounded-tl-none rounded-bl-none max-w-3xl mx-auto">
         <p className="text-xl @6xl:text-2xl @6xl:leading-tight ">{copy}</p>
-        <p className="text-center text-xl @6xl:text-2xl @6xl:leading-tight text-red mt-4 font-semibold">
+        <p className="text-center text-xl @6xl:text-2xl @6xl:leading-tight text-red mt-4  font-medium">
           How much longer can you afford this?
         </p>
       </div>

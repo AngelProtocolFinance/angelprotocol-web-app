@@ -41,7 +41,7 @@ const Testimonial = (props: TTestimonial) => {
       />
       <div>
         <p className="text-xl mb-9 text-gray">{props.content}</p>
-        <p className="text-lg mb-2 font-bold">{props.reviewer}</p>
+        <p className="text-lg mb-2 font-semibold">{props.reviewer}</p>
         <p className="text-gray">{props.org}</p>
       </div>
     </div>

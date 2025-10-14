@@ -36,7 +36,7 @@ export function Summary({ Amount, frequency = "one-time", ...props }: Props) {
       <BackBtn type="button" onClick={props.on_back} />
       <h4 className="flex items-center text-lg gap-2 my-4">
         <ListCheck size={20} />
-        <span className="font-semibold">Your donation summary</span>
+        <span className=" font-medium">Your donation summary</span>
       </h4>
       {props.pre_split_content}
 
@@ -77,7 +77,7 @@ export function Summary({ Amount, frequency = "one-time", ...props }: Props) {
           </div>
         ) : null}
 
-        <div className="grid col-span-full grid-cols-[1fr_auto] font-medium py-3">
+        <div className="grid col-span-full grid-cols-[1fr_auto]  py-3">
           <dt className="mr-auto text-gray-d4" aria-label="total">
             Total {frequency === "recurring" ? "monthly " : ""}charge
           </dt>

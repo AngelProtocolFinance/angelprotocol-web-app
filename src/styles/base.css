@@ -12,6 +12,7 @@
   body {
     font-family: var(--font-quicksand);
     color: var(--color-gray-d4);
+    font-weight: 300;
   }
 
   a {

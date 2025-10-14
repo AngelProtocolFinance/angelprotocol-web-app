@@ -49,7 +49,7 @@ function Content() {
       className="fixed-center z-10 grid content-start justify-items-center text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="relative w-full">
-        <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
+        <p className="sm:text-xl font-semibold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           Changing Application Status
         </p>
         <Link
@@ -73,7 +73,7 @@ function Content() {
         <span className="block">
           You are about to {verdict} the Application for
         </span>
-        <span className="font-semibold block">{orgName}</span>
+        <span className=" font-medium block">{orgName}</span>
       </p>
 
       {verdict === "approved" ? (
@@ -83,7 +83,7 @@ function Content() {
         </div>
       ) : null}
 
-      <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2 font-bold">
+      <div className="px-6 pb-4 text-center text-gray dark:text-gray-l2 font-semibold">
         Please ensure you have confirmed all submitted details and supporting
         documentation before proceeding!
       </div>

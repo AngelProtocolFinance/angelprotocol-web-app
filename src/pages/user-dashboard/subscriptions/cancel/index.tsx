@@ -32,7 +32,7 @@ function Content() {
       className="fixed-center z-10 grid content-start justify-items-center text-gray-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-sm overflow-hidden"
     >
       <div className="relative w-full">
-        <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
+        <p className="sm:text-xl font-semibold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l3 p-5">
           Cancel Recurring Donation
         </p>
         <Link
@@ -50,7 +50,7 @@ function Content() {
         <span className="block">
           You are about to cancel your recurring donations to
         </span>
-        <span className="font-semibold">{recipient_name}</span>. This action
+        <span className=" font-medium">{recipient_name}</span>. This action
         cannot be undone. You will no longer be charged for this subscription.
       </p>
 

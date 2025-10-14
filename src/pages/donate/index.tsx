@@ -35,7 +35,7 @@ function Page({ loaderData }: Route.ComponentProps) {
         <DappLogo classes="h-12" />
         <Link
           to={href("/marketplace/:id", { id: endow.id.toString() })}
-          className="font-semibold  hover:text-blue-d1"
+          className=" font-medium  hover:text-blue-d1"
         >
           Cancel
         </Link>
@@ -99,10 +99,5 @@ function Page({ loaderData }: Route.ComponentProps) {
 }
 
 const A: typeof ExtLink = ({ className, ...props }) => {
-  return (
-    <ExtLink
-      {...props}
-      className={`${className} font-medium hover:underline`}
-    />
-  );
+  return <ExtLink {...props} className={`${className}  hover:underline`} />;
 };

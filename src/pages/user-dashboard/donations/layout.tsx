@@ -2,7 +2,7 @@ import { nav_link_class_fn } from "helpers/create-navlink-styler";
 import { NavLink, Outlet } from "react-router";
 
 const class_fn = nav_link_class_fn(
-  "px-4 p-1 text-sm sm:text-sm leading-5 z-20 font-bold",
+  "px-4 p-1 text-sm sm:text-sm leading-5 z-20 font-semibold",
   "bg-blue-l4",
   "text-gray"
 );

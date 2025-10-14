@@ -43,17 +43,17 @@ export function Review(props: Props) {
 
   return (
     <div className={`overflow-x-auto ${props.classes || ""} p-8`}>
-      <p className="text-gray text-sm font-semibold">Portfolio value</p>
+      <p className="text-gray text-sm  font-medium">Portfolio value</p>
       <Diff
-        classes="text-2xl font-bold mb-4"
+        classes="text-2xl font-semibold mb-4"
         el="div"
         a={props.ltd.value}
         b={total_value_2}
         formatter={(x) => `$${humanize(x)}`}
       />
-      <p className="text-gray text-sm font-semibold">Unit price</p>
+      <p className="text-gray text-sm  font-medium">Unit price</p>
       <Diff
-        classes="text-2xl font-bold mb-4"
+        classes="text-2xl font-semibold mb-4"
         el="div"
         a={props.ltd.price}
         b={total_value_2 / props.ltd.units}
@@ -62,12 +62,12 @@ export function Review(props: Props) {
       <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:first:pl-0 [&_th,&_td]:text-left [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2 text-sm">
         <thead>
           <tr>
-            <th className="font-medium text-sm text-gray">Symbol</th>
-            <th className="font-medium text-sm text-gray">Units</th>
-            <th className="font-medium text-sm text-gray">Price</th>
-            <th className="font-medium text-sm text-gray">Price Date</th>
-            <th className="font-medium text-sm text-gray">Value</th>
-            <th className="font-medium text-sm text-gray">%</th>
+            <th className=" text-sm text-gray">Symbol</th>
+            <th className=" text-sm text-gray">Units</th>
+            <th className=" text-sm text-gray">Price</th>
+            <th className=" text-sm text-gray">Price Date</th>
+            <th className=" text-sm text-gray">Value</th>
+            <th className=" text-sm text-gray">%</th>
           </tr>
         </thead>
         <tbody>
@@ -75,7 +75,7 @@ export function Review(props: Props) {
             <tr key={t.id} className="text-sm text-gray-d4">
               <td
                 style={{ color: ticker_colors[t.id] || "#64748b" }}
-                className="font-bold"
+                className="font-semibold"
               >
                 {t.id}
               </td>

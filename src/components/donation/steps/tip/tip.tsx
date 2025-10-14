@@ -124,8 +124,8 @@ export function Tip(props: TipStep) {
       </h4>
       <p className="text-gray">
         Better Giving offers this donation service{" "}
-        <span className={withTip ? "" : "font-bold"}>free of charge</span> to
-        empower nonprofits worldwide. As a nonprofit ourselves, we depend on
+        <span className={withTip ? "" : "font-semibold"}>free of charge</span>{" "}
+        to empower nonprofits worldwide. As a nonprofit ourselves, we depend on
         your support. Please consider donating to help us keep it free for all.
       </p>
 
@@ -177,7 +177,7 @@ export function Tip(props: TipStep) {
           <label
             data-required
             htmlFor="tip-custom-amount"
-            className="label mb-2 block text-base  font-semibold"
+            className="label mb-2 block text-base   font-medium"
           >
             Your One-Time Donation Amount
           </label>
@@ -228,7 +228,7 @@ export function Tip(props: TipStep) {
       <p className="text-sm text-gray mt-6">
         Assist us in advancing our mission to connect with global organizations
         and spread our timeless message:{" "}
-        <span className="font-medium block">Give today, give forever.</span>
+        <span className=" block">Give today, give forever.</span>
       </p>
 
       <ContinueBtn type="submit" className="mt-6" />

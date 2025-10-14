@@ -61,11 +61,11 @@ export function Steps({ classes = "" }) {
         transition={{ type: "spring", delay: 0.4 }}
       >
         We pride ourselves in helping fellow nonprofits like yours{" "}
-        <span className="font-bold">save money</span> with free donation
-        processing, <span className="font-bold">save time</span> by handling all
-        admin & reporting work, and{" "}
-        <span className="font-bold">save for your future</span> with simple but
-        powerful high-yield savings and investment options
+        <span className="font-semibold">save money</span> with free donation
+        processing, <span className="font-semibold">save time</span> by handling
+        all admin & reporting work, and{" "}
+        <span className="font-semibold">save for your future</span> with simple
+        but powerful high-yield savings and investment options
       </motion.p>
       <motion.div
         className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10"
@@ -76,13 +76,13 @@ export function Steps({ classes = "" }) {
       >
         <Link
           to={href("/register/welcome")}
-          className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-semibold shadow-2xl rounded-full"
         >
           Join us today!
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="inline-flex items-center px-10 py-3 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1  font-bold rounded-full relative border border-blue-l2"
+          className="inline-flex items-center px-10 py-3 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1  font-semibold rounded-full relative border border-blue-l2"
         >
           Book a demo
         </Link>
@@ -107,8 +107,8 @@ function ListItem(props: TListItem & { index: number }) {
         alt={props.image.alt}
         className="mb-4"
       />
-      <h4 className="text-center  font-medium text-2xl px-8">{props.title1}</h4>
-      <h5 className="py-4 text-center font-medium  text-lg @6xl:text-xl border-b-[3px] border-blue-d1 mb-7 px-8">
+      <h4 className="text-center   text-2xl px-8">{props.title1}</h4>
+      <h5 className="py-4 text-center   text-lg @6xl:text-xl border-b-[3px] border-blue-d1 mb-7 px-8">
         {props.title2}
       </h5>
       <p className="text-center text-lg @6xl:text-xl">{props.description}</p>

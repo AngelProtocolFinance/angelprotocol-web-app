@@ -70,9 +70,9 @@ export function Form({
         label="Name"
         required
         error={rhf.errors.name?.message}
-        classes={{ label: "font-medium text-base" }}
+        classes={{ label: " text-base" }}
       />
-      <label className="label font-medium mt-4 mb-1" data-required>
+      <label className="label  mt-4 mb-1" data-required>
         Description
       </label>
       <RichText
@@ -106,7 +106,7 @@ export function Form({
         }
       />
       <Videos {...rhf.videos} classes="mt-4 mb-8" />
-      <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
+      <label className="text-lg  block mb-2 mt-4">Logo</label>
       <ImgEditor
         disabled={is_submitting}
         value={rhf.logo.value}
@@ -123,7 +123,7 @@ export function Form({
         error={rhf.errors.logo?.message}
       />
 
-      <label className="text-lg font-medium block mt-6 mb-2">Banner</label>
+      <label className="text-lg  block mt-6 mb-2">Banner</label>
       <ImgEditor
         disabled={is_submitting}
         value={rhf.banner.value}
@@ -180,7 +180,7 @@ export function Form({
                 <Input
                   type="number"
                   {...rhf.register(`increments.${idx}.value`)}
-                  className="w-full h-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                  className="w-full h-full  outline-blue-d1 rounded-sm text-sm  bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                 />
               </div>
 
@@ -192,7 +192,7 @@ export function Form({
               <Textarea
                 {...rhf.register(`increments.${idx}.label`)}
                 rows={2}
-                className="w-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                className="w-full  outline-blue-d1 rounded-sm text-sm  bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
               />
               <p
                 data-error={!!rhf.errors.increments?.[idx]?.label?.message}
@@ -222,7 +222,7 @@ export function Form({
             );
           }}
           type="button"
-          className="btn btn-red text-sm font-medium px-4 py-2 justify-self-end"
+          className="btn btn-red text-sm  px-4 py-2 justify-self-end"
         >
           {is_closing_fund ? "Closing.." : "Close fund"}
         </button>
@@ -231,7 +231,7 @@ export function Form({
             !rhf.isDirty || rhf.is_uploading || is_submitting || is_uploading
           }
           type="submit"
-          className="btn btn-blue text-sm font-medium px-4 py-2 justify-self-end"
+          className="btn btn-blue text-sm  px-4 py-2 justify-self-end"
         >
           Update fund
         </button>

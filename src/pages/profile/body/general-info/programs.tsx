@@ -22,7 +22,7 @@ function Program(props: IProgramDb) {
       />
       <Image src={props.banner} className="h-64 w-full object-cover" />
       <div className="p-5">
-        <p className="text-lg font-bold mb-3 block">{props.title}</p>
+        <p className="text-lg font-semibold mb-3 block">{props.title}</p>
         <RichText
           content={{ value: props.description }}
           readOnly

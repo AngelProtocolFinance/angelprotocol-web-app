@@ -21,7 +21,7 @@ export function Container({ title, children, classes = "" }: Props) {
         >
           {is_open ? <Minus size={18} /> : <Plus size={18} />}
         </button>
-        <p className="uppercase text-sm font-bold">{title}</p>
+        <p className="uppercase text-sm font-semibold">{title}</p>
       </div>
       {is_open && children}
     </div>

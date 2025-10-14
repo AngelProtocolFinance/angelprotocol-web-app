@@ -63,7 +63,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
         {({ open }) => (
           <>
             <FilterIcon className="@5xl:hidden mr-1" size={16} />
-            <div className="uppercase font-semibold text-[0.9375rem]">
+            <div className="uppercase  font-medium text-[0.9375rem]">
               Filter
             </div>
             <DrawerIcon
@@ -90,7 +90,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
           "fixed @5xl:absolute inset-x-0 top-0 @5xl:top-full @5xl:mt-1 z-40 grid content-start gap-4 w-full rounded-sm border border-gray-l3 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @5xl:shadow-xs"
         }
       >
-        <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
+        <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-semibold uppercase">
           <span className="text-blue-d1">Filters</span>
           <PopoverButton className="absolute top-1/2 -translate-y-1/2 right-2">
             <XIcon size={33} />
@@ -123,7 +123,7 @@ export function Filter({ classes = "", isDisabled }: Props) {
           </button>
           <button
             type="submit"
-            className="btn btn btn-blue px-6 py-2 rounded-xs text-xs font-bold uppercase"
+            className="btn btn btn-blue px-6 py-2 rounded-xs text-xs font-semibold uppercase"
           >
             Submit
           </button>

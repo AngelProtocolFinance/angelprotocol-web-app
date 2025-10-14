@@ -24,11 +24,11 @@ export function Loaded(props: LoaderData) {
         <p className="text-red text-sm -mt-3">{props.ba.rejection_reason}</p>
       )}
       <div className="flex max-sm:flex-col gap-x-4">
-        <span className="text-sm font-semibold uppercase">Account ID:</span>
+        <span className="text-sm  font-medium uppercase">Account ID:</span>
         <span className="uppercase text-sm">{props.id}</span>
       </div>
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
-        <span className="text-sm font-semibold uppercase">Date submitted:</span>
+        <span className="text-sm  font-medium uppercase">Date submitted:</span>
         <span className="uppercase text-sm">
           {new Date(props.ba.date_created).toLocaleDateString()}
         </span>
@@ -98,7 +98,7 @@ type Props = PropsWithChildren<{
 function Row(props: Props) {
   return (
     <>
-      <dt className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs font-semibold uppercase">
+      <dt className="px-3 max-sm:pt-3 sm:p-3 flex items-center text-xs  font-medium uppercase">
         {props.label}
       </dt>
       <div

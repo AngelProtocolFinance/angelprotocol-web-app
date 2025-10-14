@@ -11,7 +11,7 @@ export default CacheRoute(Dashboard);
 function Dashboard({ loaderData: data }: Route.ComponentProps) {
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
+      <h3 className="font-semibold text-2xl mb-4">Dashboard</h3>
       <Loaded {...data} />
       <Outlet />
     </div>

@@ -12,7 +12,7 @@ export const BlogCard = (props: IPost) => {
         classes="rounded-t-3xl object-contain object-center w-full"
       />
       <h3
-        className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2 px-6"
+        className="text-[#0D283A]  font-medium w-full text-xl line-clamp-2 px-6"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: props.title.rendered }}
       />
@@ -27,7 +27,7 @@ export const BlogCard = (props: IPost) => {
       />
       <NavLink
         to={href("/blog/:slug", { slug: props.slug })}
-        className="z-10 justify-self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
+        className="z-10 justify-self-end mt-auto text-blue-d1 px-4 py-2 rounded-full  font-medium uppercase"
       >
         Read More
         <span className="sr-only">: {props.slug.replace(/-/g, " ")}</span>

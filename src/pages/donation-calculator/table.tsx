@@ -35,10 +35,10 @@ export function Table({ classes = "", ...v }: Props) {
           <TrendingDown size={40} className="size-8 sm:size-10 text-red" />
         ) : null}
         <div>
-          <p className="sm:text-lg font-bold text-balance">
+          <p className="sm:text-lg font-semibold text-balance">
             {periods[idx].label} Savings & Investment Impact
           </p>
-          <Usd classes="text-lg font-bold">{p.total}</Usd>
+          <Usd classes="text-lg font-semibold">{p.total}</Usd>
         </div>
         {p.total > 0 && (
           <Image
@@ -55,7 +55,7 @@ export function Table({ classes = "", ...v }: Props) {
             <Tab
               key={p.value}
               className={({ selected }) =>
-                `flex-1 py-2.5 font-medium leading-5 focus:outline-none ${
+                `flex-1 py-2.5  leading-5 focus:outline-none ${
                   selected
                     ? "border-b-2 border-blue text-blue-d1"
                     : "text-gray-d1 hover:text-blue-d1"
@@ -77,14 +77,12 @@ export function Table({ classes = "", ...v }: Props) {
                   <table className="min-w-full [&_th,&_td]:p-2 [&_th,&_td]:text-left  [&_tbody]:divide-y [&_tbody]:divide-gray-l2 divide-y divide-gray-l2">
                     <thead>
                       <tr>
-                        <th className="font-semibold">Account</th>
-                        <th className="font-semibold">
+                        <th className=" font-medium">Account</th>
+                        <th className=" font-medium">
                           {p.value === 1 ? "Allocation" : "Total Invested"}
                         </th>
-                        <th className="font-semibold">
-                          Year {p.value} Balance
-                        </th>
-                        <th className="font-semibold">Growth</th>
+                        <th className=" font-medium">Year {p.value} Balance</th>
+                        <th className=" font-medium">Growth</th>
                       </tr>
                     </thead>
                     <tbody>

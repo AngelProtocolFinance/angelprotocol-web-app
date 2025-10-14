@@ -7,7 +7,7 @@ import { Link, href } from "react-router";
 export const Top = ({ classes = "" }) => {
   return (
     <section className={`${classes} relative grid pt-36 pb-20`}>
-      <p className="text-sm md:text-lg  uppercase font-bold text-center mb-5 tracking-wider text-blue-d1">
+      <p className="text-sm md:text-lg  uppercase font-semibold text-center mb-5 tracking-wider text-blue-d1">
         By a nonprofit, for nonprofits
       </p>
       <h1 className="mx-auto text-3xl/tight md:text-4xl/tight lg:text-5xl/tight text-center text-pretty mb-6 px-6 ">
@@ -77,7 +77,7 @@ export const Top = ({ classes = "" }) => {
       <div className="mt-8 isolate z-10 justify-self-center relative">
         <Link
           to={href("/register/welcome")}
-          className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
+          className="btn-blue ml-1 group active:translate-x-1 font-semibold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
         >
           Join Better Giving Today!
           <ArrowRight size={18} className="group-hover:translate-x-1" />

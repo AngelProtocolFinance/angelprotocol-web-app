@@ -24,7 +24,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
   const data = use_admin_data();
   return (
     <div>
-      <h2 className="text-[2rem] font-bold mb-4">Donations</h2>
+      <h2 className="text-[2rem] font-semibold mb-4">Donations</h2>
       <Allocation
         classes="mb-4"
         allocation={

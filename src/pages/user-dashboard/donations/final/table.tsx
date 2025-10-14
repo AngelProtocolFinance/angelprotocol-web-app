@@ -23,7 +23,7 @@ export function Table({
       <TableSection type="thead" rowClass="bg-blue-l4 divide-x divide-gray-l3">
         <Cells
           type="th"
-          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
+          cellClass="px-3 py-4 text-xs uppercase  font-medium text-left first:rounded-tl last:rounded-tr"
         >
           <>Date</>
           <>Recipient</>

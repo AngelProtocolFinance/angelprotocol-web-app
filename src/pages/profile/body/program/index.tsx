@@ -47,7 +47,7 @@ function TargetProgress({ target, total }: ProgressProps) {
     <div className="m-6 border-t border-gray-l3 pt-2 ">
       <div className="mb-2 flex items-center gap-2">
         <p className="font-medium">Target raise:</p>
-        <p className="font-bold text-gray">{to_usd(target)}</p>
+        <p className="font-semibold text-gray">{to_usd(target)}</p>
       </div>
       <div className="h-4 rounded-full bg-gray-l4 relative overflow-clip">
         <div className="h-full bg-green" style={{ width: `${progressPct}%` }} />

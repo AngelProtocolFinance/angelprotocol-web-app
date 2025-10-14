@@ -21,7 +21,7 @@ export function Breadcrumbs({ items, className = "" }: Props) {
             className={({ isActive }) =>
               `max-w-xs truncate ${
                 isActive
-                  ? "font-bold cursor-default pointer-events-none"
+                  ? "font-semibold cursor-default pointer-events-none"
                   : "underline hover:text-blue-d1"
               }`
             }

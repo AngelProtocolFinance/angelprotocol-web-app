@@ -13,7 +13,7 @@ export function Manifesto({ className = "" }) {
         Better Giving, we’re committed to breaking down these barriers.
       </p>
 
-      <p className="text-xl font-bold text-center text-blue-d1 mb-4">
+      <p className="text-xl font-semibold text-center text-blue-d1 mb-4">
         We believe in these fundamental rights for all nonprofits :
       </p>
 
@@ -42,7 +42,7 @@ export function Manifesto({ className = "" }) {
               The ability to diversify funding sources.
             </li>
           </ul>
-          <p className="font-bold mb-2 mt-6 text-gray">
+          <p className="font-semibold mb-2 mt-6 text-gray">
             How we support this right :
           </p>
           <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
@@ -86,7 +86,7 @@ export function Manifesto({ className = "" }) {
               Access to educational resources for financial empowerment.
             </li>
           </ul>
-          <p className="font-bold mb-2 mt-6 text-gray">
+          <p className="font-semibold mb-2 mt-6 text-gray">
             How we support this right :
           </p>
           <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
@@ -131,7 +131,7 @@ export function Manifesto({ className = "" }) {
               The ability to innovate and adapt strategies.
             </li>
           </ul>
-          <p className="font-bold mb-2 mt-6 text-gray">
+          <p className="font-semibold mb-2 mt-6 text-gray">
             How we support this right :
           </p>
           <ul className="space-y-3 mb-8 list-disc list-outside pl-4">

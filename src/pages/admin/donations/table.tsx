@@ -17,7 +17,7 @@ export function Table({ items, load_next, loading, disabled }: Props) {
       >
         <Cells
           type="th"
-          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
+          cellClass="px-3 py-4 text-xs uppercase  font-medium text-left first:rounded-tl last:rounded-tr"
         >
           <>Date</>
           <>Program</>
@@ -30,19 +30,23 @@ export function Table({ items, load_next, loading, disabled }: Props) {
               <Tooltip
                 tip={
                   <Content className="p-4 bg-white max-w-sm text-sm rounded-lg shadow-lg">
-                    <p className="text-xs uppercase font-semibold">
+                    <p className="text-xs uppercase  font-medium">
                       Base fee{" "}
-                      <span className="text-blue text-xs font-bold">1.5%</span>
+                      <span className="text-blue text-xs font-semibold">
+                        1.5%
+                      </span>
                     </p>
                     <p className="text-gray-d1 mb-4">
                       charged when {APP_NAME} tip screen is disabled at the time
                       of donation
                     </p>
-                    <p className="text-xs uppercase font-semibold">
+                    <p className="text-xs uppercase  font-medium">
                       Fiscal sponsorship fee{" "}
-                      <span className="text-blue text-xs font-bold">2.9%</span>
+                      <span className="text-blue text-xs font-semibold">
+                        2.9%
+                      </span>
                     </p>
-                    <p className="text-xs uppercase font-semibold mt-4">
+                    <p className="text-xs uppercase  font-medium mt-4">
                       Processing fee
                     </p>
                     <p className="text-gray-d1">
@@ -92,7 +96,7 @@ export function Table({ items, load_next, loading, disabled }: Props) {
                   type="button"
                   onClick={load_next}
                   disabled={disabled}
-                  className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 active:bg-blue-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 dark:aria-disabled:bg-gray-d1 dark:disabled:bg-gray-d1"
+                  className="flex items-center justify-center gap-3 uppercase text-sm font-semibold rounded-b w-full h-12 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 active:bg-blue-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 dark:aria-disabled:bg-gray-d1 dark:disabled:bg-gray-d1"
                 >
                   {loading ? "Loading..." : "Load More"}
                 </button>

@@ -21,7 +21,7 @@ const Path = () => {
       <h3 className="text-3xl md:text-4.5xl capitalize text-gray-d4 leading-snug text-center text-balance mb-11">
         Why Choose Better Giving
       </h3>
-      <p className="text-lg md:text-2xl font-medium text-gray/60 text-center mb-11">
+      <p className="text-lg md:text-2xl  text-gray/60 text-center mb-11">
         Your All-in-One Solution for Sustainable Fundraising and Financial
         Growth
       </p>
@@ -30,7 +30,7 @@ const Path = () => {
       <Carousel slides={benefits[path]} classes="lg:hidden" />
       <Link
         to={path === "nonprofits" ? href("/nonprofit") : href("/donor")}
-        className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1  font-bold shadow-2xl rounded-full"
+        className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1  font-semibold shadow-2xl rounded-full"
       >
         <span className="mr-1">Learn more</span>
         <ArrowRight size={18} className="group-hover:translate-x-1" />

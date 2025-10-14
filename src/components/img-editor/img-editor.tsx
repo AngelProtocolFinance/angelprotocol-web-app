@@ -52,7 +52,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
   const styles = unpack(props.classes);
   const is_loading = props.value === "loading";
-  const overlay = `before:content-[''] before:grid before:place-items-center before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 data-[loading="true"]:before:bg-blue-l5/90 data-[loading="true"]:before:content-['._._.'] before:text-xl before:font-bold `;
+  const overlay = `before:content-[''] before:grid before:place-items-center before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 data-[loading="true"]:before:bg-blue-l5/90 data-[loading="true"]:before:content-['._._.'] before:text-xl before:font-semibold `;
 
   async function handleSave(cropped: File) {
     setFile(cropped);
@@ -137,7 +137,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           >
             <input {...getInputProps()} className="absolute inset-0" />
             <ArrowUpFromLine size={22} className="mb-[1.125rem]" />
-            <p className="font-semibold mb-1">Upload file</p>
+            <p className=" font-medium mb-1">Upload file</p>
             <span className="text-center">
               Click to Browse or Drag &amp; Drop
             </span>

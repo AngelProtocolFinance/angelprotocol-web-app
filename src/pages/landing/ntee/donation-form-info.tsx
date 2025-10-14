@@ -63,7 +63,7 @@ export function DonationFormInfo({ className = "" }) {
       </ul>
       <Link
         to={href("/register/welcome")}
-        className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  font-bold shadow-2xl rounded-xl justify-self-center col-span-full mt-8"
+        className="text-center btn-blue px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1  font-semibold shadow-2xl rounded-xl justify-self-center col-span-full mt-8"
       >
         Start Free
       </Link>
@@ -80,9 +80,7 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         height={props.image.height}
       />
-      <h6 className="text-lg font-medium @6xl:text-xl text-gray-d4">
-        {props.title}
-      </h6>
+      <h6 className="text-lg  @6xl:text-xl text-gray-d4">{props.title}</h6>
       <p className="text-lg @6xl:text-xl text-gray">{props.description}</p>
     </li>
   );

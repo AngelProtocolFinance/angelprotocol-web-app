@@ -22,7 +22,7 @@ export function Top({ className = "" }) {
           <li>
             Accept donations seamlessly: credit card, crypto, stock, and DAF
             gifts —
-            <span className="font-bold">Zero&nbsp;Platform&nbsp;Fees</span>.
+            <span className="font-semibold">Zero&nbsp;Platform&nbsp;Fees</span>.
           </li>
           <li>
             Simplify operations with automated tax reporting and customizable
@@ -43,7 +43,7 @@ export function Top({ className = "" }) {
               const dest = document.getElementById("claim-nonprofit");
               dest?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="btn-blue ml-1 group active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
+            className="btn-blue ml-1 group active:translate-x-1 font-semibold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
           >
             Claim Your Account Now
             <ArrowRight size={18} className="group-hover:translate-x-1" />

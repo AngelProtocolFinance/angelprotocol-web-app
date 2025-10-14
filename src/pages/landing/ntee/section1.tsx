@@ -15,13 +15,13 @@ export function Section1({ classes = "", ...props }: Props) {
         </h2>
         <div className="grid @6xl:grid-cols-2 gap-y-8">
           <div>
-            <p className="text-center text-2xl @6xl:text-3xl font-semibold text-red">
+            <p className="text-center text-2xl @6xl:text-3xl  font-medium text-red">
               $97,000
             </p>
             <p className="text-center">What you keep with fees</p>
           </div>
           <div>
-            <p className="text-center text-2xl @6xl:text-3xl font-semibold text-blue">
+            <p className="text-center text-2xl @6xl:text-3xl  font-medium text-blue">
               $100,000
             </p>
             <p className="text-center">What you keep with {APP_NAME}</p>

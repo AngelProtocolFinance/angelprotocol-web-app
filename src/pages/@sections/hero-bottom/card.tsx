@@ -13,7 +13,7 @@ export const Card = (props: EndowmentCard) => {
         height={224}
         className="object-cover w-full rounded-t-4xl h-56"
       />
-      <h4 className="text-[#0D283A] font-bold text-xl whitespace-nowrap text-ellipsis px-8 mt-4 overflow-hidden">
+      <h4 className="text-[#0D283A] font-semibold text-xl whitespace-nowrap text-ellipsis px-8 mt-4 overflow-hidden">
         {props.name}
       </h4>
 
@@ -23,7 +23,7 @@ export const Card = (props: EndowmentCard) => {
 
       <Link
         to={href("/donate/:id", { id: props.id.toString() })}
-        className="my-4 justify-self-center self-end rounded-[40px] py-2 px-7 border-2 border-solid border-blue-d1 text-blue-d1 font-semibold "
+        className="my-4 justify-self-center self-end rounded-[40px] py-2 px-7 border-2 border-solid border-blue-d1 text-blue-d1  font-medium "
       >
         Donate
       </Link>

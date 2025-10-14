@@ -42,19 +42,14 @@ export const InfoBubble: React.FC<InfoBubbleProps> = ({
       />
       <image href={imageUrl} width="272" height="272" x="112" y="0" />
       <text
-        className="fill-gray-d4 capitalize  font-bold text-3xl"
+        className="fill-gray-d4 capitalize  font-semibold text-3xl"
         x="248"
         y="317"
         textAnchor="middle"
       >
         {content.title}
       </text>
-      <text
-        className="font-medium fill-gray text-xl"
-        x="248"
-        y="351"
-        textAnchor="middle"
-      >
+      <text className=" fill-gray text-xl" x="248" y="351" textAnchor="middle">
         {wrapText(content.text, 50).map((line, index) => (
           <tspan key={index} x="248" dy={index === 0 ? 0 : 27}>
             {line}
