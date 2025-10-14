@@ -67,6 +67,7 @@ export default [
   layout(layouts.$("landing/layout.tsx")._, [
     r("donation-forms", landing.$("donation-forms/index.tsx")._),
     r("fund-management", landing.$("fund-management/index.tsx")._),
+    r("fiscal-sponsorship", landing.$("fiscal-sponsorship/index.tsx")._),
   ]),
 
   r("admin/:id", admin.$("layout.tsx")._, { id: "admin" }, [

@@ -187,7 +187,45 @@ export const faqs = [
       </p>,
     ],
   },
+  {
+    id: 9,
+    question: "Can international nonprofits and NGOs use Better Giving?",
+    paragraphs: [
+      <p>
+        Yes, Better Giving supports charitable organizations all around the
+        world. Our platform offers fiscal sponsorship to help organizations
+        outside the U.S. access U.S. grants and donations while also simplifying
+        tax compliance. With our global reach, you can accept donations from
+        anywhere in the world in multiple currencies. As a nonprofit, we charge
+        a cost-leading 2.9% for these services to keep them affordable for
+        organizations of all sizes.
+      </p>,
+      <p className="italic">
+        Global nonprofits can access U.S. funding and donors with ease.
+      </p>,
+    ],
+  },
+  {
+    id: 10,
+    question: "How do I ensure my donations are safe?",
+    paragraphs: [
+      <p>
+        Better Giving is a nonprofit ourselves, committed to financial
+        transparency. Our platform is integrated with trusted financial partners
+        such as Fidelity Investments and is fully compliant with regulatory
+        standards, ensuring that all donations are processed securely. For
+        nonprofits using our savings and investment services, we offer detailed,
+        transparent reporting so you always know where your funds are and how
+        they are performing.
+      </p>,
+      <p className="italic">
+        Security and transparency build trust, ensuring your donations are safe,
+        and your donors feel confident.
+      </p>,
+    ],
+  },
 ];
+//9 4 10
 
 export function FAQ({ classes = "", items }: Props) {
   return (
