@@ -53,7 +53,7 @@ export function NavDropdown({ user, auth_links }: Props) {
               to={user ? href("/register") : href("/register/welcome")}
               className={styler}
             >
-              Register nonprofit
+              Register Nonprofit
             </NavLink>
           </MenuItem>
           <MenuItem>
