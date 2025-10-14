@@ -57,9 +57,9 @@ export const token_shape = (withMin = true): SchemaShape<TWD> => ({
         })
         .test((val, context) => {
           if (!val) return true;
-          const num_decials = val.toString().split(".").at(1)?.length ?? 0;
+          const num_decimals = val.toString().split(".").at(1)?.length ?? 0;
           const precision = context.parent.precision;
-          if (num_decials <= precision) return true;
+          if (num_decimals <= precision) return true;
           return new ValidationError(
             `can't be more than ${precision} decimals`,
             precision,
