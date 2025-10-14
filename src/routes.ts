@@ -316,4 +316,5 @@ export default [
   r("sitemap.xml", "./routes/sitemap.ts"),
 
   r("crons/grants-processor", "./crons/grants-processor/index.ts"),
+  r("crons/currencies-map", "./crons/currencies-map.ts"),
 ] satisfies RouteConfig;
