@@ -7,63 +7,15 @@ import { ExtLink } from "components/ext-link";
 import { DrawerIcon } from "components/icon";
 import { INTERCOM_HELP } from "constants/env";
 import { ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
 
-export function FAQ({ classes = "" }) {
-  return (
-    <section
-      className={`${classes} grid divide-y divide-gray-l3 pb-48`}
-      aria-labelledby="faq-heading"
-    >
-      <h2
-        id="faq-heading"
-        className="col-span-full text-center section-heading mb-10 border-b-0"
-      >
-        Got questions? We've got answers.
-      </h2>
-      {faqs.map((faq) => (
-        <Disclosure as="article" key={faq.id} className="p-4">
-          <DisclosureButton className="group flex items-center justify-between gap-2 w-full">
-            <span className="text-left group-data-open:font-semibold">
-              {faq.question}
-            </span>
-            <DrawerIcon
-              size={18}
-              is_open={false}
-              className="shrink-0 group-data-open:rotate-180"
-            />
-          </DisclosureButton>
-          <DisclosurePanel as="div" className="grid gap-3 data-open:mt-4">
-            {faq.paragraphs.map((p, idx) => (
-              <Fragment key={idx}>{p}</Fragment>
-            ))}
-          </DisclosurePanel>
-        </Disclosure>
-      ))}
-      <footer className="grid pt-8">
-        <ExtLink
-          href={INTERCOM_HELP}
-          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
-        >
-          <span>Complete FAQs</span>
-          <ArrowRight size={15} />
-        </ExtLink>
-        <button
-          type="button"
-          onClick={() => {
-            if ((window as any).Intercom) {
-              return (window as any).Intercom("show");
-            }
-            window.open(INTERCOM_HELP, "_blank");
-          }}
-          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
-        >
-          Need additional support? Live Chat.
-        </button>
-      </footer>
-    </section>
-  );
+interface IFaq {
+  classes?: string;
+  except?: number[];
+  only?: number[];
 }
+
 const faqs = [
   {
     id: 1,
@@ -156,3 +108,90 @@ const faqs = [
     ],
   },
 ];
+
+export function FAQ({ classes = "", except = [], only = [] }: IFaq) {
+  const filtered = faqs.filter((faq) => {
+    if (only.length > 0) {
+      return only.includes(faq.id);
+    }
+    if (except.length > 0) {
+      return !except.includes(faq.id);
+    }
+    // If neither is specified, include all FAQs
+    return true;
+  });
+
+  return (
+    <section
+      className={`${classes} grid divide-y divide-gray-l3 pb-48`}
+      aria-labelledby="faq-heading"
+    >
+      <h2
+        id="faq-heading"
+        className="col-span-full text-center section-heading mb-10 border-b-0"
+      >
+        Got questions? We've got answers.
+      </h2>
+      {filtered.map((faq) => (
+        <Disclosure as="article" key={faq.id} className="p-4">
+          {({ open }) => (
+            <>
+              <DisclosureButton className="group flex items-center justify-between gap-2 w-full">
+                <span className="text-left group-data-open:font-semibold">
+                  {faq.question}
+                </span>
+                <DrawerIcon
+                  size={18}
+                  is_open={false}
+                  className="shrink-0 group-data-open:rotate-180"
+                />
+              </DisclosureButton>
+              <div className="overflow-hidden">
+                <AnimatePresence initial={false}>
+                  {open && (
+                    <DisclosurePanel static as={Fragment}>
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="grid gap-3 origin-top"
+                      >
+                        <div className="py-4">
+                          {faq.paragraphs.map((p, idx) => (
+                            <Fragment key={idx}>{p}</Fragment>
+                          ))}
+                        </div>
+                      </motion.div>
+                    </DisclosurePanel>
+                  )}
+                </AnimatePresence>
+              </div>
+            </>
+          )}
+        </Disclosure>
+      ))}
+      <footer className="grid pt-8">
+        <ExtLink
+          href={INTERCOM_HELP}
+          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+        >
+          <span>Complete FAQs</span>
+          <ArrowRight size={15} />
+        </ExtLink>
+        <button
+          type="button"
+          onClick={() => {
+            if ((window as any).Intercom) {
+              return (window as any).Intercom("show");
+            }
+            window.open(INTERCOM_HELP, "_blank");
+          }}
+          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
+        >
+          Need additional support? Live Chat.
+        </button>
+      </footer>
+    </section>
+  );
+}
