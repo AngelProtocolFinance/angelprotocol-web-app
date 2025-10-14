@@ -41,7 +41,7 @@ export const Hero = ({ classes = "" }) => {
       </motion.p>
 
       <img
-        className="mt-8 justify-self-center"
+        className="mt-8 justify-self-center rounded-2xl"
         width={600}
         height={329.88}
         src={man_using_laptop}
