@@ -32,8 +32,7 @@ export function Members({ classes = "" }) {
         {form_embeds.map((item, idx) => (
           <Link to={item.to} key={idx} target="_blank">
             <img
-              width={400}
-              height={527}
+              width={300}
               className="object-contain"
               src={item.src}
               key={idx}
