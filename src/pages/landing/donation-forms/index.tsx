@@ -19,8 +19,8 @@ export const meta: MetaFunction = () =>
 
 export default function Page() {
   return (
-    <div className="pt-20">
-      <DonationFormInfo classes="px-5 xl:container xl:mx-auto" />
+    <>
+      <DonationFormInfo classes="xl:container xl:mx-auto" />
       <Partners classes="xl:container xl:mx-auto px-5 mt-16" />
       <Ctas classes="xl:container xl:mx-auto px-5" />
       <Steps classes="xl:container xl:mx-auto px-5" />
@@ -30,7 +30,6 @@ export default function Page() {
         classes="xl:container xl:mx-auto px-5 mt-24"
         items={[faqs[1], faqs[2], faqs[3], faqs[4]]}
       />
-      <Footer />
-    </div>
+    </>
   );
 }

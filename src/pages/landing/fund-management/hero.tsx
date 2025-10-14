@@ -1,15 +1,10 @@
-import banner from "assets/images/bg-banner.webp";
 import man_using_laptop from "assets/images/man-using-laptop.png";
-import { APP_NAME } from "constants/env";
 import { motion } from "motion/react";
-import { Link, href } from "react-router";
-
-const MLink = motion.create(Link);
 
 export const Hero = ({ classes = "" }) => {
   return (
     <section
-      className={`${classes} relative grid pb-24`}
+      className={`${classes} relative grid py-24`}
       aria-label="Hero section"
     >
       <motion.p

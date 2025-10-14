@@ -2,7 +2,7 @@ import { StepsCarousel } from "./components/steps-carousel";
 
 export function DonationFormInfo({ classes = "" }) {
   return (
-    <section className={`${classes} grid content-start`}>
+    <section className={`${classes} grid content-start py-20 px-5`}>
       <h4 className="mb-4 col-span-full text-blue-d1 pre-heading uppercase text-center">
         Your all-in-one donation form
       </h4>

@@ -19,8 +19,8 @@ export const meta: MetaFunction = () =>
 
 export default function Page() {
   return (
-    <div className="pt-20">
-      <Hero classes="px-5 xl:container xl:mx-auto" />
+    <>
+      <Hero classes="xl:container xl:mx-auto" />
       <Partners classes="xl:container xl:mx-auto px-5 mt-16" />
       <Ctas classes="xl:container xl:mx-auto px-5" />
       <Investment classes="xl:container xl:mx-auto px-5 mt-24" />
@@ -32,6 +32,6 @@ export default function Page() {
         items={[faqs[5], faqs[6], faqs[7], faqs[8]]}
       />
       <Footer />
-    </div>
+    </>
   );
 }
