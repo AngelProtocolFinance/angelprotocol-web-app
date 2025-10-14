@@ -16,8 +16,8 @@ export interface DonateData {
 }
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const { program } = search(request);
-  const pid = v.parse(v.optional(program_id), program);
+  const { programId } = search(request);
+  const pid = v.parse(v.optional(program_id), programId);
   const id = v.parse($int_gte1, params.id);
   const endow = await npodb.npo(id);
   if (!endow) throw new Response(null, { status: 404 });

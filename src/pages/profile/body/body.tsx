@@ -70,7 +70,7 @@ export function Body({
           <NavLink
             to={`${href("/donate/:id", {
               id: npo.id.toString(),
-            })}${program ? `?program=${program}` : ""}`}
+            })}${program ? `?programId=${program}` : ""}`}
             className="btn btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now

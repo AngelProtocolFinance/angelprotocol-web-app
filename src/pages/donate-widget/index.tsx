@@ -23,7 +23,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d, location: l }) => {
 };
 
 export default function Page({ loaderData }: Route.ComponentProps) {
-  const { endow } = loaderData;
+  const { endow, program } = loaderData;
   const [searchParams] = useSearchParams();
 
   /** Hide the Intercom chatbot */
@@ -56,7 +56,18 @@ export default function Page({ loaderData }: Route.ComponentProps) {
       }}
       className="grid grid-rows-[1fr_auto] justify-items-center gap-10"
     >
-      <Content profile={endow} config={config} />
+      <Content
+        npo={endow}
+        program={
+          program
+            ? {
+                id: program.id.toString(),
+                name: program.title,
+              }
+            : undefined
+        }
+        config={config}
+      />
     </div>
   );
 }

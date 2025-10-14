@@ -2,6 +2,7 @@ export * from "./steps";
 export {
   type DonationState,
   type DonationRecipient,
+  type IProgram,
   donation_recipient,
   is_fund,
 } from "./steps/types";

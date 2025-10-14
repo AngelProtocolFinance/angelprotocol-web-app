@@ -1,18 +1,20 @@
 import type { INpo } from "@better-giving/endowment";
 import { type DonationRecipient, Steps } from "components/donation";
+import type { IProgram } from "components/donation";
 import type { Parsed } from "./parse-config";
 
 type Props = {
-  profile: INpo;
+  npo: INpo;
   config: Parsed;
+  program?: IProgram;
   classes?: string;
 };
 
-export default function Content({ profile, config, classes = "" }: Props) {
+export default function Content({ npo, config, classes = "" }: Props) {
   const recipient: DonationRecipient = {
-    id: profile.id.toString(),
-    name: profile.name,
-    hide_bg_tip: profile.hide_bg_tip,
+    id: npo.id.toString(),
+    name: npo.name,
+    hide_bg_tip: npo.hide_bg_tip,
     members: [],
   };
 
@@ -22,7 +24,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
     >
       {config.isTitleShown && (
         <h1 className="text-center w-full z-20 text-lg sm:text-3xl text-pretty">
-          {config.title || `Donate to ${profile.name}`}
+          {config.title || `Donate to ${npo.name}`}
         </h1>
       )}
       {config.isDescriptionTextShown && (
