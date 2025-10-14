@@ -27,4 +27,5 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const put = await table.currency_map_put(map, "Usd");
   console.info(put);
+  return new Response(null, { status: 200 });
 };
