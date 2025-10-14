@@ -3,7 +3,6 @@ import {
   chains,
   is_custom,
   tokens_list,
-  tokens_map,
 } from "@better-giving/assets/tokens";
 import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { TokenCombobox } from "components/token-field/token-combobox";
@@ -49,7 +48,8 @@ export function Form(props: CryptoFormStep) {
 
   const combobox = (
     <TokenCombobox
-      classes="[&:has(:placeholder-shown)]:w-34 w-24"
+      by="code"
+      classes="[&:has(:placeholder-shown)]:w-34 w-22"
       disabled={token_state === "loading"}
       q={token_q}
       on_q_change={(x) => set_token_q(x)}
@@ -109,7 +109,7 @@ export function Form(props: CryptoFormStep) {
       autoComplete="off"
     >
       <TokenField
-        selector={combobox}
+        combobox={combobox}
         ref={token.ref}
         amount={token.value.amount}
         amount_usd={token.value.rate * +token.value.amount}
@@ -118,7 +118,7 @@ export function Form(props: CryptoFormStep) {
         label="Donation amount"
         min_amount={
           token.value.min ? (
-            <p className="text-xs my-1">
+            <p className="text-xs mb-1">
               Minimum amount: {token.value.symbol}{" "}
               {round_to_cents(
                 token.value.min,
@@ -126,9 +126,7 @@ export function Form(props: CryptoFormStep) {
                 token.value.precision
               )}
             </p>
-          ) : (
-            <div className="py-1" />
-          )
+          ) : null
         }
       />
 

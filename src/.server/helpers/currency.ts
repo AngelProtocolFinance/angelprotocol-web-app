@@ -8,14 +8,22 @@ export const to_currencies_fv = (
 ): ICurrenciesFv => {
   const items: ICurrencyFv[] = [];
   for (const c of stripe_currs) {
-    const rate = rate_map[c.toUpperCase()];
+    const uppc = c.toUpperCase();
+    const rate = rate_map[uppc];
     if (!rate) continue;
-    items.push({ code: c, rate, min: Math.round(rate) });
+    items.push({ code: uppc, rate, min: Math.round(rate) });
   }
-  const pref_rate = pref && rate_map[pref.toUpperCase()];
-  const pref_currency: ICurrencyFv | undefined = pref_rate
-    ? { code: pref, rate: pref_rate, min: Math.round(pref_rate) }
-    : undefined;
+
+  if (!pref) return { pref: undefined, all: items };
+
+  const upppref = pref.toUpperCase();
+
+  const pref_rate = rate_map[upppref];
+  const pref_currency: ICurrencyFv = {
+    code: upppref,
+    rate: pref_rate,
+    min: Math.round(pref_rate),
+  };
 
   return { pref: pref_currency, all: items };
 };

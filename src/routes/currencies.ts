@@ -1,8 +1,8 @@
 import { resp } from "helpers/https";
 import type { LoaderFunction } from "react-router";
-import type { ICurrenciesFv, ICurrencyFv } from "types/currency";
 import { cognito } from ".server/auth";
 import { table } from ".server/aws/db";
+import { to_currencies_fv } from ".server/helpers/currency";
 import { stripe } from ".server/sdks";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -19,21 +19,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   const { supported_payment_currencies } =
     await stripe.countrySpecs.retrieve("US");
 
-  const items: ICurrencyFv[] = [];
-  for (const c of supported_payment_currencies) {
-    const rate = all[c.toUpperCase()];
-    if (!rate) continue;
-    items.push({ code: c, rate, min: Math.round(rate) });
-  }
-  const pref_rate = pref && all[pref.toUpperCase()];
-  const pref_currency: ICurrencyFv | undefined = pref_rate
-    ? { code: pref, rate: pref_rate, min: Math.round(pref_rate) }
-    : undefined;
-
-  return resp.json({
-    pref: pref_currency,
-    all: items,
-  } satisfies ICurrenciesFv);
+  const r = to_currencies_fv(pref, supported_payment_currencies, all);
+  return resp.json(r);
 };
 
 async function currency_from_ip(user_ip: string): Promise<string | undefined> {

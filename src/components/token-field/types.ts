@@ -11,7 +11,7 @@ export interface ITokenField {
   amount: string;
   amount_usd: number;
   on_change: (v: string) => void;
-  selector?: ReactNode;
+  combobox?: ReactNode;
   min_amount?: ReactNode;
   error?: string;
   disabled?: boolean;

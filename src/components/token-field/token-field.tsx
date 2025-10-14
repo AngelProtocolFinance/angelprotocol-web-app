@@ -9,7 +9,7 @@ const Field: React.ForwardRefRenderFunction<El, ITokenField> = (props, ref) => {
   const style = unpack(props.classes);
 
   return (
-    <div className={`grid ${style.container}`}>
+    <div className={`grid gap-y-1 ${style.container}`}>
       <label
         htmlFor="amount"
         className={`font-semibold mr-auto after:content-['_*'] after:text-red ${style.label}`}
@@ -19,7 +19,7 @@ const Field: React.ForwardRefRenderFunction<El, ITokenField> = (props, ref) => {
       {props.min_amount}
 
       <div className="grid grid-cols-[auto_1fr] field-input-container rounded-lg pr-5 divide-x divide-gray-l3">
-        {props.selector}
+        {props.combobox}
         {/** match input text, and append $ value */}
         <div className="relative h-full w-full">
           <input

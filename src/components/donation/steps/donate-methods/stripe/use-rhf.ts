@@ -31,14 +31,14 @@ export function use_rhf(props: Props) {
     name: "frequency",
   });
 
-  const { field: currency } = useController<FV, "currency">({
-    control,
-    name: "currency",
-  });
-
   const { field: amount } = useController<FV, "amount">({
     control,
     name: "amount",
+  });
+
+  const { field: currency } = useController<FV, "currency">({
+    control,
+    name: "currency",
   });
 
   const on_increment: OnIncrement = (inc) => {

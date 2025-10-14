@@ -27,7 +27,7 @@ export const init_token_option: ITokenFv = {
   rate: 1,
 };
 
-export const USD_CODE = "usd";
+export const USD_CODE = "USD";
 export const usd_option: ICurrencyFv = { code: USD_CODE, min: 1, rate: 1 };
 
 export const init_details = (

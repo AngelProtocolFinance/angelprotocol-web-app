@@ -1,6 +1,7 @@
-import { CurrencySelector } from "components/currency-selector";
-import { Form as FieldSet, MaskedInput } from "components/form";
-import { currency as curr_mask } from "components/form/masks";
+import { CloseButton, ComboboxOption } from "@headlessui/react";
+import { Form as FieldSet } from "components/form";
+import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
+import { useState } from "react";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
 import type { ICurrenciesFv, ICurrencyFv } from "types/currency";
@@ -14,6 +15,7 @@ import type { Props } from "./types";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: Props) {
+  const [token_q, set_token_q] = useState("");
   const { set_state } = use_donation_state();
   const rhf = use_rhf(props);
 
@@ -26,6 +28,39 @@ export function Form(props: Props) {
         rhf.currency.onChange(data.pref);
       },
     }
+  );
+  const opts = currency.data?.all || [];
+  const filtered = token_q
+    ? opts.filter((c) => c.code.toLowerCase().includes(token_q.toLowerCase()))
+    : opts.slice(0, 10);
+
+  const combobox = (
+    <TokenCombobox
+      by="code"
+      classes="[&:has(:placeholder-shown)]:w-34 w-22"
+      disabled={currency.isLoading || currency.isValidating}
+      q={token_q}
+      on_q_change={(x) => set_token_q(x)}
+      btn_disp={(open) => btn_disp(open, undefined)}
+      input_disp={(t) => t.code}
+      opt_disp={(t) => {
+        return (
+          <ComboboxOption
+            as={CloseButton}
+            key={t.code}
+            className={
+              "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) data-selected:pointer-events-none cursor-pointer"
+            }
+            value={t}
+          >
+            {t.code}
+          </ComboboxOption>
+        );
+      }}
+      value={rhf.currency.value}
+      opts={filtered}
+      on_change={async (t) => rhf.currency.onChange(t)}
+    />
   );
 
   return (
@@ -40,42 +75,29 @@ export function Form(props: Props) {
         onChange={rhf.frequency.onChange}
         error={rhf.errors.frequency?.message}
       />
-      <CurrencySelector
-        currencies={{
-          is_loading: currency.isLoading,
-          is_fetching: currency.isValidating,
-          is_error: !!currency.error,
-          data: currency.data?.all,
-        }}
-        label="Currency"
-        onChange={rhf.currency.onChange}
-        value={rhf.currency.value}
-        classes={{
-          label: " font-semibold text-base",
-          input: "field-input-donate",
-        }}
-        required
-      />
-      <MaskedInput
-        id="donation-amount"
-        inputMode="decimal"
-        mask={curr_mask.opts}
+      <TokenField
         ref={rhf.amount.ref}
-        value={curr_mask.mask(rhf.amount.value)}
-        onChange={(x) => rhf.amount.onChange(curr_mask.unmask(x))}
-        label="Donation amount"
-        placeholder="Enter amount"
-        classes={{
-          label: " font-semibold text-base",
-          input: "field-input-donate",
-        }}
+        combobox={combobox}
+        amount={rhf.amount.value}
+        amount_usd={
+          rhf.currency.value.code === "USD"
+            ? 0
+            : +rhf.amount.value / rhf.currency.value.rate
+        }
+        on_change={(x) => rhf.amount.onChange(x)}
         error={rhf.errors.amount?.message}
-        required
-        // validation must be dynamicly set depending on which exact currency is selected
-        sub={createTooltip(rhf.currency.value)}
+        label="Donation amount"
+        min_amount={
+          rhf.currency.value.min ? (
+            <p className="text-sm mb-1">
+              Minimum amount: {rhf.currency.value.code} {rhf.currency.value.min}
+            </p>
+          ) : null
+        }
       />
       {rhf.currency.value.rate && (
         <Incrementers
+          disabled={currency.isLoading || currency.isValidating}
           on_increment={rhf.on_increment}
           code={rhf.currency.value.code}
           rate={rhf.currency.value.rate}
@@ -89,7 +111,13 @@ export function Form(props: Props) {
         complete your donation
       </p>
 
-      <ContinueBtn className="mt-2" type="submit" />
+      <ContinueBtn
+        disabled={
+          currency.isLoading || currency.isValidating || !!currency.error
+        }
+        className="mt-2"
+        type="submit"
+      />
     </FieldSet>
   );
 }

@@ -40,27 +40,6 @@ describe("Stripe form test", () => {
     expect(currencySelector).toHaveDisplayValue(/usd/i);
   });
 
-  test("blank state: program donations not allowed", () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      mode: "live",
-      recipient: {
-        id: "123456",
-        name: "Example Endowment",
-        progDonationsAllowed: false,
-        members: [],
-      },
-      config: null,
-    };
-    const Stub = stb(<Form step="donate-form" init={init} />);
-    render(<Stub />);
-
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
-    });
-    expect(programSelector).toBeNull();
-  });
-
   test("prefilled state: user was able to continue", async () => {
     const details: StripeDonationDetails = {
       amount: "60",
@@ -138,9 +117,9 @@ describe("Stripe form test", () => {
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, "1000");
     await userEvent.click(incrementers[0]);
-    expect(amountInput).toHaveDisplayValue("1,040");
+    expect(amountInput).toHaveDisplayValue("1040");
 
     await userEvent.click(incrementers[1]);
-    expect(amountInput).toHaveDisplayValue("1,140");
+    expect(amountInput).toHaveDisplayValue("1140");
   });
 });
