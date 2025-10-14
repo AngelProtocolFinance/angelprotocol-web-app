@@ -26,22 +26,7 @@ describe("stocks form test", () => {
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("");
   });
-  test("initial blank state: program donations now allowed", () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: null,
-      recipient: {
-        id: "0",
-        name: "",
-        progDonationsAllowed: false,
-        members: [],
-      },
-      mode: "live",
-    };
-    render(<Form init={init} step="donate-form" />);
-    const programSelector = screen.queryByLabelText(/select program/i);
-    expect(programSelector).toBeNull();
-  });
+
   test("initial state: persisted and submittable", async () => {
     const init: Init = {
       source: "bg-marketplace",
@@ -70,12 +55,7 @@ describe("stocks form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: {
-        id: "0",
-        name: "",
-        progDonationsAllowed: false,
-        members: [],
-      },
+      recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);

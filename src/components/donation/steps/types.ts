@@ -29,7 +29,6 @@ export const donation_recipient = v.object({
   /** int-str array */
   members: v.array(v.string()),
   hide_bg_tip: v.optional(v.boolean()),
-  progDonationsAllowed: v.optional(v.boolean()),
 });
 export const is_fund = (recipient: string) => v.UUID_REGEX.test(recipient); //is uuid
 
@@ -133,14 +132,16 @@ export type Config = {
   increments?: IIncrement[];
 };
 
+export interface IProgram {
+  id: string;
+  name: string;
+}
+
 export type Init = {
   source: DonationSource;
   mode: Mode;
   recipient: DonationRecipient;
-  program?: {
-    name: string;
-    id: string;
-  };
+  program?: IProgram;
   config: Config | null;
 };
 

@@ -25,7 +25,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 };
 export { ErrorBoundary } from "components/error";
 export default CacheRoute(Page);
-function Page({ loaderData: d }: Route.ComponentProps) {
+function Page({ loaderData: d, params }: Route.ComponentProps) {
   return (
     <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
       <div
@@ -41,7 +41,7 @@ function Page({ loaderData: d }: Route.ComponentProps) {
         />
       </div>
 
-      <Body npo={d.npo} user={d.user} bal={d.bal}>
+      <Body npo={d.npo} user={d.user} bal={d.bal} program={params.programId}>
         <Outlet context={d} />
       </Body>
     </section>
