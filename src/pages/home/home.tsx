@@ -17,7 +17,7 @@ import { Features } from "./9-features";
 import { Blogs } from "./blogs";
 import { BottomCta } from "./bottom-cta";
 import { Header } from "./header";
-import Hero from "./hero";
+import { Hero } from "./hero";
 import { Testimonials } from "./testimonials";
 // import { Video } from "./video";
 export { loader } from "./api";
