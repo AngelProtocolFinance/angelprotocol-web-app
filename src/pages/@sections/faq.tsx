@@ -240,10 +240,10 @@ export function FAQ({ classes = "", items }: Props) {
         Got questions? We've got answers.
       </h2>
       {items.map((faq) => (
-        <Disclosure as="article" key={faq.id} className="p-4">
+        <Disclosure as="article" key={faq.id}>
           {({ open }) => (
             <>
-              <DisclosureButton className="group flex items-center justify-between gap-2 w-full">
+              <DisclosureButton className="group flex items-center justify-between gap-2 w-full py-6 px-4">
                 <span className="text-left group-data-open:font-semibold">
                   {faq.question}
                 </span>
@@ -264,7 +264,7 @@ export function FAQ({ classes = "", items }: Props) {
                         transition={{ duration: 0.3, ease: "easeInOut" }}
                         className="grid gap-3 origin-top"
                       >
-                        <div className="py-4">
+                        <div className="pb-4 px-4">
                           {faq.paragraphs.map((p, idx) => (
                             <Fragment key={idx}>{p}</Fragment>
                           ))}
