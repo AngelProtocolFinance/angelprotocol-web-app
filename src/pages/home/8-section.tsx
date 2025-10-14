@@ -7,7 +7,7 @@ export function Section8({ classes = "" }) {
       className={`${classes} grid justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2 pb-24`}
     >
       <div className="max-w-2xl order-2 xl:order-1">
-        <h2 className="text-center xl:text-left text-4xl xl:text-4.5xl xl:leading-tight text-balance mb-8 text-gray-d4">
+        <h2 className="text-center xl:text-left section-heading mb-8 text-gray-d4">
           We’re not the biggest fundraising platform, so why go with us?
         </h2>
         <p className="mb-4 text-lg xl:text-xl text-center xl:text-left">

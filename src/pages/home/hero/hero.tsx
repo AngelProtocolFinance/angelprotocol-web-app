@@ -18,7 +18,7 @@ const Hero = ({ classes = "" }) => {
         aria-hidden="true"
       />
       <motion.p
-        className="text-sm md:text-lg uppercase font-bold text-center mb-5 tracking-wider"
+        className="pre-heading uppercase text-center mb-5 tracking-wider"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.1 }}
@@ -26,7 +26,7 @@ const Hero = ({ classes = "" }) => {
         By a nonprofit, for nonprofits
       </motion.p>
       <motion.h1
-        className="mx-auto capitalize text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-center text-pretty mb-8 px-6 "
+        className="mx-auto capitalize hero-heading text-center mb-8 px-6 "
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.2 }}
@@ -34,7 +34,7 @@ const Hero = ({ classes = "" }) => {
         Raise more this quarter, <br /> Grow funds together
       </motion.h1>
       <motion.p
-        className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center text-pretty sm:text-balance"
+        className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center sm:text-balance"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.3 }}
@@ -50,7 +50,7 @@ const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.4 }}
         to={href("/register/welcome")}
-        className="btn-blue justify-self-center mt-8 active:translate-x-1 font-bold shadow-2xl inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg "
+        className="justify-self-center mt-8 btn-blue active:translate-x-1 items-center font-bold shadow-2xl inline-flex px-10 py-3 gap-1 rounded-full text-lg "
       >
         Join us today!
       </MLink>

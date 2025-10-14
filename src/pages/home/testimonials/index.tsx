@@ -16,7 +16,7 @@ export function Testimonials({ classes = "s" }) {
       />
       <h2
         id="testimonials-heading"
-        className="text-center text-3xl/tight md:text-4.5xl/tight text-pretty justify-self-center mb-14"
+        className="text-center section-heading justify-self-center mb-14"
       >
         Member success spotlight: <br /> Inspiring change together
       </h2>

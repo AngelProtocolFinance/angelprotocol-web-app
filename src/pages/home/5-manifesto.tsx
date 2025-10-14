@@ -40,7 +40,7 @@ export function Manifesto({ classes = "" }) {
             />
           </svg>
         </div>
-        <h2 className="text-center text-3xl xl:text-4.5xl leading-snug">
+        <h2 className="text-center section-heading">
           <span className="text-blue">Membership</span> means belonging.
         </h2>
         <p className="text-center mb-8 col-span-full text-xl mt-4 max-w-5xl justify-self-center">

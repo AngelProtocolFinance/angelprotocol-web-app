@@ -17,7 +17,7 @@ export function FAQ({ classes = "" }) {
     >
       <h2
         id="faq-heading"
-        className="col-span-full text-center text-3xl md:text-4xl leading-snug mb-10 border-b-0"
+        className="col-span-full text-center section-heading mb-10 border-b-0"
       >
         Got questions? We've got answers.
       </h2>

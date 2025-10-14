@@ -107,7 +107,7 @@ export function Features({ classes = "" }) {
       aria-labelledby="features-heading"
     >
       <motion.p
-        className="text-lg  text-blue-d1 uppercase -mb-4 col-span-full text-center xl:text-left"
+        className="pre-heading text-blue uppercase -mb-4 col-span-full text-center xl:text-left"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -124,7 +124,7 @@ export function Features({ classes = "" }) {
       >
         <h2
           id="features-heading"
-          className="text-2xl xl:text-3xl text-gray-d3 mb-4 text-center xl:text-left"
+          className="mb-4 text-center xl:text-left section-heading"
         >
           Smarter Tools for seamless fundraising
         </h2>

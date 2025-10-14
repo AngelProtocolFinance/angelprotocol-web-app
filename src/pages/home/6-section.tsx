@@ -9,12 +9,12 @@ export function Section6({ classes = "" }) {
       aria-labelledby="fundraising-section-heading"
     >
       <div className="grid max-w-2xl order-2 xl:order-1">
-        <p className="text-center xl:text-left xl:text-lg uppercase text-gray-d4 mb-5">
+        <p className="text-center xl:text-left uppercase mb-5 pre-heading text-blue">
           Everything you need, already included.
         </p>
         <h2
           id="fundraising-section-heading"
-          className="text-center xl:text-left text-4xl xl:text-4.5xl xl:leading-tight text-balance mb-4 text-gray-d4"
+          className="text-center xl:text-left section-heading mb-4"
         >
           Raise funds easily. <br /> Grow them effortlessly.
         </h2>
@@ -26,7 +26,7 @@ export function Section6({ classes = "" }) {
 
         <Link
           to={href("/register/welcome")}
-          className="btn-blue justify-self-center xl:justify-self-start px-6 py-2 xl:px-10 xl:py-4 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn btn-blue justify-self-center normal-case xl:justify-self-start px-10 py-3 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
           Join us today!
         </Link>

@@ -33,10 +33,7 @@ export const Blogs = ({ classes = "" }) => {
       className={`${classes} grid content-start py-40`}
       aria-labelledby="blogs-heading"
     >
-      <h2
-        id="blogs-heading"
-        className="text-gray-d4 text-3xl md:text-4.5xl text-center mb-14 px-4"
-      >
+      <h2 id="blogs-heading" className="section-heading text-center mb-14 px-4">
         Gain knowledge to empower your nonprofit
       </h2>
 

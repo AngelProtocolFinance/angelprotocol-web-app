@@ -68,3 +68,19 @@
 @utility box-delay-2 {
   animation-delay: 600ms;
 }
+
+@utility hero-heading {
+  @apply text-3xl/tight md:text-4xl/tight lg:text-6xl/tight text-balance;
+}
+
+@utility section-heading {
+  @apply text-3xl/tight md:text-4.5xl/tight text-balance;
+}
+
+@utility article-heading {
+  @apply text-2xl md:text-3xl text-balance;
+}
+
+@utility pre-heading {
+  @apply text-sm md:text-lg font-bold;
+}

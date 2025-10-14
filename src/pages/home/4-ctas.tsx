@@ -51,7 +51,7 @@ export function Ctas({ classes = "" }) {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ type: "spring" }}
         >
-          <h3 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
+          <h3 className="max-md:text-center article-heading text-blue mb-2">
             We help you raise more.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
@@ -112,7 +112,7 @@ export function Ctas({ classes = "" }) {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ type: "spring" }}
         >
-          <h3 className="text-2xl max-md:text-center md:text-3xl text-blue mb-2">
+          <h3 className="max-md:text-center article-heading text-blue mb-2">
             We unlock larger gifts.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
