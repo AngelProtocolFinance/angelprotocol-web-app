@@ -1,10 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
-import { useController, useForm } from "react-hook-form";
-import { optionType, schema, stringNumber } from "schemas/shape";
+import { useForm } from "react-hook-form";
+import { schema, str_num } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { ContinueBtn } from "../../common/continue-btn";
-import { ProgramSelector } from "../../common/program-selector";
 import { use_donation_state } from "../../context";
 import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { next_form_state } from "../helpers";
@@ -25,28 +24,20 @@ export function Form(props: StockFormStep) {
       ? {
           symbol: props.details.symbol,
           num_shares: props.details.num_shares.toString(),
-          program: props.details.program,
         }
       : {
           symbol: "",
           num_shares: "",
-          program: { label: "", value: "" },
         },
     resolver: yupResolver(
       schema<FV>({
         symbol: requiredString.trim(),
-        num_shares: stringNumber(
+        num_shares: str_num(
           (s) => s.required("required"),
           (n) => n.positive("must be greater than 0")
         ),
-        program: optionType(),
       })
     ),
-  });
-
-  const { field: program } = useController<FV, "program">({
-    control: control,
-    name: "program",
   });
 
   return (
@@ -85,16 +76,6 @@ export function Form(props: StockFormStep) {
           input: "field-input-donate",
         }}
       />
-
-      {(props.init.recipient.progDonationsAllowed ?? true) && (
-        // program not allowed for fund (id string)
-        <ProgramSelector
-          endowId={+props.init.recipient.id}
-          classes="mt-6 mb-4"
-          program={program.value}
-          onChange={program.onChange}
-        />
-      )}
 
       <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>
       <p className="text-sm">

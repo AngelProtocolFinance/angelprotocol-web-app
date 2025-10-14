@@ -1,7 +1,9 @@
 import { resp } from "helpers/https";
 import type { LoaderFunction } from "react-router";
 import { cognito } from ".server/auth";
-import { get_db_currencies } from ".server/currency";
+import { table } from ".server/aws/db";
+import { to_currencies_fv } from ".server/helpers/currency";
+import { stripe } from ".server/sdks";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user } = await cognito.retrieve(request);
@@ -9,11 +11,16 @@ export const loader: LoaderFunction = async ({ request }) => {
     request.headers.get("x-forwarded-for")?.split(",")[0] ||
     request.headers.get("x-real-ip");
 
-  const pref_currency =
+  const pref =
     user?.currency || (user_ip ? await currency_from_ip(user_ip) : undefined);
 
-  const data = await get_db_currencies(pref_currency);
-  return resp.json(data);
+  const { all } = await table.currency_map("Usd");
+
+  const { supported_payment_currencies } =
+    await stripe.countrySpecs.retrieve("US");
+
+  const r = to_currencies_fv(pref, supported_payment_currencies, all);
+  return resp.json(r);
 };
 
 async function currency_from_ip(user_ip: string): Promise<string | undefined> {

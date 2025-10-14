@@ -1,4 +1,4 @@
-import type { Fetcher } from "types/http";
+import type { Fetcher } from "types/api";
 
 export const wp_base_url = "https://angelgiving.10web.site";
 export const wp: Fetcher = async (url_fn, init_fn) => {

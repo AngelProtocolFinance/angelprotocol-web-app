@@ -1,7 +1,6 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_tokens } from "services/apes/mock";
-import { mockPrograms } from "services/aws/programs/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
 import type { CryptoFormStep, Init } from "../../types";
 import { Form } from "./form";
@@ -32,36 +31,8 @@ describe("Crypto form: initial load", () => {
     };
     render(<Form {...state} />);
 
-    waitFor(() => {
-      const programSelector = screen.queryByLabelText(/select program/i);
-      expect(programSelector).toBeNull();
-    });
-  });
-
-  test("initial form state: program donations not allowed", () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: null,
-      recipient: {
-        id: "0",
-        name: "",
-        progDonationsAllowed: false,
-        members: [],
-      },
-      mode: "live",
-    };
-
-    const state: CryptoFormStep = {
-      step: "donate-form",
-      init,
-    };
-    render(<Form {...state} />);
-    waitFor(() => {
-      const programSelector = screen.queryByRole("button", {
-        name: /general donation/i,
-      });
-      expect(programSelector).toBeNull();
-    });
+    expect(screen.getByPlaceholderText(/select token/i)).toBeInTheDocument();
+    expect(screen.getByRole("textbox")).toHaveDisplayValue("");
   });
 
   test("submit form with initial/persisted data", async () => {
@@ -72,23 +43,19 @@ describe("Crypto form: initial load", () => {
       mode: "live",
     };
 
-    const amount = "100.33";
+    const amount = "100";
     const state: CryptoFormStep = {
       step: "donate-form",
       init,
       details: {
         method: "crypto",
         token: { ...mock_tokens[1], amount, min: 1, rate: 1 },
-        program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;
     render(<Form {...state} />);
 
-    const amountInput = screen.getByDisplayValue(amount);
+    const amountInput = screen.getByRole("textbox");
     expect(amountInput).toBeInTheDocument();
-
-    const selectedProgram = screen.getByText(/program 1/i);
-    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
@@ -150,7 +117,7 @@ describe("Crypto form: initial load", () => {
     expect(screen.getByRole("paragraph")).toHaveTextContent(/select token/i);
 
     //user selects token
-    const tokenSelector = screen.getByRole("button", { name: /select token/i });
+    const tokenSelector = screen.getByPlaceholderText(/select token/i);
     await userEvent.click(tokenSelector);
 
     const tokenOptions = screen.getAllByRole("option");

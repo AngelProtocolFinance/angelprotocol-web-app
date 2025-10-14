@@ -36,12 +36,7 @@ describe("DAF form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: {
-        id: "0",
-        name: "",
-        progDonationsAllowed: false,
-        members: [],
-      },
+      recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);
@@ -60,7 +55,6 @@ describe("DAF form test", () => {
       method: "daf",
       amount: "100",
       currency: { code: USD_CODE, rate: 1, min: 1 },
-      program: { label: "", value: "" },
     };
     render(<Form init={init} step="donate-form" details={details} />);
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
@@ -75,12 +69,7 @@ describe("DAF form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: {
-        id: "0",
-        name: "",
-        progDonationsAllowed: false,
-        members: [],
-      },
+      recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);

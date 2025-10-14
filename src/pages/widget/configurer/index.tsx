@@ -3,7 +3,6 @@ import { increment_label_max_chars } from "@better-giving/schemas";
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/donate-methods";
-import { ProgramSelector } from "components/donation";
 import { CheckField, Field, Form } from "components/form";
 import { Increments } from "components/increments";
 import { DollarSign } from "lucide-react";
@@ -17,6 +16,7 @@ import {
 import type { EndowmentOption } from "types/npo";
 import { type WidgetConfig, widget_config } from "types/widget";
 import { EndowmentSelector } from "./endowment-selector";
+import { ProgramSelector } from "./program-selector";
 import type { FormValues } from "./types";
 
 type Props = {

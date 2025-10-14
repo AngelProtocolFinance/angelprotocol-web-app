@@ -31,6 +31,7 @@ import { NavHistoryDB } from "@better-giving/nav-history";
 import { PayoutsDB } from "@better-giving/payouts";
 import { RegDb } from "@better-giving/reg";
 import { UserDb } from "@better-giving/user";
+import { Table } from "lib/table/db";
 import {
   apes_aws_access_key_id,
   apes_aws_secret_access_key,
@@ -81,3 +82,4 @@ export const dondb = new DonationsDb(apes, env);
 export const onholddb = new OnHoldDonationsDb(apes, env);
 export const subsdb = new SubsDb(apes, env);
 export const donordb = new DonationDonorsDb(apes, env);
+export const table = new Table(ap, env);

@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import { stb } from "./__tests__/test-data";
-import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
 
@@ -11,7 +10,6 @@ const stripeDonation: StripeDonationDetails = {
   amount: "100",
   currency: { code: "usd", min: 1, rate: 1 },
   frequency: "recurring",
-  program: DEFAULT_PROGRAM,
 };
 
 describe("donation flow", () => {
@@ -151,13 +149,9 @@ describe("donation flow", () => {
     await userEvent.click(cryptoTab);
 
     //select token
-    const tokenSelectorOpener = screen.getByRole("button", {
-      name: /select token/i,
-    });
-    await userEvent.click(tokenSelectorOpener);
+    const token_selector = screen.getByPlaceholderText(/select token/i);
     //wait for token dropdown to load
-    const tokenSearchInput = await screen.findByPlaceholderText("Search...");
-    await userEvent.click(tokenSearchInput);
+    await userEvent.click(token_selector);
     const tokenOptions = screen.getAllByRole("option");
     await userEvent.click(tokenOptions[0]);
 

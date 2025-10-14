@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { search } from "helpers/https";
 import { useForm } from "react-hook-form";
 import { useFetcher, useNavigate, useSearchParams } from "react-router";
-import { schema, stringNumber } from "schemas/shape";
+import { schema, str_num } from "schemas/shape";
 import { config } from "../config";
 import type { Route } from "./+types";
 
@@ -53,7 +53,7 @@ function Content(props: IContent) {
     defaultValues: { amount: props.prev.toString() || "" },
     resolver: yupResolver(
       schema<FV>({
-        amount: stringNumber(
+        amount: str_num(
           (s) => s.required("required"),
           (n) => n.min(config.pay_min, `pay_minimum of $${config.pay_min}`)
         ),

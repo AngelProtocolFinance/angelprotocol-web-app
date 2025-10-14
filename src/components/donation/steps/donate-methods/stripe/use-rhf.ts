@@ -11,7 +11,6 @@ export function use_rhf(props: Props) {
     amount: "",
     currency: usd_option,
     frequency: "" as FV["frequency"],
-    program: { label: "", value: "" },
   };
 
   const {
@@ -32,19 +31,14 @@ export function use_rhf(props: Props) {
     name: "frequency",
   });
 
-  const { field: currency } = useController<FV, "currency">({
-    control,
-    name: "currency",
-  });
-
-  const { field: program } = useController<FV, "program">({
-    control,
-    name: "program",
-  });
-
   const { field: amount } = useController<FV, "amount">({
     control,
     name: "amount",
+  });
+
+  const { field: currency } = useController<FV, "currency">({
+    control,
+    name: "currency",
   });
 
   const on_increment: OnIncrement = (inc) => {
@@ -56,7 +50,6 @@ export function use_rhf(props: Props) {
   return {
     frequency,
     currency,
-    program,
     amount,
     on_increment,
     register,

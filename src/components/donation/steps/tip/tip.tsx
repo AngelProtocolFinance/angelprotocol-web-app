@@ -8,7 +8,7 @@ import { Image } from "components/image/image";
 import { centsDecimals, humanize, roundDown } from "helpers/decimal";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
-import { schema, stringNumber } from "schemas/shape";
+import { schema, str_num } from "schemas/shape";
 import { BackBtn } from "../common/back-btn";
 import { summary_data } from "../common/constants";
 import { ContinueBtn } from "../common/continue-btn";
@@ -27,7 +27,7 @@ type FV = {
 };
 
 const tipSchema = schema<ITip>({
-  amount: stringNumber(
+  amount: str_num(
     (s) => s,
     (n) => n.min(0, "can't be negative")
   ),

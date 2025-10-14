@@ -116,7 +116,6 @@ export function ChariotCheckout(props: DafCheckoutStep) {
 
   return (
     <Summary
-      program={props.details.program}
       classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
       on_back={async () => {
         const { init } = props;
@@ -328,12 +327,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
                 source: props.init.source,
               };
 
-              if (props.details.program.value) {
-                intent.program = {
-                  id: props.details.program.value,
-                  name: props.details.program.label,
-                };
-              }
+              if (props.init.program) intent.program = props.init.program;
 
               setGrantState("pending");
               const res = await fetch("/api/donation-intents/chariot", {

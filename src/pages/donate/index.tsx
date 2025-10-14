@@ -28,7 +28,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 };
 export default CacheRoute(Page);
 function Page({ loaderData }: Route.ComponentProps) {
-  const { endow, balance } = loaderData;
+  const { endow, balance, program } = loaderData;
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
@@ -50,6 +50,7 @@ function Page({ loaderData }: Route.ComponentProps) {
             classes=""
             target={endow.target}
             balance={balance}
+            program={program}
           />
         </div>
 
@@ -62,13 +63,15 @@ function Page({ loaderData }: Route.ComponentProps) {
               id: endow.id.toString(),
               name: endow.name,
               hide_bg_tip: endow.hide_bg_tip,
-              progDonationsAllowed: endow.progDonationsAllowed,
               members: [],
             }}
             config={{
               method_ids: endow.donateMethods,
               increments: endow.increments,
             }}
+            program={
+              program ? { id: program.id, name: program.title } : undefined
+            }
             className="md:border border-gray-l3 rounded-lg row-start-2"
           />
         </div>

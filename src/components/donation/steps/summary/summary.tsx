@@ -34,7 +34,6 @@ export function Summary(props: SummaryStep) {
   return (
     <SummaryContainer
       // fee_allowance : don't show fee allowance as it's being set in this step
-      program={details.program}
       frequency={details.method === "stripe" ? details.frequency : "one-time"}
       classes="grid content-start p-4 @md/steps:p-8"
       Amount={Amount}

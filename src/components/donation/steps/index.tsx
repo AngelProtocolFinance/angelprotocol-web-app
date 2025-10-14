@@ -5,6 +5,7 @@ import type {
   Config,
   DonationRecipient,
   DonationState,
+  IProgram,
   Init,
   Mode,
 } from "./types";
@@ -14,6 +15,7 @@ type Components = {
   mode: Mode;
   config: Config | null;
   recipient: DonationRecipient;
+  program?: IProgram;
 };
 
 type InitState = {

@@ -3,16 +3,15 @@ import { Image } from "components/image";
 import { type TTarget, Target, to_target } from "components/target";
 import { Await, Link, href } from "react-router";
 
-type Props = {
+interface Props extends Pick<DonateData, "balance" | "program"> {
   id: number;
   name: string;
   logo: string;
   tagline?: string;
   target?: TTarget;
   classes?: string;
-  balance: DonateData["balance"];
-};
-export function OrgCard({ classes = "", balance, ...props }: Props) {
+}
+export function OrgCard({ classes = "", balance, program, ...props }: Props) {
   return (
     <div
       className={`grid @xl/org-card:grid-cols-[3fr_2fr] gap-x-4 gap-y-6 p-4 md:bg-white rounded-lg md:border border-gray-l3 ${classes}`}
@@ -20,17 +19,30 @@ export function OrgCard({ classes = "", balance, ...props }: Props) {
       <div className="grid grid-cols-[auto-1fr] gap-x-4 justify-start order-2 @xl/org-card:order-1">
         <Image
           src={props.logo}
+          width={56}
+          height={56}
           className="size-14 border border-gray-l3 rounded-lg object-cover bg-white row-span-2"
         />
         <Link
           to={href("/marketplace/:id", { id: props.id.toString() })}
           className="hover:text-blue-d1 text-ellipsis overflow-hidden text-nowrap @xl/org-card:text-balance col-start-2 w-full"
         >
-          {props.name}
+          <span>{props.name}</span>
+          {program ? (
+            <>
+              {" "}
+              - <span className="font-normal">{program.title}</span>
+            </>
+          ) : null}
         </Link>
-        {props.tagline && (
+        {props.tagline && !program && (
           <p className="text-gray text-sm w-full line-clamp-2">
             {props.tagline}
+          </p>
+        )}
+        {program && (
+          <p className="text-gray text-sm w-full line-clamp-2">
+            {props.tagline || program.description}
           </p>
         )}
       </div>

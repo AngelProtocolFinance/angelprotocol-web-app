@@ -1,4 +1,6 @@
 import { http, HttpResponse } from "msw";
+import { href } from "react-router";
+import type { ITokenEstimate } from "types/api";
 
 export const fiatDonationIntentCreationErrorHandler = http.post(
   "/api/donation-intents/stripe",
@@ -12,5 +14,8 @@ export const handlers = [
       //stripe.Element is mocked and doesn't need real intent id
       clientSecret: "fake_intent_id",
     });
+  }),
+  http.get(href("/api/tokens/:code/min-usd", { code: ":code" }), () => {
+    return HttpResponse.json({ min: 1, rate: 1 } satisfies ITokenEstimate);
   }),
 ];

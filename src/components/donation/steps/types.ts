@@ -1,7 +1,7 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
-import type { OptionType, TokenWithDetails } from "types/components";
-import { db_currency } from "types/currency";
+import type { ITokenFv } from "types/components";
+import { currency_fv } from "types/currency";
 import { type Donor, type Tribute, frequency } from "types/donation-intent";
 export {
   type Tribute,
@@ -29,7 +29,6 @@ export const donation_recipient = v.object({
   /** int-str array */
   members: v.array(v.string()),
   hide_bg_tip: v.optional(v.boolean()),
-  progDonationsAllowed: v.optional(v.boolean()),
 });
 export const is_fund = (recipient: string) => v.UUID_REGEX.test(recipient); //is uuid
 
@@ -43,18 +42,9 @@ export const program_opt = v.object({
 
 export interface ProgramOption extends v.InferOutput<typeof program_opt> {}
 
-type BaseDonationDetails = {
-  /** value is "" if no program is selected   */
-  program: OptionType<string>;
-};
-
-export const base_donation_details = v.object({
-  program: program_opt,
-});
-
-export type CryptoDonationDetails = BaseDonationDetails & {
+export type CryptoDonationDetails = {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
-  token: TokenWithDetails;
+  token: ITokenFv;
 };
 
 export const amount = v.lazy((x) => {
@@ -68,9 +58,8 @@ export const amount = v.lazy((x) => {
 });
 
 export const fiat_donation_details = v.object({
-  ...base_donation_details.entries,
   amount,
-  currency: db_currency,
+  currency: currency_fv,
 });
 
 export interface FiatDonationDetails
@@ -99,7 +88,7 @@ export interface StripeDonationDetails
   method: Extract<DonateMethodId, "stripe">;
 }
 
-export type StocksDonationDetails = BaseDonationDetails & {
+export type StocksDonationDetails = {
   method: Extract<DonateMethodId, "stocks">;
   symbol: string;
   num_shares: string;
@@ -143,10 +132,16 @@ export type Config = {
   increments?: IIncrement[];
 };
 
+export interface IProgram {
+  id: string;
+  name: string;
+}
+
 export type Init = {
   source: DonationSource;
   mode: Mode;
   recipient: DonationRecipient;
+  program?: IProgram;
   config: Config | null;
 };
 

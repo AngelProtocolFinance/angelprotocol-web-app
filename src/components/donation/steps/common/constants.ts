@@ -1,9 +1,5 @@
 import type { DonateMethodId } from "@better-giving/endowment";
-import type {
-  DBCurrency,
-  OptionType,
-  TokenWithDetails,
-} from "types/components";
+import type { ICurrencyFv, ITokenFv, OptionType } from "types/components";
 import type {
   DonationDetails,
   DonationState,
@@ -16,12 +12,12 @@ export const DEFAULT_PROGRAM: OptionType<""> = {
   value: "",
 };
 
-export const init_token_option: TokenWithDetails = {
+export const init_token_option: ITokenFv = {
   precision: 6,
   min: 0,
   code: "",
   name: "",
-  symbol: "Select token",
+  symbol: "",
   id: "",
   amount: "",
   network: "",
@@ -31,8 +27,8 @@ export const init_token_option: TokenWithDetails = {
   rate: 1,
 };
 
-export const USD_CODE = "usd";
-export const usd_option: DBCurrency = { code: USD_CODE, min: 1, rate: 1 };
+export const USD_CODE = "USD";
+export const usd_option: ICurrencyFv = { code: USD_CODE, min: 1, rate: 1 };
 
 export const init_details = (
   methodId: DonateMethodId,
@@ -52,17 +48,15 @@ export const init_details = (
       return {
         method: "crypto",
         token: init_token_option,
-        program,
       };
     }
     case "daf": {
-      return { method: "daf", amount: "", currency: usd_option, program };
+      return { method: "daf", amount: "", currency: usd_option };
     }
     case "stocks": {
       return {
         method: "stocks",
         num_shares: "",
-        program,
         symbol: "",
       };
     }
@@ -72,7 +66,6 @@ export const init_details = (
         amount: "",
         currency: usd_option,
         frequency: "recurring",
-        program,
       };
     }
   }

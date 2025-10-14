@@ -2,7 +2,6 @@ import { beforeEach } from "node:test";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_usd } from "services/apes/mock";
-import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import { stb } from "../../__tests__/test-data";
 import type { Init, StripeDonationDetails } from "../../types";
@@ -41,43 +40,18 @@ describe("Stripe form test", () => {
     expect(currencySelector).toHaveDisplayValue(/usd/i);
   });
 
-  test("blank state: program donations not allowed", () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      mode: "live",
-      recipient: {
-        id: "123456",
-        name: "Example Endowment",
-        progDonationsAllowed: false,
-        members: [],
-      },
-      config: null,
-    };
-    const Stub = stb(<Form step="donate-form" init={init} />);
-    render(<Stub />);
-
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
-    });
-    expect(programSelector).toBeNull();
-  });
-
   test("prefilled state: user was able to continue", async () => {
     const details: StripeDonationDetails = {
       amount: "60",
       currency: mock_usd,
       frequency: "recurring",
       method: "stripe",
-      program: { value: mockPrograms[0].id, label: mockPrograms[0].title },
     };
     const Stub = stb(<Form step="donate-form" init={init} details={details} />);
     render(<Stub />);
 
     const amountInput = await screen.findByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("60");
-
-    const selectedProgram = screen.getByText(/program 1/i);
-    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
@@ -143,9 +117,9 @@ describe("Stripe form test", () => {
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, "1000");
     await userEvent.click(incrementers[0]);
-    expect(amountInput).toHaveDisplayValue("1,040");
+    expect(amountInput).toHaveDisplayValue("1040");
 
     await userEvent.click(incrementers[1]);
-    expect(amountInput).toHaveDisplayValue("1,140");
+    expect(amountInput).toHaveDisplayValue("1140");
   });
 });
