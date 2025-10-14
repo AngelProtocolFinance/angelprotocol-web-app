@@ -1,3 +1,4 @@
+import mappng from "assets/images/map.webp";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link, href } from "react-router";
@@ -8,7 +9,6 @@ import frame2 from "./characters/frame_2.webp";
 import frame3 from "./characters/frame_3.webp";
 import frame4 from "./characters/frame_4.webp";
 import frame6 from "./characters/frame_6.webp";
-import mappng from "./map.webp";
 import s from "./styles.module.css";
 
 interface Props {
