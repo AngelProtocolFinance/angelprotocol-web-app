@@ -1,6 +1,7 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import { FAQ } from "../@sections/faq";
 import { Partners } from "../@sections/partners";
 import { Steps } from "../@sections/steps";
 import type { Route } from "./+types/home";
@@ -11,7 +12,6 @@ import { Section6 } from "./6-section";
 import { Section7 } from "./7-section";
 import { Section8 } from "./8-section";
 import { Features } from "./9-features";
-import { FAQ } from "./11-faq";
 // import { Animation } from "./animation";
 // import Benefits from "./benefits";
 import { Blogs } from "./blogs";

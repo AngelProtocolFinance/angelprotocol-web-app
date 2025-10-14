@@ -3,10 +3,10 @@ import { StepsCarousel } from "./components/steps-carousel";
 export function DonationFormInfo({ classes = "" }) {
   return (
     <section className={`${classes} grid content-start`}>
-      <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
+      <h4 className="mb-4 col-span-full text-blue-d1 pre-heading uppercase text-center">
         Your all-in-one donation form
       </h4>
-      <h2 className="col-span-full text-center text-4xl xl:text-4.5xl mb-4">
+      <h2 className="col-span-full text-center hero-heading mb-4">
         Raise more. Save more. Do less.
       </h2>
       <p className="col-span-full mb-4 text-center text-xl text-navy">
