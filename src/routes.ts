@@ -64,6 +64,7 @@ export default [
     index(widget.$("index.tsx")._, { id: "public-form-builder" }),
   ]),
   r("donation-forms", pages.$("landing/donation-forms/index.tsx")._),
+  r("fund-management", pages.$("landing/fund-management/index.tsx")._),
 
   r("admin/:id", admin.$("layout.tsx")._, { id: "admin" }, [
     index(admin.$("redirect.ts")._),
@@ -120,7 +121,7 @@ export default [
   ]),
 
   r(
-    "fund-management",
+    "fund-mgmt",
     pages.$("fund-management/layout.tsx")._,
     { id: "fund-management" },
     [

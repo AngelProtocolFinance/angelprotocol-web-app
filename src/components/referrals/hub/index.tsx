@@ -1,9 +1,9 @@
+import img3 from "assets/images/man-using-laptop.png";
 import { Image } from "components/image";
 import { Link } from "react-router";
 import img4 from "./diamond-logo.png";
 import img5 from "./laira-holding-folder.png";
 import img1 from "./laptop.png";
-import img3 from "./man-using-laptop.png";
 import img2 from "./people-using-gadget.png";
 
 interface ICard {

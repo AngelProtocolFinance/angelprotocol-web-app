@@ -7,8 +7,8 @@ export function BottomCta({ className = "" }) {
       className={`${className} grid bg-linear-to-br from-blue-d1 to-white rounded-3xl md:rounded-4xl px-10 py-12 md:px-16`}
     >
       <h3 className="text-center md:text-left article-heading text-white mb-9">
-        The all-in-one fundraising solution you deserve is only a few clicks
-        away
+        Earn 3-4% on your nonprofit’s donations, FDIC-insured and accessible
+        anytime.
       </h3>
       <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-6">
         <Link

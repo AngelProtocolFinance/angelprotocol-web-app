@@ -57,7 +57,7 @@ export function UserMenu({ user, classes }: Props) {
           {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
-              to={href("/fund-management")}
+              to={href("/fund-mgmt")}
               className="hover:text-blue-d1 text-sm flex items-center gap-x-2 mt-2"
             >
               <PieChartIcon size={16} />

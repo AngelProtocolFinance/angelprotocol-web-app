@@ -1,9 +1,10 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import { Footer } from "components/footer";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import { FAQ } from "../@sections/faq";
+import { FAQ, faqs } from "../@sections/faq";
 import { Partners } from "../@sections/partners";
 import { Steps } from "../@sections/steps";
+import { Testimonials } from "../@sections/testimonials";
 import type { Route } from "./+types/home";
 import { Stats } from "./2-stats";
 import { Ctas } from "./4-ctas";
@@ -18,7 +19,6 @@ import { Blogs } from "./blogs";
 import { BottomCta } from "./bottom-cta";
 import { Header } from "./header";
 import { Hero } from "./hero";
-import { Testimonials } from "./testimonials";
 // import { Video } from "./video";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
@@ -53,7 +53,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
         <Blogs />
       </div>
       <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
-      <FAQ classes="xl:container xl:mx-auto px-5" />
+      <FAQ items={faqs.slice(0, 5)} classes="xl:container xl:mx-auto px-5" />
       <Footer />
     </div>
   );

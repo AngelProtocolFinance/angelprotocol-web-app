@@ -77,6 +77,10 @@
   @apply text-3xl/tight md:text-4.5xl/tight text-balance;
 }
 
+@utility section-body {
+  @apply text-lg md:text-2xl text-pretty;
+}
+
 @utility article-heading {
   @apply text-2xl md:text-3xl text-balance;
 }

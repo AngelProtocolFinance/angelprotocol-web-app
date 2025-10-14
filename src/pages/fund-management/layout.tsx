@@ -32,7 +32,7 @@ export default function Page({ loaderData: user }: Route.ComponentProps) {
     <div className="grid">
       <Header classes="sticky z-40 top-[-1px]" />
       <Layout
-        rootRoute={href("/fund-management")}
+        rootRoute={href("/fund-mgmt")}
         linkGroups={linkGroups}
         //dummy header
         sidebarHeader={<div className="h-5" />}

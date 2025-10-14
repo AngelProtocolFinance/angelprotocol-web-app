@@ -5,30 +5,31 @@ import type { MetaFunction } from "react-router";
 import { FAQ, faqs } from "../../@sections/faq";
 import { Partners } from "../../@sections/partners";
 import { Steps } from "../../@sections/steps";
+import { Testimonials } from "../../@sections/testimonials";
 import { BottomCta } from "./bottom-cta";
 import { Ctas } from "./ctas";
-import { DonationFormInfo } from "./donation-form-info";
-import { Members } from "./members";
+import { Hero } from "./hero";
+import { Investment } from "./investment";
 
 export const meta: MetaFunction = () =>
   metas({
-    title: `All-In-One Donation Form | ${APP_NAME}`,
-    description:
-      "Raise more. Save more. Do Less. 100% free. No Setup costs, no recurring charges, no platform fee.",
+    title: `Fund Management | ${APP_NAME}`,
+    description: "Make your donations work for you. Automatic Savings & Growth",
   });
 
 export default function Page() {
   return (
     <div className="pt-20">
-      <DonationFormInfo classes="px-5 xl:container xl:mx-auto" />
+      <Hero classes="px-5 xl:container xl:mx-auto" />
       <Partners classes="xl:container xl:mx-auto px-5 mt-16" />
       <Ctas classes="xl:container xl:mx-auto px-5" />
-      <Steps classes="xl:container xl:mx-auto px-5" />
-      <Members classes="xl:container xl:mx-auto px-5" />
+      <Investment classes="xl:container xl:mx-auto px-5 mt-24" />
+      <Steps classes="xl:container xl:mx-auto px-5 mt-24" />
+      <Testimonials classes="xl:container xl:mx-auto px-5 mt-24" />
       <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <FAQ
         classes="xl:container xl:mx-auto px-5 mt-24"
-        items={[faqs[1], faqs[2], faqs[3], faqs[4]]}
+        items={[faqs[5], faqs[6], faqs[7], faqs[8]]}
       />
       <Footer />
     </div>

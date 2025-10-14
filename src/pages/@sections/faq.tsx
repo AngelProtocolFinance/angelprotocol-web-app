@@ -11,14 +11,19 @@ import { AnimatePresence, motion } from "motion/react";
 import { Fragment } from "react";
 
 interface IFaq {
-  classes?: string;
-  except?: number[];
-  only?: number[];
+  id: number;
+  question: string;
+  paragraphs: JSX.Element[];
 }
 
-const faqs = [
+interface Props {
+  classes?: string;
+  items: IFaq[];
+}
+
+export const faqs = [
   {
-    id: 1,
+    id: 0,
     question:
       "Are Better Giving’s fundraising solutions really free? How do you sustain your operations?",
     paragraphs: [
@@ -37,7 +42,7 @@ const faqs = [
     ],
   },
   {
-    id: 2,
+    id: 1,
     question: "What types of donations can I accept?",
     paragraphs: [
       <p>
@@ -56,7 +61,7 @@ const faqs = [
     ],
   },
   {
-    id: 3,
+    id: 2,
     question: "How quickly can I start fundraising with Better Giving?",
     paragraphs: [
       <p>
@@ -72,7 +77,7 @@ const faqs = [
     ],
   },
   {
-    id: 4,
+    id: 3,
     question: "How easy is it to embed your donation forms on our website?",
     paragraphs: [
       <p>
@@ -89,7 +94,7 @@ const faqs = [
     ],
   },
   {
-    id: 5,
+    id: 4,
     question: "How does your platform reduce administrative burdens?",
     paragraphs: [
       <p>
@@ -107,20 +112,84 @@ const faqs = [
       </p>,
     ],
   },
+  {
+    id: 5,
+    question: "How does the high-yield savings account work?",
+    paragraphs: [
+      <p>
+        Our high-yield savings account provides a secure, low-risk way for
+        nonprofits to grow their donations. Donated funds are automatically
+        placed in a US Treasury yield money market account with Fidelity
+        Investments to earn steady interest as soon as possible, helping you
+        build financial stability without risking your principal. As a nonprofit
+        ourselves, we use the same savings services to manage our own funds,
+        ensuring reliability and trust.
+      </p>,
+      <p className="italic">
+        Simple, hassle-free way to grow donations without extra overhead.
+      </p>,
+    ],
+  },
+  {
+    id: 6,
+    question:
+      "How do the managed investment funds work, and how do they benefit nonprofits?",
+    paragraphs: [
+      <p>
+        Our flagship Sustainability Fund is a high-yield investment fund
+        averaging 24% returns annually over the past five years. It’s designed
+        to help nonprofits achieve long-term financial stability by growing
+        their donations over time. Unlike one-time donations that are used up
+        quickly, the Sustainability Fund allows your contributions to keep
+        working for your organization. The growth is reinvested until you
+        request funds granted out, ensuring your nonprofit has a reliable source
+        of funding well into the future.
+      </p>,
+      <p className="italic">
+        Turn today’s donations into long-term financial security for your
+        nonprofit.
+      </p>,
+    ],
+  },
+  {
+    id: 7,
+    question: "Can I track my donation and fund performance?",
+    paragraphs: [
+      <p>
+        Yes, we offer real-time donation tracking, so you can monitor
+        contributions as they come in. Alongside this, quarterly reports detail
+        your fund performance, including the growth of your savings account and
+        Sustainability Fund. These reports help you track your financial
+        progress and make informed decisions about future fundraising and
+        investment strategies.
+      </p>,
+      <p className="italic">
+        Stay informed with transparent, regular updates on your financial
+        performance.
+      </p>,
+    ],
+  },
+  {
+    id: 8,
+    question:
+      "Are there any fees for using Better Giving’s fund management solutions?",
+    paragraphs: [
+      <p>
+        Our optional fund management solutions are provided with no setup costs
+        or minimum entry barriers. To cover expenses, we charge a cost-leading
+        0.8% AUM fee, with a 12.5% performance fee over 5% returns: we only win
+        when you win, and as a nonprofit any income generated from our fees is
+        reinvested to further our mission.
+      </p>,
+      <p className="italic">
+        Grow funds securely with a nonprofit partner rather than overpaying
+        for-profit third parties.
+      </p>,
+    ],
+  },
 ];
 
-export function FAQ({ classes = "", except = [], only = [] }: IFaq) {
-  const filtered = faqs.filter((faq) => {
-    if (only.length > 0) {
-      return only.includes(faq.id);
-    }
-    if (except.length > 0) {
-      return !except.includes(faq.id);
-    }
-    // If neither is specified, include all FAQs
-    return true;
-  });
-
+export function FAQ({ classes = "", items }: Props) {
   return (
     <section
       className={`${classes} grid divide-y divide-gray-l3 pb-48`}
@@ -132,7 +201,7 @@ export function FAQ({ classes = "", except = [], only = [] }: IFaq) {
       >
         Got questions? We've got answers.
       </h2>
-      {filtered.map((faq) => (
+      {items.map((faq) => (
         <Disclosure as="article" key={faq.id} className="p-4">
           {({ open }) => (
             <>
