@@ -1,4 +1,5 @@
-import { MenuItem } from "@headlessui/react";
+import { MenuItem, MenuSection } from "@headlessui/react";
+import { LogInIcon, UserPlus } from "lucide-react";
 import { NavLink, href } from "react-router";
 import { styles } from "./common";
 
@@ -9,24 +10,24 @@ interface Props {
 
 export function AuthLinks({ to, classes = "" }: Props) {
   return (
-    <>
+    <MenuSection className={`${classes} grid grid-cols-[2fr_3fr] p-1 gap-x-1`}>
       <MenuItem>
         <NavLink
           to={`${href("/login")}?redirect=${to}`}
-          className={`${styles} ${classes} text-blue`}
+          className="btn btn-outline text-sm py-2 normal-case"
         >
-          Login
+          Log in
         </NavLink>
       </MenuItem>
 
       <MenuItem>
         <NavLink
           to={`${href("/signup")}?redirect=${to}`}
-          className={`${styles} ${classes} text-blue`}
+          className="btn btn-blue text-sm py-2 normal-case"
         >
-          Sign up
+          Join us today!
         </NavLink>
       </MenuItem>
-    </>
+    </MenuSection>
   );
 }

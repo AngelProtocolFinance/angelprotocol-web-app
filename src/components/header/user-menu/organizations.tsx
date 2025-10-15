@@ -9,8 +9,10 @@ interface Props {
 }
 export function Organizations({ user, classes = "" }: Props) {
   return (
-    <div className={`${classes} hidden [&:has(a)]:grid gap-2`}>
-      <h5 className="uppercase text-xs text-gray">My Organizations</h5>
+    <div className={`${classes} grid-cols-subgrid col-span-2 gap-y-1`}>
+      <h5 className="uppercase text-xs text-gray col-span-2 mb-1">
+        My Organizations
+      </h5>
 
       <Suspense
         fallback={

@@ -36,16 +36,16 @@ const _Link = (props: LinkProps) => (
   <MenuItem
     as={NavLink}
     to={props.to}
-    className="hover:text-blue-d1 text-sm flex items-center gap-2"
+    className="hover:text-blue-d1 text-sm grid grid-cols-subgrid col-span-2 items-center"
   >
     <Image
       loading="lazy"
       src={props.logo}
-      className="object-cover"
+      className="object-cover aspect-square rounded-full"
       height={20}
       width={20}
     />
-    <span>{props.name ?? `Endowment: ${props.id}`}</span>
+    <span className="">{props.name ?? `Endowment: ${props.id}`}</span>
   </MenuItem>
 );
 
@@ -53,7 +53,7 @@ export function Skeleton() {
   return (
     <a
       href={"/"}
-      className="flex items-center gap-1 pointer-events-none"
+      className="grid grid-cols-subgrid col-span-2 items-center pointer-events-none"
       aria-disabled={true}
     >
       <ContentLoader className="w-[20px] h-[20px] rounded-full" />
