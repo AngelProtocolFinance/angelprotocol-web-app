@@ -207,6 +207,59 @@ export const faqs = [
   },
   {
     id: 10,
+    question:
+      "What's Fiscal Sponsorship? And Why Should My Organization Be Interested?",
+    paragraphs: [
+      <p>
+        Fiscal sponsorship lets a US 501(c)(3) nonprofit (the sponsor) receive
+        and manage donations for a non-US charity (the sponsee).
+      </p>,
+      <p>
+        With Better Giving as your sponsor, your organization can accept
+        tax-deductible US donations without forming a US nonprofit.
+      </p>,
+      <p>
+        <span className="font-semibold">Why it matters</span>
+        <br />
+        <span className="font-medium">Reach US donors:</span> Tap into America's
+        $499B+ giving market.
+        <br />
+        <span className="font-medium">Save time and money:</span> No setup
+        costs—Better Giving's 2.9% fee is paid by the donor.
+        <br />
+        <span className="font-medium">Build credibility:</span> Partner with a
+        trusted US nonprofit.
+        <br />
+        <span className="font-medium">Grow smarter:</span> Get expert help with
+        fundraising, crypto giving, and endowments.
+      </p>,
+    ],
+  },
+  {
+    id: 11,
+    question: "How much does Fiscal Sponsorship cost?",
+    paragraphs: [
+      <p>
+        The Better Giving Fiscal Sponsorship service costs just 2.9% of each
+        donation.
+      </p>,
+      <p>
+        No upfront or membership fees
+        <br />
+        The 2.9% fee is covered by the donor, so there's no cost to your
+        nonprofit
+        <br />
+        This is well below the industry average of 4–10% for similar services
+      </p>,
+      <p>
+        Better Giving is completely free to join. There are no setup fees,
+        subscriptions, or annual costs — you can start accepting donations right
+        away at no charge.
+      </p>,
+    ],
+  },
+  {
+    id: 12,
     question: "How do I ensure my donations are safe?",
     paragraphs: [
       <p>
