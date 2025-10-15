@@ -66,26 +66,7 @@ export function NavDropdown({ user, auth_links }: Props) {
       >
         <div className="">
           <MenuSection className="grid grid-cols-[auto_1fr] gap-y-2 gap-x-3 content-start p-4 sticky top-0 self-start">
-            <MenuItem>
-              <NavLink to={href("/marketplace")} className={styler}>
-                <LayoutGrid
-                  size={18}
-                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
-                />
-                <span>Marketplace</span>
-              </NavLink>
-            </MenuItem>
-            <MenuItem>
-              <NavLink to={href("/fundraisers")} className={styler} end>
-                <UsersIcon
-                  size={18}
-                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
-                />
-                <span>Fundraisers</span>
-              </NavLink>
-            </MenuItem>
-
-            <p className="font-bold text-gray uppercase text-xs mt-4 col-span-2">
+            <p className="font-bold text-gray uppercase text-xs col-span-2">
               Nonprofit
             </p>
             <MenuItem>
@@ -115,7 +96,7 @@ export function NavDropdown({ user, auth_links }: Props) {
                   size={18}
                   className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
                 />
-                <span>Sustainability Fund Management</span>
+                <span>Savings And Investments</span>
               </NavLink>
             </MenuItem>
             <MenuItem>
@@ -129,6 +110,24 @@ export function NavDropdown({ user, auth_links }: Props) {
             </MenuItem>
 
             <div className="w-full h-[1px] bg-gray-l3 mt-6 mb-1 col-span-full" />
+            <MenuItem>
+              <NavLink to={href("/marketplace")} className={styler}>
+                <LayoutGrid
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Marketplace</span>
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={href("/fundraisers")} className={styler} end>
+                <UsersIcon
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Fundraisers</span>
+              </NavLink>
+            </MenuItem>
             <MenuItem>
               <NavLink to={href("/referral-program")} className={styler}>
                 <MegaphoneIcon
@@ -157,7 +156,7 @@ export function NavDropdown({ user, auth_links }: Props) {
                   height={15}
                   className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
                 />
-                <span>Our mission</span>
+                <span>Our Mission</span>
               </NavLink>
             </MenuItem>
           </MenuSection>
