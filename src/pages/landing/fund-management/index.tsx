@@ -31,7 +31,6 @@ export default function Page() {
         classes="xl:container xl:mx-auto px-5 mt-24"
         items={[faqs[5], faqs[6], faqs[7], faqs[8]]}
       />
-      <Footer />
     </>
   );
 }
