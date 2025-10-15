@@ -6,7 +6,7 @@ export function Investment({ classes = "" }) {
   return (
     <section className={`${classes} grid`}>
       <h2 className="col-span-full text-center section-heading mb-4">
-        How the Sustainability Fund Works
+        How The Sustainability Fund Works
       </h2>
       <p className="mb-10 text-center section-body">
         From high-converting donation forms to growth through Savings and a
@@ -59,14 +59,16 @@ export function Investment({ classes = "" }) {
         </div>
       </div>
 
-      <p className="text-gray-d1 xl:text-lg text-center mt-8 mb-4 max-w-2xl justify-self-center">
+      <p className="text-gray-d1 text-center mt-8 mb-4 max-w-2xl justify-self-center">
         <span className="font-bold">
           24% average annual return over the past 5 years*
         </span>{" "}
         <br />
-        (Five-year average; past performance not guaranteed)
+        <span className="text-sm">
+          (Five-year average; past performance not guaranteed)
+        </span>
       </p>
-      <p className="text-gray xl:text-lg text-center max-w-2xl justify-self-center">
+      <p className="text-gray text-center max-w-2xl justify-self-center text-sm">
         Past performance is not indicative of future results. All investments
         carry risk, and the value of our portfolio may fluctuate. Our investment
         committee oversees and reviews our portfolio to ensure alignment with
