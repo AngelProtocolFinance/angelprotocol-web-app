@@ -20,7 +20,7 @@ export default function Page() {
   return (
     <>
       <Hero classes="xl:container xl:mx-auto" />
-      <Partners classes="xl:container xl:mx-auto px-5 mt-32" />
+      <Partners classes="xl:container xl:mx-auto px-5 max-sm:-mt-10 mt-10" />
       <Ctas classes="xl:container xl:mx-auto px-5" />
       <Steps classes="xl:container xl:mx-auto px-5 mt-24" />
       <Testimonials classes="xl:container xl:mx-auto px-5 mt-24" />
@@ -29,7 +29,6 @@ export default function Page() {
         classes="xl:container xl:mx-auto px-5 mt-24"
         items={[faqs[10], faqs[9], faqs[11], faqs[4], faqs[10]]}
       />
-      <Footer />
     </>
   );
 }

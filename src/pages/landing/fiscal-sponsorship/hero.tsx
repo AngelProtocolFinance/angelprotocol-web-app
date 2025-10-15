@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 export const Hero = ({ classes = "" }) => {
   return (
     <section
-      className={`${classes} relative grid py-24`}
+      className={`${classes} relative grid content-start pt-24`}
       aria-label="Hero section"
     >
       <motion.p
@@ -17,7 +17,7 @@ export const Hero = ({ classes = "" }) => {
         Fiscal Sponsorship: Borderless Donations
       </motion.p>
       <motion.h1
-        className="mx-auto capitalize hero-heading text-center mb-8 px-6 "
+        className="mx-auto capitalize hero-heading text-center mb-5 px-6 "
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.2 }}
@@ -47,7 +47,7 @@ export const Hero = ({ classes = "" }) => {
       </motion.p>
 
       <img
-        className="absolute inset-x-0 -bottom-10 w-full  mask-t-from-0.5"
+        className="absolute inset-x-0 max-lg:bottom-20 bottom-0 w-full mask-t-from-0.5"
         width={600}
         height={329.88}
         src={dot_map}
