@@ -26,7 +26,7 @@ export default function Page() {
       <Investment classes="xl:container xl:mx-auto px-5 mt-24" />
       <Steps classes="xl:container xl:mx-auto px-5 mt-24" />
       <Testimonials classes="xl:container xl:mx-auto px-5 mt-24" />
-      <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
+      <BottomCta className="my-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <FAQ
         classes="xl:container xl:mx-auto px-5 mt-24"
         items={[faqs[5], faqs[6], faqs[7], faqs[8]]}
