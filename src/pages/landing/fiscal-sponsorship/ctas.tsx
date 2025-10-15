@@ -130,7 +130,7 @@ export function Ctas({ classes = "" }) {
           </div>
         </motion.div>
         <img
-          src={images[1]}
+          src={images[2]}
           className="justify-self-center max-md:mb-4 scale-150 -z-10"
           width={400}
         />
