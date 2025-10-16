@@ -33,7 +33,6 @@ export default function Header({ classes }: Props) {
       }}
     >
       <DappLogo classes="w-48 h-12" />
-      {user && <UserAvatar avatar={user.avatar} classes="max-sm:hidden" />}
       {to && !user && <AuthBtns to={to} classes="max-sm:hidden" />}
       <NavDropdown
         auth_links={to && !user && <AuthLinks to={to} classes="sm:hidden" />}

@@ -1,7 +1,7 @@
+import section_img from "assets/images/laira-inside-pie-chart.webp";
 import { Image } from "components/image";
 import { Bolt, Combine, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
-import sectionImg from "./images/portfolio.webp";
 
 type TListItem = {
   title1: string;
@@ -44,7 +44,7 @@ export function WhyBG({ className = "" }) {
       </h2>
 
       <div className="grid @3xl:grid-cols-2 items-center mb-14 p-3 rounded-lg">
-        <Image src={sectionImg} width={320} className="justify-self-center" />
+        <Image src={section_img} width={320} className="justify-self-center" />
         <div className="">
           <p className="border-b border-gray-l3 pb-2 text-2xl mb-4 mt-4 @3xl:mt-0 font-medium text-center @3xl:text-left">
             Investment Philosophy

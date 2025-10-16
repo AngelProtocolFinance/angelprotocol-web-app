@@ -48,7 +48,6 @@ export function Header({ classes, page1 }: Props) {
           classes="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         />
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
-          {user && <UserAvatar avatar={user.avatar} classes="max-sm:hidden" />}
           {to && !user && <AuthBtns to={to} classes="max-sm:hidden" />}
           <NavDropdown
             user={user}

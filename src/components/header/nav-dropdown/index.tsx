@@ -3,11 +3,25 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
+  MenuSection,
 } from "@headlessui/react";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import bg_logo from "assets/images/bg-logo.webp";
+import {
+  BadgeCheck,
+  GlobeIcon,
+  LayoutGrid,
+  LibraryIcon,
+  MegaphoneIcon,
+  MenuIcon,
+  PanelsTopLeftIcon,
+  SproutIcon,
+  UsersIcon,
+  XIcon,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { NavLink, href } from "react-router";
 import type { DetailedUser } from "types/auth";
+import { UserAvatar } from "../user-avatar";
 import { UserMenu } from "../user-menu";
 import { styler } from "./common";
 
@@ -21,61 +35,131 @@ export function NavDropdown({ user, auth_links }: Props) {
     <HuiMenu>
       <MenuButton
         data-testid="nav_dropdown"
-        className="text-white data-open:text-white/90 group flex justify-center items-center hover:text-white focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white/75"
+        className="group flex items-center gap-x-2"
         aria-label="Navigation Menu"
       >
-        <MenuIcon
-          size={24}
-          className="text-gray data-open:text-gray/70 sm:hidden transition duration-150 ease-in-out group-hover:text-gray/80"
-          aria-hidden="true"
-        />
-        <ChevronDown
-          size={20}
-          className="text-blue-d7 data-open:text-blue-d7/70 max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80"
-          aria-hidden="true"
-        />
+        {user && (
+          <UserAvatar
+            avatar={user.avatar}
+            classes="peer group-data-open:hidden"
+          />
+        )}
+        <div className="peer-hover:text-blue hover:text-blue group-data-open:rotate-90 transition-transform ease-in-out">
+          <MenuIcon
+            size={24}
+            className="group-data-open:hidden"
+            aria-hidden="true"
+          />
+          <XIcon
+            size={24}
+            className="hidden group-data-open:block"
+            aria-hidden="true"
+          />
+        </div>
       </MenuButton>
 
       <MenuItems
         transition
-        anchor={{ to: "bottom end", gap: 10 }}
+        anchor={{ to: "bottom end", gap: 15 }}
         as="nav"
-        className="grid isolate z-40 rounded-lg bg-gray-l6 drop-shadow-2xl scroller origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
+        className="relative grid grid-cols-[auto_1fr] isolate z-40 rounded-lg bg-gray-l6 drop-shadow-2xl origin-top transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
       >
-        <div className="p-5 grid gap-y-2 w-80">
-          <MenuItem>
-            <NavLink to={href("/")} end className={styler}>
-              Home
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink
-              to={user ? href("/register") : href("/register/welcome")}
-              className={styler}
-            >
-              Register Nonprofit
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={href("/marketplace")} className={styler}>
-              Marketplace
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={href("/fundraisers")} className={styler} end>
-              Fundraisers
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={href("/blog")} className={styler}>
-              Blog
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={href("/referral-program")} className={styler}>
-              Referral Program
-            </NavLink>
-          </MenuItem>
+        <div className="">
+          <MenuSection className="grid grid-cols-[auto_1fr] gap-y-2 gap-x-3 content-start p-4 sticky top-0 self-start">
+            <p className="font-bold text-gray uppercase text-xs col-span-2">
+              Nonprofit
+            </p>
+            <MenuItem>
+              <NavLink
+                to={user ? href("/register") : href("/register/welcome")}
+                className={styler}
+              >
+                <BadgeCheck
+                  size={19}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Become a Member!</span>
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={href("/donation-forms")} className={styler}>
+                <PanelsTopLeftIcon
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>All-In One Donation Form</span>
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={href("/fund-management")} className={styler}>
+                <SproutIcon
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Savings And Investments</span>
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={href("/fiscal-sponsorship")} className={styler}>
+                <GlobeIcon
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Fiscal Sponsorship</span>
+              </NavLink>
+            </MenuItem>
+
+            <div className="w-full h-[1px] bg-gray-l3 mt-6 mb-1 col-span-full" />
+            <MenuItem>
+              <NavLink to={href("/marketplace")} className={styler}>
+                <LayoutGrid
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Marketplace</span>
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={href("/fundraisers")} className={styler} end>
+                <UsersIcon
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Fundraisers</span>
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={href("/referral-program")} className={styler}>
+                <MegaphoneIcon
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Referral Program</span>
+              </NavLink>
+            </MenuItem>
+
+            <div className="w-full mt-4 col-span-full" />
+            <MenuItem>
+              <NavLink to={href("/blog")} className={styler}>
+                <LibraryIcon
+                  size={18}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Blog</span>
+              </NavLink>
+            </MenuItem>
+            <MenuItem>
+              <NavLink to={href("/about-us")} className={styler}>
+                <img
+                  src={bg_logo}
+                  width={15}
+                  height={15}
+                  className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
+                />
+                <span>Our Mission</span>
+              </NavLink>
+            </MenuItem>
+          </MenuSection>
           {auth_links}
         </div>
         {user ? <UserMenu user={user} /> : null}
