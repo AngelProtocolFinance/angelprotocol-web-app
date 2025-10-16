@@ -17,16 +17,15 @@ import {
   npodb,
   podb,
 } from ".server/aws/db";
-import { cron_secret, env } from ".server/env";
+import { env } from ".server/env";
 import { aws_monitor } from ".server/sdks";
+import { is_resp, qstash_body } from ".server/utils";
 
 const fn = `grants-processor:${env}`;
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const auth_header = request.headers.get("authorization");
-  if (auth_header !== `Bearer ${cron_secret}`) {
-    return new Response("unauthorized", { status: 403 });
-  }
+  const b = await qstash_body(request);
+  if (is_resp(b)) return b;
 
   try {
     const grants = await podb.pending_payouts();

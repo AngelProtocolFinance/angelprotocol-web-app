@@ -1,14 +1,13 @@
-import type { LoaderFunction } from "react-router";
+import type { ActionFunction } from "react-router";
 
 import type { ICurrencyFvMap } from "lib/table";
 import { table } from ".server/aws/db";
-import { cron_secret, openexchange_app_id } from ".server/env";
+import { openexchange_app_id } from ".server/env";
+import { is_resp, qstash_body } from ".server/utils";
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const auth_header = request.headers.get("authorization");
-  if (auth_header !== `Bearer ${cron_secret}`) {
-    return new Response("unauthorized", { status: 403 });
-  }
+export const action: ActionFunction = async ({ request }) => {
+  const b = await qstash_body(request);
+  if (is_resp(b)) return b;
 
   const res = await fetch(
     `https://openexchangerates.org/api/latest.json?app_id=${openexchange_app_id}&base=USD`

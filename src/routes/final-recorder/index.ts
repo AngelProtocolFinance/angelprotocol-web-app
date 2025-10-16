@@ -25,22 +25,14 @@ import {
   onholddb,
 } from ".server/aws/db";
 import { env } from ".server/env";
-import { fiat_monitor, qstash_receiver } from ".server/sdks";
+import { fiat_monitor } from ".server/sdks";
+import { is_resp, qstash_body } from ".server/utils";
 
 export const action: ActionFunction = async ({ request }) => {
   try {
-    const sig = request.headers.get("upstash-signature");
-    if (!sig) return resp.err(400, "no signature");
-
-    const body = await request.text();
-
-    const url = new URL(request.url).toString();
-    await qstash_receiver.verify({
-      signature: sig,
-      body,
-      url,
-    });
-    const tx = JSON.parse(body) as FinalRecorderPayload;
+    const b = await qstash_body(request);
+    if (is_resp(b)) return b;
+    const tx = JSON.parse(b) as FinalRecorderPayload;
 
     /** Donation to endowment and BG tip is bundled into single payment intent */
     const parts = partition(

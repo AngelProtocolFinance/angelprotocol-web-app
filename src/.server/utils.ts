@@ -7,6 +7,7 @@ import type {
 } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
+import { qstash_receiver } from "./sdks";
 import { cognito, to_auth } from ".server/auth";
 
 interface IChecked extends UserV2 {
@@ -29,3 +30,25 @@ export const admin_checks = async ({
 };
 
 export const is_resp = (x: any): x is Response => x instanceof Response;
+
+export const qstash_body = async (
+  request: Request
+): Promise<string | Response> => {
+  const r = request.clone();
+
+  const sig = r.headers.get("upstash-signature");
+  if (!sig) return resp.status(205, "no signature");
+
+  r.body;
+  const body = await r.text();
+
+  const url = new URL(r.url).toString();
+  const is_valid = await qstash_receiver.verify({
+    signature: sig,
+    body,
+    url,
+  });
+
+  if (!is_valid) return resp.status(205, "invalid signature");
+  return body;
+};
