@@ -8,7 +8,7 @@ import {
   PayoutsDB,
 } from "@better-giving/payouts";
 import type { Environment } from "@better-giving/types/list";
-import type { LoaderFunction } from "react-router";
+import type { ActionFunction, LoaderFunction } from "react-router";
 import { transfer_grant } from "./transfer-grant";
 import {
   TransactWriteCommand,
@@ -23,7 +23,7 @@ import { is_resp, qstash_body } from ".server/utils";
 
 const fn = `grants-processor:${env}`;
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request }) => {
   const b = await qstash_body(request);
   if (is_resp(b)) return b;
 
