@@ -23,3 +23,11 @@ export const DonationForm = () => { ... };
 // ✗ UserProfile.tsx
 // ✗ donation_form.tsx
 ```
+
+## UI Development
+
+- **Always check existing styles**: When creating or modifying UIs, always look at `src/index.css` and `src/styles/*` to understand existing CSS patterns, variables, and utility classes before writing new styles
+
+## Code Comments
+
+- **Comments are for code readers only**: Don't add comments intended for the prompter (e.g., "Add your API key here", "TODO: implement this feature"). Only add comments that help someone reading and maintaining the code understand what it does and why
