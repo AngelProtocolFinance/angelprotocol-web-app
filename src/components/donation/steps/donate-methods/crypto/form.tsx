@@ -49,7 +49,7 @@ export function Form(props: CryptoFormStep) {
   const combobox = (
     <TokenCombobox
       by="code"
-      classes="[&:has(:placeholder-shown)]:w-34 w-22"
+      classes="[&:has(:placeholder-shown)]:w-34 w-24"
       disabled={token_state === "loading"}
       q={token_q}
       on_q_change={(x) => set_token_q(x)}
