@@ -1,4 +1,5 @@
 import { GlobeIcon, LayoutPanelLeftIcon, SproutIcon } from "lucide-react";
+import { NavLink, href } from "react-router";
 
 export function Section7({ classes = "" }) {
   return (
@@ -15,6 +16,12 @@ export function Section7({ classes = "" }) {
           Raise more with a conversion-optimized form-cash, stock, and crypto in
           one flow.
         </p>
+        <NavLink
+          to={href("/donation-forms")}
+          className="mt-4 text-blue hover:underline"
+        >
+          Learn more
+        </NavLink>
       </article>
       <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
         <SproutIcon className="stroke-green" size={26} aria-hidden="true" />
@@ -25,6 +32,12 @@ export function Section7({ classes = "" }) {
           Turn today's gifts into tomorrow's reserves with Savings and a pooled
           Growth Fund.
         </p>
+        <NavLink
+          to={href("/fund-management")}
+          className="mt-4 text-blue hover:underline"
+        >
+          Learn more
+        </NavLink>
       </article>
       <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
         <GlobeIcon className="stroke-blue" aria-hidden="true" />
@@ -35,6 +48,12 @@ export function Section7({ classes = "" }) {
           Accept U.S. tax-deductible donations globally without legal or tax
           barriers.
         </p>
+        <NavLink
+          to={href("/fiscal-sponsorship")}
+          className="mt-4 text-blue hover:underline"
+        >
+          Learn more
+        </NavLink>
       </article>
     </section>
   );
