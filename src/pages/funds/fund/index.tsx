@@ -1,5 +1,4 @@
 import { MAX_EXPIRATION_ISO } from "@better-giving/fundraiser/schema";
-import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import { DonorMsgs } from "components/donor-msgs";
 import { FundCreator } from "components/fundraiser";
@@ -47,37 +46,30 @@ function Fund({ loaderData }: Route.ComponentProps) {
   );
 
   return (
-    <section className="grid pb-10">
-      <div
-        className="relative w-full h-52 sm:h-72 bg-cover bg-center peer overlay"
-        style={{
-          backgroundImage: `url('${fund.banner || fallback_banner}')`,
-        }}
-      />
-      <div className="group peer-hover:[&>div]:mt-1 xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
-        <div className="self-start -mt-12 md:-mt-24 transition-[margin] ease-in-out z-10 grid gap-4 relative">
+    <section className="grid pb-10 bg-gray-l5">
+      <div className="group relative xl:container xl:mx-auto px-5 grid md:grid-cols-[3fr_2fr] gap-4">
+        <div className="self-start mt-14 ease-in-out z-10 grid gap-4 relative">
           <div className="absolute -top-8 flex items-center justify-between w-full">
             <Link
-              className="text-white flex items-center gap-x-1 active:-translate-x-1"
+              className="flex items-center gap-x-1 active:-translate-x-1"
               to="../fundraisers"
             >
               <ArrowLeft size={16} />
               <span>Fundraisers</span>
             </Link>
-
             <FundStatus
               status={status}
               classes={{
-                container: "px-3 py-1 rounded-full text-xs",
-                active: "bg-white",
-                inactive: "bg-red-l4 text-red",
-                completed: "bg-green-l4 text-green",
-                expired: "bg-gray-l4 text-gray",
+                container: "text-xs",
+                active: "",
+                inactive: "text-red",
+                completed: "text-green",
+                expired: "text-gray",
               }}
             />
           </div>
 
-          <div className="bg-white rounded-lg shadow-2xl shadow-black/10 p-4">
+          <div className="bg-white rounded-lg p-4 drop-shadow-2xl drop-shadow-black/5">
             <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
               <div className="mr-4 md:row-span-2 relative">
                 <Image
@@ -112,23 +104,29 @@ function Fund({ loaderData }: Route.ComponentProps) {
                 }}
               />
             </div>
+          </div>
+
+          <div className="rounded-lg overflow-hidden bg-white drop-shadow-2xl drop-shadow-black/5">
+            {fund.banner && (
+              <img
+                src={fund.banner}
+                className="w-full object-cover object-center max-sm:h-40"
+              />
+            )}
             <RichText
               content={{
                 value: fund.description ?? "",
               }}
               classes={{
                 field: "",
-                container: "mt-4 pt-4 border-t border-gray-l3",
+                container: "p-4",
               }}
               readOnly
             />
           </div>
 
           {fund.videos.map((v, idx) => (
-            <div
-              key={idx}
-              className="rounded-lg shadow-2xl shadow-black/10 mt-4"
-            >
+            <div key={idx} className="rounded-lg">
               <Video url={v} />
             </div>
           ))}
@@ -137,14 +135,14 @@ function Fund({ loaderData }: Route.ComponentProps) {
         </div>
         <div
           id="info-card"
-          className="-mt-24 transition-[margin] ease-in-out md:sticky md:top-24 self-start flex flex-col content-start bg-white shadow-2xl shadow-black/10 z-10 rounded-lg  p-4"
+          className="md:sticky md:top-30 bg-white drop-shadow-2xl drop-shadow-black/[0.03] self-start flex flex-col content-start z-10 rounded-lg p-4"
         >
+          {" "}
           <DonateSection
             {...fund}
             classes={{ container: "max-md:hidden", link: "mb-4 order-first" }}
           />
-
-          <p className="text-gray mt-8 mb-2 font-bold uppercase text-xs">
+          <p className="text-gray md:mt-8 mb-2 font-bold uppercase text-xs">
             Donations go to
           </p>
           <div className="grid gap-y-4 mb-4 grid-cols-[auto_1fr]">
