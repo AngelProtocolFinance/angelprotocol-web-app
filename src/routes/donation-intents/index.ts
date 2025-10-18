@@ -16,12 +16,49 @@ import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { cognito } from ".server/auth";
 import { onholddb } from ".server/aws/db";
+import { type IDonationsCookie, donations_cookie } from ".server/cookie";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
 import { aws_monitor, chariot, np } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
+const json_with_cookie_fn =
+  (existing: null | IDonationsCookie) =>
+  async <T>(data: T, attr: keyof T) => {
+    const now = Date.now();
+    const obj = existing || {};
+    const key_id = data[attr] as string;
+
+    // Remove expired keys
+    for (const k of Object.keys(obj)) {
+      if (obj[k] < now) {
+        delete obj[k];
+      }
+    }
+
+    // Add new key
+    obj[key_id] = now + 15 * 60 * 1000; // 15 minutes
+
+    // Keep only top 5 most recent keys
+    const sorted_entries = Object.entries(obj)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 5);
+
+    const expiry_per_id = Object.fromEntries(sorted_entries);
+
+    return new Response(JSON.stringify(data), {
+      headers: {
+        "content-type": "application/json",
+        "set-cookie": await donations_cookie.serialize(expiry_per_id),
+      },
+    });
+  };
+
 export const action: ActionFunction = async ({ request, params }) => {
+  const cookie: IDonationsCookie | null = await donations_cookie.parse(
+    request.headers.get("cookie")
+  );
+  const json_with_cookie = json_with_cookie_fn(cookie);
   const { user } = await cognito.retrieve(request);
   const intent = parse(schema, await request.json());
   const d_type = parse(donation_type, params.type);
@@ -116,7 +153,8 @@ export const action: ActionFunction = async ({ request, params }) => {
           res?.statusText
         );
       }
-      return resp.json(p);
+
+      return await json_with_cookie(p, "id");
     }
 
     const np_order: Order = {
@@ -132,7 +170,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       np_order,
       `${url.origin}/api/nowpayments-webhook/${env}`
     );
-    return resp.json(payment);
+
+    return await json_with_cookie(payment, "id");
   }
 
   if (d_type === "chariot") {
@@ -154,7 +193,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       email: intent.donor.email,
     };
     await onholddb.put(onhold);
-    return resp.json({ grantId: grant.id });
+    // return resp.json({ grantId: grant.id });
+    return await json_with_cookie({ grantId: grant.id }, "grantId");
   }
 
   if (d_type === "stripe") {
@@ -197,6 +237,6 @@ export const action: ActionFunction = async ({ request, params }) => {
         ? await create_payment_intent(onhold, customer_id)
         : await setup_intent(onhold, customer_id);
 
-    return resp.json({ clientSecret });
+    return await json_with_cookie({ clientSecret }, "clientSecret");
   }
 };
