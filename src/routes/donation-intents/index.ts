@@ -23,11 +23,10 @@ import { aws_monitor, chariot, np } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
 const json_with_cookie_fn =
-  (existing: null | IDonationsCookie) =>
-  async <T>(data: T, attr: keyof T) => {
+  (existing: null | IDonationsCookie, key: string) =>
+  async (data: Record<string, any>) => {
     const now = Date.now();
     const obj = existing || {};
-    const key_id = data[attr] as string;
 
     // Remove expired keys
     for (const k of Object.keys(obj)) {
@@ -36,10 +35,9 @@ const json_with_cookie_fn =
       }
     }
 
-    // Add new key
-    obj[key_id] = now + 15 * 60 * 1000; // 15 minutes
+    obj[key] = now + 15 * 60 * 1000; // 15 minutes
 
-    // Keep only top 5 most recent keys
+    // keep only top 5 most recent keys
     const sorted_entries = Object.entries(obj)
       .sort(([, a], [, b]) => b - a)
       .slice(0, 5);
@@ -58,7 +56,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const cookie: IDonationsCookie | null = await donations_cookie.parse(
     request.headers.get("cookie")
   );
-  const json_with_cookie = json_with_cookie_fn(cookie);
+
   const { user } = await cognito.retrieve(request);
   const intent = parse(schema, await request.json());
   const d_type = parse(donation_type, params.type);
@@ -70,6 +68,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const now = new Date();
   const intent_id = nanoid();
+  const json_with_cookie = json_with_cookie_fn(cookie, intent_id);
   const base = onhold_base(recipient, intent);
 
   if (d_type === "crypto") {
@@ -154,7 +153,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         );
       }
 
-      return await json_with_cookie(p, "id");
+      return await json_with_cookie(p);
     }
 
     const np_order: Order = {
@@ -171,7 +170,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       `${url.origin}/api/nowpayments-webhook/${env}`
     );
 
-    return await json_with_cookie(payment, "id");
+    return await json_with_cookie(payment);
   }
 
   if (d_type === "chariot") {
@@ -194,7 +193,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     };
     await onholddb.put(onhold);
     // return resp.json({ grantId: grant.id });
-    return await json_with_cookie({ grantId: grant.id }, "grantId");
+    return await json_with_cookie({ grantId: grant.id });
   }
 
   if (d_type === "stripe") {
@@ -237,6 +236,6 @@ export const action: ActionFunction = async ({ request, params }) => {
         ? await create_payment_intent(onhold, customer_id)
         : await setup_intent(onhold, customer_id);
 
-    return await json_with_cookie({ clientSecret }, "clientSecret");
+    return await json_with_cookie({ clientSecret });
   }
 };
