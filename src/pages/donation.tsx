@@ -18,7 +18,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   if (!don) return resp.status(404, "donation not found");
 
   const base_url = url.origin;
-  const donate_thanks_path = href("/donation/:id", { id: params.id });
+  const donate_thanks_path = href("/donations/:id", { id: params.id });
   const donate_path =
     don.to_type === "fund"
       ? href("/donate-fund/:fundId", { fundId: don.to_id })

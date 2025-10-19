@@ -42,8 +42,8 @@ export function Checkout(props: StripeCheckoutStep & { order_id: string }) {
 
     const return_url =
       props.init.source === "bg-widget"
-        ? `${window.location.origin}${href("/donate-widget/donation/:id", { id: props.order_id })}`
-        : `${window.location.origin}/${href("/donation/:id", { id: props.order_id })}`;
+        ? `${window.location.origin}${href("/donate-widget/donations/:id", { id: props.order_id })}`
+        : `${window.location.origin}/${href("/donations/:id", { id: props.order_id })}`;
 
     const stripe_confirm_params = {
       elements,
