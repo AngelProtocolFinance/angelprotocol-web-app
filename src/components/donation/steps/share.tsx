@@ -4,11 +4,11 @@ import telegram from "assets/icons/social/telegram.webp";
 import x from "assets/icons/social/x.webp";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { X } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { href } from "react-router";
 import { ExtLink } from "../../ext-link";
 import { Modal } from "../../modal";
-import { type DonationRecipient, is_fund } from "./types";
+import { is_fund } from "./types";
 
 interface SocialMedia {
   id: "x" | "telegram" | "linkedin" | "fb";
@@ -37,13 +37,22 @@ const socials: SocialMedia[] = [
   },
 ];
 
-interface Recipient extends Pick<DonationRecipient, "id" | "name"> {}
+interface IRecipient {
+  id: string;
+  name: string;
+}
 
-interface Props extends Recipient {
+interface IBase {
+  recipient: IRecipient;
+  donate_url: string;
+  donate_thanks_url: string;
+}
+
+interface Props extends IBase {
   classes?: string;
 }
 
-export function Share({ classes = "", ...recipient }: Props) {
+export function Share({ classes = "", ...props }: Props) {
   return (
     <div className={`${classes} grid justify-items-center py-2`}>
       <h2 className="w-full pt-2 text-center font-medium text-[color:var(--accent-primary)] mb-2">
@@ -55,16 +64,14 @@ export function Share({ classes = "", ...recipient }: Props) {
       </p>
       <div className="flex items-center gap-2 mt-1">
         {socials.map((s) => (
-          <ShareBtn key={s.id} {...s} recipient={recipient} />
+          <ShareBtn key={s.id} {...s} {...props} />
         ))}
       </div>
     </div>
   );
 }
 
-interface IShareBtn extends SocialMedia {
-  recipient: Recipient;
-}
+interface IShareBtn extends SocialMedia, IBase {}
 function ShareBtn(props: IShareBtn) {
   const [open, set_open] = useState(false);
 
@@ -84,16 +91,21 @@ function ShareBtn(props: IShareBtn) {
 interface IPrompt extends IShareBtn {
   open: boolean;
   set_open: React.Dispatch<React.SetStateAction<boolean>>;
+  recipient: IRecipient;
+  donate_url: string;
+  donate_thanks_url: string;
 }
 
-function Prompt({ recipient, open, set_open, ...social }: IPrompt) {
+function Prompt({
+  recipient,
+  open,
+  set_open,
+  donate_thanks_url,
+  donate_url,
+  ...social
+}: IPrompt) {
   //share_txt will always hold some values
   const [share_txt, set_share_txt] = useState("");
-  const msgRef = useCallback((node: HTMLParagraphElement | null) => {
-    if (node) {
-      set_share_txt(node.innerText);
-    }
-  }, []);
 
   return (
     <Modal
@@ -111,7 +123,10 @@ function Prompt({ recipient, open, set_open, ...social }: IPrompt) {
         </button>
       </div>
       <p
-        ref={msgRef}
+        ref={(node) => {
+          if (!node) return;
+          set_share_txt(node.innerText);
+        }}
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l3 rounded-sm"
       >
         I just donated to <span className="font-bold">{recipient.name}</span> on{" "}
@@ -122,7 +137,12 @@ function Prompt({ recipient, open, set_open, ...social }: IPrompt) {
         . When you give today, you give forever.
       </p>
       <ExtLink
-        href={gen_share_link(share_txt, social.id, recipient)}
+        href={gen_share_link(
+          share_txt,
+          donate_url,
+          donate_thanks_url,
+          social.id
+        )}
         className="btn btn-outline btn-donate hover:bg-blue-l4 gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center">
@@ -140,18 +160,10 @@ function Prompt({ recipient, open, set_open, ...social }: IPrompt) {
 
 function gen_share_link(
   raw_txt: string,
-  type: SocialMedia["id"],
-  recipient: Recipient
+  donate_url: string,
+  donate_thanks_url: string,
+  type: SocialMedia["id"]
 ) {
-  const path = is_fund(recipient.id)
-    ? href("/donate-fund/:fundId", {
-        fundId: recipient.id,
-      })
-    : href("/donate/:id", {
-        id: recipient.id,
-      });
-  const donate_url = `${BASE_URL}${path}`;
-
   switch (type) {
     case "x":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
@@ -162,9 +174,7 @@ function gen_share_link(
      * NOTE 6/3/2024: must rely on OpenGraph metadata
      */
     case "fb":
-      return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        `${BASE_URL}/${href("/donate-thanks")}?name=${recipient.name}&id=${recipient.id}`
-      )}&quote=${encodeURIComponent(raw_txt)}`;
+      return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(donate_thanks_url)}&quote=${encodeURIComponent(raw_txt)}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons
     case "telegram":

@@ -7,6 +7,7 @@ import type {
 } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
+import { dondb, onholddb } from "./aws/db";
 import { qstash_receiver } from "./sdks";
 import { cognito, to_auth } from ".server/auth";
 
@@ -51,4 +52,44 @@ export const qstash_body = async (
 
   if (!is_valid) return resp.status(205, "invalid signature");
   return body;
+};
+
+export interface IRetrievedDonation {
+  id: string;
+  to_name: string;
+  to_id: string;
+  to_type: "fund" | "npo";
+  status: "onhold" | "settled";
+  /** email */
+  from: string;
+}
+export const donation_get = async (
+  id: string
+): Promise<IRetrievedDonation | null> => {
+  const [onhold, settled] = await Promise.all([
+    onholddb.item(id),
+    dondb.item(id),
+  ]);
+
+  if (onhold) {
+    return {
+      id: onhold.transactionId,
+      to_name: onhold.fund_name || onhold.charityName,
+      to_id: onhold.fund_id || onhold.endowmentId.toString(),
+      to_type: onhold.fund_id ? "fund" : "npo",
+      status: "onhold",
+      from: onhold.kycEmail,
+    };
+  }
+  if (settled) {
+    return {
+      id: settled.transactionId,
+      to_name: settled.fund_name || settled.charityName || "",
+      to_id: settled.fund_id || settled.endowmentId?.toString() || "",
+      to_type: settled.fund_id ? "fund" : "npo",
+      status: "settled",
+      from: settled.email || "",
+    };
+  }
+  return null;
 };

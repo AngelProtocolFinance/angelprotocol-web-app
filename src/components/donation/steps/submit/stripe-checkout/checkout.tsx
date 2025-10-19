@@ -16,7 +16,7 @@ type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export function Checkout(props: StripeCheckoutStep) {
+export function Checkout(props: StripeCheckoutStep & { order_id: string }) {
   const [complete, set_complete] = useState(false);
   const [prompt, set_prompt] = useState<IPrompt>();
   const stripe = useStripe();
@@ -40,12 +40,10 @@ export function Checkout(props: StripeCheckoutStep) {
 
     set_status("submitting");
 
-    const encoded_name = encodeURIComponent(props.init.recipient.name);
-    const search = `?name=${encoded_name}&id=${props.init.recipient.id}`;
     const return_url =
       props.init.source === "bg-widget"
-        ? `${window.location.origin}${href("/donate-widget/donate-thanks")}${search}`
-        : `${window.location.origin}/${href("/donate-thanks")}${search}`;
+        ? `${window.location.origin}${href("/donate-widget/donate-thanks/:id", { id: props.order_id })}`
+        : `${window.location.origin}/${href("/donate-thanks/:id", { id: props.order_id })}`;
 
     const stripe_confirm_params = {
       elements,

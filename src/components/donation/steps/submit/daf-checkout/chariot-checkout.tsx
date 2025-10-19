@@ -335,11 +335,16 @@ export function ChariotCheckout(props: DafCheckoutStep) {
                 body: JSON.stringify(intent),
               });
               if (!res.ok) throw await res.text();
+              const { id } = await res.json();
 
               setPrompt(undefined);
 
-              const search = `?name=${encodeURIComponent(props.init.recipient.name)}&id=${props.init.recipient.id}`;
-              navigate(`${href("/donate-thanks")}${search}`);
+              const to =
+                props.init.source === "bg-widget"
+                  ? href("/donate-widget/donate-thanks/:id", { id })
+                  : href("/donate-thanks/:id", { id });
+
+              navigate(to);
             } catch (err) {
               setPrompt(error_prompt(err, { context: "processing donation" }));
             } finally {

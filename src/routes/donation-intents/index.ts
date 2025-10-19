@@ -114,6 +114,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (is_custom(token.id)) {
       const p: Payment = {
         id: intent_id,
+        order_id: intent_id,
         address: deposit_addrs_envs(token.network),
         amount: to_pay,
         currency: token.code,
@@ -193,7 +194,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     };
     await onholddb.put(onhold);
     // return resp.json({ grantId: grant.id });
-    return await json_with_cookie({ grantId: grant.id });
+    return await json_with_cookie({ id: onhold.transactionId });
   }
 
   if (d_type === "stripe") {

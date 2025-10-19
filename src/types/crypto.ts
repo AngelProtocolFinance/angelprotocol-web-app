@@ -4,6 +4,8 @@ export interface Payment {
    * custom - string uuid
    */
   id: number | string;
+  /** bg counterpart */
+  order_id: string;
   address: string;
   extra_address?: string | null;
   amount: number;

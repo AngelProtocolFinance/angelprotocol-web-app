@@ -38,7 +38,8 @@ export const loader: LoaderFunction = async ({ params }) => {
       currency: p.pay_currency,
       rate: estimated.rate,
       description: p.order_description,
-    };
+      order_id: p.order_id,
+    } satisfies Payment;
   }
 
   const don = await onholddb.item(id);
@@ -51,6 +52,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!deposit_addr) return 500;
   const recipient = don.fund_id ? don.fund_name : don.charityName;
   const data: Payment = {
+    order_id: don.transactionId,
     id: don.transactionId,
     address: deposit_addr,
     amount: don.amount,

@@ -32,6 +32,7 @@ export async function crypto_payment(
 
   return {
     id: p.payment_id,
+    order_id: order.id,
     address: p.pay_address,
     extra_address: p.payin_extra_id ?? undefined,
     amount: p.pay_amount,
