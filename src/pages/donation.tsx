@@ -13,9 +13,9 @@ import { donation_get } from ".server/utils";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const url = new URL(request.url);
-  if (!params.id) return resp.status(400, "missing donation id");
+  if (!params.id) throw resp.status(400, "missing donation id");
   const don = await donation_get(params.id);
-  if (!don) return resp.status(404, "donation not found");
+  if (!don) throw resp.status(404, "donation not found");
 
   const base_url = url.origin;
   const donate_thanks_path = href("/donations/:id", { id: params.id });
@@ -30,6 +30,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 };
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
+  if (!d) return [];
   return metas({
     title: `Donation to ${d.to_name}`,
     image: laira_gift,
@@ -37,6 +38,8 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
     url: d.donate_url,
   });
 };
+
+export { ErrorBoundary } from "components/error";
 
 export default function Page({ loaderData: data }: Route.ComponentProps) {
   const widget_version = useOutletContext<true | undefined>();
