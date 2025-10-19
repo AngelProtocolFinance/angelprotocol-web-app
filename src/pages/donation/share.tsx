@@ -2,13 +2,12 @@ import facebook from "assets/icons/social/facebook.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
 import telegram from "assets/icons/social/telegram.webp";
 import x from "assets/icons/social/x.webp";
-import { APP_NAME, BASE_URL } from "constants/env";
+import { APP_NAME } from "constants/env";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { href } from "react-router";
-import { ExtLink } from "../../ext-link";
-import { Modal } from "../../modal";
-import { is_fund } from "./types";
+import { is_fund } from "../../components/donation/steps/types";
+import { ExtLink } from "../../components/ext-link";
+import { Modal } from "../../components/modal";
 
 interface SocialMedia {
   id: "x" | "telegram" | "linkedin" | "fb";
@@ -18,7 +17,7 @@ interface SocialMedia {
   handle: string;
 }
 
-const socials: SocialMedia[] = [
+export const socials: SocialMedia[] = [
   {
     id: "linkedin",
     src: linkedin,
@@ -48,31 +47,8 @@ interface IBase {
   donate_thanks_url: string;
 }
 
-interface Props extends IBase {
-  classes?: string;
-}
-
-export function Share({ classes = "", ...props }: Props) {
-  return (
-    <div className={`${classes} grid justify-items-center py-2`}>
-      <h2 className="w-full pt-2 text-center font-medium text-[color:var(--accent-primary)] mb-2">
-        Spread the word!
-      </h2>
-      <p className="text-center text-gray text-sm max-w-sm">
-        Encourage your friends to join in and contribute, making a collective
-        impact through donations.
-      </p>
-      <div className="flex items-center gap-2 mt-1">
-        {socials.map((s) => (
-          <ShareBtn key={s.id} {...s} {...props} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 interface IShareBtn extends SocialMedia, IBase {}
-function ShareBtn(props: IShareBtn) {
+export function ShareBtn(props: IShareBtn) {
   const [open, set_open] = useState(false);
 
   return (
