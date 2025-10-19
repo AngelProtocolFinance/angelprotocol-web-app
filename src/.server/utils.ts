@@ -84,8 +84,9 @@ export const donation_get = async (
   if (settled) {
     return {
       id: settled.transactionId,
-      to_name: settled.fund_name || settled.charityName || "",
-      to_id: settled.fund_id || settled.endowmentId?.toString() || "",
+      to_name: settled.fund_name || settled.charityName || "a nonprofit",
+      to_id:
+        settled.fund_id || settled.endowmentId?.toString() || "a fundraiser",
       to_type: settled.fund_id ? "fund" : "npo",
       status: "settled",
       from: settled.email || "",
