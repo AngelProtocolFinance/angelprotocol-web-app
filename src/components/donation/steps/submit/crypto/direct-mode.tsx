@@ -2,7 +2,7 @@ import { chains } from "@better-giving/assets/tokens";
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
 import { round_to_cents } from "helpers/decimal";
-import { href, useNavigate } from "react-router";
+import { href, useNavigate, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
 import type { DonationIntent } from "types/donation-intent";
@@ -23,6 +23,7 @@ const fetcher = async (intent: DonationIntent) =>
 
 export function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   const { details, init, tip, donor, fee_allowance, tribute } = donation;
 
@@ -93,12 +94,17 @@ export function DirectMode({ donation, classes = "" }: Props) {
       </p>
 
       <ContinueBtn
-        disabled={!!error || isLoading}
-        onClick={() =>
-          navigate(
-            `${href("/donate-thanks")}?name=${init.recipient.name}&id=${init.recipient.id}`
-          )
-        }
+        disabled={!!error || isLoading || navigation.state !== "idle"}
+        onClick={() => {
+          const id = data?.order_id;
+          if (!id) throw new Error("No order ID found");
+          const to =
+            init.source === "bg-widget"
+              ? href("/donate-widget/donate-thanks/:id", { id })
+              : href("/donate-thanks/:id", { id });
+
+          navigate(to);
+        }}
         text="I have completed the payment"
         className="justify-self-stretch mt-8"
       />

@@ -1,45 +1,44 @@
 import char from "assets/images/celebrating-character.webp";
 import laira_gift from "assets/laira/laira-gift.webp";
-import { Share, donation_recipient, is_fund } from "components/donation";
+import { Share } from "components/donation";
 import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
 import { BASE_URL } from "constants/env";
 import { confetti } from "helpers/confetti";
-import { search } from "helpers/https";
+import { resp } from "helpers/https";
 import { metas } from "helpers/seo";
-import {
-  Link,
-  type LoaderFunctionArgs,
-  NavLink,
-  href,
-  useOutletContext,
-} from "react-router";
-import { partial, safeParse } from "valibot";
+import { Link, NavLink, href, useOutletContext } from "react-router";
 import type { Route } from "./+types/donate-thanks";
+import { donation_get } from ".server/utils";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const recipient = safeParse(partial(donation_recipient), search(request));
-  if (recipient.issues) return null;
-  return recipient.output;
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
+  const url = new URL(request.url);
+  if (!params.id) return resp.status(400, "missing donatio id");
+  const don = await donation_get(params.id);
+  if (!don) return resp.status(404, "donation not found");
+
+  const base_url = url.origin;
+  const donate_thanks_path = href("/donate-thanks/:id", { id: params.id });
+  const donate_path =
+    don.to_type === "fund"
+      ? href("/donate-fund/:fundId", { fundId: don.to_id })
+      : href("/donate/:id", { id: don.to_id });
+  const donate_url = `${base_url}${donate_path}`;
+  const donate_thanks_url = `${base_url}${donate_thanks_path}`;
+
+  return { ...don, donate_url, donate_thanks_url };
 };
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
-  const donate_url =
-    d && d.id
-      ? is_fund(d.id)
-        ? `${BASE_URL}${href("/fundraisers/:fundId/donate", { fundId: d.id })}`
-        : `${BASE_URL}${href("/donate/:id", { id: d.id })}`
-      : undefined;
-
   return metas({
-    title: `Donation to ${d?.name ?? "a Nonprofit"}`,
+    title: `Donation to ${d.to_name}`,
     image: laira_gift,
-    description: `I just donated to ${d?.name ?? "a nonprofit"} on Better Giving! ${d && d.id && is_fund(d.id) ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
-    url: donate_url,
+    description: `I just donated to ${d.to_name} on Better Giving! ${d && d.to_type === "fund" ? "My gift to this fundraiser helps raise funds for causes they love. Why don't you donate as well?" : "They can choose to use my gift today, or save and invest it for sustainable growth"}. When you give today, you give forever.`,
+    url: d.donate_url,
   });
 };
 
-export default function Page({ loaderData: recipient }: Route.ComponentProps) {
+export default function Page({ loaderData: data }: Route.ComponentProps) {
   const widget_version = useOutletContext<true | undefined>();
 
   return (
@@ -61,18 +60,20 @@ export default function Page({ loaderData: recipient }: Route.ComponentProps) {
       </h3>
       <p className="text-center text-gray">
         We'll process your donation to{" "}
-        <span className="font-bold">
-          {recipient?.name ?? "the nonprofit you specified"}
-        </span>{" "}
-        as soon as the payment has cleared.
+        <span className="font-bold">{data.to_name}</span> as soon as the payment
+        has cleared.
         {widget_version
           ? ""
           : " You can safely navigate away using the button below."}
       </p>
 
       <Share
-        name={recipient?.name ?? "Better Giving"}
-        id={recipient?.id ?? "1"}
+        recipient={{
+          id: data.to_id,
+          name: data.to_name,
+        }}
+        donate_thanks_url={data.donate_thanks_url}
+        donate_url={data.donate_url}
         classes="mt-6 border border-gray-l3 rounded-xl"
       />
 

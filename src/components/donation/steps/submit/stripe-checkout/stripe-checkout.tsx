@@ -90,7 +90,7 @@ export function StripeCheckout(props: StripeCheckoutStep) {
             }}
             stripe={stripe_promise}
           >
-            <Checkout {...props} />
+            <Checkout {...props} order_id={data} />
           </Elements>
         )}
       </ErrorBoundaryClass>
