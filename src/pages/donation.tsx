@@ -8,17 +8,17 @@ import { confetti } from "helpers/confetti";
 import { resp } from "helpers/https";
 import { metas } from "helpers/seo";
 import { Link, NavLink, href, useOutletContext } from "react-router";
-import type { Route } from "./+types/donate-thanks";
+import type { Route } from "./+types/donation";
 import { donation_get } from ".server/utils";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const url = new URL(request.url);
-  if (!params.id) return resp.status(400, "missing donatio id");
+  if (!params.id) return resp.status(400, "missing donation id");
   const don = await donation_get(params.id);
   if (!don) return resp.status(404, "donation not found");
 
   const base_url = url.origin;
-  const donate_thanks_path = href("/donate-thanks/:id", { id: params.id });
+  const donate_thanks_path = href("/donation/:id", { id: params.id });
   const donate_path =
     don.to_type === "fund"
       ? href("/donate-fund/:fundId", { fundId: don.to_id })

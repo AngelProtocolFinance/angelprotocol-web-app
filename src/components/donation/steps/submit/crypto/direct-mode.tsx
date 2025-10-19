@@ -100,8 +100,8 @@ export function DirectMode({ donation, classes = "" }: Props) {
           if (!id) throw new Error("No order ID found");
           const to =
             init.source === "bg-widget"
-              ? href("/donate-widget/donate-thanks/:id", { id })
-              : href("/donate-thanks/:id", { id });
+              ? href("/donate-widget/donation/:id", { id })
+              : href("/donation/:id", { id });
 
           navigate(to);
         }}
