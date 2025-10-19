@@ -268,12 +268,10 @@ export default [
     r("irs-npos", pages.$("irs-npos/index.tsx")._),
   ]),
 
-  r("donate-widget", donate_widget.$("widget-context.tsx")._, [
-    r(":id", donate_widget.$("index.tsx")._),
-    r("donations/:id", pages.$("donation.tsx")._, {
-      id: "donation-widget",
-    }),
-  ]),
+  r("donate-widget/:id", donate_widget.$("index.tsx")._),
+  r("donate-widget/donations/:id", pages.$("donation.tsx")._, {
+    id: "donation-widget",
+  }),
 
   r(
     "donation-calculator-export",
