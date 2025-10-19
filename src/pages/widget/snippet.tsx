@@ -55,6 +55,6 @@ const widget_url_fn = (config: WidgetConfig, base_url: string, npo_id = 0) => {
       .join(","),
   };
   return `${
-    base_url + href("/donate-widget")
-  }/${npo_id}?${new URLSearchParams(clean_object(params)).toString()}`;
+    base_url + href("/donate-widget/:id", { id: npo_id.toString() })
+  }?${new URLSearchParams(clean_object(params)).toString()}`;
 };

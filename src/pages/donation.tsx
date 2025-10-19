@@ -1,13 +1,11 @@
 import char from "assets/images/celebrating-character.webp";
 import laira_gift from "assets/laira/laira-gift.webp";
-import { Share } from "components/donation";
-import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
-import { BASE_URL } from "constants/env";
 import { confetti } from "helpers/confetti";
 import { resp } from "helpers/https";
 import { metas } from "helpers/seo";
-import { Link, NavLink, href, useOutletContext } from "react-router";
+import { href } from "react-router";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types/donation";
 import { donation_get } from ".server/utils";
 
@@ -29,6 +27,8 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   return { ...don, donate_url, donate_thanks_url };
 };
 
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   if (!d) return [];
   return metas({
@@ -40,12 +40,15 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 };
 
 export { ErrorBoundary } from "components/error";
+export default CacheRoute(Page);
 
-export default function Page({ loaderData: data }: Route.ComponentProps) {
-  const widget_version = useOutletContext<true | undefined>();
+function Page({ loaderData: data, matches }: Route.ComponentProps) {
+  const widget_version = matches.some((m) =>
+    m?.pathname.includes("donate-widget")
+  );
 
   return (
-    <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
+    <div className="grid content-start justify-items-center max-w-[35rem] mx-auto px-4 py-8 scroll-mt-6">
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {
@@ -53,24 +56,18 @@ export default function Page({ loaderData: data }: Route.ComponentProps) {
           await confetti(node);
         }}
       >
-        <Image src={char} />
+        <Image src={char} width={80} />
       </div>
-      <p className="uppercase mb-2 font-bold text-xs text-blue-d1 text-center">
-        Donation Successful
-      </p>
+
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
-      <p className="text-center text-gray">
-        We'll process your donation to{" "}
-        <span className="font-bold">{data.to_name}</span> as soon as the payment
-        has cleared.
-        {widget_version
-          ? ""
-          : " You can safely navigate away using the button below."}
+
+      <p className="mb-2 font-bold text-sm mt-16 text-blue-d1 text-center">
+        Make your donation even more impactful
       </p>
 
-      <Share
+      {/* <Share
         recipient={{
           id: data.to_id,
           name: data.to_name,
@@ -105,7 +102,7 @@ export default function Page({ loaderData: data }: Route.ComponentProps) {
         >
           Back to the platform
         </Link>
-      )}
+      )} */}
     </div>
   );
 }
