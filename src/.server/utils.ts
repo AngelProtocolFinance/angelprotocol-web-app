@@ -1,3 +1,4 @@
+import type { ITributeNotif } from "@better-giving/donation";
 import { $int_gte1 } from "@better-giving/endowment/schema";
 import { resp } from "helpers/https";
 import type {
@@ -6,6 +7,7 @@ import type {
   Params,
 } from "react-router";
 import type { UserV2 } from "types/auth";
+import type { Tribute } from "types/donation-intent";
 import { parse } from "valibot";
 import { dondb, onholddb } from "./aws/db";
 import { qstash_receiver } from "./sdks";
@@ -62,7 +64,31 @@ export interface IRetrievedDonation {
   status: "onhold" | "settled";
   /** email */
   from: string;
+  tribute?: Tribute;
+  private_msg_to_npo?: string;
+  public_msg?: string;
 }
+
+const to_tribute = (
+  honoree?: string,
+  notif?: ITributeNotif
+): Tribute | undefined => {
+  if (!honoree) return undefined;
+
+  const tribute: Tribute = {
+    full_name: honoree,
+  };
+
+  if (notif) {
+    tribute.notif = {
+      to_fullname: notif.toFullName,
+      to_email: notif.toEmail,
+      from_msg: notif.fromMsg,
+    };
+  }
+  return tribute;
+};
+
 export const donation_get = async (
   id: string
 ): Promise<IRetrievedDonation | null> => {
@@ -71,26 +97,22 @@ export const donation_get = async (
     dondb.item(id),
   ]);
 
-  if (onhold) {
-    return {
-      id: onhold.transactionId,
-      to_name: onhold.fund_name || onhold.charityName,
-      to_id: onhold.fund_id || onhold.endowmentId.toString(),
-      to_type: onhold.fund_id ? "fund" : "npo",
-      status: "onhold",
-      from: onhold.kycEmail,
-    };
-  }
-  if (settled) {
-    return {
-      id: settled.transactionId,
-      to_name: settled.fund_name || settled.charityName || "a nonprofit",
-      to_id:
-        settled.fund_id || settled.endowmentId?.toString() || "a fundraiser",
-      to_type: settled.fund_id ? "fund" : "npo",
-      status: "settled",
-      from: settled.email || "",
-    };
-  }
-  return null;
+  const y = onhold || settled;
+
+  if (!y) return null;
+
+  const x: IRetrievedDonation = {
+    id: y.transactionId,
+    to_name: y.fund_name || y.charityName || "a nonprofit",
+    to_id: y.fund_id || y.endowmentId?.toString() || "a fundraiser",
+    to_type: y.fund_id ? "fund" : "npo",
+    status: onhold ? "onhold" : "settled",
+    from: y.kycEmail || y.email || "",
+  };
+  const t = to_tribute(y.inHonorOf, y.tributeNotif);
+  if (t) x.tribute = t;
+  if (y.msg_to_npo) x.private_msg_to_npo = y.msg_to_npo;
+  if (y.donor_message) x.public_msg = y.donor_message;
+
+  return x;
 };

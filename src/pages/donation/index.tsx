@@ -12,10 +12,12 @@ import { confetti } from "helpers/confetti";
 import { resp } from "helpers/https";
 import { metas } from "helpers/seo";
 import { CheckIcon, ChevronDownIcon, StarIcon } from "lucide-react";
+import { useRef } from "react";
 import { Link, NavLink, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
 import { ShareBtn, socials } from "./share";
+import { TributeForm } from "./tribute-form";
 import { donation_get } from ".server/utils";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
@@ -55,13 +57,15 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
   const widget_version = matches.some((m) =>
     m?.pathname.includes("donate-widget")
   );
+  const confettiFired = useRef(false);
 
   return (
     <div className="grid content-start justify-items-center max-w-[35rem] mx-auto px-4 py-8 scroll-mt-6">
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {
-          if (!node) return;
+          if (!node || confettiFired.current) return;
+          confettiFired.current = true;
           await confetti(node);
         }}
       >
@@ -86,7 +90,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
           <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
         </DisclosureButton>
         <DisclosurePanel className="p-4">
-          If you're unhappy with your purchase, we'll refund you in full.
+          <TributeForm init={data.tribute} />
         </DisclosurePanel>
       </Disclosure>
       <Disclosure
