@@ -341,8 +341,8 @@ export function ChariotCheckout(props: DafCheckoutStep) {
 
               const to =
                 props.init.source === "bg-widget"
-                  ? href("/donate-widget/donation/:id", { id })
-                  : href("/donation/:id", { id });
+                  ? href("/donate-widget/donations/:id", { id })
+                  : href("/donations/:id", { id });
 
               navigate(to);
             } catch (err) {
