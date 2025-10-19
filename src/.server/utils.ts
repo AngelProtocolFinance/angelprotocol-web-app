@@ -70,6 +70,7 @@ export const donation_get = async (
     onholddb.item(id),
     dondb.item(id),
   ]);
+  console.log({ id, onhold, settled });
 
   if (onhold) {
     return {
