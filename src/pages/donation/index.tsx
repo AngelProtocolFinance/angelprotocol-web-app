@@ -1,12 +1,21 @@
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import char from "assets/images/celebrating-character.webp";
 import laira_gift from "assets/laira/laira-gift.webp";
+import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
+import { BASE_URL } from "constants/env";
 import { confetti } from "helpers/confetti";
 import { resp } from "helpers/https";
 import { metas } from "helpers/seo";
-import { href } from "react-router";
+import { CheckIcon, ChevronDownIcon, StarIcon } from "lucide-react";
+import { Link, NavLink, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
-import type { Route } from "./+types/donation";
+import type { Route } from "./+types";
+import { ShareBtn, socials } from "./share";
 import { donation_get } from ".server/utils";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
@@ -63,19 +72,53 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
 
-      <p className="mb-2 font-bold text-sm mt-16 text-blue-d1 text-center">
+      <p className="mb-4 font-bold text-sm mt-8 text-blue-d1 text-center">
         Make your donation even more impactful
       </p>
 
-      {/* <Share
-        recipient={{
-          id: data.to_id,
-          name: data.to_name,
-        }}
-        donate_thanks_url={data.donate_thanks_url}
-        donate_url={data.donate_url}
-        classes="mt-6 border border-gray-l3 rounded-xl"
-      />
+      <Disclosure
+        as="div"
+        className="w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
+      >
+        <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
+          <CheckIcon className="stroke-green" size={14} />
+          <span className="text-sm font-semibold">Dedicate your donation</span>
+          <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
+        </DisclosureButton>
+        <DisclosurePanel className="p-4">
+          If you're unhappy with your purchase, we'll refund you in full.
+        </DisclosurePanel>
+      </Disclosure>
+      <Disclosure
+        as="div"
+        className="mt-2 w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
+      >
+        <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
+          <StarIcon className="stroke-amber fill-amber" size={14} />
+          <span className="text-sm font-semibold">Spread the word!</span>
+          <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
+        </DisclosureButton>
+        <DisclosurePanel className="p-4">
+          <p className="text-gray">
+            Encourage your friends to join in and contribute, making a
+            collective impact through donations.
+          </p>
+          <div className="flex items-center gap-2 mt-1">
+            {socials.map((s) => (
+              <ShareBtn
+                key={s.id}
+                {...s}
+                recipient={{
+                  id: data.to_id,
+                  name: data.to_name,
+                }}
+                donate_thanks_url={data.donate_thanks_url}
+                donate_url={data.donate_url}
+              />
+            ))}
+          </div>
+        </DisclosurePanel>
+      </Disclosure>
 
       <p className="text-center text-gray mt-8 mb-2 text-[15px]">
         {widget_version ? (
@@ -102,7 +145,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
         >
           Back to the platform
         </Link>
-      )} */}
+      )}
     </div>
   );
 }
