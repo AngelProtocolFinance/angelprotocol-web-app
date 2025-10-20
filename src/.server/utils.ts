@@ -69,7 +69,7 @@ export interface IRetrievedDonation {
   public_msg?: string;
 }
 
-const to_tribute = (
+const tribute_to_fv = (
   honoree?: string,
   notif?: ITributeNotif
 ): Tribute | undefined => {
@@ -87,6 +87,21 @@ const to_tribute = (
     };
   }
   return tribute;
+};
+
+export const tribute_to_db = (
+  t: Tribute
+): { inHonorOf?: string; tributeNotif?: ITributeNotif } => {
+  return {
+    inHonorOf: t.full_name,
+    tributeNotif: t.notif
+      ? {
+          toEmail: t.notif.to_email,
+          toFullName: t.notif.to_fullname,
+          fromMsg: t.notif.from_msg,
+        }
+      : undefined,
+  };
 };
 
 export const donation_get = async (
@@ -109,7 +124,7 @@ export const donation_get = async (
     status: onhold ? "onhold" : "settled",
     from: y.kycEmail || y.email || "",
   };
-  const t = to_tribute(y.inHonorOf, y.tributeNotif);
+  const t = tribute_to_fv(y.inHonorOf, y.tributeNotif);
   if (t) x.tribute = t;
   if (y.msg_to_npo) x.private_msg_to_npo = y.msg_to_npo;
   if (y.donor_message) x.public_msg = y.donor_message;
