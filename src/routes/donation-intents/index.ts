@@ -232,6 +232,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       email: intent.donor.email,
     };
 
+    await onholddb.put(onhold);
+
     const clientSecret =
       intent.frequency === "one-time"
         ? await create_payment_intent(onhold, customer_id)

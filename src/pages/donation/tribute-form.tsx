@@ -1,13 +1,10 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
 import { CheckField, Field } from "components/form";
+import { use_action_result } from "hooks/use-action-result";
 import { useState } from "react";
 import { Form, useFetcher } from "react-router";
 import { useRemixForm } from "remix-hook-form";
-import {
-  type Tribute,
-  from_msg_max_length,
-  tribute,
-} from "types/donation-intent";
+import { type Tribute, from_msg_max_length } from "types/donation-intent";
+import type { TributeFv } from "./schema";
 
 interface Props {
   init?: Tribute;
@@ -16,21 +13,22 @@ interface Props {
 export function TributeForm({ classes = "", init }: Props) {
   const fetcher = useFetcher();
   const {
+    handleSubmit,
     register,
     watch,
     formState: { errors },
-  } = useRemixForm<Tribute>({
-    resolver: valibotResolver(tribute),
+  } = useRemixForm<TributeFv>({
     fetcher,
-    defaultValues: init,
+    defaultValues: { ...init, type: "tribute" },
   });
 
+  use_action_result(fetcher.data);
   const [with_notif, set_with_notif] = useState(false);
 
   const custom_msg = watch("notif.from_msg");
 
   return (
-    <Form method="POST" className={`${classes}`}>
+    <Form onSubmit={handleSubmit} method="POST" className={`${classes}`}>
       <Field
         {...register("full_name")}
         label="Honoree's name"
@@ -55,7 +53,7 @@ export function TributeForm({ classes = "", init }: Props) {
       {with_notif && (
         <div className="grid gap-y-3 mt-4">
           <Field
-            {...register("notif.to_fullname")}
+            {...register("notif.to_fullname", { shouldUnregister: true })}
             label="Recipient name"
             placeholder="e.g. Jane Doe"
             classes={{
@@ -66,7 +64,7 @@ export function TributeForm({ classes = "", init }: Props) {
             error={errors.notif?.to_fullname?.message}
           />
           <Field
-            {...register("notif.to_email")}
+            {...register("notif.to_email", { shouldUnregister: true })}
             label="Email address"
             placeholder="e.g. janedoe@better.giving"
             classes={{
@@ -77,7 +75,7 @@ export function TributeForm({ classes = "", init }: Props) {
             error={errors.notif?.to_email?.message}
           />
           <Field
-            {...register("notif.from_msg")}
+            {...register("notif.from_msg", { shouldUnregister: true })}
             rows={2}
             type="textarea"
             label="Custom message"
@@ -98,6 +96,7 @@ export function TributeForm({ classes = "", init }: Props) {
         </div>
       )}
       <button
+        disabled={fetcher.state !== "idle"}
         type="submit"
         className="btn btn-blue text-sm px-4 py-2 rounded mt-4 justify-self-end"
       >

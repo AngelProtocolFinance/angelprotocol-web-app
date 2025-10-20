@@ -9,35 +9,18 @@ import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
 import { BASE_URL } from "constants/env";
 import { confetti } from "helpers/confetti";
-import { resp } from "helpers/https";
+
 import { metas } from "helpers/seo";
-import { CheckIcon, ChevronDownIcon, StarIcon } from "lucide-react";
+import { CheckCircle2Icon, ChevronDownIcon, StarIcon } from "lucide-react";
 import { useRef } from "react";
 import { Link, NavLink, href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
+import { PublicMsgForm } from "./public-msg-form";
 import { ShareBtn, socials } from "./share";
 import { TributeForm } from "./tribute-form";
-import { donation_get } from ".server/utils";
 
-export const loader = async ({ request, params }: Route.LoaderArgs) => {
-  const url = new URL(request.url);
-  if (!params.id) throw resp.status(400, "missing donation id");
-  const don = await donation_get(params.id);
-  if (!don) throw resp.status(404, "donation not found");
-
-  const base_url = url.origin;
-  const donate_thanks_path = href("/donations/:id", { id: params.id });
-  const donate_path =
-    don.to_type === "fund"
-      ? href("/donate-fund/:fundId", { fundId: don.to_id })
-      : href("/donate/:id", { id: don.to_id });
-  const donate_url = `${base_url}${donate_path}`;
-  const donate_thanks_url = `${base_url}${donate_thanks_path}`;
-
-  return { ...don, donate_url, donate_thanks_url };
-};
-
+export { loader, action } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
 export const meta: Route.MetaFunction = ({ loaderData: d }) => {
@@ -57,15 +40,15 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
   const widget_version = matches.some((m) =>
     m?.pathname.includes("donate-widget")
   );
-  const confettiFired = useRef(false);
+  const confetti_fired = useRef(false);
 
   return (
     <div className="grid content-start justify-items-center max-w-[35rem] mx-auto px-4 py-8 scroll-mt-6">
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {
-          if (!node || confettiFired.current) return;
-          confettiFired.current = true;
+          if (!node || confetti_fired.current) return;
+          confetti_fired.current = true;
           await confetti(node);
         }}
       >
@@ -79,13 +62,72 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
       <p className="mb-4 font-bold text-sm mt-8 text-blue-d1 text-center">
         Make your donation even more impactful
       </p>
-
       <Disclosure
         as="div"
         className="w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
       >
         <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
-          <CheckIcon className="stroke-green" size={14} />
+          <CheckCircle2Icon
+            className={
+              data.public_msg ? "stroke-green" : "stroke-gray-l1 fill-gray-l4"
+            }
+            size={16}
+          />
+          <span className="text-sm font-semibold">
+            Share a message in{" "}
+            <NavLink to={data.profile_url} className="text-blue-d1">
+              {data.to_name}
+            </NavLink>
+            {data.to_type === "fund"
+              ? " fundraiser page"
+              : `${data.to_name.toLowerCase().endsWith("s") ? "'" : "'s"} profile.`}
+          </span>
+          <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
+        </DisclosureButton>
+        <DisclosurePanel className="p-4">
+          <PublicMsgForm init={data.public_msg} />
+        </DisclosurePanel>
+      </Disclosure>
+
+      {data.to_type !== "fund" ? (
+        <Disclosure
+          as="div"
+          className="w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden mt-2"
+        >
+          <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
+            <CheckCircle2Icon
+              className={
+                data.private_msg_to_npo
+                  ? "stroke-green"
+                  : "stroke-gray-l1 fill-gray-l4"
+              }
+              size={16}
+            />
+            <span className="text-sm font-semibold">
+              Send a private message to{" "}
+              <NavLink to={data.profile_url} className="text-blue-d1">
+                {data.to_name}
+              </NavLink>
+            </span>
+            <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
+          </DisclosureButton>
+          <DisclosurePanel className="p-4">
+            <PublicMsgForm init={data.private_msg_to_npo} />
+          </DisclosurePanel>
+        </Disclosure>
+      ) : null}
+
+      <Disclosure
+        as="div"
+        className="w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden mt-2"
+      >
+        <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
+          <CheckCircle2Icon
+            className={
+              data.tribute ? "stroke-green" : "stroke-gray-l1 fill-gray-l4"
+            }
+            size={16}
+          />
           <span className="text-sm font-semibold">Dedicate your donation</span>
           <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
         </DisclosureButton>
@@ -95,6 +137,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
       </Disclosure>
       <Disclosure
         as="div"
+        defaultOpen
         className="mt-2 w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
       >
         <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
