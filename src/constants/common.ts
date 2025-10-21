@@ -30,3 +30,8 @@ export const default_allocation: IAllocation = {
 
 export const logo_url = (path: string, custom = false) =>
   custom ? path : `https://nowpayments.io${path}`;
+
+export const emails = {
+  tim: "tim@better.giving",
+  hello: "hello@better.giving",
+};

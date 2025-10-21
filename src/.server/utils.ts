@@ -58,6 +58,8 @@ export const qstash_body = async (
 
 export interface IRetrievedDonation {
   id: string;
+  /** iso */
+  date: string;
   to_name: string;
   to_id: string;
   to_type: "fund" | "npo";
@@ -68,7 +70,9 @@ export interface IRetrievedDonation {
   tribute?: Tribute;
   private_msg_to_npo?: string;
   public_msg?: string;
+  amount: number;
   amount_usd: number;
+  denom: string;
 }
 
 const tribute_to_fv = (
@@ -120,12 +124,15 @@ export const donation_get = async (
 
   const x: IRetrievedDonation = {
     id: y.transactionId,
+    date: y.transactionDate || new Date().toISOString(),
     to_name: y.fund_name || y.charityName || "a nonprofit",
     to_id: y.fund_id || y.endowmentId?.toString() || "a fundraiser",
     to_type: y.fund_id ? "fund" : "npo",
     status: onhold ? "onhold" : "settled",
     from: y.kycEmail || y.email || "",
     from_name: y.fullName || "Anonymous",
+    amount: y.amount || 0,
+    denom: y.denomination || "USD",
     amount_usd: y.usdValue || 0,
   };
   const t = tribute_to_fv(y.inHonorOf, y.tributeNotif);

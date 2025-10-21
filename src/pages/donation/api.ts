@@ -1,14 +1,23 @@
 import { Txs } from "@better-giving/db";
 import type { IPublicDonor } from "@better-giving/donation";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { to_pretty_utc } from "helpers/date";
 import { resp } from "helpers/https";
+import { type DonorPrivateMsgData, send_email } from "lib/email";
+import { to_ses_amnts } from "lib/email/helpers";
 import { href } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
 import type { ActionData } from "types/action";
 import type { Route } from "./+types";
 import { type Schema, schema } from "./schema";
 import { cognito, to_auth } from ".server/auth";
-import { TransactWriteCommand, dondb, donordb, onholddb } from ".server/aws/db";
+import {
+  TransactWriteCommand,
+  dondb,
+  donordb,
+  onholddb,
+  userdb,
+} from ".server/aws/db";
 import { type IDonationsCookie, donations_cookie } from ".server/cookie";
 import { env } from ".server/env";
 import { donation_get, tribute_to_db } from ".server/utils";
@@ -69,7 +78,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
     //TODO: send email if there's notif
   }
 
-  if (p.type === "public_msg") {
+  if (p.type === "public_msg" && !don.public_msg) {
     const txs = new Txs();
     const tx1 = db.update_txi(don.id, {
       donor_message: p.msg,
@@ -95,11 +104,38 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
     console.info(res);
     return { __ok: "Your message is posted!" } satisfies ActionData;
   }
-  if (p.type === "private_msg") {
+  if (
+    p.type === "private_msg" &&
+    don.to_type !== "fund" &&
+    // hasn't sent one yet
+    !don.private_msg_to_npo
+  ) {
     await db.update(don.id, {
       msg_to_npo: p.msg,
     });
-    // TODO: send email to NPO
+    const adms = await userdb.npo_admins(+don.to_id);
+    const data: DonorPrivateMsgData = {
+      ...to_ses_amnts(don.amount, don.denom, don.amount_usd),
+      transactionDate: to_pretty_utc(don.date),
+      transactionID: don.id,
+      nonprofitName: don.to_name,
+      nonprofitID: don.to_id,
+      sender: {
+        firstName: don.from_name.split(" ")[0] || "Anonymous",
+        fullName: don.from_name,
+      },
+      message: p.msg,
+    };
+
+    const res = await send_email(
+      {
+        name: "npo-private-message",
+        ...data,
+      },
+      adms.map((a) => a.email)
+    );
+    console.info(res);
+
     return { __ok: "Your private message is sent!" } satisfies ActionData;
   }
 };

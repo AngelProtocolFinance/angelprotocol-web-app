@@ -23,3 +23,6 @@ export const iso_date = (formatter: typeof endOfDay, required?: "required") =>
       v.transform((x) => formatter(x).toISOString())
     );
   });
+
+export const to_pretty_utc = (date: string | Date) =>
+  `${format(new Date(date), "yyyy-MM-dd HH:mm:ss")} (UTC)`;
