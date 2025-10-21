@@ -23,7 +23,7 @@ export function TributeForm({ classes = "", init }: Props) {
   });
 
   use_action_result(fetcher.data);
-  const [with_notif, set_with_notif] = useState(false);
+  const [with_notif, set_with_notif] = useState(!!init?.notif);
 
   const custom_msg = watch("notif.from_msg");
 
@@ -31,6 +31,7 @@ export function TributeForm({ classes = "", init }: Props) {
     <Form onSubmit={handleSubmit} method="POST" className={`${classes}`}>
       <Field
         {...register("full_name")}
+        disabled={!!init?.full_name}
         label="Honoree's name"
         placeholder="e.g. Jane Doe"
         classes={{
@@ -41,6 +42,7 @@ export function TributeForm({ classes = "", init }: Props) {
         error={errors.full_name?.message}
       />
       <CheckField
+        disabled={!!init?.notif}
         checked={with_notif}
         onChange={(x) => {
           set_with_notif(x.target.checked);
@@ -54,6 +56,7 @@ export function TributeForm({ classes = "", init }: Props) {
         <div className="grid gap-y-3 mt-4">
           <Field
             {...register("notif.to_fullname", { shouldUnregister: true })}
+            disabled={!!init?.notif}
             label="Recipient name"
             placeholder="e.g. Jane Doe"
             classes={{
@@ -65,6 +68,7 @@ export function TributeForm({ classes = "", init }: Props) {
           />
           <Field
             {...register("notif.to_email", { shouldUnregister: true })}
+            disabled={!!init?.notif}
             label="Email address"
             placeholder="e.g. janedoe@better.giving"
             classes={{
@@ -76,6 +80,7 @@ export function TributeForm({ classes = "", init }: Props) {
           />
           <Field
             {...register("notif.from_msg", { shouldUnregister: true })}
+            disabled={!!init?.notif}
             rows={2}
             type="textarea"
             label="Custom message"
@@ -96,7 +101,9 @@ export function TributeForm({ classes = "", init }: Props) {
         </div>
       )}
       <button
-        disabled={fetcher.state !== "idle"}
+        disabled={
+          fetcher.state !== "idle" || (!!init?.full_name && !!init.notif)
+        }
         type="submit"
         className="btn btn-blue text-sm px-4 py-2 rounded mt-4 justify-self-end"
       >

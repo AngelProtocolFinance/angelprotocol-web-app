@@ -64,9 +64,11 @@ export interface IRetrievedDonation {
   status: "onhold" | "settled";
   /** email */
   from: string;
+  from_name: string;
   tribute?: Tribute;
   private_msg_to_npo?: string;
   public_msg?: string;
+  amount_usd: number;
 }
 
 const tribute_to_fv = (
@@ -123,6 +125,8 @@ export const donation_get = async (
     to_type: y.fund_id ? "fund" : "npo",
     status: onhold ? "onhold" : "settled",
     from: y.kycEmail || y.email || "",
+    from_name: y.fullName || "Anonymous",
+    amount_usd: y.usdValue || 0,
   };
   const t = tribute_to_fv(y.inHonorOf, y.tributeNotif);
   if (t) x.tribute = t;
