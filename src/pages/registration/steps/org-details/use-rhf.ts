@@ -14,7 +14,7 @@ export const use_rhf = (reg: IReg) => {
     resolver: valibotResolver(schema),
     defaultValues: {
       o_website: sans_https(reg.o_website),
-      o_hq_country: reg.o_hq_country ?? "", // opt init display
+      o_hq_country: reg.claim ? "United States" : (reg.o_hq_country ?? ""), // opt init display
       o_designation: reg.o_designation ?? ("" as any), // opt init display
       o_active_in_countries: reg.o_active_in_countries ?? [],
     },
