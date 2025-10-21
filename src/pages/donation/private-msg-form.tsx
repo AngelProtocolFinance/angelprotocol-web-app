@@ -9,7 +9,7 @@ interface Props {
   classes?: string;
 }
 export function PrivateMsgForm({ classes = "", init }: Props) {
-  const fetcher = useFetcher();
+  const fetcher = useFetcher({ key: "donation" });
   const {
     handleSubmit,
     register,
@@ -20,18 +20,16 @@ export function PrivateMsgForm({ classes = "", init }: Props) {
     defaultValues: { msg: init, type: "private_msg" },
   });
 
-  use_action_result(fetcher.data);
-
   const msg = watch("msg");
 
   return (
     <Form onSubmit={handleSubmit} method="POST" className={`${classes}`}>
       <div className="col-span-full">
-        <label htmlFor="public-msg-textarea" className="sr-only">
-          Public message
+        <label htmlFor="msg-textarea" className="sr-only">
+          Private message
         </label>
         <p
-          id="public-msg-char-count"
+          id="msg-char-count"
           data-exceed={errors.msg?.type === "max"}
           className="text-xs text-gray-l1 -mt-2 data-[exceed='true']:text-red text-right mb-1"
           aria-live="polite"
@@ -41,15 +39,16 @@ export function PrivateMsgForm({ classes = "", init }: Props) {
         </p>
         <textarea
           {...register("msg")}
-          id="public-msg-textarea"
+          disabled={!!init}
+          id="msg-textarea"
           aria-invalid={!!errors.msg?.message}
-          aria-describedby={`public-msg-char-count${errors.msg?.message ? " public-msg-error" : ""}`}
+          aria-describedby={`msg-char-count${errors.msg?.message ? " msg-error" : ""}`}
           maxLength={donor_public_msg_max_length}
           rows={4}
           className="field-input w-full text-base font-semibold"
         />
         <p
-          id="public-msg-error"
+          id="msg-error"
           className="text-red text-xs empty:hidden text-right"
           role="alert"
         >
@@ -57,7 +56,7 @@ export function PrivateMsgForm({ classes = "", init }: Props) {
         </p>
       </div>
       <button
-        disabled={fetcher.state !== "idle"}
+        disabled={fetcher.state !== "idle" || !!init}
         type="submit"
         className="btn btn-blue text-sm px-4 py-2 rounded mt-4 justify-self-end"
       >

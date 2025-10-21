@@ -9,13 +9,14 @@ import { ExtLink } from "components/ext-link";
 import { Image } from "components/image";
 import { BASE_URL } from "constants/env";
 import { confetti } from "helpers/confetti";
-
 import { metas } from "helpers/seo";
+import { use_action_result } from "hooks/use-action-result";
 import { CheckCircle2Icon, ChevronDownIcon, StarIcon } from "lucide-react";
 import { useRef } from "react";
-import { Link, NavLink, href } from "react-router";
+import { Link, NavLink, href, useActionData, useFetcher } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
+import { PrivateMsgForm } from "./private-msg-form";
 import { PublicMsgForm } from "./public-msg-form";
 import { ShareBtn, socials } from "./share";
 import { TributeForm } from "./tribute-form";
@@ -37,6 +38,8 @@ export { ErrorBoundary } from "components/error";
 export default CacheRoute(Page);
 
 function Page({ loaderData: data, matches }: Route.ComponentProps) {
+  const fetcher = useFetcher({ key: "donation" });
+  use_action_result(fetcher.data);
   const widget_version = matches.some((m) =>
     m?.pathname.includes("donate-widget")
   );
@@ -112,7 +115,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
             <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
           </DisclosureButton>
           <DisclosurePanel className="p-4">
-            <PublicMsgForm init={data.private_msg_to_npo} />
+            <PrivateMsgForm init={data.private_msg_to_npo} />
           </DisclosurePanel>
         </Disclosure>
       ) : null}
