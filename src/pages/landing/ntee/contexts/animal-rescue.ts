@@ -1,7 +1,5 @@
-import type { PageContext } from "../../types";
-import hero from "./hero.png";
-import left from "./left.png";
-import right from "./right.png";
+import { blob } from "constants/urls";
+import type { PageContext } from "../types";
 
 export const animal_rescue: PageContext = {
   meta_title: "Keep 100% for Animal Rescue",
@@ -13,7 +11,7 @@ export const animal_rescue: PageContext = {
   },
   red_copy:
     "Every dollar lost to fees is a tree that doesn’t get planted, a cleanup that doesn’t happen, a species closer to extinction",
-  hero,
-  left,
-  right,
+  hero: blob("animal-rescue-hero.png"),
+  left: blob("animal-rescue-left.png"),
+  right: blob("animal-rescue-right.png"),
 };

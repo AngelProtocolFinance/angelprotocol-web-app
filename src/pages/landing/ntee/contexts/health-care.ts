@@ -1,7 +1,5 @@
-import type { PageContext } from "../../types";
-import hero from "./hero.png";
-import left from "./left.png";
-import right from "./right.png";
+import { blob } from "constants/urls";
+import type { PageContext } from "../types";
 
 export const health_care: PageContext = {
   meta_title: "More Funding for Health Access",
@@ -13,7 +11,7 @@ export const health_care: PageContext = {
   },
   red_copy:
     "Every dollar lost is a kennel left empty, a treatment unaffordable, a life left in pain or danger.",
-  hero,
-  left,
-  right,
+  hero: blob("health-care-hero.png"),
+  left: blob("health-care-left.png"),
+  right: blob("health-care-right.png"),
 };

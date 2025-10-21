@@ -1,7 +1,5 @@
-import type { PageContext } from "../../types";
-import hero from "./hero.png";
-import left from "./left.png";
-import right from "./right.png";
+import { blob } from "constants/urls";
+import type { PageContext } from "../types";
 
 export const environment: PageContext = {
   meta_title: "Fund Climate Action Without Fees",
@@ -13,7 +11,7 @@ export const environment: PageContext = {
   },
   red_copy:
     "Every dollar lost to fees is a tree that doesn’t get planted, a cleanup that doesn’t happen, a species closer to extinction.",
-  hero,
-  left,
-  right,
+  hero: blob("environment-hero.png"),
+  left: blob("environment-left.png"),
+  right: blob("environment-right.png"),
 };
