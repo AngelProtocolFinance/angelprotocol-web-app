@@ -66,7 +66,8 @@ export const Combo = forwardRef<El, Props>((props, ref) => {
 
         {props.value && (
           <button
-            className="absolute right-4 top-1/2 -translate-y-1/2 transform text-red hover:text-red-l1 active:text-red-d1 "
+            disabled={props.disabled}
+            className="absolute right-4 top-1/2 -translate-y-1/2 transform disabled:text-gray text-red hover:text-red-l1 active:text-red-d1 "
             onClick={() => {
               props.onChange("");
               setQuery("");
