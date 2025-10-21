@@ -42,6 +42,7 @@
     "@better-giving/constants": "1.1.2",
     "@better-giving/db": "2.0.7",
     "@better-giving/donation": "3.0.27",
+    "@better-giving/emails": "1.0.2",
     "@better-giving/endowment": "4.0.34",
     "@better-giving/fundraiser": "3.0.31",
     "@better-giving/helpers": "1.1.11",
