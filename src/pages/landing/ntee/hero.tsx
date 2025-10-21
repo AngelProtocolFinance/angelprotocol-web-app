@@ -1,5 +1,6 @@
 import { Image } from "components/image";
-import { APP_NAME, BOOK_A_DEMO } from "constants/env";
+import { BOOK_A_DEMO } from "constants/env";
+import { DotIcon } from "lucide-react";
 import { Link, href } from "react-router";
 import type { PageContext } from "./types";
 
@@ -13,16 +14,17 @@ export function Hero({ className = "", ...props }: Props) {
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <p className="text-center @6xl:text-left text-gray-d4 mb-5">
-          Trusted by nonprofits • $6M+ saved from fees
+          Member powered <DotIcon /> $6M+ kept in {props.hero_subject[1]}, not
+          fees.
         </p>
-        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-gray-d4 text-balance mb-4 ">
-          Lower Costs, Increase <span className="text-blue">Donations</span>
+        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-gray-d4 text-balance mb-4">
+          Raise more this quarter.{" "}
+          <span className="text-blue">Grow funds together</span>
         </h1>
         <p className="my-10 text-lg @6xl:text-xl text-balance text-center @6xl:text-left">
-          {props.hero_copy[1]}{" "}
-          <span className="font-semibold">
-            {APP_NAME} {props.hero_copy[2]}
-          </span>
+          Free-no platform or fund-management fees. High-converting donation
+          flow helps your {props.hero_subject[2]} bring in more gifts today and
+          build lasting capacity over time.
         </p>
 
         <div className="flex flex-col @xl:flex-row justify-center @6xl:justify-start items-center gap-6">
