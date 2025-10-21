@@ -1,9 +1,10 @@
 import { Txs } from "@better-giving/db";
 import type { IPublicDonor } from "@better-giving/donation";
+import type { Donation } from "@better-giving/emails";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { to_pretty_utc } from "helpers/date";
 import { resp } from "helpers/https";
-import { type DonorPrivateMsgData, send_email } from "lib/email";
+import { send_email } from "lib/email";
 import { to_ses_amnts } from "lib/email/helpers";
 import { href } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
@@ -114,13 +115,12 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
       msg_to_npo: p.msg,
     });
     const adms = await userdb.npo_admins(+don.to_id);
-    const data: DonorPrivateMsgData = {
+    const data: Donation.Data.TDonorPrivateMsgToNpo = {
       ...to_ses_amnts(don.amount, don.denom, don.amount_usd),
       transactionDate: to_pretty_utc(don.date),
       transactionID: don.id,
       nonprofitName: don.to_name,
-      nonprofitID: don.to_id,
-      sender: {
+      donor: {
         firstName: don.from_name.split(" ")[0] || "Anonymous",
         fullName: don.from_name,
       },
@@ -128,10 +128,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
     };
 
     const res = await send_email(
-      {
-        name: "npo-private-message",
-        ...data,
-      },
+      { name: "npo-private-message", ...data },
       adms.map((a) => a.email)
     );
     console.info(res);

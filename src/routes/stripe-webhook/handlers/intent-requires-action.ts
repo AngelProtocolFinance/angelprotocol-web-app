@@ -1,9 +1,9 @@
 import type { IMetadata } from "@better-giving/stripe";
+import { send_email } from "lib/email";
 import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
 import { to_onhold } from "../../helpers/donation-metadata";
 import { payment_method } from "../helpers/payment-method";
-import { send_email } from "../helpers/send-email";
 import { onholddb } from ".server/aws/db";
 
 type Intent = Stripe.PaymentIntent | Stripe.SetupIntent;
@@ -27,13 +27,13 @@ export async function handle_intent_requires_action(intent: Intent) {
 
   await onholddb.put(onhold);
 
-  return send_email({
-    recipients: [meta.email],
-    template: "donation-microdeposit-action",
-    data: {
-      donorFirstName: meta.fullName.split(" ")[0],
+  return send_email(
+    {
+      name: "donation-microdeposit-action",
       recipientName: meta.charityName,
+      donorFirstName: meta.fullName.split(" ")[0],
       verificationLink: verification_link,
     },
-  });
+    [meta.email]
+  );
 }

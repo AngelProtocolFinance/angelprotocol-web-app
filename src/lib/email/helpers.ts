@@ -1,10 +1,10 @@
+import type { Donation, TTemplate } from "@better-giving/emails";
 import { emails } from "constants/common";
 import { round_to_cents } from "helpers/decimal";
 import { round_number } from "helpers/round-number";
-import type { Template, Tx } from "./types";
 import { SendEmailCommand, ses } from ".server/aws/ses";
 
-export async function send_email(template: Template, to: string[]) {
+export async function send_email(template: TTemplate, to: string[]) {
   const { name, ...data } = template;
   const cmd = new SendEmailCommand({
     FromEmailAddress: emails.hello,
@@ -33,5 +33,5 @@ export const to_ses_amnts = (
       denom.toLowerCase() === "usd"
         ? ""
         : `${round_number(usd_value, 2).toFixed(2)}`,
-  } satisfies Pick<Tx, "prettyAmount" | "prettyUSDamount">;
+  } satisfies Pick<Donation.Data.TTx, "prettyAmount" | "prettyUSDamount">;
 };

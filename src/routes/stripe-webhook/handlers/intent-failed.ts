@@ -1,7 +1,7 @@
 import type { IMetadata } from "@better-giving/stripe";
+import { send_email } from "lib/email";
 import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
-import { send_email } from "../helpers/send-email";
 import { stripe } from ".server/sdks";
 
 /** Sends an email to donor as to why the payment failed */
@@ -22,13 +22,13 @@ export async function handle_intent_failed(
     return pi.metadata as unknown as IMetadata;
   })(data.object);
 
-  await send_email({
-    recipients: [meta.email],
-    template: "donation-error",
-    data: {
-      donorFirstName: meta.fullName.split(" ")[0],
+  await send_email(
+    {
+      name: "donation-error",
       recipientName: meta.charityName,
+      donorFirstName: meta.fullName.split(" ")[0],
       errorMessage: `Payment Intent ID ${data.object.id} failed due to: ${data.object.last_payment_error?.message ?? "Stripe error"}`,
     },
-  });
+    [meta.email]
+  );
 }
