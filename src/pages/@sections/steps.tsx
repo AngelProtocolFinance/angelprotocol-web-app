@@ -39,7 +39,7 @@ export function Steps({ classes = "" }) {
   return (
     <section className={`${classes} grid content-start `}>
       <motion.h3
-        className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4"
+        className="text-center text-3xl section-heading mb-6 px-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}

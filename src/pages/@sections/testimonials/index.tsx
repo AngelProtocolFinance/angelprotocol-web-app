@@ -5,7 +5,7 @@ import { TestimonialCard } from "./testimonial-card";
 export function Testimonials({ classes = "s" }) {
   return (
     <section
-      className={`grid ${classes} pb-8 pt-24`}
+      className={`grid ${classes}`}
       aria-labelledby="testimonials-heading"
     >
       <img

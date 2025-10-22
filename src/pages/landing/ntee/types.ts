@@ -9,11 +9,13 @@ export interface PageContext {
   };
   hero: string;
   cta: {
-    /** appended by " .Grow Together." */
+    /** appended by " Grow Together." */
     pre: string;
     /** appended, with `" ,membership in the {APP_NAME} ..." */
     body: string;
   };
   left: string;
   right: string;
+  /** e.g. nonprofits, faith charities, schools and universities, prepended by "Join thousands of .." */
+  partners: string;
 }

@@ -8,7 +8,15 @@ const partners = Array.from({ length: 76 }, (_, i) => ({
   url: logo_url(i + 1),
 }));
 
-export function Partners({ classes = "" }) {
+interface Props {
+  classes?: string;
+  of_what?: string;
+}
+
+export function Partners({
+  classes = "",
+  of_what = "nonprofits, faith charities, schools and universities",
+}: Props) {
   return (
     <section
       className={`${classes} grid content-start`}
@@ -22,8 +30,8 @@ export function Partners({ classes = "" }) {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring" }}
       >
-        Join <span className="font-semibold text-blue">thousands</span> of
-        nonprofits, faith charities, schools and universities
+        Join <span className="font-semibold text-blue">thousands</span> of{" "}
+        {of_what}
       </motion.h2>
 
       <div className="justify-self-center relative overflow-hidden h-[400px]">

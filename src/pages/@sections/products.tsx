@@ -2,7 +2,7 @@ import { Video, videos } from "components/video/video";
 import { APP_NAME } from "constants/env";
 import { Link, href } from "react-router";
 
-export function Section6({ classes = "" }) {
+export function Products({ classes = "" }) {
   return (
     <section
       className={`${classes} grid justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2 pb-24`}

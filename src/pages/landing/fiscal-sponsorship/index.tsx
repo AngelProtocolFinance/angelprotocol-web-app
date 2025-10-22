@@ -23,7 +23,7 @@ export default function Page() {
       <Partners classes="xl:container xl:mx-auto px-5 max-sm:-mt-10 mt-10" />
       <Ctas classes="xl:container xl:mx-auto px-5" />
       <Steps classes="xl:container xl:mx-auto px-5 mt-24" />
-      <Testimonials classes="xl:container xl:mx-auto px-5 mt-24" />
+      <Testimonials classes="xl:container xl:mx-auto px-5 mt-24 py-24" />
       <BottomCta className="my-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <FAQ
         classes="xl:container xl:mx-auto px-5 mt-24"

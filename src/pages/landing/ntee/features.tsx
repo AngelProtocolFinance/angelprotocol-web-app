@@ -60,11 +60,11 @@ export const items: Item[] = [
   },
 ];
 
-export function Section5({ classes = "" }: { classes?: string }) {
+export function Features({ classes = "" }: { classes?: string }) {
   return (
-    <div className={`${classes} py-26 grid`}>
-      <h2 className="text-center text-4.5xl @6xl:text-5xl @6xl:leading-tight capitalize text-gray-d4 text-balance mb-4 ">
-        How We End Your Financial Pain
+    <div className={`${classes} grid`}>
+      <h2 className="text-center capitalize section-heading mb-6">
+        How we simplify fundraising for you
       </h2>
       <div className="grid gap-y-16 justify-self-center mt-8">
         {items.map((item, index) => (

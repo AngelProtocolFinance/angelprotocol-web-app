@@ -1,6 +1,11 @@
 import { DappLogo } from "components/image";
 import { APP_NAME } from "constants/env";
 import { metas } from "helpers/seo";
+import { Partners } from "../../@sections/partners";
+import { Products } from "../../@sections/products";
+import { Steps } from "../../@sections/steps";
+import { Testimonials } from "../../@sections/testimonials";
+import { Underdog } from "../../@sections/underdog";
 import type { Route } from "./+types";
 import { animal_rescue } from "./contexts/animal-rescue";
 import { arts_culture } from "./contexts/arts-culture";
@@ -14,15 +19,11 @@ import { human_services } from "./contexts/human-services";
 import { mental_health } from "./contexts/mental-health";
 import { public_safety } from "./contexts/public-safety";
 import { religious_organizations } from "./contexts/religious-organizations";
-import { DonationFormInfo } from "./donation-form-info";
+import { Cta } from "./cta";
+import { Faq } from "./faq";
+import { Features } from "./features";
 import { Footer } from "./footer";
 import { Hero } from "./hero";
-import { Section1 } from "./section1";
-import { Section2 } from "./section2";
-import { Section5 } from "./section5";
-import { Section6 } from "./section6";
-import { Section7 } from "./section7";
-import { Testimonials } from "./testimonials";
 import type { PageContext } from "./types";
 
 const page_context: Record<string, PageContext> = {
@@ -94,26 +95,20 @@ export default function Page({ loaderData: ctx }: Route.ComponentProps) {
         </div>
       </div>
       <Hero className="xl:container xl:mx-auto px-10" {...ctx} />
-      <Section1
-        classes="xl:container xl:mx-auto px-10 py-20 rounded-lg"
-        {...ctx}
+      <Partners
+        of_what={ctx.partners}
+        classes="xl:container xl:mx-auto px-10 my-10 xl:my-20"
       />
-
-      <div className="mt-48 bg-gray-l5">
-        <Section2 classes="xl:container xl:mx-auto p-16" copy={ctx.red_copy} />
+      <Steps classes="xl:container xl:mx-auto px-10 my-10 xl:my-20" />
+      <Products classes="xl:container xl:mx-auto px-10 my-10 xl:my-20" />
+      <Features classes="xl:container xl:mx-auto px-10 my-10 xl:my-20" />
+      <Underdog classes="xl:container xl:mx-auto px-10 my-10 xl:my-20" />
+      <Testimonials classes="xl:container xl:mx-auto px-10 my-10 xl:my-20" />
+      <div className="bg-gray-l5 pb-24">
+        <Faq classes="xl:container xl:mx-auto px-10 mt-24" />
       </div>
-
-      <DonationFormInfo className="mt-28 xl:container xl:mx-auto px-5" />
-      {/* <Section3 classes="xl:container xl:mx-auto px-10 mt-48" /> */}
-      <div className="bg-gray-l5 mt-28">
-        <Testimonials classes="xl:container xl:mx-auto px-10" />
-      </div>
-      <Section5 classes="xl:container xl:mx-auto px-10 mt-24" />
-      <div className="bg-gray-l5">
-        <Section6 classes="xl:container xl:mx-auto px-10 mt-24" />
-      </div>
-      <div className="bg-gradient-to-tr from-blue to-blue-l1">
-        <Section7 classes="xl:container xl:mx-auto px-10" />
+      <div className="xl:container mx-auto max-sm:px-10 px-24 my-10 xl:my-20">
+        <Cta {...ctx} />
       </div>
       <Footer />
     </main>
