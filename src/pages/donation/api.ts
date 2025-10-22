@@ -76,7 +76,22 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 
   if (p.type === "tribute") {
     await db.update(don.id, tribute_to_db(p));
-    //TODO: send email if there's notif
+    if (p.notif) {
+      const data: Donation.Data.TTributeNotif = {
+        nonprofitName: don.to_name,
+        inHonorOf: p.full_name,
+        toFullName: p.notif.to_fullname,
+        donor: {
+          firstName: don.from_name.split(" ")[0] || "Anonymous",
+          fullName: don.from_name,
+        },
+        ...to_ses_amnts(don.amount, don.denom, don.amount_usd),
+      };
+      await send_email({ name: "donation-tribute-notif", ...data }, [
+        p.notif.to_email,
+      ]);
+      return { __ok: "Tribute added to donation!" } satisfies ActionData;
+    }
   }
 
   if (p.type === "public_msg" && !don.public_msg) {

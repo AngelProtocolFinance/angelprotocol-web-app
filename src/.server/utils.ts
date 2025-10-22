@@ -98,16 +98,19 @@ const tribute_to_fv = (
 export const tribute_to_db = (
   t: Tribute
 ): { inHonorOf?: string; tributeNotif?: ITributeNotif } => {
-  return {
+  const result: { inHonorOf?: string; tributeNotif?: ITributeNotif } = {
     inHonorOf: t.full_name,
-    tributeNotif: t.notif
-      ? {
-          toEmail: t.notif.to_email,
-          toFullName: t.notif.to_fullname,
-          fromMsg: t.notif.from_msg,
-        }
-      : undefined,
   };
+
+  if (t.notif) {
+    result.tributeNotif = {
+      toEmail: t.notif.to_email,
+      toFullName: t.notif.to_fullname,
+      fromMsg: t.notif.from_msg,
+    };
+  }
+
+  return result;
 };
 
 export const donation_get = async (
