@@ -6,7 +6,10 @@ import { round_number } from "helpers/round-number";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
 import type { Payment } from "types/crypto";
-import { intent as schema } from "types/donation-intent";
+import {
+  type IStripeIntentReturn,
+  intent as schema,
+} from "types/donation-intent";
 import { parse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
@@ -234,11 +237,14 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     await onholddb.put(onhold);
 
-    const clientSecret =
+    const client_secret =
       intent.frequency === "one-time"
         ? await create_payment_intent(onhold, customer_id)
         : await setup_intent(onhold, customer_id);
 
-    return await json_with_cookie({ clientSecret });
+    return await json_with_cookie({
+      client_secret,
+      order_id: onhold.transactionId,
+    } satisfies IStripeIntentReturn);
   }
 };
