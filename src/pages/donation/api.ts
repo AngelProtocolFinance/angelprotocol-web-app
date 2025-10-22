@@ -85,6 +85,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
           firstName: don.from_name.split(" ")[0] || "Anonymous",
           fullName: don.from_name,
         },
+        fromMsg: p.notif.from_msg,
         ...to_ses_amnts(don.amount, don.denom, don.amount_usd),
       };
       await send_email({ name: "donation-tribute-notif", ...data }, [
