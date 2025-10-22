@@ -3,7 +3,10 @@ import { loadStripe } from "@stripe/stripe-js";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import use_swr from "swr/immutable";
-import type { DonationIntent } from "types/donation-intent";
+import type {
+  DonationIntent,
+  IStripeIntentReturn,
+} from "types/donation-intent";
 import { currency } from "../../common/currency";
 import { Summary } from "../../common/summary";
 import { use_donation_state } from "../../context";
@@ -16,9 +19,7 @@ const fetcher = async (intent: DonationIntent) =>
   fetch("/api/donation-intents/stripe", {
     method: "POST",
     body: JSON.stringify(intent),
-  })
-    .then<{ clientSecret: string }>((res) => res.json())
-    .then((x) => x.clientSecret);
+  }).then<IStripeIntentReturn>((res) => res.json());
 
 const stripe_promise = loadStripe(PUBLIC_STRIPE_KEY);
 
@@ -77,7 +78,7 @@ export function StripeCheckout(props: StripeCheckoutStep) {
                   cssSrc: "https://fonts.googleapis.com/css2?family=Quicksand",
                 },
               ],
-              clientSecret: data,
+              clientSecret: data.client_secret,
               appearance: {
                 theme: "flat",
                 variables: {
@@ -90,7 +91,7 @@ export function StripeCheckout(props: StripeCheckoutStep) {
             }}
             stripe={stripe_promise}
           >
-            <Checkout {...props} order_id={data} />
+            <Checkout {...props} order_id={data.order_id} />
           </Elements>
         )}
       </ErrorBoundaryClass>

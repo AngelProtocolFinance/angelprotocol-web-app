@@ -121,3 +121,8 @@ export const intent = v.object({
 });
 
 export type DonationIntent = v.InferOutput<typeof intent>;
+
+export interface IStripeIntentReturn {
+  client_secret: string;
+  order_id: string;
+}
