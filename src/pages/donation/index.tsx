@@ -136,7 +136,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
           <ChevronDownIcon className="ml-auto size-5  group-data-open:rotate-180 transition-transform ease-in-out" />
         </DisclosureButton>
         <DisclosurePanel className="p-4">
-          <TributeForm />
+          <TributeForm init={data.tribute} />
         </DisclosurePanel>
       </Disclosure>
       {!widget_version && (
