@@ -2,7 +2,12 @@ import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
 import type { ITokenFv } from "types/components";
 import { currency_fv } from "types/currency";
-import { type Donor, type Tribute, frequency } from "types/donation-intent";
+import {
+  type Donor,
+  type Tribute,
+  frequency,
+  str,
+} from "types/donation-intent";
 export {
   type Tribute,
   type TFrequency,
@@ -47,19 +52,38 @@ export type CryptoDonationDetails = {
   token: ITokenFv;
 };
 
-export const amount = v.lazy((x) => {
-  if (!x) return v.pipe(v.string(), v.nonEmpty("Please enter an amount"));
-  return v.pipe(
-    v.string(),
-    v.transform((x) => +x),
-    v.minValue(0, "amount must be greater than 0"),
-    v.transform((x) => x.toString())
-  );
+export const amount = ({ required = false } = {}) =>
+  v.lazy((x) => {
+    if (!x && !required) return v.string();
+    if (!x && required) {
+      return v.pipe(v.string(), v.nonEmpty("Please enter an amount"));
+    }
+    return v.pipe(
+      v.string(),
+      v.transform((x) => +x),
+      v.minValue(0, "amount must be greater than 0"),
+      v.transform((x) => x.toString())
+    );
+  });
+
+export const donation_fv = v.object({
+  tip: amount(),
+  cover_processing_fee: v.boolean(),
+  first_name: v.pipe(str, v.nonEmpty("Please enter your first name")),
+  last_name: v.pipe(str, v.nonEmpty("Please enter your last name")),
+  email: v.pipe(
+    str,
+    v.nonEmpty("Please enter your email"),
+    v.email("Please check your email for correctness")
+  ),
 });
 
+export interface IDonationFvBase extends v.InferOutput<typeof donation_fv> {}
+
 export const fiat_donation_details = v.object({
-  amount,
+  amount: amount({ required: true }),
   currency: currency_fv,
+  ...donation_fv.entries,
 });
 
 export interface FiatDonationDetails

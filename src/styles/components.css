@@ -233,7 +233,7 @@
     display: block;
     font-size: var(--text-sm);
     &[data-required="true"]::after {
-      content: "*";
+      content: " *";
       color: var(--color-red);
     }
     &[data-required="false"]::after {

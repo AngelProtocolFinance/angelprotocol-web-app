@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
 export function ContinueBtn({
@@ -13,10 +12,9 @@ export function ContinueBtn({
     <button
       {...props}
       type={type}
-      className={`btn btn-blue enabled:bg-(--accent-primary) btn-donate ${className}`}
+      className={`btn btn-blue normal-case enabled:bg-(--accent-primary) ${className}`}
     >
-      <span className="mr-4">{text}</span>
-      <ArrowRight size={18} />
+      {text}
     </button>
   );
 }

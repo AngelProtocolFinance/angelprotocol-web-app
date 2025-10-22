@@ -43,7 +43,6 @@
 }
 
 @utility field-input-donate {
-  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
   &:enabled:focus {
     @apply ring-[color:var(--accent-primary)];
   }

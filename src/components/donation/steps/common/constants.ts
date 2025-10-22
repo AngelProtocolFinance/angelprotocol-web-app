@@ -4,6 +4,7 @@ import type {
   DonationDetails,
   DonationState,
   FinishedSummaryData,
+  IDonationFvBase,
   Tribute,
 } from "../types";
 
@@ -30,20 +31,16 @@ export const init_token_option: ITokenFv = {
 export const USD_CODE = "USD";
 export const usd_option: ICurrencyFv = { code: USD_CODE, min: 1, rate: 1 };
 
-export const init_details = (
-  methodId: DonateMethodId,
-  programIdOrOption?: string | OptionType<string>
-): DonationDetails => {
-  const program: OptionType<string> =
-    typeof programIdOrOption === "string" || !programIdOrOption
-      ? {
-          //label would be replaced once program options are loaded
-          label: "General Donation",
-          value: programIdOrOption ?? "",
-        }
-      : programIdOrOption;
+export const init_donation_fv: IDonationFvBase = {
+  tip: "",
+  cover_processing_fee: false,
+  first_name: "",
+  last_name: "",
+  email: "",
+};
 
-  switch (methodId) {
+export const init_details = (method_id: DonateMethodId): DonationDetails => {
+  switch (method_id) {
     case "crypto": {
       return {
         method: "crypto",
@@ -51,7 +48,12 @@ export const init_details = (
       };
     }
     case "daf": {
-      return { method: "daf", amount: "", currency: usd_option };
+      return {
+        method: "daf",
+        amount: "",
+        currency: usd_option,
+        ...init_donation_fv,
+      };
     }
     case "stocks": {
       return {
@@ -66,6 +68,7 @@ export const init_details = (
         amount: "",
         currency: usd_option,
         frequency: "recurring",
+        ...init_donation_fv,
       };
     }
   }
