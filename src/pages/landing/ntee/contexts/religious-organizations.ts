@@ -2,12 +2,13 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const religious_organizations: PageContext = {
-  meta_title: "Zero Fees for Faith-Based Giving",
-  meta_description:
-    "helps religious nonprofits keep 100% of donations. Fund missions, outreach, and services. Start fundraising today.",
+  meta_subject: {
+    title: "Faith-Based Nonprofits",
+    description: "faith-based nonprofits",
+  },
   hero_subject: {
     1: "faith",
-    2: "spiritual mission",
+    2: "faith-based mission",
   },
   cta: {
     pre: "Faith. Serve.",

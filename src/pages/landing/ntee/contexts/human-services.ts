@@ -2,12 +2,13 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const human_services: PageContext = {
-  meta_title: "Fund Human Services Without Fees",
-  meta_description:
-    "helps nonprofits meet basic needs with zero fees. Fund care, stability, and dignity. Start your impact today.",
+  meta_subject: {
+    title: "Human Services Nonprofits",
+    description: "human services nonprofits",
+  },
   hero_subject: {
     1: "care",
-    2: "service mission",
+    2: "human services mission",
   },
   cta: {
     pre: "Support. Uplift.",

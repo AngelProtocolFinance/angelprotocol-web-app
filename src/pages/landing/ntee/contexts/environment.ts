@@ -2,9 +2,10 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const environment: PageContext = {
-  meta_title: "Fund Climate Action Without Fees",
-  meta_description:
-    "helps environmental nonprofits save more with zero fees. Protect land, water, and wildlife. Start your impact-driven fundraising today.",
+  meta_subject: {
+    title: "Environmental Nonprofits",
+    description: "environmental nonprofits",
+  },
   hero_subject: {
     1: "conservation",
     2: "environmental mission",

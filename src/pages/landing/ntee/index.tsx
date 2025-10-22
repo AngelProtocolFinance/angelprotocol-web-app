@@ -60,8 +60,8 @@ const page_context: Record<string, PageContext> = {
 export const meta: Route.MetaFunction = ({ params: { slug = "" } }) => {
   const ctx = page_context[slug];
   return metas({
-    title: `${ctx.meta_title} | ${APP_NAME}`,
-    description: `${APP_NAME} ${ctx.meta_description}`,
+    title: `Fundraising Platform for ${ctx.meta_subject.title} | ${APP_NAME}`,
+    description: `${APP_NAME} helps ${ctx.meta_subject.description} increase giving and build long-term growth. Free donation processing with no platform or fund-management fees.`,
     image: ctx.hero,
   });
 };

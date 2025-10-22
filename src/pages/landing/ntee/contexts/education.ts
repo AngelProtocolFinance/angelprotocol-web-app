@@ -1,9 +1,10 @@
 import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 export const education: PageContext = {
-  meta_title: "Education Fundraising Without Fees",
-  meta_description:
-    "helps education nonprofits save on fees and grow impact without compromise. Fund schools, scholarships, and community programs.",
+  meta_subject: {
+    title: "Education Nonprofits",
+    description: "education nonprofits",
+  },
   hero_subject: {
     1: "learning",
     2: "education mission",

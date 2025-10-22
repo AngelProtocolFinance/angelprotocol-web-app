@@ -2,9 +2,10 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const arts_culture: PageContext = {
-  meta_title: "Zero Fees for Arts Nonprofits",
-  meta_description:
-    "helps arts nonprofits keep 100% of donations. Fund classes, shows, and creative access. Start your impact journey today.",
+  meta_subject: {
+    title: "Arts and Culture Nonprofits",
+    description: "arts and culture nonprofits",
+  },
   hero_subject: {
     1: "creativity",
     2: "arts mission",

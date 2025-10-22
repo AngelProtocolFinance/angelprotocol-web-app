@@ -2,12 +2,13 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const community_improvement: PageContext = {
-  meta_title: "Fund Local Impact Without Platform Fees",
-  meta_description:
-    "helps community nonprofits raise more with zero fees. Fund programs, spaces, and equity. Start fundraising today.",
+  meta_subject: {
+    title: "Community Nonprofits",
+    description: "community nonprofits",
+  },
   hero_subject: {
-    1: "community",
-    2: "local impact",
+    1: "communities",
+    2: "community mission",
   },
   cta: {
     pre: "Unite. Build.",

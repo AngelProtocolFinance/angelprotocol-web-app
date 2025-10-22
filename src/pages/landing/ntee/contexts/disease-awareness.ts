@@ -2,12 +2,13 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const disease_awareness: PageContext = {
-  meta_title: "Fund Treatment & Research Without Fees",
-  meta_description:
-    "removes platform fees for research nonprofits. Keep more for labs, studies, and cures. Start fundraising today.",
+  meta_subject: {
+    title: "Health Associations",
+    description: "health associations",
+  },
   hero_subject: {
-    1: "research",
-    2: "health progress",
+    1: "health research",
+    2: "association",
   },
   cta: {
     pre: "Unite. Advance.",

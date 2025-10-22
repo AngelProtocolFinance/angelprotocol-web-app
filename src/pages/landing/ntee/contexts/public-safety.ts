@@ -2,12 +2,13 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const public_safety: PageContext = {
-  meta_title: "Fund Public Safety Without Fees",
-  meta_description:
-    "helps safety nonprofits maximize every donation. Fund preparedness, response, and recovery. Start fundraising today.",
+  meta_subject: {
+    title: "Disaster Relief Nonprofits",
+    description: "disaster relief nonprofits",
+  },
   hero_subject: {
-    1: "preparedness",
-    2: "safety mission",
+    1: "relief",
+    2: "relief mission",
   },
   cta: {
     pre: "Prepare. Respond.",

@@ -2,11 +2,12 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const health_care: PageContext = {
-  meta_title: "More Funding for Health Access",
-  meta_description:
-    "helps health nonprofits eliminate platform fees. Fund more care, clinics, and recovery. Start raising more today.",
+  meta_subject: {
+    title: "Health Nonprofits",
+    description: "health nonprofits",
+  },
   hero_subject: {
-    1: "health access",
+    1: "health",
     2: "health mission",
   },
   cta: {

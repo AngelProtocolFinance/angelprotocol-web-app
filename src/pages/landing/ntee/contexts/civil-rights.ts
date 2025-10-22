@@ -2,11 +2,12 @@ import { blob } from "constants/urls";
 import type { PageContext } from "../types";
 
 export const civil_rights: PageContext = {
-  meta_title: "Fund Justice & Advocacy Without Fees",
-  meta_description:
-    "supports civil rights nonprofits with fee-free fundraising. Fight injustice and fuel change. Start raising more today.",
+  meta_subject: {
+    title: "Advocacy Nonprofits",
+    description: "advocacy nonprofits",
+  },
   hero_subject: {
-    1: "equity",
+    1: "change",
     2: "advocacy mission",
   },
   cta: {

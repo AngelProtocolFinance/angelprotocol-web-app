@@ -1,8 +1,10 @@
 export interface PageContext {
-  /** append with | APP_NAME */
-  meta_title: string;
-  /** prepend with APP_NAME */
-  meta_description: string;
+  meta_subject: {
+    /** `Fundraising Platform for ${meta_subject.title}` */
+    title: string;
+    /** `{APP_NAME} helps ${meta_subject.description} increase`  */
+    description: string;
+  };
   hero_subject: {
     1: string;
     2: string;
