@@ -19,7 +19,7 @@ export function Form(props: Props) {
       onSubmit={rhf.handleSubmit((fv) =>
         set_state((prev) => next_form_state(prev, { ...fv, method: "daf" }))
       )}
-      className="grid gap-4"
+      className="flex flex-col gap-4 min-h-full"
     >
       <MaskedInput
         id="donation-amount"
@@ -31,12 +31,11 @@ export function Form(props: Props) {
         label="Donation amount"
         placeholder="$ Enter amount"
         classes={{
-          label: " font-semibold text-base",
+          label: " font-semibold",
           input: "field-input-donate",
           container: "mt-1",
         }}
         required
-        sub="The minimum donation amount will depend on your DAF provider."
         error={rhf.errors.amount?.message}
       />
 
@@ -49,12 +48,12 @@ export function Form(props: Props) {
         precision={0}
       />
 
-      <p className="text-sm text-gray-d4 dark:text-gray mt-4">
-        Please click the button below and follow the instructions provided to
-        complete your donation
-      </p>
-
-      <ContinueBtn className="mt-2" type="submit" />
+      <button
+        className="mt-auto btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        type="submit"
+      >
+        Continue
+      </button>
     </FormContainer>
   );
 }

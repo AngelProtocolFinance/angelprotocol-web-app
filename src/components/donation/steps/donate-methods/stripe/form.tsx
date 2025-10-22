@@ -1,12 +1,10 @@
 import { CloseButton, ComboboxOption } from "@headlessui/react";
-import { Form as FieldSet } from "components/form";
+import { Field, Form as FieldSet } from "components/form";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
 import { useState } from "react";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
-import type { ICurrenciesFv, ICurrencyFv } from "types/currency";
-import { USD_CODE } from "../../common/constants";
-import { ContinueBtn } from "../../common/continue-btn";
+import type { ICurrenciesFv } from "types/currency";
 import { Incrementers } from "../../common/incrementers";
 import { use_donation_state } from "../../context";
 import { next_form_state } from "../helpers";
@@ -16,6 +14,7 @@ import { use_rhf } from "./use-rhf";
 
 export function Form(props: Props) {
   const [token_q, set_token_q] = useState("");
+  const [with_tip, set_with_tip] = useState(true);
   const { set_state } = use_donation_state();
   const rhf = use_rhf(props);
 
@@ -49,7 +48,7 @@ export function Form(props: Props) {
             as={CloseButton}
             key={t.code}
             className={
-              "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) data-selected:pointer-events-none cursor-pointer"
+              "w-full text-sm grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) data-selected:pointer-events-none cursor-pointer"
             }
             value={t}
           >
@@ -68,7 +67,7 @@ export function Form(props: Props) {
       onSubmit={rhf.handleSubmit((fv) => {
         set_state((prev) => next_form_state(prev, { ...fv, method: "stripe" }));
       })}
-      className="grid gap-4"
+      className="grid"
     >
       <Frequency
         value={rhf.frequency.value}
@@ -76,6 +75,7 @@ export function Form(props: Props) {
         error={rhf.errors.frequency?.message}
       />
       <TokenField
+        classes={{ container: "mt-4 mb-1" }}
         ref={rhf.amount.ref}
         combobox={combobox}
         amount={rhf.amount.value}
@@ -89,8 +89,8 @@ export function Form(props: Props) {
         label="Donation amount"
         min_amount={
           rhf.currency.value.min ? (
-            <p className="text-sm mb-1">
-              Minimum amount: {rhf.currency.value.code} {rhf.currency.value.min}
+            <p className="text-[13px]">
+              Minimum amount: {rhf.currency.value.min} {rhf.currency.value.code}
             </p>
           ) : null
         }
@@ -106,25 +106,53 @@ export function Form(props: Props) {
         />
       )}
 
-      <p className="text-sm dark:text-gray mt-4">
-        Please click the button below and follow the instructions provided to
-        complete your donation
-      </p>
+      <div className="grid mt-4 grid-cols-2 gap-2 content-start">
+        <p className="col-span-full text-sm font-semibold">
+          Payment information
+        </p>
+        <Field
+          {...rhf.register("first_name")}
+          label="First name"
+          placeholder="First Name"
+          required
+          classes={{
+            label: "font-semibold text-base sr-only",
+            input: "field-input-donate",
+          }}
+          error={rhf.errors.first_name?.message}
+        />
+        <Field
+          {...rhf.register("last_name")}
+          label="Last name"
+          placeholder="Last Name"
+          classes={{
+            input: "field-input-donate",
+            label: "font-semibold text-base sr-only",
+          }}
+          error={rhf.errors.last_name?.message}
+        />
+        <Field
+          {...rhf.register("email")}
+          label="Your email"
+          placeholder="Your email"
+          classes={{
+            container: "col-span-full",
+            input: "field-input-donate",
+            label: "font-semibold text-base sr-only",
+          }}
+          error={rhf.errors.email?.message}
+        />
+      </div>
 
-      <ContinueBtn
+      <button
         disabled={
           currency.isLoading || currency.isValidating || !!currency.error
         }
-        className="mt-2"
+        className="mt-2 btn btn-blue text-sm enabled:bg-(--accent-primary)"
         type="submit"
-      />
+      >
+        Continue
+      </button>
     </FieldSet>
   );
-}
-
-function createTooltip({ code, min }: ICurrencyFv): string | undefined {
-  if (!min) return undefined;
-  return code === USD_CODE
-    ? "The minimum donation amount is 1 USD"
-    : `The minimum donation amount is 1 USD or ${min} ${code.toUpperCase()}`;
 }

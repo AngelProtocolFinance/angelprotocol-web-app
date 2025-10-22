@@ -15,7 +15,7 @@ export interface ITokenField {
   min_amount?: ReactNode;
   error?: string;
   disabled?: boolean;
-  classes?: Classes;
+  classes?: Classes | string;
 }
 
 export type TTokenState = "loading" | "error" | undefined;

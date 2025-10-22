@@ -70,7 +70,7 @@ export function Form(props: CryptoFormStep) {
               className="w-6 h-6 rounded-full row-span-2"
             />
 
-            <span className="text-sm">{t.symbol}</span>
+            <span className="text-[13px]">{t.symbol}</span>
 
             <p
               style={{ color: t.color }}
@@ -146,11 +146,13 @@ export function Form(props: CryptoFormStep) {
         />
       )}
 
-      <ContinueBtn
+      <button
         disabled={token_state === "error" || token_state === "loading"}
-        className="mt-auto"
+        className="mt-auto btn btn-blue text-sm enabled:bg-(--accent-primary)"
         type="submit"
-      />
+      >
+        Continue
+      </button>
     </form>
   );
 }
