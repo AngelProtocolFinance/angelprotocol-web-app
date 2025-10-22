@@ -16,6 +16,7 @@ const fields: EndowmentSettingsAttributes[] = [
   "progDonationsAllowed",
   "donateMethods",
   "target",
+  "increments",
 ];
 export const loader = async (x: Route.LoaderArgs) => {
   const adm = await admin_checks(x);
