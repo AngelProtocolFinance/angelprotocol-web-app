@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from "react";
 function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLParagraphElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const is_in_view = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!is_in_view) return;
 
     const duration = 2000;
     const steps = 60;
@@ -26,7 +26,7 @@ function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
     }, duration / steps);
 
     return () => clearInterval(timer);
-  }, [isInView, end]);
+  }, [is_in_view, end]);
 
   return (
     <p ref={ref} className="text-3xl text-center font-bold text-blue">
@@ -38,7 +38,7 @@ function CountUp({ end, suffix = "" }: { end: number; suffix?: string }) {
 
 export function Stats({ classes = "" }) {
   return (
-    <section
+    <div
       className={`${classes} grid md:grid-cols-3 gap-8`}
       aria-label="Platform statistics"
     >
@@ -80,6 +80,6 @@ export function Stats({ classes = "" }) {
           Causes discoverable across the {APP_NAME} directory.
         </p>
       </motion.article>
-    </section>
+    </div>
   );
 }

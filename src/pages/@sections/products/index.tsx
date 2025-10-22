@@ -1,8 +1,9 @@
 import { Video, videos } from "components/video/video";
 import { APP_NAME } from "constants/env";
 import { Link, href } from "react-router";
+import { Items } from "./items";
 
-export function Section6({ classes = "" }) {
+export function Products({ classes = "" }) {
   return (
     <section
       className={`${classes} grid justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2 pb-24`}
@@ -35,6 +36,7 @@ export function Section6({ classes = "" }) {
         classes="max-w-2xl xl:max-w-auto order-1 xl:order-2 w-full self-center"
         vid={videos.about}
       />
+      <Items classes="col-span-full order-3" />
     </section>
   );
 }

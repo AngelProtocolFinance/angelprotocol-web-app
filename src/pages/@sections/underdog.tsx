@@ -1,10 +1,10 @@
 import laira_pulling_woman_up from "assets/images/laira-pulling-woman-up.png";
 import { APP_NAME } from "constants/env";
 
-export function Section8({ classes = "" }) {
+export function Underdog({ classes = "" }) {
   return (
     <section
-      className={`${classes} grid justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2 pb-24`}
+      className={`${classes} grid justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2`}
     >
       <div className="max-w-2xl order-2 xl:order-1">
         <h2 className="text-center xl:text-left section-heading mb-8 text-gray-d4">

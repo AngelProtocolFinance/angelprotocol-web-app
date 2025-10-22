@@ -1,15 +1,23 @@
 export interface PageContext {
-  /** append with | APP_NAME */
-  meta_title: string;
-  /** prepend with APP_NAME */
-  meta_description: string;
-  hero_copy: {
+  meta_subject: {
+    /** `Fundraising Platform for ${meta_subject.title}` */
+    title: string;
+    /** `{APP_NAME} helps ${meta_subject.description} increase`  */
+    description: string;
+  };
+  hero_subject: {
     1: string;
-    /** prepend with APP_NAME */
     2: string;
   };
-  red_copy: string;
   hero: string;
+  cta: {
+    /** appended by " Grow Together." */
+    pre: string;
+    /** appended, with `" ,membership in the {APP_NAME} ..." */
+    body: string;
+  };
   left: string;
   right: string;
+  /** e.g. nonprofits, faith charities, schools and universities, prepended by "Join thousands of .." */
+  partners: string;
 }
