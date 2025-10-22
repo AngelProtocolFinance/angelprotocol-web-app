@@ -8,17 +8,15 @@ import { Steps } from "../@sections/steps";
 import { Testimonials } from "../@sections/testimonials";
 import { Underdog } from "../@sections/underdog";
 import type { Route } from "./+types/home";
-import { Stats } from "./2-stats";
-import { Ctas } from "./4-ctas";
-import { Manifesto } from "./5-manifesto";
-import { Section7 } from "./7-section";
-import { Features } from "./9-features";
 // import { Animation } from "./animation";
 // import Benefits from "./benefits";
 import { Blogs } from "./blogs";
 import { BottomCta } from "./bottom-cta";
+import { Ctas } from "./ctas";
+import { Features } from "./features";
 import { Header } from "./header";
 import { Hero } from "./hero";
+import { Manifesto } from "./manifesto";
 // import { Video } from "./video";
 export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
@@ -30,8 +28,6 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       <Header page1={page1} classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
       <Partners classes="xl:container xl:mx-auto px-5" />
-      <Stats classes="xl:container xl:mx-auto px-5 mt-16" />
-      {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
 
       <Steps classes="xl:container xl:mx-auto px-5 mt-36" />
       <Ctas classes="xl:container xl:mx-auto mt-36" />
@@ -39,7 +35,6 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       {/* <Animation /> */}
       <Manifesto classes="mt-56 xl:container xl:mx-auto px-5" />
       <Products classes="xl:container xl:mx-auto px-5" />
-      <Section7 classes="xl:container xl:mx-auto px-5" />
 
       <Underdog classes="xl:container xl:mx-auto px-5 pb-20 pt-10" />
       <div className="bg-gradient-to-br from-transparent to-lilac/40">

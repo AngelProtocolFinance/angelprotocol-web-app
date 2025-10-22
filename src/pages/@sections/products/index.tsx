@@ -1,6 +1,7 @@
 import { Video, videos } from "components/video/video";
 import { APP_NAME } from "constants/env";
 import { Link, href } from "react-router";
+import { Items } from "./items";
 
 export function Products({ classes = "" }) {
   return (
@@ -35,6 +36,7 @@ export function Products({ classes = "" }) {
         classes="max-w-2xl xl:max-w-auto order-1 xl:order-2 w-full self-center"
         vid={videos.about}
       />
+      <Items classes="col-span-full order-3" />
     </section>
   );
 }

@@ -1,10 +1,10 @@
 import { GlobeIcon, LayoutPanelLeftIcon, SproutIcon } from "lucide-react";
 import { NavLink, href } from "react-router";
 
-export function Section7({ classes = "" }) {
+export function Items({ classes = "" }) {
   return (
-    <section
-      className={`${classes} grid md:grid-cols-3 pb-24 gap-8`}
+    <div
+      className={`${classes} grid md:grid-cols-3 gap-8`}
       aria-label="Key offerings"
     >
       <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
@@ -55,6 +55,6 @@ export function Section7({ classes = "" }) {
           Learn more
         </NavLink>
       </article>
-    </section>
+    </div>
   );
 }

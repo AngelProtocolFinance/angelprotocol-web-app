@@ -1,5 +1,6 @@
 import { blob } from "constants/urls";
 import { motion } from "motion/react";
+import { Stats } from "./stats";
 
 const logo_url = (num: number) => blob(`partners/${num}.svg`);
 
@@ -68,6 +69,7 @@ export function Partners({
           ))}
         </motion.div>
       </div>
+      <Stats classes="mt-16" />
     </section>
   );
 }
