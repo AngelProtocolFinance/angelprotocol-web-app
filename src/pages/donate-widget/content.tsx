@@ -1,5 +1,5 @@
 import type { INpo } from "@better-giving/endowment";
-import { type DonationRecipient, Steps } from "components/donation";
+import { type DonationRecipient, Steps, type IUser } from "components/donation";
 import type { IProgram } from "components/donation";
 import type { Parsed } from "./parse-config";
 
@@ -7,10 +7,11 @@ type Props = {
   npo: INpo;
   config: Parsed;
   program?: IProgram;
+  user?: IUser;
   classes?: string;
 };
 
-export default function Content({ npo, config, classes = "" }: Props) {
+export default function Content({ npo, config, user, classes = "" }: Props) {
   const recipient: DonationRecipient = {
     id: npo.id.toString(),
     name: npo.name,
@@ -39,6 +40,7 @@ export default function Content({ npo, config, classes = "" }: Props) {
         className="w-full border border-gray-l3 rounded-lg"
         recipient={recipient}
         config={config}
+        user={user}
       />
     </div>
   );

@@ -26,7 +26,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 };
 
 export default CacheRoute(Page);
-function Page({ loaderData: { fund } }: Route.ComponentProps) {
+function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
@@ -71,6 +71,7 @@ function Page({ loaderData: { fund } }: Route.ComponentProps) {
                 method_ids: fund.settings.donateMethods,
                 increments: fund.increments,
               }}
+              user={user}
               className="md:border border-gray-l3 rounded-lg row-start-2"
             />
           )}

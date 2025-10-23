@@ -178,12 +178,19 @@ export interface IProgram {
   name: string;
 }
 
+export interface IUser {
+  email: string;
+  first_name?: string;
+  last_name?: string;
+}
+
 export type Init = {
   source: DonationSource;
   mode: Mode;
   recipient: DonationRecipient;
   program?: IProgram;
   config: Config | null;
+  user?: IUser;
 };
 
 export type FormStep<T extends DonationDetails = DonationDetails> = {
