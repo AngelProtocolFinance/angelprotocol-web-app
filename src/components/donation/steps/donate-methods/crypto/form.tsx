@@ -104,7 +104,7 @@ export function Form(props: CryptoFormStep) {
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="flex flex-col gap-4 rounded-md min-h-full"
+      className="flex flex-col rounded-md min-h-full"
       autoComplete="off"
     >
       <TokenField
@@ -131,6 +131,7 @@ export function Form(props: CryptoFormStep) {
 
       {token.value.code && !token_state && (
         <Incrementers
+          classes="mt-1"
           disabled={token_state === "error" || token_state === "loading"}
           on_increment={on_increment}
           code={token.value.symbol}

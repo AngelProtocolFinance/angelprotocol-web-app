@@ -116,7 +116,7 @@ export function Form(props: Props) {
         />
       )}
 
-      <div className="flex items-center py-1 border-y border-gray-l3 mt-6 justify-between flex-wrap gap-y-2 gap-x-3">
+      <div className="flex has-[input:focus-within]:border-b-(--accent-primary) items-center py-1 border-y border-gray-l3 mt-6 justify-between flex-wrap gap-y-2 gap-x-3">
         <F className="group gap-x-1 flex items-center text-sm justify-self-start">
           <Switch
             checked={rhf.tip_format.value !== "none"}
@@ -147,30 +147,37 @@ export function Form(props: Props) {
               rhf.tip_format.onChange(x);
               if (x === "custom") {
                 await new Promise((r) => setTimeout(r, 50));
-                rhf.setFocus("tip");
+                return rhf.setFocus("tip");
               }
+              if (x === "none") {
+                rhf.setValue("tip", "");
+              }
+              const point = +x / 100;
+              const [curr, amnt] = rhf.getValues(["currency", "amount"]);
+              const t = point * +amnt;
+              rhf.setValue("tip", ru_vdec(t, 1 / curr.rate));
             }}
           >
             <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) px-2 py-1 rounded-sm"
+              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm"
               value={"10" satisfies TTipFormat}
             >
               10%
             </Radio>
             <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) px-2 py-1 rounded-sm"
+              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm"
               value={"15" satisfies TTipFormat}
             >
               15%
             </Radio>
             <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) px-2 py-1 rounded-sm"
+              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm"
               value={"20" satisfies TTipFormat}
             >
               20%
             </Radio>
             <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) px-2 py-1 rounded-sm flex-center"
+              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm flex-center"
               value={"custom" satisfies TTipFormat}
             >
               <PencilIcon className="inline-block w-3 h-3 " />
@@ -178,20 +185,21 @@ export function Form(props: Props) {
           </RadioGroup>
         </F>
         {rhf.tip_format.value === "custom" && (
-          <input
-            type="number"
-            step="any"
-            {...rhf.register("tip", { shouldUnregister: true })}
-            className="field-input p-0 text-sm mt-1 border-none focus:outline-none"
-            placeholder="Enter tip"
-            aria-invalid={!!rhf.errors.tip?.message}
-          />
+          <div className="relative w-full">
+            <input
+              type="number"
+              step="any"
+              {...rhf.register("tip")}
+              className="w-full text-sm pl-2 focus:outline-none"
+              placeholder="Enter tip"
+              aria-invalid={!!rhf.errors.tip?.message}
+            />
+            <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
+              {rhf.errors.tip?.message}
+            </span>
+          </div>
         )}
       </div>
-
-      <p className="text-xs text-red text-right mt-0.5 empty:hidden">
-        {rhf.errors.tip?.message}
-      </p>
 
       <F className="group mt-2 gap-x-1 flex items-center text-sm justify-self-start">
         <Switch
@@ -218,7 +226,7 @@ export function Form(props: Props) {
           required
           classes={{
             label: "font-semibold text-base sr-only",
-            input: "field-input-donate",
+            input: "py-2",
           }}
           error={rhf.errors.first_name?.message}
         />
@@ -227,7 +235,7 @@ export function Form(props: Props) {
           label="Last name"
           placeholder="Last Name"
           classes={{
-            input: "field-input-donate",
+            input: "py-2",
             label: "font-semibold text-base sr-only",
           }}
           error={rhf.errors.last_name?.message}
@@ -238,7 +246,7 @@ export function Form(props: Props) {
           placeholder="Your email"
           classes={{
             container: "col-span-full",
-            input: "field-input-donate",
+            input: "py-2",
             label: "font-semibold text-base sr-only",
           }}
           error={rhf.errors.email?.message}

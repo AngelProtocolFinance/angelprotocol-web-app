@@ -76,6 +76,7 @@ export function use_rhf(props: Props) {
     errors,
     tip_format,
     setFocus,
+    getValues,
     cpf,
     tip,
   };

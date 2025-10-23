@@ -115,8 +115,8 @@ export const stripe_donation_details = v.pipe(
     v.partialCheck(
       [["tip"], ["tip_format"]],
       ({ tip, tip_format }) => {
-        if (tip_format === "custom") return !!tip;
-        return true;
+        if (tip_format !== "custom") return true;
+        return +tip > 0;
       },
       "required"
     ),
