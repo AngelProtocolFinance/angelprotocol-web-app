@@ -6,6 +6,7 @@ import type {
   DonationRecipient,
   DonationState,
   IProgram,
+  IUser,
   Init,
   Mode,
 } from "./types";
@@ -15,6 +16,7 @@ type Components = {
   mode: Mode;
   config: Config | null;
   recipient: DonationRecipient;
+  user?: IUser;
   program?: IProgram;
 };
 
@@ -43,12 +45,14 @@ function initialState({
   config,
   recipient,
   mode,
+  user,
 }: Components): DonationState {
   const init: Init = {
     source,
     config,
     recipient,
     mode,
+    user,
   };
 
   return {

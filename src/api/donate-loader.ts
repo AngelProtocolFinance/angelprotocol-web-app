@@ -6,6 +6,8 @@ import { search } from "helpers/https";
 import { type LoaderFunctionArgs, data } from "react-router";
 import * as v from "valibot";
 import { baldb, npodb } from ".server/aws/db";
+import { cognito } from ".server/auth";
+import type { UserV2 } from "types/auth";
 
 export interface DonateData {
   id: number;
@@ -13,6 +15,7 @@ export interface DonateData {
   /** need to await */
   program?: IProgram;
   balance: Promise<IPrettyBalance>;
+  user?:UserV2
 }
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
@@ -22,10 +25,13 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const endow = await npodb.npo(id);
   if (!endow) throw new Response(null, { status: 404 });
 
+  const { user } = await cognito.retrieve(request);
+
   return data({
     id,
     endow,
     program: pid ? await npodb.npo_program(pid, id) : undefined,
     balance: baldb.npo_balance(id),
+    user,
   } satisfies DonateData);
 };

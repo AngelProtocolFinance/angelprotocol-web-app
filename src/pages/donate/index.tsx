@@ -28,7 +28,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 };
 export default CacheRoute(Page);
 function Page({ loaderData }: Route.ComponentProps) {
-  const { endow, balance, program } = loaderData;
+  const { endow, balance, program, user } = loaderData;
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
@@ -72,6 +72,7 @@ function Page({ loaderData }: Route.ComponentProps) {
             program={
               program ? { id: program.id, name: program.title } : undefined
             }
+            user={user}
             className="md:border border-gray-l3 rounded-lg row-start-2"
           />
         </div>

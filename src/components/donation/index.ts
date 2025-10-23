@@ -3,6 +3,7 @@ export {
   type DonationState,
   type DonationRecipient,
   type IProgram,
+  type IUser,
   donation_recipient,
   is_fund,
 } from "./steps/types";

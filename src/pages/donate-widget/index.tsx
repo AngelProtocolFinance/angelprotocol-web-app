@@ -23,7 +23,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d, location: l }) => {
 };
 
 export default function Page({ loaderData }: Route.ComponentProps) {
-  const { endow, program } = loaderData;
+  const { endow, program, user } = loaderData;
   const [searchParams] = useSearchParams();
 
   /** Hide the Intercom chatbot */
@@ -58,6 +58,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
     >
       <Content
         npo={endow}
+        user={user}
         program={
           program
             ? {
