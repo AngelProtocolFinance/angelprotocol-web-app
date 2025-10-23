@@ -1,6 +1,6 @@
 import type { Donation, TTemplate } from "@better-giving/emails";
 import { emails } from "constants/common";
-import { round_to_cents } from "helpers/decimal";
+import { ru_vdec, usdpu } from "helpers/decimal";
 import { round_number } from "helpers/round-number";
 import { SendEmailCommand, ses } from ".server/aws/ses";
 
@@ -28,7 +28,7 @@ export const to_ses_amnts = (
   usd_value: number
 ) => {
   return {
-    prettyAmount: `${round_to_cents(amnt, usd_value)} ${denom}`,
+    prettyAmount: `${ru_vdec(amnt, usdpu(usd_value, amnt))} ${denom}`,
     prettyUSDamount:
       denom.toLowerCase() === "usd"
         ? ""

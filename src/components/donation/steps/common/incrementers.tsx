@@ -1,6 +1,6 @@
 import type { IIncrement } from "@better-giving/schemas";
 import { DONATION_INCREMENTS } from "constants/common";
-import { centsDecimals, humanize } from "helpers/decimal";
+import { humanize, vdec } from "helpers/decimal";
 
 export type OnIncrement = (increment: number) => void;
 
@@ -69,7 +69,7 @@ function Incrementer({
  * should only have at most 5 digits in total (2 before the decimal, 3 digits after).
  */
 function shortenHumanize(num: number, rate: number, precision = 2): string {
-  const decimals = centsDecimals(rate, precision);
+  const decimals = vdec(rate, precision);
   if (num > 1e10) {
     // numbers over 10 Billion
     return `${humanize(num / 1e9, decimals)}B`;

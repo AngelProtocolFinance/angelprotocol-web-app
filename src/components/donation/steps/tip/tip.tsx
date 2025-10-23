@@ -5,7 +5,7 @@ import dapp_logo from "assets/images/bettergiving-logo.webp";
 import laira_gift from "assets/laira/laira-gift.webp";
 import laira_standing_front from "assets/laira/laira-standing-front.webp";
 import { Image } from "components/image/image";
-import { centsDecimals, humanize, roundDown } from "helpers/decimal";
+import { humanize, rd, vdec } from "helpers/decimal";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, str_num } from "schemas/shape";
@@ -137,7 +137,7 @@ export function Tip(props: TipStep) {
           value={[Number(tip.pct)]}
           onValueChange={([pct]) =>
             onTipChange({
-              amount: roundDown(amount * pct, decimals),
+              amount: rd(amount * pct, decimals),
               pct,
             })
           }
@@ -153,7 +153,7 @@ export function Tip(props: TipStep) {
             <div className="absolute -top-9 px-2 py-0.5 rounded-sm text-sm">
               <span className="text-xs uppercase mr-0.5">{symbol}</span>
               <span className="mr-0.5">
-                {humanize(tip.amount || "0", centsDecimals(rate, decimals))}
+                {humanize(tip.amount || "0", vdec(rate, decimals))}
               </span>
               <span className="text-gray text-xs">
                 ({(Number(tip.pct) * 100).toFixed(0)}%)

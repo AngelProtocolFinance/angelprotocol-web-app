@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import { USD_CODE } from "../../common/constants";
+import { USD_CODE, init_donation_fv } from "../../common/constants";
 import type { DafDonationDetails, Init } from "../../types";
 import { Form } from "./form";
 
@@ -55,6 +55,7 @@ describe("DAF form test", () => {
       method: "daf",
       amount: "100",
       currency: { code: USD_CODE, rate: 1, min: 1 },
+      ...init_donation_fv,
     };
     render(<Form init={init} step="donate-form" details={details} />);
     const amountInput = screen.getByPlaceholderText(/enter amount/i);

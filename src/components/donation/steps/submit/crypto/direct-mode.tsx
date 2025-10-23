@@ -1,7 +1,7 @@
 import { chains } from "@better-giving/assets/tokens";
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
-import { round_to_cents } from "helpers/decimal";
+import { ru_vdec } from "helpers/decimal";
 import { href, useNavigate, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
@@ -47,7 +47,7 @@ export function DirectMode({ donation, classes = "" }: Props) {
 
   const { data, isLoading, error, isValidating } = use_swr(intent, fetcher);
 
-  const totalDisplayAmount = round_to_cents(
+  const total_disp_amnt = ru_vdec(
     +details.token.amount + (tip?.value ?? 0) + fee_allowance,
     details.token.rate,
     details.token.precision
@@ -56,7 +56,7 @@ export function DirectMode({ donation, classes = "" }: Props) {
   return (
     <div className={`${classes} grid justify-items-center`}>
       <p className="text-gray text-balance text-center mb-3.5 max-w-sm">
-        To complete your donation, send {totalDisplayAmount}
+        To complete your donation, send {total_disp_amnt}
         &nbsp;
         {details.token.symbol} from your crypto wallet to the address below
       </p>

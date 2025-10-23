@@ -1,6 +1,6 @@
 import { Cells, TableSection } from "components/table-section";
 import { toPP } from "helpers/date";
-import { centsDecimals, humanize, round_to_cents } from "helpers/decimal";
+import { humanize, ru_vdec, usdpu } from "helpers/decimal";
 import { ArrowDownToLine } from "lucide-react";
 import { Link, href } from "react-router";
 import type { IPaginator } from "types/components";
@@ -72,7 +72,7 @@ export function Table({
               </div>
               <div>
                 {row.currency}{" "}
-                {round_to_cents(row.amount, centsDecimals(row.usd_value))}{" "}
+                {ru_vdec(row.amount, usdpu(row.amount, row.usd_value))}{" "}
                 <span className="text-gray text-sm">
                   {row.currency !== "USD"
                     ? `$${humanize(row.usd_value)}`

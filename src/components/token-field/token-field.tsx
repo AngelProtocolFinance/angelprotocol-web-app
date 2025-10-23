@@ -31,7 +31,8 @@ const Field: React.ForwardRefRenderFunction<El, ITokenField> = (props, ref) => {
             disabled={props.disabled}
             autoComplete="off"
             id="amount"
-            type="text"
+            type="number"
+            step="any"
             placeholder="Enter amount"
             className={`outline-none w-full h-full ${style.input} bg-transparent placeholder:font-medium pl-2 py-3.5 font-semibold`}
           />
