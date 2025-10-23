@@ -14,7 +14,7 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
     query_by: "name,tagline,registration_number",
     query_by_weights: "3,2,1",
     filter_by: filters,
-    sort_by: q ? "claimed:desc,_text_match:desc" : "claimed:desc,name:asc",
+    sort_by: q ? "_text_match:desc" : "name:asc",
     per_page: HITS_PER_PAGE.toString(),
     page: page.toString(),
     use_cache: "true",
@@ -61,27 +61,21 @@ export async function get_npos(params: INposSearchObj): Promise<INposPage> {
 }
 
 const f = <T extends any[]>(i: T | undefined, exp: (v: string) => string) => {
-  return (i || []).map(exp).join(" || ");
+  const joined = (i || []).map(exp).join(" || ");
+  if (!joined) return "";
+  return `(${joined})`;
 };
 
 function filters_fn(params: Omit<INposSearchObj, "fields" | "page">): string {
   const f1 = [
     `env:=${env}`,
-    "published:=true",
+    f(params.published, (x) => `published:=${x}`),
+    f(params.claimed, (x) => `claimed:=${x}`),
     f(params.countries, (x) => `hq_country:=${x} || active_in_countries:=${x}`),
     f(params.endow_designation, (x) => `endow_designation:=${x}`),
     f(params.kyc_only, (x) => `kyc_donors_only:=${x}`),
     f(params.fund_opt_in, (x) => `fund_opt_in:=${x}`),
     f(params.sdgs, (x) => `sdgs:=${x}`),
   ].filter(Boolean);
-
-  // when filtering, searching, also include unclaimed npos
-  const f2 = f1.concat(
-    f(
-      f1.length > 2 || params.query ? [true, false] : params.claimed,
-      (x) => `claimed:=${x}`
-    )
-  );
-
-  return f2.filter(Boolean).join(" && ");
+  return f1.join(" && ");
 }

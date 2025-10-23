@@ -7,7 +7,7 @@ const options: FilterOption<boolean>[] = [
   { displayText: "Not verified", value: false, key: "false" },
 ];
 
-export default function VerificationFilter() {
+export function VerificationFilter() {
   const [params, setParams] = useSearchParams();
   const { claimed: pc = [], ...p } = toParsed(params);
 

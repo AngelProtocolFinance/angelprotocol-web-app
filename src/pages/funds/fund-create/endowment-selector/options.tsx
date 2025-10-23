@@ -22,6 +22,8 @@ const fetcher = async ({
     page,
     fund_opt_in,
     fields: "id,name,card_img,registration_number",
+    claimed: "true",
+    published: "true,false",
   });
   const res = await fetch(`/api/npos?${search.toString()}`);
   if (!res.ok) throw res;

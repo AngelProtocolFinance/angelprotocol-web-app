@@ -15,8 +15,8 @@ import Toolbar from "./toolbar";
 import { get_npos } from ".server/npos";
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const params = parse(npos_search, search(request));
-  const page = await get_npos(params);
+  const { published, claimed, ...p } = parse(npos_search, search(request));
+  const page = await get_npos({ ...p, claimed: [true], published: [true] });
   return page;
 };
 

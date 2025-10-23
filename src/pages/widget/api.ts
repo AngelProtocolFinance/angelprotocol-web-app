@@ -31,6 +31,8 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     query,
     page: 1,
     fields: ["id", "name"],
+    claimed: [true],
+    published: [true, false],
   });
 
   return {
