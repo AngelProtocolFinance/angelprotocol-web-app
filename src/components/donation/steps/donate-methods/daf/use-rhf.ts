@@ -1,7 +1,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { roundDown } from "helpers/decimal";
+import { rd } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
-import { usd_option } from "../../common/constants";
+import { init_donation_fv, usd_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import { daf_donation_details } from "../../types";
 import type { FormValues as FV, Props } from "./types";
@@ -10,6 +10,7 @@ export function use_rhf(props: Props) {
   const initial: FV = {
     amount: "",
     currency: usd_option,
+    ...init_donation_fv,
   };
 
   const {
@@ -31,9 +32,9 @@ export function use_rhf(props: Props) {
   });
 
   const on_increment: OnIncrement = (inc) => {
-    const amntNum = Number(getValues("amount"));
-    if (Number.isNaN(amntNum)) return trigger("amount", { shouldFocus: true });
-    setValue("amount", roundDown(inc + amntNum, 0));
+    const amnt = Number(getValues("amount"));
+    if (Number.isNaN(amnt)) return trigger("amount", { shouldFocus: true });
+    setValue("amount", rd(inc + amnt, 0), { shouldValidate: true });
   };
 
   return {

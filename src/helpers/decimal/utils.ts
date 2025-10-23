@@ -1,16 +1,5 @@
 import Dec, { Decimal } from "decimal.js";
 
-/** convert numbers to user's number format with precision defined */
-export function humanize(num: Dec.Value, precision = 2, truncate = false) {
-  const _num = new Dec(num);
-  const [truncated, suffix] = truncate ? shorten(_num) : [_num, ""];
-  //set local to undefined to use user's default format
-  return (
-    toPreciseLocaleString(roundDownToNum(truncated, precision), precision) +
-    suffix
-  );
-}
-
 /** wrapper of toLocalString, to use in tests to defined fraction digits*/
 export function toPreciseLocaleString(num: number, precision: number) {
   return num.toLocaleString(undefined, {
@@ -19,24 +8,49 @@ export function toPreciseLocaleString(num: number, precision: number) {
   });
 }
 
-export function roundDown(num: Dec.Value, precision = 2) {
+/** round down */
+export function rd(num: Dec.Value, precision = 2): string {
   return new Dec(num).toFixed(precision, Dec.ROUND_DOWN);
 }
 
-export function roundDownToNum(num: Dec.Value, precision = 2) {
-  return +roundDown(num, precision);
+/** round down to num*/
+export function rd2num(num: Dec.Value, precision = 2): number {
+  return +rd(num, precision);
 }
 
-export function centsDecimals(usdValue: number, decimals = 2) {
+/** convert numbers to user's number format with precision defined */
+export function humanize(num: Dec.Value, precision = 2, truncate = false) {
+  const _num = new Dec(num);
+  const [truncated, suffix] = truncate ? shorten(_num) : [_num, ""];
+  //set local to undefined to use user's default format
+  return (
+    toPreciseLocaleString(rd2num(truncated, precision), precision) + suffix
+  );
+}
+
+/** appropriate number of decimals depending on usd value
+ *  e.g. (1usd -> 1usd), 100 cents per usd -> 2 decimals
+ *  e.g. (100,000usd -> 1btc), 10,000,000 cents per btc -> 6 decimals
+ */
+export function vdec(usd_per_unit: number | number, max_decimals = 2) {
   //get `x` such that (10^x)cents = rate
-  const x = Dec.log10(new Decimal(usdValue).div(0.01));
+  const x = Dec.log10(new Decimal(usd_per_unit).div(0.01));
   // make sure display digits is less than token decimals
-  return Dec.min(decimals, Dec.max(x, 0)).floor().toNumber();
+  return Dec.min(max_decimals, Dec.max(x, 0)).floor().toNumber();
 }
 
-export function round_to_cents(amount: number, usdValue: number, decimals = 2) {
+export const usdpu = (amount: number, usd_value: number) => {
+  return amount > 0 ? usd_value / amount : 0;
+};
+
+/** round up to approriate number of decimals depending on value */
+export function ru_vdec(
+  amount: number | string,
+  usd_per_unit: number,
+  max_decimals = 2
+) {
   return new Dec(amount).toFixed(
-    centsDecimals(usdValue, decimals),
+    vdec(usd_per_unit, max_decimals),
     Dec.ROUND_UP
   );
 }

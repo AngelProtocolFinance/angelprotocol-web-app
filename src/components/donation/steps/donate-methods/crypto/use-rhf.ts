@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { centsDecimals, roundDown } from "helpers/decimal";
+import { rd, vdec } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
 import { schema, token_shape } from "schemas/shape";
 import { object } from "yup";
@@ -43,7 +43,7 @@ export function use_rhf(props: Props) {
     if (Number.isNaN(amnt)) return trigger("token", { shouldFocus: true });
     setValue("token", {
       ...token,
-      amount: roundDown(amnt + inc, centsDecimals(token.rate, token.precision)),
+      amount: rd(amnt + inc, vdec(token.rate, token.precision)),
     });
   };
 

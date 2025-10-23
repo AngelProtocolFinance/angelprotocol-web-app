@@ -40,7 +40,7 @@ export function Preview({ classes = "", config, endow }: Props) {
         increments: increments,
       },
     },
-    details: init_details(methods.at(0)?.id ?? "stripe", cfg.program),
+    details: init_details(methods.at(0)?.id ?? "stripe"),
   };
 
   return (

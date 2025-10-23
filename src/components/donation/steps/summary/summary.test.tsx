@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import type { UserV2 } from "types/auth";
 import { describe, expect, test, vi } from "vitest";
 import { stb } from "../__tests__/test-data";
-import { init_token_option } from "../common/constants";
+import { init_donation_fv, init_token_option } from "../common/constants";
 import type {
   CryptoDonationDetails,
   Donor,
@@ -22,6 +22,7 @@ const one_time_stripe_details: StripeDonationDetails = {
   frequency: "one-time",
   amount: "100.00",
   currency: { code: "usd", min: 1, rate: 1 },
+  ...init_donation_fv,
 };
 
 const donor: Donor = {

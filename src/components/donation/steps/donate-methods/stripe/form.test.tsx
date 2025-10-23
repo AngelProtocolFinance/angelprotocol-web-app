@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { mock_usd } from "services/apes/mock";
 import { describe, expect, test, vi } from "vitest";
 import { stb } from "../../__tests__/test-data";
+import { init_donation_fv } from "../../common/constants";
 import type { Init, StripeDonationDetails } from "../../types";
 import { Form } from "./form";
 
@@ -46,6 +47,7 @@ describe("Stripe form test", () => {
       currency: mock_usd,
       frequency: "recurring",
       method: "stripe",
+      ...init_donation_fv,
     };
     const Stub = stb(<Form step="donate-form" init={init} details={details} />);
     render(<Stub />);

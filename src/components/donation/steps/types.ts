@@ -61,13 +61,19 @@ export const amount = ({ required = false } = {}) =>
     return v.pipe(
       v.string(),
       v.transform((x) => +x),
+      v.number("Please enter a valid number"),
       v.minValue(0, "amount must be greater than 0"),
       v.transform((x) => x.toString())
     );
   });
 
+export const tip_formats = ["10", "15", "20", "custom", "none"] as const;
+export const tip_format = v.picklist(tip_formats);
+export type TTipFormat = (typeof tip_formats)[number];
+
 export const donation_fv = v.object({
   tip: amount(),
+  tip_format,
   cover_processing_fee: v.boolean(),
   first_name: v.pipe(str, v.nonEmpty("Please enter your first name")),
   last_name: v.pipe(str, v.nonEmpty("Please enter your last name")),
@@ -83,7 +89,6 @@ export interface IDonationFvBase extends v.InferOutput<typeof donation_fv> {}
 export const fiat_donation_details = v.object({
   amount: amount({ required: true }),
   currency: currency_fv,
-  ...donation_fv.entries,
 });
 
 export interface FiatDonationDetails
@@ -93,6 +98,7 @@ export const stripe_donation_details = v.pipe(
   v.object({
     frequency,
     ...fiat_donation_details.entries,
+    ...donation_fv.entries,
   }),
   v.forward(
     v.partialCheck(
@@ -104,6 +110,17 @@ export const stripe_donation_details = v.pipe(
       "less than min"
     ),
     ["amount"]
+  ),
+  v.forward(
+    v.partialCheck(
+      [["tip"], ["tip_format"]],
+      ({ tip, tip_format }) => {
+        if (tip_format === "custom") return !!tip;
+        return true;
+      },
+      "required"
+    ),
+    ["tip"]
   )
 );
 

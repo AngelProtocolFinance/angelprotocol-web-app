@@ -2,7 +2,6 @@ import { Form as FormContainer } from "components/form";
 import { MaskedInput } from "components/form";
 import { dollar } from "components/form/masks";
 import { usd_option } from "../../common/constants";
-import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
 import { use_donation_state } from "../../context";
 import { next_form_state } from "../helpers";
@@ -19,7 +18,7 @@ export function Form(props: Props) {
       onSubmit={rhf.handleSubmit((fv) =>
         set_state((prev) => next_form_state(prev, { ...fv, method: "daf" }))
       )}
-      className="flex flex-col gap-4 min-h-full"
+      className="flex flex-col min-h-full"
     >
       <MaskedInput
         id="donation-amount"
@@ -44,7 +43,7 @@ export function Form(props: Props) {
         code={usd_option.code}
         rate={usd_option.rate}
         increments={props.init.config?.increments}
-        classes="mb-4"
+        classes="mb-4 mt-1"
         precision={0}
       />
 

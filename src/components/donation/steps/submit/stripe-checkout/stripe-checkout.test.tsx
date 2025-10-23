@@ -6,6 +6,7 @@ import { createRoutesStub } from "react-router";
 import { fiatDonationIntentCreationErrorHandler } from "services/api/mock";
 import { mswServer } from "setup-tests";
 import { describe, expect, test, vi } from "vitest";
+import { init_donation_fv } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
 import { StripeCheckout as Checkout } from "./stripe-checkout";
 
@@ -57,6 +58,7 @@ const state: StripeCheckoutStep = {
     amount: "100",
     currency: { code: "usd", min: 1, rate: 1 },
     frequency: "recurring",
+    ...init_donation_fv,
   },
   tip: { value: 17, format: "pct" },
   donor: {

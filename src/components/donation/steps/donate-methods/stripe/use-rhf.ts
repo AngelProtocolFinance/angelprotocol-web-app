@@ -1,5 +1,5 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { roundDown } from "helpers/decimal";
+import { rd } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
 import { usd_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
@@ -11,6 +11,12 @@ export function use_rhf(props: Props) {
     amount: "",
     currency: usd_option,
     frequency: "" as FV["frequency"],
+    first_name: "",
+    last_name: "",
+    email: "",
+    tip: "",
+    cover_processing_fee: false,
+    tip_format: "15",
   };
 
   const {
@@ -20,6 +26,8 @@ export function use_rhf(props: Props) {
     setValue,
     getValues,
     trigger,
+    watch,
+    setFocus,
     formState: { errors },
   } = useForm<FV>({
     defaultValues: props.details || initial,
@@ -40,12 +48,22 @@ export function use_rhf(props: Props) {
     control,
     name: "currency",
   });
+  const { field: tip_format } = useController<FV, "tip_format">({
+    control,
+    name: "tip_format",
+  });
+  const { field: cpf } = useController<FV, "cover_processing_fee">({
+    control,
+    name: "cover_processing_fee",
+  });
 
   const on_increment: OnIncrement = (inc) => {
-    const amntNum = Number(getValues("amount"));
-    if (Number.isNaN(amntNum)) return trigger("amount", { shouldFocus: true });
-    setValue("amount", roundDown(amntNum + inc, 0));
+    const amnt = Number(getValues("amount"));
+    if (Number.isNaN(amnt)) return trigger("amount", { shouldFocus: true });
+    setValue("amount", rd(amnt + inc, 0), { shouldValidate: true });
   };
+
+  const tip = watch("tip");
 
   return {
     frequency,
@@ -54,6 +72,11 @@ export function use_rhf(props: Props) {
     on_increment,
     register,
     handleSubmit,
+    setValue,
     errors,
+    tip_format,
+    setFocus,
+    cpf,
+    tip,
   };
 }

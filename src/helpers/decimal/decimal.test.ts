@@ -1,26 +1,21 @@
 import { describe, expect, test } from "vitest";
-import {
-  humanize,
-  roundDown,
-  roundDownToNum,
-  toPreciseLocaleString,
-} from "./utils";
+import { humanize, rd, rd2num, toPreciseLocaleString } from "./utils";
 
 describe("common decimal helpers", () => {
   test("round down", () => {
-    expect(roundDown(1.23456789, 0)).toBe("1");
-    expect(roundDown(1.23456789, 1)).toBe("1.2");
-    expect(roundDown(1.23456789, 2)).toBe("1.23");
-    expect(roundDown(1.23456789, 3)).toBe("1.234");
-    expect(roundDown(1.23456789, 4)).toBe("1.2345");
-    expect(roundDown(1.23456789, 5)).toBe("1.23456");
+    expect(rd(1.23456789, 0)).toBe("1");
+    expect(rd(1.23456789, 1)).toBe("1.2");
+    expect(rd(1.23456789, 2)).toBe("1.23");
+    expect(rd(1.23456789, 3)).toBe("1.234");
+    expect(rd(1.23456789, 4)).toBe("1.2345");
+    expect(rd(1.23456789, 5)).toBe("1.23456");
 
-    expect(roundDownToNum(1.23456789, 0)).toBe(1);
-    expect(roundDownToNum(1.23456789, 1)).toBe(1.2);
-    expect(roundDownToNum(1.23456789, 2)).toBe(1.23);
-    expect(roundDownToNum(1.23456789, 3)).toBe(1.234);
-    expect(roundDownToNum(1.23456789, 4)).toBe(1.2345);
-    expect(roundDownToNum(1.23456789, 5)).toBe(1.23456);
+    expect(rd2num(1.23456789, 0)).toBe(1);
+    expect(rd2num(1.23456789, 1)).toBe(1.2);
+    expect(rd2num(1.23456789, 2)).toBe(1.23);
+    expect(rd2num(1.23456789, 3)).toBe(1.234);
+    expect(rd2num(1.23456789, 4)).toBe(1.2345);
+    expect(rd2num(1.23456789, 5)).toBe(1.23456);
   });
 
   test("to currency: truncating lt 1K", () => {

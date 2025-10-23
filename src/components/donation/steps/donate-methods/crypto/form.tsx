@@ -8,12 +8,11 @@ import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { TokenCombobox } from "components/token-field/token-combobox";
 import { DONATION_INCREMENTS, logo_url } from "constants/common";
 import Fuse from "fuse.js";
-import { round_to_cents } from "helpers/decimal";
+import { ru_vdec } from "helpers/decimal";
 import { useMemo, useState } from "react";
 import { href } from "react-router";
 import type { ITokenEstimate } from "types/api";
 import { TokenField, btn_disp } from "../../../../token-field";
-import { ContinueBtn } from "../../common/continue-btn";
 import { Incrementers } from "../../common/incrementers";
 import { use_donation_state } from "../../context";
 import type { CryptoFormStep } from "../../types";
@@ -120,7 +119,7 @@ export function Form(props: CryptoFormStep) {
           token.value.min ? (
             <p className="text-xs mb-1">
               Minimum amount: {token.value.symbol}{" "}
-              {round_to_cents(
+              {ru_vdec(
                 token.value.min,
                 token.value.rate,
                 token.value.precision

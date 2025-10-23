@@ -33,6 +33,7 @@ export const usd_option: ICurrencyFv = { code: USD_CODE, min: 1, rate: 1 };
 
 export const init_donation_fv: IDonationFvBase = {
   tip: "",
+  tip_format: "15",
   cover_processing_fee: false,
   first_name: "",
   last_name: "",
