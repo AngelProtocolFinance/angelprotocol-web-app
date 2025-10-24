@@ -1,6 +1,6 @@
 import type { INpo } from "@better-giving/endowment";
 import laira_waiving from "assets/laira/laira-waiving.webp";
-import { type DonationState, Steps, init_details } from "components/donation";
+import { Steps, type TDonationState } from "components/donation";
 
 import { Image } from "components/image/image";
 import { Info } from "components/status";
@@ -23,8 +23,8 @@ export function Preview({ classes = "", config, endow }: Props) {
 
   const { methods, increments, ...cfg } = config;
 
-  const initState: DonationState = {
-    step: "donate-form",
+  const init_state: TDonationState = {
+    method: methods.find((m) => !m.disabled)?.id || "stripe",
     init: {
       source: "bg-widget",
       mode: "preview",
@@ -40,7 +40,6 @@ export function Preview({ classes = "", config, endow }: Props) {
         increments: increments,
       },
     },
-    details: init_details(methods.at(0)?.id ?? "stripe"),
   };
 
   return (
@@ -57,8 +56,8 @@ export function Preview({ classes = "", config, endow }: Props) {
         </p>
       )}
       <Steps
-        key={JSON.stringify(initState)}
-        init={initState}
+        key={JSON.stringify(init_state)}
+        init={init_state}
         className="my-5 @md/preview:w-3/4 border border-gray-l3"
       />
     </Container>

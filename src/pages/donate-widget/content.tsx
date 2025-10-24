@@ -1,5 +1,5 @@
 import type { INpo } from "@better-giving/endowment";
-import { type DonationRecipient, Steps, type IUser } from "components/donation";
+import { type DonationRecipient, type IUser, Steps } from "components/donation";
 import type { IProgram } from "components/donation";
 import type { Parsed } from "./parse-config";
 

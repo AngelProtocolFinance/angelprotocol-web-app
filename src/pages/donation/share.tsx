@@ -5,7 +5,7 @@ import x from "assets/icons/social/x.webp";
 import { APP_NAME } from "constants/env";
 import { X } from "lucide-react";
 import { useState } from "react";
-import { is_fund } from "../../components/donation/steps/types";
+import { is_fund } from "../../components/donation/types";
 import { ExtLink } from "../../components/ext-link";
 import { Modal } from "../../components/modal";
 
