@@ -1,5 +1,6 @@
 import type { DonationSource } from "types/lists";
 import { Context } from "./context";
+import { CurrentStep } from "./current-step";
 import type {
   Config,
   DonationRecipient,
@@ -9,7 +10,6 @@ import type {
   Mode,
   TDonationState,
 } from "./types";
-import { CurrentStep } from "./current-step";
 
 type Components = {
   source: DonationSource;

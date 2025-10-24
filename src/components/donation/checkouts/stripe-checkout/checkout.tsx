@@ -10,8 +10,8 @@ import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import { href } from "react-router";
 import { use_donation_state } from "../../context";
-import { Loader } from "../loader";
 import type { StripeDonationDetails } from "../../types";
+import { Loader } from "../loader";
 
 type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 

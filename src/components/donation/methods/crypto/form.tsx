@@ -5,6 +5,8 @@ import {
   tokens_list,
 } from "@better-giving/assets/tokens";
 import { CloseButton, ComboboxOption } from "@headlessui/react";
+import { CpfToggle } from "components/donation/common/cpf-toggle";
+import { Field } from "components/form";
 import { TokenCombobox } from "components/token-field/token-combobox";
 import { DONATION_INCREMENTS, logo_url } from "constants/common";
 import Fuse from "fuse.js";
@@ -14,6 +16,7 @@ import { href } from "react-router";
 import type { ITokenEstimate } from "types/api";
 import { TokenField, btn_disp } from "../../../token-field";
 import { Incrementers } from "../../common/incrementers";
+import { TipField } from "../../common/tip-field";
 import { use_donation_state } from "../../context";
 import { type TMethodState, to_checkout } from "../../types";
 import type { TTokenState } from "./types";
@@ -38,9 +41,19 @@ export function Form(props: TMethodState<"crypto">) {
 
   const { set_state } = use_donation_state();
 
-  const { handleSubmit, reset, token, errors, on_increment } = use_rhf(
-    props.fv
-  );
+  const {
+    handleSubmit,
+    reset,
+    token,
+    errors,
+    on_increment,
+    tip_format,
+    cpf,
+    setFocus,
+    setValue,
+    getValues,
+    register,
+  } = use_rhf(props.fv);
 
   const combobox = (
     <TokenCombobox
@@ -113,7 +126,7 @@ export function Form(props: TMethodState<"crypto">) {
         amount={token.value.amount}
         amount_usd={token.value.rate * +token.value.amount}
         on_change={(x) => token.onChange({ ...token.value, amount: x })}
-        error={errors.token}
+        error={errors.token?.amount?.message || errors.token?.id?.message}
         label="Donation amount"
         min_amount={
           token.value.min ? (
@@ -145,6 +158,97 @@ export function Form(props: TMethodState<"crypto">) {
           })}
         />
       )}
+
+      <TipField
+        classes="mt-6"
+        checked={tip_format.value !== "none"}
+        checked_changed={(checked) => {
+          if (checked) {
+            tip_format.onChange("15");
+          } else {
+            tip_format.onChange("none");
+            setValue("tip", "");
+          }
+        }}
+        tip_format={tip_format.value}
+        tip_format_changed={async (format) => {
+          tip_format.onChange(format);
+          if (format === "none") {
+            return setValue("tip", "");
+          }
+          if (format === "custom") {
+            await new Promise((r) => setTimeout(r, 50));
+            return setFocus("tip");
+          }
+
+          const tkn = getValues("token");
+          if (!tkn.amount) return setValue("tip", "");
+
+          const v = (+format / 100) * +tkn.amount;
+          setValue("tip", ru_vdec(v, tkn.rate, tkn.precision));
+        }}
+        custom_tip={
+          tip_format.value === "custom" ? (
+            <div className="relative w-full">
+              <input
+                {...register("tip")}
+                type="number"
+                step="any"
+                className="w-full text-sm pl-2 focus:outline-none"
+                placeholder="Enter tip"
+                aria-invalid={!!errors.tip?.message}
+              />
+              <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
+                {errors.tip?.message}
+              </span>
+            </div>
+          ) : undefined
+        }
+      />
+
+      <CpfToggle
+        classes="mt-2"
+        checked={cpf.value}
+        checked_changed={(x) => cpf.onChange(x)}
+      />
+
+      <div className="grid mt-6 mb-4 grid-cols-2 gap-2 content-start">
+        <p className="col-span-full text-sm font-semibold">
+          Payment information
+        </p>
+        <Field
+          {...register("first_name")}
+          label="First name"
+          placeholder="First Name"
+          required
+          classes={{
+            label: "font-semibold text-base sr-only",
+            input: "py-2",
+          }}
+          error={errors.first_name?.message}
+        />
+        <Field
+          {...register("last_name")}
+          label="Last name"
+          placeholder="Last Name"
+          classes={{
+            input: "py-2",
+            label: "font-semibold text-base sr-only",
+          }}
+          error={errors.last_name?.message}
+        />
+        <Field
+          {...register("email")}
+          label="Your email"
+          placeholder="Your email"
+          classes={{
+            container: "col-span-full",
+            input: "py-2",
+            label: "font-semibold text-base sr-only",
+          }}
+          error={errors.email?.message}
+        />
+      </div>
 
       <button
         disabled={token_state === "error" || token_state === "loading"}

@@ -1,11 +1,12 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { rd, vdec } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
-import { schema, token_shape } from "schemas/shape";
-import { object } from "yup";
 import { init_donation_fv, init_token_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
-import type { CryptoDonationDetails as FV } from "../../types";
+import {
+  type CryptoDonationDetails as FV,
+  crypto_donation_details,
+} from "../../types";
 
 const initial: FV = {
   token: init_token_option,
@@ -20,15 +21,12 @@ export function use_rhf(init?: FV) {
     getValues,
     trigger,
     control,
+    setFocus,
+    register,
     formState: { errors },
   } = useForm<FV>({
     defaultValues: init || initial,
-    resolver: yupResolver(
-      schema<FV>({
-        token: object(token_shape()),
-        //no need to validate split, restricted by slider
-      })
-    ),
+    resolver: valibotResolver(crypto_donation_details),
   });
 
   const { field: token } = useController<FV, "token">({
@@ -36,24 +34,45 @@ export function use_rhf(init?: FV) {
     name: "token",
   });
 
+  const { field: cpf } = useController({
+    control: control,
+    name: "cover_processing_fee",
+  });
+
+  const { field: tip_format } = useController({
+    control: control,
+    name: "tip_format",
+  });
+
   const on_increment: OnIncrement = (inc) => {
     const token = getValues("token");
     const amnt = Number(token.amount);
     if (Number.isNaN(amnt)) return trigger("token", { shouldFocus: true });
-    setValue("token", {
-      ...token,
-      amount: rd(amnt + inc, vdec(token.rate, token.precision)),
-    });
+    setValue(
+      "token",
+      {
+        ...token,
+        amount: rd(amnt + inc, vdec(token.rate, token.precision)),
+      },
+      { shouldValidate: true }
+    );
   };
 
   return {
     reset,
     setValue,
     handleSubmit,
+    errors,
+    getValues,
+    setFocus,
+    register,
+
+    //controllers
     token,
+    tip_format,
+    cpf,
+
+    //utils
     on_increment,
-    errors: {
-      token: errors.token?.amount?.message || errors.token?.id?.message,
-    },
   };
 }

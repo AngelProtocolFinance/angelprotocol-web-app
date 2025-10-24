@@ -2,13 +2,13 @@ import { EMAIL_SUPPORT } from "constants/env";
 import { href } from "react-router";
 import { BackBtn } from "../common/back-btn";
 import { use_donation_state } from "../context";
-import { DonationTerms } from "./donation-terms";
 import {
+  type StocksDonationDetails,
   back_to_form,
   is_fund,
   tip_val,
-  type StocksDonationDetails,
 } from "../types";
+import { DonationTerms } from "./donation-terms";
 
 export function Stocks(props: StocksDonationDetails) {
   const { state } = use_donation_state();

@@ -2,7 +2,6 @@ import type { TFrequency } from "@better-giving/donation";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { Check } from "lucide-react";
 
-
 const styles = {
   icon: "hidden @[21rem]/frequency:block ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
   option:
@@ -26,11 +25,17 @@ export function Frequency({ value, onChange, error }: Props) {
         onChange={onChange}
         className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex"
       >
-        <Radio value={"recurring" satisfies TFrequency} className={styles.option}>
+        <Radio
+          value={"recurring" satisfies TFrequency}
+          className={styles.option}
+        >
           <span>Give Monthly</span>
           <Check size={16} className={styles.icon} />
         </Radio>
-        <Radio value={"one-time" satisfies TFrequency} className={styles.option}>
+        <Radio
+          value={"one-time" satisfies TFrequency}
+          className={styles.option}
+        >
           <span>Give Once</span>
           <Check size={16} className={styles.icon} />
         </Radio>

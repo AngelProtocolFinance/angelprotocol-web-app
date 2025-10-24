@@ -1,16 +1,16 @@
 import { chains } from "@better-giving/assets/tokens";
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
+import { PROCESSING_RATES } from "constants/common";
 import { ru_vdec } from "helpers/decimal";
+import { min_fee_allowance } from "helpers/donation";
 import { href, useNavigate, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
 import type { DonationIntent } from "types/donation-intent";
 import { ContinueBtn } from "../../common/continue-btn";
+import { type CryptoDonationDetails, type Init, tip_val } from "../../types";
 import { PayQr } from "./pay-qr";
-import { type Init, tip_val, type CryptoDonationDetails } from "../../types";
-import { min_fee_allowance } from "helpers/donation";
-import { PROCESSING_RATES } from "constants/common";
 
 type Props = {
   classes?: string;
