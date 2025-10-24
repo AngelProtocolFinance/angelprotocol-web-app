@@ -4,10 +4,10 @@ import { program_id } from "@better-giving/endowment/schema";
 import { $int_gte1 } from "@better-giving/schemas";
 import { search } from "helpers/https";
 import { type LoaderFunctionArgs, data } from "react-router";
-import * as v from "valibot";
-import { baldb, npodb } from ".server/aws/db";
-import { cognito } from ".server/auth";
 import type { UserV2 } from "types/auth";
+import * as v from "valibot";
+import { cognito } from ".server/auth";
+import { baldb, npodb } from ".server/aws/db";
 
 export interface DonateData {
   id: number;
@@ -15,7 +15,7 @@ export interface DonateData {
   /** need to await */
   program?: IProgram;
   balance: Promise<IPrettyBalance>;
-  user?:UserV2
+  user?: UserV2;
 }
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
