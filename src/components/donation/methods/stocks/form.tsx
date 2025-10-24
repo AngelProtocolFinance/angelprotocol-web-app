@@ -6,9 +6,9 @@ import { requiredString } from "schemas/string";
 import { ContinueBtn } from "../../common/continue-btn";
 import { use_donation_state } from "../../context";
 import {
-  to_checkout,
   type StocksDonationDetails as FV,
   type TMethodState,
+  to_checkout,
 } from "../../types";
 
 export function Form(props: TMethodState<"stocks">) {
@@ -92,7 +92,13 @@ export function Form(props: TMethodState<"stocks">) {
         be up to 20% larger because you avoid the taxes you'd incur from selling
         and donating the cash.
       </p>
-      <ContinueBtn disabled={isSubmitting} className="mt-6" type="submit" />
+      <button
+        disabled={isSubmitting}
+        className="mt-6 btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        type="submit"
+      >
+        Continue
+      </button>
     </FormContainer>
   );
 }

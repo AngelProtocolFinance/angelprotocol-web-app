@@ -4,8 +4,8 @@ import { useController, useForm } from "react-hook-form";
 import { usd_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
-  daf_donation_details,
   type DafDonationDetails as FV,
+  daf_donation_details,
 } from "../../types";
 
 export function use_rhf(init: FV | undefined) {
@@ -24,6 +24,7 @@ export function use_rhf(init: FV | undefined) {
     getValues,
     trigger,
     setValue,
+    setFocus,
     formState: { isSubmitting, errors },
   } = useForm<FV>({
     defaultValues: init || initial,
@@ -33,6 +34,15 @@ export function use_rhf(init: FV | undefined) {
   const { field: amount } = useController({
     control,
     name: "amount",
+  });
+  const { field: tip_format } = useController({
+    control,
+    name: "tip_format",
+  });
+
+  const { field: cpf } = useController({
+    control,
+    name: "cover_processing_fee",
   });
 
   const on_increment: OnIncrement = (inc) => {
@@ -46,8 +56,13 @@ export function use_rhf(init: FV | undefined) {
     isSubmitting,
     register,
     errors,
+    setValue,
+    getValues,
+    setFocus,
     //controllers
     amount,
+    cpf,
+    tip_format,
     //utils
     on_increment,
   };

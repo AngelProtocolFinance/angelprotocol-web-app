@@ -4,9 +4,9 @@ import { useController, useForm } from "react-hook-form";
 import { usd_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
+  type StripeDonationDetails as FV,
   type IUser,
   stripe_donation_details,
-  type StripeDonationDetails as FV,
 } from "../../types";
 
 export function use_rhf(init: FV | undefined, user?: IUser) {

@@ -3,21 +3,20 @@ import {
   ComboboxOption,
   Field as F,
   Label,
-  Radio,
-  RadioGroup,
   Switch,
 } from "@headlessui/react";
+import { CpfToggle } from "components/donation/common/cpf-toggle";
 import { Field, Form as FieldSet } from "components/form";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
 import { ru_vdec } from "helpers/decimal";
-import { PencilIcon } from "lucide-react";
 import { useState } from "react";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
 import type { ICurrenciesFv } from "types/currency";
 import { Incrementers } from "../../common/incrementers";
+import { TipField } from "../../common/tip-field";
 import { use_donation_state } from "../../context";
-import { type TMethodState, type TTipFormat, to_checkout } from "../../types";
+import { type TMethodState, to_checkout } from "../../types";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
 
@@ -112,104 +111,58 @@ export function Form(props: TMethodState<"stripe">) {
         />
       )}
 
-      <div className="flex has-[input:focus-within]:border-b-(--accent-primary) items-center py-1 border-y border-gray-l3 mt-6 justify-between flex-wrap gap-y-2 gap-x-3">
-        <F className="group gap-x-1 flex items-center text-sm justify-self-start">
-          <Switch
-            checked={rhf.tip_format.value !== "none"}
-            onChange={(checked) => {
-              if (checked) {
-                rhf.tip_format.onChange("15");
-              } else {
-                rhf.tip_format.onChange("none");
-                rhf.setValue("tip", "");
-              }
-            }}
-            className="group relative text-xs flex items-center h-[1lh] w-8 cursor-pointer rounded-full bg-gray-l3 p-1 ease-in-out data-checked:bg-(--accent-primary)"
-          >
-            <span
-              aria-hidden="true"
-              className="pointer-events-none inline-block h-[0.8lh] aspect-square -translate-x-0.5 rounded-full bg-white transition-transform ease-in-out group-data-checked:translate-x-3.5"
-            />
-          </Switch>
-          <Label className="whitespace-nowrap">
-            Support free fundraising tools
-          </Label>
-        </F>
-        <F className="flex gap-x-1">
-          <RadioGroup
-            className="contents"
-            value={rhf.tip_format.value}
-            onChange={async (x) => {
-              rhf.tip_format.onChange(x);
-              if (x === "custom") {
-                await new Promise((r) => setTimeout(r, 50));
-                return rhf.setFocus("tip");
-              }
-              if (x === "none") {
-                rhf.setValue("tip", "");
-              }
-              const point = +x / 100;
-              const [curr, amnt] = rhf.getValues(["currency", "amount"]);
-              const t = point * +amnt;
-              rhf.setValue("tip", ru_vdec(t, 1 / curr.rate));
-            }}
-          >
-            <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm"
-              value={"10" satisfies TTipFormat}
-            >
-              10%
-            </Radio>
-            <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm"
-              value={"15" satisfies TTipFormat}
-            >
-              15%
-            </Radio>
-            <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm"
-              value={"20" satisfies TTipFormat}
-            >
-              20%
-            </Radio>
-            <Radio
-              className="text-xs outline cursor-pointer outline-gray-l3 data-checked:outline-none data-checked:bg-(--accent-secondary) data-checked:text-(--accent-primary) data-checked:pointer-events-none select-none px-2 py-1 rounded-sm flex-center"
-              value={"custom" satisfies TTipFormat}
-            >
-              <PencilIcon className="inline-block w-3 h-3 " />
-            </Radio>
-          </RadioGroup>
-        </F>
-        {rhf.tip_format.value === "custom" && (
-          <div className="relative w-full">
-            <input
-              type="number"
-              step="any"
-              {...rhf.register("tip")}
-              className="w-full text-sm pl-2 focus:outline-none"
-              placeholder="Enter tip"
-              aria-invalid={!!rhf.errors.tip?.message}
-            />
-            <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
-              {rhf.errors.tip?.message}
-            </span>
-          </div>
-        )}
-      </div>
+      <TipField
+        classes="mt-6"
+        checked={rhf.tip_format.value !== "none"}
+        checked_changed={(checked) => {
+          if (checked) {
+            rhf.tip_format.onChange("15");
+          } else {
+            rhf.tip_format.onChange("none");
+            rhf.setValue("tip", "");
+          }
+        }}
+        tip_format={rhf.tip_format.value}
+        tip_format_changed={async (format) => {
+          rhf.tip_format.onChange(format);
+          if (format === "none") {
+            return rhf.setValue("tip", "");
+          }
+          if (format === "custom") {
+            await new Promise((r) => setTimeout(r, 50));
+            return rhf.setFocus("tip");
+          }
 
-      <F className="group mt-2 gap-x-1 flex items-center text-sm justify-self-start">
-        <Switch
-          checked={rhf.cpf.value}
-          onChange={(x) => rhf.cpf.onChange(x)}
-          className="group relative text-xs flex items-center h-[1lh] w-8 cursor-pointer rounded-full bg-gray-l3 p-1 ease-in-out data-checked:bg-(--accent-primary)"
-        >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none inline-block h-[0.8lh] aspect-square -translate-x-0.5 rounded-full bg-white transition-transform ease-in-out group-data-checked:translate-x-3.5"
-          />
-        </Switch>
-        <Label className="whitespace-nowrap">Cover processing fee</Label>
-      </F>
+          const [c, amnt] = rhf.getValues(["currency", "amount"]);
+          if (!amnt) return rhf.setValue("tip", "");
+
+          const v = (+format / 100) * +amnt;
+          rhf.setValue("tip", ru_vdec(v, 1 / c.rate));
+        }}
+        custom_tip={
+          rhf.tip_format.value === "custom" ? (
+            <div className="relative w-full">
+              <input
+                {...rhf.register("tip")}
+                type="number"
+                step="any"
+                className="w-full text-sm pl-2 focus:outline-none"
+                placeholder="Enter tip"
+                aria-invalid={!!rhf.errors.tip?.message}
+              />
+              <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
+                {rhf.errors.tip?.message}
+              </span>
+            </div>
+          ) : undefined
+        }
+      />
+
+      <CpfToggle
+        classes="mt-2"
+        checked={rhf.cpf.value}
+        checked_changed={(x) => rhf.cpf.onChange(x)}
+      />
 
       <div className="grid mt-6 grid-cols-2 gap-2 content-start">
         <p className="col-span-full text-sm font-semibold">

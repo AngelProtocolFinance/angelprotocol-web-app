@@ -1,7 +1,9 @@
 import { ContentLoader } from "components/content-loader";
 import { ErrorBoundaryClass } from "components/error";
 import { type IPrompt, Prompt } from "components/prompt";
+import { PROCESSING_RATES } from "constants/common";
 import { CHARIOT_CONNECT_ID } from "constants/env";
+import { min_fee_allowance } from "helpers/donation";
 import { error_prompt } from "helpers/error-prompt";
 import { useState } from "react";
 import ChariotConnect from "react-chariot-connect";
@@ -9,19 +11,17 @@ import { href, useNavigate } from "react-router";
 import type { DonationIntent } from "types/donation-intent";
 import { donor_address } from "types/donation-intent";
 import { safeParse } from "valibot";
-import {
-  tip_val,
-  tip_from_val,
-  type DafDonationDetails,
-  back_to_form,
-} from "../../types";
 import { currency } from "../../common/currency";
 import { Summary } from "../../common/summary";
 import { use_donation_state } from "../../context";
+import {
+  type DafDonationDetails,
+  back_to_form,
+  tip_from_val,
+  tip_val,
+} from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { to_platform_values } from "./to-platform-values";
-import { min_fee_allowance } from "helpers/donation";
-import { PROCESSING_RATES } from "constants/common";
 import type { IAmounts } from "./types";
 
 interface GrantMetadata {
