@@ -17,7 +17,7 @@ import type { ITokenEstimate } from "types/api";
 import { TokenField, btn_disp } from "../../../token-field";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
-import { use_donation_state } from "../../context";
+import { use_donation } from "../../context";
 import { type TMethodState, to_checkout } from "../../types";
 import type { TTokenState } from "./types";
 import { use_rhf } from "./use-rhf";
@@ -28,7 +28,7 @@ const tokens_fuse = new Fuse<IToken>(tokens_list, {
 const subset = tokens_list.slice(0, 10);
 
 export function Form(props: TMethodState<"crypto">) {
-  const { state } = use_donation_state();
+  const { don, don_set } = use_donation();
   const [token_state, set_token_state] = useState<TTokenState>(undefined);
   const [token_q, set_token_q] = useState("");
   const filtered = useMemo(
@@ -38,8 +38,6 @@ export function Form(props: TMethodState<"crypto">) {
         : tokens_fuse.search(token_q, { limit: 10 }).map((x) => x.item),
     [token_q]
   );
-
-  const { set_state } = use_donation_state();
 
   const {
     handleSubmit,
@@ -114,7 +112,7 @@ export function Form(props: TMethodState<"crypto">) {
   return (
     <form
       onSubmit={handleSubmit((x) => {
-        to_checkout("crypto", x, set_state);
+        to_checkout("crypto", x, don_set);
         reset();
       })}
       className="flex flex-col rounded-md min-h-full"
@@ -150,12 +148,12 @@ export function Form(props: TMethodState<"crypto">) {
           code={token.value.symbol}
           rate={token.value.rate}
           precision={token.value.precision}
-          increments={(
-            state.init.config?.increments || DONATION_INCREMENTS
-          ).map((i) => {
-            const v = +i.value / token.value.rate ** 2;
-            return { ...i, value: v.toString() };
-          })}
+          increments={(don.config?.increments || DONATION_INCREMENTS).map(
+            (i) => {
+              const v = +i.value / token.value.rate ** 2;
+              return { ...i, value: v.toString() };
+            }
+          )}
         />
       )}
 

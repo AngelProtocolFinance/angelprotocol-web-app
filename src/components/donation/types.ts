@@ -279,20 +279,19 @@ export type TMethodState<T extends TMethod> =
   | { type: T; step: "form"; fv?: TFV<T> }
   | { type: T; step: "checkout"; fv: TFV<T> };
 
-export type TDonationState = {
+export type TDonation = Init & {
   method: TMethod;
-  init: Init;
 } & {
   [method in TMethod]?: TMethodState<method>;
 };
 
 export type StateSetter = (
-  newState: TDonationState | ((prev: TDonationState) => TDonationState)
+  new_state: TDonation | ((prev: TDonation) => TDonation)
 ) => void;
 
 export type State = {
-  state: TDonationState;
-  set_state: StateSetter;
+  don: TDonation;
+  don_set: StateSetter;
 };
 
 export const back_to_form = <T extends TMethod>(

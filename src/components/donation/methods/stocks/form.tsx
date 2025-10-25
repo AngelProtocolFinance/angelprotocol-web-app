@@ -3,8 +3,7 @@ import { Field, Form as FormContainer } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema, str_num } from "schemas/shape";
 import { requiredString } from "schemas/string";
-import { ContinueBtn } from "../../common/continue-btn";
-import { use_donation_state } from "../../context";
+import { use_donation } from "../../context";
 import {
   type StocksDonationDetails as FV,
   type TMethodState,
@@ -22,7 +21,7 @@ export function Form(props: TMethodState<"stocks">) {
     tip_format: "15",
     cover_processing_fee: false,
   };
-  const { set_state } = use_donation_state();
+  const { don_set } = use_donation();
   const {
     register,
     handleSubmit,
@@ -43,7 +42,7 @@ export function Form(props: TMethodState<"stocks">) {
   return (
     <FormContainer
       className="grid"
-      onSubmit={handleSubmit((fv) => to_checkout("stocks", fv, set_state))}
+      onSubmit={handleSubmit((fv) => to_checkout("stocks", fv, don_set))}
     >
       <Field
         required

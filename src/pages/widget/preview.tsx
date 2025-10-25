@@ -1,6 +1,6 @@
 import type { INpo } from "@better-giving/endowment";
 import laira_waiving from "assets/laira/laira-waiving.webp";
-import { Steps, type TDonationState } from "components/donation";
+import { Steps, type TDonation } from "components/donation";
 
 import { Image } from "components/image/image";
 import { Info } from "components/status";
@@ -23,22 +23,20 @@ export function Preview({ classes = "", config, endow }: Props) {
 
   const { methods, increments, ...cfg } = config;
 
-  const init_state: TDonationState = {
+  const init_state: TDonation = {
     method: methods.find((m) => !m.disabled)?.id || "stripe",
-    init: {
-      source: "bg-widget",
-      mode: "preview",
-      recipient: {
-        id: endow.id.toString(),
-        name: endow.name,
-        hide_bg_tip: endow?.hide_bg_tip,
-        members: [],
-      },
-      config: {
-        ...cfg,
-        method_ids: methods.filter((m) => !m.disabled).map((m) => m.id),
-        increments: increments,
-      },
+    source: "bg-widget",
+    mode: "preview",
+    recipient: {
+      id: endow.id.toString(),
+      name: endow.name,
+      hide_bg_tip: endow?.hide_bg_tip,
+      members: [],
+    },
+    config: {
+      ...cfg,
+      method_ids: methods.filter((m) => !m.disabled).map((m) => m.id),
+      increments: increments,
     },
   };
 

@@ -71,7 +71,7 @@ export function Summary({ Amount, frequency = "one-time", ...props }: Props) {
         {props.fee_allowance ? (
           <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
             <dt className="mr-auto" aria-label="fee allowance">
-              Covered Payment Processing Fees
+              Covered processing fee
             </dt>
             <Amount classes="text-sm" amount={props.fee_allowance} />
           </div>

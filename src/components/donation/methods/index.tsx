@@ -5,7 +5,7 @@ import { Label } from "components/form";
 import { Image } from "components/image";
 import { ChartSpline, Coins, CreditCard } from "lucide-react";
 import type { ReactNode } from "react";
-import type { TDonationState, TMethodState } from "../types";
+import type { TDonation, TMethodState } from "../types";
 import { Form as Crypto } from "./crypto";
 import { Form as Daf } from "./daf";
 import { Form as Stocks } from "./stocks";
@@ -48,9 +48,9 @@ const tab_classes = (selected: boolean) =>
       : "outline outline-gray-l3 @xl/steps:outline-none text-gray"
   } flex items-center gap-2 p-2 @xl/steps:px-3 @xl/steps:py-[1.15rem] @xl/steps:grid @xl/steps:grid-cols-subgrid @xl/steps:col-span-2 focus:outline-hidden @xl/steps:w-full rounded @xl/steps:rounded-none`;
 
-export function DonateMethods(props: TDonationState) {
-  const { init, method, ...fvs } = props;
-  const method_ids = init.config?.method_ids;
+export function DonateMethods(props: TDonation) {
+  const { config, method, ...fvs } = props;
+  const method_ids = config?.method_ids;
 
   const tabs =
     method_ids?.concat(

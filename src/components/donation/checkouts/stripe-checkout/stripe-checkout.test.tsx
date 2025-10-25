@@ -6,19 +6,17 @@ import { createRoutesStub } from "react-router";
 import { fiatDonationIntentCreationErrorHandler } from "services/api/mock";
 import { mswServer } from "setup-tests";
 import { describe, expect, test, vi } from "vitest";
-import type { StripeCheckoutStep } from "../../../types";
+import type { StripeCheckoutStep } from "../../types";
 import { init_donation_fv } from "../../common/constants";
 import { StripeCheckout as Checkout } from "./stripe-checkout";
 
-const mocked_set_state = vi.hoisted(() => vi.fn());
+const don_set_mock = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
-  use_donation_state: vi
-    .fn()
-    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
+  use_donation: vi.fn().mockReturnValue({ don: {}, don_set: don_set_mock }),
 }));
 
-const confirmPaymentMock = vi.hoisted(() => vi.fn());
-const confirmSetupMock = vi.hoisted(() => vi.fn());
+const confirm_payment_mock = vi.hoisted(() => vi.fn());
+const confirm_setup_mock = vi.hoisted(() => vi.fn());
 
 vi.mock("@stripe/react-stripe-js", () => ({
   Elements: vi.fn(({ children }) => children),
@@ -34,8 +32,8 @@ vi.mock("@stripe/react-stripe-js", () => ({
   }),
   useStripe: vi.fn(() => {
     const stripe: Stripe = {
-      confirmPayment: confirmPaymentMock,
-      confirmSetup: confirmSetupMock,
+      confirmPayment: confirm_payment_mock,
+      confirmSetup: confirm_setup_mock,
     } as any;
     return stripe;
   }),
@@ -116,8 +114,8 @@ describe("stripe checkout", () => {
     };
 
     if (state.details.frequency === "one-time")
-      confirmPaymentMock.mockResolvedValueOnce({ error: err });
-    else confirmSetupMock.mockResolvedValueOnce({ error: err });
+      confirm_payment_mock.mockResolvedValueOnce({ error: err });
+    else confirm_setup_mock.mockResolvedValueOnce({ error: err });
 
     //user sees modal on card error
     await userEvent.click(donateBtn);
@@ -138,8 +136,8 @@ describe("stripe checkout", () => {
     };
 
     if (state.details.frequency === "one-time")
-      confirmPaymentMock.mockResolvedValueOnce({ error: err });
-    else confirmSetupMock.mockResolvedValueOnce({ error: err });
+      confirm_payment_mock.mockResolvedValueOnce({ error: err });
+    else confirm_setup_mock.mockResolvedValueOnce({ error: err });
 
     await userEvent.click(donateBtn);
 

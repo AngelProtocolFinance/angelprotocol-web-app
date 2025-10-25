@@ -13,7 +13,7 @@ import { donor_address } from "types/donation-intent";
 import { safeParse } from "valibot";
 import { currency } from "../../common/currency";
 import { Summary } from "../../common/summary";
-import { use_donation_state } from "../../context";
+import { use_donation } from "../../context";
 import {
   type DafDonationDetails,
   back_to_form,
@@ -22,7 +22,6 @@ import {
 } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { to_platform_values } from "./to-platform-values";
-import type { IAmounts } from "./types";
 
 interface GrantMetadata {
   /** includes tip and fee_allowance */
@@ -32,7 +31,7 @@ interface GrantMetadata {
 }
 
 export function ChariotCheckout(props: DafDonationDetails) {
-  const { set_state, state } = use_donation_state();
+  const { don_set, don } = use_donation();
   const [prompt, set_prompt] = useState<IPrompt>();
   const [grant_state, set_grant_state] = useState<"pending">();
   const navigate = useNavigate();
@@ -45,16 +44,12 @@ export function ChariotCheckout(props: DafDonationDetails) {
   return (
     <Summary
       classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
-      on_back={() => back_to_form("daf", props, set_state)}
+      on_back={() => back_to_form("daf", props, don_set)}
       Amount={currency(props.currency)}
       amount={+props.amount}
       fee_allowance={mfa}
       frequency="one-time"
-      tip={
-        tipv
-          ? { value: tipv, charity_name: state.init.recipient.name }
-          : undefined
-      }
+      tip={tipv ? { value: tipv, charity_name: don.recipient.name } : undefined}
     >
       <ErrorBoundaryClass>
         <ChariotConnect
@@ -97,7 +92,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
               const adj = to_platform_values(grant_amount, meta);
 
               //reflect adjustment to state
-              set_state((x) => ({
+              don_set((x) => ({
                 ...x,
                 method: "daf",
                 daf: {
@@ -165,7 +160,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
       </ErrorBoundaryClass>
       <ContentLoader className="h-12 mt-4 block group-has-[chariot-connect]:hidden" />
       <DonationTerms
-        endowName={state.init.recipient.name}
+        endowName={don.recipient.name}
         classes="border-t border-gray-l3 mt-5 pt-4 "
       />
       {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
