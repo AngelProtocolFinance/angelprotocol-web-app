@@ -4,7 +4,7 @@ import { describe, expect, test } from "vitest";
 import { Steps } from "../index";
 import type { DonationState, StripeDonationDetails } from "../types";
 import { stb } from "./__tests__/test-data";
-import { init_donation_fv } from "./common/constants";
+import { init_donation_fv } from "../common/constants";
 
 const stripeDonation: StripeDonationDetails = {
   method: "stripe",

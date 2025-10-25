@@ -1,7 +1,6 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { rd } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
-import { usd_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
   type DafDonationDetails as FV,
@@ -11,7 +10,6 @@ import {
 export function use_rhf(init: FV | undefined) {
   const initial: FV = {
     amount: "",
-    currency: usd_option,
     tip: "",
     tip_format: "15",
     cover_processing_fee: false,
@@ -29,6 +27,7 @@ export function use_rhf(init: FV | undefined) {
   } = useForm<FV>({
     defaultValues: init || initial,
     resolver: valibotResolver(daf_donation_details),
+    criteriaMode: "all",
   });
 
   const { field: amount } = useController({

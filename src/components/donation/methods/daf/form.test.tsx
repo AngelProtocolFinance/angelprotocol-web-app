@@ -1,87 +1,142 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, test, vi } from "vitest";
-import { USD_CODE, init_donation_fv } from "../../common/constants";
+import { afterAll, describe, expect, test, vi } from "vitest";
+import { USD_CODE } from "../../common/constants";
 import type { DafDonationDetails, Init } from "../../types";
 import { Form } from "./form";
 
-const mocked_set_state = vi.hoisted(() => vi.fn());
+const don_set_mock = vi.hoisted(() => vi.fn());
+const don_mock = vi.hoisted(() => vi.fn(() => ({})));
 vi.mock("../../context", () => ({
   use_donation: vi
     .fn()
-    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
+    .mockReturnValue({ don: don_mock, don_set: don_set_mock }),
 }));
 
-describe("DAF form test", () => {
-  test("initial state: blank", async () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: null,
-      recipient: { id: "0", name: "", members: [] },
-      mode: "live",
-    };
-
-    render(<Form init={init} step="donate-form" />);
-
-    await waitFor(() => {
-      //after loading
-      expect(screen.queryByText(/loading donate form/i)).toBeNull();
-    });
-
-    const amountInput = screen.getByPlaceholderText(/\$ enter amount/i);
-    expect(amountInput).toHaveDisplayValue("");
+describe("DAF form: initial load", () => {
+  afterAll(() => {
+    vi.restoreAllMocks();
   });
 
-  test("initial blank state: program donations now allowed", () => {
+  test("initial form state: no persisted details", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    render(<Form init={init} step="donate-form" />);
-    const programSelector = screen.queryByLabelText(/select program/i);
-    expect(programSelector).toBeNull();
+    don_mock.mockReturnValueOnce(init);
+
+    render(<Form step="form" type="daf" />);
+
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    expect(amount_input).toHaveDisplayValue("");
+
+    //tip enabled by default
+    expect(
+      screen.getByRole("switch", { name: /support free fundraising tools/i })
+    ).toBeChecked();
+    // tip enabled and defaulted to 15%
+    expect(screen.getByRole("radio", { name: /15%/i })).toBeChecked();
+
+    //fee coverage disabled by default
+    expect(
+      screen.getByRole("switch", { name: /cover processing fee/i })
+    ).not.toBeChecked();
+
+    // incrementers shown
+    const incs = screen.getAllByTestId("incrementer");
+    expect(incs).toHaveLength(4);
   });
 
-  test("initial state: persisted and submittable", async () => {
+  test("submit form with initial/persisted data", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    const details: DafDonationDetails = {
-      method: "daf",
+    don_mock.mockReturnValueOnce(init);
+
+    const fv: DafDonationDetails = {
       amount: "100",
-      currency: { code: USD_CODE, rate: 1, min: 1 },
-      ...init_donation_fv,
+      cover_processing_fee: true,
+      tip: "",
+      tip_format: "20",
     };
-    render(<Form init={init} step="donate-form" details={details} />);
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    expect(amountInput).toHaveDisplayValue("$ 100");
 
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continueBtn);
-    expect(mocked_set_state).toHaveBeenCalledOnce();
-    mocked_set_state.mockReset();
+    render(<Form fv={fv} type="daf" step="form" />);
+
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    expect(amount_input).toHaveDisplayValue("$ 100");
+    expect(
+      screen.getByRole("switch", { name: /support free fundraising tools/i })
+    ).toBeChecked();
+    expect(screen.getByRole("radio", { name: /20%/i })).toBeChecked();
+
+    expect(
+      screen.getByRole("switch", { name: /cover processing fee/i })
+    ).toBeChecked();
+
+    // incrementers shown
+    const incs = screen.getAllByTestId("incrementer");
+    expect(incs).toHaveLength(4);
+
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+    expect(don_set_mock).toHaveBeenCalledOnce();
+    don_set_mock.mockReset();
   });
-  test("user encounters validation errors and corrects them", async () => {
+
+  test("submitting empty form should show validation messages and focus first field: amount input", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    render(<Form init={init} step="donate-form" />);
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continueBtn);
+    don_mock.mockReturnValueOnce(init);
 
+    render(<Form step="form" type="daf" />);
+
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    //amount input
     expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
 
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    await userEvent.type(amountInput, "50");
-    await userEvent.click(continueBtn);
-    expect(mocked_set_state).toHaveBeenCalledOnce();
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    expect(amount_input).toHaveFocus();
+  });
+
+  test("user corrects error and submits", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+    };
+    don_mock.mockReturnValueOnce(init);
+
+    render(<Form type="daf" step="form" />);
+
+    //submit empty form
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    //amount input required and focused
+    expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    expect(amount_input).toHaveFocus();
+
+    //user inputs valid amount
+    await userEvent.type(amount_input, "50");
+    expect(screen.queryByText(/please enter an amount/i)).toBeNull();
+
+    await userEvent.click(continue_btn);
+
+    //form submitted successfully
+    expect(don_set_mock).toHaveBeenCalledOnce();
+    don_set_mock.mockReset();
   });
 });
