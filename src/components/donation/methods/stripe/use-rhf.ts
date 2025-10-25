@@ -35,6 +35,7 @@ export function use_rhf(init: FV | undefined, user?: IUser) {
   } = useForm<FV>({
     defaultValues: init || initial,
     resolver: valibotResolver(stripe_donation_details),
+    criteriaMode: "all",
   });
 
   const { field: frequency } = useController<FV, "frequency">({
@@ -51,6 +52,7 @@ export function use_rhf(init: FV | undefined, user?: IUser) {
     control,
     name: "currency",
   });
+
   const { field: tip_format } = useController<FV, "tip_format">({
     control,
     name: "tip_format",
