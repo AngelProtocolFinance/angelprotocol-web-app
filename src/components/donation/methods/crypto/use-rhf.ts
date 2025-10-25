@@ -1,16 +1,20 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { rd, vdec } from "helpers/decimal";
 import { useController, useForm } from "react-hook-form";
-import { init_donation_fv, init_token_option } from "../../common/constants";
+import { init_token_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
   type CryptoDonationDetails as FV,
   crypto_donation_details,
+  donor_fv_init,
+  tip_fv_init,
 } from "../../types";
 
 const initial: FV = {
   token: init_token_option,
-  ...init_donation_fv,
+  ...tip_fv_init,
+  ...donor_fv_init,
+  cover_processing_fee: false,
 };
 
 export function use_rhf(init?: FV) {

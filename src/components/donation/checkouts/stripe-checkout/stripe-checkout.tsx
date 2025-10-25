@@ -70,9 +70,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
       fee_allowance={mfa}
       frequency={frequency}
       tip={
-        tipv > 0
-          ? { value: tipv, charity_name: don.recipient.name }
-          : undefined
+        tipv > 0 ? { value: tipv, charity_name: don.recipient.name } : undefined
       }
     >
       <ErrorBoundaryClass>

@@ -1,6 +1,6 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
-import { currency_fv, type ICurrencyFv } from "types/currency";
+import { type ICurrencyFv, currency_fv } from "types/currency";
 import { frequency, str } from "types/donation-intent";
 export {
   type Tribute,
@@ -101,10 +101,7 @@ export const tip_format = v.picklist(tip_formats);
 
 export type TTipFormat = (typeof tip_formats)[number];
 
-export const donation_fv = v.object({
-  tip: amount(),
-  tip_format,
-  cover_processing_fee: v.boolean(),
+const donor_fv = v.object({
   first_name: v.pipe(str, v.nonEmpty("Please enter your first name")),
   last_name: v.pipe(str, v.nonEmpty("Please enter your last name")),
   email: v.pipe(
@@ -114,9 +111,25 @@ export const donation_fv = v.object({
   ),
 });
 
-export interface IDonationFvBase extends v.InferOutput<typeof donation_fv> {}
+export const donor_fv_init = {
+  first_name: "",
+  last_name: "",
+  email: "",
+};
 
-const is_tip_valid = (input: Pick<IDonationFvBase, "tip_format" | "tip">) => {
+const tip_fv = v.object({
+  tip: amount(),
+  tip_format,
+});
+
+type TipFv = v.InferOutput<typeof tip_fv>;
+
+export const tip_fv_init: TipFv = {
+  tip: "",
+  tip_format: "15",
+};
+
+const is_tip_valid = (input: TipFv) => {
   if (input.tip_format !== "custom") return true;
   return +input.tip > 0;
 };
@@ -152,7 +165,9 @@ const is_min_met = (input: { amount: string; currency: ICurrencyFv }) => {
 
 const crypto_donation_raw = v.object({
   token: token_fv,
-  ...donation_fv.entries,
+  ...donor_fv.entries,
+  ...tip_fv.entries,
+  cover_processing_fee: v.boolean(),
 });
 
 export type CryptoDonationDetails = v.InferOutput<typeof crypto_donation_raw>;
@@ -168,7 +183,9 @@ const stripe_donation_details_raw = v.object({
   amount: amount({ required: true }),
   currency: currency_fv,
   frequency,
-  ...donation_fv.entries,
+  ...donor_fv.entries,
+  ...tip_fv.entries,
+  cover_processing_fee: v.boolean(),
 });
 
 export interface StripeDonationDetails
@@ -189,8 +206,10 @@ export const stripe_donation_details = v.pipe(
 const stocks_donation_details_raw = v.object({
   symbol: v.pipe(v.string(), v.nonEmpty("Please enter a stock symbol")),
   num_shares: amount({ required: true }),
-  ...donation_fv.entries,
+  ...tip_fv.entries,
+  cover_processing_fee: v.boolean(),
 });
+
 export type StocksDonationDetails = v.InferOutput<
   typeof stocks_donation_details_raw
 >;
@@ -205,8 +224,10 @@ export const stocks_donation_details = v.pipe(
 
 const daf_donation_details_raw = v.object({
   amount: amount({ required: true }),
-  ...v.omit(donation_fv, ["first_name", "last_name", "email"]).entries,
+  ...tip_fv.entries,
+  cover_processing_fee: v.boolean(),
 });
+
 export interface DafDonationDetails
   extends v.InferOutput<typeof daf_donation_details_raw> {}
 

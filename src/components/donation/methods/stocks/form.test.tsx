@@ -1,94 +1,147 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, test, vi } from "vitest";
+import { afterAll, describe, expect, test, vi } from "vitest";
 import type { Init, StocksDonationDetails } from "../../types";
 import { Form } from "./form";
 
-const mocked_set_state = vi.hoisted(() => vi.fn());
+const don_set_mock = vi.hoisted(() => vi.fn());
+const don_mock = vi.hoisted(() => vi.fn(() => ({})));
 vi.mock("../../context", () => ({
   use_donation: vi
     .fn()
-    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
+    .mockReturnValue({ don: don_mock, don_set: don_set_mock }),
 }));
 
-describe("stocks form test", () => {
-  test("initial state: blank", async () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: null,
-      recipient: { id: "0", name: "", members: [] },
-      mode: "live",
-    };
-    render(<Form init={init} step="donate-form" />);
-    const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
-    expect(symbolInput).toHaveDisplayValue("");
-
-    const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
-    expect(qtyInput).toHaveDisplayValue("");
+describe("Stocks form: initial load", () => {
+  afterAll(() => {
+    vi.restoreAllMocks();
   });
 
-  test("initial state: persisted and submittable", async () => {
+  test("initial form state: no persisted details", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    const details: StocksDonationDetails = {
-      method: "stocks",
+    don_mock.mockReturnValueOnce(init);
+
+    render(<Form step="form" type="stocks" />);
+
+    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
+    expect(symbol_input).toHaveDisplayValue("");
+
+    const qty_input = screen.getByPlaceholderText(/enter quantity/i);
+    expect(qty_input).toHaveDisplayValue("");
+  });
+
+  test("submit form with initial/persisted data", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+      user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
+    };
+    don_mock.mockReturnValueOnce(init);
+
+    const fv: StocksDonationDetails = {
       symbol: "BG",
       num_shares: "10",
+      tip: "",
+      tip_format: "15",
+      cover_processing_fee: false,
     };
-    render(<Form init={init} step="donate-form" details={details} />);
-    const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
-    expect(symbolInput).toHaveDisplayValue("BG");
 
-    const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
-    expect(qtyInput).toHaveDisplayValue("10");
+    render(<Form fv={fv} type="stocks" step="form" />);
 
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continueBtn);
-    expect(mocked_set_state).toHaveBeenCalledOnce();
-    mocked_set_state.mockReset();
+    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
+    expect(symbol_input).toHaveDisplayValue("BG");
+
+    const qty_input = screen.getByPlaceholderText(/enter quantity/i);
+    expect(qty_input).toHaveDisplayValue("10");
+
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+    expect(don_set_mock).toHaveBeenCalledOnce();
+    don_set_mock.mockReset();
   });
-  test("user encounters validation errors and corrects them", async () => {
+
+  test("submitting empty form should show validation messages and focus first field: symbol input", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    render(<Form init={init} step="donate-form" />);
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continueBtn);
+    don_mock.mockReturnValueOnce(init);
 
-    expect(screen.getAllByText(/required/i).length === 2);
+    render(<Form step="form" type="stocks" />);
 
-    const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
-    expect(symbolInput).toHaveFocus();
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    //symbol input required
+    expect(
+      screen.getByText(/please enter a stock symbol/i)
+    ).toBeInTheDocument();
+
+    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
+    expect(symbol_input).toHaveFocus();
+  });
+
+  test("user corrects error and submits", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+    };
+    don_mock.mockReturnValueOnce(init);
+
+    render(<Form type="stocks" step="form" />);
+
+    //submit empty form
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    //symbol input required and focused
+    expect(
+      screen.getByText(/please enter a stock symbol/i)
+    ).toBeInTheDocument();
+    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
+    expect(symbol_input).toHaveFocus();
 
     //user inputs symbol
-    await userEvent.type(symbolInput, "abc");
-    expect(screen.getAllByText(/required/i).length === 1);
+    await userEvent.type(symbol_input, "AAPL");
+    expect(screen.queryByText(/please enter a stock symbol/i)).toBeNull();
 
     //user tries to submit again, but quantity is required
-    await userEvent.click(continueBtn);
-    const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
-    expect(qtyInput).toHaveFocus();
+    await userEvent.click(continue_btn);
+    const qty_input = screen.getByPlaceholderText(/enter quantity/i);
+    expect(qty_input).toHaveFocus();
 
-    //user inputs quantity
-    await userEvent.type(qtyInput, "abc");
-    expect(screen.queryByText(/required/i)).toBeNull();
-    expect(screen.getByText(/must be a number/i)).toBeInTheDocument();
+    //user inputs invalid quantity (not a number)
+    await userEvent.type(qty_input, "abc");
+    expect(screen.queryByText(/please enter an amount/i)).toBeNull();
+    expect(
+      screen.getByText(/please enter a valid number/i)
+    ).toBeInTheDocument();
 
-    await userEvent.clear(qtyInput);
-    await userEvent.type(qtyInput, "-5");
+    //user inputs negative quantity
+    await userEvent.clear(qty_input);
+    await userEvent.type(qty_input, "-5");
     expect(screen.getByText(/must be greater than 0/i)).toBeInTheDocument();
 
-    await userEvent.clear(qtyInput);
-    await userEvent.type(qtyInput, "10");
+    //user inputs valid quantity
+    await userEvent.clear(qty_input);
+    await userEvent.type(qty_input, "10");
+    expect(screen.queryByText(/must be greater than 0/i)).toBeNull();
 
-    await userEvent.click(continueBtn);
-    expect(mocked_set_state).toHaveBeenCalledOnce();
+    await userEvent.click(continue_btn);
+
+    //form submitted successfully
+    expect(don_set_mock).toHaveBeenCalledOnce();
+    don_set_mock.mockReset();
   });
 });

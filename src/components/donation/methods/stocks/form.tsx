@@ -1,12 +1,11 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, Form as FormContainer } from "components/form";
 import { useForm } from "react-hook-form";
-import { schema, str_num } from "schemas/shape";
-import { requiredString } from "schemas/string";
 import { use_donation } from "../../context";
 import {
   type StocksDonationDetails as FV,
   type TMethodState,
+  stocks_donation_details,
   to_checkout,
 } from "../../types";
 
@@ -14,9 +13,6 @@ export function Form(props: TMethodState<"stocks">) {
   const initial: FV = {
     num_shares: "",
     symbol: "",
-    first_name: "",
-    last_name: "",
-    email: "",
     tip: "",
     tip_format: "15",
     cover_processing_fee: false,
@@ -28,15 +24,8 @@ export function Form(props: TMethodState<"stocks">) {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: props.fv || initial,
-    resolver: yupResolver(
-      schema<FV>({
-        symbol: requiredString.trim(),
-        num_shares: str_num(
-          (s) => s.required("required"),
-          (n) => n.positive("must be greater than 0")
-        ),
-      })
-    ),
+    criteriaMode: "all",
+    resolver: valibotResolver(stocks_donation_details),
   });
 
   return (
