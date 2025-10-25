@@ -27,6 +27,7 @@ export function use_rhf(init?: FV) {
   } = useForm<FV>({
     defaultValues: init || initial,
     resolver: valibotResolver(crypto_donation_details),
+    criteriaMode: "all",
   });
 
   const { field: token } = useController<FV, "token">({

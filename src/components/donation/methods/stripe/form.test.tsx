@@ -1,126 +1,231 @@
-import { beforeEach } from "node:test";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_usd } from "services/apes/mock";
-import { describe, expect, test, vi } from "vitest";
-import { stb } from "../__tests__/test-data";
-import type { Init, State, StripeDonationDetails } from "../../types";
+import { afterAll, describe, expect, test, vi } from "vitest";
+import type { Init, StripeDonationDetails } from "../../types";
 import { Form } from "./form";
 
-const init: Init = {
-  source: "bg-marketplace",
-  mode: "live",
-  recipient: {
-    id: "123456",
-    name: "Example Endowment",
-    members: [],
-  },
-  config: null,
-};
-
-const mocked_set_state = vi.hoisted(() => vi.fn());
+const don_set_mock = vi.hoisted(() => vi.fn());
+const don_mock = vi.hoisted(() => vi.fn(() => ({})));
 vi.mock("../../context", () => ({
-  use_donation: vi.fn().mockReturnValue({
-    state: {},
-    set_state: mocked_set_state,
-  }),
+  use_donation: vi
+    .fn()
+    .mockReturnValue({ don: don_mock, don_set: don_set_mock }),
 }));
 
-describe("Stripe form test", () => {
-  beforeEach(() => vi.restoreAllMocks());
-
-  test("blank state: no default currency specified", async () => {
-    const Stub = stb(<Form step="form" type="stripe" />);
-    render(<Stub />);
-    const currencySelector = await screen.findByRole("combobox");
-    expect(currencySelector).toHaveDisplayValue(/usd/i);
+describe("Stripe form: initial load", () => {
+  afterAll(() => {
+    vi.restoreAllMocks();
   });
 
-  test.only("prefilled state: user was able to continue", async () => {
-    const details: StripeDonationDetails = {
-      amount: "60",
+  test("initial form state: no persisted details", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+    };
+    don_mock.mockReturnValueOnce(init);
+
+    render(<Form step="form" type="stripe" />);
+
+    // frequency selector must not be selected initially
+    expect(screen.getByRole("radio", { name: /give monthly/i })).not.toBeChecked();
+    expect(screen.getByRole("radio", { name: /give once/i })).not.toBeChecked();
+
+    // currency selector loads at the beginning with USD default
+    const currency_selector = screen.getByRole("combobox");
+    expect(currency_selector).toHaveDisplayValue(/usd/i);
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue("");
+    expect(screen.getByPlaceholderText(/first name/i)).toHaveDisplayValue("");
+    expect(screen.getByPlaceholderText(/last name/i)).toHaveDisplayValue("");
+    expect(screen.getByPlaceholderText(/email/i)).toHaveDisplayValue("");
+    //tip enabled by default
+    expect(
+      screen.getByRole("switch", { name: /support free fundraising tools/i })
+    ).toBeChecked();
+    // tip enabled and defaulted to 15%
+    expect(screen.getByRole("radio", { name: /15%/i })).toBeChecked();
+
+    //fee coverage disabled by default
+    expect(
+      screen.getByRole("switch", { name: /cover processing fee/i })
+    ).not.toBeChecked();
+
+    // incrementers shown since currency loads at the beginning
+    const incs = screen.getAllByTestId("incrementer");
+    expect(incs).toHaveLength(4);
+  });
+
+  test("submit form with initial/persisted data", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+      user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
+    };
+    don_mock.mockReturnValueOnce(init);
+
+    const fv: StripeDonationDetails = {
+      amount: "100",
       currency: mock_usd,
-      frequency: "recurring",
+      frequency: "one-time",
       first_name: "John",
       last_name: "Doe",
       email: "john@doe.com",
-      cover_processing_fee: false,
+      cover_processing_fee: true,
       tip: "",
-      tip_format: "15",
+      tip_format: "20",
     };
-    const Stub = stb(<Form step="form" fv={details} type="stripe" />);
-    render(<Stub />);
 
-    const amount_input = await screen.findByPlaceholderText(/enter amount/i);
-    expect(amount_input).toHaveDisplayValue("60");
+    render(<Form fv={fv} type="stripe" step="form" />);
+
+    const currency_selector = screen.getByRole("combobox");
+    expect(currency_selector).toHaveDisplayValue(fv.currency.code);
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
+      fv.amount
+    );
+    expect(screen.getByPlaceholderText(/first name/i)).toHaveDisplayValue(
+      fv.first_name
+    );
+    expect(screen.getByPlaceholderText(/last name/i)).toHaveDisplayValue(
+      fv.last_name
+    );
+    expect(screen.getByPlaceholderText(/email/i)).toHaveDisplayValue(fv.email);
+    expect(
+      screen.getByRole("switch", { name: /support free fundraising tools/i })
+    ).toBeChecked();
+    expect(screen.getByRole("radio", { name: /20%/i })).toBeChecked();
+
+    expect(
+      screen.getByRole("switch", { name: /cover processing fee/i })
+    ).toBeChecked();
+
+    // incrementers shown since currency loads at the beginning
+    const incs = screen.getAllByTestId("incrementer");
+    expect(incs).toHaveLength(4);
 
     const continue_btn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continue_btn);
-
-    expect(mocked_set_state).toHaveBeenCalledOnce();
-    mocked_set_state.mockReset();
+    expect(don_set_mock).toHaveBeenCalledOnce();
+    don_set_mock.mockReset();
   });
 
-  test("user corrects validation errors", async () => {
-    const Stub = stb(<Form step="donate-form" init={init} />, {
-      root: { currency: "php" },
-    });
-    render(<Stub />);
-    const continueBtn = await screen.findByRole("button", {
-      name: /continue/i,
-    });
+  test("submitting empty form should show validation messages and focus first field: amount input", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+    };
+    don_mock.mockReturnValueOnce(init);
+
+    render(<Form step="form" type="stripe" />);
+
+    const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
-    expect(mocked_set_state).not.toHaveBeenCalled();
 
-    //frequency selector errors out and corrected
-    expect(
-      screen.getByText(/please select donation frequency/i)
-    ).toBeInTheDocument();
-    const freqOptions = screen.getAllByRole("radio");
-    await userEvent.click(freqOptions[0]);
-    expect(freqOptions[0]).toBeChecked();
-    expect(screen.queryByText(/required/i)).toBeNull();
-
-    //user submits again
-    await userEvent.click(continueBtn);
-    expect(mocked_set_state).not.toHaveBeenCalled();
-
-    expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    expect(amountInput).toHaveFocus();
-
-    await userEvent.clear(amountInput);
+    //amount input
     expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
 
-    await userEvent.type(amountInput, "0.5");
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    expect(amount_input).toHaveFocus();
+  });
+
+  test("user corrects error and submits", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+    };
+    don_mock.mockReturnValueOnce(init);
+
+    render(<Form type="stripe" step="form" />);
+
+    //submit empty form
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    //amount input required and focused
+    expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    expect(amount_input).toHaveFocus();
+
+    //inputs amount below minimum
+    await userEvent.type(amount_input, "0.5");
+    await userEvent.click(continue_btn);
+
+    //shows minimum validation error
     expect(screen.getByText(/less than min/i)).toBeInTheDocument();
 
-    await userEvent.clear(amountInput);
-    await userEvent.type(amountInput, "1");
-    expect(screen.queryByText(/please enter an amount/i)).toBeNull();
+    //user now inputs amount greater than minimum
+    await userEvent.click(amount_input);
+    await userEvent.clear(amount_input);
+    await userEvent.type(amount_input, "2");
+    expect(screen.queryByText(/less than min/i)).toBeNull();
 
-    await userEvent.click(continueBtn);
-    expect(mocked_set_state).toHaveBeenCalledOnce();
-    mocked_set_state.mockReset();
+    //user still needs to fill payment information
+    await userEvent.click(continue_btn);
+    const first_name_input = screen.getByPlaceholderText(/first name/i);
+    expect(first_name_input).toHaveFocus();
+
+    //user fills payment information
+    await userEvent.type(first_name_input, "John");
+    const last_name_input = screen.getByPlaceholderText(/last name/i);
+    await userEvent.type(last_name_input, "Doe");
+    const email_input = screen.getByPlaceholderText(/email/i);
+    await userEvent.type(email_input, "john@doe.com");
+
+    //user selects frequency before submitting
+    const give_once_radio = screen.getByRole("radio", { name: /give once/i });
+    await userEvent.click(give_once_radio);
+
+    await userEvent.click(continue_btn);
+
+    //form submitted successfully
+    expect(don_set_mock).toHaveBeenCalledOnce();
+    don_set_mock.mockReset();
   });
 
-  test("incrementers", async () => {
-    const Stub = stb(<Form step="donate-form" init={init} />, {
-      root: { currency: "php" },
-    });
-    render(<Stub />);
+  test("user selects frequency and submits", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: null,
+      recipient: { id: "0", name: "", members: [] },
+      mode: "live",
+    };
+    don_mock.mockReturnValueOnce(init);
 
-    const amountInput = await screen.findByPlaceholderText(/enter amount/i);
+    render(<Form type="stripe" step="form" />);
 
-    //user tries to increment invalid input
-    const incrementers = screen.getAllByTestId("incrementer");
+    // verify frequency is not selected initially
+    expect(screen.getByRole("radio", { name: /give monthly/i })).not.toBeChecked();
+    expect(screen.getByRole("radio", { name: /give once/i })).not.toBeChecked();
 
-    await userEvent.clear(amountInput);
-    await userEvent.type(amountInput, "1000");
-    await userEvent.click(incrementers[0]);
-    expect(amountInput).toHaveDisplayValue("1040");
+    // user selects frequency
+    const give_once_radio = screen.getByRole("radio", { name: /give once/i });
+    await userEvent.click(give_once_radio);
+    expect(give_once_radio).toBeChecked();
 
-    await userEvent.click(incrementers[1]);
-    expect(amountInput).toHaveDisplayValue("1140");
+    // user fills in amount
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "50");
+
+    // user fills in payment information
+    const first_name_input = screen.getByPlaceholderText(/first name/i);
+    await userEvent.type(first_name_input, "John");
+    const last_name_input = screen.getByPlaceholderText(/last name/i);
+    await userEvent.type(last_name_input, "Doe");
+    const email_input = screen.getByPlaceholderText(/email/i);
+    await userEvent.type(email_input, "john@doe.com");
+
+    // user submits form
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    expect(don_set_mock).toHaveBeenCalledOnce();
+    don_set_mock.mockReset();
   });
 });
