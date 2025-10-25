@@ -1,6 +1,6 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
-import { currency_fv } from "types/currency";
+import { currency_fv, type ICurrencyFv } from "types/currency";
 import { frequency, str } from "types/donation-intent";
 export {
   type Tribute,
@@ -145,17 +145,7 @@ export const tip_from_val = (
   return { tip_format: "custom", tip: value.toString() };
 };
 
-export const fiat_donation_details = v.object({
-  amount: amount({ required: true }),
-  currency: currency_fv,
-});
-
-export interface FiatDonationDetails
-  extends v.InferOutput<typeof fiat_donation_details> {}
-
-const is_min_met = (
-  input: Pick<FiatDonationDetails, "amount" | "currency">
-) => {
+const is_min_met = (input: { amount: string; currency: ICurrencyFv }) => {
   if (!input.currency.min) return true;
   return +input.amount >= input.currency.min;
 };
@@ -175,8 +165,9 @@ export const crypto_donation_details = v.pipe(
 );
 
 const stripe_donation_details_raw = v.object({
+  amount: amount({ required: true }),
+  currency: currency_fv,
   frequency,
-  ...fiat_donation_details.entries,
   ...donation_fv.entries,
 });
 
@@ -213,7 +204,7 @@ export const stocks_donation_details = v.pipe(
 );
 
 const daf_donation_details_raw = v.object({
-  ...fiat_donation_details.entries,
+  amount: amount({ required: true }),
   ...v.omit(donation_fv, ["first_name", "last_name", "email"]).entries,
 });
 export interface DafDonationDetails
@@ -221,10 +212,6 @@ export interface DafDonationDetails
 
 export const daf_donation_details = v.pipe(
   daf_donation_details_raw,
-  v.forward(
-    v.partialCheck([["amount"], ["currency"]], is_min_met, "less than min"),
-    ["amount"]
-  ),
   v.forward(
     v.partialCheck([["tip"], ["tip_format"]], is_tip_valid, "required"),
     ["tip"]

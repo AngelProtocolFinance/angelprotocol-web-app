@@ -22,6 +22,7 @@ import {
 } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { to_platform_values } from "./to-platform-values";
+import { usd_option } from "components/donation/common/constants";
 
 interface GrantMetadata {
   /** includes tip and fee_allowance */
@@ -45,7 +46,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
     <Summary
       classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
       on_back={() => back_to_form("daf", props, don_set)}
-      Amount={currency(props.currency)}
+      Amount={currency(usd_option)}
       amount={+props.amount}
       fee_allowance={mfa}
       frequency="one-time"
@@ -116,10 +117,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
                 frequency: "one-time",
                 via_id: workflowSessionId,
                 via_name: "",
-                amount: {
-                  currency: props.currency.code,
-                  ...adj,
-                },
+                amount: { currency: usd_option.code, ...adj },
                 recipient: state.init.recipient.id,
                 donor: {
                   title: "",
