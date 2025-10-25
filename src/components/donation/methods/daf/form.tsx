@@ -7,17 +7,17 @@ import { ru_vdec } from "helpers/decimal";
 import { usd_option } from "../../common/constants";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
-import { use_donation_state } from "../../context";
+import { use_donation } from "../../context";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: TMethodState<"daf">) {
-  const { set_state, state } = use_donation_state();
+  const { don_set, don } = use_donation();
   const rhf = use_rhf(props.fv);
 
   return (
     <FormContainer
       disabled={rhf.isSubmitting}
-      onSubmit={rhf.handleSubmit((fv) => to_checkout("daf", fv, set_state))}
+      onSubmit={rhf.handleSubmit((fv) => to_checkout("daf", fv, don_set))}
       className="flex flex-col min-h-full"
     >
       <MaskedInput
@@ -42,7 +42,7 @@ export function Form(props: TMethodState<"daf">) {
         on_increment={rhf.on_increment}
         code={usd_option.code}
         rate={usd_option.rate}
-        increments={state.init.config?.increments}
+        increments={don.config?.increments}
         classes="mb-4 mt-1"
         precision={0}
       />

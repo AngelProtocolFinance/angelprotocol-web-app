@@ -5,13 +5,13 @@ import { min_fee_allowance } from "helpers/donation";
 import { Image } from "../../../image";
 import { Summary } from "../../common/summary";
 import { token } from "../../common/token";
-import { use_donation_state } from "../../context";
+import { use_donation } from "../../context";
 import { type CryptoDonationDetails, back_to_form, tip_val } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { DirectMode } from "./direct-mode";
 
 export function Crypto(props: CryptoDonationDetails) {
-  const { set_state, state } = use_donation_state();
+  const { don, don_set } = use_donation();
   const { token: t, tip_format, tip } = props;
 
   const tipv = tip_val(tip_format, tip, +t.amount);
@@ -21,15 +21,11 @@ export function Crypto(props: CryptoDonationDetails) {
   return (
     <Summary
       classes="grid content-start p-4 @md/steps:p-8"
-      on_back={() => back_to_form("crypto", props, set_state)}
+      on_back={() => back_to_form("crypto", props, don_set)}
       Amount={Amount}
       amount={+t.amount}
       fee_allowance={mfa}
-      tip={
-        tip
-          ? { value: tipv, charity_name: state.init.recipient.name }
-          : undefined
-      }
+      tip={tip ? { value: tipv, charity_name: don.recipient.name } : undefined}
       pre_split_content={
         <>
           <dl className="text-gray py-3 flex items-center justify-between border-b border-gray-l3">
@@ -47,8 +43,8 @@ export function Crypto(props: CryptoDonationDetails) {
         </>
       }
     >
-      <DirectMode fv={props} init={state.init} classes="mt-4" />
-      <DonationTerms endowName={state.init.recipient.name} classes="mt-5" />
+      <DirectMode fv={props} init={don} classes="mt-4" />
+      <DonationTerms endowName={don.recipient.name} classes="mt-5" />
     </Summary>
   );
 }

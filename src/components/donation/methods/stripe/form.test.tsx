@@ -3,17 +3,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_usd } from "services/apes/mock";
 import { describe, expect, test, vi } from "vitest";
-import { stb } from "../../__tests__/test-data";
-import { init_donation_fv } from "../../common/constants";
-import type { Init, StripeDonationDetails } from "../../types";
+import { stb } from "../__tests__/test-data";
+import type { Init, State, StripeDonationDetails } from "../../types";
 import { Form } from "./form";
-
-const mocked_set_state = vi.hoisted(() => vi.fn());
-vi.mock("../../context", () => ({
-  use_donation_state: vi
-    .fn()
-    .mockReturnValue({ state: {}, set_state: mocked_set_state }),
-}));
 
 const init: Init = {
   source: "bg-marketplace",
@@ -26,37 +18,44 @@ const init: Init = {
   config: null,
 };
 
-const mockUseGetter = vi.hoisted(() => vi.fn());
-vi.mock("store/accessors", () => ({
-  useGetter: mockUseGetter,
+const mocked_set_state = vi.hoisted(() => vi.fn());
+vi.mock("../../context", () => ({
+  use_donation: vi.fn().mockReturnValue({
+    state: {},
+    set_state: mocked_set_state,
+  }),
 }));
 
 describe("Stripe form test", () => {
   beforeEach(() => vi.restoreAllMocks());
 
   test("blank state: no default currency specified", async () => {
-    const Stub = stb(<Form step="donate-form" init={init} />);
+    const Stub = stb(<Form step="form" type="stripe" />);
     render(<Stub />);
     const currencySelector = await screen.findByRole("combobox");
     expect(currencySelector).toHaveDisplayValue(/usd/i);
   });
 
-  test("prefilled state: user was able to continue", async () => {
+  test.only("prefilled state: user was able to continue", async () => {
     const details: StripeDonationDetails = {
       amount: "60",
       currency: mock_usd,
       frequency: "recurring",
-      method: "stripe",
-      ...init_donation_fv,
+      first_name: "John",
+      last_name: "Doe",
+      email: "john@doe.com",
+      cover_processing_fee: false,
+      tip: "",
+      tip_format: "15",
     };
-    const Stub = stb(<Form step="donate-form" init={init} details={details} />);
+    const Stub = stb(<Form step="form" fv={details} type="stripe" />);
     render(<Stub />);
 
-    const amountInput = await screen.findByPlaceholderText(/enter amount/i);
-    expect(amountInput).toHaveDisplayValue("60");
+    const amount_input = await screen.findByPlaceholderText(/enter amount/i);
+    expect(amount_input).toHaveDisplayValue("60");
 
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continueBtn);
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
 
     expect(mocked_set_state).toHaveBeenCalledOnce();
     mocked_set_state.mockReset();

@@ -1,10 +1,4 @@
-import {
-  CloseButton,
-  ComboboxOption,
-  Field as F,
-  Label,
-  Switch,
-} from "@headlessui/react";
+import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
 import { Field, Form as FieldSet } from "components/form";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
@@ -15,14 +9,14 @@ import use_swr from "swr/immutable";
 import type { ICurrenciesFv } from "types/currency";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
-import { use_donation_state } from "../../context";
+import { use_donation } from "../../context";
 import { type TMethodState, to_checkout } from "../../types";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: TMethodState<"stripe">) {
   const [token_q, set_token_q] = useState("");
-  const { set_state, state } = use_donation_state();
+  const { don_set, don } = use_donation();
   const rhf = use_rhf(props.fv);
 
   const currency = use_swr(
@@ -71,7 +65,7 @@ export function Form(props: TMethodState<"stripe">) {
 
   return (
     <FieldSet
-      onSubmit={rhf.handleSubmit((fv) => to_checkout("stripe", fv, set_state))}
+      onSubmit={rhf.handleSubmit((fv) => to_checkout("stripe", fv, don_set))}
       className="grid"
     >
       <Frequency
@@ -106,7 +100,7 @@ export function Form(props: TMethodState<"stripe">) {
           on_increment={rhf.on_increment}
           code={rhf.currency.value.code}
           rate={rhf.currency.value.rate}
-          increments={state.init.config?.increments}
+          increments={don.config?.increments}
           precision={0}
         />
       )}

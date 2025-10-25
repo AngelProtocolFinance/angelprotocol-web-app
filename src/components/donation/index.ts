@@ -1,6 +1,6 @@
 export * from ".";
 export {
-  type TDonationState,
+  type TDonation,
   type DonationRecipient,
   type IProgram,
   type IUser,

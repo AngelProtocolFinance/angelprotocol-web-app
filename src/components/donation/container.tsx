@@ -8,7 +8,7 @@ import type {
   IUser,
   Init,
   Mode,
-  TDonationState,
+  TDonation,
 } from "./types";
 
 type Components = {
@@ -21,7 +21,7 @@ type Components = {
 };
 
 type InitState = {
-  init: TDonationState;
+  init: TDonation;
 };
 
 type Props = {
@@ -46,7 +46,7 @@ function init_state({
   recipient,
   mode,
   user,
-}: Components): TDonationState {
+}: Components): TDonation {
   const init: Init = {
     source,
     config,
@@ -56,7 +56,7 @@ function init_state({
   };
 
   return {
+    ...init,
     method: config?.method_ids?.[0] ?? "stripe",
-    init,
   };
 }

@@ -22,7 +22,7 @@ const endow: INpo = {
   env: "staging",
 };
 
-export const testDonateData: DonateData = {
+export const test_donate_data: DonateData = {
   id: 1,
   endow,
   balance: Promise.resolve({} as any),
@@ -33,7 +33,7 @@ interface Data {
   ldr?: DonateData;
 }
 export const stb = (node: ReactNode, data?: Data) => {
-  const { root = null, ldr = testDonateData } = data || {};
+  const { root = null, ldr = test_donate_data } = data || {};
   return createRoutesStub([
     {
       path: "/",

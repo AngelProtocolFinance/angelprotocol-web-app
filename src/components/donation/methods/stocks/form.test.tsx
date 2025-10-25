@@ -6,7 +6,7 @@ import { Form } from "./form";
 
 const mocked_set_state = vi.hoisted(() => vi.fn());
 vi.mock("../../context", () => ({
-  use_donation_state: vi
+  use_donation: vi
     .fn()
     .mockReturnValue({ state: {}, set_state: mocked_set_state }),
 }));

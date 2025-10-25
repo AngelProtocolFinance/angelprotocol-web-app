@@ -11,7 +11,7 @@ import type {
 } from "types/donation-intent";
 import { currency as currencyfn } from "../../common/currency";
 import { Summary } from "../../common/summary";
-import { use_donation_state } from "../../context";
+import { use_donation } from "../../context";
 import { type StripeDonationDetails, back_to_form, tip_val } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { Loader } from "../loader";
@@ -35,7 +35,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
     currency,
     ...donor
   } = props;
-  const { state, set_state } = use_donation_state();
+  const { don, don_set } = use_donation();
 
   const tipv = tip_val(tip_format, tip, +amount);
   const mfa = min_fee_allowance(
@@ -52,9 +52,9 @@ export function StripeCheckout(props: StripeDonationDetails) {
       fee_allowance: mfa,
       currency: currency.code,
     },
-    recipient: state.init.recipient.id,
+    recipient: don.recipient.id,
     donor: { title: "", ...donor },
-    source: state.init.source,
+    source: don.source,
     via_id: "fiat",
     via_name: "Stripe",
   };
@@ -64,14 +64,14 @@ export function StripeCheckout(props: StripeDonationDetails) {
   return (
     <Summary
       classes="grid content-start p-4 @md/steps:p-8"
-      on_back={() => back_to_form("stripe", props, set_state)}
+      on_back={() => back_to_form("stripe", props, don_set)}
       Amount={currencyfn(currency)}
       amount={+amount}
       fee_allowance={mfa}
       frequency={frequency}
       tip={
         tipv > 0
-          ? { value: tipv, charity_name: state.init.recipient.name }
+          ? { value: tipv, charity_name: don.recipient.name }
           : undefined
       }
     >
@@ -93,7 +93,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
               appearance: {
                 theme: "flat",
                 variables: {
-                  colorPrimary: state.init.config?.accent_primary,
+                  colorPrimary: don.config?.accent_primary,
                   fontFamily: "Quicksand, sans-serif",
                   borderRadius: "8px",
                   gridRowSpacing: "20px",
@@ -106,7 +106,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
           </Elements>
         )}
       </ErrorBoundaryClass>
-      <DonationTerms endowName={state.init.recipient.name} classes="mt-5" />
+      <DonationTerms endowName={don.recipient.name} classes="mt-5" />
     </Summary>
   );
 }

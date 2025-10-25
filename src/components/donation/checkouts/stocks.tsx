@@ -1,7 +1,7 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { href } from "react-router";
 import { BackBtn } from "../common/back-btn";
-import { use_donation_state } from "../context";
+import { use_donation } from "../context";
 import {
   type StocksDonationDetails,
   back_to_form,
@@ -11,21 +11,19 @@ import {
 import { DonationTerms } from "./donation-terms";
 
 export function Stocks(props: StocksDonationDetails) {
-  const { state } = use_donation_state();
-  const id = state.init.recipient.id;
+  const { don, don_set } = use_donation();
+  const id = don.recipient.id;
   const path = is_fund(id)
     ? href("/fundraisers/:fundId", { fundId: id })
     : href("/marketplace/:id", { id: id });
 
   const tipv = tip_val(props.tip_format, props.tip, +props.num_shares);
-
   const url = `${window.location.origin}${path}`;
-  const { set_state } = use_donation_state();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
       <BackBtn
         type="button"
-        onClick={() => back_to_form("stocks", props, set_state)}
+        onClick={() => back_to_form("stocks", props, don_set)}
       />
       <p className="mt-4 text-center text-gray uppercase">Donation pending</p>
       <p className="mt-4 text-center">
@@ -43,8 +41,7 @@ export function Stocks(props: StocksDonationDetails) {
         <p>Account number: Z40390069</p>
         <p>Account name: Altruistic Partners Empowering Society, Inc</p>
         <p>
-          Reference: [Internal Ref#, if needed] {state.init.recipient.name} (
-          {url})
+          Reference: [Internal Ref#, if needed] {don.recipient.name} ({url})
         </p>
       </div>
       <p className="text-sm mt-3 mb-1">
@@ -68,7 +65,7 @@ export function Stocks(props: StocksDonationDetails) {
       </p>
       <a
         href={email_link(
-          state.init.recipient.name,
+          don.recipient.name,
           url,
           +props.num_shares,
           props.symbol
@@ -78,7 +75,7 @@ export function Stocks(props: StocksDonationDetails) {
         Generate email
       </a>
       <DonationTerms
-        endowName={state.init.recipient.name}
+        endowName={don.recipient.name}
         classes="mt-5 border-t border-gray-l3 pt-4"
       />
     </div>
