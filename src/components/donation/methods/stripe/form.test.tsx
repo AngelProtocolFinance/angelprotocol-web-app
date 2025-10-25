@@ -30,7 +30,9 @@ describe("Stripe form: initial load", () => {
     render(<Form step="form" type="stripe" />);
 
     // frequency selector must not be selected initially
-    expect(screen.getByRole("radio", { name: /give monthly/i })).not.toBeChecked();
+    expect(
+      screen.getByRole("radio", { name: /give monthly/i })
+    ).not.toBeChecked();
     expect(screen.getByRole("radio", { name: /give once/i })).not.toBeChecked();
 
     // currency selector loads at the beginning with USD default
@@ -201,7 +203,9 @@ describe("Stripe form: initial load", () => {
     render(<Form type="stripe" step="form" />);
 
     // verify frequency is not selected initially
-    expect(screen.getByRole("radio", { name: /give monthly/i })).not.toBeChecked();
+    expect(
+      screen.getByRole("radio", { name: /give monthly/i })
+    ).not.toBeChecked();
     expect(screen.getByRole("radio", { name: /give once/i })).not.toBeChecked();
 
     // user selects frequency

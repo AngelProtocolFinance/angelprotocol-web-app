@@ -1,4 +1,5 @@
 import { ContentLoader } from "components/content-loader";
+import { usd_option } from "components/donation/common/constants";
 import { ErrorBoundaryClass } from "components/error";
 import { type IPrompt, Prompt } from "components/prompt";
 import { PROCESSING_RATES } from "constants/common";
@@ -22,7 +23,6 @@ import {
 } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { to_platform_values } from "./to-platform-values";
-import { usd_option } from "components/donation/common/constants";
 
 interface GrantMetadata {
   /** includes tip and fee_allowance */

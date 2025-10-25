@@ -1,175 +1,345 @@
+import type { DonateMethodId } from "@better-giving/endowment";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test } from "vitest";
 import { Steps } from "../index";
-import type { DonationState, StripeDonationDetails } from "../types";
+import type { Config, TDonation } from "../types";
 import { stb } from "./__tests__/test-data";
-import { init_donation_fv } from "../common/constants";
 
-const stripeDonation: StripeDonationDetails = {
-  method: "stripe",
-  amount: "100",
-  currency: { code: "usd", min: 1, rate: 1 },
-  frequency: "recurring",
-  ...init_donation_fv,
-};
+describe("payment method form state persistence", () => {
+  const all_methods_config: Config = {
+    method_ids: ["stripe", "crypto", "daf", "stocks"] as DonateMethodId[],
+  };
 
-describe("donation flow", () => {
-  test("split is skipped", async () => {
-    const state: DonationState = {
-      step: "donate-form",
-      init: {
-        recipient: { id: "1", name: "test", members: [] },
-        source: "bg-marketplace",
-        mode: "live",
-        config: null,
-      },
-      details: stripeDonation,
+  test("crypto: form state persists when navigating to checkout and back", async () => {
+    const init: TDonation = {
+      source: "bg-marketplace",
+      mode: "live",
+      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      config: all_methods_config,
+      method: "crypto",
     };
-    const Stub = stb(<Steps init={state} />);
+    const Stub = stb(<Steps init={init} />);
     render(<Stub />);
 
-    const continueBtn = await screen.findByRole("button", {
-      name: /continue/i,
-    });
-    await userEvent.click(continueBtn);
+    // Wait for donate-methods to render
+    await screen.findByTestId("donate-methods");
 
-    const tipForm = screen.getByTestId("tip-form");
-    expect(tipForm).toBeInTheDocument();
+    // Select crypto tab
+    const crypto_tab = screen.getByRole("tab", { name: /crypto/i });
+    await userEvent.click(crypto_tab);
 
-    //clicking back goes back to donate form
-    const backBtn = screen.getByRole("button", { name: /go back/i });
-    await userEvent.click(backBtn);
+    // Select token
+    const token_selector = screen.getByRole("combobox");
+    await userEvent.click(token_selector);
+    const token_options = screen.getAllByRole("option");
+    await userEvent.click(token_options[0]);
 
-    const donateMethods = screen.getByTestId("donate-methods");
-    expect(donateMethods).toBeInTheDocument();
-  });
+    // Input amount
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "2");
 
-  test("tipping is skipped", async () => {
-    const state: DonationState = {
-      step: "donate-form",
-      init: {
-        recipient: { id: "1", name: "test", hide_bg_tip: true, members: [] },
-        source: "bg-marketplace",
-        mode: "live",
-        config: null,
-      },
-      details: stripeDonation,
-    };
-    const Stub = stb(<Steps init={state} />);
-    render(<Stub />);
+    // Fill donor info
+    const first_name_input = screen.getByPlaceholderText(/first name/i);
+    await userEvent.type(first_name_input, "John");
 
-    await userEvent.click(
-      await screen.findByRole("button", {
-        name: /continue/i,
-      })
-    );
+    const last_name_input = screen.getByPlaceholderText(/last name/i);
+    await userEvent.type(last_name_input, "Doe");
 
+    const email_input = screen.getByPlaceholderText(/email/i);
+    await userEvent.type(email_input, "john@doe.com");
+
+    // Submit to checkout
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    // Should be on checkout page - look for crypto-specific button
     expect(
-      screen.getByRole("button", { name: /checkout/i })
+      await screen.findByRole("button", {
+        name: /i have completed the payment/i,
+      })
     ).toBeInTheDocument();
 
-    //user back on donate methods
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /go back/i,
-      })
-    );
+    // Go back
+    const back_btn = screen.getByRole("button", { name: /go back/i });
+    await userEvent.click(back_btn);
 
-    expect(screen.getByTestId("donate-methods")).toBeInTheDocument();
+    // Verify form state persists
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
+      "2"
+    );
+    expect(screen.getByPlaceholderText(/first name/i)).toHaveDisplayValue(
+      "John"
+    );
+    expect(screen.getByPlaceholderText(/last name/i)).toHaveDisplayValue("Doe");
+    expect(screen.getByPlaceholderText(/email/i)).toHaveDisplayValue(
+      "john@doe.com"
+    );
   });
 
-  test("tip is reset when changing token/currency", async () => {
-    const state: DonationState = {
-      step: "tip",
-      init: {
-        recipient: { id: "1", name: "test", members: [] },
-        source: "bg-marketplace",
-        mode: "live",
-        config: null,
-      },
-      details: stripeDonation,
-      tip: { value: 50, format: "pct" },
+  test("daf: form state persists when navigating to checkout and back", async () => {
+    const init: TDonation = {
+      source: "bg-marketplace",
+      mode: "live",
+      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      config: all_methods_config,
+      method: "daf",
     };
-
-    const Stub = stb(<Steps init={state} />);
+    const Stub = stb(<Steps init={init} />);
     render(<Stub />);
 
-    // back to donate methods
-    await userEvent.click(
-      await screen.findByRole("button", {
-        name: /go back/i,
-      })
+    // Wait for donate-methods to render
+    await screen.findByTestId("donate-methods");
+
+    // Select DAF tab
+    const daf_tab = screen.getByRole("tab", { name: /donor advised fund/i });
+    await userEvent.click(daf_tab);
+
+    // Input amount
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "500");
+
+    // Submit to checkout
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    // Should be on checkout page - DAF uses Chariot widget, check we left the form
+    expect(screen.queryByTestId("donate-methods")).not.toBeInTheDocument();
+    expect(
+      await screen.findByRole("button", { name: /go back/i })
+    ).toBeInTheDocument();
+
+    // Go back
+    const back_btn = screen.getByRole("button", { name: /go back/i });
+    await userEvent.click(back_btn);
+
+    // Verify form state persists - DAF shows formatted amount with $
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
+      "$ 500"
     );
-
-    const currencySelector = await screen.findByRole("combobox");
-    await userEvent.click(currencySelector);
-    await userEvent.clear(currencySelector);
-    await userEvent.type(currencySelector, "EUR");
-
-    const eurOption = screen.getByRole("option", { name: /eur/i });
-    await userEvent.click(eurOption);
-    //amount is the same
-
-    //continue to tips
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /continue/i,
-      })
-    );
-
-    //tip is reverted to 17%
-    const tipSlider = screen.getByRole("slider");
-    expect(tipSlider).toHaveAttribute("aria-valuenow", "0.17");
   });
 
-  test("tip, split reset when changing donation method", async () => {
-    const state: DonationState = {
-      step: "tip",
-      init: {
-        recipient: { id: "1", name: "test", members: [] },
-        source: "bg-marketplace",
-        mode: "live",
-        config: null,
-      },
-      details: stripeDonation,
-      tip: { value: 50, format: "pct" },
+  test("stocks: form state persists when navigating to checkout and back", async () => {
+    const init: TDonation = {
+      source: "bg-marketplace",
+      mode: "live",
+      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      config: all_methods_config,
+      method: "stocks",
     };
-
-    const Stub = stb(<Steps init={state} />);
+    const Stub = stb(<Steps init={init} />);
     render(<Stub />);
 
-    // back to donate methods
-    await userEvent.click(
-      await screen.findByRole("button", {
-        name: /go back/i,
-      })
+    // Wait for donate-methods to render
+    await screen.findByTestId("donate-methods");
+
+    // Select stocks tab
+    const stocks_tab = screen.getByRole("tab", { name: /stocks/i });
+    await userEvent.click(stocks_tab);
+
+    // Input symbol
+    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
+    await userEvent.type(symbol_input, "AAPL");
+
+    // Input quantity
+    const qty_input = screen.getByPlaceholderText(/enter quantity/i);
+    await userEvent.type(qty_input, "10");
+
+    // Submit to checkout
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    // Should be on checkout page - look for stocks-specific text
+    expect(await screen.findByText(/donation pending/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /generate email/i })
+    ).toBeInTheDocument();
+
+    // Go back
+    const back_btn = screen.getByRole("button", { name: /go back/i });
+    await userEvent.click(back_btn);
+
+    // Verify form state persists
+    expect(screen.getByPlaceholderText(/ex. aapl/i)).toHaveDisplayValue("AAPL");
+    expect(screen.getByPlaceholderText(/enter quantity/i)).toHaveDisplayValue(
+      "10"
     );
+  });
 
-    //select crypto
-    const cryptoTab = screen.getByRole("tab", { name: /crypto/i });
-    await userEvent.click(cryptoTab);
+  // TODO: Implement cross-method state persistence
+  test.skip("form state persists when switching between payment methods", async () => {
+    const init: TDonation = {
+      source: "bg-marketplace",
+      mode: "live",
+      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      config: all_methods_config,
+      method: "crypto",
+    };
+    const Stub = stb(<Steps init={init} />);
+    render(<Stub />);
 
-    //select token
-    const token_selector = screen.getByPlaceholderText(/select token/i);
-    //wait for token dropdown to load
+    // Wait for donate-methods to render
+    await screen.findByTestId("donate-methods");
+
+    // Fill crypto form
+    const crypto_tab = screen.getByRole("tab", { name: /crypto/i });
+    await userEvent.click(crypto_tab);
+
+    const token_selector = screen.getByRole("combobox");
     await userEvent.click(token_selector);
-    const tokenOptions = screen.getAllByRole("option");
-    await userEvent.click(tokenOptions[0]);
+    const token_options = screen.getAllByRole("option");
+    await userEvent.click(token_options[0]);
 
-    //input amount
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    await userEvent.type(amountInput, "150");
+    let amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "5");
 
-    //continue to tip
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /continue/i,
-      })
+    const first_name_input = screen.getByPlaceholderText(/first name/i);
+    await userEvent.type(first_name_input, "Alice");
+
+    const last_name_input = screen.getByPlaceholderText(/last name/i);
+    await userEvent.type(last_name_input, "Smith");
+
+    const email_input = screen.getByPlaceholderText(/email/i);
+    await userEvent.type(email_input, "alice@example.com");
+
+    // Switch to DAF
+    const daf_tab = screen.getByRole("tab", { name: /donor advised fund/i });
+    await userEvent.click(daf_tab);
+
+    // Fill DAF form
+    amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "1000");
+
+    // Switch to stocks
+    const stocks_tab = screen.getByRole("tab", { name: /stocks/i });
+    await userEvent.click(stocks_tab);
+
+    // Fill stocks form
+    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
+    await userEvent.type(symbol_input, "TSLA");
+
+    const qty_input = screen.getByPlaceholderText(/enter quantity/i);
+    await userEvent.type(qty_input, "20");
+
+    // Switch back to crypto - form state should persist
+    await userEvent.click(crypto_tab);
+
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
+      "5"
+    );
+    expect(screen.getByPlaceholderText(/first name/i)).toHaveDisplayValue(
+      "Alice"
+    );
+    expect(screen.getByPlaceholderText(/last name/i)).toHaveDisplayValue(
+      "Smith"
+    );
+    expect(screen.getByPlaceholderText(/email/i)).toHaveDisplayValue(
+      "alice@example.com"
     );
 
-    //tip is reverted to 17%
-    const tipSlider = screen.getByRole("slider");
-    expect(tipSlider).toHaveAttribute("aria-valuenow", "0.17");
+    // Switch back to DAF - form state should persist
+    await userEvent.click(daf_tab);
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
+      "$ 1000"
+    );
+
+    // Switch back to stocks - form state should persist
+    await userEvent.click(stocks_tab);
+    expect(screen.getByPlaceholderText(/ex. aapl/i)).toHaveDisplayValue("TSLA");
+    expect(screen.getByPlaceholderText(/enter quantity/i)).toHaveDisplayValue(
+      "20"
+    );
+  });
+
+  // TODO: Implement cross-method state persistence after checkout
+  test.skip("form state persists after going to checkout from one method and switching to another", async () => {
+    const init: TDonation = {
+      source: "bg-marketplace",
+      mode: "live",
+      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      config: all_methods_config,
+      method: "crypto",
+    };
+    const Stub = stb(<Steps init={init} />);
+    render(<Stub />);
+
+    // Wait for donate-methods to render
+    await screen.findByTestId("donate-methods");
+
+    // Fill and submit crypto form to checkout
+    const crypto_tab = screen.getByRole("tab", { name: /crypto/i });
+    await userEvent.click(crypto_tab);
+
+    const token_selector = screen.getByRole("combobox");
+    await userEvent.click(token_selector);
+    const token_options = screen.getAllByRole("option");
+    await userEvent.click(token_options[0]);
+
+    let amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "3");
+
+    const first_name_input = screen.getByPlaceholderText(/first name/i);
+    await userEvent.type(first_name_input, "Bob");
+
+    const last_name_input = screen.getByPlaceholderText(/last name/i);
+    await userEvent.type(last_name_input, "Johnson");
+
+    const email_input = screen.getByPlaceholderText(/email/i);
+    await userEvent.type(email_input, "bob@example.com");
+
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    // Should be on crypto checkout
+    expect(
+      await screen.findByRole("button", {
+        name: /i have completed the payment/i,
+      })
+    ).toBeInTheDocument();
+
+    // Go back
+    const back_btn = screen.getByRole("button", { name: /go back/i });
+    await userEvent.click(back_btn);
+
+    // Wait for donate-methods to render again
+    await screen.findByTestId("donate-methods");
+
+    // Fill DAF form and go to checkout
+    const daf_tab = await screen.findByRole("tab", {
+      name: /donor advised fund/i,
+    });
+    await userEvent.click(daf_tab);
+
+    amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "750");
+
+    const continue_btn2 = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn2);
+
+    // Should be on DAF checkout - check we left the form
+    expect(screen.queryByTestId("donate-methods")).not.toBeInTheDocument();
+
+    // Go back
+    const back_btn2 = screen.getByRole("button", { name: /go back/i });
+    await userEvent.click(back_btn2);
+
+    // Switch back to crypto - all form state should persist
+    await userEvent.click(crypto_tab);
+
+    // Wait for crypto form to render (has token selector unlike DAF)
+    await screen.findByRole("combobox");
+
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
+      "3"
+    );
+    expect(screen.getByPlaceholderText(/first name/i)).toHaveDisplayValue(
+      "Bob"
+    );
+    expect(screen.getByPlaceholderText(/last name/i)).toHaveDisplayValue(
+      "Johnson"
+    );
+    expect(screen.getByPlaceholderText(/email/i)).toHaveDisplayValue(
+      "bob@example.com"
+    );
   });
 });
