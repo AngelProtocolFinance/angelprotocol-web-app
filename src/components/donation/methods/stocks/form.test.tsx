@@ -5,11 +5,11 @@ import type { Init, StocksDonationDetails } from "../../types";
 import { Form } from "./form";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
-const don_mock = vi.hoisted(() => vi.fn(() => ({})));
+const don_mock = vi.hoisted(() => ({ value: {} }));
 vi.mock("../../context", () => ({
   use_donation: vi
     .fn()
-    .mockReturnValue({ don: don_mock, don_set: don_set_mock }),
+    .mockImplementation(() => ({ don: don_mock.value, don_set: don_set_mock })),
 }));
 
 describe("Stocks form: initial load", () => {
@@ -24,7 +24,7 @@ describe("Stocks form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="stocks" />);
 
@@ -43,7 +43,7 @@ describe("Stocks form: initial load", () => {
       mode: "live",
       user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     const fv: StocksDonationDetails = {
       symbol: "BG",
@@ -73,7 +73,7 @@ describe("Stocks form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="stocks" />);
 
@@ -96,7 +96,7 @@ describe("Stocks form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form type="stocks" step="form" />);
 

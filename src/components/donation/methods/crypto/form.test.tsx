@@ -6,11 +6,11 @@ import type { CryptoDonationDetails, Init } from "../../types";
 import { Form } from "./form";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
-const don_mock = vi.hoisted(() => vi.fn(() => ({})));
+const don_mock = vi.hoisted(() => ({ value: {} }));
 vi.mock("../../context", () => ({
   use_donation: vi
     .fn()
-    .mockReturnValue({ don: don_mock, don_set: don_set_mock }),
+    .mockImplementation(() => ({ don: don_mock.value, don_set: don_set_mock })),
 }));
 
 describe("Crypto form: initial load", () => {
@@ -25,7 +25,7 @@ describe("Crypto form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="crypto" />);
 
@@ -59,7 +59,7 @@ describe("Crypto form: initial load", () => {
       mode: "live",
       user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     const fv: CryptoDonationDetails = {
       token: { ...mock_tokens[0], amount: "100", min: 1, rate: 1 },
@@ -112,7 +112,7 @@ describe("Crypto form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="crypto" />);
 
@@ -133,7 +133,7 @@ describe("Crypto form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form type="crypto" step="form" />);
 

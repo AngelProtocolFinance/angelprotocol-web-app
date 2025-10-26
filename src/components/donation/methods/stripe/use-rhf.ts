@@ -9,7 +9,11 @@ import {
   stripe_donation_details,
 } from "../../types";
 
-export function use_rhf(init: FV | undefined, user?: IUser) {
+export function use_rhf(
+  init: FV | undefined,
+  user: IUser | undefined,
+  hide_bg_tip: boolean
+) {
   const initial: FV = {
     amount: "",
     currency: usd_option,
@@ -19,7 +23,7 @@ export function use_rhf(init: FV | undefined, user?: IUser) {
     email: user?.email || "",
     tip: "",
     cover_processing_fee: false,
-    tip_format: "15",
+    tip_format: hide_bg_tip ? "none" : "15",
   };
 
   const {

@@ -17,7 +17,7 @@ import { use_rhf } from "./use-rhf";
 export function Form(props: TMethodState<"stripe">) {
   const [token_q, set_token_q] = useState("");
   const { don_set, don } = use_donation();
-  const rhf = use_rhf(props.fv);
+  const rhf = use_rhf(props.fv, don.user, don.recipient.hide_bg_tip ?? false);
 
   const currency = use_swr(
     href("/api/currencies"),
@@ -68,7 +68,7 @@ export function Form(props: TMethodState<"stripe">) {
   return (
     <FieldSet
       onSubmit={rhf.handleSubmit((fv) => to_checkout("stripe", fv, don_set))}
-      className="grid"
+      className="grid gap-y-2"
     >
       <Frequency
         value={rhf.frequency.value}
@@ -76,7 +76,6 @@ export function Form(props: TMethodState<"stripe">) {
         error={rhf.errors.frequency?.message}
       />
       <TokenField
-        classes={{ container: "mt-4 mb-1" }}
         ref={rhf.amount.ref}
         combobox={combobox}
         amount={rhf.amount.value}
@@ -98,6 +97,7 @@ export function Form(props: TMethodState<"stripe">) {
       />
       {rhf.currency.value.rate && (
         <Incrementers
+          classes="-mt-1"
           disabled={currency.isLoading || currency.isValidating}
           on_increment={rhf.on_increment}
           code={rhf.currency.value.code}
@@ -107,60 +107,62 @@ export function Form(props: TMethodState<"stripe">) {
         />
       )}
 
-      <TipField
-        classes="mt-6"
-        checked={rhf.tip_format.value !== "none"}
-        checked_changed={(checked) => {
-          if (checked) {
-            rhf.tip_format.onChange("15");
-          } else {
-            rhf.tip_format.onChange("none");
-            rhf.setValue("tip", "");
-          }
-        }}
-        tip_format={rhf.tip_format.value}
-        tip_format_changed={async (format) => {
-          rhf.tip_format.onChange(format);
-          if (format === "none") {
-            return rhf.setValue("tip", "");
-          }
-          if (format === "custom") {
-            await new Promise((r) => setTimeout(r, 50));
-            return rhf.setFocus("tip");
-          }
+      {don.recipient.hide_bg_tip ? null : (
+        <TipField
+          classes="mt-2"
+          checked={rhf.tip_format.value !== "none"}
+          checked_changed={(checked) => {
+            if (checked) {
+              rhf.tip_format.onChange("15");
+            } else {
+              rhf.tip_format.onChange("none");
+              rhf.setValue("tip", "");
+            }
+          }}
+          tip_format={rhf.tip_format.value}
+          tip_format_changed={async (format) => {
+            rhf.tip_format.onChange(format);
+            if (format === "none") {
+              return rhf.setValue("tip", "");
+            }
+            if (format === "custom") {
+              await new Promise((r) => setTimeout(r, 50));
+              return rhf.setFocus("tip");
+            }
 
-          const [c, amnt] = rhf.getValues(["currency", "amount"]);
-          if (!amnt) return rhf.setValue("tip", "");
+            const [c, amnt] = rhf.getValues(["currency", "amount"]);
+            if (!amnt) return rhf.setValue("tip", "");
 
-          const v = (+format / 100) * +amnt;
-          rhf.setValue("tip", ru_vdec(v, 1 / c.rate));
-        }}
-        custom_tip={
-          rhf.tip_format.value === "custom" ? (
-            <div className="relative w-full">
-              <input
-                {...rhf.register("tip")}
-                type="number"
-                step="any"
-                className="w-full text-sm pl-2 focus:outline-none"
-                placeholder="Enter tip"
-                aria-invalid={!!rhf.errors.tip?.message}
-              />
-              <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
-                {rhf.errors.tip?.message}
-              </span>
-            </div>
-          ) : undefined
-        }
-      />
+            const v = (+format / 100) * +amnt;
+            rhf.setValue("tip", ru_vdec(v, 1 / c.rate));
+          }}
+          custom_tip={
+            rhf.tip_format.value === "custom" ? (
+              <div className="relative w-full">
+                <input
+                  {...rhf.register("tip")}
+                  type="number"
+                  step="any"
+                  className="w-full text-sm pl-2 focus:outline-none"
+                  placeholder="Enter tip"
+                  aria-invalid={!!rhf.errors.tip?.message}
+                />
+                <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
+                  {rhf.errors.tip?.message}
+                </span>
+              </div>
+            ) : undefined
+          }
+        />
+      )}
 
       <CpfToggle
-        classes="mt-2"
+        classes=""
         checked={rhf.cpf.value}
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
 
-      <div className="grid mt-6 grid-cols-2 gap-2 content-start">
+      <div className="grid mt-2 grid-cols-2 gap-2 content-start">
         <p className="col-span-full text-sm font-semibold">
           Payment information
         </p>
@@ -187,8 +189,8 @@ export function Form(props: TMethodState<"stripe">) {
         />
         <Field
           {...rhf.register("email")}
-          label="Your email"
-          placeholder="Your email"
+          label="Your Email"
+          placeholder="Your Email"
           classes={{
             container: "col-span-full",
             input: "py-2",
@@ -202,7 +204,7 @@ export function Form(props: TMethodState<"stripe">) {
         disabled={
           currency.isLoading || currency.isValidating || !!currency.error
         }
-        className="mt-2 btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        className="btn btn-blue text-sm enabled:bg-(--accent-primary)"
         type="submit"
       >
         Continue

@@ -6,11 +6,11 @@ import type { Init, StripeDonationDetails } from "../../types";
 import { Form } from "./form";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
-const don_mock = vi.hoisted(() => vi.fn(() => ({})));
+const don_mock = vi.hoisted(() => ({ value: {} }));
 vi.mock("../../context", () => ({
   use_donation: vi
     .fn()
-    .mockReturnValue({ don: don_mock, don_set: don_set_mock }),
+    .mockImplementation(() => ({ don: don_mock.value, don_set: don_set_mock })),
 }));
 
 describe("Stripe form: initial load", () => {
@@ -25,7 +25,7 @@ describe("Stripe form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="stripe" />);
 
@@ -67,7 +67,7 @@ describe("Stripe form: initial load", () => {
       mode: "live",
       user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     const fv: StripeDonationDetails = {
       amount: "100",
@@ -121,7 +121,7 @@ describe("Stripe form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="stripe" />);
 
@@ -142,7 +142,7 @@ describe("Stripe form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form type="stripe" step="form" />);
 
@@ -198,7 +198,7 @@ describe("Stripe form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form type="stripe" step="form" />);
 

@@ -166,8 +166,7 @@ describe("payment method form state persistence", () => {
     );
   });
 
-  // TODO: Implement cross-method state persistence
-  test.skip("form state persists when switching between payment methods", async () => {
+  test("form state persists when switching between payment methods after checkout", async () => {
     const init: TDonation = {
       source: "bg-marketplace",
       mode: "live",
@@ -202,6 +201,21 @@ describe("payment method form state persistence", () => {
     const email_input = screen.getByPlaceholderText(/email/i);
     await userEvent.type(email_input, "alice@example.com");
 
+    // Submit to checkout to persist state in context
+    const continue_btn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn);
+
+    // Should be on checkout page
+    expect(
+      await screen.findByRole("button", {
+        name: /i have completed the payment/i,
+      })
+    ).toBeInTheDocument();
+
+    // Go back
+    const back_btn = screen.getByRole("button", { name: /go back/i });
+    await userEvent.click(back_btn);
+
     // Switch to DAF
     const daf_tab = screen.getByRole("tab", { name: /donor advised fund/i });
     await userEvent.click(daf_tab);
@@ -210,19 +224,23 @@ describe("payment method form state persistence", () => {
     amount_input = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amount_input, "1000");
 
-    // Switch to stocks
-    const stocks_tab = screen.getByRole("tab", { name: /stocks/i });
-    await userEvent.click(stocks_tab);
+    // Submit to checkout to persist state in context
+    const continue_btn2 = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continue_btn2);
 
-    // Fill stocks form
-    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
-    await userEvent.type(symbol_input, "TSLA");
+    // Should be on DAF checkout
+    expect(screen.queryByTestId("donate-methods")).not.toBeInTheDocument();
+    expect(
+      await screen.findByRole("button", { name: /go back/i })
+    ).toBeInTheDocument();
 
-    const qty_input = screen.getByPlaceholderText(/enter quantity/i);
-    await userEvent.type(qty_input, "20");
+    // Go back
+    const back_btn2 = screen.getByRole("button", { name: /go back/i });
+    await userEvent.click(back_btn2);
 
     // Switch back to crypto - form state should persist
-    await userEvent.click(crypto_tab);
+    const crypto_tab2 = screen.getByRole("tab", { name: /crypto/i });
+    await userEvent.click(crypto_tab2);
 
     expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
       "5"
@@ -238,21 +256,15 @@ describe("payment method form state persistence", () => {
     );
 
     // Switch back to DAF - form state should persist
-    await userEvent.click(daf_tab);
-    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
-      "$ 1000"
-    );
+    const daf_tab2 = screen.getByRole("tab", { name: /donor advised fund/i });
+    await userEvent.click(daf_tab2);
 
-    // Switch back to stocks - form state should persist
-    await userEvent.click(stocks_tab);
-    expect(screen.getByPlaceholderText(/ex. aapl/i)).toHaveDisplayValue("TSLA");
-    expect(screen.getByPlaceholderText(/enter quantity/i)).toHaveDisplayValue(
-      "20"
+    expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
+      "$ 1,000"
     );
   });
 
-  // TODO: Implement cross-method state persistence after checkout
-  test.skip("form state persists after going to checkout from one method and switching to another", async () => {
+  test("form state persists after going to checkout from one method and switching to another", async () => {
     const init: TDonation = {
       source: "bg-marketplace",
       mode: "live",
@@ -266,7 +278,7 @@ describe("payment method form state persistence", () => {
     // Wait for donate-methods to render
     await screen.findByTestId("donate-methods");
 
-    // Fill and submit crypto form to checkout
+    // Fill and submit crypto form to checkout - this persists state in context
     const crypto_tab = screen.getByRole("tab", { name: /crypto/i });
     await userEvent.click(crypto_tab);
 
@@ -304,7 +316,7 @@ describe("payment method form state persistence", () => {
     // Wait for donate-methods to render again
     await screen.findByTestId("donate-methods");
 
-    // Fill DAF form and go to checkout
+    // Fill DAF form and go to checkout - this also persists DAF state in context
     const daf_tab = await screen.findByRole("tab", {
       name: /donor advised fund/i,
     });
@@ -323,11 +335,9 @@ describe("payment method form state persistence", () => {
     const back_btn2 = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn2);
 
-    // Switch back to crypto - all form state should persist
-    await userEvent.click(crypto_tab);
-
-    // Wait for crypto form to render (has token selector unlike DAF)
-    await screen.findByRole("combobox");
+    // Switch back to crypto - all form state should persist from context
+    const crypto_tab2 = screen.getByRole("tab", { name: /crypto/i });
+    await userEvent.click(crypto_tab2);
 
     expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
       "3"

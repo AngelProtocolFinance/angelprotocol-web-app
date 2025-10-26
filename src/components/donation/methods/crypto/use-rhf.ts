@@ -5,19 +5,25 @@ import { init_token_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
   type CryptoDonationDetails as FV,
+  type IUser,
   crypto_donation_details,
-  donor_fv_init,
-  tip_fv_init,
 } from "../../types";
 
-const initial: FV = {
-  token: init_token_option,
-  ...tip_fv_init,
-  ...donor_fv_init,
-  cover_processing_fee: false,
-};
+export function use_rhf(
+  init: FV | undefined,
+  user: IUser | undefined,
+  hide_bg_tip: boolean
+) {
+  const initial: FV = {
+    token: init_token_option,
+    tip: "",
+    tip_format: hide_bg_tip ? "none" : "15",
+    first_name: user?.first_name || "",
+    last_name: user?.last_name || "",
+    email: user?.email || "",
+    cover_processing_fee: false,
+  };
 
-export function use_rhf(init?: FV) {
   const {
     reset,
     setValue,

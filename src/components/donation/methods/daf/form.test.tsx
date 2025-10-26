@@ -6,11 +6,11 @@ import type { DafDonationDetails, Init } from "../../types";
 import { Form } from "./form";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
-const don_mock = vi.hoisted(() => vi.fn(() => ({})));
+const don_mock = vi.hoisted(() => ({ value: {} }));
 vi.mock("../../context", () => ({
   use_donation: vi
     .fn()
-    .mockReturnValue({ don: don_mock, don_set: don_set_mock }),
+    .mockImplementation(() => ({ don: don_mock.value, don_set: don_set_mock })),
 }));
 
 describe("DAF form: initial load", () => {
@@ -25,7 +25,7 @@ describe("DAF form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="daf" />);
 
@@ -56,7 +56,7 @@ describe("DAF form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     const fv: DafDonationDetails = {
       amount: "100",
@@ -95,7 +95,7 @@ describe("DAF form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form step="form" type="daf" />);
 
@@ -116,7 +116,7 @@ describe("DAF form: initial load", () => {
       recipient: { id: "0", name: "", members: [] },
       mode: "live",
     };
-    don_mock.mockReturnValueOnce(init);
+    don_mock.value = init;
 
     render(<Form type="daf" step="form" />);
 

@@ -1,4 +1,6 @@
 import { Field, Label, Radio, RadioGroup, Switch } from "@headlessui/react";
+import { ExtLink } from "components/ext-link";
+import { BASE_URL } from "constants/env";
 import { PencilIcon } from "lucide-react";
 import type { ReactElement } from "react";
 import type { TTipFormat } from "../types";
@@ -64,14 +66,29 @@ export function TipField({ classes = "", ...p }: Props) {
           </Radio>
         </RadioGroup>
       </Field>
-      <p className="text-gray-d1 text-xs w-full">
-        <span className="font-bold text-blue-d1">Better.</span>
-        <span className="font-bold text-blue">Giving</span> provide this
-        platform free of charge so nonprofits everywhere can receive 100% of
-        their gifts. You can help us keep it that way by making a small,
-        tax-deductible contribution.
-      </p>
+      {p.tip_format === "none" && (
+        <p className="text-amber-d1 text-xs w-full">
+          Please consider helping keep <BgTxtLogoLink /> free for everyone, as a
+          nonprofit we charge no platform fees and rely on your support.
+        </p>
+      )}
+      {p.tip_format !== "none" && (
+        <p className="text-gray-d1 text-xs w-full">
+          <BgTxtLogoLink /> provide this platform free of charge so nonprofits
+          everywhere can receive 100% of their gifts. You can help us keep it
+          that way by making a small, tax-deductible contribution.
+        </p>
+      )}
       {p.custom_tip}
     </div>
+  );
+}
+
+function BgTxtLogoLink() {
+  return (
+    <ExtLink href={BASE_URL}>
+      <span className="font-bold text-blue-d1">Better.</span>
+      <span className="font-bold text-blue">Giving</span>
+    </ExtLink>
   );
 }

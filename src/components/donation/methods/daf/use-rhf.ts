@@ -7,11 +7,11 @@ import {
   daf_donation_details,
 } from "../../types";
 
-export function use_rhf(init: FV | undefined) {
+export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
   const initial: FV = {
     amount: "",
     tip: "",
-    tip_format: "15",
+    tip_format: hide_bg_tip ? "none" : "15",
     cover_processing_fee: false,
   };
 
