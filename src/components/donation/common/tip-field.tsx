@@ -88,7 +88,8 @@ function BgTxtLogoLink() {
   return (
     <ExtLink href={BASE_URL}>
       <span className="font-bold text-blue-d1">Better.</span>
-      <span className="font-bold text-blue">Giving</span>
+      <span className="font-bold text-blue">Giving</span>{" "}
+      <span className="text-blue-d1 text-2xs">501(c)(3)</span>
     </ExtLink>
   );
 }
