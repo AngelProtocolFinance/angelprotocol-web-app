@@ -9,6 +9,8 @@ export const bg_session = createCookie("bg-session", {
 export const donations_cookie = createCookie("donations", {
   path: "/",
   secrets: [session_secret],
+  secure: true,
+  sameSite: "none",
 });
 
 /** donation-id: access expiry */
