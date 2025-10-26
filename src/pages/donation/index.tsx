@@ -64,7 +64,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
       {!widget_version && (
         <Disclosure
           as="div"
-          className="w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
+          className="w-full border bg-white border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
         >
           <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
             <CheckCircle2Icon
@@ -92,7 +92,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
       {data.to_type !== "fund" ? (
         <Disclosure
           as="div"
-          className="w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden mt-2"
+          className="w-full border bg-white border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden mt-2"
         >
           <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
             <CheckCircle2Icon
@@ -123,7 +123,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
       ) : null}
       <Disclosure
         as="div"
-        className="w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden mt-2"
+        className="w-full border bg-white border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden mt-2"
       >
         <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
           <CheckCircle2Icon
@@ -143,7 +143,7 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
         <Disclosure
           as="div"
           defaultOpen
-          className="mt-2 w-full border border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
+          className="mt-2 w-full border bg-white border-gray-l3 divide-y divide-gray-l3 rounded-lg overflow-hidden"
         >
           <DisclosureButton className="group flex w-full items-center gap-x-2 p-4">
             <StarIcon className="stroke-amber fill-amber" size={14} />
