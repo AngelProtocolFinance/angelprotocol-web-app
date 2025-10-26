@@ -91,7 +91,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
               appearance: {
                 theme: "flat",
                 variables: {
-                  colorPrimary: don.config?.accent_primary,
+                  colorPrimary: don.config?.accentPrimary,
                   fontFamily: "Quicksand, sans-serif",
                   borderRadius: "8px",
                   gridRowSpacing: "20px",

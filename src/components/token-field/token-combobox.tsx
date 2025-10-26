@@ -21,6 +21,7 @@ interface ITokenCombobox<T> {
   btn_disp: (open: boolean) => ReactElement;
   by?: T extends object ? keyof T : never;
   opts: T[];
+  opts_styles?: Record<string, string | undefined>;
 
   q: string;
   on_q_change: (v: string) => void;
@@ -66,6 +67,7 @@ export function TokenCombobox<T>(props: ITokenCombobox<T>) {
         </div>
       ) : (
         <ComboboxOptions
+          style={props.opts_styles}
           className={options_classes}
           anchor={{ to: "bottom start", gap: 8 }}
         >

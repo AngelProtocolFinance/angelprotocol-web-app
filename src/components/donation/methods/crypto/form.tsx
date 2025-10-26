@@ -67,10 +67,6 @@ export function Form(props: TMethodState<"crypto">) {
           <ComboboxOption
             as={CloseButton}
             key={t.code}
-            style={
-              //reapply as this option is portaled
-              { "--accent-secondary": don.config?.accent_secondary } as any
-            }
             className={
               "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) data-selected:pointer-events-none cursor-pointer"
             }
@@ -94,6 +90,8 @@ export function Form(props: TMethodState<"crypto">) {
       }}
       value={token.value}
       opts={filtered}
+      // reapply to portaled
+      opts_styles={{ "--accent-secondary": don.config?.accentSecondary }}
       on_change={async (t) => {
         try {
           token.onChange({ ...t, amount: token.value.amount });
