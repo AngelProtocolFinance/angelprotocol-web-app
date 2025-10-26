@@ -11,7 +11,7 @@ import {
   donor_fv_init,
   tip_fv_init,
 } from "../../types";
-import { StripeCheckout as Checkout } from "./stripe-checkout";
+import { StripeCheckout as Checkout } from "./checkout";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
 const don_mock = vi.hoisted(() => ({

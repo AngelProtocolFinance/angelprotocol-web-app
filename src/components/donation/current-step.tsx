@@ -1,7 +1,7 @@
 import { Crypto } from "./checkouts/crypto";
-import { ChariotCheckout } from "./checkouts/daf-checkout";
+import { ChariotCheckout } from "./checkouts/daf";
 import { Stocks } from "./checkouts/stocks";
-import { StripeCheckout } from "./checkouts/stripe-checkout";
+import { StripeCheckout } from "./checkouts/stripe";
 import { use_donation } from "./context";
 import { DonateMethods } from "./methods";
 

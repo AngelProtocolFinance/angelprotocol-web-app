@@ -50,7 +50,6 @@ describe("Stocks form: initial load", () => {
       num_shares: "10",
       tip: "",
       tip_format: "15",
-      cover_processing_fee: false,
     };
 
     render(<Form fv={fv} type="stocks" step="form" />);

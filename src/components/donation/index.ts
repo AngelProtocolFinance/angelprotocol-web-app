@@ -14,4 +14,4 @@ export {
   DEFAULT_PROGRAM,
   init_token_option,
 } from "./common/constants";
-export { PayQr } from "./checkouts/crypto/pay-qr";
+export { PayQr } from "./checkouts/crypto";

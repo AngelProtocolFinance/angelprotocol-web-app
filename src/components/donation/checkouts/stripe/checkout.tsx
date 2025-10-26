@@ -15,7 +15,7 @@ import { use_donation } from "../../context";
 import { type StripeDonationDetails, back_to_form, tip_val } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { Loader } from "../loader";
-import { Checkout } from "./checkout";
+import { Checkout } from "./checkout-form";
 
 const fetcher = async (intent: DonationIntent) =>
   fetch("/api/donation-intents/stripe", {
