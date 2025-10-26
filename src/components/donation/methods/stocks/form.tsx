@@ -1,6 +1,8 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { TipField } from "components/donation/common/tip-field";
 import { Field, Form as FormContainer } from "components/form";
-import { useForm } from "react-hook-form";
+import { ru_vdec } from "helpers/decimal";
+import { useController, useForm } from "react-hook-form";
 import { use_donation } from "../../context";
 import {
   type StocksDonationDetails as FV,
@@ -15,17 +17,25 @@ export function Form(props: TMethodState<"stocks">) {
     symbol: "",
     tip: "",
     tip_format: "15",
-    cover_processing_fee: false,
   };
   const { don_set } = use_donation();
   const {
+    control,
     register,
     handleSubmit,
+    setValue,
+    getValues,
+    setFocus,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: props.fv || initial,
     criteriaMode: "all",
     resolver: valibotResolver(stocks_donation_details),
+  });
+
+  const { field: tip_format } = useController({
+    name: "tip_format",
+    control,
   });
 
   return (
@@ -56,6 +66,53 @@ export function Form(props: TMethodState<"stocks">) {
           label: " font-semibold",
           input: "field-input-donate",
         }}
+      />
+
+      <TipField
+        classes="mt-6"
+        checked={tip_format.value !== "none"}
+        checked_changed={(checked) => {
+          if (checked) {
+            tip_format.onChange("15");
+          } else {
+            tip_format.onChange("none");
+            setValue("tip", "");
+          }
+        }}
+        tip_format={tip_format.value}
+        tip_format_changed={async (format) => {
+          tip_format.onChange(format);
+          if (format === "none") {
+            return setValue("tip", "");
+          }
+          if (format === "custom") {
+            await new Promise((r) => setTimeout(r, 50));
+            return setFocus("tip");
+          }
+
+          const amnt = getValues("num_shares");
+          if (!amnt) return setValue("tip", "");
+
+          const v = (+format / 100) * +amnt;
+          setValue("tip", ru_vdec(v, 1));
+        }}
+        custom_tip={
+          tip_format.value === "custom" ? (
+            <div className="relative w-full">
+              <input
+                {...register("tip")}
+                type="number"
+                step="any"
+                className="w-full text-sm pl-2 focus:outline-none"
+                placeholder="Enter tip"
+                aria-invalid={!!errors.tip?.message}
+              />
+              <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
+                {errors.tip?.message}
+              </span>
+            </div>
+          ) : undefined
+        }
       />
 
       <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>

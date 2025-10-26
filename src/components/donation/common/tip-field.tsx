@@ -15,7 +15,7 @@ interface Props {
 export function TipField({ classes = "", ...p }: Props) {
   return (
     <div
-      className={`${classes} flex has-[input:focus-within]:border-b-(--accent-primary) items-center py-1 border-y border-gray-l3 justify-between flex-wrap gap-y-2 gap-x-3`}
+      className={`${classes} flex has-[input:focus-within]:border-b-(--accent-primary) items-center py-1 border-y border-gray-l3 justify-between flex-wrap gap-x-3 gap-y-1`}
     >
       <Field className="group gap-x-1 flex items-center text-sm justify-self-start">
         <Switch
@@ -64,6 +64,13 @@ export function TipField({ classes = "", ...p }: Props) {
           </Radio>
         </RadioGroup>
       </Field>
+      <p className="text-gray-d1 text-xs w-full">
+        <span className="font-bold text-blue-d1">Better.</span>
+        <span className="font-bold text-blue">Giving</span> provide this
+        platform free of charge so nonprofits everywhere can receive 100% of
+        their gifts. You can help us keep it that way by making a small,
+        tax-deductible contribution.
+      </p>
       {p.custom_tip}
     </div>
   );

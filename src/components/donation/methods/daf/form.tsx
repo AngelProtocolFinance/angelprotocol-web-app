@@ -101,7 +101,7 @@ export function Form(props: TMethodState<"daf">) {
       />
 
       <button
-        className="mt-auto btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        className="mt-4 btn btn-blue text-sm enabled:bg-(--accent-primary)"
         type="submit"
       >
         Continue

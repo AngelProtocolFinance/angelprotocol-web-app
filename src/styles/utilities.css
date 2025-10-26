@@ -38,7 +38,7 @@
 /** page components */
 
 @utility btn-donate {
-  border-radius: calc(infinity * 1px);
+  border-radius: var(--radius-sm);
   text-transform: none;
 }
 
@@ -49,7 +49,7 @@
 }
 
 @utility fixed-center {
-  @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply rounded fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 @utility absolute-center {

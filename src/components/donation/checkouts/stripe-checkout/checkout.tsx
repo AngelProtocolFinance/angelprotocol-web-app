@@ -103,7 +103,7 @@ export function Checkout(props: StripeDonationDetails & { order_id: string }) {
         <Loader />
       ) : (
         <button
-          className="btn btn-blue btn-donate enabled:bg-(--accent-primary) hover:enabled:bg-(--accent-primary) w-full mt-6"
+          className="btn btn-blue enabled:bg-(--accent-primary) hover:enabled:bg-(--accent-primary) w-full mt-6"
           disabled={!stripe || !elements || status !== "ready" || !complete}
           type="submit"
         >

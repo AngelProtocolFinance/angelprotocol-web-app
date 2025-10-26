@@ -207,7 +207,6 @@ const stocks_donation_details_raw = v.object({
   symbol: v.pipe(v.string(), v.nonEmpty("Please enter a stock symbol")),
   num_shares: amount({ required: true }),
   ...tip_fv.entries,
-  cover_processing_fee: v.boolean(),
 });
 
 export type StocksDonationDetails = v.InferOutput<

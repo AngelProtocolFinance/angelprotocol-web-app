@@ -72,7 +72,6 @@ describe("Crypto form: initial load", () => {
     };
 
     render(<Form fv={fv} type="crypto" step="form" />);
-    screen.debug();
 
     expect(screen.getByPlaceholderText(/select token/i)).toHaveDisplayValue(
       fv.token.symbol
