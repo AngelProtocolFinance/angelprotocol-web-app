@@ -42,22 +42,23 @@ export function Checkout(props: StripeDonationDetails & { order_id: string }) {
 
     set_status("submitting");
 
+    const return_path =
+      don.source === "bg-widget"
+        ? href("/donate-widget/donations/:id", { id: props.order_id })
+        : href("/donations/:id", { id: props.order_id });
+
     const return_url =
       don.source === "bg-widget"
-        ? `${window.location.origin}/${href("/donate-widget/donations/:id", { id: props.order_id })}`
-        : `${window.location.origin}/${href("/donations/:id", { id: props.order_id })}`;
-
-    const stripe_confirm_params = {
-      elements,
-      confirmParams: {
-        return_url,
-      },
-    };
+        ? `${window.location.origin}${return_path}`
+        : `${window.location.origin}${return_path}`;
 
     const { error } =
       props.frequency === "recurring"
-        ? await stripe.confirmSetup(stripe_confirm_params)
-        : await stripe.confirmPayment(stripe_confirm_params);
+        ? await stripe.confirmSetup({ elements, confirmParams: { return_url } })
+        : await stripe.confirmPayment({
+            elements,
+            confirmParams: { return_url },
+          });
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
