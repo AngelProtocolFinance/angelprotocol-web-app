@@ -1,4 +1,4 @@
-import type { INpoClaim, update_ein_fv } from "@better-giving/reg/schema";
+import type { update_ein_fv } from "@better-giving/reg/schema";
 export { update_ein_fv as schema } from "@better-giving/reg/schema";
 import type { InferOutput } from "valibot";
 
