@@ -1,8 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { stripe_promise } from "components/donation/common/stripe";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PROCESSING_RATES } from "constants/common";
-import { PUBLIC_STRIPE_KEY } from "constants/env";
 import { min_fee_allowance } from "helpers/donation";
 import use_swr from "swr/immutable";
 import type {
@@ -22,8 +21,6 @@ const fetcher = async (intent: DonationIntent) =>
     method: "POST",
     body: JSON.stringify(intent),
   }).then<IStripeIntentReturn>((res) => res.json());
-
-const stripe_promise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export function StripeCheckout(props: StripeDonationDetails) {
   const {
@@ -93,7 +90,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
                 variables: {
                   colorPrimary: don.config?.accentPrimary,
                   fontFamily: "Quicksand, sans-serif",
-                  borderRadius: "8px",
+                  borderRadius: "4px",
                   gridRowSpacing: "20px",
                 },
               },
