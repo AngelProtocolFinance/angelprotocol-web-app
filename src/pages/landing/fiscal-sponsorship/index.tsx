@@ -27,7 +27,7 @@ export default function Page() {
       <BottomCta className="my-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <FAQ
         classes="xl:container xl:mx-auto px-5 mt-24"
-        items={[faqs[10], faqs[9], faqs[11], faqs[4], faqs[10]]}
+        items={[faqs[10], faqs[9], faqs[11], faqs[4]]}
       />
     </>
   );
