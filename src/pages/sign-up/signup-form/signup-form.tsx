@@ -29,8 +29,9 @@ interface Context {
 
 const context: { [id: string]: Context } = {
   registration: {
-    title: "Philanthropy for Everyone",
-    description: "Sign up to register and manage your nonprofit.",
+    title: `Become a ${APP_NAME} Member`,
+    description:
+      "Join the nonprofit-powered fundraising platform. Raise more and grow funds together.",
     terms: [
       { to: href("/terms-of-use-npo"), title: "Terms of Use (Nonprofits)" },
     ],
@@ -91,10 +92,10 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
   return (
     <div className="grid justify-items-center gap-3.5">
       <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l3 rounded-2xl">
-        <h3 className="text-center text-2xl font-bold text-gray-d4">
+        <h3 className="text-center text-balance text-2xl font-bold text-gray-d4">
           {ctx.title}
         </h3>
-        <p className="text-center font-normal max-sm:text-sm mt-2">
+        <p className="text-center text-pretty font-normal max-sm:text-sm mt-2">
           {ctx.description}
         </p>
 

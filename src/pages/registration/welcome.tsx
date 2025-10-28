@@ -9,11 +9,12 @@ export default function Welcome() {
   return (
     <Form method="POST" className="grid justify-items-center mx-6">
       <CircleCheck className="text-green" size={80} />
-      <h1 className="text-[2rem] mt-10 text-center">
+      <h1 className="text-[2rem] mt-10 text-center text-balance">
         Thank you for joining {APP_NAME}!
       </h1>
-      <p className="text-center text-gray dark:text-white/75 w-full text-lg max-w-lg mt-4 mb-8">
-        Your fundraising profile & account are just few steps away 😇
+      <p className="text-center text-pretty text-gray dark:text-white/75 w-full text-lg max-w-lg mt-4 mb-8">
+        Your account is ready - next, register your nonprofit to become a
+        member.
       </p>
 
       <button
@@ -24,8 +25,8 @@ export default function Welcome() {
       </button>
 
       <p className="text-sm italic text-gray dark:text-gray mt-8 text-center">
-        Note: Registration is quick, but we've sent an email link if you need to
-        pause and resume at any point.
+        Note: You can finish later. We've emailed you a link to pick up where
+        you left off.
       </p>
     </Form>
   );
