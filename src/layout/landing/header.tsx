@@ -1,9 +1,4 @@
-import {
-  AuthBtns,
-  AuthLinks,
-  NavDropdown,
-  UserAvatar,
-} from "components/header";
+import { AuthBtns, AuthLinks, NavDropdown } from "components/header";
 import { DappLogo } from "components/image";
 import { auth_routes } from "constants/routes";
 import { use_root_data } from "hooks/use-root-data";
@@ -31,10 +26,13 @@ export function Header({ classes }: Props) {
         observer.observe(node);
       }}
     >
-      <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 xl:container xl:mx-auto px-5 py-2">
-        <DappLogo classes="h-12" />
-        {!user && to && <AuthBtns to={to} classes="max-sm:hidden" />}
+      <div className="flex items-center gap-4 xl:container xl:mx-auto px-5 py-2">
+        <div className="flex-1">
+          <DappLogo classes="h-12" />
+        </div>
+        {!user && to && <AuthBtns to={to} classes="max-sm:hidden flex-none" />}
         <NavDropdown
+          classes="flex-none"
           auth_links={to && !user && <AuthLinks to={to} classes="sm:hidden" />}
           user={user}
         />

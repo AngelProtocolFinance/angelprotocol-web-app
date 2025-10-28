@@ -19,7 +19,7 @@ export default function Header({ classes }: Props) {
 
   return (
     <header
-      className={`${classes} bg-white grid grid-cols-[1fr_auto_auto] items-center gap-4 pr-6 py-2 border-b border-gray-l3`}
+      className={`${classes} bg-white flex items-center gap-4 pr-6 py-2 border-b border-gray-l3`}
       ref={(node) => {
         if (!node) return;
         const observer = new IntersectionObserver(
@@ -32,9 +32,12 @@ export default function Header({ classes }: Props) {
         observer.observe(node);
       }}
     >
-      <DappLogo classes="w-48 h-12" />
-      {to && !user && <AuthBtns to={to} classes="max-sm:hidden" />}
+      <div className="flex-1">
+        <DappLogo classes="w-48 h-12" />
+      </div>
+      {to && !user && <AuthBtns to={to} classes="max-sm:hidden flex-none" />}
       <NavDropdown
+        classes="flex-none"
         auth_links={to && !user && <AuthLinks to={to} classes="sm:hidden" />}
         user={user}
       />

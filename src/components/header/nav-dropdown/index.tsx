@@ -28,14 +28,15 @@ import { styler } from "./common";
 interface Props {
   auth_links: ReactNode | undefined;
   user: DetailedUser | undefined;
+  classes?: string;
 }
 
-export function NavDropdown({ user, auth_links }: Props) {
+export function NavDropdown({ user, auth_links, classes = "" }: Props) {
   return (
     <HuiMenu>
       <MenuButton
         data-testid="nav_dropdown"
-        className="group flex items-center gap-x-2"
+        className={`group flex items-center gap-x-2 ${classes}`}
         aria-label="Navigation Menu"
       >
         {user && (
