@@ -100,7 +100,6 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
         required
         label="In what country is your organization registered in?"
         //endowment claims are US-based and shoudn't be changed by claimer
-        disabled={!!reg.claim}
         placeholder="Select a country"
         classes={{
           container: "mt-6 mb-2",
