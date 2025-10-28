@@ -11,6 +11,7 @@ import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
 import { type TMethodState, to_checkout } from "../../types";
+import { ExpressCheckout } from "./express-checkout";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
 
@@ -162,9 +163,15 @@ export function Form(props: TMethodState<"stripe">) {
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
 
+      <ExpressCheckout
+        classes="mt-4 "
+        amount_cents={100}
+        currency={rhf.currency.value.code.toLowerCase()}
+      />
+
       <div className="grid mt-2 grid-cols-2 gap-2 content-start">
         <p className="col-span-full text-sm font-semibold">
-          Payment information
+          Continue with Card/Bank
         </p>
         <Field
           {...rhf.register("first_name")}
