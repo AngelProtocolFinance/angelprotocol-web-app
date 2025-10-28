@@ -106,7 +106,7 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
           container: "mt-6 mb-2",
           input: "pl-12",
         }}
-        options={cnames}
+        options={reg.claim ? ["United States"] : cnames}
         option_disp={(c) => (
           <>
             <span className="text-2xl">{cmap[c].flag}</span>
