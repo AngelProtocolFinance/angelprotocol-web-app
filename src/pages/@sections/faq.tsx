@@ -208,7 +208,7 @@ export const faqs = [
   {
     id: 10,
     question:
-      "What's Fiscal Sponsorship? And Why Should My Organization Be Interested?",
+      "What's fiscal sponsorship? And why should my organization be interested?",
     paragraphs: [
       <p>
         Fiscal sponsorship lets a US 501(c)(3) nonprofit (the sponsor) receive
