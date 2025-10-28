@@ -5,7 +5,7 @@ import type { InferOutput } from "valibot";
 export type Props = {
   reg_id: string;
   ein: string | undefined;
-  claim?: INpoClaim;
+  claim?: boolean;
 };
 
 export interface FV extends InferOutput<typeof update_ein_fv> {}

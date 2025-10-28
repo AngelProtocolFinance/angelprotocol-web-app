@@ -17,5 +17,11 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
   if (reg.o_type === "other") {
     return <FsaForm {...reg} />;
   }
-  return <NonFsaForm claim={reg.claim} ein={reg.o_ein} reg_id={reg.id} />;
+  return (
+    <NonFsaForm
+      claim={!!reg.claim}
+      ein={reg.claim?.ein ?? reg.o_ein}
+      reg_id={reg.id}
+    />
+  );
 }

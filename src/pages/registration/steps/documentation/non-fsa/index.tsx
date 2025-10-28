@@ -13,20 +13,15 @@ export function NonFsaForm(props: Props) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     defaultValues: { o_ein: props.ein ?? "" },
   });
 
   const fetcher = useFetcher();
-  const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && props.ein) {
-      return navigate(`../${steps.banking}`);
-    }
-
     const upd8: TRegUpdate = { update_type: "ein", o_ein: fv.o_ein };
 
     if (fv.o_ein !== props.ein) {
@@ -67,8 +62,8 @@ export function NonFsaForm(props: Props) {
     >
       <Field
         {...register("o_ein")}
+        disabled={props.claim}
         /** claimer should not change EIN */
-        disabled={!!props.claim}
         label="EIN# (numbers and letters only)"
         required
         classes={{ container: "mb-6 mt-1" }}
