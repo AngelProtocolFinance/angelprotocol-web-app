@@ -1,7 +1,7 @@
 import type { TRegUpdate } from "@better-giving/reg";
 import { LoadText } from "components/load-text";
 import { useForm } from "react-hook-form";
-import { NavLink, useFetcher, useNavigate } from "react-router";
+import { NavLink, useFetcher } from "react-router";
 import { steps } from "../../routes";
 import type { FV } from "./types";
 
@@ -11,11 +11,7 @@ interface Props {
 }
 
 export function PossiblyTaxExempt({ is_501c3_prev, is_501c3_init }: Props) {
-  const {
-    handleSubmit,
-    register,
-    formState: { isDirty },
-  } = useForm<FV>({
+  const { handleSubmit, register } = useForm<FV>({
     defaultValues: {
       irs501c3: is_501c3_prev || is_501c3_init ? "yes" : "no",
     },
@@ -23,16 +19,11 @@ export function PossiblyTaxExempt({ is_501c3_prev, is_501c3_init }: Props) {
 
   const fetcher = useFetcher();
   const is_loading = fetcher.state !== "idle";
-  const navigate = useNavigate();
 
   return (
     <form
       className="w-full"
       onSubmit={handleSubmit(async (fv) => {
-        if (!isDirty && is_501c3_prev != null) {
-          return navigate(`../${steps.docs}`);
-        }
-
         fetcher.submit(
           {
             update_type: "org_type",

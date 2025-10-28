@@ -47,6 +47,7 @@ export const Combo = forwardRef<El, Props>((props, ref) => {
         {props.label}
       </Label>
       <Combobox
+        immediate
         disabled={props.disabled}
         value={props.value}
         onChange={(c) => c && props.onChange(c)}
