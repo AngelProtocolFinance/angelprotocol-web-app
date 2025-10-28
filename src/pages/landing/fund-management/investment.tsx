@@ -1,4 +1,4 @@
-import section_img from "assets/images/laira-inside-pie-chart.webp";
+import section_img from "assets/images/laira-inside-pie-chart.png";
 import { Image } from "components/image";
 import { APP_NAME } from "constants/env";
 
@@ -45,14 +45,6 @@ export function Investment({ classes = "" }) {
               </span>{" "}
               <span className="text-gray-d1 xl:text-lg">
                 gain exposure to the emerging digital asset frontier
-              </span>
-            </li>
-            <li className="text-center xl:text-left">
-              <span className="block font-semibold mb-1">
-                5% Cash Flexibility
-              </span>{" "}
-              <span className="text-gray-d1 xl:text-lg">
-                maintain liquidity for strategic rebalancing opportunities
               </span>
             </li>
           </ul>

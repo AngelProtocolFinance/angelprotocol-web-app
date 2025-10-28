@@ -1,4 +1,4 @@
-import section_img from "assets/images/laira-inside-pie-chart.webp";
+import section_img from "assets/images/laira-inside-pie-chart.png";
 import { Image } from "components/image";
 import { Bolt, Combine, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
