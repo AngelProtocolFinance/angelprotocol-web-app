@@ -212,7 +212,7 @@ export function Form(props: TMethodState<"crypto">) {
 
       <CpfToggle checked={cpf.value} checked_changed={(x) => cpf.onChange(x)} />
 
-      <div className="grid mt-4 grid-cols-2 gap-2 content-start">
+      <div className="grid mt-4 mb-2 grid-cols-2 gap-2 content-start">
         <p className="col-span-full text-sm font-semibold">
           Payment information
         </p>

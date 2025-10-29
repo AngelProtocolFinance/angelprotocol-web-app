@@ -213,7 +213,7 @@ export function Form(props: TMethodState<"stripe">) {
         disabled={
           currency.isLoading || currency.isValidating || !!currency.error
         }
-        className="btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        className="mt-2 btn btn-blue text-sm enabled:bg-(--accent-primary)"
         type="submit"
       >
         Continue
