@@ -1,8 +1,15 @@
 import hexagon_badge from "assets/images/alliance-member-badge-hexagon.png";
 import rectangle_badge from "assets/images/alliance-member-badge-rectangle.png";
 import { ArrowDownToLineIcon } from "lucide-react";
+import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
+import type { Route } from "./+types";
+import { QrCode } from "./qr-code";
 
-export default function Page() {
+export { loader } from "./api";
+export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
+
+export default CacheRoute(Page);
+function Page({ loaderData: d }: Route.ComponentProps) {
   const handle_download = (image_url: string, filename: string) => {
     const link = document.createElement("a");
     link.href = image_url;
@@ -13,9 +20,9 @@ export default function Page() {
   };
 
   return (
-    <div className="@container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Alliance Member Badges</h1>
-      <div className="grid justify-start grid-cols-1 @lg:grid-cols-[auto_auto] grid-rows-[1fr_auto] gap-8">
+    <div className="@container">
+      <h1 className="text-2xl font-bold mb-8">Alliance Member Badges</h1>
+      <div className="grid justify-start grid-cols-1 @lg:grid-cols-[auto_auto] grid-rows-[1fr_auto] gap-8 mb-12">
         <div className="grid grid-rows-subgrid gap-y-2 row-span-2 justify-items-center">
           <img
             className="self-center"
@@ -60,6 +67,8 @@ export default function Page() {
           </button>
         </div>
       </div>
+
+      <QrCode base_url={d.base_url} logo={d.logo} classes="mt-16" />
     </div>
   );
 }
