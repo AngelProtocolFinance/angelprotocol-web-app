@@ -38,19 +38,18 @@
 /** page components */
 
 @utility btn-donate {
-  border-radius: calc(infinity * 1px);
+  border-radius: var(--radius-sm);
   text-transform: none;
 }
 
 @utility field-input-donate {
-  @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
   &:enabled:focus {
     @apply ring-[color:var(--accent-primary)];
   }
 }
 
 @utility fixed-center {
-  @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply rounded fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 @utility absolute-center {

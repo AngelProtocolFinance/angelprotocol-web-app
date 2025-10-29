@@ -48,7 +48,7 @@ function _Field<T extends InputType = InputType>(
   return (
     <div className={`${style.container} `}>
       <Label
-        className={`${style.label} label ${props.sub ? "" : "mb-2"}`}
+        className={`${style.label} label ${props.sub ? "" : "mb-1"}`}
         required={required}
         htmlFor={id}
       >

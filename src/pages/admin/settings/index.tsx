@@ -157,7 +157,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
           Opt out of Support Contribution Model
         </CheckField>
         <span className="text-xs sm:text-sm italic text-gray">
-          During the donation flow, there is a step in which users can choose to
+          In the donation form, there is a section in which users can choose to
           support Better Giving by contributing any amount they desire alongside
           their donation to you - the amount they contribute will not affect the
           donation amount you receive. You may choose to turn this step off in

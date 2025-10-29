@@ -52,6 +52,13 @@ const context: { [id: string]: Context } = {
         "Join Better Giving and start sharing the good! Sign up now to get your own referral code and link, earn rewards by inviting others to give better",
     }),
   },
+
+  donation: {
+    title: "Join Better Giving",
+    description: "Sign up to manage your donations",
+    terms: [{ to: href("/terms-of-use"), title: "Terms of Use (Donors)" }],
+  },
+
   fallback: {
     title: "Philanthropy for Everyone",
     description:

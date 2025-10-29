@@ -29,7 +29,21 @@ export const donor_address = v.object({
 export type DonorAddress = v.InferOutput<typeof donor_address>;
 
 export const donor_public_msg_max_length = 500;
+export const donor_public_msg = v.pipe(
+  $req,
+  v.maxLength(
+    donor_public_msg_max_length,
+    (x) => `max ${x.requirement} characters`
+  )
+);
 export const donor_msg_to_npo_max_length = 500;
+export const donor_msg_to_npo = v.pipe(
+  $req,
+  v.maxLength(
+    donor_msg_to_npo_max_length,
+    (x) => `max ${x.requirement} characters`
+  )
+);
 export const donor = v.object({
   title: donor_title,
   first_name: v.pipe(str, v.nonEmpty("Please enter your first name")),
@@ -41,24 +55,8 @@ export const donor = v.object({
     v.email("Please check your email for correctness")
   ),
   address: v.optional(donor_address),
-  public_msg: v.optional(
-    v.pipe(
-      $req,
-      v.maxLength(
-        donor_public_msg_max_length,
-        (x) => `max ${x.requirement} characters`
-      )
-    )
-  ),
-  msg_to_npo: v.optional(
-    v.pipe(
-      $req,
-      v.maxLength(
-        donor_msg_to_npo_max_length,
-        (x) => `max ${x.requirement} characters`
-      )
-    )
-  ),
+  public_msg: v.optional(donor_public_msg),
+  msg_to_npo: v.optional(donor_msg_to_npo),
   is_public: v.optional(v.boolean()),
 });
 
@@ -123,3 +121,8 @@ export const intent = v.object({
 });
 
 export type DonationIntent = v.InferOutput<typeof intent>;
+
+export interface IStripeIntentReturn {
+  client_secret: string;
+  order_id: string;
+}

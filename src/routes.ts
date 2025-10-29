@@ -41,7 +41,7 @@ export default [
   r("donate/:id", pages.$("donate/index.tsx")._),
   r("donate-fund/:fundId", donate_fund.$("redirect.ts")._),
   r("fundraisers/:fundId/donate", donate_fund.$("index.tsx")._),
-  r("donate-thanks", pages.$("donate-thanks.tsx")._),
+  r("donations/:id", pages.$("donation/index.tsx")._),
   r("referral-program", landing.$("referrals/index.tsx")._),
   r("nonprofits/:slug", landing.$("ntee/index.tsx")._),
   r("see-what-youre-losing", landing.$("don-calculator/index.tsx")._),
@@ -268,12 +268,10 @@ export default [
     r("irs-npos", pages.$("irs-npos/index.tsx")._),
   ]),
 
-  r("donate-widget", donate_widget.$("widget-context.tsx")._, [
-    r(":id", donate_widget.$("index.tsx")._),
-    r("donate-thanks", pages.$("donate-thanks.tsx")._, {
-      id: "widget-donate-thanks",
-    }),
-  ]),
+  r("donate-widget/:id", donate_widget.$("index.tsx")._),
+  r("donate-widget/donations/:id", pages.$("donation/index.tsx")._, {
+    id: "donation-widget",
+  }),
 
   r(
     "donation-calculator-export",

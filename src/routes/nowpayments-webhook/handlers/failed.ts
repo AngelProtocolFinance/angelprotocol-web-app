@@ -1,5 +1,5 @@
 import type { NP } from "@better-giving/nowpayments/types";
-import { send_email } from "../helpers";
+import { send_email } from "lib/email";
 import { onholddb } from ".server/aws/db";
 import { np } from ".server/sdks";
 
@@ -20,15 +20,15 @@ export async function handle_failed(payment: NP.PaymentPayload) {
     throw `notif recipient not found for failed payment:${payment.payment_id}`;
   }
 
-  const res = await send_email({
-    recipients: [order.kycEmail],
-    template: "donation-error",
-    data: {
+  const res = await send_email(
+    {
+      name: "donation-error",
       donorFirstName: order.fullName,
       recipientName: order.charityName,
       errorMessage: failureReason,
     },
-  });
+    [order.kycEmail]
+  );
 
   console.info("sent failure message", res.$metadata);
 

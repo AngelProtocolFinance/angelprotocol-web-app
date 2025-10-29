@@ -80,6 +80,8 @@ export const cognito_envs = {
 };
 
 export const session_secret = _var("SESSION_SECRET");
+//general use cookie secret
+export const cookie_secret = _var("COOKIE_SECRET");
 
 export const kv_envs = {
   url: _var("KV_REST_API_URL"),

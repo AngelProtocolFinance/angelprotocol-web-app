@@ -139,7 +139,7 @@
     background: transparent;
     padding: calc(var(--spacing) * 3.5) calc(var(--spacing) * 4);
     border: 1px solid var(--color-gray-l3);
-    outline-color: var(--color-blue-d1);
+    outline-color: var(--accent-primary);
     color: var(--color-gray-d4);
 
     &::placeholder {
@@ -233,7 +233,7 @@
     display: block;
     font-size: var(--text-sm);
     &[data-required="true"]::after {
-      content: "*";
+      content: " *";
       color: var(--color-red);
     }
     &[data-required="false"]::after {

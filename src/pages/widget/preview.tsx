@@ -1,6 +1,6 @@
 import type { INpo } from "@better-giving/endowment";
 import laira_waiving from "assets/laira/laira-waiving.webp";
-import { type DonationState, Steps, init_details } from "components/donation";
+import { Steps, type TDonation } from "components/donation";
 
 import { Image } from "components/image/image";
 import { Info } from "components/status";
@@ -23,24 +23,21 @@ export function Preview({ classes = "", config, endow }: Props) {
 
   const { methods, increments, ...cfg } = config;
 
-  const initState: DonationState = {
-    step: "donate-form",
-    init: {
-      source: "bg-widget",
-      mode: "preview",
-      recipient: {
-        id: endow.id.toString(),
-        name: endow.name,
-        hide_bg_tip: endow?.hide_bg_tip,
-        members: [],
-      },
-      config: {
-        ...cfg,
-        method_ids: methods.filter((m) => !m.disabled).map((m) => m.id),
-        increments: increments,
-      },
+  const init_state: TDonation = {
+    method: methods.find((m) => !m.disabled)?.id || "stripe",
+    source: "bg-widget",
+    mode: "preview",
+    recipient: {
+      id: endow.id.toString(),
+      name: endow.name,
+      hide_bg_tip: endow?.hide_bg_tip,
+      members: [],
     },
-    details: init_details(methods.at(0)?.id ?? "stripe", cfg.program),
+    config: {
+      ...cfg,
+      method_ids: methods.filter((m) => !m.disabled).map((m) => m.id),
+      increments: increments,
+    },
   };
 
   return (
@@ -57,8 +54,8 @@ export function Preview({ classes = "", config, endow }: Props) {
         </p>
       )}
       <Steps
-        key={JSON.stringify(initState)}
-        init={initState}
+        key={JSON.stringify(init_state)}
+        init={init_state}
         className="my-5 @md/preview:w-3/4 border border-gray-l3"
       />
     </Container>

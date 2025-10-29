@@ -1,0 +1,223 @@
+import { CloseButton, ComboboxOption } from "@headlessui/react";
+import { CpfToggle } from "components/donation/common/cpf-toggle";
+import { Field, Form as FieldSet } from "components/form";
+import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
+import { ru_vdec } from "helpers/decimal";
+import { useState } from "react";
+import { href } from "react-router";
+import use_swr from "swr/immutable";
+import type { ICurrenciesFv } from "types/currency";
+import { Incrementers } from "../../common/incrementers";
+import { TipField } from "../../common/tip-field";
+import { use_donation } from "../../context";
+import { type TMethodState, to_checkout } from "../../types";
+// import { ExpressCheckout } from "./express-checkout";
+import { Frequency } from "./frequency";
+import { use_rhf } from "./use-rhf";
+
+export function Form(props: TMethodState<"stripe">) {
+  const [token_q, set_token_q] = useState("");
+  const { don_set, don } = use_donation();
+  const rhf = use_rhf(props.fv, don.user, don.recipient.hide_bg_tip ?? false);
+
+  const currency = use_swr(
+    href("/api/currencies"),
+    (path) => fetch(path).then<ICurrenciesFv>((res) => res.json()),
+    {
+      onSuccess: (data) => {
+        if (!data.pref) return;
+        rhf.currency.onChange(data.pref);
+      },
+    }
+  );
+  const opts = currency.data?.all || [];
+  const filtered = token_q
+    ? opts.filter((c) => c.code.toLowerCase().includes(token_q.toLowerCase()))
+    : opts.slice(0, 10);
+
+  const combobox = (
+    <TokenCombobox
+      by="code"
+      classes="[&:has(:placeholder-shown)]:w-34 w-22"
+      disabled={currency.isLoading || currency.isValidating}
+      q={token_q}
+      on_q_change={(x) => set_token_q(x)}
+      btn_disp={(open) => btn_disp(open, undefined)}
+      input_disp={(t) => t.code}
+      opt_disp={(t) => {
+        return (
+          <ComboboxOption
+            as={CloseButton}
+            key={t.code}
+            className={
+              "w-full text-sm grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-(--accent-secondary) data-selected:bg-(--accent-secondary) data-selected:pointer-events-none cursor-pointer"
+            }
+            value={t}
+          >
+            {t.code}
+          </ComboboxOption>
+        );
+      }}
+      value={rhf.currency.value}
+      opts={filtered}
+      // reapply to portaled
+      opts_styles={{ "--accent-secondary": don.config?.accentSecondary }}
+      on_change={async (t) => rhf.currency.onChange(t)}
+    />
+  );
+
+  return (
+    <FieldSet
+      onSubmit={rhf.handleSubmit((fv) => to_checkout("stripe", fv, don_set))}
+      className="grid gap-y-2"
+    >
+      <Frequency
+        value={rhf.frequency.value}
+        onChange={rhf.frequency.onChange}
+        error={rhf.errors.frequency?.message}
+      />
+      <TokenField
+        ref={rhf.amount.ref}
+        combobox={combobox}
+        amount={rhf.amount.value}
+        amount_usd={
+          rhf.currency.value.code === "USD"
+            ? 0
+            : +rhf.amount.value / rhf.currency.value.rate
+        }
+        on_change={(x) => rhf.amount.onChange(x)}
+        error={rhf.errors.amount?.message}
+        label="Donation amount"
+        min_amount={
+          rhf.currency.value.min ? (
+            <p className="text-[13px]">
+              Minimum amount: {rhf.currency.value.min} {rhf.currency.value.code}
+            </p>
+          ) : null
+        }
+      />
+      {rhf.currency.value.rate && (
+        <Incrementers
+          classes="-mt-1"
+          disabled={currency.isLoading || currency.isValidating}
+          on_increment={rhf.on_increment}
+          code={rhf.currency.value.code}
+          rate={rhf.currency.value.rate}
+          increments={don.config?.increments}
+          precision={0}
+        />
+      )}
+
+      {don.recipient.hide_bg_tip ? null : (
+        <TipField
+          classes="mt-2"
+          checked={rhf.tip_format.value !== "none"}
+          checked_changed={(checked) => {
+            if (checked) {
+              rhf.tip_format.onChange("15");
+            } else {
+              rhf.tip_format.onChange("none");
+              rhf.setValue("tip", "");
+            }
+          }}
+          tip_format={rhf.tip_format.value}
+          tip_format_changed={async (format) => {
+            rhf.tip_format.onChange(format);
+            if (format === "none") {
+              return rhf.setValue("tip", "");
+            }
+            if (format === "custom") {
+              await new Promise((r) => setTimeout(r, 50));
+              return rhf.setFocus("tip");
+            }
+
+            const [c, amnt] = rhf.getValues(["currency", "amount"]);
+            if (!amnt) return rhf.setValue("tip", "");
+
+            const v = (+format / 100) * +amnt;
+            rhf.setValue("tip", ru_vdec(v, 1 / c.rate));
+          }}
+          custom_tip={
+            rhf.tip_format.value === "custom" ? (
+              <div className="relative w-full flex">
+                <span className="font-bold text-xs text-gray-d1 self-center">
+                  {rhf.currency.value.code}
+                </span>
+                <input
+                  {...rhf.register("tip")}
+                  inputMode="decimal"
+                  className="w-full text-sm pl-2 focus:outline-none"
+                  placeholder="Enter contribution amount"
+                  aria-invalid={!!rhf.errors.tip?.message}
+                />
+                <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">
+                  {rhf.errors.tip?.message}
+                </span>
+              </div>
+            ) : undefined
+          }
+        />
+      )}
+
+      <CpfToggle
+        classes=""
+        checked={rhf.cpf.value}
+        checked_changed={(x) => rhf.cpf.onChange(x)}
+      />
+
+      {/* <ExpressCheckout
+        classes="mt-4 "
+        amount_cents={100}
+        currency={rhf.currency.value.code.toLowerCase()}
+      /> */}
+
+      <div className="grid mt-2 grid-cols-2 gap-2 content-start">
+        <p className="col-span-full text-sm font-semibold">
+          Continue with Card/Bank
+        </p>
+        <Field
+          {...rhf.register("first_name")}
+          label="First name"
+          placeholder="First Name"
+          required
+          classes={{
+            label: "font-semibold text-base sr-only",
+            input: "py-2",
+          }}
+          error={rhf.errors.first_name?.message}
+        />
+        <Field
+          {...rhf.register("last_name")}
+          label="Last name"
+          placeholder="Last Name"
+          classes={{
+            input: "py-2",
+            label: "font-semibold text-base sr-only",
+          }}
+          error={rhf.errors.last_name?.message}
+        />
+        <Field
+          {...rhf.register("email")}
+          label="Your Email"
+          placeholder="Your Email"
+          classes={{
+            container: "col-span-full",
+            input: "py-2",
+            label: "font-semibold text-base sr-only",
+          }}
+          error={rhf.errors.email?.message}
+        />
+      </div>
+
+      <button
+        disabled={
+          currency.isLoading || currency.isValidating || !!currency.error
+        }
+        className="btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        type="submit"
+      >
+        Continue
+      </button>
+    </FieldSet>
+  );
+}

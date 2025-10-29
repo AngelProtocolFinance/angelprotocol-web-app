@@ -77,38 +77,26 @@ const faqs = (_: number) => [
     id: 2,
     question: "Can I receive a tax receipt?",
     paragraphs: [
-      <p>Yes, you can!</p>,
       <p>
-        To the extent permitted by law in their own country or state, Donors are
-        entitled to a tax receipt for the full amount of their donation, which
-        includes any transaction fee they have incurred.
+        Yes! We will email you a tax receipt immediately after your donation.
       </p>,
       <p>
-        All Donors are encouraged to consult with their tax preparer regarding
-        the specific deductibility of their contribution(s).
+        To ensure deductibility, please check with your tax advisor, as rules
+        vary by country and state.
       </p>,
       <p>
-        Donors will need to provide KYD (know your donor) information including
-        name and address, and can download an annualized cumulative report of
-        all donations provided to nonprofits within Better Giving through their
-        'My Donation' page. Donors can also request further copies of their tax
-        receipt.
-      </p>,
-      <p>
-        To keep a permanent record of all your donations and print tax receipts,
-        create your own personal user account{" "}
+        To access your receipts or a year-end donation summary,{" "}
         <Link to={href("/signup")} className="text-blue hover:text-blue-l1">
-          here
-        </Link>
-      </p>,
-      <p>
-        Here is a short video showing how to do that:{" "}
+          create a free donor account
+        </Link>{" "}
+        (
         <ExtLink
           href="https://youtu.be/74kEk7aQauA"
           className="text-blue hover:text-blue-l1"
         >
-          https://youtu.be/74kEk7aQauA
+          video guide
         </ExtLink>
+        ).
       </p>,
     ],
   },

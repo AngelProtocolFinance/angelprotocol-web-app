@@ -1,6 +1,6 @@
 import { Cells } from "components/table-section";
 import { toPP } from "helpers/date";
-import { centsDecimals, humanize, round_to_cents } from "helpers/decimal";
+import { humanize, ru_vdec, usdpu } from "helpers/decimal";
 import { Link, href } from "react-router";
 import { AmountFlow } from "./amount-flow";
 import { Fees } from "./fees";
@@ -35,12 +35,7 @@ export function Row(props: IRow & { has_more?: boolean; classes?: string }) {
       <>{props.payment_method ?? "--"}</>
       <td>
         {props.currency}{" "}
-        {round_to_cents(
-          +props.amount,
-          centsDecimals(
-            +props.amount_usd / (+props.amount || Number.MAX_SAFE_INTEGER)
-          )
-        )}{" "}
+        {ru_vdec(+props.amount, usdpu(+props.amount, +props.amount_usd))}{" "}
         {props.currency !== "USD" && (
           <span className="text-gray">${humanize(props.amount_usd || 0)}</span>
         )}

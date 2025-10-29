@@ -6,7 +6,10 @@ import { round_number } from "helpers/round-number";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
 import type { Payment } from "types/crypto";
-import { intent as schema } from "types/donation-intent";
+import {
+  type IStripeIntentReturn,
+  intent as schema,
+} from "types/donation-intent";
 import { parse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
@@ -16,12 +19,47 @@ import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { cognito } from ".server/auth";
 import { onholddb } from ".server/aws/db";
+import { type IDonationsCookie, donations_cookie } from ".server/cookie";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
 import { aws_monitor, chariot, np } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
+const json_with_cookie_fn =
+  (existing: null | IDonationsCookie, key: string) =>
+  async (data: Record<string, any>) => {
+    const now = Date.now();
+    const obj = existing || {};
+
+    // Remove expired keys
+    for (const k of Object.keys(obj)) {
+      if (obj[k] < now) {
+        delete obj[k];
+      }
+    }
+
+    obj[key] = now + 15 * 60 * 1000; // 15 minutes
+
+    // keep only top 5 most recent keys
+    const sorted_entries = Object.entries(obj)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 5);
+
+    const expiry_per_id = Object.fromEntries(sorted_entries);
+
+    return new Response(JSON.stringify(data), {
+      headers: {
+        "content-type": "application/json",
+        "set-cookie": await donations_cookie.serialize(expiry_per_id),
+      },
+    });
+  };
+
 export const action: ActionFunction = async ({ request, params }) => {
+  const cookie: IDonationsCookie | null = await donations_cookie.parse(
+    request.headers.get("cookie")
+  );
+
   const { user } = await cognito.retrieve(request);
   const intent = parse(schema, await request.json());
   const d_type = parse(donation_type, params.type);
@@ -33,6 +71,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const now = new Date();
   const intent_id = nanoid();
+  const json_with_cookie = json_with_cookie_fn(cookie, intent_id);
   const base = onhold_base(recipient, intent);
 
   if (d_type === "crypto") {
@@ -78,6 +117,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (is_custom(token.id)) {
       const p: Payment = {
         id: intent_id,
+        order_id: intent_id,
         address: deposit_addrs_envs(token.network),
         amount: to_pay,
         currency: token.code,
@@ -116,7 +156,8 @@ export const action: ActionFunction = async ({ request, params }) => {
           res?.statusText
         );
       }
-      return resp.json(p);
+
+      return await json_with_cookie(p);
     }
 
     const np_order: Order = {
@@ -132,7 +173,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       np_order,
       `${url.origin}/api/nowpayments-webhook/${env}`
     );
-    return resp.json(payment);
+
+    return await json_with_cookie(payment);
   }
 
   if (d_type === "chariot") {
@@ -154,7 +196,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       email: intent.donor.email,
     };
     await onholddb.put(onhold);
-    return resp.json({ grantId: grant.id });
+    // return resp.json({ grantId: grant.id });
+    return await json_with_cookie({ id: onhold.transactionId });
   }
 
   if (d_type === "stripe") {
@@ -192,11 +235,16 @@ export const action: ActionFunction = async ({ request, params }) => {
       email: intent.donor.email,
     };
 
-    const clientSecret =
+    await onholddb.put(onhold);
+
+    const client_secret =
       intent.frequency === "one-time"
         ? await create_payment_intent(onhold, customer_id)
         : await setup_intent(onhold, customer_id);
 
-    return resp.json({ clientSecret });
+    return await json_with_cookie({
+      client_secret,
+      order_id: onhold.transactionId,
+    } satisfies IStripeIntentReturn);
   }
 };
