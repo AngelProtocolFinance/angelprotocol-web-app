@@ -14,4 +14,5 @@ export const routes = {
   referrals: "referrals",
   savings: "savings",
   investments: "investments",
+  assets: "assets",
 } as const;

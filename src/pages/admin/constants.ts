@@ -1,6 +1,7 @@
 import type { LinkGroup } from "layout/dashboard";
 import {
   Blocks,
+  BoxIcon,
   CircleDollarSign,
   CircleUserRound,
   Heart,
@@ -81,6 +82,14 @@ const linkGroup2: LinkGroup = {
       to: sidebar_routes.media,
       icon: {
         fn: Image,
+        size: 20,
+      },
+    },
+    {
+      title: "Assets",
+      to: sidebar_routes.assets,
+      icon: {
+        fn: BoxIcon,
         size: 20,
       },
     },
