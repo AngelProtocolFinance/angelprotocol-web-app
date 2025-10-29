@@ -173,7 +173,7 @@ export function Form(props: TMethodState<"stripe">) {
 
       <div className="grid mt-2 grid-cols-2 gap-2 content-start">
         <p className="col-span-full text-sm font-semibold">
-          Continue with Card/Bank
+          Payment information
         </p>
         <Field
           {...rhf.register("first_name")}
