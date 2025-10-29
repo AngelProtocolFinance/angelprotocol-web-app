@@ -190,13 +190,15 @@ export function Form(props: TMethodState<"crypto">) {
           }}
           custom_tip={
             tip_format.value === "custom" ? (
-              <div className="relative w-full">
+              <div className="relative w-full flex">
+                <span className="font-bold text-xs text-gray-d1 self-center">
+                  {token.value.symbol}
+                </span>
                 <input
                   {...register("tip")}
-                  type="number"
-                  step="any"
+                  inputMode="decimal"
                   className="w-full text-sm pl-2 focus:outline-none"
-                  placeholder="Enter tip"
+                  placeholder="Enter contribution amount"
                   aria-invalid={!!errors.tip?.message}
                 />
                 <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">

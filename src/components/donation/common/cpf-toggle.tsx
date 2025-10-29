@@ -21,7 +21,9 @@ export function CpfToggle({ classes = "", checked, checked_changed }: Props) {
           className="pointer-events-none inline-block h-[0.8lh] aspect-square -translate-x-0.5 rounded-full bg-white transition-transform ease-in-out group-data-checked:translate-x-3.5"
         />
       </Switch>
-      <Label className="whitespace-nowrap">Cover processing fee</Label>
+      <Label className="whitespace-nowrap">
+        Cover 3rd party processing fees
+      </Label>
     </Field>
   );
 }

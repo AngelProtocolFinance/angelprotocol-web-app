@@ -41,7 +41,7 @@ describe("DAF form: initial load", () => {
 
     //fee coverage disabled by default
     expect(
-      screen.getByRole("switch", { name: /cover processing fee/i })
+      screen.getByRole("switch", { name: /cover 3rd party processing fees/i })
     ).not.toBeChecked();
 
     // incrementers shown
@@ -68,14 +68,14 @@ describe("DAF form: initial load", () => {
     render(<Form fv={fv} type="daf" step="form" />);
 
     const amount_input = screen.getByPlaceholderText(/enter amount/i);
-    expect(amount_input).toHaveDisplayValue("$ 100");
+    expect(amount_input).toHaveDisplayValue("100");
     expect(
       screen.getByRole("switch", { name: /support free fundraising tools/i })
     ).toBeChecked();
     expect(screen.getByRole("radio", { name: /20%/i })).toBeChecked();
 
     expect(
-      screen.getByRole("switch", { name: /cover processing fee/i })
+      screen.getByRole("switch", { name: /cover 3rd party processing fees/i })
     ).toBeChecked();
 
     // incrementers shown

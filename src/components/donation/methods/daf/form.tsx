@@ -1,8 +1,6 @@
 import { CpfToggle } from "components/donation/common/cpf-toggle";
 import { type TMethodState, to_checkout } from "components/donation/types";
-import { Form as FormContainer } from "components/form";
-import { MaskedInput } from "components/form";
-import { dollar } from "components/form/masks";
+import { Field, Form as FormContainer } from "components/form";
 import { ru_vdec } from "helpers/decimal";
 import { usd_option } from "../../common/constants";
 import { Incrementers } from "../../common/incrementers";
@@ -20,20 +18,16 @@ export function Form(props: TMethodState<"daf">) {
       onSubmit={rhf.handleSubmit((fv) => to_checkout("daf", fv, don_set))}
       className="flex flex-col gap-y-2 min-h-full"
     >
-      <MaskedInput
-        id="donation-amount"
+      <Field
+        required
+        {...rhf.register("amount")}
         inputMode="decimal"
-        mask={dollar.opts}
-        ref={rhf.amount.ref}
-        value={rhf.amount.value ? dollar.mask(+rhf.amount.value) : ""}
-        onChange={(x) => rhf.amount.onChange(dollar.unmask(x))}
         label="Donation amount"
-        placeholder="$ Enter amount"
         classes={{
           label: " font-semibold",
           input: "field-input-donate",
         }}
-        required
+        placeholder="Enter amount (USD)"
         error={rhf.errors.amount?.message}
       />
 

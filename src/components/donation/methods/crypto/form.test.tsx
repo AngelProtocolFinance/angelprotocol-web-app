@@ -43,7 +43,7 @@ describe("Crypto form: initial load", () => {
 
     //fee coverage disabled by default
     expect(
-      screen.getByRole("switch", { name: /cover processing fee/i })
+      screen.getByRole("switch", { name: /cover 3rd party processing fees/i })
     ).not.toBeChecked();
 
     // incrementers not shown without selected token
@@ -92,7 +92,7 @@ describe("Crypto form: initial load", () => {
     expect(screen.getByRole("radio", { name: /20%/i })).toBeChecked();
 
     expect(
-      screen.getByRole("switch", { name: /cover processing fee/i })
+      screen.getByRole("switch", { name: /cover 3rd party processing fees/i })
     ).toBeChecked();
 
     // // incrementers not shown without selected token

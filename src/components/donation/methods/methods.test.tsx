@@ -113,9 +113,9 @@ describe("payment method form state persistence", () => {
     const back_btn = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn);
 
-    // Verify form state persists - DAF shows formatted amount with $
+    // Verify form state persists
     expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
-      "$ 500"
+      "500"
     );
   });
 
@@ -260,7 +260,7 @@ describe("payment method form state persistence", () => {
     await userEvent.click(daf_tab2);
 
     expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
-      "$ 1,000"
+      "1000"
     );
   });
 

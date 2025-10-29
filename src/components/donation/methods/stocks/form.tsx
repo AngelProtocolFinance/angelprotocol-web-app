@@ -65,6 +65,7 @@ export function Form(props: TMethodState<"stocks">) {
           container: "mt-2",
           label: "font-semibold",
         }}
+        inputMode="decimal"
       />
 
       {don.recipient.hide_bg_tip ? null : (
@@ -104,7 +105,7 @@ export function Form(props: TMethodState<"stocks">) {
                   type="number"
                   step="any"
                   className="w-full text-sm pl-2 focus:outline-none"
-                  placeholder="Enter tip"
+                  placeholder="Enter contribution amount"
                   aria-invalid={!!errors.tip?.message}
                 />
                 <span className="right-6 text-xs text-red text-right absolute top-1/2 -translate-y-1/2 empty:hidden">

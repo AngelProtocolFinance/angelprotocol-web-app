@@ -30,10 +30,6 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
     criteriaMode: "all",
   });
 
-  const { field: amount } = useController({
-    control,
-    name: "amount",
-  });
   const { field: tip_format } = useController({
     control,
     name: "tip_format",
@@ -58,8 +54,6 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
     setValue,
     getValues,
     setFocus,
-    //controllers
-    amount,
     cpf,
     tip_format,
     //utils
