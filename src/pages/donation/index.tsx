@@ -172,6 +172,14 @@ function Page({ loaderData: data, matches }: Route.ComponentProps) {
           </DisclosurePanel>
         </Disclosure>
       )}{" "}
+      {widget_version && (
+        <NavLink
+          to={href("/donate-widget/:id", { id: data.to_id })}
+          className="mt-4 btn btn-outline w-full normal-case [&:is(.pending)]:text-gray"
+        >
+          Go back
+        </NavLink>
+      )}
       {!widget_version && (
         <NavLink
           to={href("/dashboard/donations")}
