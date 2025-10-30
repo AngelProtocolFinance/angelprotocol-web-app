@@ -14,17 +14,18 @@ const tabs: { id: QRCodeType; name: string }[] = [
 interface Props {
   classes?: string;
   logo?: string;
-  base_url: string;
+  profile_url: string;
+  donate_url: string;
 }
 
-export function QrCode({ classes = "", base_url, logo }: Props) {
+export function QrCode({ classes = "", logo, profile_url, donate_url }: Props) {
   const [color, set_color] = useState("#000000");
   const [show_logo, set_show_logo] = useState(true);
   const [selected_tab, set_selected_tab] = useState<QRCodeType>("profile");
 
   const urls: Record<QRCodeType, string> = {
-    profile: `${base_url}/profile`,
-    donation: `${base_url}/donate`,
+    profile: profile_url,
+    donation: donate_url,
   };
 
   const handle_download = () => {
@@ -157,7 +158,7 @@ export function QrCode({ classes = "", base_url, logo }: Props) {
               type="checkbox"
               checked={show_logo}
               onChange={(e) => set_show_logo(e.target.checked)}
-              className="h-4 w-4 rounded border-gray-l3"
+              className="size-4 rounded accent-blue"
             />
             <label htmlFor="show-logo" className="text-sm font-medium">
               Show logo in center

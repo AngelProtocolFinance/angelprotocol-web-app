@@ -1,6 +1,7 @@
 import hexagon_badge from "assets/images/alliance-member-badge-hexagon.png";
 import rectangle_badge from "assets/images/alliance-member-badge-rectangle.png";
 import { ArrowDownToLineIcon } from "lucide-react";
+import { href } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";
 import { QrCode } from "./qr-code";
@@ -9,7 +10,7 @@ export { loader } from "./api";
 export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 
 export default CacheRoute(Page);
-function Page({ loaderData: d }: Route.ComponentProps) {
+function Page({ loaderData: d, params }: Route.ComponentProps) {
   const handle_download = (image_url: string, filename: string) => {
     const link = document.createElement("a");
     link.href = image_url;
@@ -68,7 +69,12 @@ function Page({ loaderData: d }: Route.ComponentProps) {
         </div>
       </div>
 
-      <QrCode base_url={d.base_url} logo={d.logo} classes="mt-16" />
+      <QrCode
+        donate_url={`${d.base_url}${href("/donate/:id", { id: params.id })}`}
+        profile_url={`${d.base_url}${href("/marketplace/:id", { id: params.id })}`}
+        logo={d.logo}
+        classes="mt-16"
+      />
     </div>
   );
 }
