@@ -24,6 +24,15 @@ export const DonationForm = () => { ... };
 // ✗ donation_form.tsx
 ```
 
+## React Component Design
+
+- **Props-based design**: Make components reusable by accepting configuration as props rather than deriving values internally. This improves SSR compatibility, testability, and flexibility
+- **Define interfaces**: Always define proper TypeScript interfaces for component props
+- **Use existing patterns**: Check the codebase for existing design system classes (e.g., `btn btn-blue`) and patterns before creating custom ones
+- **Provide fallbacks**: Use sensible fallbacks for optional props (e.g., `logo || default_logo`)
+- **Keep it concise**: Prefer compact, inline layouts over verbose sections with extra headings unless the UI demands it
+- **Component naming**: Keep component names clear and concise
+
 ## UI Development
 
 - **Always check existing styles**: When creating or modifying UIs, always look at `src/index.css` and `src/styles/*` to understand existing CSS patterns, variables, and utility classes before writing new styles
