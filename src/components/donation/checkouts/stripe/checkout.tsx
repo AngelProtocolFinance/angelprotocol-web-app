@@ -35,11 +35,13 @@ export function StripeCheckout(props: StripeDonationDetails) {
   const { don, don_set } = use_donation();
 
   const tipv = tip_val(tip_format, tip, +amount);
-  const mfa = min_fee_allowance(
-    tipv + +amount,
-    PROCESSING_RATES.stripe,
-    PROCESSING_RATES.stripe_flat * currency.rate
-  );
+  const mfa = cover_processing_fee
+    ? min_fee_allowance(
+        tipv + +amount,
+        PROCESSING_RATES.stripe,
+        PROCESSING_RATES.stripe_flat * currency.rate
+      )
+    : 0;
 
   const intent: DonationIntent = {
     frequency: frequency,

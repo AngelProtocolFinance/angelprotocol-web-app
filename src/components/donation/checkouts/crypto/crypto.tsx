@@ -12,10 +12,12 @@ import { DirectMode } from "./direct-mode";
 
 export function Crypto(props: CryptoDonationDetails) {
   const { don, don_set } = use_donation();
-  const { token: t, tip_format, tip } = props;
+  const { token: t, tip_format, tip, cover_processing_fee } = props;
 
   const tipv = tip_val(tip_format, tip, +t.amount);
-  const mfa = min_fee_allowance(tipv + +t.amount, PROCESSING_RATES.crypto);
+  const mfa = cover_processing_fee
+    ? min_fee_allowance(tipv + +t.amount, PROCESSING_RATES.crypto)
+    : 0;
   const Amount = token(t.rate, t.precision);
 
   return (
