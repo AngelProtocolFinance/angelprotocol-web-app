@@ -15,6 +15,7 @@ import { disease_awareness } from "./contexts/disease-awareness";
 import { education } from "./contexts/education";
 import { environment } from "./contexts/environment";
 import { health_care } from "./contexts/health-care";
+import { housing_shelter } from "./contexts/housing-shelter";
 import { human_services } from "./contexts/human-services";
 import { mental_health } from "./contexts/mental-health";
 import { public_safety } from "./contexts/public-safety";
@@ -41,7 +42,7 @@ const page_context: Record<string, PageContext> = {
   // "legal-justice": {},
   // "job-training": {},
   // "food-nutrition": {},
-  // "housing-shelter": {},
+  "housing-shelter": housing_shelter,
   // "public-safety": {},
   // "recreation-sports": {},
   // "youth-development": {},
