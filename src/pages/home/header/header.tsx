@@ -43,7 +43,7 @@ export function Header({ classes }: Props) {
     >
       <div className="flex items-center gap-4 xl:container xl:mx-auto px-5 bg-white rounded-full py-2">
         <div className="flex-1">
-          <DappLogo classes="h-12" />
+          <DappLogo classes="h-12 inline-block" />
         </div>
         {/* <SearchField
           onChange={(txt) => setQuery(txt)}

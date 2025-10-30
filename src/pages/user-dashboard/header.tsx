@@ -33,7 +33,7 @@ export default function Header({ classes }: Props) {
       }}
     >
       <div className="flex-1">
-        <DappLogo classes="w-48 h-12" />
+        <DappLogo classes="w-48 h-12 inline-block" />
       </div>
       {to && !user && <AuthBtns to={to} classes="max-sm:hidden flex-none" />}
       <NavDropdown

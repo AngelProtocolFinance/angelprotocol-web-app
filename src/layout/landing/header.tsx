@@ -28,7 +28,7 @@ export function Header({ classes }: Props) {
     >
       <div className="flex items-center gap-4 xl:container xl:mx-auto px-5 py-2">
         <div className="flex-1">
-          <DappLogo classes="h-12" />
+          <DappLogo classes="h-12 inline-block" />
         </div>
         {!user && to && <AuthBtns to={to} classes="max-sm:hidden flex-none" />}
         <NavDropdown

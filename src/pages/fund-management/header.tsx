@@ -27,7 +27,7 @@ export function Header({ classes }: Props) {
       }}
     >
       <div className="flex-1">
-        <DappLogo classes="w-48 h-12" />
+        <DappLogo classes="w-48 h-12 inline-block" />
       </div>
       <NavDropdown
         classes="flex-none"
