@@ -112,7 +112,7 @@ export function NavDropdown({ user, auth_links, classes = "" }: Props) {
 
             <div className="w-full h-[1px] bg-gray-l3 mt-6 mb-1 col-span-full" />
             <MenuItem>
-              <NavLink to={href("/marketplace")} className={styler}>
+              <NavLink end to={href("/marketplace")} className={styler}>
                 <LayoutGrid
                   size={18}
                   className="shrink-0 group-hover:-rotate-12 transition-transform group-hover:stroke-blue"
