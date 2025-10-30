@@ -18,7 +18,8 @@ export function Stocks(props: StocksDonationDetails) {
     : href("/marketplace/:id", { id: id });
 
   const tipv = tip_val(props.tip_format, props.tip, +props.num_shares);
-  const url = `${window.location.origin}${path}`;
+  const url =
+    typeof window !== "undefined" ? `${window.location.origin}${path}` : path;
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
       <BackBtn
