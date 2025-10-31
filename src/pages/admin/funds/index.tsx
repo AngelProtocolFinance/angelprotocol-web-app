@@ -19,7 +19,7 @@ function Page({ loaderData }: Route.ComponentProps) {
   const [creatorType, setCreatorType] = useState<CreatorType>("ours");
 
   return (
-    <div className="grid">
+    <div className="grid px-6 py-4 md:px-10 md:py-8">
       <div className="">
         <h3 className="text-3xl border-b border-gray-l3 pb-2">Fundraisers</h3>
         <RadioGroup

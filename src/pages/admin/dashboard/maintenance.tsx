@@ -40,7 +40,7 @@ export default function Component() {
   };
 
   return (
-    <div className="@container w-full max-w-4xl grid content-start">
+    <div className="px-6 py-4 md:px-10 md:py-8 w-full max-w-4xl grid content-start">
       <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       <div className="flex items-center gap-2">
         <p className="mt-4 text-gray">

@@ -24,7 +24,7 @@ export default function Page({ loaderData: d }: Route.ComponentProps) {
   const is_with_heir = (d.ba.heir_pn || 0) >= priority_nums.approved;
 
   return (
-    <div className="grid">
+    <div className="grid px-6 py-4 md:px-10 md:py-8">
       {/** render success and delete prompt */}
       <Outlet />
       <div className="flex items-center gap-2">

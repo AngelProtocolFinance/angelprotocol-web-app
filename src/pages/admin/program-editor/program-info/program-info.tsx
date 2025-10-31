@@ -9,7 +9,7 @@ import { MAX_CHARS, img_spec } from "../common";
 import { type FV, schema } from "./schema";
 import useSubmit from "./use-submit";
 
-export default function ProgramInfo(props: IProgram) {
+export function ProgramInfo(props: IProgram) {
   const {
     register,
     handleSubmit,

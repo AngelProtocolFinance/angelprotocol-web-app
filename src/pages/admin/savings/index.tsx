@@ -17,7 +17,7 @@ export default CacheRoute(Page);
 function Page({ loaderData }: Route.ComponentProps) {
   const { bal_liq, ...btxs_page1 } = loaderData;
   return (
-    <div className="@container w-full max-w-4xl grid content-start">
+    <div className="px-6 py-4 md:px-10 md:py-8 w-full max-w-4xl grid content-start">
       <div className="font-bold text-2xl mb-4 flex items-baseline gap-x-2">
         <h3>Savings</h3>{" "}
         <Tooltip

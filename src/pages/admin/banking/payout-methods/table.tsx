@@ -9,7 +9,7 @@ type Props = {
   classes?: string;
 };
 
-export default function Table({ methods, classes = "" }: Props) {
+export function Table({ methods, classes = "" }: Props) {
   return (
     <table
       className={`${classes} w-full text-sm rounded-sm border border-separate border-spacing-0 border-blue-l2`}

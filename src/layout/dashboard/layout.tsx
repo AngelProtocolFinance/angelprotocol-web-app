@@ -27,7 +27,7 @@ export default function Layout({
         sidebarHeader={sidebarHeader}
       />
       {/** views */}
-      <div className="px-6 py-8 md:p-10 @container min-h-screen">
+      <div className="@container min-h-screen">
         <Outlet />
       </div>
     </div>

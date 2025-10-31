@@ -1,1 +1,1 @@
-export { default } from "./program-info";
+export { ProgramInfo } from "./program-info";

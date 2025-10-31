@@ -1,7 +1,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useController, useForm } from "react-hook-form";
 import { type FV, schema } from "./schema";
-export default function useRhf(init: FV) {
+export function use_rhf(init: FV) {
   const {
     handleSubmit,
     register,

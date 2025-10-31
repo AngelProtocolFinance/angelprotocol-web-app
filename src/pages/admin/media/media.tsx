@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types/media";
-import FeaturedVideos from "./featured-videos";
+import { FeaturedVideos } from "./featured-videos";
 
 export {
   featured_media as loader,
@@ -15,7 +15,7 @@ export default CacheRoute(Media);
 
 function Media({ loaderData: featured_page }: Route.ComponentProps) {
   return (
-    <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
+    <div className="grid content-start gap-y-6 @lg:gap-y-8 px-6 py-4 md:px-10 md:py-8">
       <h3 className="text-[2rem]">Media</h3>
       <div className="border border-gray-l3 rounded-sm p-8">
         <div className="flex justify-between items-center">

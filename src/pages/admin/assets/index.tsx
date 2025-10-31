@@ -21,7 +21,7 @@ function Page({ loaderData: d, params }: Route.ComponentProps) {
   };
 
   return (
-    <div className="@container">
+    <div className="px-6 py-4 md:px-10 md:py-8">
       <h1 className="text-2xl font-bold mb-8">Alliance Member Badges</h1>
       <div className="grid justify-start grid-cols-1 @lg:grid-cols-[auto_auto] grid-rows-[1fr_auto] gap-8 mb-12">
         <div className="grid grid-rows-subgrid gap-y-2 row-span-2 justify-items-center">

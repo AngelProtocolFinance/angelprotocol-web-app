@@ -18,7 +18,7 @@ import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
 import { Slug } from "./slug";
 import { use_edit_npo } from "./use-edit-profile";
-import useRhf from "./use-rhf";
+import { use_rhf } from "./use-rhf";
 
 const endowDesignations: EndowDesignation[] = [
   "Charity",
@@ -36,7 +36,7 @@ interface Props {
 }
 
 export function Form({ init_slug = "", init, id, base_url }: Props) {
-  const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
+  const { dirtyFields, handleSubmit, ...rhf } = use_rhf(init);
   const { onSubmit, state, prompt, set_prompt } = use_edit_npo(dirtyFields);
   const isUploading = [
     rhf.logo.value,
@@ -52,7 +52,7 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
         rhf.reset();
       }}
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full max-w-4xl grid content-start gap-6"
+      className="px-6 py-4 md:px-10 md:py-8 w-full max-w-4xl grid content-start gap-6"
     >
       {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
       <Group

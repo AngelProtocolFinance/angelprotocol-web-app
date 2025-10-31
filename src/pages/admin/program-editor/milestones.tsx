@@ -2,14 +2,14 @@ import type { IMilestone } from "@better-giving/endowment";
 import { Info } from "components/status";
 import { Plus } from "lucide-react";
 import { useFetcher } from "react-router";
-import Milestone from "./milestone";
+import { Milestone } from "./milestone";
 
 type Props = {
   programId: string;
   milestones: IMilestone[];
 };
 
-export default function Milestones({ programId, milestones }: Props) {
+export function Milestones({ programId, milestones }: Props) {
   const fetcher = useFetcher();
 
   return (

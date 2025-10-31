@@ -4,7 +4,7 @@ import { LoaderCircle, Minus, Pencil, Star } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 import { Link, useFetcher } from "react-router";
 
-export default function VideoPreview(props: IMedia) {
+export function VideoPreview(props: IMedia) {
   const del = useFetcher({ key: `delete-${props.id}` });
   const feat = useFetcher({ key: `feature-${props.id}` });
   const allControlsDisabled =

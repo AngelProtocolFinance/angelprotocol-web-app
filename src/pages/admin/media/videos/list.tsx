@@ -1,7 +1,7 @@
 import type { IMedia } from "@better-giving/endowment";
 import { Image } from "lucide-react";
 import type { IPaginator } from "types/components";
-import VideoPreview from "../video-preview";
+import { VideoPreview } from "../video-preview";
 
 interface Props extends IPaginator<IMedia> {}
 

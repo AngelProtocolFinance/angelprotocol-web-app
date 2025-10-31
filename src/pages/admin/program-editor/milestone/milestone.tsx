@@ -15,7 +15,7 @@ import { MAX_CHARS, img_spec } from "../common";
 import { type FV, schema } from "./schema";
 
 type Props = IMilestone & { programId: string };
-export default function Milestone(props: Props) {
+export function Milestone(props: Props) {
   const {
     register,
     handleSubmit,

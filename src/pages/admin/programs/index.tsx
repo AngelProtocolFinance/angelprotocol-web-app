@@ -12,7 +12,7 @@ function Page({ loaderData: { programs } }: Route.ComponentProps) {
   const { nav } = useRmxForm();
 
   return (
-    <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
+    <div className="grid content-start gap-y-6 @lg:gap-y-8 px-6 py-4 md:px-10 md:py-8">
       <RmxForm method="POST" className="flex items-center justify-between">
         <h2 className="text-[2rem] font-bold">Programs</h2>
         <button

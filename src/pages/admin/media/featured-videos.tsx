@@ -1,13 +1,13 @@
 import type { IMedia } from "@better-giving/endowment";
 import { Info } from "components/status";
-import VideoPreview from "./video-preview";
+import { VideoPreview } from "./video-preview";
 
 interface Props {
   classes?: string;
   items: IMedia[];
 }
 
-export default function FeaturedVideos({ classes = "", items }: Props) {
+export function FeaturedVideos({ classes = "", items }: Props) {
   if (items.length === 0) {
     return <Info classes={classes}>No featured videos</Info>;
   }

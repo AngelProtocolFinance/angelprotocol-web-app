@@ -48,7 +48,7 @@ export default function Widget({ loaderData }: Route.ComponentProps) {
   });
 
   return (
-    <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
+    <div className="grid px-6 py-4 @4xl:px-10 @4xl:py-8 @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!
       </h1>

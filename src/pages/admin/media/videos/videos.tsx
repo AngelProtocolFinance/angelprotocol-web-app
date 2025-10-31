@@ -28,7 +28,7 @@ function Page({ loaderData: page1, params }: Route.ComponentProps) {
     },
   });
   return (
-    <div className="grid content-start @container">
+    <div className="grid content-start px-6 py-4 md:px-10 md:py-8">
       <Breadcrumbs
         className="justify-self-start text-sm mb-4"
         items={[
@@ -44,7 +44,7 @@ function Page({ loaderData: page1, params }: Route.ComponentProps) {
         ]}
       />
       <div className="flex justify-between items-center">
-        <h4 className="text-2xl capitalize mt-4">All videos</h4>
+        <h4 className="text-2xl capitalize">All videos</h4>
         <NavLink to="new" className="btn-outline btn text-sm px-8 py-2 gap-1">
           <Plus size={16} />
           <span>add video</span>

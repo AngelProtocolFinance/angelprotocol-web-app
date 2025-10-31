@@ -5,7 +5,7 @@ import { error_prompt } from "helpers/error-prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { Link, useFetcher, useParams } from "react-router";
-import FormButtons from "./form-buttons";
+import { FormButtons } from "./form-buttons";
 
 export { action } from "./api";
 export { ErrorBoundary } from "components/error";
@@ -43,7 +43,7 @@ export default function Banking() {
   };
 
   return (
-    <>
+    <div className="px-6 py-4 md:px-10 md:py-8">
       <Link
         to={"../banking"}
         className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
@@ -64,6 +64,6 @@ export default function Banking() {
         />
       </Group>
       {prompt && <Prompt {...prompt} onClose={() => setPrompt(undefined)} />}
-    </>
+    </div>
   );
 }

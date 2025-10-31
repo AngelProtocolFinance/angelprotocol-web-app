@@ -18,7 +18,7 @@ export default CacheRoute(Page);
 
 function Page({ loaderData: program }: Route.ComponentProps) {
   return (
-    <>
+    <div className="grid px-6 py-4 md:px-10 md:py-8">
       <Link
         to={`../${routes.programs}`}
         className="flex items-center gap-2 text-blue-d1 hover:text-blue"
@@ -27,6 +27,6 @@ function Page({ loaderData: program }: Route.ComponentProps) {
         <span>Back</span>
       </Link>
       <Form {...program} />
-    </>
+    </div>
   );
 }

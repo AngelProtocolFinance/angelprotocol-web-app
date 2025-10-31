@@ -37,7 +37,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
   });
 
   return (
-    <div className="grid content-start">
+    <div className="grid content-start px-6 py-4 md:px-10 md:py-8">
       <Link
         to=".."
         className="flex items-center gap-1 text-blue-d1 hover:text-blue text-sm -ml-1 mb-3"
