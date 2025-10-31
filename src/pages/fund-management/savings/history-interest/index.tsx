@@ -23,7 +23,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
   });
 
   return (
-    <div>
+    <div className="px-6 py-4 md:px-10 md:py-8">
       <Link
         to={".."}
         className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm"

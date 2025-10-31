@@ -49,7 +49,7 @@ function Page({ loaderData }: Route.ComponentProps) {
   const top_holders = top_holders_fn(ltd.holders);
 
   return (
-    <div className="@container w-full max-w-4xl grid content-start">
+    <div className="px-6 py-4 md:px-10 md:py-8 w-full max-w-4xl grid content-start">
       <h3 className="font-bold text-2xl mb-4">Investments</h3>
       <div className="grid grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-4 gap-6 mb-8">
         <div className="bg-white rounded-lg">

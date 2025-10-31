@@ -8,7 +8,7 @@ const class_fn = nav_link_class_fn(
 );
 export default function Layout() {
   return (
-    <div className="grid content-start relative">
+    <div className="grid content-start relative px-6 py-4 md:px-10 md:py-8">
       <div className="flex flex-wrap gap-y-4 justify-between items-center mb-2">
         <h1 className="text-3xl">My Donations</h1>
         <div className="flex items-center divide-x divide-gray-l3">

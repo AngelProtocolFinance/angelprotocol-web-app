@@ -15,7 +15,7 @@ interface Props {
 
 type FV = { items: IUserNpo2[] };
 
-export default function EndowAlertForm({ classes = "", user_npos }: Props) {
+export function EndowAlertForm({ classes = "", user_npos }: Props) {
   const fetcher = useFetcher();
   use_action_result(fetcher.data);
 

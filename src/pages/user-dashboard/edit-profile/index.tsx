@@ -53,7 +53,7 @@ function Page({ loaderData: data }: Route.ComponentProps) {
           method: "PATCH",
         });
       })}
-      className="w-full max-w-4xl content-start"
+      className="w-full max-w-4xl content-start px-6 py-4 md:px-10 md:py-8"
     >
       <h2 className="text-3xl mb-6">User Profile</h2>
 

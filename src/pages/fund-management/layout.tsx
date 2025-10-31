@@ -1,6 +1,6 @@
 import { Footer } from "components/footer";
 import { metas } from "helpers/seo";
-import Layout from "layout/dashboard";
+import { Layout } from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
 import { href } from "react-router";
 import type { Route } from "./+types/layout";

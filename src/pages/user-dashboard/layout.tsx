@@ -1,8 +1,8 @@
 import { Footer } from "components/footer";
 import { metas } from "helpers/seo";
-import DashboardLayout from "layout/dashboard";
+import { Layout as DashboardLayout } from "layout/dashboard";
 import { type MetaFunction, href } from "react-router";
-import Header from "./header";
+import { Header } from "./header";
 import { linkGroups } from "./routes";
 
 export const meta: MetaFunction = () => metas({ title: "My Donations" });

@@ -1,7 +1,7 @@
 import { $int_gte1 } from "@better-giving/schemas";
 import { Footer } from "components/footer";
 import { metas } from "helpers/seo";
-import Layout from "layout/dashboard";
+import { Layout } from "layout/dashboard";
 import { CircleAlert } from "lucide-react";
 import { parse } from "valibot";
 import type { Route } from "./+types/layout";

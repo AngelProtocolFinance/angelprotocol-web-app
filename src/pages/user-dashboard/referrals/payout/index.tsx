@@ -3,7 +3,7 @@ import { type IPrompt, Prompt } from "components/prompt";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import { Link, useFetcher } from "react-router";
-import FormButtons from "./form-buttons";
+import { FormButtons } from "./form-buttons";
 
 export { action } from "./api";
 export { ErrorBoundary } from "components/error";
@@ -13,7 +13,7 @@ export default function Payout() {
   const [prompt, setPrompt] = useState<IPrompt>();
 
   return (
-    <>
+    <div className="px-6 py-4 md:px-10 md:py-8">
       <Link
         to={"../referrals"}
         className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm"
@@ -32,6 +32,6 @@ export default function Payout() {
         is_loading={fetcher.state !== "idle"}
       />
       {prompt && <Prompt {...prompt} onClose={() => setPrompt(undefined)} />}
-    </>
+    </div>
   );
 }

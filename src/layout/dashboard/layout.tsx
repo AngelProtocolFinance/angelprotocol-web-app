@@ -9,7 +9,7 @@ type DashboardLayoutProps = {
   rootRoute: string;
 };
 
-export default function Layout({
+export function Layout({
   linkGroups,
   sidebarHeader,
   rootRoute,

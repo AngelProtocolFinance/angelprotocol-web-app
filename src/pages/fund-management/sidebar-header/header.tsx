@@ -6,7 +6,7 @@ interface Endow {
   logo?: string;
 }
 
-export default function Loader({ name, logo = flying_character }: Endow) {
+export function Loader({ name, logo = flying_character }: Endow) {
   return (
     <div
       className={"flex flex-col gap-1 w-full py-6 px-5 border-b border-gray-l3"}

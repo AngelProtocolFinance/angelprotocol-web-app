@@ -24,7 +24,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
     },
   });
   return (
-    <div className="@container w-full max-w-4xl grid content-start">
+    <div className="px-6 py-4 md:px-10 md:py-8 w-full max-w-4xl grid content-start">
       <div className="flex items-center gap-x-4 mb-4">
         <h3 className="font-bold text-2xl">Redemption Requests</h3>
         <Select

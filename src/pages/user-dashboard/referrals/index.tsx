@@ -28,7 +28,7 @@ function Page({ loaderData }: Route.ComponentProps) {
     payout_ltd,
   } = loaderData;
   return (
-    <div className="">
+    <div className="px-6 py-4 md:px-10 md:py-8">
       <Explainer classes="mb-4" />
       <Hub classes="mb-8" />
       <h3 className="mt-8 mb-4 text-2xl">My Referral ID and Link</h3>
