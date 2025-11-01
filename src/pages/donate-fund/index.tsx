@@ -71,6 +71,7 @@ function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
                 method_ids: fund.settings.donateMethods,
                 increments: fund.increments,
               }}
+              program={undefined}
               user={user}
               className="md:border border-gray-l3 rounded-lg row-start-2"
             />

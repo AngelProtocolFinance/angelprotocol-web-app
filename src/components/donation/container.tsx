@@ -16,8 +16,8 @@ type Components = {
   mode: Mode;
   config: Config | null;
   recipient: DonationRecipient;
-  user?: IUser;
-  program?: IProgram;
+  user: IUser | undefined;
+  program: IProgram | undefined;
 };
 
 type InitState = {

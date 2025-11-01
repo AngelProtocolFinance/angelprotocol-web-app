@@ -6,12 +6,18 @@ import type { Parsed } from "./parse-config";
 type Props = {
   npo: INpo;
   config: Parsed;
-  program?: IProgram;
-  user?: IUser;
+  program: IProgram | undefined;
+  user: IUser | undefined;
   classes?: string;
 };
 
-export default function Content({ npo, config, user, classes = "" }: Props) {
+export default function Content({
+  npo,
+  config,
+  program,
+  user,
+  classes = "",
+}: Props) {
   const recipient: DonationRecipient = {
     id: npo.id.toString(),
     name: npo.name,
@@ -41,6 +47,7 @@ export default function Content({ npo, config, user, classes = "" }: Props) {
         recipient={recipient}
         config={config}
         user={user}
+        program={program}
       />
     </div>
   );
