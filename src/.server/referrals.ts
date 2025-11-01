@@ -1,6 +1,6 @@
 import * as db from "@better-giving/referrals/db";
 import type { PayoutsPage, PendingEarnings, Referred } from "types/referrals";
-import { GetCommand, QueryCommand, apes, npodb } from "./aws/db";
+import { GetCommand, QueryCommand, ap, npodb } from "./aws/db";
 
 export const referredBy = async (id: string): Promise<Referred[]> => {
   const ltdCmd = new GetCommand({
@@ -11,7 +11,7 @@ export const referredBy = async (id: string): Promise<Referred[]> => {
     >,
   });
 
-  const { Item: ltds = {} } = await apes.send(ltdCmd);
+  const { Item: ltds = {} } = await ap.send(ltdCmd);
 
   const npos = await npodb.npo_referred_by(id);
   return npos.map((i) => ({
@@ -34,7 +34,7 @@ export const pendingEarnings = async (id: string): Promise<PendingEarnings> => {
     ExpressionAttributeNames: { "#status": "status" },
   });
 
-  const res = await apes.send(cmd);
+  const res = await ap.send(cmd);
   const items = (res.Items || []) as db.Commission[];
   const pendings = items.map(({ amount, status, date }) => ({
     amount,
@@ -60,7 +60,7 @@ export async function paidOut(
     ExclusiveStartKey: next ? JSON.parse(next) : undefined,
   });
 
-  const res = await apes.send(cmd);
+  const res = await ap.send(cmd);
   const items = (res.Items || []) as db.Payout[];
   return {
     items,
@@ -79,7 +79,7 @@ export async function paidOutLtd(id: string): Promise<number> {
     } satisfies Pick<db.PayoutLtd, "PK" | "SK">,
   });
 
-  const res = await apes.send(cmd);
+  const res = await ap.send(cmd);
   const item = res.Item as db.PayoutLtd | undefined;
   return item?.amount ?? 0;
 }

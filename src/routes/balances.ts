@@ -1,7 +1,7 @@
 import { tables } from "@better-giving/types/list";
 import { type LoaderFunction, data } from "react-router";
 import { cognito } from ".server/auth";
-import { QueryCommand, apes } from ".server/aws/db";
+import { QueryCommand, ap } from ".server/aws/db";
 import { env } from ".server/env";
 
 export const MAX_ALLOWED_OPS = 100;
@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       ProjectionExpression: "id, sustainabilityFundBal",
       ExclusiveStartKey: startKey,
     });
-    const res = await apes.send(cmd);
+    const res = await ap.send(cmd);
 
     startKey = res.LastEvaluatedKey;
 

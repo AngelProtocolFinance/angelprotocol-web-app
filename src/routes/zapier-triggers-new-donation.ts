@@ -1,7 +1,7 @@
 import { DonationsDb } from "@better-giving/donation";
 import type { ActionFunction, LoaderFunction } from "react-router";
 import { isResponse, validateApiKey } from "./helpers/validate-api-key";
-import { apes, dondb, npodb } from ".server/aws/db";
+import { ap } from ".server/aws/db";
 import {
   deleteZapierHookUrl,
   saveZapierHookUrl,
@@ -29,7 +29,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const result = await validateApiKey(request.headers.get("x-api-key"));
   if (isResponse(result)) return result;
   const { npoId, env } = result;
-  const dondb = new DonationsDb(apes, env);
+  const dondb = new DonationsDb(ap, env);
   const page1 = await dondb.list_to_npo(npoId, { limit: 3 });
   const items = page1.items.map((i) => {
     const pm =

@@ -19,7 +19,6 @@ import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
 import {
   TransactWriteCommand,
   ap,
-  apes,
   donordb,
   npodb,
   onholddb,
@@ -308,7 +307,7 @@ export const action: ActionFunction = async ({ request }) => {
     const tipTxs = await settle_txs(base, overrides);
     txs.append(tipTxs);
 
-    const res = await apes.send(
+    const res = await ap.send(
       new TransactWriteCommand({ TransactItems: txs.all })
     );
     return resp.json(res.$metadata);
