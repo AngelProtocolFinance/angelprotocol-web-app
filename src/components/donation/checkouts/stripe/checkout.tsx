@@ -58,6 +58,8 @@ export function StripeCheckout(props: StripeDonationDetails) {
     via_name: "Stripe",
   };
 
+  if (don.program) intent.program = don.program;
+
   const { data, error, isLoading } = use_swr(intent, fetcher);
 
   return (
