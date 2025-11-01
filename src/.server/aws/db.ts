@@ -25,6 +25,7 @@ import {
   SubsDb,
 } from "@better-giving/donation";
 import { NpoDb } from "@better-giving/endowment";
+import { FormsDb } from "@better-giving/forms";
 import { FundDb } from "@better-giving/fundraiser";
 import { LiquidDb } from "@better-giving/liquid";
 import { NavHistoryDB } from "@better-giving/nav-history";
@@ -72,3 +73,4 @@ export const onholddb = new OnHoldDonationsDb(ap, env);
 export const subsdb = new SubsDb(ap, env);
 export const donordb = new DonationDonorsDb(ap, env);
 export const table = new Table(ap, env);
+export const formsdb = new FormsDb(ap, env);

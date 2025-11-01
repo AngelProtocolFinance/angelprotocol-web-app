@@ -92,6 +92,7 @@ export default [
     r("form-builder", widget.$("index.tsx")._, {
       id: "admin-form-builder",
     }),
+    r("forms", admin.$("forms/index.tsx")._),
     r("media", admin.$("media/media.tsx")._, [
       r("new", admin.$("media/video-new.ts")._, { id: "media-new" }),
       r(":mediaId", admin.$("media/video-edit.ts")._, {

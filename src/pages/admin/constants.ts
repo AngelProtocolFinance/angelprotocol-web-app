@@ -132,6 +132,14 @@ const linkGroup3: LinkGroup = {
       },
     },
     {
+      title: "Donation Forms",
+      to: sidebar_routes.forms,
+      icon: {
+        fn: Blocks,
+        size: 25,
+      },
+    },
+    {
       title: "Fundraisers",
       to: sidebar_routes.funds,
       icon: {
