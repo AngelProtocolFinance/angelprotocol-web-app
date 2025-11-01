@@ -1,4 +1,4 @@
-import { BatchGetCommand, apes, donordb } from "./aws/db";
+import { BatchGetCommand, ap, donordb } from "./aws/db";
 import { env } from "./env";
 
 export const npo_donors = async (
@@ -30,7 +30,7 @@ export const npo_donors = async (
       },
     },
   });
-  const { Responses } = await apes.send(batchGet);
+  const { Responses } = await ap.send(batchGet);
 
   const photoMap = (Responses?.[tables_users_meta] ?? []).reduce((acc, x) => {
     acc[x.email] = x.photo;

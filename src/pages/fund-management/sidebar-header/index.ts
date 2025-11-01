@@ -1,1 +1,1 @@
-export { default } from "./header";
+export { Loader } from "./header";

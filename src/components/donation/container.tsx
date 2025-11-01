@@ -46,6 +46,7 @@ function init_state({
   recipient,
   mode,
   user,
+  program,
 }: Components): TDonation {
   const init: Init = {
     source,
@@ -53,6 +54,7 @@ function init_state({
     recipient,
     mode,
     user,
+    program,
   };
 
   return {

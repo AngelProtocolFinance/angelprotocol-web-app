@@ -1,16 +1,11 @@
-import { GetCommand, apes } from "./aws/db";
+import { table } from "./aws/db";
 
 /**
  * @param currency - lowercase iso4217 code
  * @returns number - amount/usd
  */
 export const get_usd_rate = async (currency: string): Promise<number> => {
-  const cmd = new GetCommand({
-    TableName: "fiat_currency_data",
-    Key: { currency_code: "_all" },
-  });
-  const result = await apes.send(cmd);
-  const { rates } = result.Item!;
+  const { all: rates } = await table.currency_map("Usd");
   const rate = rates[currency.toUpperCase()];
 
   if (!rate) throw { message: `Currency ${currency} not found.` };

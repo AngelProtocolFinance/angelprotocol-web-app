@@ -57,29 +57,18 @@ export const ap = DynamoDBDocumentClient.from(
   config
 );
 
-export const apes = DynamoDBDocumentClient.from(
-  new DynamoDBClient({
-    region: aws_region,
-    credentials: {
-      accessKeyId: apes_aws_access_key_id,
-      secretAccessKey: apes_aws_secret_access_key,
-    },
-  }),
-  config
-);
-
 export const bappdb = new BankingApplicationsDb(ap, env);
-export const podb = new PayoutsDB(apes, env);
-export const navdb = new NavHistoryDB(apes, env);
-export const liqdb = new LiquidDb(apes, env);
-export const baldb = new BalanceDb(apes, env);
-export const btxdb = new BalanceTxsDb(apes, env);
+export const podb = new PayoutsDB(ap, env);
+export const navdb = new NavHistoryDB(ap, env);
+export const liqdb = new LiquidDb(ap, env);
+export const baldb = new BalanceDb(ap, env);
+export const btxdb = new BalanceTxsDb(ap, env);
 export const npodb = new NpoDb(ap, env);
 export const userdb = new UserDb(ap, env);
 export const funddb = new FundDb(ap, env);
 export const regdb = new RegDb(ap, env);
-export const dondb = new DonationsDb(apes, env);
-export const onholddb = new OnHoldDonationsDb(apes, env);
-export const subsdb = new SubsDb(apes, env);
-export const donordb = new DonationDonorsDb(apes, env);
+export const dondb = new DonationsDb(ap, env);
+export const onholddb = new OnHoldDonationsDb(ap, env);
+export const subsdb = new SubsDb(ap, env);
+export const donordb = new DonationDonorsDb(ap, env);
 export const table = new Table(ap, env);

@@ -1,7 +1,7 @@
 import { getISOWeek } from "date-fns";
 import { resp } from "helpers/https";
 import type { LoaderFunction } from "react-router";
-import { QueryCommand, apes } from ".server/aws/db";
+import { QueryCommand, ap } from ".server/aws/db";
 import { env } from ".server/env";
 
 export const loader: LoaderFunction = async () => {
@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async () => {
     ScanIndexForward: false,
   });
 
-  const { Items = [] } = await apes.send(cmd);
+  const { Items = [] } = await ap.send(cmd);
 
   const latest_weeknum = getISOWeek(Items[0].gsi1SK);
   const sorted = Items.toSorted((a, b) => {
