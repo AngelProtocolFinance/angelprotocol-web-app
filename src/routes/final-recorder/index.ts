@@ -15,11 +15,12 @@ import {
   referrer_ltd_update_txi,
 } from "./helpers";
 import { type Base, type Overrides, settle_txs } from "./settle-txs";
-import { apply_fees, fund_contrib_update } from "./settle-txs/helpers";
+import { apply_fees } from "./settle-txs/helpers";
 import {
   TransactWriteCommand,
   ap,
   donordb,
+  funddb,
   npodb,
   onholddb,
 } from ".server/aws/db";
@@ -199,10 +200,7 @@ export const action: ActionFunction = async ({ request }) => {
       for (const [r, i] of Object.entries(ltd_by_referrer(commission_ltds))) {
         txs.update(referrer_ltd_update_txi(r, i));
       }
-
-      await ap
-        .send(fund_contrib_update(fund_net, tx.to.id))
-        .catch(console.error);
+      txs.update(funddb.fund_contrib_update_txi(tx.to.id, fund_net));
       // to single endowment
     } else {
       const endow = await npodb.npo(+tx.to.id);
@@ -253,6 +251,16 @@ export const action: ActionFunction = async ({ request }) => {
         txs.update(referrer_ltd_update_txi(c.ltd.id, [c.ltd.source]));
       }
       const _txs = await settle_txs(base, overrides);
+
+      //program is not selected for fund donations
+      if (base.programId) {
+        const x = npodb.npo_prog_contrib_update_txi(
+          endow.id,
+          base.programId,
+          processed.net
+        );
+        txs.update(x);
+      }
       txs.append(_txs);
     }
 

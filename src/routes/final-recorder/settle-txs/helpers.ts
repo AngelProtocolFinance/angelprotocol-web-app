@@ -1,7 +1,4 @@
 import type { IBalanceUpdate } from "@better-giving/balance";
-import type { FundDb } from "@better-giving/fundraiser";
-import { tables } from "@better-giving/types/list";
-import { UpdateCommand } from ".server/aws/db";
 
 export const apply_fees = (
   amount: number,
@@ -65,19 +62,4 @@ export const bal_deltas_fn = (
     lock_units: ["inc", i.lock_units],
     cash: ["inc", i.cash],
   };
-};
-
-export const fund_contrib_update = (
-  amount: number,
-  fundId: string
-): UpdateCommand => {
-  return new UpdateCommand({
-    TableName: tables.funds,
-    Key: { PK: `Fund#${fundId}`, SK: `Fund#${fundId}` } satisfies ReturnType<
-      FundDb["key_fund"]
-    >,
-    UpdateExpression: "SET #c = if_not_exists(#c, :zero) + :c",
-    ExpressionAttributeNames: { "#c": "donation_total_usd" },
-    ExpressionAttributeValues: { ":c": amount, ":zero": 0 },
-  });
 };

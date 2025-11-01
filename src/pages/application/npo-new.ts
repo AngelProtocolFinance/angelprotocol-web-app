@@ -57,8 +57,6 @@ export const npo_new = async (r: NonNullable<Progress["banking"]>) => {
   ///////////// APPROVAL OF CLAIM /////////////
   if (r.claim) {
     const { id } = r.claim;
-    //init balances first: if endow creation fails, would simply override prev id
-    await baldb.balance_put(id);
     const wacc = await wise.v2_account(+r.o_bank_id);
     const bank_new: IApplication = {
       wiseRecipientID: r.o_bank_id,
@@ -81,6 +79,7 @@ export const npo_new = async (r: NonNullable<Progress["banking"]>) => {
       })
     );
     txs.update(npodb.npo_update_txi(id, ecfr));
+    txs.put(baldb.balance_put_txi(id));
 
     const tx_cmd = new TransactWriteCommand({ TransactItems: txs.all });
     await npodb.client.send(tx_cmd);
@@ -101,10 +100,7 @@ export const npo_new = async (r: NonNullable<Progress["banking"]>) => {
     rejectionReason: "",
   };
 
-  //init balances first: if endow creation fails, would simply override prev id
-  await baldb.balance_put(npo_id);
-
-  const newEndow: INpo = {
+  const new_endow: INpo = {
     ...ecfr,
     env,
     id: npo_id,
@@ -120,7 +116,8 @@ export const npo_new = async (r: NonNullable<Progress["banking"]>) => {
       status_approved_npo_id: npo_id,
     })
   );
-  txs.put({ TableName: NpoDb.table, Item: npodb.npo_record(newEndow) });
+  txs.put({ TableName: NpoDb.table, Item: npodb.npo_record(new_endow) });
+  txs.put(baldb.balance_put_txi(npo_id));
 
   const tx_cmd = new TransactWriteCommand({ TransactItems: txs.all });
   await npodb.client.send(tx_cmd);
