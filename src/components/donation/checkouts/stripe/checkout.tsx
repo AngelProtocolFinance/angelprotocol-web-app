@@ -57,6 +57,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
     via_id: "fiat",
     via_name: "Stripe",
   };
+  console.log(don);
 
   if (don.program) intent.program = don.program;
 
