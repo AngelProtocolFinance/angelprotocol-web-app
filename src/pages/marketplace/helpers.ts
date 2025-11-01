@@ -1,5 +1,5 @@
 import type { INposSearch, INposSearchObj } from "@better-giving/endowment";
-import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
+import { npos_search } from "@better-giving/endowment/schema";
 import * as v from "valibot";
 
 export const toRaw = (p: INposSearchObj): URLSearchParams => {
@@ -28,5 +28,5 @@ export const toParsed = (raw: URLSearchParams): INposSearchObj => {
   for (const [k, v] of raw.entries()) {
     obj[k] = v;
   }
-  return v.parse(endowsQueryParams, obj);
+  return v.parse(npos_search, obj);
 };
