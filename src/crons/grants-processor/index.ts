@@ -8,7 +8,8 @@ import {
   PayoutsDB,
 } from "@better-giving/payouts";
 import type { Environment } from "@better-giving/types/list";
-import type { ActionFunction, LoaderFunction } from "react-router";
+import { resp } from "helpers/https";
+import type { ActionFunction } from "react-router";
 import { transfer_grant } from "./transfer-grant";
 import {
   TransactWriteCommand,
@@ -37,7 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
         title: "No grants to process",
         body: `No grants to process for ${env}`,
       });
-      return;
+      return resp.status(200, "No grants to process");
     }
 
     const by_npo = Object.groupBy(grants, (g) => g.recipient_id);
@@ -45,6 +46,7 @@ export const action: ActionFunction = async ({ request }) => {
     for (const [npo, items = []] of Object.entries(by_npo)) {
       await process_item(+npo, items, env, podb);
     }
+    return resp.status(200, "Done processing grants");
   } catch (err) {
     console.error(err);
     await aws_monitor.sendAlert({
@@ -53,6 +55,7 @@ export const action: ActionFunction = async ({ request }) => {
       title: "Unexpected error processing commissions",
       body: JSON.stringify(err, Object.getOwnPropertyNames(err)),
     });
+    return resp.status(200, "Something went wrong");
   }
 };
 
