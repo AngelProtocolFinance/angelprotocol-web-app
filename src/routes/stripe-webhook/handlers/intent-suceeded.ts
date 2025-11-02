@@ -1,9 +1,8 @@
-import type {} from "@better-giving/donation/subscriptions-db";
 import type { IMetadata, IMetadataSubs } from "@better-giving/stripe";
+import { str_id } from "helpers/stripe";
 import { to_onhold } from "routes/helpers/donation-metadata";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
-import { str_id } from "../../helpers/stripe";
 import { payment_method } from "../helpers/payment-method";
 import { settled_fn } from "../helpers/settled";
 import { subsdb } from ".server/aws/db";
