@@ -1,6 +1,6 @@
 import type { IMetadata } from "@better-giving/stripe";
+import { str_id } from "helpers/stripe";
 import { send_email } from "lib/email";
-import { str_id } from "routes/helpers/stripe";
 import type Stripe from "stripe";
 import { to_onhold } from "../../helpers/donation-metadata";
 import { payment_method } from "../helpers/payment-method";
