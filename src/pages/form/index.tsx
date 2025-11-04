@@ -23,5 +23,11 @@ export default function Page({ loaderData }: Route.ComponentProps) {
     program: rd.program,
   };
 
-  return <Steps key={JSON.stringify(init_state)} init={init_state} />;
+  return (
+    <Steps
+      className="self-start"
+      key={JSON.stringify(init_state)}
+      init={init_state}
+    />
+  );
 }
