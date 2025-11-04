@@ -1,5 +1,6 @@
 import type { LinkGroup } from "layout/dashboard";
 import {
+  BlocksIcon,
   CircleDollarSign,
   CircleUserRound,
   Heart,
@@ -16,6 +17,7 @@ export const routes = {
   settings: "settings",
   referrals: "referrals",
   subscriptions: "subscriptions",
+  forms: "forms",
 };
 
 export const linkGroups: LinkGroup[] = [
@@ -61,6 +63,15 @@ export const linkGroups: LinkGroup[] = [
           size: 21,
         },
       },
+      {
+        title: "Donation Forms",
+        to: routes.forms,
+        icon: {
+          fn: BlocksIcon,
+          size: 21,
+        },
+      },
+
       {
         title: "My Referrals",
         to: routes.referrals,

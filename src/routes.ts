@@ -63,6 +63,7 @@ export default [
   r("form-builder", widget.$("form-builder-layout.tsx")._, [
     index(widget.$("index.tsx")._, { id: "public-form-builder" }),
   ]),
+  r("forms/:id", "./pages/form/index.tsx"),
 
   layout(layouts.$("landing/layout.tsx")._, [
     r("donation-forms", landing.$("donation-forms/index.tsx")._),
@@ -93,6 +94,7 @@ export default [
       id: "admin-form-builder",
     }),
     r("forms", admin.$("forms/index.tsx")._),
+    r("forms/:form_id", admin.$("form-edit/index.tsx")._),
     r("media", admin.$("media/media.tsx")._, [
       r("new", admin.$("media/video-new.ts")._, { id: "media-new" }),
       r(":mediaId", admin.$("media/video-edit.ts")._, {
@@ -181,6 +183,7 @@ export default [
     index(user.$("index-route.ts")._),
     r("edit-profile", user.$("edit-profile/index.tsx")._),
     r("settings", user.$("settings/index.tsx")._),
+    r("forms", user.$("forms/index.tsx")._),
     r("donations", user.$("donations/layout.tsx")._, [
       index(user.$("donations/redirect.ts")._),
       r("received", user.$("donations/final/index.tsx")._, [

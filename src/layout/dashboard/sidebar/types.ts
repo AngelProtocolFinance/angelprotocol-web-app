@@ -1,10 +1,10 @@
-import type { Church } from "lucide-react";
+import type { Icon } from "lucide-react";
 
 export type Link = {
   title: string;
   to: string;
   icon: {
-    fn: typeof Church;
+    fn: typeof Icon;
     size: number;
   };
   end?: boolean;

@@ -1,43 +1,39 @@
 import { increment_label_max_chars } from "@better-giving/schemas";
-import { Field as HuiField, Input, Label, Textarea } from "@headlessui/react";
+import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { DonateMethods } from "components/donate-methods";
+import { Form } from "components/form";
+import { Increments } from "components/increments";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import { bg_accent_primary, bg_accent_secondary } from "styles/colors";
-import { widget_config } from "types/widget";
-import { DonateMethods } from "../donate-methods";
-import { Field, Form } from "../form";
-import { GoalSelector } from "../goal-selector";
-import { Increments } from "../increments";
-import type { FV } from "./types";
+import { type FV, schema } from "./types";
 
 interface Props extends FV {
   classes?: string;
-  on_submit: (fv: FV) => void;
   is_submitting: boolean;
+  on_submit: (fv: FV) => void;
 }
-export function FormEditor({
+
+export function Configurer({
   classes = "",
   on_submit,
   is_submitting,
-  accent_primary = bg_accent_primary,
-  accent_secondary = bg_accent_secondary,
   ...fv
 }: Props) {
   const {
     handleSubmit,
     reset: hookFormReset,
-    formState: { isDirty, errors },
+    formState: { isDirty, errors, isSubmitting },
     watch,
     register,
     control,
   } = useForm<FV>({
-    resolver: valibotResolver(widget_config),
+    resolver: valibotResolver(schema),
     //set new config as default, so user would need to make a change to be able to update again
-    values: { ...fv, accent_primary, accent_secondary },
+    values: fv,
   });
 
-  const { field: donateMethods } = useController({
+  const { field: donate_methods } = useController({
     control: control,
     name: "methods",
   });
@@ -47,16 +43,11 @@ export function FormEditor({
     name: "increments",
   });
 
-  const { field: target } = useController({
-    control,
-    name: "target.type",
-  });
-
   const incs = watch("increments");
 
   return (
     <Form
-      disabled={is_submitting}
+      disabled={isSubmitting}
       className={`${classes} @container/configurer`}
       onSubmit={handleSubmit((x) => on_submit(x))}
       onReset={(e) => {
@@ -75,8 +66,8 @@ export function FormEditor({
             tooltip: "italic",
             label: "font-medium text-base",
           }}
-          values={donateMethods.value}
-          onChange={donateMethods.onChange}
+          values={donate_methods.value}
+          onChange={donate_methods.onChange}
           error={
             <p className="text-red text-sm mb-1 empty:hidden">
               {errors.methods?.message}
@@ -149,20 +140,6 @@ export function FormEditor({
           )}
         />
 
-        <HuiField>
-          <Label className="font-bold mb-3">Donation goal</Label>
-          <GoalSelector value={target.value} onChange={target.onChange} />
-          {target.value === "fixed" && (
-            <Field
-              {...register("target.value", { shouldUnregister: true })}
-              label="How much money do you want to raise?"
-              classes="mt-4 mb-6"
-              placeholder="$"
-              error={errors?.target?.value?.message}
-            />
-          )}
-        </HuiField>
-
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">
           <button
             disabled={!isDirty}
@@ -176,7 +153,7 @@ export function FormEditor({
             type="submit"
             className="btn btn-blue @max-sm/configurer:mx-auto w-40"
           >
-            {is_submitting ? "Updating.." : "Update Form"}
+            {isSubmitting ? "Updating.." : "Update Form"}
           </button>
         </div>
       </div>
