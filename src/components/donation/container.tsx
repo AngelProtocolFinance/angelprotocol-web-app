@@ -37,7 +37,7 @@ export function Donation({ className = "", ...props }: Props) {
   return (
     <div
       style={colors}
-      className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
+      className={`grid ${className} content-start w-full @container/steps overflow-clip bg-white min-h-96`}
     >
       <Context {...tdonation}>
         <CurrentStep />
