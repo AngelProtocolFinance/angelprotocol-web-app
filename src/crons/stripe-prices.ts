@@ -14,6 +14,8 @@ const currency_opts = (
 ) => {
   const obj: Record<string, Stripe.PriceCreateParams.CurrencyOptions> = {};
   for (const code of currencies) {
+    const amnt = rate(code);
+    if (!amnt) continue;
     obj[code] = { unit_amount: to_atomic(rate(code), code) };
   }
   return obj;
