@@ -29,11 +29,17 @@ type Props = {
 } & (Components | InitState);
 
 export function Donation({ className = "", ...props }: Props) {
+  const tdonation = "init" in props ? props.init : init_state(props);
+  const colors: Record<string, string | undefined> = {
+    "--accent-primary": tdonation.config?.accentPrimary,
+    "--accent-secondary": tdonation.config?.accentSecondary,
+  };
   return (
     <div
+      style={colors}
       className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
     >
-      <Context {...("init" in props ? props.init : init_state(props))}>
+      <Context {...tdonation}>
         <CurrentStep />
       </Context>
     </div>

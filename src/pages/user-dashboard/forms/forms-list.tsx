@@ -1,6 +1,6 @@
 import { type IForm, is_form_expired } from "@better-giving/forms";
 import { Target } from "components/target";
-import { NavLink } from "react-router";
+import { NavLink, href } from "react-router";
 import type { IPaginator } from "types/components";
 
 interface Props extends IPaginator<IForm> {
@@ -30,7 +30,7 @@ export function FormsList({ items, classes = "" }: Props) {
               aria-disabled={
                 form.status !== "active" || is_form_expired(form.expiration)
               }
-              to="edit"
+              to={href("/forms/:id", { id: form.id })}
               className="btn btn-outline text-xs py-2 px-3.5"
             >
               Edit

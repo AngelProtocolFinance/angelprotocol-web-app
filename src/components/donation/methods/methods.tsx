@@ -61,6 +61,16 @@ export function DonateMethods(props: TDonation) {
 
   const tab_idx_found = tabs.findIndex((t) => t === method);
 
+  if (tabs.length === 1) {
+    const Panel = methods[tabs[0]].panel;
+    const s = fvs[tabs[0]] || { type: tabs[0], step: "form" };
+    return (
+      <div className="grid p-4 @xl/steps:p-8">
+        <Panel {...(s as any)} />
+      </div>
+    );
+  }
+
   return (
     <TabGroup
       data-testid="donate-methods"
@@ -82,7 +92,7 @@ export function DonateMethods(props: TDonation) {
       </TabList>
       <TabPanels
         as="div"
-        className="grid p-4 @xl/steps:p-8 pt-0 @xl/steps:pt-4 "
+        className="grid p-4 @xl/steps:p-8 pt-0 @xl/steps:pt-4"
       >
         {tabs.map((tab) => {
           const Panel = methods[tab].panel;

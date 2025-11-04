@@ -1,8 +1,10 @@
 import type { IForm } from "@better-giving/forms";
 import { resp } from "helpers/https";
 import { href } from "react-router";
+import type { ActionData } from "types/action";
 import * as v from "valibot";
 import type { Route } from "./+types";
+import { schema } from "./types";
 import { cognito, to_auth } from ".server/auth";
 import { formsdb, funddb, npodb } from ".server/aws/db";
 
@@ -78,4 +80,40 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const back_url = `${base_url}${back_path}`;
 
   return { ...form, back_url, base_url, recipient_details } satisfies ILoader;
+};
+
+export const action = async ({ request, params }: Route.ActionArgs) => {
+  const json = await request.json();
+  const fv = v.parse(schema, json);
+
+  const { user } = await cognito.retrieve(request);
+  if (!user) return to_auth(request);
+
+  const form = await formsdb.form_get(params.id);
+  if (!form) throw resp.err(404, "form not found");
+
+  if (form.owner !== user.email && !user.endowments.includes(+form.owner)) {
+    throw resp.err(403, "forbidden");
+  }
+
+  const target = ((x) => {
+    switch (x.type) {
+      case "fixed":
+        return +x.value;
+      case "none":
+        return null;
+      case "smart":
+        return "smart";
+    }
+  })(fv.target);
+
+  await formsdb.form_update(params.id, {
+    accent_primary: fv.accent_primary,
+    accent_secondary: fv.accent_secondary,
+    donate_methods: fv.methods.filter((m) => !m.disabled).map((m) => m.id),
+    increments: fv.increments,
+    target,
+  });
+
+  return { __ok: "Form updated" } satisfies ActionData;
 };

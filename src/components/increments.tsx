@@ -30,7 +30,7 @@ export function Increments({
       className={`${classes} grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2`}
     >
       <div className="flex items-center gap-2 col-span-3">
-        <p className="font-bold text-base">Donation increments</p>
+        <p className="font-bold text-sm">Increments</p>
         <button type="button" className="text-base font-bold text-green">
           <Plus size={17} strokeWidth={3} onClick={() => onAdd("")} />
         </button>

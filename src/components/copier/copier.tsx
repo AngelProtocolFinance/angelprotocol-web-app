@@ -21,11 +21,7 @@ export function Copier({ text, classes, size, children }: Props) {
       : size
     : {};
   return (
-    <button
-      className={`${container} relative`}
-      type="button"
-      onClick={handle_copy}
-    >
+    <button className={`${container}`} type="button" onClick={handle_copy}>
       {(copied && (
         <Check
           className={`${icon} cursor-default text-green`}
@@ -39,10 +35,10 @@ export function Copier({ text, classes, size, children }: Props) {
           aria-labelledby="copy"
         />
       )}
-      <span id="copied" className="invisible absolute">
+      <span id="copied" className="sr-only">
         Copied!
       </span>
-      <span id="copy" className="invisible absolute">
+      <span id="copy" className="sr-only">
         Copy
       </span>
       {children}

@@ -1,4 +1,5 @@
 import { Copier } from "components/copier";
+import { CodeIcon } from "lucide-react";
 
 type Props = {
   classes?: string;
@@ -9,16 +10,20 @@ export function Snippet({ classes = "", src }: Props) {
   const iframe_url = `<iframe src="${src}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`;
 
   return (
-    <div className={classes}>
-      <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
-        Copy / paste this code snippet:
-      </h2>
-      <div className="flex items-center justify-center gap-x-4 max-w-xl px-10 rounded-sm bg-gray-l3 dark:bg-blue-d4 @4xl/widget:mx-auto">
-        <div className="w-full text-sm sm:text-base font-mono break-all py-4">
+    <div className={`${classes} relative`}>
+      <p className="absolute -top-6 text-sm flex items-center gap-x-1 mb-1">
+        <CodeIcon size={16} className="stroke-gray-d1" />
+        <span>Copy snippet below and paste into your website</span>
+      </p>
+      <div className="flex p-4 rounded bg-gray-l3 divide-x divide-gray-l2">
+        <code className="w-full text-sm font-mono break-all block pr-2">
           {iframe_url}
-        </div>
+        </code>
         <Copier
-          classes={{ icon: "w-10 h-10 hover:text-blue-d1" }}
+          classes={{
+            icon: "size-5 hover:text-blue-d1",
+            container: "ml-2",
+          }}
           text={iframe_url}
         />
       </div>

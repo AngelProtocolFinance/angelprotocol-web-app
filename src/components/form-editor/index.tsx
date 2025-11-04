@@ -84,14 +84,16 @@ export function FormEditor({
           }
         />
 
-        <p className="font-bold text-base mt-8">Style settings</p>
+        <p className="mt-8">Style settings</p>
         <div className="flex items-center gap-2 mt-3">
           <input
             id="__accent-prim"
             type="color"
             {...register("accent_primary")}
           />
-          <label htmlFor="__accent-prim"> Accent primary</label>
+          <label className="text-sm" htmlFor="__accent-prim">
+            Accent primary
+          </label>
         </div>
         <div className="flex items-center gap-2 mt-3">
           <input
@@ -99,7 +101,9 @@ export function FormEditor({
             type="color"
             {...register("accent_secondary")}
           />
-          <label htmlFor="__accent-sec">Accent secondary</label>
+          <label className="text-sm" htmlFor="__accent-sec">
+            Accent secondary
+          </label>
         </div>
 
         <Increments

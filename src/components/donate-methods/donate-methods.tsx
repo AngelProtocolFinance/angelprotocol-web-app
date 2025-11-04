@@ -22,10 +22,10 @@ export function DonateMethods({ values, onChange, error, classes }: Props) {
   const style = unpack(classes);
   return (
     <div className={style.container}>
-      <label className={`${style.label} mb-2 block`}>
-        Customize donation payment options
+      <label className={`${style.label} text-sm mb-1 block font-semibold`}>
+        Payment options
       </label>
-      <p className={`text-gray ${style.tooltip} mb-4`}>
+      <p className={`text-gray ${style.tooltip} mb-2 text-sm`}>
         Here you can turn on/off payment options and change the order of their
         appearance
       </p>
@@ -112,7 +112,7 @@ function Method({
       </button>
 
       <div>
-        <span>{value.name}</span>
+        <span className="text-sm">{value.name}</span>
         <span className="text-gray-l1 text-sm ml-2">{value.tooltip}</span>
       </div>
     </Reorder.Item>
