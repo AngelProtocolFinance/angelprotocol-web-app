@@ -59,6 +59,7 @@ export default [
     landing.$("tgb-attack/index.tsx")._
   ),
   r("forms/:id/edit", "./pages/form-editor/index.tsx"),
+  r("forms/:id", "./pages/form/index.tsx"),
   layout(layouts.$("landing/layout.tsx")._, [
     r("donation-forms", landing.$("donation-forms/index.tsx")._),
     r("fund-management", landing.$("fund-management/index.tsx")._),
