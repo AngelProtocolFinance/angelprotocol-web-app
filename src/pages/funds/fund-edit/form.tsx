@@ -1,13 +1,9 @@
 import type { IFundUpdate } from "@better-giving/fundraiser";
-import { increment_label_max_chars } from "@better-giving/schemas";
-import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { Field, Form as Frm } from "components/form";
 import { GoalSelector, to_target } from "components/goal-selector";
 import { ImgEditor } from "components/img-editor";
-import { Increments } from "components/increments";
 import { RichText } from "components/rich-text";
 import { use_action_result } from "hooks/use-action-result";
-import { DollarSign } from "lucide-react";
 import type { SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { IFund } from "types/fund";
@@ -157,53 +153,6 @@ export function Form({
           error={rhf.errors?.target?.value?.message}
         />
       )}
-
-      <Increments
-        classes="mt-8 mb-10"
-        fields={rhf.increments.fields}
-        onAdd={(val) => {
-          if (rhf.increments.fields.length >= 4) {
-            return alert("You can only have 4 increments");
-          }
-          rhf.increments.append({ value: val, label: "" });
-        }}
-        onRemove={(idx) => rhf.increments.remove(idx)}
-        countError={rhf.errors.increments?.root?.message}
-        field={(idx) => (
-          <>
-            <HuiField className="grid grid-rows-subgrid row-span-2">
-              <div className="relative w-full">
-                <DollarSign
-                  size={15}
-                  className="text-gray absolute top-1/2 left-2 transform -translate-y-1/2"
-                />
-                <Input
-                  type="number"
-                  {...rhf.register(`increments.${idx}.value`)}
-                  className="w-full h-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
-                />
-              </div>
-
-              <p className="mt-1 empty:hidden text-left text-xs text-red">
-                {rhf.errors.increments?.[idx]?.value?.message}
-              </p>
-            </HuiField>
-            <HuiField className="grid grid-rows-subgrid row-span-2">
-              <Textarea
-                {...rhf.register(`increments.${idx}.label`)}
-                rows={2}
-                className="w-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
-              />
-              <p
-                data-error={!!rhf.errors.increments?.[idx]?.label?.message}
-                className="mt-1 text-left text-xs data-[error='true']:text-red"
-              >
-                {rhf.incs[idx].label.length}/{increment_label_max_chars}
-              </p>
-            </HuiField>
-          </>
-        )}
-      />
 
       <div className="flex items-center justify-end gap-4 mt-4 mb-8">
         <button

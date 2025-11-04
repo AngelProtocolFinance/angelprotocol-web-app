@@ -17,7 +17,6 @@ class Path {
 const pages = new Path("./pages");
 const donate_fund = pages.$("donate-fund");
 const landing = pages.$("landing");
-const widget = pages.$("widget");
 const admin = pages.$("admin");
 const user = pages.$("user-dashboard");
 const layouts = new Path("./layout");
@@ -59,12 +58,7 @@ export default [
     "the-smart-move-to-make-for-accepting-crypto-donations",
     landing.$("tgb-attack/index.tsx")._
   ),
-
-  r("form-builder", widget.$("form-builder-layout.tsx")._, [
-    index(widget.$("index.tsx")._, { id: "public-form-builder" }),
-  ]),
-  r("forms/:id", "./pages/form/index.tsx"),
-
+  r("forms/:id/edit", "./pages/form-editor/index.tsx"),
   layout(layouts.$("landing/layout.tsx")._, [
     r("donation-forms", landing.$("donation-forms/index.tsx")._),
     r("fund-management", landing.$("fund-management/index.tsx")._),
@@ -90,11 +84,7 @@ export default [
     r("banking/:bankId", admin.$("banking/payout-method/payout-method.tsx")._, [
       r("delete", admin.$("banking/payout-method/delete-prompt.tsx")._),
     ]),
-    r("form-builder", widget.$("index.tsx")._, {
-      id: "admin-form-builder",
-    }),
     r("forms", admin.$("forms/index.tsx")._),
-    r("forms/:form_id", admin.$("form-edit/index.tsx")._),
     r("media", admin.$("media/media.tsx")._, [
       r("new", admin.$("media/video-new.ts")._, { id: "media-new" }),
       r(":mediaId", admin.$("media/video-edit.ts")._, {

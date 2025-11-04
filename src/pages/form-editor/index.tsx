@@ -4,6 +4,7 @@ import { Preview } from "./preview";
 import { Snippet } from "./snippet";
 
 import { to_form_target } from "components/goal-selector";
+import { Target } from "components/target";
 import { metas } from "helpers/seo";
 import { use_action_result } from "hooks/use-action-result";
 import { ChevronLeftIcon } from "lucide-react";
@@ -25,7 +26,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   return (
     <div className="bg-gray-l4">
       <div className="grid py-4 content-start grid-rows-[auto_auto_1fr] lg:container lg:mx-auto px-4 lg:grid-cols-2 gap-4">
-        <header className="col-span-full">
+        <header className="col-span-full lg:mb-6">
           <NavLink
             to={back_url}
             className="flex text-blue hover:text-blue-d1 items-center gap-x-1"
@@ -33,6 +34,26 @@ export default function Page({ loaderData }: Route.ComponentProps) {
             <ChevronLeftIcon size={16} />
             <span className="text-sm">Forms</span>
           </NavLink>
+          <div
+            key={d.id}
+            className="p-4 border border-gray-l3 rounded flex gap-2 max-lg:flex-col max-lg:items-start items-center bg-white mt-4"
+          >
+            {d.recipient_type === "fund" ? (
+              <span className="bg-lilac inline-block text-xs px-2 py-0.5 rounded">
+                Fundraiser
+              </span>
+            ) : d.recipient_type === "program" ? (
+              <span className="bg-green-l4 inline-block text-xs px-2 py-0.5 rounded">
+                Program
+              </span>
+            ) : (
+              <span className="bg-blue-l4 inline-block text-xs px-2 py-0.5 rounded">
+                Nonprofit
+              </span>
+            )}
+            <h3 className="text-lg flex-1">{d.name}</h3>
+            <Target.Inline classes="w-64" target={d.target} progress={d.ltd} />
+          </div>
         </header>
         <Configurer
           classes="row-span-2"
