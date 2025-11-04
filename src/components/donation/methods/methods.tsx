@@ -76,7 +76,7 @@ export function DonateMethods(props: TDonation) {
       data-testid="donate-methods"
       manual
       as="div"
-      className="grid @xl/steps:grid-cols-[auto_1fr]"
+      className="grid content-start @xl/steps:grid-cols-[auto_1fr]"
       defaultIndex={tab_idx_found === -1 ? 0 : tab_idx_found}
     >
       <Label className="p-4 pb-0 col-span-full @xl/steps:hidden font-bold">
