@@ -1,11 +1,6 @@
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import script from "./form-embed.js?raw";
 
 export async function loader() {
-  const script = readFileSync(join(__dirname, "form-embed.js"), "utf-8");
   return new Response(script, {
     headers: {
       "Content-Type": "text/javascript",
