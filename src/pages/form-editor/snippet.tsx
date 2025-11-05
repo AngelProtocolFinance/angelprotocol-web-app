@@ -70,7 +70,7 @@ export function Snippet({ classes = "", form_id, base_url }: Props) {
               icon: "size-5 hover:text-blue-d1",
               container: "ml-2",
             }}
-            text={iframe_url}
+            text={container_url}
           />
         </div>
       </TabPanel>
