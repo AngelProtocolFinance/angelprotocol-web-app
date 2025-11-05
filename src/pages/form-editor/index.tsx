@@ -68,7 +68,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           }
         />
         <Snippet base_url={base_url} form_id={d.id} classes="self-start" />
-        <Preview {...loaderData} classes="max-lg:mt-8" />
+        <Preview {...loaderData} classes="mt-4" />
       </div>
     </div>
   );
