@@ -67,7 +67,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
             fetcher.submit(x, { method: "POST", encType: "application/json" })
           }
         />
-        <Snippet src={`${base_url}/forms/${d.id}`} classes="self-start" />
+        <Snippet base_url={base_url} form_id={d.id} classes="self-start" />
         <Preview {...loaderData} classes="max-lg:mt-8" />
       </div>
     </div>

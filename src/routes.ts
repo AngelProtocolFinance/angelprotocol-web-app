@@ -314,6 +314,7 @@ export default [
   r("utils/calendar", "./routes/calendar.tsx"),
   r("robots.txt", "./routes/robots.ts"),
   r("sitemap.xml", "./routes/sitemap.ts"),
+  r("form-embed.js", "./routes/form-embed.ts"),
 
   r("crons/grants-processor", "./crons/grants-processor/index.ts"),
   r("crons/currencies-map", "./crons/currencies-map.ts"),

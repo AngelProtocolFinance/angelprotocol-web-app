@@ -3,11 +3,12 @@ import { CodeIcon } from "lucide-react";
 
 type Props = {
   classes?: string;
-  src: string;
+  form_id: string;
+  base_url: string;
 };
-export function Snippet({ classes = "", src }: Props) {
+export function Snippet({ classes = "", form_id, base_url }: Props) {
   /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
-  const iframe_url = `<iframe src="${src}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`;
+  const iframe_url = `<div id="bg-form-${form_id}"></div>\n<script src="${base_url}/form-embed.js"async></script>`;
 
   return (
     <div className={`${classes} relative`}>
@@ -16,7 +17,7 @@ export function Snippet({ classes = "", src }: Props) {
         <span>Copy snippet below and paste into your website</span>
       </p>
       <div className="flex p-4 rounded bg-gray-l3 divide-x divide-gray-l2">
-        <code className="w-full text-sm font-mono break-all block pr-2">
+        <code className="w-full text-sm font-mono break-all block pr-2 whitespace-pre-line">
           {iframe_url}
         </code>
         <Copier
