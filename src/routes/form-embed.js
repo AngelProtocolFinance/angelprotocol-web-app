@@ -39,7 +39,6 @@
     iframe.src = `${script_origin}/forms/${form_id}`;
     iframe.style.width = "100%";
     iframe.style.border = "none";
-    iframe.style.height = "0px";
 
     // Add sandbox attribute for security (adjust permissions as needed)
     iframe.sandbox = "allow-scripts allow-same-origin allow-forms allow-popups";
