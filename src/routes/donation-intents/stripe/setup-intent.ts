@@ -30,7 +30,7 @@ export async function setup_intent(
     metadata: {
       ...to_metadata(order),
       productId: stripe_envs.subs_product_id,
-      subsQuantity: String(rd(order.usdValue, 0)),
+      subsQuantity: rd(order.usdValue, 0),
     } satisfies IMetadataSubs,
     usage: "off_session",
   });

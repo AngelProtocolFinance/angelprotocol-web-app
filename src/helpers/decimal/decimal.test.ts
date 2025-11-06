@@ -18,6 +18,12 @@ describe("common decimal helpers", () => {
     expect(rd2num(1.23456789, 5)).toBe(1.23456);
   });
 
+  test("expand number with trailing zeros", () => {
+    expect(rd(2, 2)).toBe("2.00");
+    expect(rd(10, 3)).toBe("10.000");
+    expect(rd(5.5, 3)).toBe("5.500");
+  });
+
   test("to currency: truncating lt 1K", () => {
     expect(humanize(934.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
