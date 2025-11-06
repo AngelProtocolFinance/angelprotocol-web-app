@@ -8,7 +8,14 @@ export const payment_methods: {
   [key in string]: TPaymentMethods[];
 } = {
   CAD: ["acss_debit", "card"],
-  EUR: ["bancontact", "card", "eps", "ideal", "p24", "sepa_debit", "sofort"],
+  EUR: [
+    "bancontact",
+    "card",
+    "eps" /** TODO: add once available "ideal" **/,
+    "p24",
+    "sepa_debit",
+    "sofort",
+  ],
   PLN: ["card", "p24"],
   USD: ["amazon_pay", "card", "cashapp", "link", "us_bank_account"],
 };
