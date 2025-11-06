@@ -16,7 +16,7 @@ const currency_opts = (
   for (const code of currencies) {
     const amnt = rate(code);
     if (!amnt) continue;
-    obj[code] = { unit_amount: to_atomic(rate(code), code) };
+    obj[code] = { unit_amount: to_atomic(amnt, code) };
   }
   return obj;
 };
