@@ -1,6 +1,6 @@
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import type { IMetadataSubs } from "@better-giving/stripe";
-import { round_number } from "helpers/round-number";
+import { rd } from "helpers/decimal";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe_envs } from ".server/env";
 import { stripe } from ".server/sdks";
@@ -30,7 +30,7 @@ export async function setup_intent(
     metadata: {
       ...to_metadata(order),
       productId: stripe_envs.subs_product_id,
-      subsQuantity: String(round_number(order.usdValue, 0)),
+      subsQuantity: String(rd(order.usdValue, 0)),
     } satisfies IMetadataSubs,
     usage: "off_session",
   });

@@ -1,6 +1,7 @@
 import { is_custom, tokens_map } from "@better-giving/assets/tokens";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import { addDays, getUnixTime } from "date-fns";
+import { rd2num } from "helpers/decimal";
 import { resp } from "helpers/https";
 import { round_number } from "helpers/round-number";
 import { nanoid } from "nanoid";
@@ -182,7 +183,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
     const grant = await chariot.create_grant(
       intent.via_id,
-      round_number(to_pay * 100, 0)
+      rd2num(to_pay * 100, 0)
     );
 
     const onhold: IDonationOnHoldAttr = {

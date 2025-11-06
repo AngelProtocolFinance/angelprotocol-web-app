@@ -1,7 +1,6 @@
 import type { Donation, TTemplate } from "@better-giving/emails";
 import { emails } from "constants/common";
-import { ru_vdec, usdpu } from "helpers/decimal";
-import { round_number } from "helpers/round-number";
+import { rd, ru_vdec, usdpu } from "helpers/decimal";
 import { SendEmailCommand, ses } from ".server/aws/ses";
 
 export async function send_email(template: TTemplate, to: string[]) {
@@ -29,9 +28,6 @@ export const to_ses_amnts = (
 ) => {
   return {
     prettyAmount: `${ru_vdec(amnt, usdpu(usd_value, amnt))} ${denom}`,
-    prettyUSDamount:
-      denom.toLowerCase() === "usd"
-        ? ""
-        : `${round_number(usd_value, 2).toFixed(2)}`,
+    prettyUSDamount: denom.toLowerCase() === "usd" ? "" : rd(usd_value),
   } satisfies Pick<Donation.Data.TTx, "prettyAmount" | "prettyUSDamount">;
 };

@@ -1,9 +1,8 @@
 import type { Donation } from "@better-giving/emails";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { to_pretty_utc } from "helpers/date";
-import { humanize } from "helpers/decimal";
+import { humanize, rd } from "helpers/decimal";
 import { resp } from "helpers/https";
-import { round_number } from "helpers/round-number";
 import { send_email } from "lib/email";
 import { redirect } from "react-router";
 import { getValidatedFormData } from "remix-hook-form";
@@ -72,7 +71,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
     transactionDate: to_pretty_utc(don.transactionDate),
     nonprofitName: don.charityName,
     programName: don.programName,
-    prettyAmount: `${humanize(round_number(don.amount, don.fiatRamp ? 2 : 4))} ${don.denomination}`,
+    prettyAmount: `${humanize(rd(don.amount, don.fiatRamp ? 2 : 4))} ${don.denomination}`,
     prettyUSDamount: don.denomination === "USD" ? "" : humanize(don.usdValue),
     isBg: don.endowmentId === bg_npo_id ? true : undefined,
     isRecurring: don.isRecurring || undefined,
