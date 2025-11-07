@@ -2,6 +2,8 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { TipField } from "components/donation/common/tip-field";
 import { Field, Form as FormContainer } from "components/form";
 import { ru_vdec } from "helpers/decimal";
+import { ChevronDown, LightbulbIcon } from "lucide-react";
+import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { use_donation } from "../../context";
 import {
@@ -12,6 +14,7 @@ import {
 } from "../../types";
 
 export function Form(props: TMethodState<"stocks">) {
+  const [tip_expanded, set_tip_expanded] = useState(false);
   const { don_set, don } = use_donation();
   const initial: FV = {
     num_shares: "",
@@ -117,28 +120,51 @@ export function Form(props: TMethodState<"stocks">) {
         />
       )}
 
-      <h4 className="mt-4">Benefits of donating appreciated stock</h4>
-      <p className="text-sm">
+      <div className="mt-4 flex items-center gap-x-1">
+        <LightbulbIcon
+          size={16}
+          className="stroke-amber self-start h-[1lh] shrink-0"
+        />
+        <h4 className="tex-sm text-gray-d1 font-medium">
+          Benefits of donating appreciated stock
+        </h4>
+      </div>
+      <p className={`text-sm ${tip_expanded ? "" : "mask-b-from-1 pb-2"}`}>
         You can enjoy significant tax advantages and maximize the size of your
         contributions when you transfer securities through Better Giving:
       </p>
-      <div className="grid rounded-sm bg-gray-l5 dark:bg-gray-d3 p-2 my-4">
-        <span className="text-sm text-gray">
-          NOTE: This is not financial advice! Please speak to your tax advisor
-          or broker about your specific situation and country's tax laws.
-        </span>
-      </div>
-      <p className="text-sm">
-        If you held the stock for at least one year, you receive a tax deduction
-        for the full value of the stock at the time of donation (not just the
-        amount you paid for the stock).
-      </p>
-      <p className="text-sm mt-4">
-        You avoid paying both capital gains tax and stock sales commissions.
-        When you give appreciated stocks directly to a nonprofit, your gift can
-        be up to 20% larger because you avoid the taxes you'd incur from selling
-        and donating the cash.
-      </p>
+      {!tip_expanded && (
+        <button
+          onClick={() => set_tip_expanded(true)}
+          type="button"
+          className="flex items-center -mt-4 justify-self-start text-[13px] text-blue-d1"
+        >
+          read more <ChevronDown size={16} />
+        </button>
+      )}
+      {tip_expanded && (
+        <div className="grid rounded-sm bg-gray-l5 dark:bg-gray-d3 p-2 my-2">
+          <span className="text-sm text-gray">
+            NOTE: This is not financial advice! Please speak to your tax advisor
+            or broker about your specific situation and country's tax laws.
+          </span>
+        </div>
+      )}
+      {tip_expanded && (
+        <p className="text-sm">
+          If you held the stock for at least one year, you receive a tax
+          deduction for the full value of the stock at the time of donation (not
+          just the amount you paid for the stock).
+        </p>
+      )}
+      {tip_expanded && (
+        <p className="text-sm mt-2">
+          You avoid paying both capital gains tax and stock sales commissions.
+          When you give appreciated stocks directly to a nonprofit, your gift
+          can be up to 20% larger because you avoid the taxes you'd incur from
+          selling and donating the cash.
+        </p>
+      )}
       <button
         disabled={isSubmitting}
         className="mt-4 btn btn-blue text-sm enabled:bg-(--accent-primary)"
