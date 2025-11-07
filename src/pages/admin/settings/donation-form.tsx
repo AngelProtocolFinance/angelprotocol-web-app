@@ -117,7 +117,7 @@ export function DonationFormTab(p: Props) {
           tooltip: "italic text-sm",
         }}
         values={donateMethods.value}
-        onChange={donateMethods.onChange}
+        on_change={donateMethods.onChange}
         error={
           <ErrorMessage
             name="donateMethods"

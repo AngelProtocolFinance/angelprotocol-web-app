@@ -13,12 +13,12 @@ type Classes = {
 
 type Props = {
   values: TDonateMethod[];
-  onChange: Updator;
+  on_change: Updator;
   error?: ReactNode;
   classes?: Classes | string;
 };
 
-export function DonateMethods({ values, onChange, error, classes }: Props) {
+export function DonateMethods({ values, on_change, error, classes }: Props) {
   const style = unpack(classes);
   return (
     <div className={style.container}>
@@ -32,7 +32,7 @@ export function DonateMethods({ values, onChange, error, classes }: Props) {
       {error}
       <Reorder.Group
         axis="y"
-        onReorder={(values) => onChange(values.map((v) => JSON.parse(v)))}
+        onReorder={(values) => on_change(values.map((v) => JSON.parse(v)))}
         values={values.map((v) => JSON.stringify(v))}
         className="grid gap-4"
       >
@@ -43,29 +43,10 @@ export function DonateMethods({ values, onChange, error, classes }: Props) {
             updator={(updated) => {
               const _methods = values.map((v) => {
                 if (v.id === updated.id) return updated;
-
-                //if DAF is enabled, also enable card + lock
-                if (
-                  updated.id === "daf" &&
-                  !updated.disabled &&
-                  v.id === "stripe"
-                ) {
-                  return { ...v, disabled: false, locked: true };
-                }
-
-                //if DAF is disabled, remove lock from card
-                if (
-                  updated.id === "daf" &&
-                  updated.disabled &&
-                  v.id === "stripe"
-                ) {
-                  return { ...v, locked: false };
-                }
-
                 return v;
               });
 
-              onChange(_methods);
+              on_change(_methods);
             }}
           />
         ))}
@@ -74,13 +55,12 @@ export function DonateMethods({ values, onChange, error, classes }: Props) {
   );
 }
 
-function Method({
-  value,
-  updator,
-}: {
+interface IMethod {
   value: TDonateMethod;
   updator: (old: TDonateMethod) => void;
-}) {
+}
+
+function Method({ value, updator }: IMethod) {
   const y = useMotionValue(0);
   const controls = useDragControls();
   return (
@@ -96,7 +76,6 @@ function Method({
       <input
         type="checkbox"
         className="accent-blue-d1 size-3.5"
-        disabled={value.locked}
         checked={!value.disabled}
         onChange={(e) => {
           updator({ ...value, disabled: !e.target.checked });
@@ -111,10 +90,7 @@ function Method({
         <GripVertical size={20} />
       </button>
 
-      <div>
-        <span>{value.name}</span>
-        <span className="text-gray-l1 text-sm ml-2">{value.tooltip}</span>
-      </div>
+      <span>{value.name}</span>
     </Reorder.Item>
   );
 }

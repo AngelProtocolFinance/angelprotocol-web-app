@@ -79,8 +79,6 @@ export const donate_method = v.object({
   id: donate_method_id,
   name: v.string(),
   disabled: v.boolean(),
-  locked: v.optional(v.boolean()),
-  tooltip: v.optional(v.string()),
 });
 
 export type TDonateMethod = v.InferOutput<typeof donate_method>;

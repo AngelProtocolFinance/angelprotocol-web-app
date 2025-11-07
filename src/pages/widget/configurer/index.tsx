@@ -140,7 +140,7 @@ export function Configurer({
             label: "font-medium text-base",
           }}
           values={donateMethods.value}
-          onChange={donateMethods.onChange}
+          on_change={donateMethods.onChange}
           error={
             <p className="text-red text-sm mb-1 empty:hidden">
               {errors.methods?.message}
