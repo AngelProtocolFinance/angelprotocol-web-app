@@ -64,8 +64,7 @@ export function Stats({ classes = "" }) {
       >
         <CountUp end={24} suffix="%" />
         <p className="max-w-md text-center mt-2 text-lg">
-          Raised across crypto, stock, DAF, and card donations for nonprofit
-          members.
+          5-year average fund return through the Sustainability Fund.
         </p>
       </motion.article>
       <motion.article
