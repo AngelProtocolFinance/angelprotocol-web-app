@@ -2,7 +2,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_tokens } from "services/apes/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
-import type { CryptoDonationDetails, Init } from "../../types";
+import {
+  type CryptoDonationDetails,
+  type Init,
+  donation_recipient_init,
+} from "../../types";
 import { Form } from "./form";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
@@ -22,7 +26,12 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: {
+        id: "0",
+        name: "",
+        members: [],
+        donor_address_required: false,
+      },
       mode: "live",
     };
     don_mock.value = init;
@@ -55,7 +64,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
       user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
     };
@@ -109,7 +118,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;
@@ -130,7 +139,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;

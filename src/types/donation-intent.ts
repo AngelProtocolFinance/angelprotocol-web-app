@@ -28,6 +28,13 @@ export const donor_address = v.object({
 
 export type DonorAddress = v.InferOutput<typeof donor_address>;
 
+export const donor_address_init: DonorAddress = {
+  street: "",
+  city: "",
+  zip_code: "",
+  country: "",
+};
+
 export const donor_public_msg_max_length = 500;
 export const donor_public_msg = v.pipe(
   $req,
@@ -55,12 +62,16 @@ export const donor = v.object({
     v.email("Please check your email for correctness")
   ),
   address: v.optional(donor_address),
-  public_msg: v.optional(donor_public_msg),
-  msg_to_npo: v.optional(donor_msg_to_npo),
-  is_public: v.optional(v.boolean()),
 });
 
 export type Donor = v.InferOutput<typeof donor>;
+
+export const donor_init: Donor = {
+  title: "",
+  first_name: "",
+  last_name: "",
+  email: "",
+};
 
 const money = v.pipe(v.number(), v.minValue(0));
 

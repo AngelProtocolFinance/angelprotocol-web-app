@@ -6,6 +6,7 @@ import { Image } from "components/image/image";
 import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
 import type { IWidgetFv } from "types/widget";
+import { donor_address_init, donor_init } from "types/donation-intent";
 
 type Props = {
   classes?: string;
@@ -36,9 +37,13 @@ export function Preview({ classes = "", fv, endow }: Props) {
       id: endow.id.toString(),
       name: endow.name,
       hide_bg_tip: endow?.hide_bg_tip,
+      donor_address_required: endow.donor_address_required,
       members: [],
     },
     config: config,
+    donor: endow.donor_address_required
+      ? { ...donor_init, address: donor_address_init }
+      : donor_init,
   };
 
   return (

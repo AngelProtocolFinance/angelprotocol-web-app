@@ -2,7 +2,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mock_usd } from "services/apes/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
-import type { Init, StripeDonationDetails } from "../../types";
+import {
+  type Init,
+  type StripeDonationDetails,
+  donation_recipient_init,
+} from "../../types";
 import { Form } from "./form";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
@@ -22,7 +26,7 @@ describe("Stripe form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;
@@ -63,7 +67,7 @@ describe("Stripe form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
       user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
     };
@@ -118,7 +122,7 @@ describe("Stripe form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;
@@ -139,7 +143,7 @@ describe("Stripe form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;
@@ -195,7 +199,7 @@ describe("Stripe form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;

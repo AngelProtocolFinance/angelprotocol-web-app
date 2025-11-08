@@ -9,9 +9,9 @@ import { useController } from "react-hook-form";
 import { useFetcher, useParams } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 import type { UserV2 } from "types/auth";
+import { states } from "../../../../../../constants/us-states";
 import type { FV } from "../schema";
 import { Tooltip } from "./tooltip";
-import { states } from "./us-states";
 
 export const form_style = "w-full text-gray-d4 dark:text-white p-3";
 

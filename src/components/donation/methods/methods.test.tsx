@@ -1,9 +1,10 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { donor_init } from "types/donation-intent";
 import { describe, expect, test } from "vitest";
 import { Steps } from "../index";
-import type { Config, TDonation } from "../types";
+import { type Config, type TDonation, donation_recipient_init } from "../types";
 import { stb } from "./__tests__/test-data";
 
 describe("payment method form state persistence", () => {
@@ -15,7 +16,8 @@ describe("payment method form state persistence", () => {
     const init: TDonation = {
       source: "bg-marketplace",
       mode: "live",
-      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      recipient: donation_recipient_init({ hide_bg_tip: true }),
+      donor: donor_init,
       config: all_methods_config,
       method: "crypto",
     };
@@ -81,7 +83,8 @@ describe("payment method form state persistence", () => {
     const init: TDonation = {
       source: "bg-marketplace",
       mode: "live",
-      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      recipient: donation_recipient_init({ hide_bg_tip: true }),
+      donor: donor_init,
       config: all_methods_config,
       method: "daf",
     };
@@ -123,7 +126,8 @@ describe("payment method form state persistence", () => {
     const init: TDonation = {
       source: "bg-marketplace",
       mode: "live",
-      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      recipient: donation_recipient_init({ hide_bg_tip: true }),
+      donor: donor_init,
       config: all_methods_config,
       method: "stocks",
     };
@@ -170,7 +174,8 @@ describe("payment method form state persistence", () => {
     const init: TDonation = {
       source: "bg-marketplace",
       mode: "live",
-      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      recipient: donation_recipient_init({ hide_bg_tip: true }),
+      donor: donor_init,
       config: all_methods_config,
       method: "crypto",
     };
@@ -268,7 +273,8 @@ describe("payment method form state persistence", () => {
     const init: TDonation = {
       source: "bg-marketplace",
       mode: "live",
-      recipient: { id: "1", name: "test", members: [], hide_bg_tip: true },
+      recipient: donation_recipient_init({ hide_bg_tip: true }),
+      donor: donor_init,
       config: all_methods_config,
       method: "crypto",
     };

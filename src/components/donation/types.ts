@@ -1,7 +1,7 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
 import { type ICurrencyFv, currency_fv } from "types/currency";
-import { frequency, str } from "types/donation-intent";
+import { type Donor, frequency, str } from "types/donation-intent";
 export {
   type Tribute,
   type TFrequency,
@@ -23,11 +23,25 @@ export const donation_recipient = v.object({
   /** int-str array */
   members: v.array(v.string()),
   hide_bg_tip: v.optional(v.boolean()),
+  donor_address_required: v.union([v.boolean(), v.undefined()]),
 });
+
 export const is_fund = (recipient: string) => v.UUID_REGEX.test(recipient); //is uuid
 
 export interface DonationRecipient
   extends v.InferOutput<typeof donation_recipient> {}
+
+export const donation_recipient_init = (
+  overrides?: Partial<DonationRecipient>
+): DonationRecipient => {
+  return {
+    id: "1",
+    name: "Better Giving",
+    members: [],
+    donor_address_required: false,
+    ...overrides,
+  };
+};
 
 export const program_opt = v.object({
   label: v.string(),
@@ -284,9 +298,13 @@ type TFV<T extends TMethod> = T extends "stripe"
 
 export type TMethodState<T extends TMethod> =
   | { type: T; step: "form"; fv?: TFV<T> }
+  /** donor info is set shared among donate methods */
+  | { type: T; step: "donor"; fv: TFV<T> }
   | { type: T; step: "checkout"; fv: TFV<T> };
 
 export type TDonation = Init & {
+  /** may be empty */
+  donor: Donor;
   method: TMethod;
 } & {
   [method in TMethod]?: TMethodState<method>;

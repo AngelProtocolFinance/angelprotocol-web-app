@@ -64,6 +64,7 @@ function Page({ loaderData }: Route.ComponentProps) {
               name: endow.name,
               hide_bg_tip: endow.hide_bg_tip,
               members: [],
+              donor_address_required: endow.donor_address_required,
             }}
             config={{
               method_ids: endow.donateMethods,

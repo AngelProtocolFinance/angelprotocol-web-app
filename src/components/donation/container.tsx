@@ -1,3 +1,4 @@
+import { donor_init } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import { Context } from "./context";
 import { CurrentStep } from "./current-step";
@@ -68,6 +69,7 @@ function init_state({
 
   return {
     ...init,
+    donor: donor_init,
     method: config?.method_ids?.[0] ?? "stripe",
   };
 }
