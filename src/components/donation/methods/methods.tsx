@@ -52,12 +52,7 @@ export function DonateMethods(props: TDonation) {
   const { config, method, ...fvs } = props;
   const method_ids = config?.method_ids;
 
-  const tabs =
-    method_ids?.concat(
-      method_ids.includes("daf") && !method_ids.includes("stripe")
-        ? ["stripe"]
-        : []
-    ) || all_method_ids;
+  const tabs = method_ids ?? all_method_ids;
 
   const tab_idx_found = tabs.findIndex((t) => t === method);
 
