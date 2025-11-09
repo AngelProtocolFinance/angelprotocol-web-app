@@ -7,7 +7,7 @@ import { min_fee_allowance } from "helpers/donation";
 import { href, useNavigate, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
-import type { DonationIntent } from "types/donation-intent";
+import type { DonationIntent, Donor } from "types/donation-intent";
 import { ContinueBtn } from "../../common/continue-btn";
 import { type CryptoDonationDetails, type Init, tip_val } from "../../types";
 import { PayQr } from "./pay-qr";
@@ -15,6 +15,7 @@ import { PayQr } from "./pay-qr";
 type Props = {
   classes?: string;
   fv: CryptoDonationDetails;
+  donor: Donor;
   init: Init;
 };
 
@@ -24,7 +25,7 @@ const fetcher = async (intent: DonationIntent) =>
     body: JSON.stringify(intent),
   }).then<Payment>((res) => res.json());
 
-export function DirectMode({ fv, init, classes = "" }: Props) {
+export function DirectMode({ fv, init, classes = "", donor: d }: Props) {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
@@ -47,10 +48,10 @@ export function DirectMode({ fv, init, classes = "" }: Props) {
     recipient: init.recipient.id,
     source: init.source,
     donor: {
-      title: "",
-      first_name: fv.first_name,
-      last_name: fv.last_name,
-      email: fv.email,
+      title: d.title,
+      first_name: d.first_name,
+      last_name: d.last_name,
+      email: d.email,
     },
   };
 

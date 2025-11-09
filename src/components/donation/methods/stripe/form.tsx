@@ -1,6 +1,6 @@
 import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
-import { Field, Form as FieldSet } from "components/form";
+import { Form as FieldSet } from "components/form";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
 import { ru_vdec } from "helpers/decimal";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import type { ICurrenciesFv } from "types/currency";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
-import { type TMethodState, to_checkout } from "../../types";
+import { type TMethodState, to_step } from "../../types";
 // import { ExpressCheckout } from "./express-checkout";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
@@ -68,7 +68,9 @@ export function Form(props: TMethodState<"stripe">) {
 
   return (
     <FieldSet
-      onSubmit={rhf.handleSubmit((fv) => to_checkout("stripe", fv, don_set))}
+      onSubmit={rhf.handleSubmit((fv) =>
+        to_step("stripe", fv, "donor", don_set)
+      )}
       className="grid gap-y-2"
     >
       <Frequency
@@ -170,44 +172,6 @@ export function Form(props: TMethodState<"stripe">) {
         amount_cents={100}
         currency={rhf.currency.value.code.toLowerCase()}
       /> */}
-
-      <div className="grid mt-2 grid-cols-2 gap-2 content-start">
-        <p className="col-span-full text-sm font-semibold">
-          Payment information
-        </p>
-        <Field
-          {...rhf.register("first_name")}
-          label="First name"
-          placeholder="First Name"
-          required
-          classes={{
-            label: "font-semibold text-base sr-only",
-            input: "py-2",
-          }}
-          error={rhf.errors.first_name?.message}
-        />
-        <Field
-          {...rhf.register("last_name")}
-          label="Last name"
-          placeholder="Last Name"
-          classes={{
-            input: "py-2",
-            label: "font-semibold text-base sr-only",
-          }}
-          error={rhf.errors.last_name?.message}
-        />
-        <Field
-          {...rhf.register("email")}
-          label="Your Email"
-          placeholder="Your Email"
-          classes={{
-            container: "col-span-full",
-            input: "py-2",
-            label: "font-semibold text-base sr-only",
-          }}
-          error={rhf.errors.email?.message}
-        />
-      </div>
 
       <button
         disabled={

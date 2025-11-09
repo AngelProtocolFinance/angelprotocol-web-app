@@ -43,9 +43,6 @@ describe("Stripe form: initial load", () => {
     const currency_selector = screen.getByRole("combobox");
     expect(currency_selector).toHaveDisplayValue(/usd/i);
     expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue("");
-    expect(screen.getByPlaceholderText(/first name/i)).toHaveDisplayValue("");
-    expect(screen.getByPlaceholderText(/last name/i)).toHaveDisplayValue("");
-    expect(screen.getByPlaceholderText(/email/i)).toHaveDisplayValue("");
     //tip enabled by default
     expect(
       screen.getByRole("switch", { name: /support free fundraising tools/i })
@@ -77,9 +74,6 @@ describe("Stripe form: initial load", () => {
       amount: "100",
       currency: mock_usd,
       frequency: "one-time",
-      first_name: "John",
-      last_name: "Doe",
-      email: "john@doe.com",
       cover_processing_fee: true,
       tip: "",
       tip_format: "20",
@@ -92,13 +86,7 @@ describe("Stripe form: initial load", () => {
     expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
       fv.amount
     );
-    expect(screen.getByPlaceholderText(/first name/i)).toHaveDisplayValue(
-      fv.first_name
-    );
-    expect(screen.getByPlaceholderText(/last name/i)).toHaveDisplayValue(
-      fv.last_name
-    );
-    expect(screen.getByPlaceholderText(/email/i)).toHaveDisplayValue(fv.email);
+
     expect(
       screen.getByRole("switch", { name: /support free fundraising tools/i })
     ).toBeChecked();
@@ -172,25 +160,14 @@ describe("Stripe form: initial load", () => {
     await userEvent.type(amount_input, "2");
     expect(screen.queryByText(/less than min/i)).toBeNull();
 
-    //user still needs to fill payment information
-    await userEvent.click(continue_btn);
-    const first_name_input = screen.getByPlaceholderText(/first name/i);
-    expect(first_name_input).toHaveFocus();
-
-    //user fills payment information
-    await userEvent.type(first_name_input, "John");
-    const last_name_input = screen.getByPlaceholderText(/last name/i);
-    await userEvent.type(last_name_input, "Doe");
-    const email_input = screen.getByPlaceholderText(/email/i);
-    await userEvent.type(email_input, "john@doe.com");
-
     //user selects frequency before submitting
     const give_once_radio = screen.getByRole("radio", { name: /give once/i });
     await userEvent.click(give_once_radio);
 
+    //user submits form and moves to donor step
     await userEvent.click(continue_btn);
 
-    //form submitted successfully
+    //form submitted successfully, navigates to donor step
     expect(don_set_mock).toHaveBeenCalledOnce();
     don_set_mock.mockReset();
   });
@@ -221,18 +198,11 @@ describe("Stripe form: initial load", () => {
     const amount_input = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amount_input, "50");
 
-    // user fills in payment information
-    const first_name_input = screen.getByPlaceholderText(/first name/i);
-    await userEvent.type(first_name_input, "John");
-    const last_name_input = screen.getByPlaceholderText(/last name/i);
-    await userEvent.type(last_name_input, "Doe");
-    const email_input = screen.getByPlaceholderText(/email/i);
-    await userEvent.type(email_input, "john@doe.com");
-
-    // user submits form
+    // user submits form and moves to donor step
     const continue_btn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continue_btn);
 
+    //form submitted successfully, navigates to donor step
     expect(don_set_mock).toHaveBeenCalledOnce();
     don_set_mock.mockReset();
   });

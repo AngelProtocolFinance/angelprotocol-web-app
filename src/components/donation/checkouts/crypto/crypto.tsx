@@ -6,7 +6,7 @@ import { Image } from "../../../image";
 import { Summary } from "../../common/summary";
 import { token } from "../../common/token";
 import { use_donation } from "../../context";
-import { type CryptoDonationDetails, back_to_form, tip_val } from "../../types";
+import { type CryptoDonationDetails, tip_val, to_step } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { DirectMode } from "./direct-mode";
 
@@ -22,7 +22,7 @@ export function Crypto(props: CryptoDonationDetails) {
   return (
     <Summary
       classes="grid content-start p-4 @xl/steps:p-8"
-      on_back={() => back_to_form("crypto", props, don_set)}
+      on_back={() => to_step("crypto", props, "donor", don_set)}
       Amount={Amount}
       amount={+t.amount}
       fee_allowance={mfa}
@@ -44,7 +44,7 @@ export function Crypto(props: CryptoDonationDetails) {
         </>
       }
     >
-      <DirectMode fv={props} init={don} classes="mt-4" />
+      <DirectMode donor={don.donor} fv={props} init={don} classes="mt-4" />
       <DonationTerms endowName={don.recipient.name} classes="mt-5" />
     </Summary>
   );

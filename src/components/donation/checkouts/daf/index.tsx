@@ -17,9 +17,9 @@ import { Summary } from "../../common/summary";
 import { use_donation } from "../../context";
 import {
   type DafDonationDetails,
-  back_to_form,
   tip_from_val,
   tip_val,
+  to_step,
 } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { to_platform_values } from "./to-platform-values";
@@ -45,7 +45,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
   return (
     <Summary
       classes="group grid content-start p-4 @xl/steps:p-8 [&_#connectContainer]:mt-8"
-      on_back={() => back_to_form("daf", props, don_set)}
+      on_back={() => to_step("daf", props, "donor", don_set)}
       Amount={currency(usd_option)}
       amount={+props.amount}
       fee_allowance={mfa}

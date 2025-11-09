@@ -11,7 +11,7 @@ import {
   type StocksDonationDetails as FV,
   type TMethodState,
   stocks_donation_details,
-  to_checkout,
+  to_step,
 } from "../../types";
 
 export function Form(props: TMethodState<"stocks">) {
@@ -46,7 +46,7 @@ export function Form(props: TMethodState<"stocks">) {
   return (
     <FormContainer
       className="grid gap-y-2"
-      onSubmit={handleSubmit((fv) => to_checkout("stocks", fv, don_set))}
+      onSubmit={handleSubmit((fv) => to_step("stocks", fv, "donor", don_set))}
     >
       <Field
         required

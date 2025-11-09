@@ -19,7 +19,7 @@ import { TokenField, btn_disp } from "../../../token-field";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
-import { type TMethodState, to_checkout } from "../../types";
+import { type TMethodState, to_step } from "../../types";
 import type { TTokenState } from "./types";
 import { use_rhf } from "./use-rhf";
 
@@ -115,7 +115,7 @@ export function Form(props: TMethodState<"crypto">) {
   return (
     <form
       onSubmit={handleSubmit((x) => {
-        to_checkout("crypto", x, don_set);
+        to_step("crypto", x, "donor", don_set);
         reset();
       })}
       className="flex flex-col gap-y-2 rounded-md min-h-full"
@@ -217,44 +217,6 @@ export function Form(props: TMethodState<"crypto">) {
         checked_changed={(x) => cpf.onChange(x)}
       />
       <MethodBenefits subject="crypto" classes="mt-2" />
-
-      <div className="grid mt-4 mb-2 grid-cols-2 gap-2 content-start">
-        <p className="col-span-full text-sm font-semibold">
-          Payment information
-        </p>
-        <Field
-          {...register("first_name")}
-          label="First name"
-          placeholder="First Name"
-          required
-          classes={{
-            label: "font-semibold text-base sr-only",
-            input: "py-2",
-          }}
-          error={errors.first_name?.message}
-        />
-        <Field
-          {...register("last_name")}
-          label="Last name"
-          placeholder="Last Name"
-          classes={{
-            input: "py-2",
-            label: "font-semibold text-base sr-only",
-          }}
-          error={errors.last_name?.message}
-        />
-        <Field
-          {...register("email")}
-          label="Your Email"
-          placeholder="Your Email"
-          classes={{
-            container: "col-span-full",
-            input: "py-2",
-            label: "font-semibold text-base sr-only",
-          }}
-          error={errors.email?.message}
-        />
-      </div>
 
       <button
         disabled={token_state === "error" || token_state === "loading"}

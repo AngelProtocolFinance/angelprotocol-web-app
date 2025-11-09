@@ -1,5 +1,5 @@
 import { CpfToggle } from "components/donation/common/cpf-toggle";
-import { type TMethodState, to_checkout } from "components/donation/types";
+import { type TMethodState, to_step } from "components/donation/types";
 import { Field, Form as FormContainer } from "components/form";
 import { ru_vdec } from "helpers/decimal";
 import { usd_option } from "../../common/constants";
@@ -15,7 +15,7 @@ export function Form(props: TMethodState<"daf">) {
   return (
     <FormContainer
       disabled={rhf.isSubmitting}
-      onSubmit={rhf.handleSubmit((fv) => to_checkout("daf", fv, don_set))}
+      onSubmit={rhf.handleSubmit((fv) => to_step("daf", fv, "donor", don_set))}
       className="flex flex-col gap-y-2 min-h-full"
     >
       <Field
