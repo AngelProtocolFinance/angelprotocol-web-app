@@ -35,17 +35,19 @@ export const widget_fv = v.object({
   accent_primary: v.optional(str),
   accent_secondary: v.optional(str),
   increments,
+  //
+  req_donor_address: v.optional(v.boolean()),
 });
 
 export interface IWidgetFv extends v.InferInput<typeof widget_fv> {}
 
-const toBool = v.pipe(
+const bool_str = v.pipe(
   v.picklist(["true", "false"] as const),
   v.transform((x) => x === "true")
 );
 
 export const widget_search = v.object({
-  isDescriptionTextShown: v.optional(toBool),
+  isDescriptionTextShown: v.optional(bool_str),
 
   // v2.3 params //
   methods: v.optional(
@@ -57,7 +59,7 @@ export const widget_search = v.object({
   ),
   title: v.optional(title),
   description: v.optional(description),
-  isTitleShown: v.optional(toBool),
+  isTitleShown: v.optional(bool_str),
   accentPrimary: v.optional(v.pipe(str, v.hexColor())),
   accentSecondary: v.optional(v.pipe(str, v.hexColor())),
   programId: v.optional(v.pipe(str, v.uuid())),
@@ -78,6 +80,7 @@ export const widget_search = v.object({
       v.everyItem((x) => v.safeParse(increment_label, x).success)
     )
   ),
+  req_donor_address: v.optional(bool_str),
 });
 
 export interface IWidgetSearch extends v.InferInput<typeof widget_search> {}

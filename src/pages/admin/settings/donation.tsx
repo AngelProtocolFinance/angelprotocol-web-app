@@ -16,6 +16,7 @@ const schema = v.object({
     )
   ),
   hide_bg_tip: v.boolean(),
+  donor_address_required: v.boolean(),
 });
 
 type FV = v.InferInput<typeof schema>;
@@ -23,9 +24,14 @@ type FV = v.InferInput<typeof schema>;
 interface Props {
   receiptMsg: string;
   hide_bg_tip: boolean;
+  donor_address_required: boolean;
 }
 
-export function DonationTab({ receiptMsg, hide_bg_tip }: Props) {
+export function DonationTab({
+  receiptMsg,
+  hide_bg_tip,
+  donor_address_required,
+}: Props) {
   const fetcher = useFetcher<ActionData>();
   use_action_result(fetcher.data);
 
@@ -40,6 +46,7 @@ export function DonationTab({ receiptMsg, hide_bg_tip }: Props) {
     values: {
       receiptMsg: receiptMsg ?? "",
       hide_bg_tip: hide_bg_tip ?? false,
+      donor_address_required: donor_address_required ?? false,
     },
   });
 
@@ -105,6 +112,10 @@ export function DonationTab({ receiptMsg, hide_bg_tip }: Props) {
           apply a fixed 1.5% fee to any donation amount you receive.
         </span>
       </div>
+
+      <CheckField {...register("donor_address_required")} classes="font-medium">
+        Require donor address
+      </CheckField>
 
       <div className="flex gap-3 mt-8">
         <button

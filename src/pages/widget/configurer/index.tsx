@@ -139,7 +139,7 @@ export function Configurer({ classes = "", fv, set_fv, endow, endows }: Props) {
             type="color"
             {...register("accent_primary")}
           />
-          <label htmlFor="__accent-prim"> Accent primary</label>
+          <label htmlFor="__accent-prim">Accent primary</label>
         </div>
         <div className="flex items-center gap-2 mt-3">
           <input

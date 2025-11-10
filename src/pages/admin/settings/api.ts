@@ -18,6 +18,7 @@ const fields: EndowmentSettingsAttributes[] = [
   "target",
   "increments",
   "fund_opt_in",
+  "donor_address_required",
 ];
 export const loader = async (x: Route.LoaderArgs) => {
   const adm = await admin_checks(x);

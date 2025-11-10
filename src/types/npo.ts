@@ -43,6 +43,7 @@ export type EndowmentSettingsAttributes = keyof Pick<
   | "increments"
   | "fund_opt_in"
   | "target"
+  | "donor_address_required"
 >;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..

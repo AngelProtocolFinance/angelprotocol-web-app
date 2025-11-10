@@ -21,13 +21,13 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
   const { don, don_set } = use_donation();
   const {
     handleSubmit,
-    resetField,
     register,
     control,
     formState: { errors },
   } = useForm<FV>({
     resolver: valibotResolver(donor),
     values: value,
+    criteriaMode: "all",
   });
 
   const { field: country } = useController<FV, "address.country">({

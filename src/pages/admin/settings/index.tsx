@@ -42,6 +42,7 @@ function Page({ loaderData: endow }: Route.ComponentProps) {
           <TabPanel>
             <DonationTab
               receiptMsg={endow.receiptMsg ?? ""}
+              donor_address_required={endow.donor_address_required ?? false}
               hide_bg_tip={endow.hide_bg_tip ?? false}
             />
           </TabPanel>
