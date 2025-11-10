@@ -58,7 +58,7 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
         }
       />
 
-      <p className="font-bold">Payment information</p>
+      <p className="font-semibold text-[15px]">Payment information</p>
 
       <Field
         label="Your email"
