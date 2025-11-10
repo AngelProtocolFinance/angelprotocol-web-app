@@ -3,7 +3,7 @@ import {
   donor_title,
   frequency,
 } from "@better-giving/donation/schema";
-import { $int_gte1, $req } from "@better-giving/schemas";
+import { $, $int_gte1, $req } from "@better-giving/schemas";
 
 export {
   donation_source,
@@ -16,21 +16,38 @@ import * as v from "valibot";
 
 export const str = v.pipe(v.string(), v.trim());
 
-export const donor_address = v.object({
+const donor_address_raw = v.object({
   street: $req,
   city: $req,
-  state: v.optional($req),
+  state: $,
   zip_code: $req,
   /** country name */
   country: $req,
   uk_gift_aid: v.optional(v.boolean()),
 });
+export const donor_address = v.pipe(
+  donor_address_raw,
+  v.forward(
+    v.partialCheck(
+      [["country"], ["state"]],
+      ({ country: c, state: s }) => {
+        if (/united states/i.test(c)) {
+          return s.trim().length > 0;
+        }
+        return true;
+      },
+      "required"
+    ),
+    ["state"]
+  )
+);
 
-export type DonorAddress = v.InferOutput<typeof donor_address>;
+export type DonorAddress = v.InferOutput<typeof donor_address_raw>;
 
 export const donor_address_init: DonorAddress = {
   street: "",
   city: "",
+  state: "",
   zip_code: "",
   country: "",
 };
@@ -53,14 +70,10 @@ export const donor_msg_to_npo = v.pipe(
 );
 export const donor = v.object({
   title: donor_title,
-  first_name: v.pipe(str, v.nonEmpty("Please enter your first name")),
+  first_name: $req,
   company_name: v.optional(str),
-  last_name: v.pipe(str, v.nonEmpty("Please enter your last name")),
-  email: v.pipe(
-    str,
-    v.nonEmpty("Please enter your email"),
-    v.email("Please check your email for correctness")
-  ),
+  last_name: $req,
+  email: v.pipe($req, v.email("Please check your email for correctness")),
   address: v.optional(donor_address),
 });
 

@@ -49,10 +49,12 @@ describe("payment method form state persistence", () => {
     const email_input = await screen.findByPlaceholderText(/john@doe\.com/i);
     await userEvent.type(email_input, "john@doe.com");
 
-    const first_name_input = screen.getByPlaceholderText("First name");
+    const first_name_input = screen.getByRole("textbox", {
+      name: /first name/i,
+    });
     await userEvent.type(first_name_input, "John");
 
-    const last_name_input = screen.getByPlaceholderText("Last name");
+    const last_name_input = screen.getByRole("textbox", { name: /last name/i });
     await userEvent.type(last_name_input, "Doe");
 
     // Continue to checkout
@@ -74,10 +76,12 @@ describe("payment method form state persistence", () => {
     expect(
       await screen.findByPlaceholderText(/john@doe\.com/i)
     ).toHaveDisplayValue("john@doe.com");
-    expect(screen.getByPlaceholderText("First name")).toHaveDisplayValue(
-      "John"
-    );
-    expect(screen.getByPlaceholderText("Last name")).toHaveDisplayValue("Doe");
+    expect(
+      screen.getByRole("textbox", { name: /first name/i })
+    ).toHaveDisplayValue("John");
+    expect(
+      screen.getByRole("textbox", { name: /last name/i })
+    ).toHaveDisplayValue("Doe");
 
     // Go back to form
     const back_btn2 = screen.getByRole("button", { name: /go back/i });
@@ -120,10 +124,12 @@ describe("payment method form state persistence", () => {
     const email_input = await screen.findByPlaceholderText(/john@doe\.com/i);
     await userEvent.type(email_input, "jane@example.com");
 
-    const first_name_input = screen.getByPlaceholderText("First name");
+    const first_name_input = screen.getByRole("textbox", {
+      name: /first name/i,
+    });
     await userEvent.type(first_name_input, "Jane");
 
-    const last_name_input = screen.getByPlaceholderText("Last name");
+    const last_name_input = screen.getByRole("textbox", { name: /last name/i });
     await userEvent.type(last_name_input, "Smith");
 
     // Continue to checkout
@@ -144,12 +150,12 @@ describe("payment method form state persistence", () => {
     expect(
       await screen.findByPlaceholderText(/john@doe\.com/i)
     ).toHaveDisplayValue("jane@example.com");
-    expect(screen.getByPlaceholderText("First name")).toHaveDisplayValue(
-      "Jane"
-    );
-    expect(screen.getByPlaceholderText("Last name")).toHaveDisplayValue(
-      "Smith"
-    );
+    expect(
+      screen.getByRole("textbox", { name: /first name/i })
+    ).toHaveDisplayValue("Jane");
+    expect(
+      screen.getByRole("textbox", { name: /last name/i })
+    ).toHaveDisplayValue("Smith");
 
     // Go back to form
     const back_btn2 = screen.getByRole("button", { name: /go back/i });
@@ -196,10 +202,12 @@ describe("payment method form state persistence", () => {
     const email_input = await screen.findByPlaceholderText(/john@doe\.com/i);
     await userEvent.type(email_input, "bob@example.com");
 
-    const first_name_input = screen.getByPlaceholderText("First name");
+    const first_name_input = screen.getByRole("textbox", {
+      name: /first name/i,
+    });
     await userEvent.type(first_name_input, "Bob");
 
-    const last_name_input = screen.getByPlaceholderText("Last name");
+    const last_name_input = screen.getByRole("textbox", { name: /last name/i });
     await userEvent.type(last_name_input, "Wilson");
 
     // Continue to checkout
@@ -220,10 +228,12 @@ describe("payment method form state persistence", () => {
     expect(
       await screen.findByPlaceholderText(/john@doe\.com/i)
     ).toHaveDisplayValue("bob@example.com");
-    expect(screen.getByPlaceholderText("First name")).toHaveDisplayValue("Bob");
-    expect(screen.getByPlaceholderText("Last name")).toHaveDisplayValue(
-      "Wilson"
-    );
+    expect(
+      screen.getByRole("textbox", { name: /first name/i })
+    ).toHaveDisplayValue("Bob");
+    expect(
+      screen.getByRole("textbox", { name: /last name/i })
+    ).toHaveDisplayValue("Wilson");
 
     // Go back to form
     const back_btn2 = screen.getByRole("button", { name: /go back/i });
@@ -273,10 +283,12 @@ describe("payment method form state persistence", () => {
     const email_input = await screen.findByPlaceholderText(/john@doe\.com/i);
     await userEvent.type(email_input, "alice@example.com");
 
-    const first_name_input = screen.getByPlaceholderText("First name");
+    const first_name_input = screen.getByRole("textbox", {
+      name: /first name/i,
+    });
     await userEvent.type(first_name_input, "Alice");
 
-    const last_name_input = screen.getByPlaceholderText("Last name");
+    const last_name_input = screen.getByRole("textbox", { name: /last name/i });
     await userEvent.type(last_name_input, "Smith");
 
     // Submit to checkout to persist state in context
@@ -385,10 +397,12 @@ describe("payment method form state persistence", () => {
     const email_input = await screen.findByPlaceholderText(/john@doe\.com/i);
     await userEvent.type(email_input, "bob@example.com");
 
-    const first_name_input = screen.getByPlaceholderText("First name");
+    const first_name_input = screen.getByRole("textbox", {
+      name: /first name/i,
+    });
     await userEvent.type(first_name_input, "Bob");
 
-    const last_name_input = screen.getByPlaceholderText("Last name");
+    const last_name_input = screen.getByRole("textbox", { name: /last name/i });
     await userEvent.type(last_name_input, "Johnson");
 
     const continue_btn2 = screen.getByRole("button", { name: /continue/i });

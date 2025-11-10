@@ -1,6 +1,8 @@
+import { ComboboxInput, Fieldset, Label, Legend } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Combo } from "components/combo";
+import { Combo, ComboInline } from "components/combo";
 import { Field } from "components/form";
+import { Field2, Input2 } from "components/form/field-2";
 import { DrawerIcon } from "components/icon";
 import { Select } from "components/selector";
 import { countries, country_names } from "constants/countries";
@@ -25,13 +27,19 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
     register,
     control,
     formState: { errors },
-  } = useForm<FV>({ resolver: valibotResolver(donor), values: value });
+  } = useForm<FV>({
+    resolver: valibotResolver(donor),
+    values: value,
+  });
 
   const { field: country } = useController<FV, "address.country">({
     control,
     name: "address.country",
   });
-  const { field: us_state } = useController<FV, "address.state">({
+
+  const is_US = /united states/i.test(country.value);
+
+  const { field: state } = useController<FV, "address.state">({
     control,
     name: "address.state",
   });
@@ -39,7 +47,7 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
   return (
     <form
       onSubmit={handleSubmit((x) => on_change(x), console.error)}
-      className={`flex flex-col p-4 @xl/steps:p-8 gap-2 content-start ${classes}`}
+      className={`flex flex-col p-4 @xl/steps:p-8 gap-4 content-start ${classes}`}
     >
       <BackBtn
         className=""
@@ -52,111 +60,89 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
         }
       />
 
-      <p className="col-span-full font-semibold mb-2">Payment information</p>
+      <p className="font-bold">Payment information</p>
 
       <Field
-        required
-        {...register("email")}
         label="Your email"
+        required
         placeholder="e.g. john@doe.com"
-        classes={{ container: "col-span-full mb-1", label: "font-semibold" }}
+        {...register("email")}
         error={errors.email?.message}
+        classes={{ label: "font-semibold" }}
+        sub="We'll send your donation receipt to this email."
       />
-      <div className="flex items-center justify-between gap-x-4">
-        <Field
-          {...register("first_name")}
-          label="Your name"
-          placeholder="First name"
+
+      <Fieldset className="grid grid-cols-2 group gap-4">
+        <Legend className="col-span-full text-sm font-semibold -mb-1">
+          Your name{" "}
+          <span className="block text-sm text-gray font-normal">
+            as would appear in your tax receipt and donation record.
+          </span>
+        </Legend>
+        <Field2
           required
-          classes={{ label: "font-semibold", container: "flex-1" }}
+          label="First name"
+          input={<Input2 {...register("first_name")} />}
           error={errors.first_name?.message}
         />
-        <Field
-          {...register("last_name")}
+        <Field2
+          required
           label="Last name"
-          placeholder="Last name"
-          classes={{ label: "invisible", container: "flex-1" }}
+          input={<Input2 {...register("last_name")} />}
           error={errors.last_name?.message}
         />
-      </div>
+      </Fieldset>
 
       {don.recipient.donor_address_required && (
-        <div>
-          <Field
-            {...register("address.street")}
-            label="Address"
-            placeholder="e.g. Street Rd 9920"
+        <Fieldset className="grid gap-4 mt-2">
+          <Legend className="font-semibold text-sm -mb-2">Your address</Legend>
+          <Field2
             required
+            classes="mt-2"
+            label="Street"
+            input={<Input2 {...register("address.street")} />}
             error={errors.address?.street?.message}
           />
-          <Field
-            {...register("address.city")}
-            label="City"
-            placeholder="e.g. London"
+          <Field2
             required
+            label="City"
+            input={<Input2 {...register("address.city")} />}
             error={errors.address?.city?.message}
           />
-          <Field
-            {...register("address.zip_code")}
-            label="Zip code"
-            placeholder="e.g. 1080"
+          <Field2
             required
+            label="Zip code"
+            input={<Input2 {...register("address.zip_code")} />}
             error={errors.address?.zip_code?.message}
           />
 
-          <Combo
+          <ComboInline
             label="Country"
             required
             ref={country.ref}
             // may be undefined as country is nested optional
             value={country.value ?? ""}
-            onChange={country.onChange}
-            placeholder="Select a country"
-            options={country_names}
-            onReset={() => resetField("address.state")}
-            error={errors.address?.country?.message}
-            classes={{ input: "pl-12" }}
-            option_disp={(c) => (
-              <>
-                <span className="text-2xl">{countries[c].flag}</span>
-                <span>{c}</span>
-              </>
-            )}
-            btn_disp={(c, open) => {
-              const flag = countries[c]?.flag;
-              return flag ? (
-                <span data-flag className="text-2xl">
-                  {flag}
-                </span>
-              ) : (
-                <DrawerIcon
-                  is_open={open}
-                  size={20}
-                  className="justify-self-end dark:text-gray shrink-0"
-                />
-              );
+            on_change={(x) => {
+              country.onChange(x);
+              state.onChange("");
             }}
+            options={country_names}
+            error={errors.address?.country?.message}
+            option_disp={(c) => <span>{c}</span>}
           />
-          {/united states/i.test(country.value) ? (
-            <Select
-              required={false}
-              label="State"
-              onChange={us_state.onChange}
-              value={us_state.value}
-              options={states}
-              classes={{ options: "text-sm" }}
-              option_disp={(s) => s}
-            />
-          ) : (
-            <Field
-              {...register("address.state", { shouldUnregister: true })}
-              label="State"
-              required={false}
-              placeholder="e.g. England"
-              error={errors.address?.state?.message}
-            />
-          )}
-        </div>
+          <ComboInline
+            label="State"
+            required={is_US}
+            ref={state.ref}
+            // may be undefined as country is nested optional
+            value={state.value ?? ""}
+            on_change={state.onChange}
+            options={is_US ? states : []}
+            allow_custom={!is_US}
+            error={errors.address?.state?.message}
+            option_disp={(c) => <span>{c}</span>}
+          />
+        </Fieldset>
       )}
       <button
         className="btn btn-blue text-sm enabled:bg-(--accent-primary) col-span-full mt-auto"
