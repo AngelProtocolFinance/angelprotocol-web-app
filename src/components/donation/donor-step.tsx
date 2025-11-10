@@ -1,11 +1,9 @@
-import { ComboboxInput, Fieldset, Label, Legend } from "@headlessui/react";
+import { Fieldset, Legend } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { Combo, ComboInline } from "components/combo";
+import { ComboInline } from "components/combo";
 import { Field } from "components/form";
 import { Field2, Input2 } from "components/form/field-2";
-import { DrawerIcon } from "components/icon";
-import { Select } from "components/selector";
-import { countries, country_names } from "constants/countries";
+import { country_names } from "constants/countries";
 import { states } from "constants/us-states";
 import { useController, useForm } from "react-hook-form";
 import { type Donor as FV, donor } from "types/donation-intent";
@@ -145,7 +143,7 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
         </Fieldset>
       )}
       <button
-        className="btn btn-blue text-sm enabled:bg-(--accent-primary) col-span-full mt-auto"
+        className="mt-auto btn btn-blue text-sm enabled:bg-(--accent-primary) col-span-full"
         type="submit"
       >
         Continue

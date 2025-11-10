@@ -71,7 +71,7 @@ export function Form(props: TMethodState<"stripe">) {
       onSubmit={rhf.handleSubmit((fv) =>
         to_step("stripe", fv, "donor", don_set)
       )}
-      className="grid gap-y-2"
+      className="flex flex-col h-full gap-y-2"
     >
       <Frequency
         value={rhf.frequency.value}
@@ -177,7 +177,7 @@ export function Form(props: TMethodState<"stripe">) {
         disabled={
           currency.isLoading || currency.isValidating || !!currency.error
         }
-        className="mt-2 btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        className="mt-auto btn btn-blue text-sm enabled:bg-(--accent-primary)"
         type="submit"
       >
         Continue
