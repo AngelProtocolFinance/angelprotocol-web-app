@@ -1,6 +1,7 @@
 import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
 import { Form as FieldSet } from "components/form";
+import { type IPrompt, Prompt } from "components/prompt";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
 import { ru_vdec } from "helpers/decimal";
 import { useState } from "react";
@@ -17,6 +18,7 @@ import { use_rhf } from "./use-rhf";
 
 export function Form(props: TMethodState<"stripe">) {
   const [token_q, set_token_q] = useState("");
+  const [prompt, set_prompt] = useState<IPrompt>();
   const { don_set, don } = use_donation();
   const rhf = use_rhf(props.fv, don.recipient.hide_bg_tip ?? false);
 
@@ -166,19 +168,28 @@ export function Form(props: TMethodState<"stripe">) {
         checked={rhf.cpf.value}
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
-
-      {rhf.amnt_express && (
-        <ExpressCheckout classes="mt-4" {...rhf.amnt_express} />
+      {rhf.express && !prompt && (
+        <ExpressCheckout
+          on_error={(msg) =>
+            set_prompt({ type: "error", children: <p>{msg}</p> })
+          }
+          classes="mt-4"
+          {...rhf.express}
+        />
       )}
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
 
       <button
         disabled={
           currency.isLoading || currency.isValidating || !!currency.error
         }
-        className="mt-auto btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        className="mt-auto font-medium normal-case rounded py-2 btn-blue enabled:bg-(--accent-primary)"
         type="submit"
       >
-        Continue
+        Continue with{" "}
+        <span className="text-xs font-semibold bg-white/20 p-2 rounded inline-block">
+          Card/Bank
+        </span>
       </button>
     </FieldSet>
   );

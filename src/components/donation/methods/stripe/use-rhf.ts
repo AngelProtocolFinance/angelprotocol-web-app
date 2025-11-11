@@ -17,31 +17,34 @@ import {
 
 export interface ILineItem {
   name: string;
-  amount: number;
-  amount_usd: number;
+  amount_atomic: number;
 }
-export interface IAmntExpress {
+export interface IExpress {
   /** may be empty */
   frequency: TFrequency;
   total_usd: number;
   total_atomic: number;
   /** includes tip and fee_allowance */
   total: number;
+  tip: number;
+  fee_allowance: number;
   items: ILineItem[];
   currency: string;
   is_partial: boolean;
 }
 
 /** render  */
-export const amnt_express_partial = (
+export const express_partial = (
   currency: string,
   unit_per_usd: number,
   frequency: TFrequency
-): IAmntExpress => {
+): IExpress => {
   return {
     frequency,
     is_partial: true,
     total_usd: 1,
+    tip: 0,
+    fee_allowance: 0,
     total_atomic: to_atomic(unit_per_usd, currency),
     total: unit_per_usd,
     items: [],
@@ -53,7 +56,7 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
   const initial: FV = {
     amount: "",
     currency: usd_option,
-    frequency: "" as FV["frequency"],
+    frequency: "one-time",
     tip: "",
     cover_processing_fee: false,
     tip_format: hide_bg_tip ? "none" : "15",
@@ -108,35 +111,31 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
   const tip = watch("tip");
   const amnt = watch("amount");
 
-  const amnt_express = ((...x): IAmntExpress | null => {
+  const express = ((...x): IExpress | null => {
     const [a, c, pf, tf, f] = x;
 
     if (!c.code) return null;
 
     const ap = safeParse(amount_schema({ required: true }), a);
-    if (ap.issues) return amnt_express_partial(c.code, c.rate, f);
+    if (ap.issues) return express_partial(c.code, c.rate, f);
 
     const amnt = +ap.output;
-    if (amnt < c.min) return amnt_express_partial(c.code, c.rate, f);
+    if (amnt < c.min) return express_partial(c.code, c.rate, f);
 
     const items: ILineItem[] = [
       {
-        name: "Amount",
-        amount: amnt,
-        amount_usd: amnt / c.rate,
+        name: "Donation",
+        amount_atomic: to_atomic(amnt, c.code),
       },
     ];
 
     const tipv = tip_val(tf, tip, amnt);
     if (tipv) {
       items.push({
-        name: "Tip",
-        amount: tipv,
-        amount_usd: tipv / c.rate,
+        name: "Donation to Better Giving",
+        amount_atomic: to_atomic(tipv, c.code),
       });
     }
-
-    // const tipv_usd = tipv / c.rate;
 
     const mfa = pf
       ? min_fee_allowance(
@@ -148,18 +147,22 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
 
     if (mfa) {
       items.push({
-        name: "fee coverage",
-        amount: mfa,
-        amount_usd: mfa / c.rate,
+        name: "Fee coverage",
+        amount_atomic: to_atomic(mfa, c.code),
       });
     }
 
     const total = amnt + tipv + mfa;
     const total_usd = total / c.rate;
-    const total_atomic = to_atomic(total, c.code);
+    /** total_atomic should match line items */
+    const total_atomic = items
+      .map((x) => x.amount_atomic)
+      .reduce((a, b) => a + b, 0);
 
     return {
       frequency: f,
+      tip: tipv,
+      fee_allowance: mfa,
       is_partial: false,
       total_usd,
       total_atomic,
@@ -169,13 +172,12 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
     };
   })(amnt, currency.value, cpf.value, tip_format.value, frequency.value);
 
-  console.log(amnt_express);
   return {
     frequency,
     currency,
     amount,
     on_increment,
-    amnt_express,
+    express,
     register,
     handleSubmit,
     setValue,
@@ -185,5 +187,6 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
     getValues,
     cpf,
     tip,
+    trigger,
   };
 }

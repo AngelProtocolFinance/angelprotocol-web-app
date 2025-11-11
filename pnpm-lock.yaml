@@ -135,11 +135,11 @@ importers:
         specifier: 8.47.0
         version: 8.47.0(react@18.2.0)
       '@stripe/react-stripe-js':
-        specifier: 3.1.1
-        version: 3.1.1(@stripe/stripe-js@5.3.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@stripe/stripe-js':
         specifier: 5.3.0
-        version: 5.3.0
+        version: 5.3.0(@stripe/stripe-js@8.4.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@stripe/stripe-js':
+        specifier: 8.4.0
+        version: 8.4.0
       '@tailwindcss/vite':
         specifier: 4.1.13
         version: 4.1.13(vite@6.3.3(@types/node@22.15.21)(jiti@2.6.1)(lightningcss@1.30.1))
@@ -1947,15 +1947,15 @@ packages:
     resolution: {integrity: sha512-IHk53BVw6MPMi2Gsn+hCng8rFA3ZmR3Rk7GllxDUW9qFJl/hiSvskn7XldkECapQVkIg/1dHpMAxI9xSTaLLSA==}
     engines: {node: '>=14.0.0'}
 
-  '@stripe/react-stripe-js@3.1.1':
-    resolution: {integrity: sha512-+JzYFgUivVD7koqYV7LmLlt9edDMAwKH7XhZAHFQMo7NeRC+6D2JmQGzp9tygWerzwttwFLlExGp4rAOvD6l9g==}
+  '@stripe/react-stripe-js@5.3.0':
+    resolution: {integrity: sha512-q9Wl6JKg9JUU9zRcQyx4rkKauiM4Il+/ohJemQkLa4SsFEvcXVzX9X89cRLiaAEiNOaJ/2EQML+aWNSHc0EXBw==}
     peerDependencies:
-      '@stripe/stripe-js': ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+      '@stripe/stripe-js': '>=8.0.0 <9.0.0'
       react: '>=16.8.0 <20.0.0'
       react-dom: '>=16.8.0 <20.0.0'
 
-  '@stripe/stripe-js@5.3.0':
-    resolution: {integrity: sha512-lNCZwCak1Yk0x2ecQO+4kcV7MwxAXapfgmLEh5SIoczc/r4GWAmcfyXZu3AAle+MAVW9HBe6f7tywuxJtYomcg==}
+  '@stripe/stripe-js@8.4.0':
+    resolution: {integrity: sha512-3LYVbK3Yg6NTGq3xB8jHSZF8VhoVjb3qJSAorzh2yuva/g4FMRmdQq68euk4hqaq2nRJHkr6x+Id473roUky1w==}
     engines: {node: '>=12.16'}
 
   '@swc/helpers@0.5.17':
@@ -6230,14 +6230,14 @@ snapshots:
       '@smithy/types': 2.12.0
       tslib: 2.8.1
 
-  '@stripe/react-stripe-js@3.1.1(@stripe/stripe-js@5.3.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@stripe/react-stripe-js@5.3.0(@stripe/stripe-js@8.4.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@stripe/stripe-js': 5.3.0
+      '@stripe/stripe-js': 8.4.0
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  '@stripe/stripe-js@5.3.0': {}
+  '@stripe/stripe-js@8.4.0': {}
 
   '@swc/helpers@0.5.17':
     dependencies:

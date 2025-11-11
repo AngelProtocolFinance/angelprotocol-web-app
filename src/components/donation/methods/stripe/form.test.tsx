@@ -33,11 +33,11 @@ describe("Stripe form: initial load", () => {
 
     render(<Form step="form" type="stripe" />);
 
-    // frequency selector must not be selected initially
+    // frequency selector defaults to one-time
     expect(
       screen.getByRole("radio", { name: /give monthly/i })
     ).not.toBeChecked();
-    expect(screen.getByRole("radio", { name: /give once/i })).not.toBeChecked();
+    expect(screen.getByRole("radio", { name: /give once/i })).toBeChecked();
 
     // currency selector loads at the beginning with USD default
     const currency_selector = screen.getByRole("combobox");
@@ -160,10 +160,6 @@ describe("Stripe form: initial load", () => {
     await userEvent.type(amount_input, "2");
     expect(screen.queryByText(/less than min/i)).toBeNull();
 
-    //user selects frequency before submitting
-    const give_once_radio = screen.getByRole("radio", { name: /give once/i });
-    await userEvent.click(give_once_radio);
-
     //user submits form and moves to donor step
     await userEvent.click(continue_btn);
 
@@ -183,15 +179,11 @@ describe("Stripe form: initial load", () => {
 
     render(<Form type="stripe" step="form" />);
 
-    // verify frequency is not selected initially
+    // verify frequency defaults to one-time
+    const give_once_radio = screen.getByRole("radio", { name: /give once/i });
     expect(
       screen.getByRole("radio", { name: /give monthly/i })
     ).not.toBeChecked();
-    expect(screen.getByRole("radio", { name: /give once/i })).not.toBeChecked();
-
-    // user selects frequency
-    const give_once_radio = screen.getByRole("radio", { name: /give once/i });
-    await userEvent.click(give_once_radio);
     expect(give_once_radio).toBeChecked();
 
     // user fills in amount
