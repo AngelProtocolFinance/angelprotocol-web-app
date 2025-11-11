@@ -29,6 +29,7 @@ export function ExpressCheckout({
         onConfirm={(x) => {
           console.log(x);
         }}
+        options={{ layout: { overflow: "never" } }}
       />
     </Elements>
   );
