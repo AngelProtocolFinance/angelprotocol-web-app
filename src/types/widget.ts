@@ -35,8 +35,6 @@ export const widget_fv = v.object({
   accent_primary: v.optional(str),
   accent_secondary: v.optional(str),
   increments,
-  //
-  req_donor_address: v.optional(v.boolean()),
 });
 
 export interface IWidgetFv extends v.InferInput<typeof widget_fv> {}
@@ -80,7 +78,6 @@ export const widget_search = v.object({
       v.everyItem((x) => v.safeParse(increment_label, x).success)
     )
   ),
-  req_donor_address: v.optional(bool_str),
 });
 
 export interface IWidgetSearch extends v.InferInput<typeof widget_search> {}

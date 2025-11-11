@@ -11,14 +11,14 @@ import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
 import { type TMethodState, to_step } from "../../types";
-// import { ExpressCheckout } from "./express-checkout";
+import { ExpressCheckout } from "./express-checkout";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: TMethodState<"stripe">) {
   const [token_q, set_token_q] = useState("");
   const { don_set, don } = use_donation();
-  const rhf = use_rhf(props.fv, don.user, don.recipient.hide_bg_tip ?? false);
+  const rhf = use_rhf(props.fv, don.recipient.hide_bg_tip ?? false);
 
   const currency = use_swr(
     href("/api/currencies"),
@@ -162,16 +162,14 @@ export function Form(props: TMethodState<"stripe">) {
       )}
 
       <CpfToggle
-        classes="mt-1"
+        classes="mt-1 mb-4"
         checked={rhf.cpf.value}
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
 
-      {/* <ExpressCheckout
-        classes="mt-4 "
-        amount_cents={100}
-        currency={rhf.currency.value.code.toLowerCase()}
-      /> */}
+      {rhf.amnt_express && (
+        <ExpressCheckout classes="mt-4" {...rhf.amnt_express} />
+      )}
 
       <button
         disabled={
