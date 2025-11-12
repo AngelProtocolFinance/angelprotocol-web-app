@@ -25,7 +25,7 @@ const fetcher = async (intent: DonationIntent) =>
     body: JSON.stringify(intent),
   }).then<Payment>((res) => res.json());
 
-export function DirectMode({ fv, init, classes = "", donor: d }: Props) {
+export function DirectMode({ fv, init, classes = "", donor }: Props) {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
@@ -47,12 +47,7 @@ export function DirectMode({ fv, init, classes = "", donor: d }: Props) {
     via_name: chains[fv.token.network].name,
     recipient: init.recipient.id,
     source: init.source,
-    donor: {
-      title: d.title,
-      first_name: d.first_name,
-      last_name: d.last_name,
-      email: d.email,
-    },
+    donor,
   };
 
   if (init.program) intent.program = init.program;
