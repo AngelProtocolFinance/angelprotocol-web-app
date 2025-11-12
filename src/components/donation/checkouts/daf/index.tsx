@@ -10,8 +10,6 @@ import { useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { href, useNavigate } from "react-router";
 import type { DonationIntent } from "types/donation-intent";
-import { donor_address } from "types/donation-intent";
-import { safeParse } from "valibot";
 import { currency } from "../../common/currency";
 import { Summary } from "../../common/summary";
 import { use_donation } from "../../context";
@@ -81,11 +79,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
                 isDismissable: false,
               });
 
-              const {
-                grantIntent,
-                workflowSessionId,
-                user: grantor,
-              } = ev.detail;
+              const { grantIntent, workflowSessionId } = ev.detail;
               const meta: GrantMetadata = grantIntent.metadata;
               /** user may input amount different from our donate form */
               const grant_amount: number = grantIntent.amount / 100;
@@ -103,34 +97,17 @@ export function ChariotCheckout(props: DafDonationDetails) {
                 },
               }));
 
-              const { postalCode, line1, line2, city, state } = grantor.address;
-
-              const addr = safeParse(donor_address, {
-                street: [line1, line2].filter(Boolean).join(", "),
-                city,
-                state,
-                country: "n/a",
-                zip_code: postalCode,
-              });
-
               const intent: DonationIntent = {
                 frequency: "one-time",
                 via_id: workflowSessionId,
                 via_name: "",
                 amount: { currency: usd_option.code, ...adj },
-                recipient: state.init.recipient.id,
-                donor: {
-                  title: "",
-                  email: grantor.email,
-                  first_name: grantor.firstName,
-                  last_name: grantor.lastName,
-                  company_name: "",
-                  address: addr.issues ? undefined : addr.output,
-                },
-                source: state.init.source,
+                recipient: don.recipient.id,
+                donor: don.donor,
+                source: don.source,
               };
 
-              if (state.init.program) intent.program = state.init.program;
+              if (don.program) intent.program = don.program;
 
               set_grant_state("pending");
               const res = await fetch("/api/donation-intents/chariot", {
@@ -143,7 +120,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
               set_prompt(undefined);
 
               const to =
-                state.init.source === "bg-widget"
+                don.source === "bg-widget"
                   ? href("/donate-widget/donations/:id", { id })
                   : href("/donations/:id", { id });
 
