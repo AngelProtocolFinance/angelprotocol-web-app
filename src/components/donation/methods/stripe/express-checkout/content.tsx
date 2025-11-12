@@ -114,6 +114,10 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       onClick={on_click}
       options={{
         layout: { overflow: "never" },
+        buttonTheme: {
+          googlePay: "white",
+          applePay: "white",
+        },
         emailRequired: true,
         billingAddressRequired: true,
       }}
