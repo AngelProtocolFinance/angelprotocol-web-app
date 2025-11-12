@@ -211,7 +211,11 @@ export function Form(props: TMethodState<"crypto">) {
         />
       )}
 
-      <CpfToggle checked={cpf.value} checked_changed={(x) => cpf.onChange(x)} />
+      <CpfToggle
+        classes="mt-1"
+        checked={cpf.value}
+        checked_changed={(x) => cpf.onChange(x)}
+      />
       <MethodBenefits subject="crypto" classes="mt-2" />
 
       <div className="grid mt-4 mb-2 grid-cols-2 gap-2 content-start">

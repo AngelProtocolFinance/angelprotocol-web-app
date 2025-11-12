@@ -160,7 +160,7 @@ export function Form(props: TMethodState<"stripe">) {
       )}
 
       <CpfToggle
-        classes=""
+        classes="mt-1"
         checked={rhf.cpf.value}
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
