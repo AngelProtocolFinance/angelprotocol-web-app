@@ -186,10 +186,7 @@ export function Form(props: TMethodState<"stripe">) {
         className="mt-auto font-medium normal-case rounded py-2 btn-blue enabled:bg-(--accent-primary)"
         type="submit"
       >
-        Continue with{" "}
-        <span className="text-xs font-semibold bg-white/20 p-2 rounded inline-block">
-          Card/Bank
-        </span>
+        Continue with Card/Bank
       </button>
     </FieldSet>
   );
