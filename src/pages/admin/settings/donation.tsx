@@ -113,9 +113,20 @@ export function DonationTab({
         </span>
       </div>
 
-      <CheckField {...register("donor_address_required")} classes="font-medium">
-        Require donor address
-      </CheckField>
+      <div className="grid gap-2">
+        <CheckField
+          {...register("donor_address_required")}
+          classes="font-medium"
+        >
+          Require donor address
+        </CheckField>
+        <span className="text-xs sm:text-sm italic text-gray">
+          Collecting the donor address is not required and adds an additional
+          step for donors before completing their gifts, so we do not normally
+          ask for it. However, if this is information you would like, we can
+          make it a mandatory field before checkout.
+        </span>
+      </div>
 
       <div className="flex gap-3 mt-8">
         <button
