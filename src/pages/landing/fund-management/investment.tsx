@@ -6,7 +6,7 @@ export function Investment({ classes = "" }) {
   return (
     <section className={`${classes} grid`}>
       <h2 className="col-span-full text-center section-heading mb-4">
-        How The Sustainability Fund Works
+        How the Sustainability Fund Works
       </h2>
       <p className="mb-10 text-center section-body">
         From high-converting donation forms to growth through Savings and a
