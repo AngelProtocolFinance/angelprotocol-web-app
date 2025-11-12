@@ -10,7 +10,7 @@ export function Ctas({ classes = "" }) {
       className={`${classes} grid gap-y-20 md:gap-y-32 py-14 md:py-28`}
       aria-label="Key benefits"
     >
-      <article className="grid md:grid-cols-2 items-center">
+      <article className="grid md:grid-cols-2 gap-x-4 items-center">
         <motion.div
           className="grid max-md:order-2"
           initial={{ opacity: 0, x: -30 }}
@@ -52,7 +52,7 @@ export function Ctas({ classes = "" }) {
           width={400}
         />
       </article>
-      <article className="grid md:grid-cols-2 items-center">
+      <article className="grid md:grid-cols-2 gap-x-4 items-center">
         <img
           src={boy_sleeping_in_hammock}
           className="justify-self-center max-md:mb-4"
