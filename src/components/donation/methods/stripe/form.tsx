@@ -12,6 +12,7 @@ import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
 import { type TMethodState, to_step } from "../../types";
+import { Paypal } from "../paypal";
 import { ExpressCheckout } from "./express-checkout";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
@@ -177,7 +178,7 @@ export function Form(props: TMethodState<"stripe">) {
           {...rhf.express}
         />
       )}
-      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
+      <Paypal />
 
       <button
         disabled={
@@ -188,6 +189,7 @@ export function Form(props: TMethodState<"stripe">) {
       >
         Continue with Card/Bank
       </button>
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
     </FieldSet>
   );
 }

@@ -1,10 +1,18 @@
 import { fallback, literal, parse, union } from "valibot";
 
-export const envSchema = fallback(
+const nv = (name: string): string => {
+  const v = import.meta.env[`VITE_${name}`];
+  if (!v) {
+    console.error(`Missing env var: VITE_${name}`);
+  }
+  return v || "";
+};
+
+export const env_schema = fallback(
   union([literal("dev"), literal("production")]),
   "dev"
 );
-export const env = parse(envSchema, import.meta.env.VITE_ENVIRONMENT);
+export const env = parse(env_schema, import.meta.env.VITE_ENVIRONMENT);
 export const IS_TEST = env === "dev";
 
 // THE CONSTANTS BELOW ARE ALL CONFIGURED BY ENVIRONMENT VARIABLES
@@ -19,6 +27,6 @@ export const BOOK_A_DEMO =
 export const INTERCOM_HELP = "https://intercom.help/better-giving/en";
 export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 
-export const PUBLIC_STRIPE_KEY = import.meta.env.VITE_STRIPE_PK || "";
-export const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID || "";
+export const stripe_public_key = nv("STRIPE_PK");
+export const paypal_client_id = nv("PAYPAL_CLIENT_ID");
 export const CHARIOT_CONNECT_ID = import.meta.env.VITE_CHARIOT_CONNECT_ID || "";
