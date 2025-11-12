@@ -37,7 +37,6 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
     }
 
     const { billingDetails: b } = ev;
-    console.log({ ev });
     if (!b?.email) {
       return on_error("your email was not found in billing details.");
     }
@@ -77,15 +76,12 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       body: JSON.stringify(intent),
     });
 
-    console.log({ res });
-
     if (!res.ok) {
       return on_error(`Failed to create donation intent: ${res.statusText}`);
     }
 
     const { order_id, client_secret }: IStripeIntentReturn = await res.json();
 
-    console.log({ order_id, client_secret });
     const return_path =
       don.source === "bg-widget"
         ? href("/donate-widget/donations/:id", { id: order_id })
