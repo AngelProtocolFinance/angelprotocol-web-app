@@ -42,6 +42,11 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
     name: "address.state",
   });
 
+  const opts_style: Record<string, string | undefined> = {
+    "--accent-primary": don.config?.accentPrimary,
+    "--accent-secondary": don.config?.accentSecondary,
+  };
+
   return (
     <form
       onSubmit={handleSubmit((x) => on_change(x), console.error)}
@@ -125,6 +130,7 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
               state.onChange("");
             }}
             options={country_names}
+            options_style={opts_style}
             error={errors.address?.country?.message}
             option_disp={(c) => <span>{c}</span>}
           />
@@ -136,6 +142,7 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
             value={state.value ?? ""}
             on_change={state.onChange}
             options={is_US ? states : []}
+            options_style={opts_style}
             allow_custom={!is_US}
             error={errors.address?.state?.message}
             option_disp={(c) => <span>{c}</span>}

@@ -4,16 +4,18 @@ import type { ReactNode } from "react";
 type Props = {
   query: string;
   options: string[];
+  options_style?: Record<string, string | undefined>;
   option_disp: (string: string) => ReactNode;
 };
 
-export function Options({ query, options, option_disp }: Props) {
+export function Options({ query, options, option_disp, options_style }: Props) {
   const filtered = options.filter((o) =>
     o.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
     <ComboboxOptions
+      style={options_style}
       anchor={{ to: "bottom", gap: 4 }}
       className="bg-white w-(--input-width) z-10 rounded shadow-2xl/20"
     >

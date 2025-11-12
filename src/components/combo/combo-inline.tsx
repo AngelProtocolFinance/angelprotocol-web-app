@@ -9,6 +9,7 @@ type El = HTMLInputElement;
 
 interface BaseProps {
   options: string[];
+  options_style?: Record<string, string | undefined>;
   option_disp: (opt: string) => ReactNode;
   required?: boolean;
   allow_custom?: boolean;
@@ -39,13 +40,13 @@ export const ComboInline = forwardRef<El, Props>((props, ref) => {
         value={props.value}
         onChange={(c) => c && props.on_change(c)}
         as="div"
-        className="relative group"
+        className="relative group/combo"
       >
         <ComboboxInput
           ref={ref}
           placeholder=""
           onChange={(event) => set_query(event.target.value as any)}
-          className={`${props.classes?.input} text-sm w-full px-4 py-3.5 border border-gray-l3 rounded outline-blue-d1 group-[:has([data-error])]:border-red`}
+          className={`${props.classes?.input} text-sm w-full px-4 py-3.5 border border-gray-l3 rounded outline-(--accent-primary) group-[:has([data-error])]/combo:border-red`}
         />
 
         <Label
@@ -81,6 +82,7 @@ export const ComboInline = forwardRef<El, Props>((props, ref) => {
               : props.options
           }
           option_disp={props.option_disp}
+          options_style={props.options_style}
         />
       </Combobox>
     </Field>
