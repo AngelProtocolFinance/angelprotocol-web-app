@@ -6,6 +6,7 @@ import {
 } from "@better-giving/assets/tokens";
 import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
+import { MethodBenefits } from "components/donation/common/method-benefits";
 import { Field } from "components/form";
 import { TokenCombobox } from "components/token-field/token-combobox";
 import { DONATION_INCREMENTS, logo_url } from "constants/common";
@@ -211,6 +212,7 @@ export function Form(props: TMethodState<"crypto">) {
       )}
 
       <CpfToggle checked={cpf.value} checked_changed={(x) => cpf.onChange(x)} />
+      <MethodBenefits subject="crypto" classes="mt-2" />
 
       <div className="grid mt-4 mb-2 grid-cols-2 gap-2 content-start">
         <p className="col-span-full text-sm font-semibold">
