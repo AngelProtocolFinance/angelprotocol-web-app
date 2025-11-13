@@ -10,7 +10,7 @@ interface PayPalMoney {
 
 interface PayPalPayee {
   email_address: string;
-  merchant_id: string;
+  merchant_id?: string;
 }
 
 interface PayPalAmountBreakdown {
@@ -30,6 +30,57 @@ interface PayPalCaptureResource {
   };
 }
 
+interface PayPalName {
+  given_name: string;
+  surname: string;
+}
+
+/**
+ * Payer information from PayPal webhook events.
+ * Note: Additional fields like phone, birth_date, tax_info are not included.
+ */
+interface PayPalPayer {
+  name: PayPalName;
+  email_address: string;
+  payer_id: string;
+}
+
+/**
+ * Shipping address information.
+ * Note: Additional fields like name, phone may exist but are not included.
+ */
+interface PayPalAddress {
+  address_line_1: string;
+  address_line_2?: string;
+  admin_area_2: string;
+  admin_area_1: string;
+  postal_code: string;
+  country_code: string;
+}
+
+interface PayPalShipping {
+  address: PayPalAddress;
+}
+
+/**
+ * Purchase unit in an order.
+ * Note: Fields like reference_id, payee, payments, description are not included.
+ */
+interface PayPalPurchaseUnit {
+  amount: PayPalMoney;
+  shipping?: PayPalShipping;
+}
+
+/**
+ * Order resource from CHECKOUT.ORDER.APPROVED event.
+ * Note: Fields like status, intent, create_time, update_time, links are not included.
+ */
+interface PayPalOrderResource {
+  id: string;
+  payer: PayPalPayer;
+  purchase_units: PayPalPurchaseUnit[];
+}
+
 interface PayPalWebhookEvent<T = unknown> {
   id: string;
   event_type: string;
@@ -37,6 +88,7 @@ interface PayPalWebhookEvent<T = unknown> {
 }
 
 type PaymentCaptureCompletedEvent = PayPalWebhookEvent<PayPalCaptureResource>;
+type CheckoutOrderApprovedEvent = PayPalWebhookEvent<PayPalOrderResource>;
 
 interface PayPalWebhookHeaders {
   "paypal-transmission-id": string;
@@ -127,13 +179,47 @@ async function handle_payment_capture_completed(
   });
 }
 
+async function handle_checkout_order_approved(
+  event: CheckoutOrderApprovedEvent
+): Promise<void> {
+  const order = event.resource;
+  const purchase_unit = order.purchase_units[0];
+  const amount = purchase_unit?.amount;
+  const shipping = purchase_unit?.shipping;
+
+  console.info("[paypal webhook] order approved:", {
+    order_id: order.id,
+    buyer_email: order.payer.email_address,
+    buyer_name: `${order.payer.name.given_name} ${order.payer.name.surname}`,
+    payer_id: order.payer.payer_id,
+    gross_amount: amount
+      ? `${amount.value} ${amount.currency_code}`
+      : undefined,
+    shipping_address: shipping?.address
+      ? {
+          line_1: shipping.address.address_line_1,
+          line_2: shipping.address.address_line_2,
+          city: shipping.address.admin_area_2,
+          state: shipping.address.admin_area_1,
+          postal_code: shipping.address.postal_code,
+          country: shipping.address.country_code,
+        }
+      : undefined,
+  });
+}
+
 async function process_webhook_event(event: PayPalWebhookEvent): Promise<void> {
   switch (event.event_type) {
+    case "CHECKOUT.ORDER.APPROVED":
+      await handle_checkout_order_approved(event as CheckoutOrderApprovedEvent);
+      break;
+
     case "PAYMENT.CAPTURE.COMPLETED":
       await handle_payment_capture_completed(
         event as PaymentCaptureCompletedEvent
       );
       break;
+
     case "PAYMENT.CAPTURE.DENIED":
       console.info("[paypal webhook] payment capture denied:", event.id);
       break;
