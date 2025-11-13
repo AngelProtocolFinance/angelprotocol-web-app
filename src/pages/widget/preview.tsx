@@ -1,30 +1,35 @@
 import type { INpo } from "@better-giving/endowment";
 import laira_waiving from "assets/laira/laira-waiving.webp";
-import { Steps, type TDonation } from "components/donation";
+import { type Config, Steps, type TDonation } from "components/donation";
 
 import { Image } from "components/image/image";
 import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
-import type { WidgetConfig } from "types/widget";
+import type { IWidgetFv } from "types/widget";
 
 type Props = {
   classes?: string;
-  config: WidgetConfig;
+  fv: IWidgetFv;
   endow?: INpo;
 };
-export function Preview({ classes = "", config, endow }: Props) {
+export function Preview({ classes = "", fv, endow }: Props) {
   if (!endow) {
     return (
-      <Container classes={classes} {...config}>
+      <Container classes={classes} fv={fv}>
         <Info classes="text-lg">Please select an organization.</Info>
       </Container>
     );
   }
 
-  const { methods, increments, ...cfg } = config;
+  const config: Config = {
+    method_ids: fv.methods.filter((m) => !m.disabled).map((m) => m.id),
+    accent_primary: fv.accent_primary,
+    accent_secondary: fv.accent_secondary,
+    increments: fv.increments,
+  };
 
   const init_state: TDonation = {
-    method: methods.find((m) => !m.disabled)?.id || "stripe",
+    method: config.method_ids?.at(0) ?? "stripe",
     source: "bg-widget",
     mode: "preview",
     recipient: {
@@ -33,23 +38,19 @@ export function Preview({ classes = "", config, endow }: Props) {
       hide_bg_tip: endow?.hide_bg_tip,
       members: [],
     },
-    config: {
-      ...cfg,
-      method_ids: methods.filter((m) => !m.disabled).map((m) => m.id),
-      increments: increments,
-    },
+    config: config,
   };
 
   return (
-    <Container {...config}>
-      {config.isTitleShown && (
+    <Container fv={fv} classes={classes}>
+      {fv.is_title_shown && (
         <h1 className="text-center w-full text-pretty mb-2 text-lg @sm/preview:text-3xl">
-          {config.title || `Donate to ${endow.name}`}
+          {fv.title || `Donate to ${endow.name}`}
         </h1>
       )}
-      {config.isDescriptionTextShown && (
+      {fv.is_description_text_shown && (
         <p className="text-xs text-center @sm/preview:text-base">
-          {config.description ||
+          {fv.description ||
             "Select your preferred payment option from our comprehensive donation choices and get an immediate tax receipt for your records."}
         </p>
       )}
@@ -62,28 +63,14 @@ export function Preview({ classes = "", config, endow }: Props) {
   );
 }
 
-interface IContainer extends PropsWithChildren, WidgetConfig {
+interface IContainer extends PropsWithChildren {
   classes?: string;
+  fv: IWidgetFv;
 }
 
-function Container({
-  accentPrimary,
-  accentSecondary,
-  classes = "",
-  children,
-}: IContainer) {
+function Container({ classes = "", children }: IContainer) {
   return (
-    <section
-      style={{
-        ...(accentPrimary
-          ? ({ "--accent-primary": accentPrimary } as any)
-          : {}),
-        ...(accentPrimary
-          ? ({ "--accent-secondary": accentSecondary } as any)
-          : {}),
-      }}
-      className={`${classes} @container/preview pb-4`}
-    >
+    <section className={`${classes} @container/preview pb-4`}>
       <div>
         <p className="flex text-gray-d4 text-lg ">
           <Image src={laira_waiving} className="h-[45px] mr-2 pb-2" />
@@ -91,7 +78,7 @@ function Container({
         </p>
       </div>
       <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded-sm text-gray-d4 bg-white">
-        <div className="grow flex flex-col justify-between items-center pt-6 @xl/preview:pt-10">
+        <div className="grow flex flex-col items-center pt-6 @xl/preview:pt-10">
           {children}
         </div>
       </div>

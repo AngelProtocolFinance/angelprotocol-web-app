@@ -64,7 +64,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
 
   return (
     <Summary
-      classes="grid content-start p-4 @md/steps:p-8"
+      classes="grid content-start p-4 @xl/steps:p-8"
       on_back={() => back_to_form("stripe", props, don_set)}
       Amount={currencyfn(currency)}
       amount={+amount}
@@ -92,7 +92,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
               appearance: {
                 theme: "flat",
                 variables: {
-                  colorPrimary: don.config?.accentPrimary,
+                  colorPrimary: don.config?.accent_primary,
                   fontFamily: "Quicksand, sans-serif",
                   borderRadius: "4px",
                   gridRowSpacing: "20px",

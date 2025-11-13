@@ -21,7 +21,7 @@ export function Stocks(props: StocksDonationDetails) {
   const url =
     typeof window !== "undefined" ? `${window.location.origin}${path}` : path;
   return (
-    <div className="grid content-start p-4 @md/steps:p-8">
+    <div className="grid content-start p-4 @xl/steps:p-8">
       <BackBtn
         type="button"
         onClick={() => back_to_form("stocks", props, don_set)}

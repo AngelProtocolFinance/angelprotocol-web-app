@@ -44,7 +44,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
 
   return (
     <Summary
-      classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
+      classes="group grid content-start p-4 @xl/steps:p-8 [&_#connectContainer]:mt-8"
       on_back={() => back_to_form("daf", props, don_set)}
       Amount={currency(usd_option)}
       amount={+props.amount}

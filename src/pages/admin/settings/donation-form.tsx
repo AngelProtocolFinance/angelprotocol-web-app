@@ -18,7 +18,7 @@ import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { ActionData } from "types/action";
-import { type TDonateMethod, donate_method } from "types/components";
+import { donate_method } from "types/components";
 import * as v from "valibot";
 
 const schema = v.object({

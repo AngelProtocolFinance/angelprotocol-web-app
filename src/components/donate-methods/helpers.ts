@@ -1,4 +1,5 @@
 import type { DonateMethodId } from "@better-giving/endowment";
+import { all_method_ids as all } from "components/donation";
 import type { TDonateMethod } from "types/components";
 
 const method_details: {
@@ -19,8 +20,6 @@ const to_methods = (
     disabled,
   }));
 };
-
-const all: DonateMethodId[] = ["stripe", "stocks", "daf", "crypto"];
 
 export function fill(sub = all): TDonateMethod[] {
   const existing = sub.filter((x) => all.includes(x));

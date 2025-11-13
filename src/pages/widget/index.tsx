@@ -2,7 +2,7 @@ import { fill } from "components/donate-methods";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
 import { useState } from "react";
-import type { WidgetConfig } from "types/widget";
+import type { IWidgetFv } from "types/widget";
 import { Configurer } from "./configurer";
 import { Preview } from "./preview";
 import { Snippet } from "./snippet";
@@ -27,19 +27,12 @@ export const meta: Route.MetaFunction = ({ loaderData: d, location: loc }) => {
 export default function Widget({ loaderData }: Route.ComponentProps) {
   const { endow, base_url, endows } = loaderData;
 
-  const _methods = endow?.donateMethods;
-  const filled = fill(
-    _methods?.concat(
-      _methods.includes("daf") && !_methods.includes("stripe") ? ["stripe"] : []
-    )
-  );
-
-  const [state, setState] = useState<WidgetConfig>({
-    isDescriptionTextShown: true,
-    isTitleShown: true,
-    methods: filled,
-    accentPrimary: "#2D89C8",
-    accentSecondary: "#E6F1F9",
+  const [fv, set_fv] = useState<IWidgetFv>({
+    is_description_text_shown: true,
+    is_title_shown: true,
+    methods: fill(endow?.donateMethods),
+    accent_primary: "#2D89C8",
+    accent_secondary: "#E6F1F9",
     program: DEFAULT_PROGRAM,
     increments: DONATION_INCREMENTS.map((i) => ({
       label: i.label,
@@ -58,22 +51,17 @@ export default function Widget({ loaderData }: Route.ComponentProps) {
       </p>
       <div className="w-full">
         <Configurer
-          config={state}
-          setConfig={setState}
+          fv={{ ...fv, methods: fill(fv.methods.map((x) => x.id)) }}
+          set_fv={set_fv}
           endow={endow}
           endows={endows}
         />
-        <Snippet
-          base_url={base_url}
-          config={state}
-          classes="mt-10"
-          endow={endow}
-        />
+        <Snippet base_url={base_url} fv={fv} classes="mt-10" endow={endow} />
       </div>
 
       <Preview
         endow={endow}
-        config={state}
+        fv={fv}
         classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10"
       />
     </div>

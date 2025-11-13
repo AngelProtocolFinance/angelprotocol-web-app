@@ -19,10 +19,9 @@ export function Crypto(props: CryptoDonationDetails) {
     ? min_fee_allowance(tipv + +t.amount, PROCESSING_RATES.crypto)
     : 0;
   const Amount = token(t.rate, t.precision);
-
   return (
     <Summary
-      classes="grid content-start p-4 @md/steps:p-8"
+      classes="grid content-start p-4 @xl/steps:p-8"
       on_back={() => back_to_form("crypto", props, don_set)}
       Amount={Amount}
       amount={+t.amount}

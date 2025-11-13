@@ -244,9 +244,9 @@ export type Config = {
   /** donation tabs follows the list order */
   method_ids?: DonateMethodId[];
   /** hex color without alpha */
-  accentPrimary?: string;
+  accent_primary?: string;
   /** hex color without alpha */
-  accentSecondary?: string;
+  accent_secondary?: string;
   increments?: IIncrement[];
 };
 

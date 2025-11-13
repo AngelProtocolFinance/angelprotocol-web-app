@@ -17,34 +17,34 @@ const description = v.pipe(
   v.maxLength(300, "cannot exceed 300 characters")
 );
 
-export const widget_config = v.object({
+export const widget_fv = v.object({
   title: v.optional(title),
-  isTitleShown: v.boolean(),
+  is_title_shown: v.boolean(),
   description: v.optional(description),
   //from dropdown
   program: v.object({
     label: str,
     value: str,
   }),
-  isDescriptionTextShown: v.boolean(),
+  is_description_text_shown: v.boolean(),
   methods: v.pipe(
     v.array(donate_method),
     v.filterItems((m) => !m.disabled),
     v.minLength(1, "at least one payment option should be active")
   ),
-  accentPrimary: v.optional(str),
-  accentSecondary: v.optional(str),
+  accent_primary: v.optional(str),
+  accent_secondary: v.optional(str),
   increments,
 });
 
-export interface WidgetConfig extends v.InferInput<typeof widget_config> {}
+export interface IWidgetFv extends v.InferInput<typeof widget_fv> {}
 
 const toBool = v.pipe(
   v.picklist(["true", "false"] as const),
   v.transform((x) => x === "true")
 );
 
-export const widgetUrlSearchParams = v.object({
+export const widget_search = v.object({
   isDescriptionTextShown: v.optional(toBool),
 
   // v2.3 params //
@@ -80,7 +80,5 @@ export const widgetUrlSearchParams = v.object({
   ),
 });
 
-export type WidgetURLSearchParams = v.InferInput<typeof widgetUrlSearchParams>;
-export type ParsedWidgetURLSearchParams = v.InferOutput<
-  typeof widgetUrlSearchParams
->;
+export interface IWidgetSearch extends v.InferInput<typeof widget_search> {}
+export interface IWidgetSearchObj extends v.InferOutput<typeof widget_search> {}

@@ -1,3 +1,4 @@
+import type { DonateMethodId } from "@better-giving/schemas";
 import type { ICurrencyFv, ITokenFv, OptionType } from "types/components";
 import type { Tribute } from "../types";
 
@@ -29,3 +30,10 @@ export const init_tribute_notif: Tribute["notif"] = {
   to_fullname: "",
   from_msg: "",
 };
+
+export const all_method_ids: DonateMethodId[] = [
+  "stripe",
+  "daf",
+  "stocks",
+  "crypto",
+];

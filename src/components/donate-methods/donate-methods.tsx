@@ -45,7 +45,6 @@ export function DonateMethods({ values, on_change, error, classes }: Props) {
                 if (v.id === updated.id) return updated;
                 return v;
               });
-
               on_change(_methods);
             }}
           />

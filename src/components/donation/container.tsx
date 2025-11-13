@@ -29,8 +29,17 @@ type Props = {
 } & (Components | InitState);
 
 export function Donation({ className = "", ...props }: Props) {
+  const state = "init" in props ? props.init : init_state(props);
+
+  const styles: Record<string, string | undefined> = {
+    "--accent-primary": state?.config?.accent_primary,
+    "--accent-secondary": state?.config?.accent_secondary,
+  };
+
   return (
     <div
+      id="donation-container"
+      style={styles}
       className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
     >
       <Context {...("init" in props ? props.init : init_state(props))}>

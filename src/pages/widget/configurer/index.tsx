@@ -7,33 +7,21 @@ import { CheckField, Field, Form } from "components/form";
 import { Increments } from "components/increments";
 import { DollarSign } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
-import {
-  type SubmitHandler,
-  useController,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
+import { useController, useFieldArray, useForm } from "react-hook-form";
 import type { EndowmentOption } from "types/npo";
-import { type WidgetConfig, widget_config } from "types/widget";
+import { type IWidgetFv, widget_fv } from "types/widget";
 import { EndowmentSelector } from "./endowment-selector";
 import { ProgramSelector } from "./program-selector";
-import type { FormValues } from "./types";
 
 type Props = {
   classes?: string;
   endow?: INpo;
   endows: EndowmentOption[];
-  config: WidgetConfig;
-  setConfig: Dispatch<SetStateAction<WidgetConfig>>;
+  fv: IWidgetFv;
+  set_fv: Dispatch<SetStateAction<IWidgetFv>>;
 };
 
-export function Configurer({
-  classes = "",
-  config,
-  endow,
-  endows,
-  setConfig,
-}: Props) {
+export function Configurer({ classes = "", fv, set_fv, endow, endows }: Props) {
   const {
     handleSubmit,
     reset: hookFormReset,
@@ -42,13 +30,13 @@ export function Configurer({
     watch,
     register,
     control,
-  } = useForm<FormValues>({
-    resolver: valibotResolver(widget_config),
+  } = useForm<IWidgetFv>({
+    resolver: valibotResolver(widget_fv),
     //set new config as default, so user would need to make a change to be able to update again
-    values: config,
+    values: fv,
   });
 
-  const { field: donateMethods } = useController({
+  const { field: donate_methods } = useController({
     control: control,
     name: "methods",
   });
@@ -63,19 +51,15 @@ export function Configurer({
     name: "increments",
   });
 
-  const isDescriptionTextShown = watch("isDescriptionTextShown");
-  const isTitleShown = watch("isTitleShown");
+  const is_description_text_shown = watch("is_description_text_shown");
+  const is_title_shown = watch("is_title_shown");
   const incs = watch("increments");
-
-  const submit: SubmitHandler<FormValues> = async (fv) => {
-    setConfig(fv);
-  };
 
   return (
     <Form
       disabled={isSubmitting}
       className={`${classes} @container/configurer`}
-      onSubmit={handleSubmit(submit)}
+      onSubmit={handleSubmit(set_fv)}
       onReset={(e) => {
         e.preventDefault();
         hookFormReset();
@@ -105,12 +89,12 @@ export function Configurer({
           type="textarea"
           label="Custom title"
           classes={{ container: "mt-8", label: "font-medium text-base" }}
-          disabled={!isTitleShown}
+          disabled={!is_title_shown}
           error={errors.title?.message}
         />
 
         <CheckField
-          {...register("isTitleShown")}
+          {...register("is_title_shown")}
           classes="mt-3"
           onChange={(checked) => !checked && setValue("title", "")}
         >
@@ -122,11 +106,11 @@ export function Configurer({
           type="textarea"
           label="Custom description"
           classes={{ container: "mt-8", label: "font-medium text-base" }}
-          disabled={!isDescriptionTextShown}
+          disabled={!is_description_text_shown}
           error={errors.description?.message}
         />
         <CheckField
-          {...register("isDescriptionTextShown")}
+          {...register("is_description_text_shown")}
           classes="mt-4"
           onChange={(checked) => !checked && setValue("description", "")}
         >
@@ -139,8 +123,8 @@ export function Configurer({
             tooltip: "italic",
             label: "font-medium text-base",
           }}
-          values={donateMethods.value}
-          on_change={donateMethods.onChange}
+          values={donate_methods.value}
+          on_change={donate_methods.onChange}
           error={
             <p className="text-red text-sm mb-1 empty:hidden">
               {errors.methods?.message}
@@ -153,7 +137,7 @@ export function Configurer({
           <input
             id="__accent-prim"
             type="color"
-            {...register("accentPrimary")}
+            {...register("accent_primary")}
           />
           <label htmlFor="__accent-prim"> Accent primary</label>
         </div>
@@ -161,7 +145,7 @@ export function Configurer({
           <input
             id="__accent-sec"
             type="color"
-            {...register("accentSecondary")}
+            {...register("accent_secondary")}
           />
           <label htmlFor="__accent-sec">Accent secondary</label>
         </div>
@@ -213,18 +197,18 @@ export function Configurer({
           )}
         />
 
-        <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">
+        <div className="flex gap-3 w-full flex-wrap mt-8">
           <button
             disabled={!isDirty}
             type="reset"
-            className="btn-outline btn @max-sm/configurer:mx-auto w-40"
+            className="btn-outline btn w-40"
           >
             Reset Changes
           </button>
           <button
             disabled={!isDirty}
             type="submit"
-            className="btn btn-blue @max-sm/configurer:mx-auto w-40"
+            className="btn btn-blue w-40"
           >
             {isSubmitting ? "Updating.." : "Update Form"}
           </button>

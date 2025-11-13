@@ -92,7 +92,7 @@ export function Form(props: TMethodState<"crypto">) {
       value={token.value}
       opts={filtered}
       // reapply to portaled
-      opts_styles={{ "--accent-secondary": don.config?.accentSecondary }}
+      opts_styles={{ "--accent-secondary": don.config?.accent_secondary }}
       on_change={async (t) => {
         try {
           token.onChange({ ...t, amount: token.value.amount });

@@ -1,11 +1,17 @@
 import type { INpo } from "@better-giving/endowment";
-import { type DonationRecipient, type IUser, Steps } from "components/donation";
-import type { IProgram } from "components/donation";
-import type { Parsed } from "./parse-config";
+import { type IIncrement, donate_method_ids } from "@better-giving/schemas";
+import {
+  type DonationRecipient,
+  type IUser,
+  Steps,
+  all_method_ids,
+} from "components/donation";
+import type { Config, IProgram } from "components/donation";
+import type { IWidgetSearchObj } from "types/widget";
 
 type Props = {
   npo: INpo;
-  config: Parsed;
+  config: IWidgetSearchObj;
   program: IProgram | undefined;
   user: IUser | undefined;
   classes?: string;
@@ -23,6 +29,21 @@ export default function Content({
     name: npo.name,
     hide_bg_tip: npo.hide_bg_tip,
     members: [],
+  };
+
+  const ms: any = config.methods ?? all_method_ids;
+  const incs_str = config.increments || [];
+  const incs_labels = config.descriptions || [];
+  const incs: IIncrement[] = incs_str.map((val, idx) => ({
+    value: val,
+    label: incs_labels[idx] || "",
+  }));
+
+  const c: Config = {
+    method_ids: ms,
+    accent_primary: config.accentPrimary,
+    accent_secondary: config.accentSecondary,
+    increments: incs,
   };
 
   return (
@@ -45,7 +66,7 @@ export default function Content({
         mode="live"
         className="w-full border border-gray-l3 rounded-lg"
         recipient={recipient}
-        config={config}
+        config={c}
         user={user}
         program={program}
       />

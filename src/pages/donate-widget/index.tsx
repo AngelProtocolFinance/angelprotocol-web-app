@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import type { Route } from "./+types";
 import Content from "./content";
-import parseConfig from "./parse-config";
+import { parse_config } from "./parse-config";
 
 export { ErrorBoundary } from "components/error";
 export { loader } from "api/donate-loader";
@@ -24,7 +24,7 @@ export const meta: Route.MetaFunction = ({ loaderData: d, location: l }) => {
 
 export default function Page({ loaderData }: Route.ComponentProps) {
   const { endow, program, user } = loaderData;
-  const [searchParams] = useSearchParams();
+  const [search] = useSearchParams();
 
   /** Hide the Intercom chatbot */
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
     }
   }, []);
 
-  const config = parseConfig(searchParams);
+  const config = parse_config(search);
 
   //validation error
   if ("error" in config) {
@@ -44,16 +44,14 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 
   const { accentPrimary, accentSecondary } = config;
 
+  const styles: Record<string, string | undefined> = {
+    "--accent-primary": accentPrimary,
+    "--accent-secondary": accentSecondary,
+  };
+
   return (
     <div
-      style={{
-        ...(accentPrimary
-          ? ({ "--accent-primary": accentPrimary } as any)
-          : {}),
-        ...(accentPrimary
-          ? ({ "--accent-secondary": accentSecondary } as any)
-          : {}),
-      }}
+      style={styles}
       className="grid grid-rows-[1fr_auto] justify-items-center gap-10"
     >
       <Content

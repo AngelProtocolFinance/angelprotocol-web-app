@@ -4,6 +4,7 @@ export {
   type DonationRecipient,
   type IProgram,
   type IUser,
+  type Config,
   donation_recipient,
   is_fund,
 } from "./types";
@@ -13,5 +14,6 @@ export { ProgramSelector } from "../../pages/widget/configurer/program-selector"
 export {
   DEFAULT_PROGRAM,
   init_token_option,
+  all_method_ids,
 } from "./common/constants";
 export { PayQr } from "./checkouts/crypto";

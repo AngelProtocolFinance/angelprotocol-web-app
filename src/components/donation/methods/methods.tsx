@@ -5,6 +5,7 @@ import { Label } from "components/form";
 import { Image } from "components/image";
 import { ChartSpline, Coins, CreditCard } from "lucide-react";
 import type { ReactNode } from "react";
+import { all_method_ids } from "../common/constants";
 import type { TDonation, TMethodState } from "../types";
 import { Form as Crypto } from "./crypto";
 import { Form as Daf } from "./daf";
@@ -39,7 +40,6 @@ const methods: {
     panel: Crypto,
   },
 };
-const all_method_ids: DonateMethodId[] = ["stripe", "daf", "stocks", "crypto"];
 
 const tab_classes = (selected: boolean) =>
   `${
@@ -50,11 +50,21 @@ const tab_classes = (selected: boolean) =>
 
 export function DonateMethods(props: TDonation) {
   const { config, method, ...fvs } = props;
-  const method_ids = config?.method_ids;
-
-  const tabs = method_ids ?? all_method_ids;
-
+  const { method_ids: tabs = all_method_ids } = config || {};
   const tab_idx_found = tabs.findIndex((t) => t === method);
+
+  if (tabs.length === 1) {
+    const Panel = methods[method].panel;
+    const s: TMethodState<typeof method> = fvs[method] || {
+      type: method,
+      step: "form",
+    };
+    return (
+      <div className="grid p-4 @xl/steps:p-8">
+        <Panel {...(s as any)} />
+      </div>
+    );
+  }
 
   return (
     <TabGroup
@@ -77,7 +87,7 @@ export function DonateMethods(props: TDonation) {
       </TabList>
       <TabPanels
         as="div"
-        className="grid p-4 @xl/steps:p-8 pt-0 @xl/steps:pt-4 "
+        className="grid p-4 @xl/steps:p-8 pt-0 @xl/steps:pt-4"
       >
         {tabs.map((tab) => {
           const Panel = methods[tab].panel;
