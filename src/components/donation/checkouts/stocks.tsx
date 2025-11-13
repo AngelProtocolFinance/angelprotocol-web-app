@@ -24,7 +24,7 @@ export function Stocks(props: StocksDonationDetails) {
     <div className="grid content-start p-4 @xl/steps:p-8">
       <BackBtn
         type="button"
-        onClick={() => to_step("stocks", props, "donor", don_set)}
+        onClick={() => to_step("stocks", props, "form", don_set)}
       />
       <p className="mt-4 text-center text-gray uppercase">Donation pending</p>
       <p className="mt-4 text-center">

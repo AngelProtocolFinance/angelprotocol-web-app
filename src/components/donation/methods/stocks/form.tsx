@@ -46,7 +46,10 @@ export function Form(props: TMethodState<"stocks">) {
   return (
     <FormContainer
       className="grid gap-y-2"
-      onSubmit={handleSubmit((fv) => to_step("stocks", fv, "donor", don_set))}
+      onSubmit={handleSubmit((fv) =>
+        // skip donor step
+        to_step("stocks", fv, "checkout", don_set)
+      )}
     >
       <Field
         required

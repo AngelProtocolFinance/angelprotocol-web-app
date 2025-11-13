@@ -112,56 +112,25 @@ describe("payment method form state persistence", () => {
     const daf_tab = screen.getByRole("tab", { name: /donor advised fund/i });
     await userEvent.click(daf_tab);
 
-    // Input amount
+    // input amount
     const amount_input = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amount_input, "500");
 
-    // Submit to donor step
+    // submit directly to checkout (donor step is skipped)
     const continue_btn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continue_btn);
 
-    // Should be on donor step now - fill donor info
-    const email_input = await screen.findByPlaceholderText(/john@doe\.com/i);
-    await userEvent.type(email_input, "jane@example.com");
-
-    const first_name_input = screen.getByRole("textbox", {
-      name: /first name/i,
-    });
-    await userEvent.type(first_name_input, "Jane");
-
-    const last_name_input = screen.getByRole("textbox", { name: /last name/i });
-    await userEvent.type(last_name_input, "Smith");
-
-    // Continue to checkout
-    const continue_btn2 = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continue_btn2);
-
-    // Should be on checkout page - DAF uses Chariot widget, check we left the form
+    // should be on checkout page - daf uses chariot widget, check we left the form
     expect(screen.queryByTestId("donate-methods")).not.toBeInTheDocument();
     expect(
       await screen.findByRole("button", { name: /go back/i })
     ).toBeInTheDocument();
 
-    // Go back to donor step
+    // go back to form (donor step is skipped)
     const back_btn = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn);
 
-    // Verify donor state persists
-    expect(
-      await screen.findByPlaceholderText(/john@doe\.com/i)
-    ).toHaveDisplayValue("jane@example.com");
-    expect(
-      screen.getByRole("textbox", { name: /first name/i })
-    ).toHaveDisplayValue("Jane");
-    expect(
-      screen.getByRole("textbox", { name: /last name/i })
-    ).toHaveDisplayValue("Smith");
-
-    // Go back to form
-    const back_btn2 = screen.getByRole("button", { name: /go back/i });
-    await userEvent.click(back_btn2);
-
-    // Verify form state persists
+    // verify form state persists
     expect(
       await screen.findByPlaceholderText(/enter amount/i)
     ).toHaveDisplayValue("500");
@@ -186,60 +155,29 @@ describe("payment method form state persistence", () => {
     const stocks_tab = screen.getByRole("tab", { name: /stocks/i });
     await userEvent.click(stocks_tab);
 
-    // Input symbol
+    // input symbol
     const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
     await userEvent.type(symbol_input, "AAPL");
 
-    // Input quantity
+    // input quantity
     const qty_input = screen.getByPlaceholderText(/enter quantity/i);
     await userEvent.type(qty_input, "10");
 
-    // Submit to donor step
+    // submit directly to checkout (donor step is skipped)
     const continue_btn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continue_btn);
 
-    // Should be on donor step now - fill donor info
-    const email_input = await screen.findByPlaceholderText(/john@doe\.com/i);
-    await userEvent.type(email_input, "bob@example.com");
-
-    const first_name_input = screen.getByRole("textbox", {
-      name: /first name/i,
-    });
-    await userEvent.type(first_name_input, "Bob");
-
-    const last_name_input = screen.getByRole("textbox", { name: /last name/i });
-    await userEvent.type(last_name_input, "Wilson");
-
-    // Continue to checkout
-    const continue_btn2 = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continue_btn2);
-
-    // Should be on checkout page - look for stocks-specific text
+    // should be on checkout page - look for stocks-specific text
     expect(await screen.findByText(/donation pending/i)).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /generate email/i })
     ).toBeInTheDocument();
 
-    // Go back to donor step
+    // go back to form (donor step is skipped)
     const back_btn = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn);
 
-    // Verify donor state persists
-    expect(
-      await screen.findByPlaceholderText(/john@doe\.com/i)
-    ).toHaveDisplayValue("bob@example.com");
-    expect(
-      screen.getByRole("textbox", { name: /first name/i })
-    ).toHaveDisplayValue("Bob");
-    expect(
-      screen.getByRole("textbox", { name: /last name/i })
-    ).toHaveDisplayValue("Wilson");
-
-    // Go back to form
-    const back_btn2 = screen.getByRole("button", { name: /go back/i });
-    await userEvent.click(back_btn2);
-
-    // Verify form state persists
+    // verify form state persists
     expect(await screen.findByPlaceholderText(/ex. aapl/i)).toHaveDisplayValue(
       "AAPL"
     );
@@ -313,40 +251,29 @@ describe("payment method form state persistence", () => {
     const back_btn2 = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn2);
 
-    // Switch to DAF (tabs should already be rendered)
+    // switch to daf (tabs should already be rendered)
     const daf_tab = screen.getByRole("tab", { name: /donor advised fund/i });
     await userEvent.click(daf_tab);
 
-    // Fill DAF form
+    // fill daf form
     amount_input = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amount_input, "1000");
 
-    // Submit to donor step - donor info should already be filled
+    // submit directly to checkout (donor step is skipped for daf)
     const continue_btn3 = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continue_btn3);
 
-    // Donor info should be pre-filled, continue to checkout
-    expect(
-      await screen.findByPlaceholderText(/john@doe\.com/i)
-    ).toHaveDisplayValue("alice@example.com");
-    const continue_btn4 = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continue_btn4);
-
-    // Should be on DAF checkout
+    // should be on daf checkout
     expect(screen.queryByTestId("donate-methods")).not.toBeInTheDocument();
     expect(
       await screen.findByRole("button", { name: /go back/i })
     ).toBeInTheDocument();
 
-    // Go back to donor
+    // go back to form (donor step is skipped for daf)
     const back_btn3 = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn3);
 
-    // Go back to form
-    const back_btn4 = screen.getByRole("button", { name: /go back/i });
-    await userEvent.click(back_btn4);
-
-    // Switch back to crypto - form state should persist (tabs already rendered)
+    // switch back to crypto - form state should persist (tabs already rendered)
     const crypto_tab2 = screen.getByRole("tab", { name: /crypto/i });
     await userEvent.click(crypto_tab2);
 
@@ -423,10 +350,10 @@ describe("payment method form state persistence", () => {
     const back_btn2 = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn2);
 
-    // Wait for donate-methods to render again
+    // wait for donate-methods to render again
     await screen.findByTestId("donate-methods");
 
-    // Fill DAF form and go to checkout - this also persists DAF state in context (tabs already rendered)
+    // fill daf form and go to checkout - this also persists daf state in context (tabs already rendered)
     const daf_tab = screen.getByRole("tab", {
       name: /donor advised fund/i,
     });
@@ -435,28 +362,18 @@ describe("payment method form state persistence", () => {
     amount_input = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amount_input, "750");
 
+    // submit directly to checkout (donor step is skipped for daf)
     const continue_btn3 = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continue_btn3);
 
-    // Donor info should be pre-filled, continue to checkout
-    expect(
-      await screen.findByPlaceholderText(/john@doe\.com/i)
-    ).toHaveDisplayValue("bob@example.com");
-    const continue_btn4 = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continue_btn4);
-
-    // Should be on DAF checkout - check we left the form
+    // should be on daf checkout - check we left the form
     expect(screen.queryByTestId("donate-methods")).not.toBeInTheDocument();
 
-    // Go back to donor
+    // go back to form (donor step is skipped for daf)
     const back_btn3 = screen.getByRole("button", { name: /go back/i });
     await userEvent.click(back_btn3);
 
-    // Go back to form
-    const back_btn4 = screen.getByRole("button", { name: /go back/i });
-    await userEvent.click(back_btn4);
-
-    // Switch back to crypto - all form state should persist from context (tabs already rendered)
+    // switch back to crypto - all form state should persist from context (tabs already rendered)
     const crypto_tab2 = screen.getByRole("tab", { name: /crypto/i });
     await userEvent.click(crypto_tab2);
 

@@ -15,7 +15,10 @@ export function Form(props: TMethodState<"daf">) {
   return (
     <FormContainer
       disabled={rhf.isSubmitting}
-      onSubmit={rhf.handleSubmit((fv) => to_step("daf", fv, "donor", don_set))}
+      onSubmit={rhf.handleSubmit((fv) =>
+        // skip donor step
+        to_step("daf", fv, "checkout", don_set)
+      )}
       className="flex flex-col gap-y-2 min-h-full"
     >
       <Field
