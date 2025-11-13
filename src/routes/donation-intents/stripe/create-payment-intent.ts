@@ -2,7 +2,6 @@ import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import { to_atomic } from "helpers/stripe";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe } from ".server/sdks";
-import { payment_methods } from ".server/stripe/payment-methods";
 
 export async function create_payment_intent(
   order: IDonationOnHoldAttr,
@@ -23,7 +22,7 @@ export async function create_payment_intent(
         verification_method: "automatic",
       },
     },
-    payment_method_types: payment_methods[order.denomination] ?? ["card"],
+    automatic_payment_methods: { enabled: true },
   });
   return client_secret || "invalid client secret";
 }

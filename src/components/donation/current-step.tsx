@@ -3,10 +3,11 @@ import { ChariotCheckout } from "./checkouts/daf";
 import { Stocks } from "./checkouts/stocks";
 import { StripeCheckout } from "./checkouts/stripe";
 import { use_donation } from "./context";
+import { DonorStep } from "./donor-step";
 import { DonateMethods } from "./methods";
 
 export function CurrentStep() {
-  const { don } = use_donation();
+  const { don, don_set } = use_donation();
   const { stripe, crypto, daf, stocks } = don;
   const method_states = [stripe, crypto, daf, stocks] as const;
 
@@ -26,6 +27,27 @@ export function CurrentStep() {
     case "daf": {
       return <ChariotCheckout {...c.fv} />;
     }
+  }
+  const d = method_states.find((m) => m?.step === "donor");
+  if (d) {
+    return (
+      <DonorStep
+        value={don.donor}
+        on_change={(x) =>
+          don_set((z) => ({
+            ...z,
+            donor: x,
+            [d.type]: { ...don[d.type], step: "checkout" },
+          }))
+        }
+        on_back={() => {
+          don_set((z) => ({
+            ...z,
+            [d.type]: { ...don[d.type], step: "form" },
+          }));
+        }}
+      />
+    );
   }
 
   return <DonateMethods {...don} />;

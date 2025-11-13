@@ -18,9 +18,6 @@ export function use_rhf(
     token: init_token_option,
     tip: "",
     tip_format: hide_bg_tip ? "none" : "15",
-    first_name: user?.first_name || "",
-    last_name: user?.last_name || "",
-    email: user?.email || "",
     cover_processing_fee: false,
   };
 

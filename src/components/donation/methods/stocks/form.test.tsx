@@ -1,7 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterAll, describe, expect, test, vi } from "vitest";
-import type { Init, StocksDonationDetails } from "../../types";
+import {
+  type Init,
+  type StocksDonationDetails,
+  donation_recipient_init,
+} from "../../types";
 import { Form } from "./form";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
@@ -21,7 +25,7 @@ describe("Stocks form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;
@@ -39,7 +43,7 @@ describe("Stocks form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
       user: { email: "john@doe.com", first_name: "John", last_name: "Doe" },
     };
@@ -70,7 +74,7 @@ describe("Stocks form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;
@@ -93,7 +97,7 @@ describe("Stocks form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: "0", name: "", members: [] },
+      recipient: donation_recipient_init(),
       mode: "live",
     };
     don_mock.value = init;

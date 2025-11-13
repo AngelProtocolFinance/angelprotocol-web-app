@@ -1,7 +1,7 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
 import { type ICurrencyFv, currency_fv } from "types/currency";
-import { frequency, str } from "types/donation-intent";
+import { type Donor, frequency } from "types/donation-intent";
 export {
   type Tribute,
   type TFrequency,
@@ -23,11 +23,25 @@ export const donation_recipient = v.object({
   /** int-str array */
   members: v.array(v.string()),
   hide_bg_tip: v.optional(v.boolean()),
+  donor_address_required: v.union([v.boolean(), v.undefined()]),
 });
+
 export const is_fund = (recipient: string) => v.UUID_REGEX.test(recipient); //is uuid
 
 export interface DonationRecipient
   extends v.InferOutput<typeof donation_recipient> {}
+
+export const donation_recipient_init = (
+  overrides?: Partial<DonationRecipient>
+): DonationRecipient => {
+  return {
+    id: "1",
+    name: "Better Giving",
+    members: [],
+    donor_address_required: false,
+    ...overrides,
+  };
+};
 
 export const program_opt = v.object({
   label: v.string(),
@@ -101,22 +115,6 @@ export const tip_format = v.picklist(tip_formats);
 
 export type TTipFormat = (typeof tip_formats)[number];
 
-const donor_fv = v.object({
-  first_name: v.pipe(str, v.nonEmpty("Please enter your first name")),
-  last_name: v.pipe(str, v.nonEmpty("Please enter your last name")),
-  email: v.pipe(
-    str,
-    v.nonEmpty("Please enter your email"),
-    v.email("Please check your email for correctness")
-  ),
-});
-
-export const donor_fv_init = {
-  first_name: "",
-  last_name: "",
-  email: "",
-};
-
 const tip_fv = v.object({
   tip: amount(),
   tip_format,
@@ -165,7 +163,6 @@ const is_min_met = (input: { amount: string; currency: ICurrencyFv }) => {
 
 const crypto_donation_raw = v.object({
   token: token_fv,
-  ...donor_fv.entries,
   ...tip_fv.entries,
   cover_processing_fee: v.boolean(),
 });
@@ -183,7 +180,6 @@ const stripe_donation_details_raw = v.object({
   amount: amount({ required: true }),
   currency: currency_fv,
   frequency,
-  ...donor_fv.entries,
   ...tip_fv.entries,
   cover_processing_fee: v.boolean(),
 });
@@ -284,9 +280,13 @@ type TFV<T extends TMethod> = T extends "stripe"
 
 export type TMethodState<T extends TMethod> =
   | { type: T; step: "form"; fv?: TFV<T> }
+  /** donor info is set shared among donate methods */
+  | { type: T; step: "donor"; fv: TFV<T> }
   | { type: T; step: "checkout"; fv: TFV<T> };
 
 export type TDonation = Init & {
+  /** may be empty */
+  donor: Donor;
   method: TMethod;
 } & {
   [method in TMethod]?: TMethodState<method>;
@@ -301,9 +301,10 @@ export type State = {
   don_set: StateSetter;
 };
 
-export const back_to_form = <T extends TMethod>(
+export const to_step = <T extends TMethod>(
   type: T,
   curr: TFV<T>,
+  step: "form" | "donor" | "checkout",
   setter: StateSetter
 ) => {
   setter((x) => ({
@@ -311,23 +312,7 @@ export const back_to_form = <T extends TMethod>(
     method: type,
     [type]: {
       type: type,
-      step: "form",
-      fv: curr,
-    },
-  }));
-};
-
-export const to_checkout = <T extends TMethod>(
-  type: T,
-  curr: TFV<T>,
-  setter: StateSetter
-) => {
-  setter((x) => ({
-    ...x,
-    method: type,
-    [type]: {
-      type: type,
-      step: "checkout",
+      step: step,
       fv: curr,
     },
   }));

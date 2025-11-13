@@ -1,26 +1,62 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { rd } from "helpers/decimal";
+import { PROCESSING_RATES } from "constants/common";
+import { rd, ru_vdec } from "helpers/decimal";
+import { min_fee_allowance } from "helpers/donation";
+import { to_atomic } from "helpers/stripe";
 import { useController, useForm } from "react-hook-form";
+import { safeParse } from "valibot";
 import { usd_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
   type StripeDonationDetails as FV,
-  type IUser,
+  type TFrequency,
+  amount as amount_schema,
   stripe_donation_details,
+  tip_val,
 } from "../../types";
 
-export function use_rhf(
-  init: FV | undefined,
-  user: IUser | undefined,
-  hide_bg_tip: boolean
-) {
+export interface ILineItem {
+  name: string;
+  amount_atomic: number;
+}
+export interface IExpress {
+  /** may be empty */
+  frequency: TFrequency;
+  total_usd: number;
+  total_atomic: number;
+  /** includes tip and fee_allowance */
+  total: number;
+  tip: number;
+  fee_allowance: number;
+  items: ILineItem[];
+  currency: string;
+  is_partial: boolean;
+}
+
+/** render  */
+export const express_partial = (
+  currency: string,
+  unit_per_usd: number,
+  frequency: TFrequency
+): IExpress => {
+  return {
+    frequency,
+    is_partial: true,
+    total_usd: 1,
+    tip: 0,
+    fee_allowance: 0,
+    total_atomic: to_atomic(unit_per_usd, currency),
+    total: unit_per_usd,
+    items: [],
+    currency: currency.toLowerCase(),
+  };
+};
+
+export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
   const initial: FV = {
     amount: "",
     currency: usd_option,
-    frequency: "" as FV["frequency"],
-    first_name: user?.first_name || "",
-    last_name: user?.last_name || "",
-    email: user?.email || "",
+    frequency: "one-time",
     tip: "",
     cover_processing_fee: false,
     tip_format: hide_bg_tip ? "none" : "15",
@@ -73,12 +109,75 @@ export function use_rhf(
   };
 
   const tip = watch("tip");
+  const amnt = watch("amount");
+
+  const express = ((...x): IExpress | null => {
+    const [a, c, pf, tf, f] = x;
+
+    if (!c.code) return null;
+
+    const ap = safeParse(amount_schema({ required: true }), a);
+    if (ap.issues) return express_partial(c.code, c.rate, f);
+
+    const amnt = +ap.output;
+    if (amnt < c.min) return express_partial(c.code, c.rate, f);
+
+    const items: ILineItem[] = [
+      {
+        name: "Donation",
+        amount_atomic: to_atomic(amnt, c.code),
+      },
+    ];
+
+    const tipv = tip_val(tf, tip, amnt);
+    if (tipv) {
+      items.push({
+        name: "Donation to Better Giving",
+        amount_atomic: to_atomic(tipv, c.code),
+      });
+    }
+
+    const mfa = pf
+      ? min_fee_allowance(
+          tipv + amnt,
+          PROCESSING_RATES.stripe,
+          PROCESSING_RATES.stripe_flat * c.rate
+        )
+      : 0;
+
+    if (mfa) {
+      items.push({
+        name: "Fee coverage",
+        amount_atomic: to_atomic(mfa, c.code),
+      });
+    }
+
+    const total = amnt + tipv + mfa;
+    const total_usd = total / c.rate;
+    /** total_atomic should match line items */
+    const total_atomic = items
+      .map((x) => x.amount_atomic)
+      .reduce((a, b) => a + b, 0);
+
+    return {
+      frequency: f,
+      tip: tipv,
+      fee_allowance: mfa,
+      is_partial: false,
+      total_usd,
+      total_atomic,
+      total,
+      items,
+      currency: c.code.toLowerCase(),
+    };
+  })(amnt, currency.value, cpf.value, tip_format.value, frequency.value);
 
   return {
     frequency,
     currency,
     amount,
     on_increment,
+    express,
     register,
     handleSubmit,
     setValue,
@@ -88,5 +187,6 @@ export function use_rhf(
     getValues,
     cpf,
     tip,
+    trigger,
   };
 }

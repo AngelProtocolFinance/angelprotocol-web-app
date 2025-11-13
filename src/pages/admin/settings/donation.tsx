@@ -16,6 +16,7 @@ const schema = v.object({
     )
   ),
   hide_bg_tip: v.boolean(),
+  donor_address_required: v.boolean(),
 });
 
 type FV = v.InferInput<typeof schema>;
@@ -23,9 +24,14 @@ type FV = v.InferInput<typeof schema>;
 interface Props {
   receiptMsg: string;
   hide_bg_tip: boolean;
+  donor_address_required: boolean;
 }
 
-export function DonationTab({ receiptMsg, hide_bg_tip }: Props) {
+export function DonationTab({
+  receiptMsg,
+  hide_bg_tip,
+  donor_address_required,
+}: Props) {
   const fetcher = useFetcher<ActionData>();
   use_action_result(fetcher.data);
 
@@ -40,6 +46,7 @@ export function DonationTab({ receiptMsg, hide_bg_tip }: Props) {
     values: {
       receiptMsg: receiptMsg ?? "",
       hide_bg_tip: hide_bg_tip ?? false,
+      donor_address_required: donor_address_required ?? false,
     },
   });
 
@@ -103,6 +110,21 @@ export function DonationTab({ receiptMsg, hide_bg_tip }: Props) {
           donation amount you receive. You may choose to turn this step off in
           the donation flow by ticking the checkbox above and we will instead
           apply a fixed 1.5% fee to any donation amount you receive.
+        </span>
+      </div>
+
+      <div className="grid gap-2">
+        <CheckField
+          {...register("donor_address_required")}
+          classes="font-medium"
+        >
+          Require donor address
+        </CheckField>
+        <span className="text-xs sm:text-sm italic text-gray">
+          Collecting the donor address is not required and adds an additional
+          step for donors before completing their gifts, so we do not normally
+          ask for it. However, if this is information you would like, we can
+          make it a mandatory field before checkout.
         </span>
       </div>
 

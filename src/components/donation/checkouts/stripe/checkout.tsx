@@ -11,7 +11,7 @@ import type {
 import { currency as currencyfn } from "../../common/currency";
 import { Summary } from "../../common/summary";
 import { use_donation } from "../../context";
-import { type StripeDonationDetails, back_to_form, tip_val } from "../../types";
+import { type StripeDonationDetails, tip_val, to_step } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { Loader } from "../loader";
 import { Checkout } from "./checkout-form";
@@ -23,15 +23,8 @@ const fetcher = async (intent: DonationIntent) =>
   }).then<IStripeIntentReturn>((res) => res.json());
 
 export function StripeCheckout(props: StripeDonationDetails) {
-  const {
-    frequency,
-    amount,
-    tip,
-    tip_format,
-    cover_processing_fee,
-    currency,
-    ...donor
-  } = props;
+  const { frequency, amount, tip, tip_format, cover_processing_fee, currency } =
+    props;
   const { don, don_set } = use_donation();
 
   const tipv = tip_val(tip_format, tip, +amount);
@@ -52,20 +45,19 @@ export function StripeCheckout(props: StripeDonationDetails) {
       currency: currency.code,
     },
     recipient: don.recipient.id,
-    donor: { title: "", ...donor },
+    donor: don.donor,
     source: don.source,
     via_id: "fiat",
     via_name: "Stripe",
   };
 
   if (don.program) intent.program = don.program;
-
   const { data, error, isLoading } = use_swr(intent, fetcher);
 
   return (
     <Summary
       classes="grid content-start p-4 @xl/steps:p-8"
-      on_back={() => back_to_form("stripe", props, don_set)}
+      on_back={() => to_step("stripe", props, "donor", don_set)}
       Amount={currencyfn(currency)}
       amount={+amount}
       fee_allowance={mfa}
@@ -101,7 +93,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
             }}
             stripe={stripe_promise}
           >
-            <Checkout {...props} order_id={data.order_id} />
+            <Checkout {...props} donor={don.donor} order_id={data.order_id} />
           </Elements>
         )}
       </ErrorBoundaryClass>

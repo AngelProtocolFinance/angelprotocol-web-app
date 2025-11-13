@@ -1,3 +1,4 @@
+import { donor_address_init, donor_init } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import { Context } from "./context";
 import { CurrentStep } from "./current-step";
@@ -66,8 +67,21 @@ function init_state({
     program,
   };
 
+  const donor_init_prefilled = user
+    ? {
+        ...donor_init,
+        first_name: user.first_name ?? "",
+        last_name: user.last_name ?? "",
+        email: user.email ?? "",
+      }
+    : donor_init;
+
   return {
     ...init,
+    donor: recipient.donor_address_required
+      ? //define with invalid address to force user to fill it out
+        { ...donor_init_prefilled, address: donor_address_init }
+      : donor_init_prefilled,
     method: config?.method_ids?.[0] ?? "stripe",
   };
 }

@@ -4,7 +4,6 @@ import { rd } from "helpers/decimal";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe_envs } from ".server/env";
 import { stripe } from ".server/sdks";
-import { nonsubs_pm, payment_methods } from ".server/stripe/payment-methods";
 
 export async function setup_intent(
   order: IDonationOnHoldAttr,
@@ -23,16 +22,13 @@ export async function setup_intent(
         verification_method: "automatic",
       },
     },
-    payment_method_types: (
-      payment_methods[order.denomination] ?? ["card"]
-    ).filter(nonsubs_pm),
-
     metadata: {
       ...to_metadata(order),
       productId: stripe_envs.subs_product_id,
       subsQuantity: rd(order.usdValue, 0),
     } satisfies IMetadataSubs,
     usage: "off_session",
+    automatic_payment_methods: { enabled: true },
   });
 
   return client_secret || "invalid client secret";

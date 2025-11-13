@@ -1,6 +1,7 @@
 import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
-import { Field, Form as FieldSet } from "components/form";
+import { Form as FieldSet } from "components/form";
+import { type IPrompt, Prompt } from "components/prompt";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
 import { ru_vdec } from "helpers/decimal";
 import { useState } from "react";
@@ -10,15 +11,16 @@ import type { ICurrenciesFv } from "types/currency";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
-import { type TMethodState, to_checkout } from "../../types";
-// import { ExpressCheckout } from "./express-checkout";
+import { type TMethodState, to_step } from "../../types";
+import { ExpressCheckout } from "./express-checkout";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: TMethodState<"stripe">) {
   const [token_q, set_token_q] = useState("");
+  const [prompt, set_prompt] = useState<IPrompt>();
   const { don_set, don } = use_donation();
-  const rhf = use_rhf(props.fv, don.user, don.recipient.hide_bg_tip ?? false);
+  const rhf = use_rhf(props.fv, don.recipient.hide_bg_tip ?? false);
 
   const currency = use_swr(
     href("/api/currencies"),
@@ -68,8 +70,10 @@ export function Form(props: TMethodState<"stripe">) {
 
   return (
     <FieldSet
-      onSubmit={rhf.handleSubmit((fv) => to_checkout("stripe", fv, don_set))}
-      className="grid gap-y-2"
+      onSubmit={rhf.handleSubmit((fv) =>
+        to_step("stripe", fv, "donor", don_set)
+      )}
+      className="flex flex-col h-full gap-y-2"
     >
       <Frequency
         value={rhf.frequency.value}
@@ -160,63 +164,29 @@ export function Form(props: TMethodState<"stripe">) {
       )}
 
       <CpfToggle
-        classes="mt-1"
+        classes="mt-1 mb-4"
         checked={rhf.cpf.value}
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
-
-      {/* <ExpressCheckout
-        classes="mt-4 "
-        amount_cents={100}
-        currency={rhf.currency.value.code.toLowerCase()}
-      /> */}
-
-      <div className="grid mt-2 grid-cols-2 gap-2 content-start">
-        <p className="col-span-full text-sm font-semibold">
-          Payment information
-        </p>
-        <Field
-          {...rhf.register("first_name")}
-          label="First name"
-          placeholder="First Name"
-          required
-          classes={{
-            label: "font-semibold text-base sr-only",
-            input: "py-2",
-          }}
-          error={rhf.errors.first_name?.message}
+      {rhf.express && !prompt && (
+        <ExpressCheckout
+          on_error={(msg) =>
+            set_prompt({ type: "error", children: <p>{msg}</p> })
+          }
+          classes="mt-4"
+          {...rhf.express}
         />
-        <Field
-          {...rhf.register("last_name")}
-          label="Last name"
-          placeholder="Last Name"
-          classes={{
-            input: "py-2",
-            label: "font-semibold text-base sr-only",
-          }}
-          error={rhf.errors.last_name?.message}
-        />
-        <Field
-          {...rhf.register("email")}
-          label="Your Email"
-          placeholder="Your Email"
-          classes={{
-            container: "col-span-full",
-            input: "py-2",
-            label: "font-semibold text-base sr-only",
-          }}
-          error={rhf.errors.email?.message}
-        />
-      </div>
+      )}
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
 
       <button
         disabled={
           currency.isLoading || currency.isValidating || !!currency.error
         }
-        className="mt-2 btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        className="mt-auto font-medium normal-case rounded py-2 btn-blue enabled:bg-(--accent-primary)"
         type="submit"
       >
-        Continue
+        Continue with Card/Bank
       </button>
     </FieldSet>
   );

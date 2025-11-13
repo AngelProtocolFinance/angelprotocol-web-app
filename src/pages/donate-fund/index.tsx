@@ -66,6 +66,7 @@ function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
                 name: fund.name,
                 hide_bg_tip: fund.settings.hide_bg_tip,
                 members: fund.members.map((x) => x.id.toString()),
+                donor_address_required: false,
               }}
               config={{
                 method_ids: fund.settings.donateMethods,

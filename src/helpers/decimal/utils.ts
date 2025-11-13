@@ -68,6 +68,17 @@ export function ru_vdec(
   );
 }
 
+export function rd_vdec(
+  amount: number | string,
+  usd_per_unit: number,
+  max_decimals = 2
+) {
+  return new Dec(amount).toFixed(
+    vdec(usd_per_unit, max_decimals),
+    Dec.ROUND_DOWN
+  );
+}
+
 export function shorten(num: Dec): [Dec, string] {
   if (num.abs().gte(1e9)) {
     return [num.div(1e9), "B"];

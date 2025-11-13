@@ -35,9 +35,9 @@ export const onhold_base = (
     country: intent.donor.address?.country,
     zipCode: intent.donor.address?.zip_code,
     company_name: intent.donor.company_name,
-    donor_message: intent.donor.public_msg,
-    donor_public: intent.donor.is_public,
-    msg_to_npo: intent.donor.msg_to_npo,
+    // donor_message: intent.donor.public_msg, //edited post donation
+    donor_public: true,
+    // msg_to_npo: intent.donor.msg_to_npo, //edited post donation
     ukGiftAid: intent.donor.address?.uk_gift_aid ?? false,
 
     //TO

@@ -4,9 +4,9 @@ import { BackBtn } from "../common/back-btn";
 import { use_donation } from "../context";
 import {
   type StocksDonationDetails,
-  back_to_form,
   is_fund,
   tip_val,
+  to_step,
 } from "../types";
 import { DonationTerms } from "./donation-terms";
 
@@ -24,7 +24,7 @@ export function Stocks(props: StocksDonationDetails) {
     <div className="grid content-start p-4 @xl/steps:p-8">
       <BackBtn
         type="button"
-        onClick={() => back_to_form("stocks", props, don_set)}
+        onClick={() => to_step("stocks", props, "form", don_set)}
       />
       <p className="mt-4 text-center text-gray uppercase">Donation pending</p>
       <p className="mt-4 text-center">

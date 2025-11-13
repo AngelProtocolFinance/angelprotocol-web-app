@@ -36,7 +36,7 @@ export function Summary({ Amount, frequency = "one-time", ...props }: Props) {
       <BackBtn type="button" onClick={props.on_back} />
       <h4 className="flex items-center text-lg gap-2 my-4">
         <ListCheck size={20} />
-        <span className="font-semibold">Your donation summary</span>
+        <span className="font-semibold text-[15px]">Your donation summary</span>
       </h4>
       {props.pre_split_content}
 

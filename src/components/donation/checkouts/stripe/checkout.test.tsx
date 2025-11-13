@@ -6,11 +6,7 @@ import { createRoutesStub } from "react-router";
 import { fiatDonationIntentCreationErrorHandler } from "services/api/mock";
 import { mswServer } from "setup-tests";
 import { describe, expect, test, vi } from "vitest";
-import {
-  type StripeDonationDetails,
-  donor_fv_init,
-  tip_fv_init,
-} from "../../types";
+import { type StripeDonationDetails, tip_fv_init } from "../../types";
 import { StripeCheckout as Checkout } from "./checkout";
 
 const don_set_mock = vi.hoisted(() => vi.fn());
@@ -19,6 +15,11 @@ const don_mock = vi.hoisted(() => ({
   source: "bg-marketplace",
   mode: "live",
   config: null,
+  donor: {
+    email: "john@doe.com",
+    first_name: "John",
+    last_name: "Doe",
+  },
 }));
 vi.mock("../../context", () => ({
   use_donation: vi
@@ -59,7 +60,6 @@ const fv: StripeDonationDetails = {
   currency: { code: "usd", min: 1, rate: 1 },
   frequency: "recurring",
   ...tip_fv_init,
-  ...donor_fv_init,
   cover_processing_fee: false,
 };
 

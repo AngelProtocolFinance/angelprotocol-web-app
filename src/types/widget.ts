@@ -39,13 +39,13 @@ export const widget_fv = v.object({
 
 export interface IWidgetFv extends v.InferInput<typeof widget_fv> {}
 
-const toBool = v.pipe(
+const bool_str = v.pipe(
   v.picklist(["true", "false"] as const),
   v.transform((x) => x === "true")
 );
 
 export const widget_search = v.object({
-  isDescriptionTextShown: v.optional(toBool),
+  isDescriptionTextShown: v.optional(bool_str),
 
   // v2.3 params //
   methods: v.optional(
@@ -57,7 +57,7 @@ export const widget_search = v.object({
   ),
   title: v.optional(title),
   description: v.optional(description),
-  isTitleShown: v.optional(toBool),
+  isTitleShown: v.optional(bool_str),
   accentPrimary: v.optional(v.pipe(str, v.hexColor())),
   accentSecondary: v.optional(v.pipe(str, v.hexColor())),
   programId: v.optional(v.pipe(str, v.uuid())),

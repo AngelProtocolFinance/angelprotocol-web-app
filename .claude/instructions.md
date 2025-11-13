@@ -40,6 +40,7 @@ export const DonationForm = () => { ... };
 ## Code Comments
 
 - **Comments are for code readers only**: Don't add comments intended for the prompter (e.g., "Add your API key here", "TODO: implement this feature"). Only add comments that help someone reading and maintaining the code understand what it does and why
+- **Use lowercase**: Write comments in lowercase as much as possible (e.g., `// submit form and navigate to next step` instead of `// Submit form and navigate to next step`)
 
 ## Development Workflow
 

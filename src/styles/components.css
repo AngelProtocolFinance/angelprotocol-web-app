@@ -237,10 +237,55 @@
       color: var(--color-red);
     }
     &[data-required="false"]::after {
-      content: "(optional)";
+      content: " (optional)";
       color: var(--color-gray);
       font-weight: normal;
       font-size: 0.8em;
     }
+  }
+
+  .label-floating {
+    position: absolute;
+    left: 0;
+    color: var(--accent-primary);
+    transition: transform 0.2s ease-out;
+    background-color: var(--color-white);
+    padding-right: var(--spacing);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-xs);
+    bottom: calc(100% - 0.5lh);
+
+    &[data-required="true"]::after {
+      content: " *";
+      color: var(--color-red);
+    }
+    &[data-required="false"]::after {
+      content: " (optional)";
+      color: var(--color-gray);
+      font-weight: normal;
+      font-size: 0.8em;
+    }
+  }
+
+  /* Floating label state when input is empty (placeholder shown) */
+  input:placeholder-shown + .label-floating {
+    left: calc(var(--spacing) * 4);
+    font-weight: normal;
+    background-color: transparent;
+    bottom: 50%;
+    transform: translateY(50%);
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+  }
+
+  /* When input is focused, apply floating styles even if placeholder shown */
+  input:focus + .label-floating {
+    left: 0;
+    color: var(--accent-primary);
+    font-weight: var(--font-weight-semibold);
+    background-color: var(--color-white);
+    bottom: calc(100% - 0.5lh);
+    transform: translateY(0);
+    font-size: 0.75rem;
   }
 }

@@ -1,34 +1,36 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import type { ReactNode } from "react";
 
-const containerStyle =
-  "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded-sm overflow-y-scroll scroller";
-
 type Props = {
   query: string;
   options: string[];
+  options_style?: Record<string, string | undefined>;
   option_disp: (string: string) => ReactNode;
 };
 
-export function Options({ query, options, option_disp }: Props) {
+export function Options({ query, options, option_disp, options_style }: Props) {
   const filtered = options.filter((o) =>
     o.toLowerCase().includes(query.toLowerCase())
   );
+
   return (
     <ComboboxOptions
-      className={containerStyle}
-      style={{ height: options.length <= 10 ? "auto" : "10rem" }}
+      style={options_style}
+      anchor={{ to: "bottom", gap: 4 }}
+      className="bg-white w-(--input-width) z-10 rounded shadow-2xl/20"
     >
-      {(options.length > 0 &&
-        filtered.map((country) => (
-          <ComboboxOption
-            className="data-selected:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm "
-            key={country}
-            value={country}
-          >
-            {option_disp(country)}
-          </ComboboxOption>
-        ))) || <div className="p-2 text-sm">{query} not found</div>}
+      {query && filtered.length === 0 && (
+        <div className="p-2 text-sm text-gray-d1">{query} not found</div>
+      )}
+      {filtered.slice(0, 5).map((v) => (
+        <ComboboxOption
+          className="data-selected:bg-(--accent-secondary) hover:bg-(--accent-secondary) flex items-center gap-2 p-2 text-sm "
+          key={v}
+          value={v}
+        >
+          {option_disp(v)}
+        </ComboboxOption>
+      ))}
     </ComboboxOptions>
   );
 }

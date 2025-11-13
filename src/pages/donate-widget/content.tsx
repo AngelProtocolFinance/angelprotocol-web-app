@@ -29,6 +29,7 @@ export default function Content({
     name: npo.name,
     hide_bg_tip: npo.hide_bg_tip,
     members: [],
+    donor_address_required: npo.donor_address_required,
   };
 
   const ms: any = config.methods ?? all_method_ids;

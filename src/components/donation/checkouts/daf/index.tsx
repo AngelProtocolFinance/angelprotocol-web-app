@@ -9,17 +9,16 @@ import { error_prompt } from "helpers/error-prompt";
 import { useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { href, useNavigate } from "react-router";
-import type { DonationIntent } from "types/donation-intent";
-import { donor_address } from "types/donation-intent";
+import { type DonationIntent, donor_address } from "types/donation-intent";
 import { safeParse } from "valibot";
 import { currency } from "../../common/currency";
 import { Summary } from "../../common/summary";
 import { use_donation } from "../../context";
 import {
   type DafDonationDetails,
-  back_to_form,
   tip_from_val,
   tip_val,
+  to_step,
 } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { to_platform_values } from "./to-platform-values";
@@ -45,7 +44,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
   return (
     <Summary
       classes="group grid content-start p-4 @xl/steps:p-8 [&_#connectContainer]:mt-8"
-      on_back={() => back_to_form("daf", props, don_set)}
+      on_back={() => to_step("daf", props, "form", don_set)}
       Amount={currency(usd_option)}
       amount={+props.amount}
       fee_allowance={mfa}
@@ -89,7 +88,6 @@ export function ChariotCheckout(props: DafDonationDetails) {
               const meta: GrantMetadata = grantIntent.metadata;
               /** user may input amount different from our donate form */
               const grant_amount: number = grantIntent.amount / 100;
-
               const adj = to_platform_values(grant_amount, meta);
 
               //reflect adjustment to state
@@ -118,7 +116,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
                 via_id: workflowSessionId,
                 via_name: "",
                 amount: { currency: usd_option.code, ...adj },
-                recipient: state.init.recipient.id,
+                recipient: don.recipient.id,
                 donor: {
                   title: "",
                   email: grantor.email,
@@ -127,10 +125,10 @@ export function ChariotCheckout(props: DafDonationDetails) {
                   company_name: "",
                   address: addr.issues ? undefined : addr.output,
                 },
-                source: state.init.source,
+                source: don.source,
               };
 
-              if (state.init.program) intent.program = state.init.program;
+              if (don.program) intent.program = don.program;
 
               set_grant_state("pending");
               const res = await fetch("/api/donation-intents/chariot", {
@@ -143,7 +141,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
               set_prompt(undefined);
 
               const to =
-                state.init.source === "bg-widget"
+                don.source === "bg-widget"
                   ? href("/donate-widget/donations/:id", { id })
                   : href("/donations/:id", { id });
 

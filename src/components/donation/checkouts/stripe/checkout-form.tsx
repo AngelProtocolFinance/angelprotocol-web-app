@@ -10,14 +10,19 @@ import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import { href } from "react-router";
 import { use_donation } from "../../context";
-import type { StripeDonationDetails } from "../../types";
+import type { Donor, StripeDonationDetails } from "../../types";
 import { Loader } from "../loader";
 
 type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 
+interface Props extends StripeDonationDetails {
+  order_id: string;
+  donor: Donor;
+}
+
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export function Checkout(props: StripeDonationDetails & { order_id: string }) {
+export function Checkout(props: Props) {
   const { don } = use_donation();
   const [complete, set_complete] = useState(false);
   const [prompt, set_prompt] = useState<IPrompt>();
@@ -90,8 +95,8 @@ export function Checkout(props: StripeDonationDetails & { order_id: string }) {
           layout: "tabs",
           defaultValues: {
             billingDetails: {
-              name: `${props.first_name} ${props.last_name}`,
-              email: props.email,
+              name: `${props.donor.first_name} ${props.donor.last_name}`,
+              email: props.donor.email,
             },
           },
         }}
