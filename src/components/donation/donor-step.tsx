@@ -43,8 +43,8 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
   });
 
   const opts_style: Record<string, string | undefined> = {
-    "--accent-primary": don.config?.accentPrimary,
-    "--accent-secondary": don.config?.accentSecondary,
+    "--accent-primary": don.config?.accent_primary,
+    "--accent-secondary": don.config?.accent_secondary,
   };
 
   return (

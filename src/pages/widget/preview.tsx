@@ -5,8 +5,8 @@ import { type Config, Steps, type TDonation } from "components/donation";
 import { Image } from "components/image/image";
 import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
-import type { IWidgetFv } from "types/widget";
 import { donor_address_init, donor_init } from "types/donation-intent";
+import type { IWidgetFv } from "types/widget";
 
 type Props = {
   classes?: string;
