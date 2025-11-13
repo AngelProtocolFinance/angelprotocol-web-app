@@ -87,7 +87,9 @@ async function verify_webhook_signature(
     }
 
     const crc_value = crc32(raw_body_buffer);
-    const message = `${transmission_id}|${timestamp}|${webhook_id}|${crc_value}`;
+    const message = [transmission_id, timestamp, webhook_id, crc_value].join(
+      "|"
+    );
 
     const cert = await download_and_cache_cert(cert_url);
     const verifier = crypto.createVerify("SHA256");
@@ -132,7 +134,6 @@ async function process_webhook_event(event: PayPalWebhookEvent): Promise<void> {
         event as PaymentCaptureCompletedEvent
       );
       break;
-
     case "PAYMENT.CAPTURE.DENIED":
       console.info("[paypal webhook] payment capture denied:", event.id);
       break;
