@@ -19,20 +19,20 @@ export function Ctas({ classes = "" }) {
           transition={{ type: "spring" }}
         >
           <h3 className="text-2xl max-md:text-center md:text-3xl mb-2">
-            Your donations, your way.
+            Your gifts, your way.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            Access funds anytime. Send donations straight to your bank, earn
-            3–4% in savings, or grow long-term through the Sustainability Fund;
-            your choice, flexible to your needs, and entirely free. No setup
-            costs, AUM fees, or performance fees.
+            Access funds anytime. Send gifts straight to your bank, earn 3–4% in
+            savings, or grow long-term through our USCCB-aligned investment
+            fund; your choice, flexible to your needs, and entirely free. No
+            setup costs, AUM fees, or performance fees.
           </p>
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
               className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}
@@ -79,7 +79,7 @@ export function Ctas({ classes = "" }) {
               to={href("/register/welcome")}
               className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}

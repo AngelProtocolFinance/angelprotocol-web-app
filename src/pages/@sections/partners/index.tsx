@@ -16,7 +16,7 @@ interface Props {
 
 export function Partners({
   classes = "",
-  of_what = "nonprofits, faith charities, schools and universities",
+  of_what = "Catholic parishes, schools, dioceses, and ministries worldwide",
 }: Props) {
   return (
     <section

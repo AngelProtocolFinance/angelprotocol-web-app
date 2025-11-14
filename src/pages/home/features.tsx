@@ -28,13 +28,13 @@ interface IFeature {
 const features: IFeature[] = [
   {
     id: 1,
-    title: "Recurring Donations",
+    title: "Recurring Gifts",
     icon: <RefreshCcw className="text-blue-d1" />,
-    body: "Stabilize revenue – Ensure predictable, ongoing support with automated recurring donations.",
+    body: "Stabilize revenue – Ensure predictable, ongoing support with automated recurring gifts.",
   },
   {
     id: 2,
-    title: "Multiple Donation Types",
+    title: "Multiple Gift Types",
     icon: <Shapes className="text-blue-d1" />,
     body: "Flexible Contributions - Accept cash, credit, bank transfers, crypto, stock and donor-advised funds (DAFs).",
   },
@@ -42,7 +42,7 @@ const features: IFeature[] = [
     id: 3,
     title: "Global Donor Access",
     icon: <Globe className="text-blue-d1" />,
-    body: "Expand reach – Accept donations worldwide with localized multi-currency support.",
+    body: "Expand reach – Accept gifts worldwide with localized multi-currency support.",
   },
   {
     id: 4,
@@ -72,7 +72,7 @@ const features: IFeature[] = [
     id: 8,
     title: "Donors Covering Processing Fees",
     icon: <CreditCard className="text-blue-d1" />,
-    body: "Full donations – 95% of donors choose to cover transaction fees so nonprofits receive 100% of the gift.",
+    body: "Full gifts – 95% of donors choose to cover transaction fees so nonprofits receive 100% of the gift.",
   },
   {
     id: 9,
@@ -90,7 +90,7 @@ const features: IFeature[] = [
     id: 11,
     title: "Conversion-Optimized UI/UX",
     icon: <MousePointer className="text-blue-d1" />,
-    body: "Maximize donations – An intuitive, user-friendly interface increases completed donations.",
+    body: "Maximize gifts – An intuitive, user-friendly interface increases completed gifts.",
   },
   {
     id: 13,
@@ -129,8 +129,8 @@ export function Features({ classes = "" }) {
           Smarter Tools for seamless fundraising
         </h2>
         <p className="text-lg text-center xl:text-left">
-          Raise funds, grow donations, and secure financial stability—all with
-          no platform fees.
+          Raise funds, grow gifts, and secure financial stability—all with no
+          platform fees.
         </p>
       </motion.header>
       <ul className="contents">

@@ -55,17 +55,17 @@ export function Ctas({ classes = "" }) {
             We help you raise more.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">
-              Conversion-optimized donation flow
-            </span>
-            : fewer clicks, express checkout, all gift types in one form—plus
-            easy embedding to lift completion and grow monthly donors.
+            <span className="font-bold">Conversion-optimized gift flow</span>:
+            fewer clicks, express checkout, all gift types in one form—plus easy
+            embedding to lift completion and grow recurring givers. Label funds
+            as needed for Offertory, Second Collections, Appeals, Building Fund,
+            School, Ministries, etc.
           </p>
           <Link
             to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
         <BlurImg
@@ -91,16 +91,16 @@ export function Ctas({ classes = "" }) {
             We grow what you raise.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">Let your donations work for you</span>:
-            High-yield savings (FDIC-insured) and a managed option averaging
-            over 20% annually across the last 5 years (past performance isn't
-            guaranteed).
+            <span className="font-bold">Let your gifts work for you</span>:
+            High-yield savings (FDIC-insured) and a USCCB-aligned investment
+            option averaging over 24% annually across the last 5 years (past
+            performance isn't guaranteed).
           </p>
           <Link
             to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
       </article>
@@ -117,15 +117,15 @@ export function Ctas({ classes = "" }) {
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">Stop turning donors away</span>: Accept
-            stock & crypto in the same secure flow—no extra systems, no added
-            admin, no extra cost, just cash in your bank account and tax
-            benefits for your donors.
+            stock, crypto and DAF gifts in the same secure flow—no extra
+            systems, no added admin, no extra cost, just cash in your bank
+            account and tax benefits for your donors.
           </p>
           <Link
             to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
         <BlurImg
@@ -161,7 +161,7 @@ export function Ctas({ classes = "" }) {
             to={href("/register/welcome")}
             className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
       </article>

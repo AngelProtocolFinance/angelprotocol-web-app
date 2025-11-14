@@ -51,8 +51,8 @@ export function Stats({ classes = "" }) {
       >
         <CountUp end={6} suffix=" Million+" />
         <p className="max-w-md text-center mt-2 text-lg">
-          Raised across crypto, stock, DAF, and card donations for nonprofit
-          members.
+          Gifts processed across card, bank, stock, crypto, and DAF giving
+          methods
         </p>
       </motion.article>
       <motion.article
@@ -64,7 +64,7 @@ export function Stats({ classes = "" }) {
       >
         <CountUp end={24} suffix="%" />
         <p className="max-w-md text-center mt-2 text-lg">
-          5-year average fund return through the Sustainability Fund.
+          Avg annual investment returns, faithful to USCCB guidelines
         </p>
       </motion.article>
       <motion.article
@@ -74,9 +74,9 @@ export function Stats({ classes = "" }) {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring", delay: 0.2 }}
       >
-        <CountUp end={18000} suffix="+" />
+        <CountUp end={5} suffix="+" />
         <p className="max-w-md text-center mt-2 text-lg">
-          Causes discoverable across the {APP_NAME} directory.
+          Years providing free Catholic giving & fund management solutions
         </p>
       </motion.article>
     </div>

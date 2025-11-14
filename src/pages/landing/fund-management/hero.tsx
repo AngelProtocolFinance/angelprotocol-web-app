@@ -13,7 +13,7 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.1 }}
       >
-        Fund Management Solutions
+        Faithful Fund Management
       </motion.p>
       <motion.h1
         className="mx-auto capitalize hero-heading text-center mb-8 px-6 "
@@ -21,8 +21,8 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.2 }}
       >
-        Make Your Donations Work for You: <br />
-        Automatic Savings & Growth
+        Make Your Gifts Work for the Church: <br />
+        Savings & Catholic-Aligned Growth
       </motion.h1>
       <motion.p
         className="px-6 font-medium section-body max-w-5xl mx-auto max-md:block text-center"
@@ -30,9 +30,9 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.3 }}
       >
-        Your donors trust you with their gifts. Now you can trust those funds to
-        grow safely earning high-yield interest while remaining accessible
-        whenever your nonprofit needs them.
+        Your parishioners trust you with their gifts. Steward those funds
+        prudently with FDIC-insured savings and an investment fund driven by
+        Catholic values (USCCB-aligned).
       </motion.p>
 
       <img

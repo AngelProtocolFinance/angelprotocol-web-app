@@ -23,7 +23,7 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.1 }}
       >
-        By a nonprofit, for nonprofits
+        By a nonprofit, for the Church
       </motion.p>
       <motion.h1
         className="mx-auto capitalize hero-heading text-center mb-8 px-6 "
@@ -31,7 +31,7 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.2 }}
       >
-        Raise more this quarter, <br /> Grow funds together
+        Increase Catholic giving, <br /> grow funds faithfully
       </motion.h1>
       <motion.p
         className="px-6 font-medium text-gray-d1 max-w-5xl mx-auto max-md:block md:text-2xl text-center sm:text-balance"
@@ -39,10 +39,9 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.3 }}
       >
-        When you sign up, you're a {APP_NAME} Member, no extra steps, no fees.
-        Our high-converting donation flow lifts completed gifts and monthly
-        donors. Savings and a pooled Sustainability Fund build reserves over
-        time.
+        Grow mission capacity with a high-converting giving form that lifts
+        completed gifts and recurring support. Steward wisely with high-yield
+        savings and a USCCB-aligned investment fund. Simple setup, free forever.
       </motion.p>
 
       <MLink
@@ -52,7 +51,7 @@ export const Hero = ({ classes = "" }) => {
         to={href("/register/welcome")}
         className="justify-self-center mt-8 btn-blue active:translate-x-1 items-center font-bold shadow-2xl inline-flex px-10 py-3 gap-1 rounded-full text-lg "
       >
-        Join us today!
+        Sign Up Now
       </MLink>
     </section>
   );

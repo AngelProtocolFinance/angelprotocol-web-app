@@ -9,29 +9,38 @@ export function FiscalSponsorship({ className = "" }) {
     >
       <div className="grid max-w-2xl order-2 @6xl:order-1">
         <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center @6xl:text-left">
-          Borderless Donations
+          Catholic Fiscal Sponsorship: Fund Mission Work at Home and Abroad
         </h4>
         <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-gray-d4">
-          Globally Inclusive: We support all nonprofits and NGOs, regardless of
-          their size or location
+          Accept U.S. tax-deductible gifts for Catholic mission work—worldwide.
         </h1>
-        <p className="mb-10 text-gray text-lg @6xl:text-xl text-center @6xl:text-left">
-          At Better Giving, we recognize that many grassroots organizations,
-          especially those outside the US, struggle to access IRS tax-exempt
-          status and benefit from US donor support. Our fiscal sponsorship
-          program helps bridge this gap, allowing these organizations to receive
-          tax-deductible donations while we handle the legal and tax
-          complexities for them.
-          <br />
-          <br />
-          To obtain fiscal sponsorship, simply register your nonprofit below!
+        <p className="mb-6 text-gray text-lg @6xl:text-xl text-center @6xl:text-left">
+          Many parishes support sister parishes and mission projects outside the
+          U.S. Offeria's Catholic fiscal sponsorship lets your partner
+          ministries receive U.S. tax-deductible gifts while we handle the
+          legal, tax, and compliance work—so your global mission can move
+          forward without obstacles.
         </p>
+        <div className="mb-10 text-gray text-lg @6xl:text-xl text-center @6xl:text-left">
+          <p className="font-bold mb-2">What you get:</p>
+          <ul className="list-disc list-inside space-y-1">
+            <li>
+              Giving infrastructure from day one (recurring gifts, campaigns,
+              stock & crypto)
+            </li>
+            <li>Compliance handled (U.S. receipting, reporting)</li>
+            <li>
+              Mission-abroad ready (works for sister parishes and Catholic
+              outreach outside the U.S.)
+            </li>
+          </ul>
+        </div>
 
         <Link
           to={href("/register/welcome")}
           className="justify-self-center text-center @6xl:justify-self-start btn btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50 uppercase"
         >
-          Unlock a new world of donors
+          Apply for Catholic Fiscal Sponsorship
         </Link>
       </div>
       <Image

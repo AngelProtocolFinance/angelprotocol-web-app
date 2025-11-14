@@ -20,16 +20,17 @@ export function Products({ classes = "" }) {
           Raise funds easily. <br /> Grow them effortlessly.
         </h2>
         <p className="mb-10 text-lg xl:text-xl text-center xl:text-left">
-          From high-converting donation forms to growth through Savings and a
-          Sustainability Fund, plus global fiscal sponsorship. {APP_NAME} is
-          built by and for nonprofits. Free-no platform or fund-management fees.
+          From high-converting giving forms to Catholic fund management and
+          global fiscal sponsorship for mission work, Offeria is built by and
+          for the Church faithful. Free forever—no platform or fund-management
+          fees.
         </p>
 
         <Link
           to={href("/register/welcome")}
           className="btn btn-blue justify-self-center normal-case xl:justify-self-start px-10 py-3 xl:text-lg shadow-blue/30 hover:shadow-blue/50 active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
-          Join us today!
+          Sign Up Now
         </Link>
       </div>
       <Video
