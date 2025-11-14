@@ -3,7 +3,7 @@ import type { ActionFunction } from "react-router";
 import { handler_order } from "./handle-order";
 import { verified_body } from "./helpers";
 import type { TWebhookEvent } from "./types";
-import { onholddb } from ".server/aws/db";
+import { dondb, onholddb } from ".server/aws/db";
 import { paypal_orders } from ".server/sdks";
 import { is_resp } from ".server/utils";
 
@@ -26,8 +26,14 @@ export const action: ActionFunction = async ({ request }) => {
       }
       case "PAYMENT.CAPTURE.COMPLETED": {
         const order_id = ev.resource.supplementary_data.related_ids.order_id;
-        const onhold = await onholddb.item(order_id);
-        if (onhold) return resp.status(201, "order is already processed");
+        const [x, y] = await Promise.all([
+          dondb.item(order_id),
+          onholddb.item(order_id),
+        ]);
+
+        if (x || y) {
+          return resp.status(201, "order is already processed");
+        }
 
         const { result: order } = await paypal_orders.getOrder({
           id: order_id,
