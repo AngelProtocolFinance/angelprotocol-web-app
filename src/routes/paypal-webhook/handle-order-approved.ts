@@ -29,26 +29,24 @@ export async function handle_checkout_order_approved(
   const breakdown = c.sellerReceivableBreakdown;
   if (!breakdown) return resp.status(201, "no breakdown");
 
-  const fee = breakdown.paypalFeeInReceivableCurrency?.value ?? 0;
-  if (!fee) return resp.status(201, "no fee value");
+  const fee = breakdown.paypalFee?.value ?? "0";
 
-  const net = breakdown.receivableAmount?.value ?? 0;
-  if (!net) return resp.status(201, "no net value");
+  const net_usd = breakdown.receivableAmount?.value ?? "0";
+  if (!net_usd) return resp.status(201, "no net value");
 
   const rate = breakdown?.exchangeRate?.value;
   if (!rate) return resp.status(201, "no exchange rate");
 
   const amnt_usd = +rate * +amnt;
+  const fee_usd = +rate * +fee;
 
   const { env, ...ids } = to_ids(p.customId);
 
-  let to_id: string | null = null;
   let tip = 0;
   let fee_allowance = 0;
 
   for (const item of p.items) {
     if (item.sku?.startsWith("to-")) {
-      to_id = item.sku.slice(3);
       if (item.sku === "tip") {
         tip = Number.parseFloat(item.unitAmount.value);
       }
@@ -57,9 +55,8 @@ export async function handle_checkout_order_approved(
       }
     }
   }
-  if (!to_id) return resp.status(201, "no recipient found");
   const recipient = await get_recipient(
-    UUID_REGEX.test(to_id) ? to_id : +to_id
+    UUID_REGEX.test(ids.recipient) ? ids.recipient : +ids.recipient
   );
   if (!recipient) return resp.status(201, "invalid recipient");
 
@@ -139,8 +136,8 @@ export async function handle_checkout_order_approved(
   await onholddb.put(x);
 
   const settled: Settled = {
-    fee: +fee,
-    net: +net,
+    fee: +fee_usd,
+    net: +net_usd,
     in: { currency: c.amount.currencyCode, hash: c.id, id: "paypal" },
   };
 
