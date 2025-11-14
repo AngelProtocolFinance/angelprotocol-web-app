@@ -1,19 +1,21 @@
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
+import type { Order } from "@paypal/paypal-server-sdk";
 import { resp } from "helpers/https";
 import { to_ids } from "types/paypal";
 import { UUID_REGEX } from "valibot";
 import { type Settled, to_final } from "../helpers/donation";
-import type { IEventOrderApproved } from "./types";
 import { onholddb } from ".server/aws/db";
 import { get_recipient } from ".server/donation-recipient";
-import { paypal_orders, qstash } from ".server/sdks";
+import { qstash } from ".server/sdks";
 
-export async function handle_checkout_order_approved(
-  event: IEventOrderApproved,
+export async function handler_order(
+  order: Order,
   base_url: string
 ): Promise<Response> {
-  const { result } = await paypal_orders.getOrder({ id: event.resource.id });
-  const p = result.purchaseUnits?.[0];
+  if (!order.id) return resp.status(201, "no order id");
+  if (!order.createTime) return resp.status(201, "no create time");
+
+  const p = order.purchaseUnits?.[0];
 
   if (!p) return resp.status(201, "no purchase units");
   if (!p.items) return resp.status(201, "no items");
@@ -61,7 +63,7 @@ export async function handle_checkout_order_approved(
   if (!recipient) return resp.status(201, "invalid recipient");
 
   // only one source expected
-  const source = result.paymentSource?.paypal || result.paymentSource?.venmo;
+  const source = order.paymentSource?.paypal || order.paymentSource?.venmo;
   const email = source?.emailAddress;
   if (!email) return resp.status(201, "no payer email");
 
@@ -79,8 +81,8 @@ export async function handle_checkout_order_approved(
 
   const x: IDonationOnHoldAttr = {
     // Transaction details
-    transactionDate: event.resource.create_time,
-    transactionId: event.resource.id,
+    transactionDate: order.createTime,
+    transactionId: order.id,
     status: "pending",
     network: env,
 

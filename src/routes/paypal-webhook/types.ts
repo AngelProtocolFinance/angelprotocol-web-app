@@ -1,27 +1,10 @@
-interface IMoney {
-  value: string;
-  currency_code: string;
-}
-
-interface IExchangeRate {
-  /** uppercase */
-  source_currency: string;
-  /** lowercase */
-  target_currency: string;
-  /** usd per unit */
-  value: string;
-}
-
-interface IBreakdown {
-  exchange_rate: IExchangeRate;
-  gross_amount: IMoney;
-  paypal_fee: IMoney;
-  net_amount: IMoney;
-}
-
 export interface ICapture {
   id: string;
-  seller_receivable_breakdown: IBreakdown;
+  supplementary_data: {
+    related_ids: {
+      order_id: string;
+    };
+  };
 }
 
 interface IOrder {
@@ -40,5 +23,13 @@ export interface IEventOrderApproved {
   event_type: "CHECKOUT.ORDER.APPROVED";
   resource: IOrder;
 }
+export interface IEventOther {
+  id: string;
+  event_type: string;
+  resource: any;
+}
 
-export type TWebhookEvent = IEventCaptureCompleted | IEventOrderApproved;
+export type TWebhookEvent =
+  | IEventCaptureCompleted
+  | IEventOrderApproved
+  | IEventOther;
