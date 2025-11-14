@@ -78,7 +78,7 @@ export function FsaForm(props: Props) {
         className="mt-10"
         label={
           <Label className="mb-2 font-semibold" required>
-            Proof of registration as a 501(c)(3) nonprofit or equivalent
+            Proof of registration as a 501(c)(3) organization or equivalent
           </Label>
         }
         value={por.value}
@@ -93,7 +93,7 @@ export function FsaForm(props: Props) {
         usually be found in your registration/organizing document"
         required
         classes={{ container: "mb-2 mt-10" }}
-        placeholder="e.g. Nonprofit Organization"
+        placeholder="e.g. Catholic Organization"
         error={errors.o_legal_entity_type?.message}
       />
 
