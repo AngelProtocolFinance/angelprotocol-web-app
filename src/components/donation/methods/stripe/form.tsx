@@ -1,13 +1,16 @@
 import { CloseButton, ComboboxOption } from "@headlessui/react";
+import { usd_option } from "components/donation/common/constants";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
 import { Form as FieldSet } from "components/form";
 import { type IPrompt, Prompt } from "components/prompt";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
+import { env } from "constants/env";
 import { ru_vdec } from "helpers/decimal";
 import { useState } from "react";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
 import type { ICurrenciesFv } from "types/currency";
+import { to_custom_id } from "types/paypal";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
@@ -21,7 +24,23 @@ export function Form(props: TMethodState<"stripe">) {
   const [token_q, set_token_q] = useState("");
   const [prompt, set_prompt] = useState<IPrompt>();
   const { don_set, don } = use_donation();
-  const rhf = use_rhf(props.fv, don.recipient.hide_bg_tip ?? false);
+
+  const fv = props.fv || {
+    amount: "",
+    currency: usd_option,
+    frequency: "one-time",
+    tip: "",
+    cover_processing_fee: false,
+    tip_format: don.recipient.hide_bg_tip ? "none" : "15",
+  };
+
+  const custom_id = to_custom_id({
+    env: env === "production" ? "production" : "staging",
+    recipient: don.recipient.id,
+    program: don.program ? don.program.id : "nil",
+    source: don.source,
+  });
+  const rhf = use_rhf(fv, custom_id);
 
   const currency = use_swr(
     href("/api/currencies"),
@@ -178,7 +197,9 @@ export function Form(props: TMethodState<"stripe">) {
           {...rhf.stripe_express}
         />
       )}
-      {rhf.paypal_express && <Paypal {...rhf.paypal_express} />}
+      {rhf.paypal_express && rhf.paypal_express.frequency === "one-time" && (
+        <Paypal {...rhf.paypal_express} />
+      )}
 
       <button
         disabled={

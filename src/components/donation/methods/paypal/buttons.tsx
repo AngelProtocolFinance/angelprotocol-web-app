@@ -37,6 +37,7 @@ export function Paypal({ classes = "", ...p }: Props) {
               intent: "CAPTURE",
               purchase_units: [
                 {
+                  custom_id: p.custom_id,
                   amount: {
                     currency_code: p.currency,
                     value: p.total,
@@ -55,11 +56,11 @@ export function Paypal({ classes = "", ...p }: Props) {
                       value: x.amnt,
                     },
                     category: "DONATION",
+                    sku: x.id,
                   })),
                 },
               ],
             });
-            console.log({ order_id });
             return order_id;
           }}
           fundingSource="paypal"

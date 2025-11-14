@@ -1,6 +1,6 @@
 import type { IAllocation } from "@better-giving/donation/schema";
 import type { IIncrement } from "@better-giving/schemas";
-import { EMAIL_SUPPORT, IS_TEST } from "./env";
+import { EMAIL_SUPPORT } from "./env";
 
 export const GENERIC_ERROR_MESSAGE = `An unexpected error occurred and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
@@ -22,7 +22,6 @@ export const DONATION_INCREMENTS: IIncrement[] = [
   { value: "200", label: "" },
   { value: "400", label: "" },
 ];
-export const BG_ID = IS_TEST ? 8 : 1;
 
 export const default_allocation: IAllocation = {
   liq: 100,
