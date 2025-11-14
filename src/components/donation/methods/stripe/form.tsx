@@ -169,16 +169,16 @@ export function Form(props: TMethodState<"stripe">) {
         checked={rhf.cpf.value}
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
-      {rhf.express && !prompt && (
+      {rhf.stripe_express && !prompt && (
         <ExpressCheckout
           on_error={(msg) =>
             set_prompt({ type: "error", children: <p>{msg}</p> })
           }
           classes="mt-4"
-          {...rhf.express}
+          {...rhf.stripe_express}
         />
       )}
-      <Paypal />
+      {rhf.paypal_express && <Paypal {...rhf.paypal_express} />}
 
       <button
         disabled={

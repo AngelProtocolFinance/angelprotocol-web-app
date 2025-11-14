@@ -117,7 +117,7 @@ async function download_and_cache_cert(cert_url: string): Promise<string> {
 }
 
 async function verify_webhook_signature(
-  raw_body_buffer: Buffer,
+  body: string,
   headers: PayPalWebhookHeaders
 ): Promise<boolean> {
   try {
@@ -138,8 +138,8 @@ async function verify_webhook_signature(
       return false;
     }
 
-    const crc_value = crc32(raw_body_buffer);
-    const message = [transmission_id, timestamp, webhook_id, crc_value].join(
+    const crc_body = crc32(body);
+    const message = [transmission_id, timestamp, webhook_id, crc_body].join(
       "|"
     );
 
@@ -239,10 +239,7 @@ async function process_webhook_event(event: PayPalWebhookEvent): Promise<void> {
 
 export const action: ActionFunction = async ({ request }) => {
   try {
-    const array_buffer = await request.arrayBuffer();
-    const raw_body_buffer = Buffer.from(array_buffer);
-    const raw_body = raw_body_buffer.toString("utf8");
-
+    const body_json_str = await request.text();
     const headers = {
       "paypal-transmission-id":
         request.headers.get("paypal-transmission-id") || "",
@@ -254,14 +251,14 @@ export const action: ActionFunction = async ({ request }) => {
       "paypal-auth-algo": request.headers.get("paypal-auth-algo") || "",
     };
 
-    const event = JSON.parse(raw_body) as PayPalWebhookEvent;
+    const event = JSON.parse(body_json_str) as PayPalWebhookEvent;
 
     console.info("[paypal webhook] received:", {
       event_id: event.id,
       event_type: event.event_type,
     });
 
-    const is_valid = await verify_webhook_signature(raw_body_buffer, headers);
+    const is_valid = await verify_webhook_signature(body_json_str, headers);
 
     if (!is_valid) {
       console.error("[paypal webhook] invalid signature for event:", event.id);
