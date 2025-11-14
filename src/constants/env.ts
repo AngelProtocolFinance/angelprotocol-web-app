@@ -12,7 +12,7 @@ export const IS_TEST = env === "dev";
 export const SEO_IMAGE =
   "https://charity-profile-images.s3.amazonaws.com/bettergiving-favicon-min.png";
 export const EMAIL_SUPPORT = "support@better.giving";
-export const APP_NAME = "Better Giving";
+export const APP_NAME = "Offeria";
 export const BASE_URL = `https://${IS_TEST ? "staging." : ""}better.giving`;
 export const BOOK_A_DEMO =
   "https://meetings-eu1.hubspot.com/chauncey-st-john/better-giving-nonprofit-demo";

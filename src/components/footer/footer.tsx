@@ -1,4 +1,4 @@
-import dappLogo from "assets/images/bg-logo-503c.webp";
+import dappLogo from "assets/images/offeria-logo-text-501c3.png";
 import { ExtLink } from "components/ext-link";
 import { INTERCOM_HELP } from "constants/env";
 import { guidestar } from "constants/urls";
@@ -77,10 +77,14 @@ export function Footer({ classes = "" }: Props) {
 function Copyright({ classes = "" }) {
   return (
     <p className={`text-[0.93rem] text-gray ${classes}`}>
-      <span>© Copyright {new Date().getFullYear()} Better&nbsp;Giving</span>
+      <span>© Copyright {new Date().getFullYear()} Offeria</span>
       <br className="xl:hidden" />
       <span className="hidden xl:inline">,</span>
-      <span> a Registered Charitable 501(c)(3) (EIN 87-3758939)</span>
+      <span>
+        {" "}
+        a d/b/a of Better Giving Inc., a Registered Charitable 501(c)(3) (EIN
+        87-3758939)
+      </span>
     </p>
   );
 }

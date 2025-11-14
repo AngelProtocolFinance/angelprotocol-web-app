@@ -10,8 +10,8 @@ interface Meta {
 }
 
 export const metas = ({
-  title = `Fundraising Platform for Nonprofits - ${APP_NAME}`,
-  description = `Raise more this quarter and grow funds together. ${APP_NAME} offers free, high-converting donation forms, savings, and fund growth tools—no platform or management fees.`,
+  title = `Catholic Giving: Faithful online gift processing and fund management | ${APP_NAME}`,
+  description = `Increase Catholic giving, grow funds faithfully. ${APP_NAME} offers free, high-converting giving forms, USCCB-aligned savings, and faithful fund growth tools—no platform or management fees.`,
   image = SEO_IMAGE,
   url = BASE_URL,
 }: Meta): MetaDescriptor[] => [

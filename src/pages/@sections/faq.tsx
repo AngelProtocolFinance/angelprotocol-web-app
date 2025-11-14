@@ -25,10 +25,10 @@ export const faqs = [
   {
     id: 0,
     question:
-      "Are Better Giving’s fundraising solutions really free? How do you sustain your operations?",
+      "Are Offeria's fundraising solutions really free? How do you sustain your operations?",
     paragraphs: [
       <p>
-        Yes, Better Giving’s fundraising solutions and donation processing are
+        Yes, Offeria's fundraising solutions and donation processing are
         completely free: we grant out 100% of all donations, and you pay no
         costs at any time. We rely on optional donor contributions during
         checkout for support, allowing us to provide free services to nonprofits
@@ -62,14 +62,14 @@ export const faqs = [
   },
   {
     id: 2,
-    question: "How quickly can I start fundraising with Better Giving?",
+    question: "How quickly can I start fundraising with Offeria?",
     paragraphs: [
       <p>
-        With Better Giving, you can start accepting donations almost
-        immediately. Our setup process is quick and user-friendly—many
-        nonprofits are up and running within a day. Easily add your donation
-        form to your website or share your custom fundraising page to start
-        receiving donations from day one.
+        With Offeria, you can start accepting donations almost immediately. Our
+        setup process is quick and user-friendly—many nonprofits are up and
+        running within a day. Easily add your donation form to your website or
+        share your custom fundraising page to start receiving donations from day
+        one.
       </p>,
       <p className="italic">
         Start raising funds fast without the hassle of complex setup processes.
@@ -98,7 +98,7 @@ export const faqs = [
     question: "How does your platform reduce administrative burdens?",
     paragraphs: [
       <p>
-        Better Giving takes care of all the heavy lifting when it comes to tax
+        Offeria takes care of all the heavy lifting when it comes to tax
         reporting, donor receipts, and compliance. Once your donations are
         processed, we automatically send receipts to donors, simplifying your
         record-keeping. Additionally, our embeddable forms integrate seamlessly
@@ -172,7 +172,7 @@ export const faqs = [
   {
     id: 8,
     question:
-      "Are there any fees for using Better Giving’s fund management solutions?",
+      "Are there any fees for using Offeria's fund management solutions?",
     paragraphs: [
       <p>
         Our optional fund management solutions are provided with no setup costs
@@ -189,13 +189,13 @@ export const faqs = [
   },
   {
     id: 9,
-    question: "Can international nonprofits and NGOs use Better Giving?",
+    question: "Can international nonprofits and NGOs use Offeria?",
     paragraphs: [
       <p>
-        Yes, Better Giving supports charitable organizations all around the
-        world. Our platform offers fiscal sponsorship to help organizations
-        outside the U.S. access U.S. grants and donations while also simplifying
-        tax compliance. With our global reach, you can accept donations from
+        Yes, Offeria supports charitable organizations all around the world. Our
+        platform offers fiscal sponsorship to help organizations outside the
+        U.S. access U.S. grants and donations while also simplifying tax
+        compliance. With our global reach, you can accept donations from
         anywhere in the world in multiple currencies. As a nonprofit, we charge
         a cost-leading 2.9% for these services to keep them affordable for
         organizations of all sizes.
@@ -215,7 +215,7 @@ export const faqs = [
         and manage donations for a non-US charity (the sponsee).
       </p>,
       <p>
-        With Better Giving as your sponsor, your organization can accept
+        With Offeria as your sponsor, your organization can accept
         tax-deductible US donations without forming a US nonprofit.
       </p>,
       <p>
@@ -225,7 +225,7 @@ export const faqs = [
         $499B+ giving market.
         <br />
         <span className="font-medium">Save time and money:</span> No setup
-        costs—Better Giving's 2.9% fee is paid by the donor.
+        costs—Offeria's 2.9% fee is paid by the donor.
         <br />
         <span className="font-medium">Build credibility:</span> Partner with a
         trusted US nonprofit.
@@ -240,8 +240,7 @@ export const faqs = [
     question: "How much does Fiscal Sponsorship cost?",
     paragraphs: [
       <p>
-        The Better Giving Fiscal Sponsorship service costs just 2.9% of each
-        donation.
+        The Offeria Fiscal Sponsorship service costs just 2.9% of each donation.
       </p>,
       <p>
         No upfront or membership fees
@@ -252,7 +251,7 @@ export const faqs = [
         This is well below the industry average of 4–10% for similar services
       </p>,
       <p>
-        Better Giving is completely free to join. There are no setup fees,
+        Offeria is completely free to join. There are no setup fees,
         subscriptions, or annual costs — you can start accepting donations right
         away at no charge.
       </p>,
@@ -263,13 +262,13 @@ export const faqs = [
     question: "How do I ensure my donations are safe?",
     paragraphs: [
       <p>
-        Better Giving is a nonprofit ourselves, committed to financial
-        transparency. Our platform is integrated with trusted financial partners
-        such as Fidelity Investments and is fully compliant with regulatory
-        standards, ensuring that all donations are processed securely. For
-        nonprofits using our savings and investment services, we offer detailed,
-        transparent reporting so you always know where your funds are and how
-        they are performing.
+        Offeria is a nonprofit ourselves, committed to financial transparency.
+        Our platform is integrated with trusted financial partners such as
+        Fidelity Investments and is fully compliant with regulatory standards,
+        ensuring that all donations are processed securely. For nonprofits using
+        our savings and investment services, we offer detailed, transparent
+        reporting so you always know where your funds are and how they are
+        performing.
       </p>,
       <p className="italic">
         Security and transparency build trust, ensuring your donations are safe,
