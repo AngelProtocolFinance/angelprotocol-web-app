@@ -189,7 +189,7 @@ export function Cta({ classes = "" }: ICta) {
           to={href("/register/welcome")}
           className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
         >
-          Join us today!
+          Sign Up Now
         </Link>
       </div>
       <div className="relative order-1">

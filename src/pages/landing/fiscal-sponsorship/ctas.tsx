@@ -32,7 +32,7 @@ export function Ctas({ classes = "" }) {
               to={href("/register/welcome")}
               className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}
@@ -78,7 +78,7 @@ export function Ctas({ classes = "" }) {
               to={href("/register/welcome")}
               className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}
@@ -115,7 +115,7 @@ export function Ctas({ classes = "" }) {
               to={href("/register/welcome")}
               className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}

@@ -20,13 +20,13 @@ export function BottomCta({ className = "" }) {
             to={href("/register/welcome")}
             className="btn-blue active:translate-x-1 font-bold shadow-2xl rounded-full px-6 py-2 md:px-10 md:py-5"
           >
-            Join us today!
+            Sign Up Now
           </Link>
           <Link
             to={BOOK_A_DEMO}
             className="bg-white shadow-2xl hover:shadow-white/40 active:translate-x-1 text-blue-d1  font-bold rounded-full px-6 py-2 md:px-10 md:py-5"
           >
-            Book a demo
+            Schedule a Demo
           </Link>
         </div>
       </div>
