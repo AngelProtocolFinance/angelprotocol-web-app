@@ -36,7 +36,8 @@ export async function handler_order(
   const net_usd = breakdown.receivableAmount?.value ?? "0";
   if (!net_usd) return resp.status(201, "no net value");
 
-  const rate = breakdown?.exchangeRate?.value;
+  const rate =
+    c.amount.currencyCode === "USD" ? "1" : breakdown?.exchangeRate?.value;
   if (!rate) return resp.status(201, "no exchange rate");
 
   const amnt_usd = +rate * +amnt;
@@ -128,7 +129,7 @@ export async function handler_order(
     chainName: "Fiat",
     fiatRamp: "PAYPAL",
 
-    // paymentMethod
+    paymentMethod: "Paypal",
     // stripeDepositVerifyUrl
 
     // TRIBUTE
