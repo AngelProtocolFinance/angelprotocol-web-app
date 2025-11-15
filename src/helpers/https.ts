@@ -1,5 +1,3 @@
-import { ngrok_base_url } from ".server/env";
-
 class Resp {
   json(x: object, status = 200) {
     return new Response(JSON.stringify(x), {
@@ -51,18 +49,3 @@ export function search<T extends R>(
 
 export const sans_https = (x: string | undefined) =>
   x && x.replace(/^https:\/\//, "");
-
-export const base_url = (url: string | URL | Request) => {
-  let base = "";
-  if (url instanceof Request) {
-    base = new URL(url.url).origin;
-  }
-  if (url instanceof URL) {
-    base = url.origin;
-  }
-  if (typeof url === "string") {
-    const u = new URL(url);
-    base = u.origin;
-  }
-  return ngrok_base_url || base;
-};

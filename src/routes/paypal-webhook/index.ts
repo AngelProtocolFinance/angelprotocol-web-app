@@ -1,4 +1,4 @@
-import { base_url, resp } from "helpers/https";
+import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import { handler_order } from "./handle-order";
 import { verified_body } from "./helpers";
@@ -9,6 +9,7 @@ import { is_resp } from ".server/utils";
 
 export const action: ActionFunction = async ({ request }) => {
   try {
+    const base_url = new URL(request.url).origin;
     const jsonstr = await verified_body(request);
     if (is_resp(jsonstr)) return jsonstr;
 
@@ -21,7 +22,7 @@ export const action: ActionFunction = async ({ request }) => {
         const { result: order } = await paypal_orders.getOrder({
           id: ev.resource.id,
         });
-        return await handler_order(order, base_url(request));
+        return await handler_order(order, base_url);
       }
       case "PAYMENT.CAPTURE.COMPLETED": {
         const order_id = ev.resource.supplementary_data.related_ids.order_id;
@@ -37,7 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
         const { result: order } = await paypal_orders.getOrder({
           id: order_id,
         });
-        return await handler_order(order, base_url(request));
+        return await handler_order(order, base_url);
       }
     }
     console.info(ev);
