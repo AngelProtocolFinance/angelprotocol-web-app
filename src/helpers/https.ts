@@ -8,6 +8,7 @@ class Resp {
     });
   }
   status(status: number, text?: string): Response {
+    text && console.info(`[resp] ${status} - ${text}`);
     return new Response(text, { status, statusText: text });
   }
   txt(x: string, status = 200): Response {
