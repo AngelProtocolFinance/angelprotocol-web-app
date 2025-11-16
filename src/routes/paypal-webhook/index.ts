@@ -77,7 +77,7 @@ export const action: ActionFunction = async ({ request }) => {
         if (!onhold_id)
           return resp.status(201, `missing onhold id for capture: ${c_id}`);
 
-        const onhold = await onholddb.item(ev.resource.id);
+        const onhold = await onholddb.item(onhold_id);
         if (!onhold)
           return resp.status(
             200,
