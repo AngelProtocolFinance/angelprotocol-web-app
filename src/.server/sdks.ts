@@ -5,6 +5,7 @@ import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
 import {
   OrdersController,
+  PaymentsController,
   Client as PaypalClient,
   Environment as PaypalEnv,
 } from "@paypal/paypal-server-sdk";
@@ -92,3 +93,4 @@ const paypal = new PaypalClient({
 });
 
 export const paypal_orders = new OrdersController(paypal);
+export const paypal_payments = new PaymentsController(paypal);

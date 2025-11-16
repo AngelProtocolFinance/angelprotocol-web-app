@@ -1,15 +1,8 @@
 export interface ICapture {
   id: string;
-  supplementary_data: {
-    related_ids: {
-      order_id: string;
-    };
-  };
 }
 
 interface IOrder {
-  /** iso date */
-  create_time: string;
   id: string;
 }
 
@@ -25,8 +18,8 @@ export interface IEventOrderApproved {
 }
 export interface IEventOther {
   id: string;
-  event_type: string;
-  resource: any;
+  event_type: "other";
+  resource: unknown;
 }
 
 export type TWebhookEvent =

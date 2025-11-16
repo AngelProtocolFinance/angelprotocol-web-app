@@ -1,7 +1,7 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { donor_init } from "types/donation-intent";
+import { donor_blank } from "types/donation-intent";
 import { describe, expect, test } from "vitest";
 import { Steps } from "../index";
 import { type Config, type TDonation, donation_recipient_init } from "../types";
@@ -17,7 +17,7 @@ describe("payment method form state persistence", () => {
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
-      donor: donor_init,
+      donor: donor_blank,
       config: all_methods_config,
       method: "crypto",
     };
@@ -98,7 +98,7 @@ describe("payment method form state persistence", () => {
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
-      donor: donor_init,
+      donor: donor_blank,
       config: all_methods_config,
       method: "daf",
     };
@@ -141,7 +141,7 @@ describe("payment method form state persistence", () => {
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
-      donor: donor_init,
+      donor: donor_blank,
       config: all_methods_config,
       method: "stocks",
     };
@@ -191,7 +191,7 @@ describe("payment method form state persistence", () => {
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
-      donor: donor_init,
+      donor: donor_blank,
       config: all_methods_config,
       method: "crypto",
     };
@@ -295,7 +295,7 @@ describe("payment method form state persistence", () => {
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
-      donor: donor_init,
+      donor: donor_blank,
       config: all_methods_config,
       method: "crypto",
     };

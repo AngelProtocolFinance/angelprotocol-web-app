@@ -1,10 +1,10 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { PROCESSING_RATES } from "constants/common";
+import { paypal_currencies } from "constants/paypal";
 import { rd } from "helpers/decimal";
 import { min_fee_allowance } from "helpers/donation";
 import { to_atomic } from "helpers/stripe";
 import { useController, useForm } from "react-hook-form";
-import type { TCustomId, TItemId } from "types/paypal";
 import { safeParse } from "valibot";
 import type { OnIncrement } from "../../common/incrementers";
 import {
@@ -14,13 +14,12 @@ import {
   stripe_donation_details,
   tip_val,
 } from "../../types";
-import { currencies } from "../paypal";
 
 export interface ILineItem {
   name: string;
   amount_atomic: number;
 }
-export interface IExpress {
+export interface IStripeExpress {
   /** may be empty */
   frequency: TFrequency;
   total_usd: number;
@@ -35,28 +34,25 @@ export interface IExpress {
 }
 
 export interface IITem {
-  id: TItemId;
   name: string;
   amnt: string;
 }
 
 export interface IPayPalExpress {
-  /** may be empty */
-  custom_id: TCustomId;
   currency: string;
   frequency: TFrequency;
-  /** sum of individual items[amnt] */
-  total: string;
-  items: IITem[];
+  amnt: number;
+  tip: number;
+  fee_allowance: number;
   is_partial: boolean;
 }
 
 /** render  */
-export const express_partial = (
+export const stripe_express_partial = (
   currency: string,
   unit_per_usd: number,
   frequency: TFrequency
-): IExpress => {
+): IStripeExpress => {
   return {
     frequency,
     is_partial: true,
@@ -72,23 +68,19 @@ export const express_partial = (
 
 export const paypal_express_partial = (
   currency: string,
-  unit_per_usd: number,
-  frequency: TFrequency,
-  custom_id: TCustomId
+  frequency: TFrequency
 ): IPayPalExpress => {
-  const decimals = currencies[currency];
-  const t = rd(unit_per_usd, decimals);
   return {
-    custom_id,
     currency,
     frequency,
-    total: t,
-    items: [{ amnt: t, name: "Donation", id: "donation" }],
+    amnt: 1,
+    tip: 0,
+    fee_allowance: 0,
     is_partial: true,
   };
 };
 
-export function use_rhf(fv: FV, paypal_custom_id: TCustomId) {
+export function use_rhf(fv: FV) {
   const {
     control,
     handleSubmit,
@@ -138,16 +130,16 @@ export function use_rhf(fv: FV, paypal_custom_id: TCustomId) {
   const tip = watch("tip");
   const amnt = watch("amount");
 
-  const stripe_express = ((...x): IExpress | null => {
+  const stripe_express = ((...x): IStripeExpress | null => {
     const [a, c, pf, tf, f] = x;
 
     if (!c.code) return null;
 
     const ap = safeParse(amount_schema({ required: true }), a);
-    if (ap.issues) return express_partial(c.code, c.rate, f);
+    if (ap.issues) return stripe_express_partial(c.code, c.rate, f);
 
     const amnt = +ap.output;
-    if (amnt < c.min) return express_partial(c.code, c.rate, f);
+    if (amnt < c.min) return stripe_express_partial(c.code, c.rate, f);
 
     const items: ILineItem[] = [
       {
@@ -203,22 +195,19 @@ export function use_rhf(fv: FV, paypal_custom_id: TCustomId) {
     const [a, c, pf, tf, f] = x;
 
     if (!c.code) return null;
-    const d = currencies[c.code];
+    const d = paypal_currencies[c.code];
     if (d === undefined) return null;
 
     const ap = safeParse(amount_schema({ required: true }), a);
-    if (ap.issues)
-      return paypal_express_partial(c.code, c.rate, f, paypal_custom_id);
+    if (ap.issues) return paypal_express_partial(c.code, f);
 
     const amnt = +ap.output;
-    if (amnt < c.min)
-      return paypal_express_partial(c.code, c.rate, f, paypal_custom_id);
+    if (amnt < c.min) return paypal_express_partial(c.code, f);
 
     const items: IITem[] = [
       {
         name: "Donation",
         amnt: rd(amnt, d),
-        id: "donation",
       },
     ];
 
@@ -227,7 +216,6 @@ export function use_rhf(fv: FV, paypal_custom_id: TCustomId) {
       items.push({
         name: "Donation to Better Giving",
         amnt: rd(tipv, d),
-        id: "tip",
       });
     }
 
@@ -243,19 +231,16 @@ export function use_rhf(fv: FV, paypal_custom_id: TCustomId) {
       items.push({
         name: "Fee coverage",
         amnt: rd(mfa, d),
-        id: "fee-allowance",
       });
     }
 
-    const total = amnt + tipv + mfa;
-
     return {
-      custom_id: paypal_custom_id,
       currency: c.code,
       frequency: f,
       is_partial: false,
-      items,
-      total: rd(total, d),
+      amnt,
+      tip: tipv,
+      fee_allowance: mfa,
     };
   })(amnt, currency.value, cpf.value, tip_format.value, frequency.value);
 

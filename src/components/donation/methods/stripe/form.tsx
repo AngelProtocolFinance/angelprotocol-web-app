@@ -40,7 +40,7 @@ export function Form(props: TMethodState<"stripe">) {
     program: don.program ? don.program.id : "nil",
     source: don.source,
   });
-  const rhf = use_rhf(fv, custom_id);
+  const rhf = use_rhf(fv);
 
   const currency = use_swr(
     href("/api/currencies"),
@@ -197,9 +197,19 @@ export function Form(props: TMethodState<"stripe">) {
           {...rhf.stripe_express}
         />
       )}
-      {rhf.paypal_express && rhf.paypal_express.frequency === "one-time" && (
-        <Paypal {...rhf.paypal_express} />
-      )}
+      {rhf.paypal_express &&
+        rhf.paypal_express.frequency === "one-time" &&
+        !prompt && (
+          <Paypal
+            {...rhf.paypal_express}
+            on_error={(x) =>
+              set_prompt({
+                type: "error",
+                children: x,
+              })
+            }
+          />
+        )}
 
       <button
         disabled={

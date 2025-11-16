@@ -1,10 +1,10 @@
 import { Elements } from "@stripe/react-stripe-js";
 import type { StripeElementsOptions } from "@stripe/stripe-js";
 import { stripe_promise } from "../../../common/stripe";
-import type { IExpress } from "../use-rhf";
+import type { IStripeExpress } from "../use-rhf";
 import { Content, type IContentExternal } from "./content";
 
-interface Props extends IExpress, IContentExternal {}
+interface Props extends IStripeExpress, IContentExternal {}
 
 export function ExpressCheckout({ classes = "", items, ...p }: Props) {
   const c = p.currency.toLowerCase();

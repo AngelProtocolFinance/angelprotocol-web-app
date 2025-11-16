@@ -79,11 +79,17 @@ export const donor = v.object({
 
 export type Donor = v.InferOutput<typeof donor>;
 
-export const donor_init: Donor = {
+export const donor_blank: Donor = {
   title: "",
   first_name: "",
   last_name: "",
   email: "",
+};
+export const donor_init: Donor = {
+  title: "",
+  first_name: "first name",
+  last_name: "last name",
+  email: "hi@better.giving",
 };
 
 const money = v.pipe(v.number(), v.minValue(0));

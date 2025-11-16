@@ -1,4 +1,4 @@
-import { donor_address_init, donor_init } from "types/donation-intent";
+import { donor_address_init, donor_blank } from "types/donation-intent";
 import type { DonationSource } from "types/lists";
 import { Context } from "./context";
 import { CurrentStep } from "./current-step";
@@ -69,12 +69,12 @@ function init_state({
 
   const donor_init_prefilled = user
     ? {
-        ...donor_init,
+        ...donor_blank,
         first_name: user.first_name ?? "",
         last_name: user.last_name ?? "",
         email: user.email ?? "",
       }
-    : donor_init;
+    : donor_blank;
 
   return {
     ...init,

@@ -13,7 +13,7 @@
  *
  * source: https://developer.paypal.com/api/rest/reference/currency-codes/
  */
-export const currencies: Record<string, 0 | 2> = {
+export const paypal_currencies: Record<string, 0 | 2> = {
   USD: 2,
   AUD: 2,
   CAD: 2,

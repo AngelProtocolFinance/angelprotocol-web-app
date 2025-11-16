@@ -1,8 +1,6 @@
 import type { Environment } from "@better-giving/schemas";
 import type { DonationSource } from "./lists";
 
-export type TItemId = "tip" | "fee-allowance" | "donation";
-
 /** ${recipient_id, program_id, source_id} */
 export type TCustomId = `${Environment}_${string}_${string}_${DonationSource}`;
 export interface IIds {
