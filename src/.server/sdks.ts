@@ -3,12 +3,9 @@ import { Chariot } from "@better-giving/chariot";
 import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
-import {
-  OrdersController,
-  PaymentsController,
-  Client as PaypalClient,
-  Environment as PaypalEnv,
-} from "@paypal/paypal-server-sdk";
+
+import { PayPalSDK } from "@better-giving/paypal/helpers";
+
 import { Client, Receiver } from "@upstash/qstash";
 import Stripe from "stripe";
 import type { Fetcher } from "types/api";
@@ -84,13 +81,8 @@ export const hubspot_forms: Fetcher = (url_fn, init_fn) => {
     init_fn?.(h) || { headers: h }
   );
 };
-const paypal = new PaypalClient({
-  environment: env === "staging" ? PaypalEnv.Sandbox : PaypalEnv.Production,
-  clientCredentialsAuthCredentials: {
-    oAuthClientId: paypal_envs.client_id,
-    oAuthClientSecret: paypal_envs.client_secret,
-  },
+export const paypal = new PayPalSDK({
+  client_id: paypal_envs.client_id,
+  client_secret: paypal_envs.client_secret,
+  api_url: paypal_envs.api_url,
 });
-
-export const paypal_orders = new OrdersController(paypal);
-export const paypal_payments = new PaymentsController(paypal);
