@@ -287,7 +287,6 @@ export default [
   r("api/crypto-intents/:id", "./routes/crypto-intents.ts"),
   r("api/currencies", "./routes/currencies.ts"),
   r("api/donation-intents/:type", "./routes/donation-intents/index.ts"),
-  r("api/donation-intents/:intent_id", "./routes/donation-intent.ts"),
   r("api/file-upload", "./routes/file-upload.ts"),
   r("api/nav-txs", "./routes/nav-txs.ts"),
   r("api/nowpayments-webhook/:stage", "./routes/nowpayments-webhook/index.ts"),

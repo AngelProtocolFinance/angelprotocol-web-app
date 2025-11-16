@@ -329,6 +329,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     console.info("paypal create order", res.result.id);
 
-    return await json_with_cookie({ order_id: onhold.transactionId });
+    return await json_with_cookie({
+      order_id: res.result.id,
+    });
   }
 };

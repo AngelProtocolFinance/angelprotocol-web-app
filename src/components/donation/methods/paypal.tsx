@@ -47,7 +47,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
 
             y.redirect(return_url);
           }}
-          createOrder={async (_, y) => {
+          createOrder={async () => {
             //create intent
             const intent: DonationIntent = {
               frequency: p.frequency,
