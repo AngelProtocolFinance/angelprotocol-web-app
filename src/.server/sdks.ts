@@ -3,6 +3,9 @@ import { Chariot } from "@better-giving/chariot";
 import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
+
+import { PayPalSDK } from "@better-giving/paypal";
+
 import { Client, Receiver } from "@upstash/qstash";
 import Stripe from "stripe";
 import type { Fetcher } from "types/api";
@@ -14,6 +17,7 @@ import {
   env,
   hubspot_envs,
   np_envs,
+  paypal_envs,
   qtash_envs,
   stripe_envs,
   typesense_envs,
@@ -77,3 +81,8 @@ export const hubspot_forms: Fetcher = (url_fn, init_fn) => {
     init_fn?.(h) || { headers: h }
   );
 };
+export const paypal = new PayPalSDK({
+  client_id: paypal_envs.client_id,
+  client_secret: paypal_envs.client_secret,
+  api_url: paypal_envs.api_url,
+});

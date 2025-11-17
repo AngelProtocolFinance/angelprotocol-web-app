@@ -5,7 +5,7 @@ import { type Config, Steps, type TDonation } from "components/donation";
 import { Image } from "components/image/image";
 import { Info } from "components/status";
 import type { PropsWithChildren } from "react";
-import { donor_address_init, donor_init } from "types/donation-intent";
+import { donor_address_init, donor_blank } from "types/donation-intent";
 import type { IWidgetFv } from "types/widget";
 
 type Props = {
@@ -42,8 +42,8 @@ export function Preview({ classes = "", fv, endow }: Props) {
     },
     config: config,
     donor: endow.donor_address_required
-      ? { ...donor_init, address: donor_address_init }
-      : donor_init,
+      ? { ...donor_blank, address: donor_address_init }
+      : donor_blank,
   };
 
   return (

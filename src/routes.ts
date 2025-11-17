@@ -299,6 +299,7 @@ export default [
   r("api/npos/ein/:id", "./routes/npos-ein.ts"),
   r("api/npos", "./routes/npos.ts"),
   r("api/stripe-webhook/:stage", "./routes/stripe-webhook/index.ts"),
+  r("api/paypal-webhook", "./routes/paypal-webhook/index.ts"),
   r("api/top-countries", "./routes/top-countries.ts"),
   r("api/wise/*", "./routes/wise.ts"),
   r("api/zapier/generate/:id", "./routes/zapier-generate.ts"),

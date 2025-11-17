@@ -1,11 +1,11 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { PROCESSING_RATES } from "constants/common";
-import { rd, ru_vdec } from "helpers/decimal";
+import { paypal_currencies } from "constants/paypal";
+import { rd } from "helpers/decimal";
 import { min_fee_allowance } from "helpers/donation";
 import { to_atomic } from "helpers/stripe";
 import { useController, useForm } from "react-hook-form";
 import { safeParse } from "valibot";
-import { usd_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
   type StripeDonationDetails as FV,
@@ -19,7 +19,7 @@ export interface ILineItem {
   name: string;
   amount_atomic: number;
 }
-export interface IExpress {
+export interface IStripeExpress {
   /** may be empty */
   frequency: TFrequency;
   total_usd: number;
@@ -33,12 +33,26 @@ export interface IExpress {
   is_partial: boolean;
 }
 
+export interface IITem {
+  name: string;
+  amnt: string;
+}
+
+export interface IPayPalExpress {
+  currency: string;
+  frequency: TFrequency;
+  amnt: number;
+  tip: number;
+  fee_allowance: number;
+  is_partial: boolean;
+}
+
 /** render  */
-export const express_partial = (
+export const stripe_express_partial = (
   currency: string,
   unit_per_usd: number,
   frequency: TFrequency
-): IExpress => {
+): IStripeExpress => {
   return {
     frequency,
     is_partial: true,
@@ -52,16 +66,21 @@ export const express_partial = (
   };
 };
 
-export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
-  const initial: FV = {
-    amount: "",
-    currency: usd_option,
-    frequency: "one-time",
-    tip: "",
-    cover_processing_fee: false,
-    tip_format: hide_bg_tip ? "none" : "15",
+export const paypal_express_partial = (
+  currency: string,
+  frequency: TFrequency
+): IPayPalExpress => {
+  return {
+    currency,
+    frequency,
+    amnt: 1,
+    tip: 0,
+    fee_allowance: 0,
+    is_partial: true,
   };
+};
 
+export function use_rhf(fv: FV) {
   const {
     control,
     handleSubmit,
@@ -73,7 +92,7 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
     setFocus,
     formState: { errors },
   } = useForm<FV>({
-    defaultValues: init || initial,
+    defaultValues: fv,
     resolver: valibotResolver(stripe_donation_details),
     criteriaMode: "all",
   });
@@ -111,16 +130,16 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
   const tip = watch("tip");
   const amnt = watch("amount");
 
-  const express = ((...x): IExpress | null => {
+  const stripe_express = ((...x): IStripeExpress | null => {
     const [a, c, pf, tf, f] = x;
 
     if (!c.code) return null;
 
     const ap = safeParse(amount_schema({ required: true }), a);
-    if (ap.issues) return express_partial(c.code, c.rate, f);
+    if (ap.issues) return stripe_express_partial(c.code, c.rate, f);
 
     const amnt = +ap.output;
-    if (amnt < c.min) return express_partial(c.code, c.rate, f);
+    if (amnt < c.min) return stripe_express_partial(c.code, c.rate, f);
 
     const items: ILineItem[] = [
       {
@@ -172,12 +191,66 @@ export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
     };
   })(amnt, currency.value, cpf.value, tip_format.value, frequency.value);
 
+  const paypal_express = ((...x): IPayPalExpress | null => {
+    const [a, c, pf, tf, f] = x;
+
+    if (!c.code) return null;
+    const d = paypal_currencies[c.code];
+    if (d === undefined) return null;
+
+    const ap = safeParse(amount_schema({ required: true }), a);
+    if (ap.issues) return paypal_express_partial(c.code, f);
+
+    const amnt = +ap.output;
+    if (amnt < c.min) return paypal_express_partial(c.code, f);
+
+    const items: IITem[] = [
+      {
+        name: "Donation",
+        amnt: rd(amnt, d),
+      },
+    ];
+
+    const tipv = tip_val(tf, tip, amnt);
+    if (tipv) {
+      items.push({
+        name: "Donation to Better Giving",
+        amnt: rd(tipv, d),
+      });
+    }
+
+    const mfa = pf
+      ? min_fee_allowance(
+          tipv + amnt,
+          PROCESSING_RATES.paypal,
+          PROCESSING_RATES.paypal_flat * c.rate
+        )
+      : 0;
+
+    if (mfa) {
+      items.push({
+        name: "Fee coverage",
+        amnt: rd(mfa, d),
+      });
+    }
+
+    return {
+      currency: c.code,
+      frequency: f,
+      is_partial: false,
+      amnt,
+      tip: tipv,
+      fee_allowance: mfa,
+    };
+  })(amnt, currency.value, cpf.value, tip_format.value, frequency.value);
+
   return {
     frequency,
     currency,
     amount,
     on_increment,
-    express,
+    stripe_express,
+    paypal_express,
     register,
     handleSubmit,
     setValue,

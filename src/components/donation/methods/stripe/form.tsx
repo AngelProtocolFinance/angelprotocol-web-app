@@ -1,17 +1,21 @@
 import { CloseButton, ComboboxOption } from "@headlessui/react";
+import { usd_option } from "components/donation/common/constants";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
 import { Form as FieldSet } from "components/form";
 import { type IPrompt, Prompt } from "components/prompt";
 import { TokenCombobox, TokenField, btn_disp } from "components/token-field";
+import { env } from "constants/env";
 import { ru_vdec } from "helpers/decimal";
 import { useState } from "react";
 import { href } from "react-router";
 import use_swr from "swr/immutable";
 import type { ICurrenciesFv } from "types/currency";
+import { to_custom_id } from "types/paypal";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
 import { type TMethodState, to_step } from "../../types";
+import { Paypal } from "../paypal";
 import { ExpressCheckout } from "./express-checkout";
 import { Frequency } from "./frequency";
 import { use_rhf } from "./use-rhf";
@@ -20,7 +24,23 @@ export function Form(props: TMethodState<"stripe">) {
   const [token_q, set_token_q] = useState("");
   const [prompt, set_prompt] = useState<IPrompt>();
   const { don_set, don } = use_donation();
-  const rhf = use_rhf(props.fv, don.recipient.hide_bg_tip ?? false);
+
+  const fv = props.fv || {
+    amount: "",
+    currency: usd_option,
+    frequency: "one-time",
+    tip: "",
+    cover_processing_fee: false,
+    tip_format: don.recipient.hide_bg_tip ? "none" : "15",
+  };
+
+  const custom_id = to_custom_id({
+    env: env === "production" ? "production" : "staging",
+    recipient: don.recipient.id,
+    program: don.program ? don.program.id : "nil",
+    source: don.source,
+  });
+  const rhf = use_rhf(fv);
 
   const currency = use_swr(
     href("/api/currencies"),
@@ -168,16 +188,28 @@ export function Form(props: TMethodState<"stripe">) {
         checked={rhf.cpf.value}
         checked_changed={(x) => rhf.cpf.onChange(x)}
       />
-      {rhf.express && !prompt && (
+      {rhf.stripe_express && !prompt && (
         <ExpressCheckout
           on_error={(msg) =>
             set_prompt({ type: "error", children: <p>{msg}</p> })
           }
           classes="mt-4"
-          {...rhf.express}
+          {...rhf.stripe_express}
         />
       )}
-      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
+      {rhf.paypal_express &&
+        rhf.paypal_express.frequency === "one-time" &&
+        !prompt && (
+          <Paypal
+            {...rhf.paypal_express}
+            on_error={(x) =>
+              set_prompt({
+                type: "error",
+                children: x,
+              })
+            }
+          />
+        )}
 
       <button
         disabled={
@@ -188,6 +220,7 @@ export function Form(props: TMethodState<"stripe">) {
       >
         Continue with Card/Bank
       </button>
+      {prompt && <Prompt {...prompt} onClose={() => set_prompt(undefined)} />}
     </FieldSet>
   );
 }

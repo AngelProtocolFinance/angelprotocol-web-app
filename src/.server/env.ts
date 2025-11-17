@@ -123,3 +123,12 @@ export const hubspot_envs = {
 export const openexchange_app_id = _var("OPENEXCHANGE_APP_ID");
 
 export const dynamodb_table_name = _var("DYNAMODB_TABLE_NAME");
+
+export const paypal_envs = {
+  client_id: _var("PAYPAL_CLIENT_ID"),
+  client_secret: _var("PAYPAL_CLIENT_SECRET"),
+  webhook_id: _var("PAYPAL_WEBHOOK_ID"),
+  api_url: _var("PAYPAL_API_URL"),
+};
+
+export const ngrok_base_url = _var("NGROK_BASE_URL");

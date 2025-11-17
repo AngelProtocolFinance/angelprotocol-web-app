@@ -1,7 +1,9 @@
 import { is_custom, tokens_map } from "@better-giving/assets/tokens";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
+import type { PurchaseUnitsRequest } from "@better-giving/paypal";
+import { paypal_currencies } from "constants/paypal";
 import { addDays, getUnixTime } from "date-fns";
-import { rd2num } from "helpers/decimal";
+import { rd, rd2num } from "helpers/decimal";
 import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
@@ -22,7 +24,7 @@ import { onholddb } from ".server/aws/db";
 import { type IDonationsCookie, donations_cookie } from ".server/cookie";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
-import { aws_monitor, chariot, np } from ".server/sdks";
+import { aws_monitor, chariot, np, paypal } from ".server/sdks";
 import { get_usd_rate } from ".server/usd-rate";
 
 const json_with_cookie_fn =
@@ -246,5 +248,89 @@ export const action: ActionFunction = async ({ request, params }) => {
       client_secret,
       order_id: onhold.transactionId,
     } satisfies IStripeIntentReturn);
+  }
+
+  if (d_type === "paypal") {
+    const usd_rate = await get_usd_rate(intent.amount.currency);
+
+    const to_pay =
+      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
+
+    const onhold: IDonationOnHoldAttr = {
+      ...base,
+      transactionId: intent_id,
+      transactionDate: now.toISOString(),
+      amount: to_pay,
+      usdValue: to_pay / usd_rate,
+      fiatRamp: "PAYPAL",
+      chainId: "fiat",
+      email: intent.donor.email,
+    };
+    await onholddb.put(onhold);
+
+    const c = intent.amount.currency;
+    const d = paypal_currencies[c];
+
+    const p: PurchaseUnitsRequest = {
+      custom_id: onhold.transactionId,
+      amount: {
+        value: rd(to_pay, d),
+        currency_code: c,
+      },
+    };
+    if (intent.amount.tip || intent.amount.fee_allowance) {
+      p.items ||= [];
+      p.items.push({
+        name: "Donation",
+        quantity: "1",
+        unit_amount: {
+          currency_code: c,
+          value: rd(intent.amount.amount, d),
+        },
+        category: "DONATION",
+      });
+
+      if (intent.amount.tip) {
+        p.items.push({
+          name: "Donation to Better Giving",
+          quantity: "1",
+          unit_amount: {
+            currency_code: c,
+            value: rd(intent.amount.tip, d),
+          },
+          category: "DONATION",
+        });
+      }
+      if (intent.amount.fee_allowance) {
+        p.items.push({
+          name: "Fee coverage",
+          quantity: "1",
+          unit_amount: {
+            currency_code: c,
+            value: rd(intent.amount.fee_allowance, d),
+          },
+          category: "DONATION",
+        });
+      }
+
+      if (p.amount) {
+        p.amount.breakdown = {
+          item_total: {
+            currency_code: c,
+            value: rd(to_pay, d),
+          },
+        };
+      }
+    }
+    const res = await paypal.create_order({
+      intent: "CAPTURE",
+      purchase_units: [p],
+    });
+
+    console.info("paypal create order", res.id);
+
+    return await json_with_cookie({
+      order_id: res.id,
+    });
   }
 };

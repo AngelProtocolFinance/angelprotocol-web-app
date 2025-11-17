@@ -12,10 +12,10 @@ import type {
   DonorAddress,
   IStripeIntentReturn,
 } from "types/donation-intent";
-import type { IExpress } from "../use-rhf";
+import type { IStripeExpress } from "../use-rhf";
 
 export interface IContentExternal
-  extends Omit<IExpress, "items" | "is_partial"> {
+  extends Omit<IStripeExpress, "items" | "is_partial"> {
   classes?: string;
   on_error: (msg: string) => void;
 }
@@ -87,10 +87,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
         ? href("/donate-widget/donations/:id", { id: order_id })
         : href("/donations/:id", { id: order_id });
 
-    const return_url =
-      don.source === "bg-widget"
-        ? `${window.location.origin}${return_path}`
-        : `${window.location.origin}${return_path}`;
+    const return_url = `${window.location.origin}/${return_path}`;
 
     const { error } = await stripe[
       x.frequency === "recurring" ? "confirmSetup" : "confirmPayment"

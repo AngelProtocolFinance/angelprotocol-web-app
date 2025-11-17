@@ -25,7 +25,6 @@ import { donation_get, tribute_to_db } from ".server/utils";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const url = new URL(request.url);
-  if (!params.id) throw resp.status(400, "missing donation id");
   const don = await donation_get(params.id);
   if (!don) throw resp.status(404, "donation not found");
 
