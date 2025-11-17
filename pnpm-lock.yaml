@@ -72,8 +72,8 @@ importers:
         specifier: 2.0.8
         version: 2.0.8(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)
       '@better-giving/paypal':
-        specifier: 1.0.7
-        version: 1.0.7
+        specifier: 1.0.8
+        version: 1.0.8
       '@better-giving/referrals':
         specifier: 1.0.7
         version: 1.0.7(@better-giving/types@1.1.8)
@@ -751,8 +751,8 @@ packages:
       '@better-giving/db': 2.0.7
       '@better-giving/types': 1.1.8
 
-  '@better-giving/paypal@1.0.7':
-    resolution: {integrity: sha512-ebX//EzUZ0W34nWQS8ASzMLLOXumz84/21IrC3EHawFt1vZp7lQNiPNpJzCNEcvPnY2vr7DWgy1b1sRUo1Gqeg==}
+  '@better-giving/paypal@1.0.8':
+    resolution: {integrity: sha512-4bDUGfd9QtXBBmKtrTu3S6wGn9TO1TZYEQXonbULsWCJZz0lhvMxC1Iznb/z+QduvO+HvRb8dZ17mhdBJfhPBg==}
 
   '@better-giving/referrals@1.0.7':
     resolution: {integrity: sha512-Nlk8elczE1qRmtZ3JzZxOxSspMYIrBnQczUnq5o2XI19EeGa8nLsU7rOI9DfXmNy4BDw6rHE15YhLgbBYCElEg==}
@@ -4999,7 +4999,7 @@ snapshots:
       '@better-giving/db': 2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)
       '@better-giving/types': 1.1.8
 
-  '@better-giving/paypal@1.0.7': {}
+  '@better-giving/paypal@1.0.8': {}
 
   '@better-giving/referrals@1.0.7(@better-giving/types@1.1.8)':
     dependencies:

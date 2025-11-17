@@ -4,7 +4,7 @@ import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
 
-import { PayPalSDK } from "@better-giving/paypal/helpers";
+import { PayPalSDK } from "@better-giving/paypal";
 
 import { Client, Receiver } from "@upstash/qstash";
 import Stripe from "stripe";

@@ -1,6 +1,6 @@
 import { is_custom, tokens_map } from "@better-giving/assets/tokens";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import type { components } from "@better-giving/paypal/orders";
+import type { PurchaseUnitsRequest } from "@better-giving/paypal";
 import { paypal_currencies } from "constants/paypal";
 import { addDays, getUnixTime } from "date-fns";
 import { rd, rd2num } from "helpers/decimal";
@@ -271,7 +271,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const c = intent.amount.currency;
     const d = paypal_currencies[c];
 
-    const p: components["schemas"]["purchase_unit_request"] = {
+    const p: PurchaseUnitsRequest = {
       custom_id: onhold.transactionId,
       amount: {
         value: rd(to_pay, d),

@@ -1,6 +1,4 @@
-import type { components as oc } from "@better-giving/paypal/orders";
-import type { components as pc } from "@better-giving/paypal/payments";
-import type { components as wc } from "@better-giving/paypal/webhooks";
+import type { Capture, Order, WebhookEvent } from "@better-giving/paypal";
 import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import { to_final } from "routes/helpers/donation";
@@ -15,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
     const jsonstr = await verified_body(request);
     if (is_resp(jsonstr)) return jsonstr;
 
-    const ev: wc["schemas"]["event"] = JSON.parse(jsonstr);
+    const ev: WebhookEvent = JSON.parse(jsonstr);
 
     console.info("[paypal webhook] received:", ev);
 
@@ -25,7 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
           id: order_id,
           payment_source,
           purchase_units,
-        } = ev.resource as oc["schemas"]["order"];
+        } = ev.resource as Order;
 
         if (!order_id) return resp.status(201, "missing order id");
 
@@ -83,7 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
           id: cid,
           custom_id: onhold_id,
           seller_receivable_breakdown: b,
-        } = ev.resource as pc["schemas"]["capture-2"];
+        } = ev.resource as Capture;
         if (!cid) return resp.status(201, "missing capture id");
 
         if (!onhold_id)
