@@ -47,6 +47,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
     const { order_id } = await res.json();
     return order_id;
   };
+
   const on_approve: PayPalButtonsComponentProps["onApprove"] = async (_, y) => {
     if (!y.order) return;
     const captured = await y.order.capture();
@@ -59,10 +60,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
         ? href("/donate-widget/donations/:id", { id: onhold_id })
         : href("/donations/:id", { id: onhold_id });
 
-    const return_url =
-      don.source === "bg-widget"
-        ? `${window.location.origin}${return_path}`
-        : `${window.location.origin}${return_path}`;
+    const return_url = `${window.location.origin}${return_path}`;
 
     y.redirect(return_url);
   };

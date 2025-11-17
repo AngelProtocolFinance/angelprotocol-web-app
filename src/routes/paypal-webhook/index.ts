@@ -58,7 +58,7 @@ export const action: ActionFunction = async ({ request }) => {
         if (!onhold) {
           return resp.status(
             200,
-            `onhold missing or have been processed: ${order_id}`
+            `onhold missing or has been processed: ${order_id}`
           );
         }
         const fn = [n?.given_name, n?.surname].filter(Boolean).join(" ") || "";
@@ -91,7 +91,7 @@ export const action: ActionFunction = async ({ request }) => {
         if (!onhold)
           return resp.status(
             200,
-            `onhold missing or have been processed: ${cid}`
+            `onhold missing or has been processed: ${cid}`
           );
 
         if (!b || !b.net_amount || !b.paypal_fee) {
@@ -100,9 +100,8 @@ export const action: ActionFunction = async ({ request }) => {
         const settled = ((
           r
         ): { net: number; fee: number; c: string } | null => {
-          const n = b.net_amount?.value;
-          const p = b.paypal_fee?.value;
-          if (!n || !p) return null;
+          const n = b.net_amount.value;
+          const p = b.paypal_fee.value;
           const c = b.net_amount.currency_code;
           if (r) {
             return { net: +n * +r, fee: +p * +r, c };

@@ -87,8 +87,8 @@ export const donor_blank: Donor = {
 };
 export const donor_init: Donor = {
   title: "",
-  first_name: "first name",
-  last_name: "last name",
+  first_name: "unknown",
+  last_name: "unknown",
   email: "hi@better.giving",
 };
 

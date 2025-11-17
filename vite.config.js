@@ -7,7 +7,7 @@ import tailwind from "@tailwindcss/vite";
 export default defineConfig({
   base: "/",
   build: { outDir: "build", target: "es2022" },
-  server: { port: 4200, allowedHosts: true },
+  server: { port: 4200 },
   plugins: [
     !process.env.VITEST && reactRouter(),
     tsconfig_paths(),
