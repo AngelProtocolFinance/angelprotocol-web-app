@@ -6,7 +6,7 @@ import { SendEmailCommand, ses } from ".server/aws/ses";
 export async function send_email(template: TTemplate, to: string[]) {
   const { name, ...data } = template;
   const cmd = new SendEmailCommand({
-    FromEmailAddress: emails.hello,
+    FromEmailAddress: `Better Giving 😇 <${emails.hi}>`,
     Destination: {
       ToAddresses: to,
       BccAddresses: name.startsWith("registration-") ? [emails.tim] : [],

@@ -34,5 +34,5 @@ export const logo_url = (path: string, custom = false) =>
 
 export const emails = {
   tim: "tim@better.giving",
-  hello: "hello@better.giving",
+  hi: "hi@better.giving",
 };
