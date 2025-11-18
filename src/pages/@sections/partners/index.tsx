@@ -2,11 +2,11 @@ import { blob } from "constants/urls";
 import { motion } from "motion/react";
 import { Stats } from "./stats";
 
-const logo_url = (num: number) => blob(`partners/${num}.svg`);
+const logo_url = (num: number) => blob(`church-${num}.svg`);
 
 const partners = Array.from({ length: 76 }, (_, i) => ({
-  id: i + 1,
-  url: logo_url(i + 1),
+  id: i,
+  url: logo_url(i),
 }));
 
 interface Props {
