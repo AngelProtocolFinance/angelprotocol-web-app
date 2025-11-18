@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const page1 = await dondb.list_to_npo(npoId, { limit: 3 });
   const items = page1.items.map((i) => {
     const pm =
-      i.paymentMethod || (i.chainId !== "fiat" ? "Crypto" : i.fiatRamp);
+      i.paymentMethod || (i.chainId === "fiat" ? i.fiatRamp : i.chainName);
     const x: Item = {
       id: i.transactionId || "",
       date: i.transactionDate || "",

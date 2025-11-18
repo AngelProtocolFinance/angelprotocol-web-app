@@ -18,7 +18,8 @@ export interface IRow {
 }
 
 export const to_row = (x: IDonationOnHold): IRow => {
-  const pm = x.paymentMethod || (x.chainId !== "fiat" ? "Crypto" : x.fiatRamp);
+  const pm =
+    x.paymentMethod || (x.chainId === "fiat" ? x.fiatRamp : x.chainName);
   const row: IRow = {
     id: x.transactionId,
     date: x.transactionDate,
