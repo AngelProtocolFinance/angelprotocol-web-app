@@ -1,5 +1,4 @@
-import banner from "assets/images/bg-banner.webp";
-import { APP_NAME } from "constants/env";
+import banner from "assets/images/bg-banner.png";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
 
