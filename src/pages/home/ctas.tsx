@@ -1,9 +1,9 @@
-import girl_pointing_up from "assets/landing/girl-pointing-up.webp";
-import girl_using_phone from "assets/landing/girl-using-phone.webp";
-import girl_watering_plant from "assets/landing/girl-watering-plant.webp";
-import hand_payment_methods from "assets/landing/hand-payment-methods.webp";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
+import cta_1 from "./cta-1.svg";
+import cta_2 from "./cta-2.svg";
+import cta_3 from "./cta-3.svg";
+import cta_4 from "./cta-4.svg";
 
 interface IBlurImg {
   classes?: string;
@@ -69,14 +69,14 @@ export function Ctas({ classes = "" }) {
           </Link>
         </motion.div>
         <BlurImg
-          url={girl_pointing_up}
+          url={cta_1}
           classes="justify-self-center max-md:mb-4"
           index={0}
         />
       </article>
       <article className="grid md:grid-cols-2 items-center">
         <BlurImg
-          url={girl_watering_plant}
+          url={cta_2}
           classes="justify-self-center max-md:mb-4"
           index={1}
         />
@@ -129,14 +129,14 @@ export function Ctas({ classes = "" }) {
           </Link>
         </motion.div>
         <BlurImg
-          url={hand_payment_methods}
+          url={cta_3}
           classes="justify-self-center max-md:mb-4"
           index={2}
         />
       </article>
       <article className="grid md:grid-cols-2 items-center">
         <BlurImg
-          url={girl_using_phone}
+          url={cta_4}
           classes="justify-self-center max-md:mb-4"
           index={3}
         />
@@ -195,12 +195,12 @@ export function Cta({ classes = "" }: ICta) {
       <div className="relative order-1">
         <img
           width={320}
-          src={girl_pointing_up}
+          src={cta_4}
           className="rounded-full justify-self-center absolute-center blur-xl"
         />
         <img
           width={220}
-          src={girl_pointing_up}
+          src={cta_4}
           className="z-10 rounded-full justify-self-center absolute-center"
         />
       </div>
