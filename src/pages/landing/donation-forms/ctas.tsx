@@ -32,7 +32,7 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
               Sign Up Now
             </Link>
@@ -78,7 +78,7 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
               Sign Up Now
             </Link>
@@ -115,7 +115,7 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
               Sign Up Now
             </Link>
@@ -161,7 +161,7 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
               Sign Up Now
             </Link>

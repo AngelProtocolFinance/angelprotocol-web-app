@@ -30,7 +30,7 @@ const Path = () => {
       <Carousel slides={benefits[path]} classes="lg:hidden" />
       <Link
         to={path === "nonprofits" ? href("/nonprofit") : href("/donor")}
-        className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1  font-bold shadow-2xl rounded-full"
+        className="btn-blue mt-8 group justify-self-center flex items-center px-10 py-3 gap-1 text-lg group active:translate-x-1  font-bold shadow-2xl rounded"
       >
         <span className="mr-1">Learn more</span>
         <ArrowRight size={18} className="group-hover:translate-x-1" />

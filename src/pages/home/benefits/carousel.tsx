@@ -8,7 +8,7 @@ const Carousel = ({ slides, classes = "" }: Props) => {
       {slides.map((slide, index) => {
         return (
           <div
-            className={`${slide.cardBgClass} grid justify-items-center p-8 rounded-4xl md:rounded-5xl shadow-black/5 `}
+            className={`${slide.cardBgClass} grid justify-items-center p-8 rounded md:rounded shadow-black/5 `}
             key={index}
           >
             <img

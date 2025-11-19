@@ -17,7 +17,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
 
   return (
     <div
-      className={`${classes} bg-white container rounded-lg p-6 shadow-2xl shadow-black/20`}
+      className={`${classes} bg-white container rounded p-6 shadow-2xl shadow-black/20`}
     >
       {state === "idle" && !query ? (
         <>
@@ -26,7 +26,7 @@ export default function SearchDropdown({ classes = "", page1, query }: Props) {
             {Object.entries(categories).map(([, v]) => (
               <NavLink
                 key={v.name}
-                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
+                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded text-sm hover:bg-blue-l4"
                 to={{
                   pathname: href("/marketplace"),
                   search: new URLSearchParams({
@@ -79,7 +79,7 @@ function SearchResult(props: ISearchResult) {
             <Image
               width={26}
               src={endow.card_img}
-              className="aspect-square object-cover rounded-full"
+              className="aspect-square object-cover rounded"
             />
           ) : (
             <img

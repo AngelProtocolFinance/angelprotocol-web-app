@@ -80,7 +80,7 @@ export function Video() {
         create lasting positive change{" "}
       </p>
 
-      <div className="rounded-xl md:rounded-[3rem] max-w-[69.5rem] p-4 pb-12 border border-gray-l3 justify-self-center">
+      <div className="rounded md:rounded max-w-[69.5rem] p-4 pb-12 border border-gray-l3 justify-self-center">
         <div className="relative">
           <img height={600} src={videobanner} alt="donation tally" />
           <TextSurroundedHeart classes="max-xl:hidden absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2" />

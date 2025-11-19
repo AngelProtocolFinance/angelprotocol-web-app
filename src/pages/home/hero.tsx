@@ -48,7 +48,7 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.4 }}
         to={href("/register/welcome")}
-        className="justify-self-center mt-8 btn-blue active:translate-x-1 items-center font-bold shadow-2xl inline-flex px-10 py-3 gap-1 rounded-full text-lg "
+        className="justify-self-center mt-8 btn-blue active:translate-x-1 items-center font-bold shadow-2xl inline-flex px-10 py-3 gap-1 rounded text-lg "
       >
         Sign Up Now
       </MLink>

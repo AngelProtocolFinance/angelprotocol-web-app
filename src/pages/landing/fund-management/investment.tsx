@@ -13,7 +13,7 @@ export function Investment({ classes = "" }) {
         the USCCB Socially Responsible Investment Guidelines.
       </p>
 
-      <div className="grid xl:grid-cols-2 items-center mb-14 p-3 rounded-lg">
+      <div className="grid xl:grid-cols-2 items-center mb-14 p-3 rounded">
         <Image src={section_img} width={320} className="justify-self-center" />
         <div className="">
           <p className="border-b border-gray-l3 pb-2 text-2xl mb-4 mt-4 xl:mt-0 font-medium text-center xl:text-left">

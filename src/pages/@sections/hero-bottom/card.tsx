@@ -6,12 +6,12 @@ import type { EndowmentCard } from "types/npo";
 
 export const Card = (props: EndowmentCard) => {
   return (
-    <div className="grid rounded-4xl bg-white h-[27rem] border border-gray-l3/30 shadow-xs shadow-black/5">
+    <div className="grid rounded bg-white h-[27rem] border border-gray-l3/30 shadow-xs shadow-black/5">
       <Image
         src={props.card_img || flying_character}
         alt="card image"
         height={224}
-        className="object-cover w-full rounded-t-4xl h-56"
+        className="object-cover w-full rounded-t h-56"
       />
       <h4 className="text-[#0D283A] font-bold text-xl whitespace-nowrap text-ellipsis px-8 mt-4 overflow-hidden">
         {props.name}
@@ -31,6 +31,4 @@ export const Card = (props: EndowmentCard) => {
   );
 };
 
-export const Skeleton = () => (
-  <ContentLoader className="h-[27rem] rounded-4xl" />
-);
+export const Skeleton = () => <ContentLoader className="h-[27rem] rounded" />;

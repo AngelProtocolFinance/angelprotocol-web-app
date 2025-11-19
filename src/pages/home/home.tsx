@@ -44,7 +44,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       <div className="bg-gradient-to-bl from-lilac/40 to-peach/10">
         <Testimonials classes="xl:container xl:mx-auto px-5 py-24" />
       </div>
-      <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
+      <BottomCta className="my-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <FAQ items={faqs.slice(0, 5)} classes="xl:container xl:mx-auto px-5" />
       <Footer />
     </div>

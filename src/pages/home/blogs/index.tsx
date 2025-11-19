@@ -41,7 +41,7 @@ export const Blogs = ({ classes = "" }) => {
         <button
           type="button"
           onClick={() => embla_api?.scrollPrev()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 sm:left-[10%]"
+          className="p-4 bg-white text-blue-d1 rounded shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 sm:left-[10%]"
           aria-label="Previous slide"
         >
           <ChevronLeft />
@@ -70,7 +70,7 @@ export const Blogs = ({ classes = "" }) => {
         <button
           type="button"
           onClick={() => embla_api?.scrollNext()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-10 sm:right-[10%]"
+          className="p-4 bg-white text-blue-d1 rounded shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-10 sm:right-[10%]"
           aria-label="Next slide"
         >
           <ChevronRight />

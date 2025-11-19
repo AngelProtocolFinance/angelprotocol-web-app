@@ -56,7 +56,7 @@ export const HeroBottom = ({ className = "", endowments }: Props) => {
         <button
           type="button"
           onClick={() => emblaApi?.scrollPrev()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
+          className="p-4 bg-white text-blue-d1 rounded shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
           aria-label="Previous slide"
         >
           <ChevronLeft />
@@ -81,7 +81,7 @@ export const HeroBottom = ({ className = "", endowments }: Props) => {
         <button
           type="button"
           onClick={() => emblaApi?.scrollNext()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
+          className="p-4 bg-white text-blue-d1 rounded shadow-lg z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
           aria-label="Next slide"
         >
           <ChevronRight className="text-2xl" />
@@ -92,7 +92,7 @@ export const HeroBottom = ({ className = "", endowments }: Props) => {
 
       <Link
         to={href("/marketplace")}
-        className="z-10 mt-16 justify-self-center btn btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full  relative"
+        className="z-10 mt-16 justify-self-center btn btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded  relative"
       >
         <span className="ml-1">Explore All Causes</span>
         <ArrowRight size={20} />

@@ -52,7 +52,7 @@ export function Ctas({ classes = "" }) {
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
             Sign Up Now
           </Link>
@@ -87,7 +87,7 @@ export function Ctas({ classes = "" }) {
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
             Sign Up Now
           </Link>
@@ -112,7 +112,7 @@ export function Ctas({ classes = "" }) {
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
             Sign Up Now
           </Link>
@@ -148,7 +148,7 @@ export function Ctas({ classes = "" }) {
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
             Sign Up Now
           </Link>
@@ -176,7 +176,7 @@ export function Cta({ classes = "" }: ICta) {
         </p>
         <Link
           to={href("/register/welcome")}
-          className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
         >
           Sign Up Now
         </Link>
@@ -185,12 +185,12 @@ export function Cta({ classes = "" }: ICta) {
         <img
           width={320}
           src={cta_4}
-          className="rounded-full justify-self-center absolute-center blur-xl"
+          className="rounded justify-self-center absolute-center blur-xl"
         />
         <img
           width={220}
           src={cta_4}
-          className="z-10 rounded-full justify-self-center absolute-center"
+          className="z-10 rounded justify-self-center absolute-center"
         />
       </div>
     </div>
