@@ -27,7 +27,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
     <div className="grid pb-4">
       <Header page1={page1} classes="sticky z-40 top-[-1px]" />
       <Hero classes="" />
-      <Partners classes="xl:container xl:mx-auto px-5 mt-12" />
+      <Partners classes="xl:container xl:mx-auto px-5 my-12" />
 
       <Steps classes="xl:container xl:mx-auto px-5 mt-36" />
       <Ctas classes="xl:container xl:mx-auto mt-36" />

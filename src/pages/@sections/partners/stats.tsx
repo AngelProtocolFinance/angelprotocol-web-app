@@ -1,4 +1,3 @@
-import { APP_NAME } from "constants/env";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
@@ -43,7 +42,7 @@ export function Stats({ classes = "" }) {
       aria-label="Platform statistics"
     >
       <motion.article
-        className="grid justify-items-center"
+        className="grid justify-items-center border p-8 rounded border-blue-l5/40"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -56,7 +55,7 @@ export function Stats({ classes = "" }) {
         </p>
       </motion.article>
       <motion.article
-        className="grid justify-items-center"
+        className="grid justify-items-center border p-8 rounded border-blue-l5/40"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -68,7 +67,7 @@ export function Stats({ classes = "" }) {
         </p>
       </motion.article>
       <motion.article
-        className="grid justify-items-center"
+        className="grid justify-items-center border p-8 rounded border-blue-l5/40"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
