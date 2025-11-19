@@ -7,7 +7,7 @@ export function Items({ classes = "" }) {
       className={`${classes} grid md:grid-cols-3 gap-8`}
       aria-label="Key offerings"
     >
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid p-4 pb-8 border border-blue-l5/30 rounded justify-items-center">
         <LayoutPanelLeftIcon aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
           All-In-One Giving Form
@@ -23,7 +23,7 @@ export function Items({ classes = "" }) {
           Learn more
         </NavLink>
       </article>
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid p-4 pb-8 border border-blue-l5/30 rounded justify-items-center">
         <SproutIcon className="stroke-green" size={26} aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
           Faithful Fund Management
@@ -39,7 +39,7 @@ export function Items({ classes = "" }) {
           Learn more
         </NavLink>
       </article>
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid p-4 pb-8 border border-blue-l5/30 rounded justify-items-center">
         <GlobeIcon className="stroke-blue" aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
           Global Fiscal Sponsorship

@@ -13,7 +13,7 @@ interface IBlurImg {
 function BlurImg({ classes, url, index = 0 }: IBlurImg) {
   return (
     <motion.img
-      className={`${classes} relative size-80 rounded-full`}
+      className={`${classes} relative size-72`}
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}
