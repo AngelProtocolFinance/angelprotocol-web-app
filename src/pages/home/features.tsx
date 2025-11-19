@@ -156,7 +156,7 @@ export function Features({ classes = "" }) {
 function Feature(props: IFeature & { index: number }) {
   return (
     <motion.li
-      className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2 bg-white"
+      className="p-4 border border-blue-l5 rounded-lg grid grid-rows-subgrid row-span-2 bg-white"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
