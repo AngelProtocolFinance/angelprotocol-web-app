@@ -1,11 +1,12 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { motion } from "motion/react";
+import bg from "./manifesto-bg.svg";
 
 export function Manifesto({ classes = "" }) {
   return (
-    <section className={`${classes} grid pb-40`}>
+    <section className={`${classes} grid grid-cols-2 py-20 relative`}>
       <motion.div
-        className="relative w-full max-w-4xl justify-self-center rounded-2xl border-t border-gray-l4 p-8 sm:p-12 shadow-2xl shadow-black/10"
+        className="relative w-full col-span-full max-w-4xl justify-self-center bg-white p-8"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -113,6 +114,7 @@ export function Manifesto({ classes = "" }) {
           </TabPanels>
         </TabGroup>
       </motion.div>
+      <img src={bg} className="absolute inset-0 -z-10 w-full" />
     </section>
   );
 }

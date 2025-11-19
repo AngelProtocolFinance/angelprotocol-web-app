@@ -33,7 +33,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       <Ctas classes="xl:container xl:mx-auto mt-36" />
       {/* <Benefits /> */}
       {/* <Animation /> */}
-      <Manifesto classes="mt-56 xl:container xl:mx-auto px-5" />
+      <Manifesto classes="my-32 px-5" />
       <Products classes="xl:container xl:mx-auto px-5" />
 
       <Underdog classes="xl:container xl:mx-auto px-5 pb-20 pt-10" />
