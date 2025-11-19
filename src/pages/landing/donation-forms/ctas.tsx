@@ -2,10 +2,10 @@ import { BOOK_A_DEMO } from "constants/env";
 import { blob } from "constants/urls";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
-
-const images = Array.from({ length: 4 }, (_, i) =>
-  blob(`donation-form-cta-${i + 1}.png`)
-);
+import cta_1 from "./cta-1.svg";
+import cta_2 from "./cta-2.svg";
+import cta_3 from "./cta-3.svg";
+import cta_4 from "./cta-4.svg";
 
 export function Ctas({ classes = "" }) {
   return (
@@ -49,14 +49,14 @@ export function Ctas({ classes = "" }) {
           </div>
         </motion.div>
         <img
-          src={images[0]}
+          src={cta_1}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
       </article>
       <article className="grid md:grid-cols-2 gap-x-4 items-center">
         <img
-          src={images[1]}
+          src={cta_2}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
@@ -132,14 +132,14 @@ export function Ctas({ classes = "" }) {
           </div>
         </motion.div>
         <img
-          src={images[2]}
+          src={cta_3}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
       </article>
       <article className="grid md:grid-cols-2 gap-x-4 items-center">
         <img
-          src={images[3]}
+          src={cta_4}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
