@@ -65,10 +65,10 @@ const faqs = [
   {
     id: 1,
     question:
-      "Are Better Giving’s fundraising solutions really free? How do you sustain your operations?",
+      "Are Offeria's fundraising solutions really free? How do you sustain your operations?",
     paragraphs: [
       <p>
-        Yes, Better Giving’s fundraising solutions and donation processing are
+        Yes, Offeria's fundraising solutions and donation processing are
         completely free: we grant out 100% of all donations, and you pay no
         costs at any time. We rely on optional donor contributions during
         checkout for support, allowing us to provide free services to nonprofits
@@ -102,14 +102,14 @@ const faqs = [
   },
   {
     id: 3,
-    question: "How quickly can I start fundraising with Better Giving?",
+    question: "How quickly can I start fundraising with Offeria?",
     paragraphs: [
       <p>
-        With Better Giving, you can start accepting donations almost
-        immediately. Our setup process is quick and user-friendly—many
-        nonprofits are up and running within a day. Easily add your donation
-        form to your website or share your custom fundraising page to start
-        receiving donations from day one.
+        With Offeria, you can start accepting donations almost immediately. Our
+        setup process is quick and user-friendly—many nonprofits are up and
+        running within a day. Easily add your donation form to your website or
+        share your custom fundraising page to start receiving donations from day
+        one.
       </p>,
       <p className="italic">
         Start raising funds fast without the hassle of complex setup processes.
@@ -138,11 +138,11 @@ const faqs = [
     question: "Can I customize my donation forms?",
     paragraphs: [
       <p>
-        Yes, Better Giving offers fully customizable donation forms that allow
-        you to align them with your nonprofit’s branding. You can adjust the
-        form’s appearance, set donation types, and even let donors choose to
-        support specific programs or projects. These forms can be embedded
-        anywhere on your website, creating a seamless experience for donors.
+        Yes, Offeria offers fully customizable donation forms that allow you to
+        align them with your nonprofit’s branding. You can adjust the form’s
+        appearance, set donation types, and even let donors choose to support
+        specific programs or projects. These forms can be embedded anywhere on
+        your website, creating a seamless experience for donors.
       </p>,
       <p className="italic">
         Customization builds trust with your donors, making them feel more
@@ -155,7 +155,7 @@ const faqs = [
     question: "How does your platform reduce administrative burdens?",
     paragraphs: [
       <p>
-        Better Giving takes care of all the heavy lifting when it comes to tax
+        Offeria takes care of all the heavy lifting when it comes to tax
         reporting, donor receipts, and compliance. Once your donations are
         processed, we automatically send receipts to donors, simplifying your
         record-keeping. Additionally, our embeddable forms integrate seamlessly
@@ -229,7 +229,7 @@ const faqs = [
   {
     id: 10,
     question:
-      "Are there any fees for using Better Giving’s fund management solutions?",
+      "Are there any fees for using Offeria's fund management solutions?",
     paragraphs: [
       <p>
         Our optional fund management solutions are provided with no setup costs
@@ -246,13 +246,13 @@ const faqs = [
   },
   {
     id: 11,
-    question: "Can international nonprofits and NGOs use Better Giving?",
+    question: "Can international nonprofits and NGOs use Offeria?",
     paragraphs: [
       <p>
-        Yes, Better Giving supports charitable organizations all around the
-        world. Our platform offers fiscal sponsorship to help organizations
-        outside the U.S. access U.S. grants and donations while also simplifying
-        tax compliance. With our global reach, you can accept donations from
+        Yes, Offeria supports charitable organizations all around the world. Our
+        platform offers fiscal sponsorship to help organizations outside the
+        U.S. access U.S. grants and donations while also simplifying tax
+        compliance. With our global reach, you can accept donations from
         anywhere in the world in multiple currencies. As a nonprofit, we charge
         a cost-leading 2.9% for these services to keep them affordable for
         organizations of all sizes.
@@ -267,13 +267,13 @@ const faqs = [
     question: "How do I ensure my donations are safe?",
     paragraphs: [
       <p>
-        Better Giving is a nonprofit ourselves, committed to financial
-        transparency. Our platform is integrated with trusted financial partners
-        such as Fidelity Investments and is fully compliant with regulatory
-        standards, ensuring that all donations are processed securely. For
-        nonprofits using our savings and investment services, we offer detailed,
-        transparent reporting so you always know where your funds are and how
-        they are performing.
+        Offeria is a nonprofit ourselves, committed to financial transparency.
+        Our platform is integrated with trusted financial partners such as
+        Fidelity Investments and is fully compliant with regulatory standards,
+        ensuring that all donations are processed securely. For nonprofits using
+        our savings and investment services, we offer detailed, transparent
+        reporting so you always know where your funds are and how they are
+        performing.
       </p>,
       <p className="italic">
         Security and transparency build trust, ensuring your donations are safe,

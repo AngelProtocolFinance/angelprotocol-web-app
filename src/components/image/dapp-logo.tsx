@@ -1,4 +1,4 @@
-import dapp_logo from "assets/images/bg-logo-503c.webp";
+import dapp_logo from "assets/images/offeria-logo-text-501c3.png";
 import { Link, href } from "react-router";
 import { Image } from "./image";
 

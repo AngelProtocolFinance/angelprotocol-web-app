@@ -15,8 +15,8 @@ export function Hero({ className = "" }) {
           Raise funds easily. <br /> Grow them effortlessly.
         </h1>
         <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">
-          Better Giving streamlines donations, simplifies administration, and
-          helps your nonprofit grow its funds—all through an easily embeddable
+          Offeria streamlines donations, simplifies administration, and helps
+          your nonprofit grow its funds—all through an easily embeddable
           donation form. As a 501(c)(3) ourselves, we accept donations on your
           behalf, automate tax receipts, and grant 100% of the funds to you—no
           fees, no hassle.

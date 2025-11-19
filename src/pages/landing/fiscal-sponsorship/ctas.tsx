@@ -1,9 +1,9 @@
 import { BOOK_A_DEMO } from "constants/env";
-import { blob } from "constants/urls";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
-
-const images = [blob("fsa-1.png"), blob("fsa-2.png"), blob("fsa-3.png")];
+import cta_1 from "./cta-1.svg";
+import cta_2 from "./cta-2.svg";
+import cta_3 from "./cta-3.svg";
 
 export function Ctas({ classes = "" }) {
   return (
@@ -30,9 +30,9 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}
@@ -47,15 +47,15 @@ export function Ctas({ classes = "" }) {
           </div>
         </motion.div>
         <img
-          src={images[1]}
-          className="justify-self-center max-md:mb-4 scale-150 -z-10"
+          src={cta_1}
+          className="justify-self-center max-md:mb-4 -z-10"
           width={400}
         />
       </article>
       <article className="grid md:grid-cols-2 items-center">
         <img
-          src={images[0]}
-          className="justify-self-center max-md:mb-4 scale-150 -z-10"
+          src={cta_2}
+          className="justify-self-center max-md:mb-4 -z-10"
           width={400}
         />
         <motion.div
@@ -76,9 +76,9 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}
@@ -113,9 +113,9 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}
@@ -130,8 +130,8 @@ export function Ctas({ classes = "" }) {
           </div>
         </motion.div>
         <img
-          src={images[2]}
-          className="justify-self-center max-md:mb-4 scale-150 -z-10"
+          src={cta_3}
+          className="justify-self-center max-md:mb-4 -z-10"
           width={400}
         />
       </article>

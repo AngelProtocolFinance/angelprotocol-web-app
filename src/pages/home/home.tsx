@@ -25,15 +25,15 @@ export default CacheRoute(Page);
 function Page({ loaderData: page1 }: Route.ComponentProps) {
   return (
     <div className="grid pb-4">
-      <Header page1={page1} classes="sticky z-40 top-[-1px] mt-8 px-4" />
-      <Hero classes="-mt-24" />
-      <Partners classes="xl:container xl:mx-auto px-5" />
+      <Header page1={page1} classes="sticky z-40 top-[-1px]" />
+      <Hero classes="" />
+      <Partners classes="xl:container xl:mx-auto px-5 my-12" />
 
       <Steps classes="xl:container xl:mx-auto px-5 mt-36" />
       <Ctas classes="xl:container xl:mx-auto mt-36" />
       {/* <Benefits /> */}
       {/* <Animation /> */}
-      <Manifesto classes="mt-56 xl:container xl:mx-auto px-5" />
+      <Manifesto classes="my-32 px-5" />
       <Products classes="xl:container xl:mx-auto px-5" />
 
       <Underdog classes="xl:container xl:mx-auto px-5 pb-20 pt-10" />
@@ -44,10 +44,7 @@ function Page({ loaderData: page1 }: Route.ComponentProps) {
       <div className="bg-gradient-to-bl from-lilac/40 to-peach/10">
         <Testimonials classes="xl:container xl:mx-auto px-5 py-24" />
       </div>
-      <div className="bg-gradient-to-br from-peach/10 from-80% to-transparent">
-        <Blogs />
-      </div>
-      <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
+      <BottomCta className="my-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <FAQ items={faqs.slice(0, 5)} classes="xl:container xl:mx-auto px-5" />
       <Footer />
     </div>

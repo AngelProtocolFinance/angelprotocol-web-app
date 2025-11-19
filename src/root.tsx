@@ -1,5 +1,5 @@
-import quicksand from "@fontsource-variable/quicksand/index.css?url";
 import gochiHand from "@fontsource/gochi-hand/index.css?url";
+import quicksand from "@fontsource/lexend/index.css?url";
 import { metas } from "helpers/seo";
 import nProgressStyles from "nprogress/nprogress.css?url";
 import { type LinksFunction, type MetaFunction, Outlet } from "react-router";

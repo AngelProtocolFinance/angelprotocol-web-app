@@ -7,14 +7,14 @@ export function Items({ classes = "" }) {
       className={`${classes} grid md:grid-cols-3 gap-8`}
       aria-label="Key offerings"
     >
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid p-4 pb-8 border border-blue-l5/30 rounded justify-items-center">
         <LayoutPanelLeftIcon aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
-          All-in one donation form
+          All-In-One Giving Form
         </h3>
         <p className="text-center mt-4 text-lg">
-          Raise more with a conversion-optimized form-cash, stock, and crypto in
-          one flow.
+          Raise more with a conversion-optimized form—cash, stock, crypto, and
+          DAF in one flow.
         </p>
         <NavLink
           to={href("/donation-forms")}
@@ -23,14 +23,14 @@ export function Items({ classes = "" }) {
           Learn more
         </NavLink>
       </article>
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid p-4 pb-8 border border-blue-l5/30 rounded justify-items-center">
         <SproutIcon className="stroke-green" size={26} aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
-          Sustainability fund management
+          Faithful Fund Management
         </h3>
         <p className="text-center mt-4 text-lg">
-          Turn today's gifts into tomorrow's reserves with Savings and a pooled
-          Growth Fund.
+          Turn today's gifts into tomorrow's reserves with high-yield savings
+          and a USCCB-aligned investment fund.
         </p>
         <NavLink
           to={href("/fund-management")}
@@ -39,14 +39,14 @@ export function Items({ classes = "" }) {
           Learn more
         </NavLink>
       </article>
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid p-4 pb-8 border border-blue-l5/30 rounded justify-items-center">
         <GlobeIcon className="stroke-blue" aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
-          Fiscal sponsorship
+          Global Fiscal Sponsorship
         </h3>
         <p className="text-center mt-4 text-lg">
-          Accept U.S. tax-deductible donations globally without legal or tax
-          barriers.
+          Support mission work and sister parishes outside the U.S. with
+          compliant U.S. receipting.
         </p>
         <NavLink
           to={href("/fiscal-sponsorship")}

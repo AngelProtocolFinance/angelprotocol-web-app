@@ -5,11 +5,11 @@ import type { IPost } from "types/wordpress";
 
 export const BlogCard = (props: IPost) => {
   return (
-    <div className="relative hover:border-blue-l2 has-[.pending]:grayscale grid grid-rows-subgrid row-span-4 gap-3 pb-5 rounded-3xl bg-white border border-gray-l3">
+    <div className="relative hover:border-blue-l2 has-[.pending]:grayscale grid grid-rows-subgrid row-span-4 gap-3 pb-5 rounded bg-white border border-gray-l3">
       <Media
         sizes="(max-width: 640px) 100vw, 33vw"
         id={props.featured_media}
-        classes="rounded-t-3xl object-contain object-center w-full"
+        classes="rounded-t object-contain object-center w-full"
       />
       <h3
         className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2 px-6"
@@ -27,7 +27,7 @@ export const BlogCard = (props: IPost) => {
       />
       <NavLink
         to={href("/blog/:slug", { slug: props.slug })}
-        className="z-10 justify-self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
+        className="z-10 justify-self-end mt-auto text-blue-d1 px-4 py-2 rounded font-semibold uppercase"
       >
         Read More
         <span className="sr-only">: {props.slug.replace(/-/g, " ")}</span>
@@ -36,6 +36,4 @@ export const BlogCard = (props: IPost) => {
   );
 };
 
-export const Skeleton = () => (
-  <ContentLoader className="h-[27rem] rounded-3xl" />
-);
+export const Skeleton = () => <ContentLoader className="h-[27rem] rounded" />;

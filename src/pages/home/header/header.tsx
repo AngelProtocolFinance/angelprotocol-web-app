@@ -34,14 +34,13 @@ export function Header({ classes }: Props) {
             const isIntersecting = e.intersectionRatio < 1;
             e.target.classList.toggle("bg-white", isIntersecting);
             e.target.classList.toggle("shadow-lg", isIntersecting);
-            e.target.classList.toggle("px-4", !isIntersecting);
           },
           { threshold: [1] }
         );
         observer.observe(node);
       }}
     >
-      <div className="flex items-center gap-4 xl:container xl:mx-auto px-5 bg-white rounded-full py-2">
+      <div className="flex items-center gap-4 xl:container xl:mx-auto bg-white px-5 py-2">
         <div className="flex-1">
           <DappLogo classes="h-12 inline-block" />
         </div>

@@ -32,11 +32,11 @@ export function NonFsaForm(props: Props) {
       if (endow) {
         if (endow.claimed ?? true) {
           return toast.info(
-            `Nonprofit: ${endow.name} with EIN: ${fv.o_ein} already exists on our app. You must speak with an existing user of your NPO Account's members in order to be invited on as a member.`
+            `Organization: ${endow.name} with EIN: ${fv.o_ein} already exists on our app. You must speak with an existing user of your organization's members in order to be invited on as a member.`
           );
         }
 
-        const convertToClaimNotif = `Nonprofit: ${endow.name} with EIN: ${fv.o_ein} already exists on our app. Would you like to claim this organization instead?`;
+        const convertToClaimNotif = `Organization: ${endow.name} with EIN: ${fv.o_ein} already exists on our app. Would you like to claim this organization instead?`;
         if (!window.confirm(convertToClaimNotif)) return;
 
         upd8.claim = {

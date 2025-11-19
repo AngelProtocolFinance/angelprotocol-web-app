@@ -26,7 +26,7 @@ export function TopCountries() {
               {Array(10)
                 .fill(0)
                 .map((_, idx) => (
-                  <ContentLoader key={idx} className="w-32 h-10 rounded-full" />
+                  <ContentLoader key={idx} className="w-32 h-10 rounded" />
                 ))}
             </>
           ),
@@ -37,7 +37,7 @@ export function TopCountries() {
             {countries.map((country) => (
               <NavLink
                 key={country}
-                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
+                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l3 px-6 py-2 rounded text-sm hover:bg-blue-l4"
                 to={{
                   pathname: href("/marketplace"),
                   search: new URLSearchParams({

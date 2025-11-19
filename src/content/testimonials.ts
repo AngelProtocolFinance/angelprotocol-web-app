@@ -1,8 +1,8 @@
-import ace from "assets/partners/ace-of-hearts-dog-rescue.jpg";
+// import ace from "assets/partners/ace-of-hearts-dog-rescue.jpg";
 import buck from "assets/partners/buckminster-fuller.svg";
 import casd from "assets/partners/casd-sl.webp";
 import fora from "assets/partners/for-a-day-foundation.webp";
-import ph from "assets/partners/ph8.webp";
+// import ph from "assets/partners/ph8.webp";
 import shoe from "assets/partners/shoes-that-speak.webp";
 import ygap from "assets/partners/ygap.png";
 
@@ -45,20 +45,6 @@ export const testimonials: Testimonial[] = [
     reviewer: "Joy Onuche",
     org: "Shoes that Speak Africa",
     org_logo: { w: 80, src: shoe },
-  },
-  {
-    content:
-      "The funds we have been granted have saved over 30 dogs. That's a very large impact. I'm very excited to start the sustainability fund (endowments) as I think this is the future.",
-    reviewer: "Kari Whitman",
-    org: "Ace of Hearts Dog Rescue",
-    org_logo: { w: 45, src: ace, classes: "rounded-full mt-2" },
-  },
-  {
-    content:
-      "The last couple of years have been rough. Better Giving helped us get back on our feet and helped remind me and the team that the work is never done, and helped aligned us back to our overall purpose.",
-    reviewer: "Gordon Zhou",
-    org: "PH8 Foundation",
-    org_logo: { w: 40, src: ph, classes: "-ml-2" },
   },
   {
     content:

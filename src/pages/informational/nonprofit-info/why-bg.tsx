@@ -40,10 +40,10 @@ export default function WhyBG({ className = "" }) {
   return (
     <section className={`${className} grid`}>
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
-        The Better Giving Difference
+        The Offeria Difference
       </h4>
       <h2 className="col-span-full text-center text-3xl md:text-4.5xl leading-snug">
-        Why Nonprofits Choose Better Giving
+        Why Nonprofits Choose Offeria
       </h2>
       <p className="text-gray-d1 text-center mb-16  col-span-full text-xl mt-4">
         A partner who understands your needs.

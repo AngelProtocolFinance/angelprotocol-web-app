@@ -25,7 +25,7 @@ export function AuthLinks({ to, classes = "" }: Props) {
           to={`${href("/signup")}?redirect=${to}`}
           className="btn btn-blue text-sm py-2 normal-case"
         >
-          Join us today!
+          Sign Up Free
         </NavLink>
       </MenuItem>
     </MenuSection>

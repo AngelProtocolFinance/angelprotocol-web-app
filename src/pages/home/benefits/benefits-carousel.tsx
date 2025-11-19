@@ -20,7 +20,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
           {slides.map((slide, index) => (
             <div key={index} className="flex-[0_0_100%] px-4">
               <div
-                className={`grid justify-items-center py-14 px-10 rounded-5xl mx-auto max-w-3xl @4xl:max-w-4xl ${slide.cardBgClass}`}
+                className={`grid justify-items-center py-14 px-10 rounded mx-auto max-w-3xl @4xl:max-w-4xl ${slide.cardBgClass}`}
               >
                 <img
                   src={slide.img}
@@ -43,7 +43,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
         <button
           type="button"
           onClick={() => emblaApi?.scrollPrev()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-1/4"
+          className="p-4 bg-white text-blue-d1 rounded shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-1/4"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6" />
@@ -51,7 +51,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
         <button
           type="button"
           onClick={() => emblaApi?.scrollNext()}
-          className="p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-1/4"
+          className="p-4 bg-white text-blue-d1 rounded shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-1/4"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6" />

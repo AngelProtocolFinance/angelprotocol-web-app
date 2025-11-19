@@ -25,7 +25,7 @@ export default function Page({ classes = "" }: { classes?: string }) {
       className={`${classes} justify-center gap-8 px-5 w-full max-w-2xl grid`}
     >
       <h3 className="text-3xl text-center">
-        Register your new {APP_NAME} nonprofit account
+        Register your new {APP_NAME} Catholic organization account
       </h3>
 
       <button

@@ -1,20 +1,18 @@
-import section_img from "assets/images/laira-inside-pie-chart.png";
 import { Image } from "components/image";
-import { APP_NAME } from "constants/env";
+import section_img from "./pie.svg";
 
 export function Investment({ classes = "" }) {
   return (
     <section className={`${classes} grid`}>
       <h2 className="col-span-full text-center section-heading mb-4">
-        How the Sustainability Fund Works
+        Faithful Investing Made Simple
       </h2>
       <p className="mb-10 text-center section-body">
-        From high-converting donation forms to growth through Savings and a
-        Sustainability Fund, plus global fiscal sponsorship. {APP_NAME} is built
-        by and for nonprofits. Free-no platform or fund-management fees.
+        All investment options follow Catholic investing guidelines informed by
+        the USCCB Socially Responsible Investment Guidelines.
       </p>
 
-      <div className="grid xl:grid-cols-2 items-center mb-14 p-3 rounded-lg">
+      <div className="grid xl:grid-cols-2 items-center mb-14 p-3 rounded">
         <Image src={section_img} width={320} className="justify-self-center" />
         <div className="">
           <p className="border-b border-gray-l3 pb-2 text-2xl mb-4 mt-4 xl:mt-0 font-medium text-center xl:text-left">

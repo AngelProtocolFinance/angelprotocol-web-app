@@ -35,7 +35,7 @@ function Benefit(props: TBenefit) {
   return (
     <article className="grid justify-items-center @2xl:grid-cols-2 group gap-x-10">
       <div
-        className={`w-full max-w-xs @2xl:max-w-[30rem] aspect-square ${props.cardBgClass} grid place-items-center rounded-4xl order-1 group-even:order-2 p-8 @3xl:p-16`}
+        className={`w-full max-w-xs @2xl:max-w-[30rem] aspect-square ${props.cardBgClass} grid place-items-center rounded order-1 group-even:order-2 p-8 @3xl:p-16`}
       >
         <Image
           height={350}

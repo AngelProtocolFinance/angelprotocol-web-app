@@ -1,5 +1,5 @@
-import laira_pulling_woman_up from "assets/images/laira-pulling-woman-up.png";
 import { APP_NAME } from "constants/env";
+import section_img from "./a-person-guiding-another-person-through-a-path.svg";
 
 export function Underdog({ classes = "" }) {
   return (
@@ -35,7 +35,7 @@ export function Underdog({ classes = "" }) {
       </div>
       <img
         width={728}
-        src={laira_pulling_woman_up}
+        src={section_img}
         className="max-w-xl xl:max-w-none order-1 xl:order-2 w-full self-center"
         alt="David and Goliath illustration representing how smaller nonprofits can compete"
       />

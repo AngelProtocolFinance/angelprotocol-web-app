@@ -70,7 +70,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 };
 
 export const meta: Route.MetaFunction = () =>
-  metas({ title: "Login - Better Giving" });
+  metas({ title: "Login - Offeria" });
 
 export { ErrorBoundary } from "components/error";
 export default function Page({ loaderData: to }: Route.ComponentProps) {
@@ -94,7 +94,8 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
           Philanthropy for Everyone
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
-          Log in to support 18000+ causes or register and manage your nonprofit.
+          Log in to support 18000+ causes or register and manage your Catholic
+          organization.
         </p>
         <RmxForm disabled={is_submitting} method="POST" className="contents">
           <button
@@ -177,7 +178,7 @@ export default function Page({ loaderData: to }: Route.ComponentProps) {
           href={href("/terms-of-use-npo")}
           className="text-blue hover:text-blue-l2"
         >
-          Terms of Use (Nonprofits)
+          Terms of Use (Catholic Organizations)
         </ExtLink>
       </span>
     </div>

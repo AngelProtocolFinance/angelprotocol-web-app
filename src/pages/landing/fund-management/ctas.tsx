@@ -1,8 +1,8 @@
-import boy_sleeping_in_hammock from "assets/landing/boy-sleeping-in-hammock.webp";
-import man_going_out_of_box from "assets/landing/man-going-out-of-box.webp";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
+import cta_1 from "./cta-1.svg";
+import cta_2 from "./cta-2.svg";
 
 export function Ctas({ classes = "" }) {
   return (
@@ -19,20 +19,20 @@ export function Ctas({ classes = "" }) {
           transition={{ type: "spring" }}
         >
           <h3 className="text-2xl max-md:text-center md:text-3xl mb-2">
-            Your donations, your way.
+            Your gifts, your way.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            Access funds anytime. Send donations straight to your bank, earn
-            3–4% in savings, or grow long-term through the Sustainability Fund;
-            your choice, flexible to your needs, and entirely free. No setup
-            costs, AUM fees, or performance fees.
+            Access funds anytime. Send gifts straight to your bank, earn 3–4% in
+            savings, or grow long-term through our USCCB-aligned investment
+            fund; your choice, flexible to your needs, and entirely free. No
+            setup costs, AUM fees, or performance fees.
           </p>
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}
@@ -47,14 +47,14 @@ export function Ctas({ classes = "" }) {
           </div>
         </motion.div>
         <img
-          src={man_going_out_of_box}
+          src={cta_1}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
       </article>
       <article className="grid md:grid-cols-2 gap-x-4 items-center">
         <img
-          src={boy_sleeping_in_hammock}
+          src={cta_2}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
@@ -77,9 +77,9 @@ export function Ctas({ classes = "" }) {
           <div className="justify-self-center md:justify-self-start">
             <Link
               to={href("/register/welcome")}
-              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+              className="btn-blue inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
             >
-              Join us today!
+              Sign Up Now
             </Link>
             <div className="md:ml-3 max-md:text-center mt-2">
               or,{" "}

@@ -13,8 +13,8 @@ export default function Welcome() {
         Thank you for joining {APP_NAME}!
       </h1>
       <p className="text-center text-pretty text-gray dark:text-white/75 w-full text-lg max-w-lg mt-4 mb-8">
-        Your account is ready - next, register your nonprofit to become a
-        member.
+        Your account is ready - next, register your Catholic organization to
+        become a member.
       </p>
 
       <button

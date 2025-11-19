@@ -58,7 +58,7 @@ export function ProgressIndicator({ step, classes = "" }: Props) {
       Organization
     </Step>,
     <Step isDone={step >= 3} isCurr={currPath === 3} key={3}>
-      Nonprofit Status
+      Organization Status
     </Step>,
     <Step isDone={step >= 4} isCurr={currPath === 4} key={4}>
       Documentation

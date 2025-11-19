@@ -95,12 +95,12 @@ importers:
       '@better-giving/wise':
         specifier: 1.1.7
         version: 1.1.7
-      '@fontsource-variable/quicksand':
-        specifier: 5.1.1
-        version: 5.1.1
       '@fontsource/gochi-hand':
         specifier: 5.1.1
         version: 5.1.1
+      '@fontsource/lexend':
+        specifier: 5.2.11
+        version: 5.2.11
       '@headlessui/react':
         specifier: 2.1.0
         version: 2.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1059,11 +1059,11 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fontsource-variable/quicksand@5.1.1':
-    resolution: {integrity: sha512-FVyhFT7QgcTf95ZR1TOowU2mtuoLWvkKw1oVhOXGsZ0/0IXJmx1/ibWbOUkAm6MPGJt8HEjcpMDZsE3WCYsJcw==}
-
   '@fontsource/gochi-hand@5.1.1':
     resolution: {integrity: sha512-6H2AssG/ZKvBvMGkx8AZVmyxVdQFO5zlvpF0keVbMEtfmRURMw91/TplG9O+c/VGzoZpIcQpjHBW3ZmFRozG2g==}
+
+  '@fontsource/lexend@5.2.11':
+    resolution: {integrity: sha512-bShbQr2g2sWl7GJNyIxdllZST1faVbebXN6H7AEEDCRms/g4orDLxWnmTVodOtiErdZVUJURq4jpafZ34nIkTw==}
 
   '@headlessui/react@2.1.0':
     resolution: {integrity: sha512-/MizQk2xqR5ELkmCI1xWy3VgJULvR8gcAXtZhcK7sY53TNRCPeMdeODEXKSv9LPSSRlEAyzW1+NGJiaXq6dLRw==}
@@ -5201,9 +5201,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fontsource-variable/quicksand@5.1.1': {}
-
   '@fontsource/gochi-hand@5.1.1': {}
+
+  '@fontsource/lexend@5.2.11': {}
 
   '@headlessui/react@2.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:

@@ -1,10 +1,10 @@
-import laira1 from "assets/laira/laira1.png";
-import laira2 from "assets/laira/laira2.png";
-import laira3 from "assets/laira/laira3.png";
 import { Image } from "components/image";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
+import step_1 from "./step-1.svg";
+import step_2 from "./step-2.svg";
+import step_3 from "./step-3.svg";
 
 type TListItem = {
   title1: string;
@@ -17,21 +17,21 @@ const items: TListItem[] = [
     title1: "Step 1",
     title2: "Sign up",
     description: `Join ${APP_NAME} — free, no platform or fund-management fees.`,
-    image: { src: laira1, width: 95, alt: "Laira holding number 1" },
+    image: { src: step_1, width: 300, alt: "Laira holding number 1" },
   },
   {
     title1: "Step 2",
-    title2: "Add the donation form ",
+    title2: "Add the giving form",
     description:
-      "Fewer clicks + more donation types + express checkout = more completed gifts and monthly donors.",
-    image: { src: laira2, width: 95, alt: "Laira holding number 2" },
+      "Fewer clicks + more gift types + express checkout = more completed gifts and recurring givers.",
+    image: { src: step_2, width: 300, alt: "Laira holding number 2" },
   },
   {
     title1: "Step 3",
-    title2: "Grow",
+    title2: "Grow faithfully",
     description:
-      "Let your hard earned donations work for you with passive high-yield savings & managed investments.",
-    image: { src: laira3, width: 115, alt: "Laira holding number 3" },
+      "Let your hard-earned gifts work for you with passive high-yield savings & USCCB-aligned investments.",
+    image: { src: step_3, width: 300, alt: "Laira holding number 3" },
   },
 ];
 
@@ -60,12 +60,12 @@ export function Steps({ classes = "" }) {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring", delay: 0.4 }}
       >
-        We pride ourselves in helping fellow nonprofits like yours{" "}
-        <span className="font-bold">save money</span> with free donation
-        processing, <span className="font-bold">save time</span> by handling all
-        admin & reporting work, and{" "}
-        <span className="font-bold">save for your future</span> with simple but
-        powerful high-yield savings and investment options
+        We help Catholic organizations like yours{" "}
+        <span className="font-bold">grow gifts</span> by accepting all giving
+        methods, <span className="font-bold">grow capacity</span> by handling
+        all admin & reporting work, and{" "}
+        <span className="font-bold">grow funds</span> with simple high-yield
+        savings and USCCB-aligned investments
       </motion.p>
       <motion.div
         className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10"
@@ -76,15 +76,15 @@ export function Steps({ classes = "" }) {
       >
         <Link
           to={href("/register/welcome")}
-          className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn-blue inline-flex items-center px-10 py-3 text-lg active:translate-x-1 font-bold shadow-2xl rounded"
         >
-          Join us today!
+          Sign Up Now
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="inline-flex items-center px-10 py-3 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1  font-bold rounded-full relative border border-blue-l2"
+          className="inline-flex items-center px-10 py-3 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1  font-bold rounded relative border border-blue-l2"
         >
-          Book a demo
+          Schedule a Demo
         </Link>
       </motion.div>
     </section>

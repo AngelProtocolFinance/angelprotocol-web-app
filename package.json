@@ -57,7 +57,7 @@
     "@better-giving/types": "1.1.8",
     "@better-giving/user": "2.0.19",
     "@better-giving/wise": "1.1.7",
-    "@fontsource-variable/quicksand": "5.1.1",
+    "@fontsource/lexend": "5.2.11",
     "@fontsource/gochi-hand": "5.1.1",
     "@headlessui/react": "2.1.0",
     "@hookform/error-message": "2.0.1",

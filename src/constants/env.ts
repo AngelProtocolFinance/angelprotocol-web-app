@@ -17,10 +17,9 @@ export const IS_TEST = env === "dev";
 
 // THE CONSTANTS BELOW ARE ALL CONFIGURED BY ENVIRONMENT VARIABLES
 // AND DISPLAY THE DESIRED TEXT/IMAGES/URLS/ETC THROUGHOUT THE APP
-export const SEO_IMAGE =
-  "https://charity-profile-images.s3.amazonaws.com/bettergiving-favicon-min.png";
+export const SEO_IMAGE = "https://www.offeria.church/favicon.png";
 export const EMAIL_SUPPORT = "support@better.giving";
-export const APP_NAME = "Better Giving";
+export const APP_NAME = "Offeria";
 export const BASE_URL = `https://${IS_TEST ? "staging." : ""}better.giving`;
 export const BOOK_A_DEMO =
   "https://meetings-eu1.hubspot.com/chauncey-st-john/better-giving-nonprofit-demo";

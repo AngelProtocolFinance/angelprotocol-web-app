@@ -29,16 +29,19 @@ interface Context {
 
 const context: { [id: string]: Context } = {
   registration: {
-    title: `Become a ${APP_NAME} Member`,
+    title: `Become an ${APP_NAME} Member`,
     description:
-      "Join the nonprofit-powered fundraising platform. Raise more and grow funds together.",
+      "Join the Catholic giving platform. Raise more and grow funds faithfully together.",
     terms: [
-      { to: href("/terms-of-use-npo"), title: "Terms of Use (Nonprofits)" },
+      {
+        to: href("/terms-of-use-npo"),
+        title: "Terms of Use (Catholic Organizations)",
+      },
     ],
   },
 
   referrals: {
-    title: "Empower More Nonprofits",
+    title: "Empower More Catholic Organizations",
     description: `Sign up to refer organizations to ${APP_NAME} and help them grow their impact make a difference with every connection.`,
     terms: [
       {
@@ -47,25 +50,28 @@ const context: { [id: string]: Context } = {
       },
     ],
     meta: metas({
-      title: "Sign Up Referral | Better Giving",
+      title: "Sign Up Referral | Offeria",
       description:
-        "Join Better Giving and start sharing the good! Sign up now to get your own referral code and link, earn rewards by inviting others to give better",
+        "Join Offeria and start sharing the good! Sign up now to get your own referral code and link, earn rewards by inviting others to give faithfully",
     }),
   },
 
   donation: {
-    title: "Join Better Giving",
-    description: "Sign up to manage your donations",
+    title: "Join Offeria",
+    description: "Sign up to manage your gifts",
     terms: [{ to: href("/terms-of-use"), title: "Terms of Use (Donors)" }],
   },
 
   fallback: {
     title: "Philanthropy for Everyone",
     description:
-      "Sign up to support 18000+ causes or register and manage your nonprofit.",
+      "Sign up to support 18000+ causes or register and manage your Catholic organization.",
     terms: [
       { to: href("/terms-of-use"), title: "Terms of Use (Donors)" },
-      { to: href("/terms-of-use-npo"), title: "Terms of Use (Nonprofits)" },
+      {
+        to: href("/terms-of-use-npo"),
+        title: "Terms of Use (Catholic Organizations)",
+      },
     ],
   },
 };
@@ -78,7 +84,7 @@ const get_context = (to: string): Context => {
 
 export const meta: Route.MetaFunction = ({ loaderData: to }) => {
   const ctx = get_context(to as string);
-  return ctx?.meta || [{ title: "Sign Up - Better Giving" }];
+  return ctx?.meta || [{ title: "Sign Up - Offeria" }];
 };
 
 export default function Page({ loaderData: to }: Route.ComponentProps) {

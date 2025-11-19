@@ -85,7 +85,7 @@ function Page({ loaderData: reg }: Route.ComponentProps) {
         value={designation.value}
         onChange={designation.onChange}
         required
-        label="Nonprofit Designation"
+        label="Organization Designation"
         classes={{ options: "text-sm", container: "mt-4" }}
         options={org_designations as any}
         option_disp={(v) => v}

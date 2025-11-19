@@ -7,7 +7,7 @@ export function StepsCard(props: Card) {
         src={props.img}
         height={300}
         alt="step card img"
-        className="md:row-span-2 size-52 md:size-72 relative rounded-full shadow-lg object-cover object-center max-md:mb-7"
+        className="md:row-span-2 size-52 md:size-72 relative rounded shadow-lg object-cover object-center max-md:mb-7"
       />
 
       <h4 className="md:self-end text-gray-d4 text-center md:text-left text-xl md:text-2xl leading-10 max-md:mb-2.5">

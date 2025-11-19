@@ -16,14 +16,14 @@ export function NotTaxExempt({ country, is_fsa_prev }: Props) {
   return (
     <div className="w-full">
       <p className="text-sm text-gray dark:text-gray leading-relaxed">
-        Great news: Nonprofit Organizations in{" "}
+        Great news: Catholic Organizations in{" "}
         <span className="font-semibold">{country}</span> can now take advantage
-        of {APP_NAME}’s Fiscal Sponsorship service.
+        of {APP_NAME}'s Global Fiscal Sponsorship service.
       </p>
       <p className="text-sm text-gray dark:text-gray leading-relaxed mt-4">
         {APP_NAME} provides fiscal sponsorship services at market-leading cost
         (2.9%) for our partner organizations worldwide to enable them to receive
-        tax efficient donations from the USA. Continue to setup your fiscal
+        tax efficient gifts from the USA. Continue to setup your fiscal
         sponsorship agreement.
       </p>
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">

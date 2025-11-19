@@ -1,9 +1,9 @@
-import girl_pointing_up from "assets/landing/girl-pointing-up.webp";
-import girl_using_phone from "assets/landing/girl-using-phone.webp";
-import girl_watering_plant from "assets/landing/girl-watering-plant.webp";
-import hand_payment_methods from "assets/landing/hand-payment-methods.webp";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
+import cta_1 from "./cta-1.svg";
+import cta_2 from "./cta-2.svg";
+import cta_3 from "./cta-3.svg";
+import cta_4 from "./cta-4.svg";
 
 interface IBlurImg {
   classes?: string;
@@ -12,28 +12,17 @@ interface IBlurImg {
 }
 function BlurImg({ classes, url, index = 0 }: IBlurImg) {
   return (
-    <motion.div
-      className={`${classes} relative w-64 h-64`}
+    <motion.img
+      className={`${classes} relative size-72`}
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ type: "spring", delay: index * 0.1 }}
       role="presentation"
       aria-hidden="true"
-    >
-      <img
-        width={400}
-        src={url}
-        className="rounded-full absolute-center blur-2xl"
-        alt=""
-      />
-      <img
-        width={240}
-        src={url}
-        className="z-10 rounded-full absolute-center"
-        alt=""
-      />
-    </motion.div>
+      width={400}
+      src={url}
+    />
   );
 }
 
@@ -55,28 +44,28 @@ export function Ctas({ classes = "" }) {
             We help you raise more.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">
-              Conversion-optimized donation flow
-            </span>
-            : fewer clicks, express checkout, all gift types in one form—plus
-            easy embedding to lift completion and grow monthly donors.
+            <span className="font-bold">Conversion-optimized gift flow</span>:
+            fewer clicks, express checkout, all gift types in one form—plus easy
+            embedding to lift completion and grow recurring givers. Label funds
+            as needed for Offertory, Second Collections, Appeals, Building Fund,
+            School, Ministries, etc.
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
         <BlurImg
-          url={girl_pointing_up}
+          url={cta_1}
           classes="justify-self-center max-md:mb-4"
           index={0}
         />
       </article>
       <article className="grid md:grid-cols-2 items-center">
         <BlurImg
-          url={girl_watering_plant}
+          url={cta_2}
           classes="justify-self-center max-md:mb-4"
           index={1}
         />
@@ -91,16 +80,16 @@ export function Ctas({ classes = "" }) {
             We grow what you raise.
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
-            <span className="font-bold">Let your donations work for you</span>:
-            High-yield savings (FDIC-insured) and a managed option averaging
-            over 20% annually across the last 5 years (past performance isn't
-            guaranteed).
+            <span className="font-bold">Let your gifts work for you</span>:
+            High-yield savings (FDIC-insured) and a USCCB-aligned investment
+            option averaging over 24% annually across the last 5 years (past
+            performance isn't guaranteed).
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
       </article>
@@ -117,26 +106,26 @@ export function Ctas({ classes = "" }) {
           </h3>
           <p className="md:text-lg mb-4 max-md:text-center">
             <span className="font-bold">Stop turning donors away</span>: Accept
-            stock & crypto in the same secure flow—no extra systems, no added
-            admin, no extra cost, just cash in your bank account and tax
-            benefits for your donors.
+            stock, crypto and DAF gifts in the same secure flow—no extra
+            systems, no added admin, no extra cost, just cash in your bank
+            account and tax benefits for your donors.
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
         <BlurImg
-          url={hand_payment_methods}
+          url={cta_3}
           classes="justify-self-center max-md:mb-4"
           index={2}
         />
       </article>
       <article className="grid md:grid-cols-2 items-center">
         <BlurImg
-          url={girl_using_phone}
+          url={cta_4}
           classes="justify-self-center max-md:mb-4"
           index={3}
         />
@@ -159,9 +148,9 @@ export function Ctas({ classes = "" }) {
           </p>
           <Link
             to={href("/register/welcome")}
-            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+            className="btn-blue justify-self-center md:justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
           >
-            Join us today!
+            Sign Up Now
           </Link>
         </motion.div>
       </article>
@@ -187,21 +176,21 @@ export function Cta({ classes = "" }: ICta) {
         </p>
         <Link
           to={href("/register/welcome")}
-          className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded-full"
+          className="btn-blue justify-self-start inline-flex items-center px-10 py-3 active:translate-x-1 font-bold shadow-2xl rounded"
         >
-          Join us today!
+          Sign Up Now
         </Link>
       </div>
       <div className="relative order-1">
         <img
           width={320}
-          src={girl_pointing_up}
-          className="rounded-full justify-self-center absolute-center blur-xl"
+          src={cta_4}
+          className="rounded justify-self-center absolute-center blur-xl"
         />
         <img
           width={220}
-          src={girl_pointing_up}
-          className="z-10 rounded-full justify-self-center absolute-center"
+          src={cta_4}
+          className="z-10 rounded justify-self-center absolute-center"
         />
       </div>
     </div>

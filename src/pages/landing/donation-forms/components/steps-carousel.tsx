@@ -18,7 +18,7 @@ interface DotButtonProps {
 
 const DotButton: FC<DotButtonProps> = ({ selected, on_click }) => (
   <button
-    className={`w-2 h-2 rounded-full border-blue-d1 border mx-1 transition-all ${
+    className={`w-2 h-2 rounded border-blue-d1 border mx-1 transition-all ${
       selected ? "bg-blue-d1" : ""
     }`}
     type="button"
@@ -68,7 +68,7 @@ export function StepsCarousel({
             <div className="flex-[0_0_100%]" key={idx}>
               <Image
                 src={screenshot}
-                className="rounded-xl border border-gray-l3 overflow-clip"
+                className="rounded border border-gray-l3 overflow-clip"
                 alt={`Step ${idx + 1}`}
               />
             </div>
