@@ -1,5 +1,5 @@
-import man_using_laptop from "assets/images/man-using-laptop.png";
 import { motion } from "motion/react";
+import hero from "./hero.svg";
 
 export const Hero = ({ classes = "" }) => {
   return (
@@ -36,10 +36,8 @@ export const Hero = ({ classes = "" }) => {
       </motion.p>
 
       <img
-        className="mt-8 justify-self-center rounded-2xl"
-        width={600}
-        height={329.88}
-        src={man_using_laptop}
+        className="mt-8 justify-self-center"
+        src={hero}
         alt="man using laptop"
       />
     </section>
