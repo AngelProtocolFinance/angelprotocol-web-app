@@ -1,10 +1,10 @@
-import laira1 from "assets/laira/laira1.png";
-import laira2 from "assets/laira/laira2.png";
-import laira3 from "assets/laira/laira3.png";
 import { Image } from "components/image";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
+import step_1 from "./step-1.svg";
+import step_2 from "./step-2.svg";
+import step_3 from "./step-3.svg";
 
 type TListItem = {
   title1: string;
@@ -17,21 +17,21 @@ const items: TListItem[] = [
     title1: "Step 1",
     title2: "Sign up",
     description: `Join ${APP_NAME} — free, no platform or fund-management fees.`,
-    image: { src: laira1, width: 95, alt: "Laira holding number 1" },
+    image: { src: step_1, width: 300, alt: "Laira holding number 1" },
   },
   {
     title1: "Step 2",
     title2: "Add the giving form",
     description:
       "Fewer clicks + more gift types + express checkout = more completed gifts and recurring givers.",
-    image: { src: laira2, width: 95, alt: "Laira holding number 2" },
+    image: { src: step_2, width: 300, alt: "Laira holding number 2" },
   },
   {
     title1: "Step 3",
     title2: "Grow faithfully",
     description:
       "Let your hard-earned gifts work for you with passive high-yield savings & USCCB-aligned investments.",
-    image: { src: laira3, width: 115, alt: "Laira holding number 3" },
+    image: { src: step_3, width: 300, alt: "Laira holding number 3" },
   },
 ];
 

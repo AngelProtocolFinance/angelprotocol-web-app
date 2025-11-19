@@ -25,9 +25,9 @@ export default CacheRoute(Page);
 function Page({ loaderData: page1 }: Route.ComponentProps) {
   return (
     <div className="grid pb-4">
-      <Header page1={page1} classes="sticky z-40 top-[-1px] mt-8 px-4" />
-      <Hero classes="-mt-24" />
-      <Partners classes="xl:container xl:mx-auto px-5" />
+      <Header page1={page1} classes="sticky z-40 top-[-1px]" />
+      <Hero classes="" />
+      <Partners classes="xl:container xl:mx-auto px-5 mt-12" />
 
       <Steps classes="xl:container xl:mx-auto px-5 mt-36" />
       <Ctas classes="xl:container xl:mx-auto mt-36" />

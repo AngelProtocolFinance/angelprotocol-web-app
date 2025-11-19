@@ -1,45 +1,16 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import alliance_member_badge from "assets/images/alliance-member-badge-hexagon.png";
-import alliance_member_badge_rect from "assets/images/alliance-member-badge-rectangle.png";
-import laira_pointing from "assets/laira/laira-pointing.webp";
-import laira_yellow from "assets/laira/laira-yellow.webp";
-import { APP_NAME } from "constants/env";
 import { motion } from "motion/react";
 
 export function Manifesto({ classes = "" }) {
   return (
     <section className={`${classes} grid pb-40`}>
       <motion.div
-        className="relative w-full max-w-4xl justify-self-center rounded-2xl border-t border-gray-l4 p-4 sm:p-12 shadow-2xl shadow-black/10"
+        className="relative w-full max-w-4xl justify-self-center rounded-2xl border-t border-gray-l4 p-8 sm:p-12 shadow-2xl shadow-black/10"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring" }}
       >
-        <div className="max-xl:hidden absolute -left-32 isolate -bottom-5">
-          <img src={laira_pointing} width={120} className="z-10 max-sm:w-24" />
-          {/** shadow */}
-          <svg
-            className="absolute -bottom-4 left-0 z-0"
-            width="100%"
-            height="20"
-          >
-            <defs>
-              <filter id="blur">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
-              </filter>
-            </defs>
-            <ellipse
-              cx="50%"
-              cy="50%"
-              rx="50"
-              ry="8"
-              filter="url(#blur)"
-              className="fill-gray-l4"
-              // className="blur-sm"
-            />
-          </svg>
-        </div>
         <h2 className="text-center section-heading">
           <span className="text-blue">Stewardship</span> means belonging.
         </h2>
@@ -51,7 +22,7 @@ export function Manifesto({ classes = "" }) {
         </p>
 
         <TabGroup className="mt-4">
-          <TabList className="flex mb-2 gap-x-1">
+          <TabList className="grid grid-cols-3 gap-x-1">
             <Tab className="focus:outline-none px-4 pb-2 font-bold text-lg data-selected:border-blue border-b-2 border-gray-l3">
               Your Rights
             </Tab>
@@ -141,30 +112,6 @@ export function Manifesto({ classes = "" }) {
             </TabPanel>
           </TabPanels>
         </TabGroup>
-        <div className="max-xl:hidden absolute -right-28 isolate -bottom-2">
-          <img
-            src={laira_yellow}
-            width={90}
-            className="z-10 max-sm:w-24 rotate-y-180"
-          />
-          {/** shadow */}
-          <svg className="absolute -bottom-3 z-0" width="100%" height="20">
-            <defs>
-              <filter id="blur">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
-              </filter>
-            </defs>
-            <ellipse
-              cx="50%"
-              cy="50%"
-              rx="40"
-              ry="6"
-              filter="url(#blur)"
-              className="fill-gray-l3"
-              // className="blur-sm"
-            />
-          </svg>
-        </div>
       </motion.div>
     </section>
   );

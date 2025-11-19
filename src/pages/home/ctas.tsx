@@ -12,28 +12,17 @@ interface IBlurImg {
 }
 function BlurImg({ classes, url, index = 0 }: IBlurImg) {
   return (
-    <motion.div
-      className={`${classes} relative w-64 h-64`}
+    <motion.img
+      className={`${classes} relative size-80 rounded-full`}
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ type: "spring", delay: index * 0.1 }}
       role="presentation"
       aria-hidden="true"
-    >
-      <img
-        width={400}
-        src={url}
-        className="rounded-full absolute-center blur-2xl"
-        alt=""
-      />
-      <img
-        width={240}
-        src={url}
-        className="z-10 rounded-full absolute-center"
-        alt=""
-      />
-    </motion.div>
+      width={400}
+      src={url}
+    />
   );
 }
 
