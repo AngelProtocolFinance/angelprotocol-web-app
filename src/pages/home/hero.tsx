@@ -11,7 +11,7 @@ export const Hero = ({ classes = "" }) => {
       aria-label="Hero section"
     >
       <div
-        className="absolute inset-0 -z-10 mask-b-from-30% bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom]"
+        className="absolute inset-0 -z-10 mask-b-from-1% bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom]"
         style={{ backgroundImage: `url('${banner}')` }}
         role="presentation"
         aria-hidden="true"
