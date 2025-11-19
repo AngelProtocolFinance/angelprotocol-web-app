@@ -1,6 +1,5 @@
-import section_img from "assets/images/laira-inside-pie-chart.png";
 import { Image } from "components/image";
-import { APP_NAME } from "constants/env";
+import section_img from "./pie.svg";
 
 export function Investment({ classes = "" }) {
   return (

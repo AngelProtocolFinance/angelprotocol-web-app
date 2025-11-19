@@ -1,8 +1,8 @@
-import boy_sleeping_in_hammock from "assets/landing/boy-sleeping-in-hammock.webp";
-import man_going_out_of_box from "assets/landing/man-going-out-of-box.webp";
 import { APP_NAME, BOOK_A_DEMO } from "constants/env";
 import { motion } from "motion/react";
 import { Link, href } from "react-router";
+import cta_1 from "./cta-1.svg";
+import cta_2 from "./cta-2.svg";
 
 export function Ctas({ classes = "" }) {
   return (
@@ -47,14 +47,14 @@ export function Ctas({ classes = "" }) {
           </div>
         </motion.div>
         <img
-          src={man_going_out_of_box}
+          src={cta_1}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
       </article>
       <article className="grid md:grid-cols-2 gap-x-4 items-center">
         <img
-          src={boy_sleeping_in_hammock}
+          src={cta_2}
           className="justify-self-center max-md:mb-4"
           width={400}
         />
