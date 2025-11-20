@@ -41,12 +41,6 @@ export function Hero({ className = "" }) {
         classes="max-w-2xl @6xl:max-w-auto order-1 @6xl:order-2 w-full self-center"
         vid={videos.about}
       />
-      {/* <Image
-        src={benefits.donors[1].img}
-        width={420}
-        height={420}
-        className="rounded-4xl order-1 @6xl:order-2"
-      /> */}
     </section>
   );
 }
