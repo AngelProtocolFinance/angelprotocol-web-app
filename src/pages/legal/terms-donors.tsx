@@ -58,7 +58,7 @@ export default function TermsDonors() {
         The headings and subheadings are for reference only and do not limit the
         terms or application of the applicable section. Your trust is very
         important to us. If you have questions about this Agreement, please
-        email support@better.giving.
+        email hi@better.giving.
       </p>
       <ol>
         <li>

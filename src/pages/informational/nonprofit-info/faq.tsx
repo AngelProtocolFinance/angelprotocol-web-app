@@ -253,9 +253,7 @@ const faqs = [
         world. Our platform offers fiscal sponsorship to help organizations
         outside the U.S. access U.S. grants and donations while also simplifying
         tax compliance. With our global reach, you can accept donations from
-        anywhere in the world in multiple currencies. As a nonprofit, we charge
-        a cost-leading 2.9% for these services to keep them affordable for
-        organizations of all sizes.
+        anywhere in the world in multiple currencies.
       </p>,
       <p className="italic">
         Global nonprofits can access U.S. funding and donors with ease.

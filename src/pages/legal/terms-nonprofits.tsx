@@ -85,7 +85,7 @@ export default function TermsNonprofits() {
         The headings and subheadings are for reference only and do not limit the
         terms or application of the applicable section. Your trust is very
         important to us. If you have questions about this Agreement please
-        contact, support@better.giving.
+        contact, hi@better.giving.
       </p>
 
       <ol type="1">

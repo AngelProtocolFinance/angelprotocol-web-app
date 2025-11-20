@@ -196,9 +196,7 @@ export const faqs = [
         world. Our platform offers fiscal sponsorship to help organizations
         outside the U.S. access U.S. grants and donations while also simplifying
         tax compliance. With our global reach, you can accept donations from
-        anywhere in the world in multiple currencies. As a nonprofit, we charge
-        a cost-leading 2.9% for these services to keep them affordable for
-        organizations of all sizes.
+        anywhere in the world in multiple currencies.
       </p>,
       <p className="italic">
         Global nonprofits can access U.S. funding and donors with ease.
@@ -224,9 +222,6 @@ export const faqs = [
         <span className="font-medium">Reach US donors:</span> Tap into America's
         $499B+ giving market.
         <br />
-        <span className="font-medium">Save time and money:</span> No setup
-        costs—Better Giving's 2.9% fee is paid by the donor.
-        <br />
         <span className="font-medium">Build credibility:</span> Partner with a
         trusted US nonprofit.
         <br />
@@ -246,8 +241,8 @@ export const faqs = [
       <p>
         No upfront or membership fees
         <br />
-        The 2.9% fee is covered by the donor, so there's no cost to your
-        nonprofit
+        The 2.9% fee is often covered by the donor, in which case there's no
+        cost to your nonprofit.
         <br />
         This is well below the industry average of 4–10% for similar services
       </p>,
