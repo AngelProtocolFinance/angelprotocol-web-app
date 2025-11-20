@@ -32,8 +32,7 @@ export const Hero = ({ classes = "" }) => {
       >
         Access should never depend on budget or borders. Many international
         nonprofits struggle to receive U.S. tax-deductible donations —{" "}
-        {APP_NAME}
-        Giving makes it simple.{" "}
+        {APP_NAME} makes it simple.{" "}
         <span className="block mt-4">
           That’s why we offer fiscal sponsorship: a simple bridge that lets
           international nonprofits receive tax-deductible U.S. donations while
