@@ -39,7 +39,7 @@ export function Hero2({ className = "" }) {
         width={450}
         alt="laira floating and holding a wrapped gift"
         src={hero_img}
-        className="max-xl:w-64 order-1 xl:order-2 justify-self-center self-center"
+        className="max-xl:w-64 order-1 xl:order-2 xl:justify-self-end self-center"
       />
     </section>
   );

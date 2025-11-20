@@ -1,4 +1,5 @@
 import { CheckIcon, ClockIcon, TrendingUpIcon, WalletIcon } from "lucide-react";
+import { Items } from "pages/@sections/products";
 import type { ReactElement } from "react";
 
 interface ICard {
@@ -39,24 +40,10 @@ export function Features({ classes = "" }) {
       <h2 className="text-center section-heading">
         Our features aren't seasonal. They're standard.
       </h2>
-      <p className="section-body mt-4 text-center">
+      <p className="section-body mt-4 mb-10 text-center">
         Everything you need to grow your mission, available every single day.
       </p>
-      <div className="grid gap-4 mt-10 xl:grid-cols-3 xl:grid-rows-[auto_auto_1fr]">
-        {cards.map(({ title, description, icon }) => (
-          <div
-            key={title}
-            className="bg-white grid grid-rows-subgrid row-span-3 items-center p-6 rounded-lg transition-shadow duration-300"
-          >
-            <div className="p-1">{icon}</div>
-            <div className="text-xl font-semibold flex items-center gap-x-1">
-              <CheckIcon size={20} className="h-[1h] stroke-green stroke-2" />
-              {title}
-            </div>
-            <p className="text-gray">{description}</p>
-          </div>
-        ))}
-      </div>
+      <Items />
     </div>
   );
 }

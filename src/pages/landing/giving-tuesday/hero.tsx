@@ -5,7 +5,7 @@ import hero_img from "./hero-img.png";
 export function Hero({ className = "" }) {
   return (
     <section
-      className={`${className} grid content-start justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2 py-24`}
+      className={`${className} grid content-start justify-items-center gap-10 xl:justify-items-start xl:grid-cols-2 pt-20 xl:pt-40  pb-24`}
     >
       <div className="max-w-2xl order-2 xl:order-1">
         <h4 className="pre-heading text-blue-d1 text-center xl:text-left  uppercase mb-5">
@@ -38,7 +38,7 @@ export function Hero({ className = "" }) {
         width={320}
         alt="laira floating and holding a wrapped gift"
         src={hero_img}
-        className="max-xl:w-64 order-1 xl:order-2 justify-self-center self-center"
+        className="max-xl:w-64 order-1 xl:order-2 xl:justify-self-end self-center"
       />
     </section>
   );

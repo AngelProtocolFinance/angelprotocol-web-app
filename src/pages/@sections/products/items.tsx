@@ -7,7 +7,7 @@ export function Items({ classes = "" }) {
       className={`${classes} grid md:grid-cols-3 gap-8`}
       aria-label="Key offerings"
     >
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid bg-white p-4 pb-8 rounded-lg border border-gray-l3 justify-items-center">
         <LayoutPanelLeftIcon aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
           All-in one donation form
@@ -23,7 +23,7 @@ export function Items({ classes = "" }) {
           Learn more
         </NavLink>
       </article>
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid bg-white p-4 pb-8 rounded-lg border border-gray-l3 justify-items-center">
         <SproutIcon className="stroke-green" size={26} aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
           Sustainability fund management
@@ -39,7 +39,7 @@ export function Items({ classes = "" }) {
           Learn more
         </NavLink>
       </article>
-      <article className="grid p-4 pb-8 rounded-lg shadow-xl shadow-gray-l4 border-t border-gray-l4 justify-items-center">
+      <article className="grid bg-white p-4 pb-8 rounded-lg border border-gray-l3 justify-items-center">
         <GlobeIcon className="stroke-blue" aria-hidden="true" />
         <h3 className="mt-2 capitalize text-center font-bold text-lg md:text-xl">
           Fiscal sponsorship
