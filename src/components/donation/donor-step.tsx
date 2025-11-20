@@ -96,6 +96,14 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
         />
       </Fieldset>
 
+      <Field
+        label="Your company"
+        {...register("company_name")}
+        error={errors.email?.message}
+        classes={{ label: "font-semibold" }}
+        placeholder="e.g. Better Giving"
+      />
+
       {don.recipient.donor_address_required && (
         <Fieldset className="grid gap-4 mt-2">
           <Legend className="font-semibold text-sm -mb-2">Your address</Legend>
