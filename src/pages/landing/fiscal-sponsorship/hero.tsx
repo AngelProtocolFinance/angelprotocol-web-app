@@ -22,8 +22,7 @@ export const Hero = ({ classes = "" }) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", delay: 0.2 }}
       >
-        Make Your Donations Work for You: <br />
-        Automatic Savings & Growth
+        Globally Inclusive: Every Nonprofit Deserves Access, Wherever You Are
       </motion.h1>
       <motion.p
         className="px-6 font-medium section-body max-w-5xl mx-auto max-md:block text-center"
