@@ -1,5 +1,4 @@
-import { CheckIcon, ClockIcon, TrendingUpIcon, WalletIcon } from "lucide-react";
-import { Items } from "pages/@sections/products";
+import { ClockIcon, TrendingUpIcon, WalletIcon } from "lucide-react";
 import type { ReactElement } from "react";
 
 interface ICard {
@@ -43,7 +42,18 @@ export function Features({ classes = "" }) {
       <p className="section-body mt-4 mb-10 text-center">
         Everything you need to grow your mission, available every single day.
       </p>
-      <Items />
+      <div className="grid gap-4 mt-10 xl:grid-cols-3 xl:grid-rows-[auto_auto_1fr]">
+        {cards.map(({ title, description, icon }) => (
+          <div
+            key={title}
+            className="shadow-2xl/[0.1] bg-white grid grid-rows-subgrid justify-items-center row-span-3 items-center p-6 rounded-lg transition-shadow duration-300"
+          >
+            <div className="p-1">{icon}</div>
+            <div className="text-xl font-semibold">{title}</div>
+            <p className="text-gray text-center">{description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
