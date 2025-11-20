@@ -33,8 +33,6 @@ import { RegDb } from "@better-giving/reg";
 import { UserDb } from "@better-giving/user";
 import { Table } from "lib/table/db";
 import {
-  apes_aws_access_key_id,
-  apes_aws_secret_access_key,
   aws_access_key_id,
   aws_region,
   aws_secret_access_key,

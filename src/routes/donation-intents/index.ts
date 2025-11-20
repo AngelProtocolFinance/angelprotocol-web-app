@@ -195,6 +195,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       usdValue: to_pay, // chariot returns USD value
       fiatRamp: "CHARIOT",
       chainId: "fiat",
+      paymentMethod: "Daf",
       email: intent.donor.email,
     };
     await onholddb.put(onhold);
@@ -264,6 +265,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       usdValue: to_pay / usd_rate,
       fiatRamp: "PAYPAL",
       chainId: "fiat",
+      paymentMethod: "Paypal",
       email: intent.donor.email,
     };
     await onholddb.put(onhold);
