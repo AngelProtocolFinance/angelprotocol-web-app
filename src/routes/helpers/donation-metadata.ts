@@ -2,7 +2,7 @@ import type {
   IDonationOnHoldAttr,
   TOnHoldStatus,
 } from "@better-giving/donation";
-import type { IMetadata, IMetadataAttr } from "@better-giving/stripe";
+import type { IMetadata, IMetadataAttr } from "lib/stripe";
 
 const to_boolstr = (b: boolean | undefined, fallback: boolean) =>
   (b ?? fallback) ? "true" : "false";

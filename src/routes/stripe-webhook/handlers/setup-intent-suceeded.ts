@@ -1,5 +1,5 @@
-import type { IMetadataSubs } from "@better-giving/stripe";
 import { str_id } from "helpers/stripe";
+import type { IMetadataSubs } from "lib/stripe";
 import type Stripe from "stripe";
 import { subsdb } from ".server/aws/db";
 import { create_subscription } from ".server/stripe/create-subscription";

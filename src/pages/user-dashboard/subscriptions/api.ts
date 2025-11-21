@@ -1,4 +1,4 @@
-import type { IMetadata } from "@better-giving/stripe";
+import type { IMetadata } from "lib/stripe";
 import type Stripe from "stripe";
 import type { Route } from "./+types";
 import { cognito, to_auth } from ".server/auth";

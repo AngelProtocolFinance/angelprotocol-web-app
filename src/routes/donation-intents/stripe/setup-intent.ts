@@ -1,6 +1,6 @@
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import type { IMetadataSubs } from "@better-giving/stripe";
 import { rd } from "helpers/decimal";
+import type { IMetadataSubs } from "lib/stripe";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe_envs } from ".server/env";
 import { stripe } from ".server/sdks";

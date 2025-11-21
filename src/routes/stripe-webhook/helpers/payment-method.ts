@@ -1,4 +1,4 @@
-import type { TPaymentMethods } from "@better-giving/stripe";
+import type { TPaymentMethods } from "lib/stripe";
 import { stripe } from ".server/sdks";
 
 export async function payment_method(id: string): Promise<string> {

@@ -1,5 +1,5 @@
-import type { IMetadata, IMetadataSubs } from "@better-giving/stripe";
 import { str_id } from "helpers/stripe";
+import type { IMetadata, IMetadataSubs } from "lib/stripe";
 import { to_onhold } from "routes/helpers/donation-metadata";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";

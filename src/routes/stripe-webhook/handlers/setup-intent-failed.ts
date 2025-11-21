@@ -1,5 +1,5 @@
-import type { IMetadataSubs } from "@better-giving/stripe";
 import { send_email } from "lib/email";
+import type { IMetadataSubs } from "lib/stripe";
 import type Stripe from "stripe";
 
 export async function handle_setup_intent_failed(

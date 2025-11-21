@@ -1,6 +1,6 @@
-import type { IMetadata } from "@better-giving/stripe";
 import { str_id } from "helpers/stripe";
 import { send_email } from "lib/email";
+import type { IMetadata } from "lib/stripe";
 import type Stripe from "stripe";
 import { stripe } from ".server/sdks";
 

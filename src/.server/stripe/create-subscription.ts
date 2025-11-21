@@ -1,4 +1,4 @@
-import type { IMetadataSubs } from "@better-giving/stripe";
+import type { IMetadataSubs } from "lib/stripe";
 import { stripe } from ".server/sdks";
 
 export async function create_subscription(
