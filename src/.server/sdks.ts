@@ -1,4 +1,5 @@
 import Anvil from "@anvilco/anvil";
+import { CognitoIdentityProviderClient } from "@aws-sdk/client-cognito-identity-provider";
 import { Chariot } from "@better-giving/chariot";
 import { Discord } from "@better-giving/helpers/discord";
 import { Nowpayments } from "@better-giving/nowpayments";
@@ -11,6 +12,7 @@ import Stripe from "stripe";
 import type { Fetcher } from "types/api";
 import {
   anvil_envs,
+  aws_region,
   chariot_envs,
   coingecko_api_key,
   discord_envs,
@@ -85,4 +87,8 @@ export const paypal = new PayPalSDK({
   client_id: paypal_envs.client_id,
   client_secret: paypal_envs.client_secret,
   api_url: paypal_envs.api_url,
+});
+
+export const cognito = new CognitoIdentityProviderClient({
+  region: aws_region,
 });

@@ -77,6 +77,7 @@ export const cognito_envs = {
   client_id: _var("COGNITO_CLIENT_ID"),
   domain: _var("COGNITO_DOMAIN"),
   endpoint: _var("COGNITO_ENDPOINT"),
+  user_pool_id: _var("COGNITO_USER_POOL_ID"),
 };
 
 export const session_secret = _var("SESSION_SECRET");
