@@ -86,9 +86,6 @@ importers:
       '@better-giving/schemas':
         specifier: 2.0.4
         version: 2.0.4(valibot@0.42.0(typescript@5.9.2))
-      '@better-giving/stripe':
-        specifier: 1.0.7
-        version: 1.0.7
       '@better-giving/types':
         specifier: 1.1.8
         version: 1.1.8
@@ -779,9 +776,6 @@ packages:
     resolution: {integrity: sha512-gWBlVN4qhMQCVbDxblP+MUicMreLoG7/FU5y9m3RhQSp99mLgE7AAAe6nAid/YwmobtL1Hs71m1vhPcZ0LAUoQ==}
     peerDependencies:
       valibot: 0.42.0
-
-  '@better-giving/stripe@1.0.7':
-    resolution: {integrity: sha512-nLnrJo3DPeArA/d1KbMFN6IJLmz+qCaaGFE8vO3AnjhcXTGbPZQAORflN7ES3AYrhUezSi/pG+3ZXoGj0Ns5/g==}
 
   '@better-giving/types@1.1.8':
     resolution: {integrity: sha512-2X34iBg8+Iewwy9f+bKfqQr817AmmLTQgFvEY29lGFeui0W7z38WSpY+oYPfB3MwcRJaHnQv/SFzxpevLgAiLQ==}
@@ -5070,8 +5064,6 @@ snapshots:
       valibot: 0.42.0(typescript@5.9.2)
     optionalDependencies:
       date-fns: 4.1.0
-
-  '@better-giving/stripe@1.0.7': {}
 
   '@better-giving/types@1.1.8': {}
 
