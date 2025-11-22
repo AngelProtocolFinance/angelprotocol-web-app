@@ -42,7 +42,6 @@ export const qstash_body = async (
   const sig = r.headers.get("upstash-signature");
   if (!sig) return resp.status(205, "no signature");
 
-  r.body;
   const body = await r.text();
 
   const url = new URL(r.url).toString();

@@ -22,7 +22,8 @@
     "./src/**/*.ts",
     "./src/**/*.tsx",
     "./src/.server/**/*.ts",
-    "./src/.server/**/*.tsx"
+    "./src/.server/**/*.tsx",
+    "vite.config.ts"
   ],
   "exclude": ["./src/scripts/**/*"]
 }
