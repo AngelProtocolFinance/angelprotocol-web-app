@@ -94,9 +94,14 @@ export function Configurer({ classes = "", fv, set_fv, endow, endows }: Props) {
         />
 
         <CheckField
-          {...register("is_title_shown")}
+          {...register("is_title_shown", {
+            onChange(event) {
+              if (!event.target.checked) {
+                setValue("title", "");
+              }
+            },
+          })}
           classes="mt-3"
-          onChange={(checked) => !checked && setValue("title", "")}
         >
           Show title
         </CheckField>
@@ -110,9 +115,14 @@ export function Configurer({ classes = "", fv, set_fv, endow, endows }: Props) {
           error={errors.description?.message}
         />
         <CheckField
-          {...register("is_description_text_shown")}
+          {...register("is_description_text_shown", {
+            onChange(event) {
+              if (!event.target.checked) {
+                setValue("description", "");
+              }
+            },
+          })}
           classes="mt-4"
-          onChange={(checked) => !checked && setValue("description", "")}
         >
           Show description
         </CheckField>
