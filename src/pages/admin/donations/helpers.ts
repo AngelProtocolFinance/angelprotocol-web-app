@@ -41,7 +41,7 @@ export const to_csv_row = (x: IDonationFinal): IRow => {
   const fees: IFees = {
     base: x.baseFee || 0,
     fsa: x.fiscalSponsorFee || 0,
-    processing: Math.max(0, (x.usdValue || 0) - (x.settledUsdAmount || 0)),
+    processing: x.processingFee || 0,
     processing_allowance: x.feeAllowance || 0,
   };
 
