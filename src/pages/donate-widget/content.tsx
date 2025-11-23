@@ -1,5 +1,5 @@
 import type { INpo } from "@better-giving/endowment";
-import { type IIncrement, donate_method_ids } from "@better-giving/schemas";
+import type { IIncrement } from "@better-giving/schemas";
 import {
   type DonationRecipient,
   type IUser,

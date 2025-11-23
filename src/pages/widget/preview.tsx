@@ -59,6 +59,12 @@ export function Preview({ classes = "", fv, endow }: Props) {
             "Select your preferred payment option from our comprehensive donation choices and get an immediate tax receipt for your records."}
         </p>
       )}
+      {fv.program && fv.program.value && (
+        <p className="mt-2">
+          <span className="text-xs bg-blue-l3 p-1 rounded-sm">Program</span>{" "}
+          <span className="text-sm text-gray-d1">{fv.program.label}</span>
+        </p>
+      )}
       <Steps
         key={JSON.stringify(init_state)}
         init={init_state}
