@@ -211,21 +211,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       intent.donor.email.toLowerCase()
     );
 
-    // save stripe customer id to user
-    if (user && user.email === intent.donor.email && !user.stripe_customer_id) {
-      await cognito
-        .update_user_attributes(
-          [{ Name: "custom:stripe_customer_id", Value: customer_id }],
-          user.token_access
-        )
-        .catch(console.error);
-    }
-
     const to_pay =
-      intent.amount.amount +
-      intent.amount.tip +
-      // don't add fee allowance fo subs
-      (intent.frequency === "one-time" ? intent.amount.fee_allowance : 0);
+      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
 
     const onhold: IDonationOnHoldAttr = {
       ...base,
