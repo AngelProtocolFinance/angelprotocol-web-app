@@ -9,6 +9,7 @@ import type { IDonationFinal } from "@better-giving/donation";
 import type { Commission } from "@better-giving/referrals";
 import * as ref_db from "@better-giving/referrals/db";
 import { tables } from "@better-giving/types/list";
+import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import { get_referrer } from "./helpers";
 import { send_commission } from "./send-commission.js";
@@ -20,7 +21,9 @@ import { is_resp, qstash_body } from ".server/utils.js";
 const lambda = `commissions-processor:${env}`;
 // monthly
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<Response> => {
   const b = await qstash_body(request);
   if (is_resp(b)) return b;
 
@@ -55,7 +58,7 @@ export const action: ActionFunction = async ({ request }) => {
         title: "No commissions to process",
         body: `No commissions to process for ${env}`,
       });
-      return;
+      return resp.status(200, "No commissions to process");
     }
 
     // Grouping payouts based on endowment ID
@@ -71,6 +74,8 @@ export const action: ActionFunction = async ({ request }) => {
     for (const [referrer, sources] of Object.entries(grouped)) {
       await process_item(referrer, sources);
     }
+
+    return resp.status(200, "Done processing commissions");
   } catch (err) {
     console.error(err);
     await aws_monitor.sendAlert({
@@ -79,6 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
       title: "Unexpected error processing commissions",
       body: JSON.stringify(err, Object.getOwnPropertyNames(err)),
     });
+    return resp.status(500, "Something went wrong");
   }
 };
 

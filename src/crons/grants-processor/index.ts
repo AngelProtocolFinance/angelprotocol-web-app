@@ -55,7 +55,7 @@ export const action: ActionFunction = async ({ request }) => {
       title: "Unexpected error processing commissions",
       body: JSON.stringify(err, Object.getOwnPropertyNames(err)),
     });
-    return resp.status(200, "Something went wrong");
+    return resp.status(500, "Something went wrong");
   }
 };
 

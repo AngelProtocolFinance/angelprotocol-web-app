@@ -53,6 +53,6 @@ export const action: ActionFunction = async ({ request }) => {
     return resp.txt(`created price ${res.id}`);
   } catch (err) {
     console.error(err);
-    return resp.txt("price creation failed");
+    return resp.txt("price creation failed", 500);
   }
 };
