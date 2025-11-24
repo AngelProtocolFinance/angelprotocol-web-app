@@ -13,7 +13,7 @@ export const PROCESSING_RATES = {
   stripe_flat: 0.3,
   paypal: 0.0199,
   paypal_flat: 0.49,
-  crypto: 0.015,
+  crypto: 0.01,
 };
 
 export const DONATION_INCREMENTS: IIncrement[] = [
