@@ -1,3 +1,4 @@
+import { fromUnixTime } from "date-fns";
 import { str_id } from "helpers/stripe";
 import type { IMetadataSubs } from "lib/stripe";
 import type Stripe from "stripe";
@@ -12,30 +13,31 @@ import { create_subscription } from ".server/stripe/create-subscription";
 export async function handle_setup_intent_succeeded({
   object: intent,
 }: Stripe.SetupIntentSucceededEvent.Data) {
-  const metadata = intent.metadata as IMetadataSubs;
+  const { transactionDate, ...m } = intent.metadata as IMetadataSubs;
 
+  const d = fromUnixTime(intent.created).toISOString();
   /** CREATE SUBSCRIPTION */
   const subs_id = await create_subscription(
     str_id(intent.customer),
     str_id(intent.payment_method),
-    metadata
+    { ...m, transactionDate: d }
   );
 
   await subsdb.put({
     subscription_id: subs_id,
-    app_used: metadata.appUsed as any,
-    charity_name: metadata.charityName,
+    app_used: m.appUsed as any,
+    charity_name: m.charityName,
     customer_id: str_id(intent.customer),
-    email: metadata.email,
-    endowment_id: +metadata.endowmentId,
+    email: m.email,
+    endowment_id: +m.endowmentId,
     fiat_ramp: "STRIPE",
     /** Stripe only allows string, number or undefined as `metadata` values */
-    fiscal_sponsored: metadata.fiscalSponsored === "true",
-    hide_bg_tip: metadata.hideBgTip === "true",
+    fiscal_sponsored: m.fiscalSponsored === "true",
+    hide_bg_tip: m.hideBgTip === "true",
     network: intent.livemode ? "production" : "staging",
-    product_id: metadata.productId,
-    quantity: +metadata.subsQuantity || 1,
-    split_liq: metadata.splitLiq || "50",
+    product_id: m.productId,
+    quantity: +m.subsQuantity || 1,
+    split_liq: m.splitLiq || "50",
     status: "incomplete",
   });
 }

@@ -1,8 +1,9 @@
+import { fromUnixTime } from "date-fns";
 import { str_id } from "helpers/stripe";
 import type { IMetadata, IMetadataSubs } from "lib/stripe";
-import { to_onhold } from "routes/helpers/donation-metadata";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
+import { to_onhold } from "../../helpers/donation-metadata";
 import { payment_method } from "../helpers/payment-method";
 import { settled_fn } from "../helpers/settled";
 import { subsdb } from ".server/aws/db";
@@ -25,8 +26,12 @@ export async function handle_intent_succeeded(
   };
 
   if (is_onetime(intent.metadata)) {
-    const meta = intent.metadata as IMetadata;
-    const order = to_onhold(meta, { payment_method: pm, status: "pending" });
+    const d = fromUnixTime(intent.created).toISOString();
+    const { transactionDate, ...m } = intent.metadata as IMetadata;
+    const order = to_onhold(
+      { ...m, transactionDate: d },
+      { payment_method: pm, status: "pending" }
+    );
     const final = to_final(order, settled);
     return qstash.publishJSON({
       body: final,
@@ -37,16 +42,21 @@ export async function handle_intent_succeeded(
   }
 
   // PaymentIntent Event does not contain subs metadata so we query for Invoice
-  const { subscription, subscription_details, hosted_invoice_url } =
+  const { subscription, subscription_details, hosted_invoice_url, created } =
     await stripe.invoices.retrieve(str_id(intent.invoice));
 
   const subs_meta = subscription_details?.metadata as IMetadataSubs | null;
   if (!subs_meta) throw "missing subs metadata";
 
-  const onhold = to_onhold(subs_meta, {
-    payment_method: pm,
-    status: "pending",
-  });
+  const { transactionDate, ...sm } = subs_meta;
+  const d = fromUnixTime(created).toISOString();
+  const onhold = to_onhold(
+    { ...sm, transactionDate: d },
+    {
+      payment_method: pm,
+      status: "pending",
+    }
+  );
 
   // unique tx id per record
   const final = to_final({ ...onhold, transactionId: intent.id }, settled);

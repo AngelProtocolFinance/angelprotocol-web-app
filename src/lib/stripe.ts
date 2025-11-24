@@ -35,8 +35,10 @@ export interface IMetadataAttrDeprecated
 
 export interface IMetadataAttr extends Record<string, string | undefined> {
   network: "staging" | "production";
-  /** iso */
   transactionId: string;
+  /** iso, date when this tx is snapshotted to stripe as metadata
+   *  @warning - don't use for settlement records
+   */
   transactionDate: string;
   /** `"${bool}"` */
   isRecurring: string;
