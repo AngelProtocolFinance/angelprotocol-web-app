@@ -89,6 +89,7 @@ export function Checkout(props: Props) {
       <PaymentElement
         className="mt-4"
         options={{
+          wallets: { applePay: "never", googlePay: "never", link: "never" },
           layout: "tabs",
           defaultValues: {
             billingDetails: {
