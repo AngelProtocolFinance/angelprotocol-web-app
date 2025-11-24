@@ -326,5 +326,5 @@ export default [
   r("crons/currencies-map", "./crons/currencies-map.ts"),
   r("crons/stripe-prices", "./crons/stripe-prices.ts"),
   r("crons/commissions-processor", "./crons/commissions-processor/index.ts"),
-  r("crons/daily-nav-update", "./crons/daily-nav-update/index.ts"),
+  r("crons/nav-update", "./crons/nav-update/index.ts"),
 ] satisfies RouteConfig;
