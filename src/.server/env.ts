@@ -93,6 +93,7 @@ export const gemini_api_key = _var("GEMINI_API_KEY");
 export const mongodb_url = _var("MONGODB_URL");
 
 export const coingecko_api_key = _var("COINGECKO_API_KEY");
+export const finnhub_api_key = _var("FINNHUB_API_KEY");
 export const q_url_email = _var("Q_URL_EMAIL");
 
 const deposit_addr_evm = _var("DEPOSIT_ADDR_EVM");
