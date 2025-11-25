@@ -5,6 +5,11 @@ import type {
 } from "@better-giving/schemas";
 import type { IPageKeyed } from "@better-giving/types/api";
 
+export interface IProgram {
+  id: string; //uuid
+  name: string;
+}
+
 export interface IForm {
   /** nanoid */
   id: string;
@@ -31,8 +36,7 @@ export interface IForm {
   /** received ltd in usd  */
   ltd: number;
   ltd_count: number;
-
-  status: "inactive" | "active";
+  program?: IProgram;
 }
 
 export interface IOwnerFormsPage extends IPageKeyed<IForm> {}

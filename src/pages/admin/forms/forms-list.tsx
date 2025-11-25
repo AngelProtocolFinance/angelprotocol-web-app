@@ -1,6 +1,5 @@
 import { Target } from "components/target";
 import type { IForm } from "lib/forms";
-import { is_form_expired } from "lib/forms/helpers";
 import { NavLink, href } from "react-router";
 import type { IPaginator } from "types/components";
 
@@ -13,20 +12,6 @@ export function FormsList({ items, classes = "" }: Props) {
       {items.map((form) => (
         <div key={form.id} className="p-4 border border-gray-l3 rounded">
           <div className="flex items-center justify-between">
-            {form.recipient_type === "fund" ? (
-              <span className="bg-lilac inline-block mb-2 text-xs px-2 py-0.5 rounded">
-                Fundraiser
-              </span>
-            ) : form.recipient_type === "program" ? (
-              <span className="bg-green-l4 inline-block mb-2 text-xs px-2 py-0.5 rounded">
-                Program
-              </span>
-            ) : (
-              <span className="bg-blue-l4 inline-block mb-2 text-xs px-2 py-0.5 rounded">
-                Nonprofit
-              </span>
-            )}
-
             <NavLink
               to={href("/forms/:id/edit", { id: form.id })}
               className="btn btn-outline text-xs py-2 px-3.5"

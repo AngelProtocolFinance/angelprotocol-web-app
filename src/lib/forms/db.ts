@@ -1,4 +1,9 @@
-import { GetCommand, QueryCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import {
+  GetCommand,
+  PutCommand,
+  QueryCommand,
+  UpdateCommand,
+} from "@aws-sdk/lib-dynamodb";
 import { Db, type TxType, UpdateBuilder } from "@better-giving/db";
 import type {
   IForm,
@@ -40,11 +45,12 @@ export class FormsDb extends Db {
     return this.client.send(cmd).then(({ Item: i }) => i && this.sans_keys(i));
   }
 
-  form_put_txi(data: IForm): TxType["Put"] {
-    return {
+  async form_put(data: IForm): Promise<IForm> {
+    const cmd = new PutCommand({
       TableName: FormsDb.table,
       Item: this.form_record(data),
-    };
+    });
+    return this.client.send(cmd).then((res) => res.Attributes as any);
   }
 
   form_del_txi(id: string): TxType["Delete"] {
