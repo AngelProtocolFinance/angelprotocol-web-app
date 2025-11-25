@@ -93,6 +93,7 @@ export default [
     r("form-builder", widget.$("index.tsx")._, {
       id: "admin-form-builder",
     }),
+    r("forms", admin.$("forms/index.tsx")._),
     r("media", admin.$("media/media.tsx")._, [
       r("new", admin.$("media/video-new.ts")._, { id: "media-new" }),
       r(":mediaId", admin.$("media/video-edit.ts")._, {
@@ -192,6 +193,7 @@ export default [
       r("cancel/:sub_id", user.$("subscriptions/cancel/index.tsx")._),
     ]),
     r("funds", user.$("funds/funds.tsx")._),
+    r("forms", user.$("forms/index.tsx")._),
     r("referrals", user.$("referrals/index.tsx")._, [
       r("payout-min", user.$("referrals/payout-min/index.tsx")._),
       r("w-form", user.$("referrals/w-forms/index.tsx")._),
@@ -268,6 +270,7 @@ export default [
     ]),
     r("donation-calculator", donation_calculator.$("index.tsx")._),
     r("irs-npos", pages.$("irs-npos/index.tsx")._),
+    r("forms/:id/edit", pages.$("form-editor/index.tsx")._),
   ]),
 
   r("donate-widget/:id", donate_widget.$("index.tsx")._),
