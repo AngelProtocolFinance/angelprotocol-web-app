@@ -15,19 +15,23 @@ export function FormCard({ classes = "", ...f }: Props) {
     <div
       style={styles}
       key={f.id}
-      className="flex flex-col p-4 border border-gray-l3 rounded-b"
+      className="grid [grid-template-rows:subgrid] row-span-4 bg-white rounded p-4 border border-gray-l3 rounded-b"
     >
       <h3 className="text-lg">{f.name}</h3>
-      {f.program && (
-        <p className="text-sm text-gray-d4 mt-1">
-          <span className="text-2xs bg-gray-l3 p-1 rounded-xs">Program</span>{" "}
-          <span className="text-sm font-medium text-gray">
-            {f.program.name}
-          </span>
-        </p>
-      )}
+      <p className="text-sm text-gray-d4 mt-1">
+        {f.program ? (
+          <>
+            <span className="text-2xs bg-gray-l3 p-1 rounded-xs">Program</span>{" "}
+            <span className="text-sm font-medium text-gray">
+              {f.program.name}
+            </span>
+          </>
+        ) : (
+          <span className="invisible">placeholder</span>
+        )}
+      </p>
       <Target classes="mt-8 mb-4" target={f.target} progress={f.ltd} />
-      <div className="flex items-center justify-between mt-auto">
+      <div className="flex items-center justify-between">
         {f.tag && (
           <p className="pl-1 text-gray">
             <TagIcon size={13} className="inline-block  mr-1" />

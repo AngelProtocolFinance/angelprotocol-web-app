@@ -7,7 +7,7 @@ export const meta: Route.MetaFunction = () =>
   metas({ title: "Donation forms" });
 export default function Page({ loaderData: d }: Route.ComponentProps) {
   return (
-    <div className="px-6 py-4 md:px-10 md:py-8">
+    <div className="px-6 py-4 md:px-10 md:py-8 h-full bg-gray-l5">
       <div className="flex items-start">
         <div className="flex-1">
           <h3 className="text-2xl">Donation forms</h3>
@@ -22,7 +22,7 @@ export default function Page({ loaderData: d }: Route.ComponentProps) {
           Create Form
         </NavLink>
       </div>
-      <div className="grid gap-4 grid-cols-2">
+      <div className="grid gap-4 grid-cols-2 [grid-template-rows:repeat(auto-fill,auto_auto_1fr_auto)]">
         {d.items.map((f) => (
           <FormCard key={f.id} {...f} />
         ))}
