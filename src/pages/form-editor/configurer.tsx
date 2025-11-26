@@ -123,6 +123,7 @@ export function Configurer({
                 <Input
                   type="number"
                   placeholder="0.00"
+                  step="any"
                   {...register(`increments.${idx}.value`)}
                   className="w-full h-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                 />
@@ -155,6 +156,7 @@ export function Configurer({
           <Field
             {...register("target.value", { shouldUnregister: true })}
             label="How much money do you want to raise?"
+            required
             classes="mt-4 mb-6"
             placeholder="$"
             error={errors?.target?.value?.message}
@@ -167,6 +169,7 @@ export function Configurer({
         label="Tag"
         placeholder="e.g. in mywebsite.com"
         required={false}
+        classes={{ container: "mt-4", label: "font-semibold" }}
         error={errors.tag?.message}
       />
 
