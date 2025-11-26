@@ -38,6 +38,8 @@ export const loader = async ({
   params,
 }: UserRoute.LoaderArgs | AdminRoute.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
+  const s = new URL(request.url).search;
+  console.log({ s });
   if (!user) return to_auth(request, headers);
 
   //creating inside admin, form is attributed to :id
@@ -57,7 +59,6 @@ export const loader = async ({
   const { npo_id, q } = search(request);
   const npos = await get_npos({
     claimed: [true],
-    published: [true],
     query: q,
   }).then((x) => x.items.map((n) => ({ id: n.id, name: n.name })));
 
@@ -108,7 +109,7 @@ export const action = async ({
     }
     actors = { creator: x, recipient: x };
   } else if (y) {
-    actors = { creator: y, recipient: y };
+    actors = { creator: user.email, recipient: y };
   }
   if (!actors) {
     return resp.status(400, "creator and recipient cannot be determined");

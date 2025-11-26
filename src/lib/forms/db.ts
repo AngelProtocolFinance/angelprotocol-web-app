@@ -50,7 +50,8 @@ export class FormsDb extends Db {
       TableName: FormsDb.table,
       Item: this.form_record(data),
     });
-    return this.client.send(cmd).then((res) => res.Attributes as any);
+    await this.client.send(cmd);
+    return data;
   }
 
   form_del_txi(id: string): TxType["Delete"] {

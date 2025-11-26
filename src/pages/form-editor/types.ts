@@ -13,6 +13,7 @@ export const schema = v.object({
   accent_secondary: v.optional($),
   increments: v.array(increment),
   target,
+  tag: $,
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}

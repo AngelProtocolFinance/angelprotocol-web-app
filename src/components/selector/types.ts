@@ -3,6 +3,7 @@ export type Classes = {
   button?: string;
   options?: string;
   option?: string;
+  label?: string;
 };
 
 export interface BaseProps {

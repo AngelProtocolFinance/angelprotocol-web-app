@@ -113,6 +113,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
     donate_methods: fv.methods.filter((m) => !m.disabled).map((m) => m.id),
     increments: fv.increments,
     target,
+    tag: fv.tag,
   });
 
   return { __ok: "Form updated" } satisfies ActionData;

@@ -161,6 +161,14 @@ export function Configurer({
           />
         )}
       </div>
+      <Field
+        sub="A meaningful label to help you identify this form."
+        {...register("tag")}
+        label="Tag"
+        placeholder="e.g. in mywebsite.com"
+        required={false}
+        error={errors.tag?.message}
+      />
 
       <div className="flex gap-3 mt-8">
         <button

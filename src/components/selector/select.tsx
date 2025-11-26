@@ -42,7 +42,10 @@ function _Select<T extends string>(
 
   return (
     <Field className={cls.container}>
-      <Label data-required={props.required} className="label empty:hidden mb-2">
+      <Label
+        data-required={props.required}
+        className={`label empty:hidden mb-2 ${cls.label}`}
+      >
         {props.label}
       </Label>
       <Listbox
