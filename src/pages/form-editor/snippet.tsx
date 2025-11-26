@@ -7,7 +7,7 @@ type Props = {
 };
 export function Snippet({ classes = "", form_id, base_url }: Props) {
   /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
-  const iframe_url = `<iframe src="${base_url}/forms/${form_id}" width="700" height="900" style="border:0px"></iframe>`;
+  const iframe_url = `<iframe src="${base_url}/forms/${form_id}" allow="payment" width="700" height="900" style="border:0px"></iframe>`;
 
   return (
     <div className={`${classes} relative`}>
