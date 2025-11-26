@@ -101,7 +101,11 @@ export const action: ActionFunction = async ({ request }) => {
       }
     }
 
-    if (tx.form_id) base.form_id = tx.form_id;
+    if (tx.form_id) {
+      base.form_id = tx.form_id;
+      const f = await formsdb.form_get(base.form_id);
+      if (f && f.tag) base.form_tag = f.tag;
+    }
 
     const txs = new Txs();
     const processed_tip = apply_fees(

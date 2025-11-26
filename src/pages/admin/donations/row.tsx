@@ -32,7 +32,7 @@ export function Row(props: IRow & { has_more?: boolean; classes?: string }) {
           <div>
             <span>Donation Form</span>
             <span className="text-xs text-gray block">
-              {props.donation_origin_id}
+              {props.donation_origin_tag || props.donation_origin_id}
             </span>
           </div>
         ) : (

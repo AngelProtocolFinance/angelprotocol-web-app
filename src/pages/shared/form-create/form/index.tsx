@@ -95,7 +95,7 @@ export function Form({ classes = "", ...p }: Props) {
         {...register("tag")}
         label="Tag"
         placeholder="e.g. in mywebsite.com"
-        required={false}
+        required
         error={errors.tag?.message}
         classes={{ label: "font-semibold" }}
       />

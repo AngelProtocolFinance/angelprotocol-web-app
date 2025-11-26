@@ -25,6 +25,7 @@ export interface IRow {
   program_name: string;
   donation_origin: string;
   donation_origin_id: string;
+  donation_origin_tag: string;
   donor_name: string;
   donor_email: string;
   donor_company: string;
@@ -64,6 +65,8 @@ export const to_csv_row = (x: IDonationFinal): IRow => {
     program_name: x.programName || "",
     donation_origin: x.appUsed || "",
     donation_origin_id: x.form_id || "",
+    donation_origin_tag: x.form_tag || "",
+
     donor_name: x.fullName || "",
     donor_email: x.email || x.kycEmail || "",
     donor_company: x.company_name || "",

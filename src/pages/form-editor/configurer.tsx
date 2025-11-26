@@ -163,12 +163,13 @@ export function Configurer({
           />
         )}
       </div>
+
       <Field
         sub="A meaningful label to help you identify this form."
         {...register("tag")}
         label="Tag"
         placeholder="e.g. in mywebsite.com"
-        required={false}
+        required
         classes={{ container: "mt-4", label: "font-semibold" }}
         error={errors.tag?.message}
       />
