@@ -107,10 +107,10 @@ async function process_item(ref_id: string, items: ref_db.Commission[]) {
     if (!ref) throw `referrer:${ref_id} not found`;
 
     if (!ref.pay_id) {
-      return console.log(`referrer:${ref_id} has no payout method`);
+      return console.info(`referrer:${ref_id} has no payout method`);
     }
     if (total < ref.pay_min) {
-      return console.log(
+      return console.info(
         `referrer:${ref_id} payout ${total} is less than minimum ${ref.pay_min}`
       );
     }
