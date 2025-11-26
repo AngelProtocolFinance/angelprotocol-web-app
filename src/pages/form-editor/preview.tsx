@@ -36,7 +36,7 @@ export function Preview({ classes = "", recipient_details: rd, ...f }: Props) {
       <Steps
         key={JSON.stringify(init_state)}
         init={init_state}
-        className="border border-gray-l3 rounded"
+        className="rounded"
       />
     </div>
   );

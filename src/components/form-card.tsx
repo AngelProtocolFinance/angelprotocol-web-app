@@ -15,7 +15,7 @@ export function FormCard({ classes = "", ...f }: Props) {
     <div
       style={styles}
       key={f.id}
-      className="grid [grid-template-rows:subgrid] row-span-4 bg-white rounded p-4 border border-gray-l3 rounded-b"
+      className="grid [grid-template-rows:subgrid] row-span-4 bg-white rounded p-4"
     >
       <h3 className="text-lg">{f.name}</h3>
       <p className="text-sm text-gray-d4 mt-1">

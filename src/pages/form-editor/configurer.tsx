@@ -57,7 +57,7 @@ export function Configurer({
   return (
     <Form
       disabled={isSubmitting}
-      className={`${classes} @container/configurer bg-white border border-gray-l3 rounded p-4 self-start`}
+      className={`${classes} @container/configurer bg-white rounded p-4 self-start`}
       onSubmit={handleSubmit((x) => on_submit(x))}
       onReset={(e) => {
         e.preventDefault();
