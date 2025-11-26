@@ -237,6 +237,7 @@ export const daf_donation_details = v.pipe(
 export type Mode = "live" | "preview";
 
 export type Config = {
+  id: string | null;
   /** donation tabs follows the list order */
   method_ids?: DonateMethodId[];
   /** hex color without alpha */

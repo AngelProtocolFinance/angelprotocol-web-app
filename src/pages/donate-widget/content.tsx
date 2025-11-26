@@ -41,6 +41,7 @@ export default function Content({
   }));
 
   const c: Config = {
+    id: null,
     method_ids: ms,
     accent_primary: config.accentPrimary,
     accent_secondary: config.accentSecondary,

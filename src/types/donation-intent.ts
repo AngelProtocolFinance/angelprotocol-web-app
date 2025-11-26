@@ -142,6 +142,7 @@ export const intent = v.object({
   donor,
 
   source: donation_source,
+  source_id: v.optional(v.pipe($req, v.nanoid("invalid source id"))),
   tribute: v.optional(tribute),
   frequency,
   /** chain name, etc. */

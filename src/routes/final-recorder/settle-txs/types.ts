@@ -13,6 +13,7 @@ export type Base = Pick<
   | "chainName"
   | "fiatRamp"
   | "paymentMethod"
+  | "form_id"
   //to
   | "programId"
   | "programName"

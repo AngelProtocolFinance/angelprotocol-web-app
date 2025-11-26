@@ -23,6 +23,7 @@ export function Preview({ classes = "", fv, endow }: Props) {
   }
 
   const config: Config = {
+    id: null,
     method_ids: fv.methods.filter((m) => !m.disabled).map((m) => m.id),
     accent_primary: fv.accent_primary,
     accent_secondary: fv.accent_secondary,

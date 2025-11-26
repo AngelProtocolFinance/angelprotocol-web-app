@@ -67,6 +67,7 @@ function Page({ loaderData }: Route.ComponentProps) {
               donor_address_required: endow.donor_address_required,
             }}
             config={{
+              id: null,
               method_ids: endow.donateMethods,
               increments: endow.increments,
             }}

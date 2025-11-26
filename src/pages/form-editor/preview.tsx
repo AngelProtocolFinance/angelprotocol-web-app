@@ -20,6 +20,7 @@ export function Preview({ classes = "", recipient_details: rd, ...f }: Props) {
     },
     donor: donor_blank,
     config: {
+      id: f.id,
       accent_primary: f.accent_primary,
       accent_secondary: f.accent_secondary,
       method_ids: f.donate_methods,

@@ -10,6 +10,7 @@ import { stb } from "./__tests__/test-data";
 describe("payment method form state persistence", () => {
   const all_methods_config: Config = {
     method_ids: ["stripe", "crypto", "daf", "stocks"] as DonateMethodId[],
+    id: null,
   };
 
   test("crypto: form state persists when navigating to checkout and back", async () => {
