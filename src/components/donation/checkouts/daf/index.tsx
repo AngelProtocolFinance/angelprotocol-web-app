@@ -140,13 +140,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
               const { id } = await res.json();
 
               set_prompt(undefined);
-
-              const to =
-                don.source === "bg-widget"
-                  ? href("/donate-widget/donations/:id", { id })
-                  : href("/donations/:id", { id });
-
-              navigate(to);
+              navigate(href("/donations/:id", { id }));
             } catch (err) {
               set_prompt(error_prompt(err, { context: "processing donation" }));
             } finally {
