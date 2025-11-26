@@ -52,26 +52,24 @@ export function Form({ classes = "", ...p }: Props) {
       autoSave="off"
     >
       {p.npos?.opts && (
-        <f.Form>
-          <HuiField>
-            <Label data-required className="label font-semibold text-sm mb-1">
-              Select nonprofit
-            </Label>
-            <NpoSelector
-              q={q}
-              on_q_change={(q) => f.submit({ q }, { method: "GET" })}
-              value={p.npos.value}
-              on_change={(opt) => {
-                set_search((s) => {
-                  s.set("npo_id", opt.id.toString());
-                  return s;
-                });
-              }}
-              is_loading={f.state === "loading" || nav.state === "loading"}
-              opts={opts}
-            />
-          </HuiField>
-        </f.Form>
+        <HuiField>
+          <Label data-required className="label font-semibold text-sm mb-1">
+            Select nonprofit
+          </Label>
+          <NpoSelector
+            q={q}
+            on_q_change={(q) => f.submit({ q }, { method: "GET" })}
+            value={p.npos.value}
+            on_change={(opt) => {
+              set_search((s) => {
+                s.set("npo_id", opt.id.toString());
+                return s;
+              });
+            }}
+            is_loading={f.state === "loading" || nav.state === "loading"}
+            opts={opts}
+          />
+        </HuiField>
       )}
 
       {p.programs.length > 0 && (
@@ -99,6 +97,7 @@ export function Form({ classes = "", ...p }: Props) {
         placeholder="e.g. in mywebsite.com"
         required={false}
         error={errors.tag?.message}
+        classes={{ label: "font-semibold" }}
       />
 
       <button
