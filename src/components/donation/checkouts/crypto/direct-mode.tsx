@@ -51,6 +51,7 @@ export function DirectMode({ fv, init, classes = "", donor }: Props) {
   };
 
   if (init.program) intent.program = init.program;
+  if (init.config?.id) intent.source_id = init.config.id;
 
   const { data, isLoading, error, isValidating } = use_swr(intent, fetcher);
 

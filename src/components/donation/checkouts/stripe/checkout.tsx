@@ -52,6 +52,8 @@ export function StripeCheckout(props: StripeDonationDetails) {
   };
 
   if (don.program) intent.program = don.program;
+  if (don.config?.id) intent.source_id = don.config.id;
+
   const { data, error, isLoading } = use_swr(intent, fetcher);
 
   return (

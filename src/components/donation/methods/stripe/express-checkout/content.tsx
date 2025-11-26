@@ -70,6 +70,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       via_name: "Stripe Express Checkout",
     };
     if (don.program) intent.program = don.program;
+    if (don.config?.id) intent.source_id = don.config.id;
 
     const res = await fetch("/api/donation-intents/stripe", {
       method: "POST",

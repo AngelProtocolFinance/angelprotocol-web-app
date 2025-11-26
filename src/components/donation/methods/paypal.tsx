@@ -35,6 +35,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
       source: don.source,
     };
     if (don.program) intent.program = don.program;
+    if (don.config?.id) intent.source_id = don.config.id;
 
     const res = await fetch(
       href("/api/donation-intents/:type", { type: "paypal" }),

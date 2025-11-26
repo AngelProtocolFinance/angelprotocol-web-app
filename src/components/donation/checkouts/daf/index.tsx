@@ -129,6 +129,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
               };
 
               if (don.program) intent.program = don.program;
+              if (don.config?.id) intent.source_id = don.config.id;
 
               set_grant_state("pending");
               const res = await fetch("/api/donation-intents/chariot", {
