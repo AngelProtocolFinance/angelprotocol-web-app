@@ -1,5 +1,5 @@
-import { interest_log } from "@better-giving/liquid/schemas";
 import { resp } from "helpers/https";
+import { interest_log } from "lib/liquid/schemas";
 import type { ActionFunction } from "react-router";
 import { parse } from "valibot";
 import { cognito, to_auth } from ".server/auth";

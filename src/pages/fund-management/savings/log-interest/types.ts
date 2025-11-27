@@ -1,8 +1,8 @@
-import type { IInterestLog as FV } from "@better-giving/liquid";
+import type { IInterestLog as FV } from "lib/liquid";
 export {
   type IInterestLog as FV,
   interest_log as fv,
-} from "@better-giving/liquid/schemas";
+} from "lib/liquid/schemas";
 
 export interface FormState {
   type: "form";

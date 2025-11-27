@@ -1,4 +1,4 @@
-import type { IBalLog } from "@better-giving/liquid";
+import type { IBalLog } from "lib/liquid";
 import { QueryCommand, liqdb } from "./aws/db";
 
 interface AccrualPeriod {

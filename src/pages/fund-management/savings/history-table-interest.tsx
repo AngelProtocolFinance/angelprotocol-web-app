@@ -1,6 +1,6 @@
-import type { IInterestLog } from "@better-giving/liquid";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import type { IInterestLog } from "lib/liquid";
 import type { IPaginator } from "types/components";
 
 export interface Props extends IPaginator<IInterestLog> {}

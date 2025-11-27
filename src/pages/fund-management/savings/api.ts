@@ -1,5 +1,5 @@
-import type { IBalLog, IInterestLog } from "@better-giving/liquid";
 import { resp } from "helpers/https";
+import type { IBalLog, IInterestLog } from "lib/liquid";
 import type { Route } from "./+types";
 import { cognito, to_auth } from ".server/auth";
 import { liqdb } from ".server/aws/db";

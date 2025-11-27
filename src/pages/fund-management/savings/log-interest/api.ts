@@ -1,5 +1,5 @@
-import type { TAllocStatus } from "@better-giving/liquid";
-import { interest_log } from "@better-giving/liquid/schemas";
+import type { TAllocStatus } from "lib/liquid";
+import { interest_log } from "lib/liquid/schemas";
 import { nanoid } from "nanoid";
 import { MIN_INTR_TO_CREDIT } from "pages/fund-management/constants";
 import { redirect } from "react-router";
