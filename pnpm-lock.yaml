@@ -38,9 +38,6 @@ importers:
       '@better-giving/banking-applications':
         specifier: 3.0.13
         version: 3.0.13(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.4(valibot@0.42.0(typescript@5.9.2)))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.9.2))
-      '@better-giving/chariot':
-        specifier: 1.1.7
-        version: 1.1.7
       '@better-giving/constants':
         specifier: 1.1.2
         version: 1.1.2
@@ -65,9 +62,6 @@ importers:
       '@better-giving/liquid':
         specifier: 1.0.13
         version: 1.0.13(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/helpers@1.1.11(@better-giving/types@1.1.8)(@types/aws-lambda@8.10.130)(date-fns@4.1.0))(@better-giving/schemas@2.0.4(valibot@0.42.0(typescript@5.9.2)))(@better-giving/types@1.1.8)(date-fns@4.1.0)(immer@10.1.1)(valibot@0.42.0(typescript@5.9.2))
-      '@better-giving/nowpayments':
-        specifier: 1.1.2
-        version: 1.1.2
       '@better-giving/payouts':
         specifier: 2.0.8
         version: 2.0.8(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)
@@ -666,9 +660,6 @@ packages:
       '@better-giving/types': 1.1.8
       valibot: 0.42.0
 
-  '@better-giving/chariot@1.1.7':
-    resolution: {integrity: sha512-x+jLT6U8VafFhhuVmpTsaaZZSM76eQJCAJ2ImCRf7cmNEyCy09DeYjd+RRZbdF1O3Ycf3I3m3aF8XmFsVSuTPA==}
-
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
 
@@ -729,9 +720,6 @@ packages:
       date-fns: 4.1.0
       immer: 10.1.1
       valibot: 0.42.0
-
-  '@better-giving/nowpayments@1.1.2':
-    resolution: {integrity: sha512-sBx7YxseKKwG4DqHOx67tL9tXhw3rrQduzvQmJmzW17n5onLW/+OtHkSUktTPurL7+GqbJ4NWeqaKJSLuCNueA==}
 
   '@better-giving/payouts@2.0.8':
     resolution: {integrity: sha512-SWY8d1c2vDhLT9ktHobYTomUlhTcP61OFvUAx+igPOTmEJ3/+wjhx6AKtNHVxWsGov8Kt1x7iggrtR8q1gUMyw==}
@@ -4955,8 +4943,6 @@ snapshots:
       '@better-giving/types': 1.1.8
       valibot: 0.42.0(typescript@5.9.2)
 
-  '@better-giving/chariot@1.1.7': {}
-
   '@better-giving/constants@1.1.2': {}
 
   '@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)':
@@ -5010,8 +4996,6 @@ snapshots:
       date-fns: 4.1.0
       immer: 10.1.1
       valibot: 0.42.0(typescript@5.9.2)
-
-  '@better-giving/nowpayments@1.1.2': {}
 
   '@better-giving/payouts@2.0.8(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)':
     dependencies:
