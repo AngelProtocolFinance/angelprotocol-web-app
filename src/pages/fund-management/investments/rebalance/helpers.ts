@@ -1,4 +1,4 @@
-import type { IComposition } from "@better-giving/nav-history";
+import type { IComposition } from "lib/nav";
 import type { IBals, Tx } from "./types";
 
 export const to_bals = (from: IComposition): IBals => {

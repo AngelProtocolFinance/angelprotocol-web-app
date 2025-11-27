@@ -27,11 +27,11 @@ import {
 import { NpoDb } from "@better-giving/endowment";
 import { FundDb } from "@better-giving/fundraiser";
 import { LiquidDb } from "@better-giving/liquid";
-import { NavHistoryDB } from "@better-giving/nav-history";
 import { PayoutsDB } from "@better-giving/payouts";
 import { RegDb } from "@better-giving/reg";
 import { UserDb } from "@better-giving/user";
 import { FormsDb } from "lib/forms";
+import { NavHistoryDB } from "lib/nav";
 import { Table } from "lib/table/db";
 import {
   aws_access_key_id,

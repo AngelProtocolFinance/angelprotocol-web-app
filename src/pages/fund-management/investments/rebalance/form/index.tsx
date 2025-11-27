@@ -1,5 +1,5 @@
-import type { IComposition } from "@better-giving/nav-history";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import type { IComposition } from "lib/nav";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { to_bals } from "../helpers";

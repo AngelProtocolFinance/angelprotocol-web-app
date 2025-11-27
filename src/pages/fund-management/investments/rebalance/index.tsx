@@ -1,5 +1,5 @@
-import type { ILog } from "@better-giving/nav-history";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import type { ILog } from "lib/nav";
 import { useState } from "react";
 import { Link, useFetcher, useNavigate } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";

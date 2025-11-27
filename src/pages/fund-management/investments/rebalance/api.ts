@@ -1,11 +1,7 @@
 import { Txs } from "@better-giving/db";
-import type {
-  IComposition,
-  IRebalanceLog,
-  ITicker,
-} from "@better-giving/nav-history";
 import { resp } from "helpers/https";
 import { produce } from "immer";
+import type { IComposition, IRebalanceLog, ITicker } from "lib/nav";
 import { nanoid } from "nanoid";
 import { redirect } from "react-router";
 import { parse } from "valibot";

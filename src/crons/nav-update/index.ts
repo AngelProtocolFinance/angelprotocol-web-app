@@ -1,6 +1,6 @@
 import { YYYYMMDD } from "@better-giving/helpers/date";
-import type { ILog } from "@better-giving/nav-history/interfaces";
 import { isMonday } from "date-fns";
+import type { ILog } from "lib/nav/interfaces";
 import type { ActionFunction } from "react-router";
 import { update_tickers } from "./update-tickers.js";
 import { navdb } from ".server/aws/db.js";

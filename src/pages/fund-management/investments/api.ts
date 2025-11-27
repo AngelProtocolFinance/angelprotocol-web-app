@@ -1,5 +1,5 @@
-import type { ILog, IPage } from "@better-giving/nav-history";
 import { resp } from "helpers/https";
+import type { ILog, IPage } from "lib/nav";
 import type { Route } from "./+types";
 import { cognito, to_auth } from ".server/auth";
 import { navdb } from ".server/aws/db";

@@ -1,6 +1,6 @@
-import type { ISeriesPoint } from "@better-giving/nav-history";
-import { npo_series_opts } from "@better-giving/nav-history/schemas";
 import { resp, search } from "helpers/https";
+import type { ISeriesPoint } from "lib/nav";
+import { npo_series_opts } from "lib/nav/schemas";
 import type { LoaderFunction } from "react-router";
 import type { INpoMetrics, IPerfPoint } from "types/npo-sf-metrics";
 import { parse } from "valibot";

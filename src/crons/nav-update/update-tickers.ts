@@ -1,4 +1,4 @@
-import type { ITicker } from "@better-giving/nav-history";
+import type { ITicker } from "lib/nav";
 import { coingecko_api_key, finnhub_api_key } from ".server/env";
 
 export async function update_tickers(tickers: ITicker[]): Promise<ITicker[]> {

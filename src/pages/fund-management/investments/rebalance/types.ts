@@ -1,11 +1,11 @@
-import type { IRebalancePayload as FV } from "@better-giving/nav-history/schemas";
+import type { IRebalancePayload as FV } from "lib/nav/schemas";
 export {
   type IRebalancePayload as FV,
   type IRebalanceTx as Tx,
   type IBals,
   ticker_nets,
   rebalance_log as fv,
-} from "@better-giving/nav-history/schemas";
+} from "lib/nav/schemas";
 
 export interface FormState {
   type: "form";

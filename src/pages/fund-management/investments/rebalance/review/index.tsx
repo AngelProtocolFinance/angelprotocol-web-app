@@ -1,6 +1,6 @@
-import type { ILog } from "@better-giving/nav-history";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import type { ILog } from "lib/nav";
 import { ticker_colors } from "../../common";
 import { prices_fn } from "../helpers";
 import { type FV, ticker_nets } from "../types";
