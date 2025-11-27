@@ -1,5 +1,5 @@
-import type { NP } from "@better-giving/nowpayments/types";
 import { send_email } from "lib/email";
+import type { NP } from "lib/nowpayments/types";
 import { onholddb } from ".server/aws/db";
 import { np } from ".server/sdks";
 

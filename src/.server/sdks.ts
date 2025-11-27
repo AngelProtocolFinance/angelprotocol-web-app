@@ -2,8 +2,8 @@ import Anvil from "@anvilco/anvil";
 import { CognitoIdentityProviderClient } from "@aws-sdk/client-cognito-identity-provider";
 import { Chariot } from "@better-giving/chariot";
 import { Discord } from "@better-giving/helpers/discord";
-import { Nowpayments } from "@better-giving/nowpayments";
 import { Wise } from "@better-giving/wise";
+import { Nowpayments } from "lib/nowpayments";
 
 import { PayPalSDK } from "@better-giving/paypal";
 

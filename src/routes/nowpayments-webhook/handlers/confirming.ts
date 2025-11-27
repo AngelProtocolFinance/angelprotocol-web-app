@@ -1,5 +1,5 @@
 import { partition } from "@better-giving/helpers";
-import type { NP } from "@better-giving/nowpayments/types";
+import type { NP } from "lib/nowpayments/types";
 import type { Stage } from "routes/types/donation-message";
 import { onholddb } from ".server/aws/db";
 import { np } from ".server/sdks";

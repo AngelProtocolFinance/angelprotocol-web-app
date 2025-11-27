@@ -1,6 +1,6 @@
 import type { INposPage } from "@better-giving/endowment";
-import type { NP } from "@better-giving/nowpayments/types";
 import { APIs } from "constants/urls";
+import type { NP } from "lib/nowpayments/types";
 import { http, HttpResponse } from "msw";
 
 export const handlers = [

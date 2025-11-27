@@ -1,5 +1,5 @@
 import { tokens_map } from "@better-giving/assets/tokens";
-import type { NP } from "@better-giving/nowpayments/types";
+import type { NP } from "lib/nowpayments/types";
 import { type Settled, to_final } from "../../../helpers/donation";
 import { onholddb } from ".server/aws/db";
 import { np, qstash } from ".server/sdks";

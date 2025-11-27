@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
-import type { NP } from "@better-giving/nowpayments/types";
 import { resp } from "helpers/https";
+import type { NP } from "lib/nowpayments/types";
 import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
 import { handle_confirming } from "./handlers/confirming";
