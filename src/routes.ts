@@ -41,7 +41,6 @@ export default [
   r("donate/:id", pages.$("donate/index.tsx")._),
   r("donate-fund/:fundId", donate_fund.$("redirect.ts")._),
   r("fundraisers/:fundId/donate", donate_fund.$("index.tsx")._),
-  r("donations/:id", pages.$("donation/index.tsx")._),
   r("referral-program", landing.$("referrals/index.tsx")._),
   r("nonprofits/:slug", landing.$("ntee/index.tsx")._),
   r("see-what-youre-losing", landing.$("don-calculator/index.tsx")._),
@@ -93,6 +92,11 @@ export default [
     r("form-builder", widget.$("index.tsx")._, {
       id: "admin-form-builder",
     }),
+    r("forms", admin.$("forms/index.tsx")._, [
+      r("create", pages.$("shared/form-create/index.tsx")._, {
+        id: "admin-form-create",
+      }),
+    ]),
     r("media", admin.$("media/media.tsx")._, [
       r("new", admin.$("media/video-new.ts")._, { id: "media-new" }),
       r(":mediaId", admin.$("media/video-edit.ts")._, {
@@ -192,6 +196,11 @@ export default [
       r("cancel/:sub_id", user.$("subscriptions/cancel/index.tsx")._),
     ]),
     r("funds", user.$("funds/funds.tsx")._),
+    r("forms", user.$("forms/index.tsx")._, [
+      r("create", pages.$("shared/form-create/index.tsx")._, {
+        id: "user-form-create",
+      }),
+    ]),
     r("referrals", user.$("referrals/index.tsx")._, [
       r("payout-min", user.$("referrals/payout-min/index.tsx")._),
       r("w-form", user.$("referrals/w-forms/index.tsx")._),
@@ -268,12 +277,13 @@ export default [
     ]),
     r("donation-calculator", donation_calculator.$("index.tsx")._),
     r("irs-npos", pages.$("irs-npos/index.tsx")._),
+
+    r("forms/:id/edit", pages.$("form-editor/index.tsx")._),
   ]),
 
+  r("forms/:id", pages.$("form/index.tsx")._),
   r("donate-widget/:id", donate_widget.$("index.tsx")._),
-  r("donate-widget/donations/:id", pages.$("donation/index.tsx")._, {
-    id: "donation-widget",
-  }),
+  r("donations/:id", pages.$("donation/index.tsx")._),
 
   r(
     "donation-calculator-export",

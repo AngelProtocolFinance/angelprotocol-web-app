@@ -70,6 +70,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       via_name: "Stripe Express Checkout",
     };
     if (don.program) intent.program = don.program;
+    if (don.config?.id) intent.source_id = don.config.id;
 
     const res = await fetch("/api/donation-intents/stripe", {
       method: "POST",
@@ -82,12 +83,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
 
     const { order_id, client_secret }: IStripeIntentReturn = await res.json();
 
-    const return_path =
-      don.source === "bg-widget"
-        ? href("/donate-widget/donations/:id", { id: order_id })
-        : href("/donations/:id", { id: order_id });
-
-    const return_url = `${window.location.origin}/${return_path}`;
+    const return_url = `${window.location.origin}/${href("/donations/:id", { id: order_id })}`;
 
     const { error } = await stripe[
       x.frequency === "recurring" ? "confirmSetup" : "confirmPayment"

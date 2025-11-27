@@ -69,6 +69,7 @@ function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
                 donor_address_required: false,
               }}
               config={{
+                id: null,
                 method_ids: fund.settings.donateMethods,
                 increments: fund.increments,
               }}

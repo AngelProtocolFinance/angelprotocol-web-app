@@ -35,12 +35,11 @@ export const meta: Route.MetaFunction = ({ loaderData: d }) => {
 export { ErrorBoundary } from "components/error";
 export default CacheRoute(Page);
 
-function Page({ loaderData: data, matches }: Route.ComponentProps) {
+function Page({ loaderData: data }: Route.ComponentProps) {
   const fetcher = useFetcher({ key: "donation" });
   use_action_result(fetcher.data);
-  const widget_version = matches.some((m) =>
-    m?.pathname.includes("donate-widget")
-  );
+
+  const widget_version = data.source === "bg-widget";
   const confetti_fired = useRef(false);
 
   return (

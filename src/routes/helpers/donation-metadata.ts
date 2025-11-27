@@ -55,6 +55,7 @@ export const to_metadata = (x: IDonationOnHoldAttr): IMetadataAttr => {
     ...(x.tributeNotif && {
       tributeNotif: JSON.stringify(x.tributeNotif),
     }),
+    ...(x.form_id && { form_id: x.form_id }),
   };
 
   return obj;
@@ -132,6 +133,7 @@ export const to_onhold = (m: IMetadata, additional: Additional) => {
     // TRIBUTE
     ...(m.inHonorOf && { inHonorOf: m.inHonorOf }),
     ...(m.tributeNotif && { tributeNotif: JSON.parse(m.tributeNotif) }),
+    ...(m.form_id && { form_id: m.form_id }),
   };
 
   return x;

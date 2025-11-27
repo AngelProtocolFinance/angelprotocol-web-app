@@ -1,4 +1,4 @@
-import type { ITributeNotif } from "@better-giving/donation";
+import type { ITributeNotif, TDonationSource } from "@better-giving/donation";
 import { $int_gte1 } from "@better-giving/endowment/schema";
 import { resp } from "helpers/https";
 import type {
@@ -72,6 +72,7 @@ export interface IRetrievedDonation {
   amount: number;
   amount_usd: number;
   denom: string;
+  source: TDonationSource;
 }
 
 const tribute_to_fv = (
@@ -136,6 +137,7 @@ export const donation_get = async (
     amount: y.amount || 0,
     denom: y.denomination || "USD",
     amount_usd: y.usdValue || 0,
+    source: y.appUsed === "bg-widget" ? "bg-widget" : "bg-marketplace",
   };
   const t = tribute_to_fv(y.inHonorOf, y.tributeNotif);
   if (t) x.tribute = t;

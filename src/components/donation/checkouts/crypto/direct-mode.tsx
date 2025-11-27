@@ -51,6 +51,7 @@ export function DirectMode({ fv, init, classes = "", donor }: Props) {
   };
 
   if (init.program) intent.program = init.program;
+  if (init.config?.id) intent.source_id = init.config.id;
 
   const { data, isLoading, error, isValidating } = use_swr(intent, fetcher);
 
@@ -105,12 +106,7 @@ export function DirectMode({ fv, init, classes = "", donor }: Props) {
         onClick={() => {
           const id = data?.order_id;
           if (!id) throw new Error("No order ID found");
-          const to =
-            init.source === "bg-widget"
-              ? href("/donate-widget/donations/:id", { id })
-              : href("/donations/:id", { id });
-
-          navigate(to);
+          navigate(href("/donations/:id", { id }));
         }}
         text="I have completed the payment"
         className="justify-self-stretch mt-8"

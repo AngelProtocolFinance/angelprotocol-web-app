@@ -47,12 +47,7 @@ export function Checkout(props: Props) {
 
     set_status("submitting");
 
-    const return_path =
-      don.source === "bg-widget"
-        ? href("/donate-widget/donations/:id", { id: props.order_id })
-        : href("/donations/:id", { id: props.order_id });
-
-    const return_url = `${window.location.origin}${return_path}`;
+    const return_url = `${window.location.origin}${href("/donations/:id", { id: props.order_id })}`;
 
     const { error } =
       props.frequency === "recurring"

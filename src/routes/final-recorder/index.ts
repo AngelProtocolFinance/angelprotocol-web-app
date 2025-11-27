@@ -20,6 +20,7 @@ import {
   TransactWriteCommand,
   ap,
   donordb,
+  formsdb,
   funddb,
   npodb,
   onholddb,
@@ -100,8 +101,13 @@ export const action: ActionFunction = async ({ request }) => {
       }
     }
 
-    const txs = new Txs();
+    if (tx.form_id) {
+      base.form_id = tx.form_id;
+      const f = await formsdb.form_get(base.form_id);
+      if (f && f.tag) base.form_tag = f.tag;
+    }
 
+    const txs = new Txs();
     const processed_tip = apply_fees(
       p_net_settled.tip,
       tx.to.no_tip ? fees.base : 0,
@@ -262,6 +268,12 @@ export const action: ActionFunction = async ({ request }) => {
         txs.update(x);
       }
       txs.append(_txs);
+
+      //increment form_id ltd
+      if (base.form_id) {
+        const x = formsdb.form_ltd_inc_txi(base.form_id, processed.net);
+        txs.update(x);
+      }
     }
 
     txs.del(onholddb.del_txi(tx.id));

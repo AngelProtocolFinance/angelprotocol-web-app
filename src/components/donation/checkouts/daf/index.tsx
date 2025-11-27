@@ -129,6 +129,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
               };
 
               if (don.program) intent.program = don.program;
+              if (don.config?.id) intent.source_id = don.config.id;
 
               set_grant_state("pending");
               const res = await fetch("/api/donation-intents/chariot", {
@@ -139,13 +140,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
               const { id } = await res.json();
 
               set_prompt(undefined);
-
-              const to =
-                don.source === "bg-widget"
-                  ? href("/donate-widget/donations/:id", { id })
-                  : href("/donations/:id", { id });
-
-              navigate(to);
+              navigate(href("/donations/:id", { id }));
             } catch (err) {
               set_prompt(error_prompt(err, { context: "processing donation" }));
             } finally {

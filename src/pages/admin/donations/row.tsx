@@ -27,11 +27,18 @@ export function Row(props: IRow & { has_more?: boolean; classes?: string }) {
         <>--</>
       )}
 
-      <>
-        {props.donation_origin === "bg-widget"
-          ? "Donation Form"
-          : "Marketplace"}
-      </>
+      <td>
+        {props.donation_origin === "bg-widget" ? (
+          <div>
+            <span>Donation Form</span>
+            <span className="text-xs text-gray block">
+              {props.donation_origin_tag || props.donation_origin_id}
+            </span>
+          </div>
+        ) : (
+          "Marketplace"
+        )}
+      </td>
       <>{props.payment_method ?? "--"}</>
       <td>
         {props.currency}{" "}

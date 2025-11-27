@@ -62,7 +62,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     request.headers.get("cookie")
   );
 
-  const { user } = await cognito.retrieve(request);
   const intent = parse(schema, await request.json());
   const d_type = parse(donation_type, params.type);
 

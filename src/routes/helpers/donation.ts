@@ -83,6 +83,7 @@ export const to_final = (
     date: onhold.transactionDate,
     is_recurring: onhold.isRecurring ?? false,
     settled_in: settled.in,
+    form_id: onhold.form_id,
   };
 
   if (onhold.programId && onhold.programName) {

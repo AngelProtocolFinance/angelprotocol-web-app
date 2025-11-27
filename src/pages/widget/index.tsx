@@ -9,6 +9,7 @@ import { Snippet } from "./snippet";
 
 import { BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
+import { bg_accent_primary, bg_accent_secondary } from "styles/colors";
 import type { Route } from "./+types";
 
 export { loader } from "./api";
@@ -31,8 +32,8 @@ export default function Widget({ loaderData }: Route.ComponentProps) {
     is_description_text_shown: true,
     is_title_shown: true,
     methods: fill(endow?.donateMethods),
-    accent_primary: "#2D89C8",
-    accent_secondary: "#E6F1F9",
+    accent_primary: bg_accent_primary,
+    accent_secondary: bg_accent_secondary,
     program: DEFAULT_PROGRAM,
     increments: DONATION_INCREMENTS.map((i) => ({
       label: i.label,
