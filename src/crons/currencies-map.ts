@@ -5,7 +5,9 @@ import { table } from ".server/aws/db";
 import { openexchange_app_id } from ".server/env";
 import { is_resp, qstash_body } from ".server/utils";
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<Response> => {
   const b = await qstash_body(request);
   if (is_resp(b)) return b;
 

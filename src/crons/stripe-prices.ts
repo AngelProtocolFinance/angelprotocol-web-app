@@ -21,7 +21,9 @@ const currency_opts = (
   return obj;
 };
 // daily trigger
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<Response> => {
   try {
     const b = await qstash_body(request);
     if (is_resp(b)) return b;

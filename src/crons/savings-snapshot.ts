@@ -11,7 +11,9 @@ import { env } from ".server/env";
 import { is_resp, qstash_body } from ".server/utils";
 
 // runs daily
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<Response> => {
   const b = await qstash_body(request);
   if (is_resp(b)) return b;
 
@@ -57,4 +59,5 @@ export const action: ActionFunction = async ({ request }) => {
 
   await db.client.send(put);
   console.log(`Logged ${non_zero_bals.length} non-zero balances`);
+  return new Response(null, { status: 200 });
 };

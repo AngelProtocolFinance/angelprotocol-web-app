@@ -6,7 +6,9 @@ import { update_tickers } from "./update-tickers.js";
 import { navdb } from ".server/aws/db.js";
 import { is_resp, qstash_body } from ".server/utils.js";
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({
+  request,
+}): Promise<Response> => {
   const b = await qstash_body(request);
   if (is_resp(b)) return b;
 
@@ -18,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (now_day_num === ltd_day_num) {
     console.info(`No updates needed for day ${now_day_num}`);
-    return;
+    return new Response(null, { status: 200 });
   }
 
   const updated_tickers = await update_tickers(
@@ -44,4 +46,5 @@ export const action: ActionFunction = async ({ request }) => {
 
   await navdb.log_put(updated_ltd, { day: true, week: isMonday(now) });
   console.info("Updated LTD:", updated_ltd);
+  return new Response(null, { status: 200 });
 };
