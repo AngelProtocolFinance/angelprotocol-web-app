@@ -1,5 +1,4 @@
-import { chains } from "@better-giving/crypto/tokens";
-import { is_custom } from "@better-giving/crypto/tokens";
+import { chains, is_custom } from "@better-giving/crypto";
 import { PROCESSING_RATES, logo_url } from "constants/common";
 import { min_fee_allowance } from "helpers/donation";
 import { Image } from "../../../image";

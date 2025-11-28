@@ -1,4 +1,4 @@
-import { tokens_map } from "@better-giving/crypto/tokens";
+import { tokens_map } from "@better-giving/crypto";
 import type { NP } from "lib/nowpayments/types";
 import { type Settled, to_final } from "../../../helpers/donation";
 import { onholddb } from ".server/aws/db";

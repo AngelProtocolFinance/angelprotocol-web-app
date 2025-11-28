@@ -39,8 +39,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2
       '@better-giving/crypto':
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.0.1
+        version: 1.0.1
       '@better-giving/db':
         specifier: 2.0.7
         version: 2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)
@@ -74,6 +74,9 @@ importers:
       '@better-giving/schemas':
         specifier: 2.0.4
         version: 2.0.4(valibot@0.42.0(typescript@5.9.2))
+      '@better-giving/stocks':
+        specifier: 1.0.2
+        version: 1.0.2
       '@better-giving/types':
         specifier: 1.1.8
         version: 1.1.8
@@ -657,8 +660,8 @@ packages:
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
 
-  '@better-giving/crypto@1.0.0':
-    resolution: {integrity: sha512-+r71U4/ye6RUseONeMBHSu3UPmTDKRGZCpDL9NqUoYBsW/EIsQSYDS5LG1S4GeVPpUFpY3XvOHzA3XnNJPkOWA==}
+  '@better-giving/crypto@1.0.1':
+    resolution: {integrity: sha512-VWWrl48nBsbxnodNfaeUfY4ax8awyWE5cbD/uBEfEgmiBn4h7Cg17IVkq72IbVfDmni9MVNG/6jh6xE5I2LK5w==}
 
   '@better-giving/db@2.0.7':
     resolution: {integrity: sha512-cZ+CqxWlBWSEnhBmHd95CWOBWYaFHIVL7kU4RpOTiaKhUM/RPx4tS3MJvh6r/sZ/yXsD6ZYeMZCxprcmNCyFCQ==}
@@ -734,6 +737,9 @@ packages:
     resolution: {integrity: sha512-gWBlVN4qhMQCVbDxblP+MUicMreLoG7/FU5y9m3RhQSp99mLgE7AAAe6nAid/YwmobtL1Hs71m1vhPcZ0LAUoQ==}
     peerDependencies:
       valibot: 0.42.0
+
+  '@better-giving/stocks@1.0.2':
+    resolution: {integrity: sha512-SS/CsIIkp2NDK+Bl8PmCFBRR8cNCfVaGAMuuaI0lOPlDs6lNYtdPZVQLUrx2Q4dVDjcm9RzDIFM6w8DLRPPpiw==}
 
   '@better-giving/types@1.1.8':
     resolution: {integrity: sha512-2X34iBg8+Iewwy9f+bKfqQr817AmmLTQgFvEY29lGFeui0W7z38WSpY+oYPfB3MwcRJaHnQv/SFzxpevLgAiLQ==}
@@ -4928,7 +4934,7 @@ snapshots:
 
   '@better-giving/constants@1.1.2': {}
 
-  '@better-giving/crypto@1.0.0': {}
+  '@better-giving/crypto@1.0.1': {}
 
   '@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)':
     dependencies:
@@ -4996,6 +5002,8 @@ snapshots:
       valibot: 0.42.0(typescript@5.9.2)
     optionalDependencies:
       date-fns: 4.1.0
+
+  '@better-giving/stocks@1.0.2': {}
 
   '@better-giving/types@1.1.8': {}
 

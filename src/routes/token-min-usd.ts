@@ -1,4 +1,4 @@
-import { is_custom, tokens_map } from "@better-giving/crypto/tokens";
+import { is_custom, tokens_map } from "@better-giving/crypto";
 import { resp } from "helpers/https";
 import type { ITokenEstimate } from "types/api";
 import type { Route } from "./+types/token-min-usd";

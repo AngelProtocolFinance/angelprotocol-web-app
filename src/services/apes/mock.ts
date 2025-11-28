@@ -1,4 +1,4 @@
-import type { IToken } from "@better-giving/crypto/tokens";
+import type { IToken } from "@better-giving/crypto";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
 import type { ICurrenciesFv, ICurrencyFv } from "types/currency";
