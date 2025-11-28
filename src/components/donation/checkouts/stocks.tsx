@@ -1,4 +1,5 @@
 import { EMAIL_SUPPORT } from "constants/env";
+import { ru_vdec } from "helpers/decimal";
 import { href } from "react-router";
 import { BackBtn } from "../common/back-btn";
 import { use_donation } from "../context";
@@ -34,7 +35,7 @@ export function Stocks(props: StocksDonationDetails) {
       <div className="grid rounded-sm bg-gray-l4 dark:bg-gray-d3 p-3 text-sm leading-relaxed mt-6">
         <p>
           Please transfer [&nbsp;
-          {+props.ticker.amount + tipv}
+          {+ru_vdec(tipv + +props.ticker.amount, props.ticker.rate)}
           &nbsp;] share(s) of [&nbsp;{props.ticker.symbol}&nbsp;] to:
         </p>
         <p>Deliver to: Fidelity Investments</p>
