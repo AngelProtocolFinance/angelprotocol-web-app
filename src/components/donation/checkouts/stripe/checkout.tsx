@@ -1,5 +1,4 @@
 import { Elements } from "@stripe/react-stripe-js";
-import { stripe_promise } from "components/donation/common/stripe";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PROCESSING_RATES } from "constants/common";
 import { min_fee_allowance } from "helpers/donation";
@@ -9,6 +8,7 @@ import type {
   IStripeIntentReturn,
 } from "types/donation-intent";
 import { currency as currencyfn } from "../../common/currency";
+import { stripe_promise } from "../../common/stripe";
 import { Summary } from "../../common/summary";
 import { use_donation } from "../../context";
 import { type StripeDonationDetails, tip_val, to_step } from "../../types";

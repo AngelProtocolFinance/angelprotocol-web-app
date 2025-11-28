@@ -1,3 +1,4 @@
+import { $req } from "@better-giving/schemas";
 import {
   Dialog,
   DialogBackdrop,
@@ -6,11 +7,11 @@ import {
   Input,
   Label,
 } from "@headlessui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { search } from "helpers/https";
 import { useForm } from "react-hook-form";
 import { useFetcher, useNavigate, useSearchParams } from "react-router";
-import { schema, str_num } from "schemas/shape";
+import * as v from "valibot";
 import { config } from "../config";
 import type { Route } from "./+types";
 
@@ -41,9 +42,21 @@ export default function Page({ loaderData: user }: Route.ComponentProps) {
   );
 }
 
+const schema = v.object({
+  amount: v.lazy((x) => {
+    if (!x) return $req;
+    return v.pipe(
+      $req,
+      v.transform((x) => +x),
+      v.minValue(config.pay_min, `pay_minimum of $${config.pay_min}`),
+      v.transform((x) => x.toString())
+    );
+  }),
+});
+interface FV extends v.InferOutput<typeof schema> {}
+
 function Content(props: IContent) {
   const fetcher = useFetcher({ key: "bal-mov" });
-  type FV = { amount: string };
 
   const {
     handleSubmit,
@@ -51,14 +64,7 @@ function Content(props: IContent) {
     formState: { errors, isDirty },
   } = useForm<FV>({
     defaultValues: { amount: props.prev.toString() || "" },
-    resolver: yupResolver(
-      schema<FV>({
-        amount: str_num(
-          (s) => s.required("required"),
-          (n) => n.min(config.pay_min, `pay_minimum of $${config.pay_min}`)
-        ),
-      })
-    ),
+    resolver: valibotResolver(schema),
   });
 
   return (

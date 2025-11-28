@@ -1,4 +1,5 @@
 import { EMAIL_SUPPORT } from "constants/env";
+import { ru_vdec } from "helpers/decimal";
 import { href } from "react-router";
 import { BackBtn } from "../common/back-btn";
 import { use_donation } from "../context";
@@ -17,7 +18,7 @@ export function Stocks(props: StocksDonationDetails) {
     ? href("/fundraisers/:fundId", { fundId: id })
     : href("/marketplace/:id", { id: id });
 
-  const tipv = tip_val(props.tip_format, props.tip, +props.num_shares);
+  const tipv = tip_val(props.tip_format, props.tip, +props.ticker.amount);
   const url =
     typeof window !== "undefined" ? `${window.location.origin}${path}` : path;
   return (
@@ -34,8 +35,8 @@ export function Stocks(props: StocksDonationDetails) {
       <div className="grid rounded-sm bg-gray-l4 dark:bg-gray-d3 p-3 text-sm leading-relaxed mt-6">
         <p>
           Please transfer [&nbsp;
-          {+props.num_shares + tipv}
-          &nbsp;] share(s) of [&nbsp;{props.symbol}&nbsp;] to:
+          {+ru_vdec(tipv + +props.ticker.amount, props.ticker.rate)}
+          &nbsp;] share(s) of [&nbsp;{props.ticker.symbol}&nbsp;] to:
         </p>
         <p>Deliver to: Fidelity Investments</p>
         <p>DTC number: 0226</p>
@@ -68,8 +69,8 @@ export function Stocks(props: StocksDonationDetails) {
         href={email_link(
           don.recipient.name,
           url,
-          +props.num_shares,
-          props.symbol
+          +props.ticker.amount,
+          props.ticker.symbol
         )}
         className="btn btn btn-blue bg-(--accent-primary) enabled:hover:bg-(--accent-primary) rounded px-4 py-2 justify-self-end mt-2 text-xs font-normal"
       >

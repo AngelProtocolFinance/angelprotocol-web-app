@@ -326,7 +326,8 @@ export default [
     "api/alchemy-webhook/:chain_id/:signing_key",
     "./routes/alchemy-webhook/index.ts"
   ),
-  r("api/tokens/:code/min-usd", "./routes/token-min-usd.ts"),
+  r("api/tokens/:code/estimate", "./routes/token-estimate.ts"),
+  r("api/tickers/:symbol/estimate", "./routes/ticker-estimate.ts"),
   r("q/final-recorder", "./routes/final-recorder/index.ts"),
   r("utils/calendar", "./routes/calendar.tsx"),
   r("robots.txt", "./routes/robots.ts"),

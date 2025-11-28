@@ -156,13 +156,15 @@ describe("payment method form state persistence", () => {
     const stocks_tab = screen.getByRole("tab", { name: /stocks/i });
     await userEvent.click(stocks_tab);
 
-    // input symbol
-    const symbol_input = screen.getByPlaceholderText(/ex. aapl/i);
-    await userEvent.type(symbol_input, "AAPL");
+    // Select ticker
+    const ticker_selector = screen.getByRole("combobox");
+    await userEvent.click(ticker_selector);
+    const ticker_options = screen.getAllByRole("option");
+    await userEvent.click(ticker_options[0]);
 
-    // input quantity
-    const qty_input = screen.getByPlaceholderText(/enter quantity/i);
-    await userEvent.type(qty_input, "10");
+    // Input amount
+    const amount_input = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amount_input, "10");
 
     // submit directly to checkout (donor step is skipped)
     const continue_btn = screen.getByRole("button", { name: /continue/i });
@@ -179,12 +181,9 @@ describe("payment method form state persistence", () => {
     await userEvent.click(back_btn);
 
     // verify form state persists
-    expect(await screen.findByPlaceholderText(/ex. aapl/i)).toHaveDisplayValue(
-      "AAPL"
-    );
-    expect(screen.getByPlaceholderText(/enter quantity/i)).toHaveDisplayValue(
-      "10"
-    );
+    expect(
+      await screen.findByPlaceholderText(/enter amount/i)
+    ).toHaveDisplayValue("10");
   });
 
   test("form state persists when switching between payment methods after checkout", async () => {

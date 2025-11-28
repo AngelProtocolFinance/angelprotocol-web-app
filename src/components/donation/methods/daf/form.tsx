@@ -1,11 +1,11 @@
-import { CpfToggle } from "components/donation/common/cpf-toggle";
-import { type TMethodState, to_step } from "components/donation/types";
 import { Field, Form as FormContainer } from "components/form";
 import { ru_vdec } from "helpers/decimal";
 import { usd_option } from "../../common/constants";
+import { CpfToggle } from "../../common/cpf-toggle";
 import { Incrementers } from "../../common/incrementers";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
+import { type TMethodState, to_step } from "../../types";
 import { use_rhf } from "./use-rhf";
 
 export function Form(props: TMethodState<"daf">) {

@@ -1,8 +1,6 @@
 import * as v from "valibot";
-import * as Yup from "yup";
 
 export const alphanumeric = /^[0-9a-zA-Z]+$/;
-export const requiredString = Yup.string().required("required");
 export const new_password = v.pipe(
   v.string("required"),
   v.nonEmpty("required"),

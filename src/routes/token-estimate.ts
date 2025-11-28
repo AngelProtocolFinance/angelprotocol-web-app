@@ -1,7 +1,7 @@
 import { is_custom, tokens_map } from "@better-giving/crypto";
 import { resp } from "helpers/https";
 import type { ITokenEstimate } from "types/api";
-import type { Route } from "./+types/token-min-usd";
+import type { Route } from "./+types/token-estimate";
 import { coingecko, np } from ".server/sdks";
 
 export const loader = async ({ params }: Route.LoaderArgs) => {

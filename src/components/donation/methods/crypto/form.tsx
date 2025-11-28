@@ -5,22 +5,24 @@ import {
   tokens_list,
 } from "@better-giving/crypto";
 import { CloseButton, ComboboxOption } from "@headlessui/react";
-import { CpfToggle } from "components/donation/common/cpf-toggle";
-import { MethodBenefits } from "components/donation/common/method-benefits";
-import { Field } from "components/form";
-import { TokenCombobox } from "components/token-field/token-combobox";
+import {
+  type TTokenState,
+  TokenCombobox,
+  TokenField,
+  btn_disp,
+} from "components/token-field";
 import { DONATION_INCREMENTS, logo_url } from "constants/common";
 import Fuse from "fuse.js";
 import { ru_vdec } from "helpers/decimal";
 import { useMemo, useState } from "react";
 import { href } from "react-router";
 import type { ITokenEstimate } from "types/api";
-import { TokenField, btn_disp } from "../../../token-field";
+import { CpfToggle } from "../../common/cpf-toggle";
 import { Incrementers } from "../../common/incrementers";
+import { MethodBenefits } from "../../common/method-benefits";
 import { TipField } from "../../common/tip-field";
 import { use_donation } from "../../context";
 import { type TMethodState, to_step } from "../../types";
-import type { TTokenState } from "./types";
 import { use_rhf } from "./use-rhf";
 
 const tokens_fuse = new Fuse<IToken>(tokens_list, {
@@ -52,7 +54,7 @@ export function Form(props: TMethodState<"crypto">) {
     setValue,
     getValues,
     register,
-  } = use_rhf(props.fv, don.user, don.recipient.hide_bg_tip ?? false);
+  } = use_rhf(props.fv, don.recipient.hide_bg_tip ?? false);
 
   const combobox = (
     <TokenCombobox
@@ -63,6 +65,7 @@ export function Form(props: TMethodState<"crypto">) {
       on_q_change={(x) => set_token_q(x)}
       btn_disp={(open) => btn_disp(open, token_state)}
       input_disp={(t) => t.symbol}
+      input_placeholder="Select token"
       opt_disp={(t) => {
         return (
           <ComboboxOption
@@ -98,7 +101,7 @@ export function Form(props: TMethodState<"crypto">) {
           token.onChange({ ...t, amount: token.value.amount });
           set_token_state("loading");
           const res = await fetch(
-            href("/api/tokens/:code/min-usd", { code: t.code })
+            href("/api/tokens/:code/estimate", { code: t.code })
           );
           if (!res.ok) throw res;
           const { rate, min }: ITokenEstimate = await res.json();

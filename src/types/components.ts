@@ -1,15 +1,9 @@
-import type { IToken } from "@better-giving/crypto";
 import { donate_method_id } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
 
 import type { ICurrencyFv } from "types/currency";
 
-export interface ITokenFv extends IToken {
-  amount: string;
-  min: number;
-  rate: number;
-}
 //selector
 export type ValKey = string | number;
 export type OptionType<V extends ValKey> = { label: string; value: V };

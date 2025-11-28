@@ -1,6 +1,6 @@
 import type { DonateMethodId } from "@better-giving/endowment";
-import { all_method_ids as all } from "components/donation";
 import type { TDonateMethod } from "types/components";
+import { all_method_ids as all } from "../donation";
 
 const method_details: {
   [K in DonateMethodId]: Pick<TDonateMethod, "name">;

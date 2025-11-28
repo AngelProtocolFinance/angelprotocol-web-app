@@ -65,6 +65,33 @@ export const amount = ({ required = false } = {}) =>
     );
   });
 
+export const ticker_raw = v.object({
+  symbol: v.pipe(v.string(), v.nonEmpty("select ticker")),
+  amount: amount({ required: true }),
+
+  // internal
+  rate: v.number(),
+  min: v.number(),
+  name: v.string(),
+});
+
+export const ticker_fv = v.pipe(
+  ticker_raw,
+  v.forward(
+    v.partialCheck(
+      [["amount"], ["min"]],
+      ({ amount, min }) => {
+        if (!min) return true;
+        return +amount >= min;
+      },
+      "less than minimum"
+    ),
+    ["amount"]
+  )
+);
+
+export interface ITickerFv extends v.InferOutput<typeof ticker_fv> {}
+
 const token_raw = v.object({
   id: v.pipe(v.string(), v.nonEmpty("select token")),
   amount: amount({ required: true }),
@@ -82,6 +109,8 @@ const token_raw = v.object({
   color: v.string(),
   symbol: v.string(),
 });
+
+export interface ITokenFv extends v.InferOutput<typeof token_raw> {}
 
 export const token_fv = v.pipe(
   token_raw,
@@ -200,8 +229,7 @@ export const stripe_donation_details = v.pipe(
 );
 
 const stocks_donation_details_raw = v.object({
-  symbol: v.pipe(v.string(), v.nonEmpty("Please enter a stock symbol")),
-  num_shares: amount({ required: true }),
+  ticker: ticker_fv,
   ...tip_fv.entries,
 });
 

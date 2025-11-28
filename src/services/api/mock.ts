@@ -29,7 +29,10 @@ export const handlers = [
       order_id: "fake_order_id",
     } satisfies Payment);
   }),
-  http.get(href("/api/tokens/:code/min-usd", { code: ":code" }), () => {
+  http.get(href("/api/tokens/:code/estimate", { code: ":code" }), () => {
+    return HttpResponse.json({ min: 1, rate: 1 } satisfies ITokenEstimate);
+  }),
+  http.get(href("/api/tickers/:symbol/estimate", { symbol: ":symbol" }), () => {
     return HttpResponse.json({ min: 1, rate: 1 } satisfies ITokenEstimate);
   }),
 ];

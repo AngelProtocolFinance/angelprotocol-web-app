@@ -17,6 +17,7 @@ import {
   coingecko_api_key,
   discord_envs,
   env,
+  finnhub_api_key,
   hubspot_envs,
   np_envs,
   paypal_envs,
@@ -65,6 +66,18 @@ export const typesense: Fetcher = (url_fn, init_fn) => {
   const x = new URL(typesense_envs.endpoint);
   const h = new Headers({
     "x-typesense-api-key": typesense_envs.api_key,
+    accept: "application/json",
+  });
+  return fetch(
+    url_fn(x, (p) => p),
+    init_fn?.(h) || { headers: h }
+  );
+};
+
+export const finnhub: Fetcher = (url_fn, init_fn) => {
+  const x = new URL("https://finnhub.io");
+  x.searchParams.set("token", finnhub_api_key);
+  const h = new Headers({
     accept: "application/json",
   });
   return fetch(
