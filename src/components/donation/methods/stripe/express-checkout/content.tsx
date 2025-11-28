@@ -4,7 +4,6 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { use_donation } from "components/donation/context";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { href } from "react-router";
 import type {
@@ -12,6 +11,7 @@ import type {
   DonorAddress,
   IStripeIntentReturn,
 } from "types/donation-intent";
+import { use_donation } from "../../../context";
 import type { IStripeExpress } from "../use-rhf";
 
 export interface IContentExternal

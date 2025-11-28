@@ -3,10 +3,10 @@ import {
   type PayPalButtonsComponentProps,
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
-import { use_donation } from "components/donation/context";
 import { paypal_client_id } from "constants/env";
 import { href } from "react-router";
 import { type DonationIntent, donor_init } from "types/donation-intent";
+import { use_donation } from "../context";
 import type { IPayPalExpress } from "./stripe/use-rhf";
 
 interface Props extends IPayPalExpress {

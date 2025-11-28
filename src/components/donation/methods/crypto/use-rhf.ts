@@ -5,15 +5,10 @@ import { init_token_option } from "../../common/constants";
 import type { OnIncrement } from "../../common/incrementers";
 import {
   type CryptoDonationDetails as FV,
-  type IUser,
   crypto_donation_details,
 } from "../../types";
 
-export function use_rhf(
-  init: FV | undefined,
-  user: IUser | undefined,
-  hide_bg_tip: boolean
-) {
+export function use_rhf(init: FV | undefined, hide_bg_tip: boolean) {
   const initial: FV = {
     token: init_token_option,
     tip: "",

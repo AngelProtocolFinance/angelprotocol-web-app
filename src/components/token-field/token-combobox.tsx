@@ -18,6 +18,7 @@ interface ITokenCombobox<T> {
   value: T;
   value_disp?: T extends string ? never : (v: T) => string;
   input_disp: (v: T) => string;
+  input_placeholder: string;
   btn_disp: (open: boolean) => ReactElement;
   by?: T extends object ? keyof T : never;
   opts: T[];
@@ -49,7 +50,7 @@ export function TokenCombobox<T>(props: ITokenCombobox<T>) {
       onChange={(v) => v && props.on_change(v)}
     >
       <ComboboxInput<T>
-        placeholder="Select token"
+        placeholder={props.input_placeholder}
         displayValue={(x) => props.input_disp(x)}
         onBlur={not_found_txt ? () => props.on_q_change("") : undefined}
         className="w-full text-left text-sm focus:outline-hidden bg-transparent px-4"

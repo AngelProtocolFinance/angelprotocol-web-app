@@ -1,5 +1,4 @@
 import { ContentLoader } from "components/content-loader";
-import { usd_option } from "components/donation/common/constants";
 import { ErrorBoundaryClass } from "components/error";
 import { type IPrompt, Prompt } from "components/prompt";
 import { PROCESSING_RATES } from "constants/common";
@@ -11,6 +10,7 @@ import ChariotConnect from "react-chariot-connect";
 import { href, useNavigate } from "react-router";
 import { type DonationIntent, donor_address } from "types/donation-intent";
 import { safeParse } from "valibot";
+import { usd_option } from "../../common/constants";
 import { currency } from "../../common/currency";
 import { Summary } from "../../common/summary";
 import { use_donation } from "../../context";
