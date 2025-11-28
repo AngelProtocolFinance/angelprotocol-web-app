@@ -1,4 +1,4 @@
-import { tokens_map } from "@better-giving/assets/tokens";
+import { tokens_map } from "@better-giving/crypto/tokens";
 import { PayQr } from "components/donation";
 import { Modal } from "components/modal";
 import { type IPrompt, Prompt } from "components/prompt";

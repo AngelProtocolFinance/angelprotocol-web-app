@@ -1,4 +1,4 @@
-import type { IToken } from "@better-giving/assets/tokens";
+import type { IToken } from "@better-giving/crypto/tokens";
 import { donate_method_id } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";

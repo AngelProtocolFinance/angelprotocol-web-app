@@ -3,7 +3,7 @@ import {
   chains,
   is_custom,
   tokens_list,
-} from "@better-giving/assets/tokens";
+} from "@better-giving/crypto/tokens";
 import { CloseButton, ComboboxOption } from "@headlessui/react";
 import { CpfToggle } from "components/donation/common/cpf-toggle";
 import { MethodBenefits } from "components/donation/common/method-benefits";

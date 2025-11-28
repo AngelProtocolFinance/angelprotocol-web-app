@@ -1,4 +1,4 @@
-import { type IToken, is_custom } from "@better-giving/assets/tokens";
+import { type IToken, is_custom } from "@better-giving/crypto/tokens";
 import { Copier } from "components/copier";
 import { logo_url } from "constants/common";
 import { QRCodeSVG } from "qrcode.react";

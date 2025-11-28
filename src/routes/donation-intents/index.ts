@@ -1,4 +1,4 @@
-import { is_custom, tokens_map } from "@better-giving/assets/tokens";
+import { is_custom, tokens_map } from "@better-giving/crypto/tokens";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import type { PurchaseUnitsRequest } from "@better-giving/paypal";
 import { paypal_currencies } from "constants/paypal";

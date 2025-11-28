@@ -1,4 +1,4 @@
-import { chains } from "@better-giving/assets/tokens";
+import { chains } from "@better-giving/crypto/tokens";
 import { ContentLoader } from "components/content-loader";
 import { QueryLoader } from "components/query-loader";
 import { PROCESSING_RATES } from "constants/common";

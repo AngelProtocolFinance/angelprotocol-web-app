@@ -26,9 +26,6 @@ importers:
       '@aws-sdk/lib-dynamodb':
         specifier: 3.485.0
         version: 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
-      '@better-giving/assets':
-        specifier: 1.0.43
-        version: 1.0.43
       '@better-giving/balance':
         specifier: 2.0.10
         version: 2.0.10(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)
@@ -41,6 +38,9 @@ importers:
       '@better-giving/constants':
         specifier: 1.1.2
         version: 1.1.2
+      '@better-giving/crypto':
+        specifier: 1.0.0
+        version: 1.0.0
       '@better-giving/db':
         specifier: 2.0.7
         version: 2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)
@@ -630,9 +630,6 @@ packages:
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
 
-  '@better-giving/assets@1.0.43':
-    resolution: {integrity: sha512-wFGsRDntODASUyruEW4Jem8Dr2otjje4yaq/45FRDzeGwro3CVs9eueYhTtYYlbqyOqPKp1Jtk/zgCSAuFDsww==}
-
   '@better-giving/balance-txs@2.0.10':
     resolution: {integrity: sha512-uwhj84wZ5A1HBAttBkYiOOQTPDkgp1Lzf0SfpxDeIfpEJoY9hPPl9nLl5DwLSZqYldkeA2MfQIpnAM48yAsU6Q==}
     peerDependencies:
@@ -659,6 +656,9 @@ packages:
 
   '@better-giving/constants@1.1.2':
     resolution: {integrity: sha512-SgC8QUEASCc0PnAxmyKauZKoqQ6qU5lbhfnCwp9rHmVq/FjK6UxC9XgCDl1cyR8+b9G/BU8SUvhAIaqWBloSdQ==}
+
+  '@better-giving/crypto@1.0.0':
+    resolution: {integrity: sha512-+r71U4/ye6RUseONeMBHSu3UPmTDKRGZCpDL9NqUoYBsW/EIsQSYDS5LG1S4GeVPpUFpY3XvOHzA3XnNJPkOWA==}
 
   '@better-giving/db@2.0.7':
     resolution: {integrity: sha512-cZ+CqxWlBWSEnhBmHd95CWOBWYaFHIVL7kU4RpOTiaKhUM/RPx4tS3MJvh6r/sZ/yXsD6ZYeMZCxprcmNCyFCQ==}
@@ -4905,8 +4905,6 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@better-giving/assets@1.0.43': {}
-
   '@better-giving/balance-txs@2.0.10(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)(valibot@0.42.0(typescript@5.9.2))':
     dependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
@@ -4929,6 +4927,8 @@ snapshots:
       valibot: 0.42.0(typescript@5.9.2)
 
   '@better-giving/constants@1.1.2': {}
+
+  '@better-giving/crypto@1.0.0': {}
 
   '@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)':
     dependencies:
