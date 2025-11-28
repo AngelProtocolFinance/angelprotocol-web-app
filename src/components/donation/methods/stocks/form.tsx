@@ -24,8 +24,9 @@ import {
   stocks_donation_details,
   to_step,
 } from "../../types";
+
 const tickers_fuse = new Fuse<ITicker>(tickers, {
-  keys: ["name", "code", "network", "symbol"],
+  keys: ["symbol", "name"],
 });
 const subset = tickers.slice(0, 10);
 
