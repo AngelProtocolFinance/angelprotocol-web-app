@@ -19,13 +19,12 @@ import { create_payment_intent } from "./stripe/create-payment-intent";
 import { get_customer_id } from "./stripe/customer-id";
 import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
-import { cognito } from ".server/auth";
 import { onholddb } from ".server/aws/db";
 import { type IDonationsCookie, donations_cookie } from ".server/cookie";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
 import { aws_monitor, chariot, np, paypal } from ".server/sdks";
-import { get_usd_rate } from ".server/usd-rate";
+import { unit_per_usd } from ".server/unit-per-usd";
 
 const json_with_cookie_fn =
   (existing: null | IDonationsCookie, key: string) =>
@@ -203,7 +202,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 
   if (d_type === "stripe") {
-    const usd_rate = await get_usd_rate(intent.amount.currency);
+    const usd_rate = await unit_per_usd(intent.amount.currency);
 
     const customer_id = await get_customer_id(
       intent.amount.currency.toUpperCase(),
@@ -238,7 +237,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 
   if (d_type === "paypal") {
-    const usd_rate = await get_usd_rate(intent.amount.currency);
+    const usd_rate = await unit_per_usd(intent.amount.currency);
 
     const to_pay =
       intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
