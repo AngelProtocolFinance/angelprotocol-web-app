@@ -20,7 +20,7 @@ export const action: ActionFunction = async ({
   const now = new Date();
 
   const scan: ScanCommandInput = {
-    TableName: BalanceDb.name,
+    TableName: BalanceDb.table,
     FilterExpression: "#env = :env",
     ExpressionAttributeNames: {
       "#env": "network",
