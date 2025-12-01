@@ -73,6 +73,7 @@ export interface IRetrievedDonation {
   amount_usd: number;
   denom: string;
   source: TDonationSource;
+  form_id: string | undefined;
 }
 
 const tribute_to_fv = (
@@ -138,6 +139,7 @@ export const donation_get = async (
     denom: y.denomination || "USD",
     amount_usd: y.usdValue || 0,
     source: y.appUsed === "bg-widget" ? "bg-widget" : "bg-marketplace",
+    form_id: y.form_id,
   };
   const t = tribute_to_fv(y.inHonorOf, y.tributeNotif);
   if (t) x.tribute = t;

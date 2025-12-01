@@ -173,7 +173,11 @@ function Page({ loaderData: data }: Route.ComponentProps) {
       )}{" "}
       {widget_version && (
         <NavLink
-          to={href("/donate-widget/:id", { id: data.to_id })}
+          to={
+            data.form_id
+              ? href("/forms/:id", { id: data.form_id })
+              : href("/donate-widget/:id", { id: data.to_id })
+          }
           className="mt-4 btn btn-outline w-full normal-case [&:is(.pending)]:text-gray"
         >
           Go back
