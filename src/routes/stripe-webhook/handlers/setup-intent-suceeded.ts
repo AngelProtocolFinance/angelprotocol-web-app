@@ -23,21 +23,5 @@ export async function handle_setup_intent_succeeded({
     { ...m, transactionDate: d }
   );
 
-  await subsdb.put({
-    subscription_id: subs_id,
-    app_used: m.appUsed as any,
-    charity_name: m.charityName,
-    customer_id: str_id(intent.customer),
-    email: m.email,
-    endowment_id: +m.endowmentId,
-    fiat_ramp: "STRIPE",
-    /** Stripe only allows string, number or undefined as `metadata` values */
-    fiscal_sponsored: m.fiscalSponsored === "true",
-    hide_bg_tip: m.hideBgTip === "true",
-    network: intent.livemode ? "production" : "staging",
-    product_id: m.productId,
-    quantity: +m.subsQuantity || 1,
-    split_liq: m.splitLiq || "50",
-    status: "incomplete",
-  });
+  console.info(`Created subscription ${subs_id} for setup intent ${intent.id}`);
 }

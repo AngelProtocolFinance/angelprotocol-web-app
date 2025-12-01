@@ -8,6 +8,7 @@ import {
   handle_setup_intent_succeeded,
 } from "./handlers";
 import { handle_intent_succeeded } from "./handlers/intent-suceeded";
+import { handle_subscription_created } from "./handlers/subscription-created";
 import { subsdb } from ".server/aws/db";
 import { stripe_envs } from ".server/env";
 import { fiat_monitor, stripe } from ".server/sdks";
@@ -62,6 +63,10 @@ export const action: ActionFunction = async ({
         }
         await handle_intent_requires_action(event.data.object);
         break;
+      case "customer.subscription.created": {
+        await handle_subscription_created(event.data);
+        break;
+      }
       default:
         return new Response(`Unhandled event type: ${event.type}`, {
           status: 201,
