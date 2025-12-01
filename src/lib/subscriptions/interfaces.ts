@@ -1,7 +1,15 @@
 import type { Environment } from "@better-giving/schemas";
 
 export type TStatus = "active" | "inactive";
+export type TStatusFlag = "0" | "1";
 export type TPlatform = "stripe" | "paypal";
+
+export const to_flag = (status: TStatus): TStatusFlag => {
+  return status === "active" ? "1" : "0";
+};
+export const from_flag = (flag: TStatusFlag): TStatus => {
+  return flag === "1" ? "active" : "inactive";
+};
 
 export interface ISubs {
   id: string;
