@@ -241,6 +241,7 @@ export default [
     r("fundraisers/:fundId/edit", funds.$("fund-edit/index.tsx")._),
     r("fundraisers/new", funds.$("fund-create/index.tsx")._),
     r("privacy-policy", legal.$("privacy-policy.tsx")._),
+    r("security-policy", legal.$("security-policy.tsx")._),
     r("terms-of-use-npo", legal.$("terms-nonprofits.tsx")._),
     r("terms-of-use", legal.$("terms-donors.tsx")._),
     r("terms-of-use-referrals", legal.$("terms-referrals.tsx")._),
