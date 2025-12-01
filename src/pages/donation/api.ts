@@ -54,20 +54,24 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 
   const { data: p } = fv;
 
-  const { user } = await cognito.retrieve(request);
   const don = await donation_get(params.id);
   if (!don) throw resp.status(404, "donation not found");
 
-  if (!user) {
-    const cookie: IDonationsCookie | null = await donations_cookie.parse(
-      request.headers.get("cookie")
-    );
-    if (!cookie) return to_auth(request);
-    const exp = cookie[params.id];
-    if (!exp || new Date(exp) < new Date()) {
-      return to_auth(request);
-    }
+  // prioritize cookie authentication over user authentication
+  const cookie: IDonationsCookie | null = await donations_cookie.parse(
+    request.headers.get("cookie")
+  );
+
+  if (
+    cookie &&
+    cookie[params.id] &&
+    new Date(cookie[params.id]) >= new Date()
+  ) {
+    // cookie is valid, proceed without further auth checks
   } else {
+    // fall back to user authentication
+    const { user } = await cognito.retrieve(request);
+    if (!user) return to_auth(request);
     if (user.email !== don.from) throw resp.status(403, "not authorized");
   }
 
