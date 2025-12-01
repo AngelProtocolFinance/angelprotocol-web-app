@@ -15,7 +15,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
       name: d.name,
       hide_bg_tip: rd.hide_bg_tip,
       members: [],
-      donor_address_required: false,
+      donor_address_required: rd.donor_address_required,
     },
     config: {
       id: d.id,
