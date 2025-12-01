@@ -8,7 +8,7 @@ import { stripe } from ".server/sdks";
 export async function get_customer_id(
   currency: string,
   email: string
-): Promise<Stripe.Customer["id"]> {
+): Promise<string> {
   // Search for existing Stripe Customer data
   const actives: Stripe.Customer[] = [];
   let next_page: string | undefined;
