@@ -18,7 +18,7 @@ export async function handle_setup_intent_succeeded({
     currency: c,
     product: stripe_envs.subs_product_id,
     recurring: { interval: "month", interval_count: 1 },
-    unit_amount: 1 / to_atomic(1, c), // price per atomic unit
+    unit_amount: to_atomic(1, c),
   });
 
   const cust_id = str_id(intent.customer);
@@ -26,7 +26,7 @@ export async function handle_setup_intent_succeeded({
     customer: cust_id,
     default_payment_method: str_id(intent.payment_method),
     currency: c,
-    items: [{ price: price_id, quantity: to_atomic(+m.amount, c) }],
+    items: [{ price: price_id, quantity: +m.amount }],
     metadata: {
       ...m,
       transactionDate: fromUnixTime(intent.created).toISOString(),
