@@ -25,11 +25,14 @@ export class SubsDb extends Db {
   gsi1_user_subs_pk(user_id: string) {
     return `UserSubs#${user_id}`;
   }
+  gsi1_user_subs_sk(status: TStatus, date_created: string) {
+    return `${to_flag(status)}#${date_created}` as const;
+  }
   gsi1_user_subs_key(user_id: string, date_created: string, status: TStatus) {
     return {
       gsi1PK: this.gsi1_user_subs_pk(user_id),
-      gsi1SK: `${to_flag(status)}#${date_created}`,
-    };
+      gsi1SK: this.gsi1_user_subs_sk(status, date_created),
+    } as const;
   }
 
   record(data: ISubs) {
@@ -55,7 +58,32 @@ export class SubsDb extends Db {
     const q: QueryCommandInput = {
       TableName: SubsDb.table,
       IndexName: SubsDb.gsi1,
+      ScanIndexForward: false,
     };
+
+    if (!status) {
+      q.KeyConditionExpression = "#pk = :pk";
+      q.ExpressionAttributeNames = {
+        "#pk": "gsi1PK",
+      };
+      q.ExpressionAttributeValues = {
+        ":pk": this.gsi1_user_subs_pk(user_id),
+      };
+    } else {
+      q.KeyConditionExpression = "#pk = :pk AND begins_with(#sk, :sk)";
+      q.ExpressionAttributeNames = {
+        "#pk": "gsi1PK",
+        "#sk": "gsi1SK",
+      };
+      q.ExpressionAttributeValues = {
+        ":pk": this.gsi1_user_subs_pk(user_id),
+        ":sk": to_flag(status),
+      };
+    }
+    const cmd = new QueryCommand(q);
+    return this.client
+      .send(cmd)
+      .then((r) => (r.Items || []).map((i) => this.sans_keys(i)));
   }
 
   async put(data: ISubs) {
@@ -78,7 +106,7 @@ export class SubsDb extends Db {
       if (prev) {
         upd8.set(
           "gsi1SK",
-          `${to_flag(data.status)}#${prev.created_at.toString()}`
+          this.gsi1_user_subs_sk(data.status, prev.created_at.toString())
         );
       }
     }
