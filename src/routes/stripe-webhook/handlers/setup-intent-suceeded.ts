@@ -18,7 +18,7 @@ export async function handle_setup_intent_succeeded({
     currency: c,
     product: stripe_envs.subs_product_id,
     recurring: { interval: "month", interval_count: 1 },
-    unit_amount: to_atomic(1, c),
+    unit_amount: 1 / to_atomic(1, c), // price per atomic unit
   });
 
   const cust_id = str_id(intent.customer);
