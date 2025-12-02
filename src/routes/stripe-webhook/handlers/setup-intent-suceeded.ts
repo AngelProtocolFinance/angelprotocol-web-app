@@ -1,27 +1,38 @@
 import { fromUnixTime } from "date-fns";
-import { str_id } from "helpers/stripe";
+import { str_id, to_atomic } from "helpers/stripe";
 import type { IMetadataSubs } from "lib/stripe";
 import type Stripe from "stripe";
-import { subsdb } from ".server/aws/db";
-import { create_subscription } from ".server/stripe/create-subscription";
+import { stripe_envs } from ".server/env";
+import { stripe } from ".server/sdks";
 
-/**
- * Updates Customer's default payment method which will be used for recurring payments.
- * Creates Subscription object in Stripe.
- * Creates an item in subscriptions DB table.
- */
 export async function handle_setup_intent_succeeded({
   object: intent,
 }: Stripe.SetupIntentSucceededEvent.Data) {
   const { transactionDate, ...m } = intent.metadata as IMetadataSubs;
 
-  const d = fromUnixTime(intent.created).toISOString();
-  /** CREATE SUBSCRIPTION */
-  const subs_id = await create_subscription(
-    str_id(intent.customer),
-    str_id(intent.payment_method),
-    { ...m, transactionDate: d }
-  );
+  const c = m.denomination.toLowerCase();
+
+  const { id: price_id } = await stripe.prices.create({
+    active: true,
+    billing_scheme: "per_unit",
+    currency: c,
+    product: stripe_envs.subs_product_id,
+    recurring: { interval: "month", interval_count: 1 },
+    unit_amount: to_atomic(1, c),
+  });
+
+  const cust_id = str_id(intent.customer);
+  const { id: subs_id } = await stripe.subscriptions.create({
+    customer: cust_id,
+    default_payment_method: str_id(intent.payment_method),
+    currency: c,
+    items: [{ price: price_id, quantity: to_atomic(+m.amount, c) }],
+    metadata: {
+      ...m,
+      transactionDate: fromUnixTime(intent.created).toISOString(),
+    },
+    off_session: true,
+  });
 
   console.info(`Created subscription ${subs_id} for setup intent ${intent.id}`);
 }
