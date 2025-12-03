@@ -5,7 +5,7 @@ import { stripe } from ".server/sdks";
  * @param currency - uppercase
  * @param email - lowercase
  */
-export async function get_customer_id(
+export async function customer_with_currency(
   currency: string,
   email: string
 ): Promise<string> {
@@ -23,10 +23,6 @@ export async function get_customer_id(
     if (result.next_page) next_page = result.next_page;
   } while (next_page);
 
-  if (actives.length === 0) {
-    // no existing customer found, create a new one
-    return stripe.customers.create({ email }).then((x) => x.id);
-  }
   const with_currency = actives.find(
     (x) => x.currency?.toUpperCase() === currency
   );

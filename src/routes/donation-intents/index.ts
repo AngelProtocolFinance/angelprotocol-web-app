@@ -16,7 +16,7 @@ import { parse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
 import { create_payment_intent } from "./stripe/create-payment-intent";
-import { get_customer_id } from "./stripe/customer-id";
+import { customer_with_currency } from "./stripe/customer-with-currency";
 import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { onholddb } from ".server/aws/db";
@@ -204,7 +204,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (d_type === "stripe") {
     const upusd = await unit_per_usd(intent.amount.currency);
 
-    const customer_id = await get_customer_id(
+    const customer_id = await customer_with_currency(
       intent.amount.currency.toUpperCase(),
       intent.donor.email.toLowerCase()
     );
