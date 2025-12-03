@@ -10,7 +10,7 @@ export async function handle_subscription_created({
 }: Stripe.CustomerSubscriptionCreatedEvent.Data) {
   const { transactionDate, ...m } = sub.metadata as IMetadataSubs;
 
-  const is_fund = Boolean(m.fund_id && m.fund_members?.length) && m.fund_name;
+  const is_fund = Boolean(m.fund_id && m.fund_members?.length && m.fund_name);
   const { price: p } = sub.items.data[0];
 
   if (!p.recurring)
