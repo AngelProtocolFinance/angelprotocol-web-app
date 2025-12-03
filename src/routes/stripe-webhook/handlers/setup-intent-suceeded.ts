@@ -12,19 +12,15 @@ export async function handle_setup_intent_succeeded({
   const { transactionDate, ...m } = intent.metadata as IMetadataSubs;
 
   const c = m.denomination.toLowerCase();
-  const unit_per_usd = +m.amount / +m.usdValue;
 
   const { id: price_id } = await stripe.prices.create({
     active: true,
     billing_scheme: "per_unit",
     /** all prices are usd based */
-    currency: "usd",
-    currency_options: {
-      [c]: { unit_amount: to_atomic(unit_per_usd, c) },
-    },
+    currency: c,
     product: stripe_envs.subs_product_id,
     recurring: { interval: "month", interval_count: 1 },
-    unit_amount: 100, // 1 usd in cents
+    unit_amount: to_atomic(1, c),
   });
 
   const cust_id = str_id(intent.customer);
@@ -32,7 +28,7 @@ export async function handle_setup_intent_succeeded({
     customer: cust_id,
     default_payment_method: str_id(intent.payment_method),
     currency: c,
-    items: [{ price: price_id, quantity: rd2num(m.usdValue, 0) }],
+    items: [{ price: price_id, quantity: rd2num(+m.amount, 0) }],
     metadata: {
       ...m,
       transactionDate: fromUnixTime(intent.created).toISOString(),

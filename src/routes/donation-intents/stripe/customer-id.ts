@@ -31,5 +31,8 @@ export async function get_customer_id(
     (x) => x.currency?.toUpperCase() === currency
   );
 
-  return (with_currency || actives[0]).id;
+  if (with_currency) return with_currency.id;
+
+  //create new customer for the desired currency
+  return stripe.customers.create({ email }).then((x) => x.id);
 }
