@@ -1,3 +1,4 @@
+import { getUnixTime } from "date-fns";
 import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
@@ -77,6 +78,8 @@ export const action: ActionFunction = async ({
         const { object: sub } = event.data;
         await subsdb.update(sub.id, {
           status: "cancelled",
+          status_cancel_reason: sub.cancellation_details?.comment ?? undefined,
+          updated_at: getUnixTime(new Date()),
         });
         console.info(`cancelled subscription ${sub.id}`);
         break;

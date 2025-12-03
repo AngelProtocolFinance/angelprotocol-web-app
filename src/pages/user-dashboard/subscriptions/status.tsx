@@ -1,67 +1,38 @@
-import type Stripe from "stripe";
+import type { TStatus } from "lib/subscriptions";
 
 interface IStatus {
-  status: Stripe.Subscription.Status;
+  status: TStatus;
   classes?: string;
 }
 
 export function Status({ status, classes = "" }: IStatus) {
-  const getStatusConfig = (status: Stripe.Subscription.Status) => {
+  const get_status_config = (status: TStatus) => {
     switch (status) {
       case "active":
         return {
           text: "Active",
-          bgColor: "bg-green-l4",
-          textColor: "text-green-d2",
-          dotColor: "bg-green",
+          bg_color: "bg-green-l4",
+          text_color: "text-green-d2",
+          dot_color: "bg-green",
         };
-      case "trialing":
-        return {
-          text: "Trial",
-          bgColor: "bg-blue-l4",
-          textColor: "text-blue-d2",
-          dotColor: "bg-blue",
-        };
-      case "past_due":
-        return {
-          text: "Past Due",
-          bgColor: "bg-amber-l4",
-          textColor: "text-amber-d2",
-          dotColor: "bg-amber",
-        };
-      case "canceled":
-      case "unpaid":
-        return {
-          text: status === "canceled" ? "Canceled" : "Unpaid",
-          bgColor: "bg-red-l4",
-          textColor: "text-red-d2",
-          dotColor: "bg-red",
-        };
-      case "incomplete":
-      case "incomplete_expired":
-        return {
-          text: "Incomplete",
-          bgColor: "bg-gray-l4",
-          textColor: "text-gray-d2",
-          dotColor: "bg-gray",
-        };
+
       default:
         return {
-          text: status,
-          bgColor: "bg-gray-l4",
-          textColor: "text-gray-d2",
-          dotColor: "bg-gray",
+          text: status satisfies "cancelled",
+          bg_color: "bg-gray-l4",
+          text_color: "text-gray-d2",
+          dot_color: "bg-gray",
         };
     }
   };
 
-  const config = getStatusConfig(status);
+  const config = get_status_config(status);
 
   return (
     <div
-      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${config.bgColor} ${config.textColor} ${classes}`}
+      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${config.bg_color} ${config.text_color} ${classes}`}
     >
-      <div className={`w-2 h-2 rounded-full ${config.dotColor}`} />
+      <div className={`w-2 h-2 rounded-full ${config.dot_color}`} />
       {config.text}
     </div>
   );

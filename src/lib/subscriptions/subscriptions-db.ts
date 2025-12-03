@@ -1,20 +1,20 @@
-import { QueryCommand } from "@aws-sdk/client-dynamodb";
 import {
   DeleteCommand,
   GetCommand,
   PutCommand,
+  QueryCommand,
   type QueryCommandInput,
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
 import { Db, UpdateBuilder } from "@better-giving/db";
 import {
-  type ISubs,
-  type ISubsUpdate,
+  type ISub,
+  type ISubUpdate,
   type TStatus,
   to_flag,
 } from "./interfaces";
 
-type K = keyof ISubs;
+type K = keyof ISub;
 export class SubsDb extends Db {
   static readonly table = "subs";
   static readonly gsi1 = "gsi1";
@@ -35,7 +35,7 @@ export class SubsDb extends Db {
     } as const;
   }
 
-  record(data: ISubs) {
+  record(data: ISub) {
     return {
       ...this.key(data.id),
       ...this.gsi1_user_subs_key(
@@ -47,14 +47,14 @@ export class SubsDb extends Db {
     };
   }
 
-  async get(id: string): Promise<ISubs | undefined> {
+  async get(id: string): Promise<ISub | undefined> {
     const cmd = new GetCommand({
       TableName: SubsDb.table,
       Key: this.key(id),
     });
     return this.client.send(cmd).then(({ Item: i }) => i && this.sans_keys(i));
   }
-  async user_subs(user_id: string, status?: TStatus): Promise<ISubs[]> {
+  async user_subs(user_id: string, status?: TStatus): Promise<ISub[]> {
     const q: QueryCommandInput = {
       TableName: SubsDb.table,
       IndexName: SubsDb.gsi1,
@@ -86,7 +86,7 @@ export class SubsDb extends Db {
       .then((r) => (r.Items || []).map((i) => this.sans_keys(i)));
   }
 
-  async put(data: ISubs) {
+  async put(data: ISub) {
     const cmd = new PutCommand({
       TableName: SubsDb.table,
       Item: this.record(data),
@@ -95,7 +95,7 @@ export class SubsDb extends Db {
     return this.client.send(cmd);
   }
 
-  async update(id: string, data: ISubsUpdate): Promise<ISubs> {
+  async update(id: string, data: ISubUpdate): Promise<ISub> {
     const upd8 = new UpdateBuilder();
     for (const k in data) {
       upd8.set(k as K, (data as any)[k]);

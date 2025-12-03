@@ -1,5 +1,5 @@
 import { Info } from "components/status";
-import { format } from "date-fns";
+import { format, fromUnixTime } from "date-fns";
 import { humanize } from "helpers/decimal";
 import { to_usd } from "helpers/to-usd";
 import { Link, Outlet, href } from "react-router";
@@ -14,29 +14,29 @@ export const clientLoader = createClientLoaderCache<Route.ClientLoaderArgs>();
 export default CacheRoute(Page);
 function Page({ loaderData: { subs } }: Route.ComponentProps) {
   const rows = subs.map((s) => {
-    const can_cancel = s.status === "active" || s.status === "trialing";
+    const can_cancel = s.status === "active";
 
     return (
       <tr key={s.id}>
         <td className="text-sm text-gray-d4">
           <Link
             to={
-              s.recipient.type === "fund"
-                ? href("/fundraisers/:fundId", { fundId: s.recipient.id })
-                : href("/marketplace/:id", { id: s.recipient.id })
+              s.to_type === "fund"
+                ? href("/fundraisers/:fundId", { fundId: s.to_id })
+                : href("/marketplace/:id", { id: s.to_id })
             }
             className="text-blue hover:text-blue-d1"
           >
-            {s.recipient.name}
+            {s.to_name}
           </Link>
         </td>
         <td className="text-sm text-gray-d4">
           <div className="flex items-baseline gap-x-2">
             <span className="text-xs text-gray-d1 font-semibold">
-              {s.denom}
+              {s.currency}
             </span>
             <span>{humanize(s.amount, 2)}</span>
-            {s.denom !== "USD" && (
+            {s.currency !== "USD" && (
               <span className="text-xs text-gray-d1">
                 ({to_usd(s.amount_usd)})
               </span>
@@ -48,13 +48,15 @@ function Page({ loaderData: { subs } }: Route.ComponentProps) {
         </td>
 
         <td className="text-sm text-gray-d4">
-          {s.status === "active" ? format(new Date(s.next_payment), "PP") : ""}
+          {s.status === "active"
+            ? format(fromUnixTime(s.next_billing), "PP")
+            : ""}
         </td>
 
         <td className="text-sm">
           {can_cancel ? (
             <Link
-              to={`cancel/${s.id}?recipient=${encodeURIComponent(s.recipient.name)}`}
+              to={`cancel/${s.id}?recipient=${encodeURIComponent(s.to_name)}`}
               className="btn btn-red text-xs px-3 py-1 inline-block"
             >
               Cancel

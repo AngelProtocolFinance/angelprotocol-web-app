@@ -12,7 +12,7 @@ export const from_flag = (flag: TStatusFlag): TStatus => {
   return flag === "1" ? "active" : "cancelled";
 };
 
-export interface ISubs {
+export interface ISub {
   id: string;
   /** unix */
   created_at: number;
@@ -24,6 +24,7 @@ export interface ISubs {
   /** unix */
   next_billing: number;
   amount: number;
+  amount_usd: number;
   currency: string;
   product_id: string;
   /** npo-id (number), uuid (fund) */
@@ -33,10 +34,11 @@ export interface ISubs {
 
   platform: TPlatform;
   status: TStatus;
+  status_cancel_reason?: string;
   env: Environment;
 
   /** email, */
   from_id: string;
 }
 
-export interface ISubsUpdate extends Partial<Omit<ISubs, "id">> {}
+export interface ISubUpdate extends Partial<Omit<ISub, "id">> {}

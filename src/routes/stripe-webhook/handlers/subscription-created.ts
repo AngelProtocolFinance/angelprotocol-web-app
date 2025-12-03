@@ -1,7 +1,7 @@
 import { rd2num } from "helpers/decimal";
 import { str_id } from "helpers/stripe";
 import type { IMetadataSubs } from "lib/stripe";
-import type { ISubs } from "lib/subscriptions";
+import type { ISub } from "lib/subscriptions";
 import type Stripe from "stripe";
 import { subsdb } from ".server/aws/db";
 
@@ -18,7 +18,7 @@ export async function handle_subscription_created({
       `price:${p.id} is not recurring on subscription:${sub.id} price`
     );
 
-  const record: ISubs = {
+  const record: ISub = {
     id: sub.id,
     created_at: sub.created,
     updated_at: sub.created,
@@ -26,6 +26,7 @@ export async function handle_subscription_created({
     interval_count: p.recurring.interval_count,
     next_billing: sub.current_period_end,
     amount: rd2num(m.amount, 0),
+    amount_usd: +m.usdValue,
     currency: m.denomination,
     product_id: str_id(p.product),
     to_type: is_fund ? "fund" : "npo",
