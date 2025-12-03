@@ -336,7 +336,6 @@ export default [
 
   r("crons/grants-processor", "./crons/grants-processor/index.ts"),
   r("crons/currencies-map", "./crons/currencies-map.ts"),
-  r("crons/stripe-prices", "./crons/stripe-prices.ts"),
   r("crons/commissions-processor", "./crons/commissions-processor/index.ts"),
   r("crons/nav-update", "./crons/nav-update/index.ts"),
   r("crons/savings-snapshot", "./crons/savings-snapshot.ts"),
