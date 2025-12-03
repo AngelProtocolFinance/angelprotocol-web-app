@@ -1,5 +1,6 @@
 import { tokens_map } from "@better-giving/crypto";
 import type { NP } from "lib/nowpayments/types";
+import { href } from "react-router";
 import { type Settled, to_final } from "../../../helpers/donation";
 import { onholddb } from ".server/aws/db";
 import { np, qstash } from ".server/sdks";
@@ -40,5 +41,6 @@ export const handle_settled = async (
     body: final,
     retries: 0,
     deduplicationId: payment.order_id,
+    failureCallback: `${base_url}${href("/failure-callback")}`,
   });
 };

@@ -1,6 +1,7 @@
 import { fromUnixTime } from "date-fns";
 import { str_id } from "helpers/stripe";
 import type { IMetadata, IMetadataSubs } from "lib/stripe";
+import { href } from "react-router";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
 import { to_onhold } from "../../helpers/donation-metadata";
@@ -64,6 +65,7 @@ export async function handle_intent_succeeded(
     url: `${base_url}/q/final-recorder`,
     retries: 0,
     deduplicationId: intent.id,
+    failureCallback: `${base_url}${href("/failure-callback")}`,
   });
 
   console.info(`Final donation record sent:${res.messageId}`);

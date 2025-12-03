@@ -342,4 +342,5 @@ export default [
   r("crons/savings-snapshot", "./crons/savings-snapshot.ts"),
 
   r("streams/subs", "./routes/streams/subs.ts"),
+  r("failure-callback", "./routes/failure-callback.ts"),
 ] satisfies RouteConfig;

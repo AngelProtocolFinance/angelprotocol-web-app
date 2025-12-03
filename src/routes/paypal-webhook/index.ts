@@ -1,6 +1,6 @@
 import type { Capture, Order, WebhookEvent } from "@better-giving/paypal";
 import { resp } from "helpers/https";
-import type { ActionFunction } from "react-router";
+import { type ActionFunction, href } from "react-router";
 import { to_final } from "routes/helpers/donation";
 import { verified_body } from "./helpers";
 import { onholddb } from ".server/aws/db";
@@ -124,6 +124,7 @@ export const action: ActionFunction = async ({ request }) => {
           url: `${base_url}/q/final-recorder`,
           retries: 0,
           deduplicationId: final.id,
+          failureCallback: `${base_url}${href("/failure-callback")}`,
         });
 
         console.info(`Final donation record sent:${res.messageId}`);
