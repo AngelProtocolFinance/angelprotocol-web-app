@@ -1,3 +1,4 @@
+import { rd2num } from "helpers/decimal";
 import { str_id } from "helpers/stripe";
 import type { IMetadataSubs } from "lib/stripe";
 import type { ISubs } from "lib/subscriptions";
@@ -10,7 +11,7 @@ export async function handle_subscription_created({
   const { transactionDate, ...m } = sub.metadata as IMetadataSubs;
 
   const is_fund = Boolean(m.fund_id && m.fund_members?.length) && m.fund_name;
-  const p = sub.items.data[0].price;
+  const { price: p } = sub.items.data[0];
 
   if (!p.recurring)
     throw new Error(
@@ -24,9 +25,9 @@ export async function handle_subscription_created({
     interval: p.recurring.interval,
     interval_count: p.recurring.interval_count,
     next_billing: sub.current_period_end,
-    amount: +m.subsQuantity,
+    amount: rd2num(m.amount, 0),
     curreny: m.denomination,
-    product_id: str_id(sub.items.data[0].price.product),
+    product_id: str_id(p.product),
     to_type: is_fund ? "fund" : "npo",
     to_id: is_fund ? m.fund_id! : m.endowmentId.toString(),
     to_name: is_fund ? m.fund_name! : m.charityName,
