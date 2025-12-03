@@ -132,5 +132,3 @@ export const paypal_envs = {
   webhook_id: _var("PAYPAL_WEBHOOK_ID"),
   api_url: _var("PAYPAL_API_URL"),
 };
-
-export const ngrok_base_url = _var("NGROK_BASE_URL");
