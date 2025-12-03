@@ -32,7 +32,7 @@ export async function handle_setup_intent_succeeded({
     customer: cust_id,
     default_payment_method: str_id(intent.payment_method),
     currency: c,
-    items: [{ price: price_id, quantity: rd2num(m.amount, 0) }],
+    items: [{ price: price_id, quantity: rd2num(m.usdValue, 0) }],
     metadata: {
       ...m,
       transactionDate: fromUnixTime(intent.created).toISOString(),
