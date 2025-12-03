@@ -12,7 +12,7 @@ import {
   type IStripeIntentReturn,
   intent as schema,
 } from "types/donation-intent";
-import { parse, safeParse } from "valibot";
+import { getDotPath, parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
 import { create_payment_intent } from "./stripe/create-payment-intent";
@@ -63,8 +63,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const parsed = safeParse(schema, await request.json());
   if (parsed.issues) {
-    console.error(parsed.issues);
-    return resp.status(400);
+    const i = parsed.issues[0];
+    return resp.status(400, `${getDotPath(i)}: ${i.message}`);
   }
   const intent = parsed.output;
 
