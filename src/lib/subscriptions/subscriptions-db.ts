@@ -114,9 +114,12 @@ export class SubsDb extends Db {
     const cmd = new UpdateCommand({
       TableName: SubsDb.table,
       Key: this.key(id),
+      ReturnValues: "ALL_NEW",
       ...upd8.collect(),
     });
-    return this.client.send(cmd).then((r) => r.Attributes as any);
+    return this.client
+      .send(cmd)
+      .then((r) => this.sans_keys(r.Attributes ?? {}));
   }
 
   async del(id: string) {
