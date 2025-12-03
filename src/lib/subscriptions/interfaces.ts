@@ -6,11 +6,11 @@ export type TPlatform = "stripe" | "paypal";
 export type TInterval = "day" | "month" | "week" | "year";
 
 export const to_flag = (status: TStatus): TStatusFlag => {
-  // "0" is lexicographically before "1"
-  return status === "active" ? "0" : "1";
+  // "0" is lexicographically before "1, but scan index forward : false "
+  return status === "active" ? "1" : "0";
 };
 export const from_flag = (flag: TStatusFlag): TStatus => {
-  return flag === "1" ? "cancelled" : "active";
+  return flag === "0" ? "cancelled" : "active";
 };
 
 export interface ISub {

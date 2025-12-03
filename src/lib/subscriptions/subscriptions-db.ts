@@ -58,6 +58,7 @@ export class SubsDb extends Db {
     const q: QueryCommandInput = {
       TableName: SubsDb.table,
       IndexName: SubsDb.gsi1,
+      ScanIndexForward: false,
     };
 
     if (!status) {
