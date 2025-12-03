@@ -17,10 +17,7 @@ import {
 type K = keyof ISub;
 export class SubsDb extends Db {
   static readonly gsi1 = "gsi1";
-
-  private get table() {
-    return `subs-${this.env}`;
-  }
+  static readonly table = "subs";
 
   key(id: string) {
     return { PK: `Sub#${id}`, SK: `Sub#${id}` } as const;
@@ -52,14 +49,14 @@ export class SubsDb extends Db {
 
   async get(id: string): Promise<ISub | undefined> {
     const cmd = new GetCommand({
-      TableName: this.table,
+      TableName: SubsDb.table,
       Key: this.key(id),
     });
     return this.client.send(cmd).then(({ Item: i }) => i && this.sans_keys(i));
   }
   async user_subs(user_id: string, status?: TStatus): Promise<ISub[]> {
     const q: QueryCommandInput = {
-      TableName: this.table,
+      TableName: SubsDb.table,
       IndexName: SubsDb.gsi1,
       ScanIndexForward: false,
     };
@@ -91,7 +88,7 @@ export class SubsDb extends Db {
 
   async put(data: ISub) {
     const cmd = new PutCommand({
-      TableName: this.table,
+      TableName: SubsDb.table,
       Item: this.record(data),
       ConditionExpression: `attribute_not_exists(${"id" satisfies K})`,
     });
@@ -115,7 +112,7 @@ export class SubsDb extends Db {
     }
 
     const cmd = new UpdateCommand({
-      TableName: this.table,
+      TableName: SubsDb.table,
       Key: this.key(id),
       ReturnValues: "ALL_NEW",
       ...upd8.collect(),
@@ -127,7 +124,7 @@ export class SubsDb extends Db {
 
   async del(id: string) {
     const cmd = new DeleteCommand({
-      TableName: this.table,
+      TableName: SubsDb.table,
       Key: this.key(id),
     });
     return this.client.send(cmd);
