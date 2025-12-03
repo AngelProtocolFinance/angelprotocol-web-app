@@ -1,4 +1,5 @@
 import { fromUnixTime } from "date-fns";
+import { rd2num } from "helpers/decimal";
 import { str_id, to_atomic } from "helpers/stripe";
 import type { IMetadataSubs } from "lib/stripe";
 import type Stripe from "stripe";
@@ -26,7 +27,7 @@ export async function handle_setup_intent_succeeded({
     customer: cust_id,
     default_payment_method: str_id(intent.payment_method),
     currency: c,
-    items: [{ price: price_id, quantity: +m.amount }],
+    items: [{ price: price_id, quantity: rd2num(m.amount, 0) }],
     metadata: {
       ...m,
       transactionDate: fromUnixTime(intent.created).toISOString(),
