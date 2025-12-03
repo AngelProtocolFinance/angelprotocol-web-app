@@ -12,7 +12,7 @@ import {
   type IStripeIntentReturn,
   intent as schema,
 } from "types/donation-intent";
-import { parse } from "valibot";
+import { parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
 import { create_payment_intent } from "./stripe/create-payment-intent";
@@ -61,7 +61,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     request.headers.get("cookie")
   );
 
-  const intent = parse(schema, await request.json());
+  const parsed = safeParse(schema, await request.json());
+  if (parsed.issues) {
+    console.error(parsed.issues);
+    return resp.status(400);
+  }
+  const intent = parsed.output;
+
   const d_type = parse(donation_type, params.type);
 
   const recipient = await get_recipient(intent.recipient);
