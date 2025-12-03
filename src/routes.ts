@@ -340,4 +340,6 @@ export default [
   r("crons/commissions-processor", "./crons/commissions-processor/index.ts"),
   r("crons/nav-update", "./crons/nav-update/index.ts"),
   r("crons/savings-snapshot", "./crons/savings-snapshot.ts"),
+
+  r("streams/subs", "./routes/streams/subs.ts"),
 ] satisfies RouteConfig;
