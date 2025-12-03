@@ -116,9 +116,7 @@ export class SubsDb extends Db {
       Key: this.key(id),
       ...upd8.collect(),
     });
-    return this.client
-      .send(cmd)
-      .then((r) => this.sans_keys(r.Attributes as any));
+    return this.client.send(cmd).then((r) => r.Attributes as any);
   }
 
   async del(id: string) {
