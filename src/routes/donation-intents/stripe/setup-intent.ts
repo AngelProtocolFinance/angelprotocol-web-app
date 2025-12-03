@@ -1,8 +1,5 @@
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import { rd } from "helpers/decimal";
-import type { IMetadataSubs } from "lib/stripe";
 import { to_metadata } from "../../helpers/donation-metadata";
-import { stripe_envs } from ".server/env";
 import { stripe } from ".server/sdks";
 
 export async function setup_intent(
@@ -22,11 +19,7 @@ export async function setup_intent(
         verification_method: "automatic",
       },
     },
-    metadata: {
-      ...to_metadata(order),
-      productId: stripe_envs.subs_product_id,
-      subsQuantity: rd(order.usdValue, 0),
-    } satisfies IMetadataSubs,
+    metadata: to_metadata(order) as any,
     usage: "off_session",
     automatic_payment_methods: { enabled: true },
   });

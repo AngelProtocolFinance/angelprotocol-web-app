@@ -202,22 +202,22 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 
   if (d_type === "stripe") {
-    const usd_rate = await unit_per_usd(intent.amount.currency);
+    const upusd = await unit_per_usd(intent.amount.currency);
 
     const customer_id = await get_customer_id(
       intent.amount.currency.toUpperCase(),
       intent.donor.email.toLowerCase()
     );
 
-    const to_pay =
+    const units =
       intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
 
     const onhold: IDonationOnHoldAttr = {
       ...base,
       transactionId: intent_id,
       transactionDate: now.toISOString(),
-      amount: to_pay,
-      usdValue: to_pay / usd_rate,
+      amount: units,
+      usdValue: units / upusd,
       fiatRamp: "STRIPE",
       chainId: "fiat",
       email: intent.donor.email,
