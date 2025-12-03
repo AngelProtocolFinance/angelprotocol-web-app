@@ -3,6 +3,7 @@ import type { Environment } from "@better-giving/schemas";
 export type TStatus = "active" | "inactive";
 export type TStatusFlag = "0" | "1";
 export type TPlatform = "stripe" | "paypal";
+export type TInterval = "day" | "month" | "week" | "year";
 
 export const to_flag = (status: TStatus): TStatusFlag => {
   return status === "active" ? "1" : "0";
@@ -17,6 +18,9 @@ export interface ISubs {
   created_at: number;
   /** unix */
   updated_at: number;
+  interval: TInterval;
+  interval_count: number;
+
   /** unix */
   next_billing: number;
   amount: number;
