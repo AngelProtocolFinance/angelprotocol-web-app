@@ -1,6 +1,6 @@
 import type { Environment } from "@better-giving/schemas";
 
-export type TStatus = "active" | "inactive";
+export type TStatus = "active" | "cancelled";
 export type TStatusFlag = "0" | "1";
 export type TPlatform = "stripe" | "paypal";
 export type TInterval = "day" | "month" | "week" | "year";
@@ -9,7 +9,7 @@ export const to_flag = (status: TStatus): TStatusFlag => {
   return status === "active" ? "1" : "0";
 };
 export const from_flag = (flag: TStatusFlag): TStatus => {
-  return flag === "1" ? "active" : "inactive";
+  return flag === "1" ? "active" : "cancelled";
 };
 
 export interface ISubs {
@@ -24,7 +24,7 @@ export interface ISubs {
   /** unix */
   next_billing: number;
   amount: number;
-  curreny: string;
+  currency: string;
   product_id: string;
   /** npo-id (number), uuid (fund) */
   to_type: "npo" | "fund";

@@ -63,9 +63,23 @@ export const action: ActionFunction = async ({
         await handle_subscription_created(event.data);
         break;
       }
+      case "customer.subscription.updated": {
+        const { object: sub } = event.data;
+        await subsdb.update(sub.id, {
+          next_billing: sub.current_period_end,
+        });
+        console.info(
+          `Updated subscription ${sub.id} next_billing to ${sub.current_period_end}`
+        );
+        break;
+      }
       case "customer.subscription.deleted": {
-        const res = await subsdb.del(event.data.object.id);
-        return resp.json(res.$metadata);
+        const { object: sub } = event.data;
+        await subsdb.update(sub.id, {
+          status: "cancelled",
+        });
+        console.info(`cancelled subscription ${sub.id}`);
+        break;
       }
       default:
         return new Response(`Unhandled event type: ${event.type}`, {

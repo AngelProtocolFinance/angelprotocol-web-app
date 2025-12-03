@@ -26,7 +26,7 @@ export async function handle_subscription_created({
     interval_count: p.recurring.interval_count,
     next_billing: sub.current_period_end,
     amount: rd2num(m.amount, 0),
-    curreny: m.denomination,
+    currency: m.denomination,
     product_id: str_id(p.product),
     to_type: is_fund ? "fund" : "npo",
     to_id: is_fund ? m.fund_id! : m.endowmentId.toString(),
