@@ -23,7 +23,7 @@ export class SubsDb extends Db {
     return { PK: `Sub#${id}`, SK: `Sub#${id}` } as const;
   }
   gsi1_user_subs_pk(user_id: string) {
-    return `UserSubs#${user_id}`;
+    return `UserSubs#${user_id}#${this.env}` as const;
   }
   gsi1_user_subs_sk(status: TStatus, date_created: string) {
     return `${to_flag(status)}#${date_created}` as const;
@@ -58,7 +58,6 @@ export class SubsDb extends Db {
     const q: QueryCommandInput = {
       TableName: SubsDb.table,
       IndexName: SubsDb.gsi1,
-      ScanIndexForward: false,
     };
 
     if (!status) {
