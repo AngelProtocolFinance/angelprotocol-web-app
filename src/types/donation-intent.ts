@@ -72,7 +72,7 @@ export const donor = v.object({
   title: donor_title,
   first_name: $req,
   company_name: v.optional(str),
-  last_name: $req,
+  last_name: $,
   email: v.pipe($req, v.email("Please check your email for correctness")),
   address: v.optional(donor_address),
 });
