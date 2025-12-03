@@ -16,7 +16,6 @@ export async function handle_setup_intent_succeeded({
   const { id: price_id } = await stripe.prices.create({
     active: true,
     billing_scheme: "per_unit",
-    /** all prices are usd based */
     currency: c,
     product: stripe_envs.subs_product_id,
     recurring: { interval: "month", interval_count: 1 },
