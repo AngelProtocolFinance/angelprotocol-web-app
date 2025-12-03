@@ -5,10 +5,10 @@ import { stripe } from ".server/sdks";
  * @param currency - uppercase
  * @param email - lowercase
  */
-export async function get_customer_id(
+export async function customer_with_currency(
   currency: string,
   email: string
-): Promise<Stripe.Customer["id"]> {
+): Promise<string> {
   // Search for existing Stripe Customer data
   const actives: Stripe.Customer[] = [];
   let next_page: string | undefined;
@@ -23,13 +23,12 @@ export async function get_customer_id(
     if (result.next_page) next_page = result.next_page;
   } while (next_page);
 
-  if (actives.length === 0) {
-    // no existing customer found, create a new one
-    return stripe.customers.create({ email }).then((x) => x.id);
-  }
   const with_currency = actives.find(
     (x) => x.currency?.toUpperCase() === currency
   );
 
-  return (with_currency || actives[0]).id;
+  if (with_currency) return with_currency.id;
+
+  //create new customer for the desired currency
+  return stripe.customers.create({ email }).then((x) => x.id);
 }

@@ -1,12 +1,12 @@
 import { fromUnixTime } from "date-fns";
 import { str_id } from "helpers/stripe";
 import type { IMetadata, IMetadataSubs } from "lib/stripe";
+import { href } from "react-router";
 import type Stripe from "stripe";
 import { type Settled, to_final } from "../../helpers/donation";
 import { to_onhold } from "../../helpers/donation-metadata";
 import { payment_method } from "../helpers/payment-method";
 import { settled_fn } from "../helpers/settled";
-import { subsdb } from ".server/aws/db";
 import { qstash, stripe } from ".server/sdks";
 
 export async function handle_intent_succeeded(
@@ -65,14 +65,10 @@ export async function handle_intent_succeeded(
     url: `${base_url}/q/final-recorder`,
     retries: 0,
     deduplicationId: intent.id,
+    failureCallback: `${base_url}${href("/failure-callback")}`,
   });
 
   console.info(`Final donation record sent:${res.messageId}`);
-
-  await subsdb.update(str_id(subscription), {
-    latest_invoice: hosted_invoice_url || "",
-    status: "active",
-  });
 }
 
 // One time payment intents have their own `metadata` unlike subs payment intents which comes from invoice

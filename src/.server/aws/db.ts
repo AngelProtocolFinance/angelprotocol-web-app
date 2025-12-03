@@ -22,7 +22,6 @@ import {
   DonationDonorsDb,
   DonationsDb,
   OnHoldDonationsDb,
-  SubsDb,
 } from "@better-giving/donation";
 import { NpoDb } from "@better-giving/endowment";
 import { FundDb } from "@better-giving/fundraiser";
@@ -32,6 +31,7 @@ import { UserDb } from "@better-giving/user";
 import { FormsDb } from "lib/forms";
 import { LiquidDb } from "lib/liquid";
 import { NavHistoryDB } from "lib/nav";
+import { SubsDb } from "lib/subscriptions";
 import { Table } from "lib/table/db";
 import {
   aws_access_key_id,

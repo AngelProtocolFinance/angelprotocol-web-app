@@ -1,6 +1,6 @@
 import crypto from "node:crypto";
 import { resp } from "helpers/https";
-import type { ActionFunction } from "react-router";
+import { type ActionFunction, href } from "react-router";
 import { type Settled, to_final } from "../helpers/donation";
 import { onholddb } from ".server/aws/db";
 import { chariot_envs } from ".server/env";
@@ -61,6 +61,7 @@ export const action: ActionFunction = async ({ request }) => {
       body: final,
       retries: 0,
       deduplicationId: order.transactionId,
+      failureCallback: `${base_url}${href("/failure-callback")}`,
     });
     return new Response(null, { status: 200 });
   } catch (err) {

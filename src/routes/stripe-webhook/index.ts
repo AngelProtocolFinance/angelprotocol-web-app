@@ -1,3 +1,4 @@
+import { getUnixTime } from "date-fns";
 import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
@@ -8,6 +9,7 @@ import {
   handle_setup_intent_succeeded,
 } from "./handlers";
 import { handle_intent_succeeded } from "./handlers/intent-suceeded";
+import { handle_subscription_created } from "./handlers/subscription-created";
 import { subsdb } from ".server/aws/db";
 import { stripe_envs } from ".server/env";
 import { fiat_monitor, stripe } from ".server/sdks";
@@ -34,10 +36,6 @@ export const action: ActionFunction = async ({
   // Event handlers
   try {
     switch (event.type) {
-      case "customer.subscription.deleted": {
-        const res = await subsdb.del(event.data.object.id);
-        return resp.json(res.$metadata);
-      }
       case "payment_intent.succeeded":
         await handle_intent_succeeded(event.data, base_url);
         break;
@@ -62,6 +60,30 @@ export const action: ActionFunction = async ({
         }
         await handle_intent_requires_action(event.data.object);
         break;
+      case "customer.subscription.created": {
+        await handle_subscription_created(event.data);
+        break;
+      }
+      case "customer.subscription.updated": {
+        const { object: sub } = event.data;
+        await subsdb.update(sub.id, {
+          next_billing: sub.current_period_end,
+        });
+        console.info(
+          `Updated subscription ${sub.id} next_billing to ${sub.current_period_end}`
+        );
+        break;
+      }
+      case "customer.subscription.deleted": {
+        const { object: sub } = event.data;
+        await subsdb.update(sub.id, {
+          status: "cancelled",
+          status_cancel_reason: sub.cancellation_details?.comment ?? undefined,
+          updated_at: getUnixTime(new Date()),
+        });
+        console.info(`cancelled subscription ${sub.id}`);
+        break;
+      }
       default:
         return new Response(`Unhandled event type: ${event.type}`, {
           status: 201,
