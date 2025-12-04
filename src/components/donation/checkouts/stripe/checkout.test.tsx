@@ -74,7 +74,7 @@ describe("stripe checkout", () => {
     expect(screen.getByText(/loading payment form../i)).toBeInTheDocument();
 
     const errorMsg =
-      "An unexpected error occurred and has been reported. Please get in touch with support@better.giving if the problem persists.";
+      "An unexpected error occurred and has been reported. Please get in touch with hi@better.giving if the problem persists.";
     expect(await screen.findByText(errorMsg)).toBeInTheDocument();
   });
 
@@ -138,7 +138,7 @@ describe("stripe checkout", () => {
 
     const errorModal = screen.getByRole("dialog");
     const genericError =
-      "An unexpected error occurred while processing payment and has been reported. Please get in touch with support@better.giving if the problem persists.";
+      "An unexpected error occurred while processing payment and has been reported. Please get in touch with hi@better.giving if the problem persists.";
     expect(errorModal).toHaveTextContent(genericError);
   });
 });

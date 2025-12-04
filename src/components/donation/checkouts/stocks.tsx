@@ -1,4 +1,4 @@
-import { EMAIL_SUPPORT } from "constants/env";
+import { emails } from "constants/common";
 import { ru_vdec } from "helpers/decimal";
 import { href } from "react-router";
 import { BackBtn } from "../common/back-btn";
@@ -58,7 +58,7 @@ export function Stocks(props: StocksDonationDetails) {
         For your gift to be recognized when it comes into our account, please
         email us details of the shares you are donating and which project or
         projects to designate your donation to. Please send this email to
-        support@better.giving.
+        {emails.hi}.
       </p>
 
       <p className="mt-6 text-sm text-right text-balance">
@@ -92,7 +92,7 @@ const email_link = (
   stock_symbol: string
 ) => `
 mailto:${"[ Your broker's email ]"}
-  ?cc=${EMAIL_SUPPORT}
+  ?cc=${emails.hi}
   &subject=Stock donation to Better Giving supporting ${charity_name}
   &body=
 Hi,${NEW_LINE}

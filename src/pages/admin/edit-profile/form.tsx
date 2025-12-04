@@ -11,6 +11,7 @@ import { MultiCombo } from "components/selector/multi-combo";
 import { Select } from "components/selector/select";
 import { Confirmed, Info } from "components/status";
 import { Toggle } from "components/toggle";
+import { emails } from "constants/common";
 import { countries, country_names } from "constants/countries";
 import { unsdgs } from "constants/unsdgs";
 import { Link, Outlet, href } from "react-router";
@@ -64,7 +65,7 @@ export function Form({ init_slug = "", init, id, base_url }: Props) {
           {...rhf.register("name")}
           label="Name of your organization"
           disabled
-          tooltip="The name field reflects your organization's legal name as provided on your initial application. If you need to change your name please contact support@better.giving and provide documentation supporting the legal name change or D.B.A. records."
+          tooltip={`The name field reflects your organization's legal name as provided on your initial application. If you need to change your name please contact ${emails.hi} and provide documentation supporting the legal name change or D.B.A. records.`}
           error={rhf.errors.name?.message}
           required
         />

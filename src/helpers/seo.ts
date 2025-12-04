@@ -1,4 +1,4 @@
-import { APP_NAME, BASE_URL, SEO_IMAGE } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import type { MetaDescriptor } from "react-router";
 
 interface Meta {
@@ -12,7 +12,7 @@ interface Meta {
 export const metas = ({
   title = `Fundraising Platform for Nonprofits - ${APP_NAME}`,
   description = `Raise more this quarter and grow funds together. ${APP_NAME} offers free, high-converting donation forms, savings, and fund growth tools—no platform or management fees.`,
-  image = SEO_IMAGE,
+  image = "/logo.png",
   url = BASE_URL,
 }: Meta): MetaDescriptor[] => [
   { title },

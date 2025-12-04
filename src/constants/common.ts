@@ -1,8 +1,5 @@
 import type { IAllocation } from "@better-giving/donation/schema";
 import type { IIncrement } from "@better-giving/schemas";
-import { EMAIL_SUPPORT } from "./env";
-
-export const GENERIC_ERROR_MESSAGE = `An unexpected error occurred and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
 
 export const BYTES_IN_MB = 1e6;
 
@@ -36,3 +33,5 @@ export const emails = {
   tim: "tim@better.giving",
   hi: "hi@better.giving",
 };
+
+export const GENERIC_ERROR_MESSAGE = `An unexpected error occurred and has been reported. Please get in touch with ${emails.hi} if the problem persists.`;

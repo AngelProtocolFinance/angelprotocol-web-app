@@ -1,4 +1,4 @@
-import { EMAIL_SUPPORT } from "constants/env";
+import { emails } from "constants/common";
 import type { ReactNode } from "react";
 
 type Generic = {
@@ -25,7 +25,7 @@ function parse_error(error: unknown): string | undefined {
 const generic_msg = (context?: string) =>
   `An unexpected error occurred${
     context ? ` while ${context} ` : " "
-  }and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
+  }and has been reported. Please get in touch with ${emails.hi} if the problem persists.`;
 
 export const error_prompt = (error: unknown, display?: DisplayType) => {
   console.error(error);

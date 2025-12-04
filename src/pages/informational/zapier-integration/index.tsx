@@ -1,3 +1,4 @@
+import { emails } from "constants/common";
 import { AlertCircle } from "lucide-react";
 const imgSrc = "https://placehold.co/400x200";
 export default function Component() {
@@ -42,10 +43,10 @@ export default function Component() {
               <p className="mt-1 text-sm text-blue-d2">
                 If you need any additional support, please reach out to{" "}
                 <a
-                  href="mailto:support@better.giving"
+                  href={`mailto:${emails.hi}`}
                   className="text-blue hover:underline"
                 >
-                  support@better.giving
+                  {emails.hi}
                 </a>
                 .
               </p>
