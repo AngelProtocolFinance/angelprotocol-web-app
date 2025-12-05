@@ -15,6 +15,7 @@ import {
 import { getDotPath, parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
+import { create_order } from "./paypal/create-order";
 import { customer_with_currency } from "./stripe/customer-with-currency";
 import { payment_intent } from "./stripe/payment-intent";
 import { setup_intent } from "./stripe/setup-intent";
@@ -260,69 +261,10 @@ export const action: ActionFunction = async ({ request, params }) => {
     };
     await onholddb.put(onhold);
 
-    const c = intent.amount.currency;
-    const d = paypal_currencies[c];
-
-    const p: PurchaseUnitsRequest = {
-      custom_id: onhold.transactionId,
-      amount: {
-        value: rd(to_pay, d),
-        currency_code: c,
-      },
-    };
-    if (intent.amount.tip || intent.amount.fee_allowance) {
-      p.items ||= [];
-      p.items.push({
-        name: "Donation",
-        quantity: "1",
-        unit_amount: {
-          currency_code: c,
-          value: rd(intent.amount.amount, d),
-        },
-        category: "DONATION",
-      });
-
-      if (intent.amount.tip) {
-        p.items.push({
-          name: "Donation to Better Giving",
-          quantity: "1",
-          unit_amount: {
-            currency_code: c,
-            value: rd(intent.amount.tip, d),
-          },
-          category: "DONATION",
-        });
-      }
-      if (intent.amount.fee_allowance) {
-        p.items.push({
-          name: "Fee coverage",
-          quantity: "1",
-          unit_amount: {
-            currency_code: c,
-            value: rd(intent.amount.fee_allowance, d),
-          },
-          category: "DONATION",
-        });
-      }
-
-      if (p.amount) {
-        p.amount.breakdown = {
-          item_total: {
-            currency_code: c,
-            value: rd(to_pay, d),
-          },
-        };
-      }
-    }
-    const res = await paypal.create_order({
-      intent: "CAPTURE",
-      purchase_units: [p],
-    });
-
-    console.info("paypal create order", res.id);
+    const order_id = await create_order(onhold);
 
     return await json_with_cookie({
-      order_id: res.id,
+      order_id,
     });
   }
 };
