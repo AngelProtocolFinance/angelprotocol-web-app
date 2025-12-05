@@ -190,19 +190,12 @@ export function Form(props: TMethodState<"stripe">) {
           {...rhf.stripe_express}
         />
       )}
-      {rhf.paypal_express &&
-        rhf.paypal_express.frequency === "one-time" &&
-        !prompt && (
-          <Paypal
-            {...rhf.paypal_express}
-            on_error={(x) =>
-              set_prompt({
-                type: "error",
-                children: x,
-              })
-            }
-          />
-        )}
+      {rhf.paypal_express && !prompt && (
+        <Paypal
+          {...rhf.paypal_express}
+          on_error={(x) => set_prompt({ type: "error", children: x })}
+        />
+      )}
 
       <button
         disabled={

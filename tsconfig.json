@@ -25,5 +25,5 @@
     "./src/.server/**/*.tsx",
     "vite.config.ts"
   ],
-  // "exclude": ["./src/scripts/**/*"]
+  "exclude": ["./src/scripts/**/*"]
 }
