@@ -16,6 +16,7 @@ import { getDotPath, parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
 import { create_order } from "./paypal/create-order";
+import { create_subs } from "./paypal/creater-subs";
 import { customer_with_currency } from "./stripe/customer-with-currency";
 import { payment_intent } from "./stripe/payment-intent";
 import { setup_intent } from "./stripe/setup-intent";
@@ -261,10 +262,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     };
     await onholddb.put(onhold);
 
-    const order_id = await create_order(onhold);
+    const tx_id =
+      intent.frequency === "recurring"
+        ? await create_subs(to_pay, onhold.denomination, onhold.transactionId)
+        : await create_order(onhold);
 
     return await json_with_cookie({
-      order_id,
+      tx_id,
     });
   }
 };
