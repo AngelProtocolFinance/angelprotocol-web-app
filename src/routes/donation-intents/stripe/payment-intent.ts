@@ -3,7 +3,7 @@ import { to_atomic } from "helpers/stripe";
 import { to_metadata } from "../../helpers/donation-metadata";
 import { stripe } from ".server/sdks";
 
-export async function create_payment_intent(
+export async function payment_intent(
   order: IDonationOnHoldAttr,
   customer_id: string
 ): Promise<string> {

@@ -15,8 +15,8 @@ import {
 import { getDotPath, parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
-import { create_payment_intent } from "./stripe/create-payment-intent";
 import { customer_with_currency } from "./stripe/customer-with-currency";
+import { payment_intent } from "./stripe/payment-intent";
 import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { onholddb } from ".server/aws/db";
@@ -233,7 +233,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     const client_secret =
       intent.frequency === "one-time"
-        ? await create_payment_intent(onhold, customer_id)
+        ? await payment_intent(onhold, customer_id)
         : await setup_intent(onhold, customer_id);
 
     return await json_with_cookie({
@@ -244,7 +244,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (d_type === "paypal") {
     const usd_rate = await unit_per_usd(intent.amount.currency);
-
     const to_pay =
       intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
 
