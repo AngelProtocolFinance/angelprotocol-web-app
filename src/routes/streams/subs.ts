@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
   console.info(p);
 
   if (p.type === "modify") {
-    if (p.prev.status === "active" && p.curr.status === "cancelled") {
+    if (p.prev.status === "active" && p.curr.status === "inactive") {
       await stripe.subscriptions.cancel(p.curr.id, {
         cancellation_details: {
           comment: p.curr.status_cancel_reason,

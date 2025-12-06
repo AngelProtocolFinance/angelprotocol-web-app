@@ -77,7 +77,7 @@ export const action: ActionFunction = async ({
       case "customer.subscription.deleted": {
         const { object: sub } = event.data;
         await subsdb.update(sub.id, {
-          status: "cancelled",
+          status: "inactive",
           status_cancel_reason: sub.cancellation_details?.comment ?? undefined,
           updated_at: getUnixTime(new Date()),
         });

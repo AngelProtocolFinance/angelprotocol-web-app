@@ -10,7 +10,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 
   const { reason } = await request.json();
   await subsdb.update(params.sub_id, {
-    status: "cancelled",
+    status: "inactive",
     status_cancel_reason: reason,
     updated_at: getUnixTime(new Date()),
   });

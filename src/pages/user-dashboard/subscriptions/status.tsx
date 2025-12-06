@@ -17,9 +17,9 @@ export function Status({ status, classes = "" }: IStatus) {
         };
 
       default:
-        status satisfies "cancelled";
+        status satisfies "inactive";
         return {
-          text: "Cancelled",
+          text: "Inactive",
           bg_color: "bg-gray-l4",
           text_color: "text-gray-d2",
           dot_color: "bg-gray",
