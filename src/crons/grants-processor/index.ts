@@ -7,7 +7,6 @@ import {
   type ISettlement,
   PayoutsDB,
 } from "@better-giving/payouts";
-import type { Environment } from "@better-giving/types/list";
 import { resp } from "helpers/https";
 import type { ActionFunction } from "react-router";
 import { transfer_grant } from "./transfer-grant";
@@ -46,7 +45,7 @@ export const action: ActionFunction = async ({
     const by_npo = Object.groupBy(grants, (g) => g.recipient_id);
 
     for (const [npo, items = []] of Object.entries(by_npo)) {
-      await process_item(+npo, items, env, podb);
+      await process_item(+npo, items, podb);
     }
     return resp.status(200, "Done processing grants");
   } catch (err) {
@@ -64,7 +63,6 @@ export const action: ActionFunction = async ({
 async function process_item(
   npo_id: number,
   items: IPayout<IPendingStatus>[],
-  env: Environment,
   payoutsdb: PayoutsDB
 ) {
   const payout_date = new Date().toISOString();

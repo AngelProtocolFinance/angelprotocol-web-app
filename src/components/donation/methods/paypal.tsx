@@ -58,7 +58,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
           const { tx_id } = await res.json();
           return tx_id;
         };
-        const on_approve: PayPalButtonOnApprove = async (data, actions) => {
+        const on_approve: PayPalButtonOnApprove = async (_, actions) => {
           if (actions.order) {
             const captured = await actions.order.capture();
             const onhold_id = captured?.purchase_units?.[0].custom_id;
@@ -119,7 +119,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
   return (
     <div
       id="paypal-container"
-      className={`${classes} ${p.is_partial ? "pointer-events-none grayscale" : ""} empty:bg-red`}
+      className={`${classes} ${p.is_partial ? "pointer-events-none grayscale" : ""}`}
     />
   );
 }

@@ -1,5 +1,5 @@
 import { Footer } from "components/footer";
-import { NavDropdown, UserAvatar } from "components/header";
+import { NavDropdown } from "components/header";
 import { DappLogo } from "components/image";
 import { metas } from "helpers/seo";
 import { use_root_data } from "hooks/use-root-data";

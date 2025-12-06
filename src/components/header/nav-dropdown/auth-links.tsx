@@ -1,7 +1,5 @@
 import { MenuItem, MenuSection } from "@headlessui/react";
-import { LogInIcon, UserPlus } from "lucide-react";
 import { NavLink, href } from "react-router";
-import { styles } from "./common";
 
 interface Props {
   to: string | undefined;

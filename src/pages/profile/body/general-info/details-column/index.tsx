@@ -1,5 +1,4 @@
 import type { INpo } from "@better-giving/endowment";
-import { Target, to_target } from "components/target";
 import type { PropsWithChildren, ReactNode } from "react";
 import { NavLink, href } from "react-router";
 import Socials from "./socials";

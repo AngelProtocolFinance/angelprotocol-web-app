@@ -50,6 +50,7 @@ export async function verified_body(
 
     return json_str;
   } catch (error) {
+    console.error(error);
     return resp.status(201, "signature verification error");
   }
 }

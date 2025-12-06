@@ -1,9 +1,7 @@
 import { is_custom, tokens_map } from "@better-giving/crypto";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import type { PurchaseUnitsRequest } from "@better-giving/paypal";
-import { paypal_currencies } from "constants/paypal";
 import { addDays, getUnixTime } from "date-fns";
-import { rd, rd2num } from "helpers/decimal";
+import { rd2num } from "helpers/decimal";
 import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
@@ -16,7 +14,7 @@ import { getDotPath, parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
 import { create_order } from "./paypal/create-order";
-import { create_subs } from "./paypal/creater-subs";
+import { create_subs } from "./paypal/create-subs";
 import { customer_with_currency } from "./stripe/customer-with-currency";
 import { payment_intent } from "./stripe/payment-intent";
 import { setup_intent } from "./stripe/setup-intent";
@@ -25,7 +23,7 @@ import { onholddb } from ".server/aws/db";
 import { type IDonationsCookie, donations_cookie } from ".server/cookie";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
-import { aws_monitor, chariot, np, paypal } from ".server/sdks";
+import { aws_monitor, chariot, np } from ".server/sdks";
 import { unit_per_usd } from ".server/unit-per-usd";
 
 const json_with_cookie_fn =

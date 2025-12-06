@@ -13,7 +13,7 @@ import {
   uuid,
 } from "valibot";
 import { onholddb } from ".server/aws/db";
-import { _var, deposit_addrs_envs } from ".server/env";
+import { deposit_addrs_envs } from ".server/env";
 import { np } from ".server/sdks";
 
 const int = pipe(
