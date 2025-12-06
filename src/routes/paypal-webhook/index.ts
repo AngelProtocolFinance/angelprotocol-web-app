@@ -72,19 +72,21 @@ export const action: ActionFunction = async ({ request }) => {
         const fn = [n?.given_name, n?.surname].filter(Boolean).join(" ") || "";
         const str = [l1, l2].filter(Boolean).join(" ") || "";
 
-        const donor_update = onholddb.update(email, {
-          kycEmail: email,
-          ...(fn && { fullName: fn }),
-          ...(str && { streetAddress: str }),
-          ...(city && { city }),
-          ...(state && { state }),
-          ...(zip && { postalCode: zip }),
-          ...(country && { country }),
-        });
-        donor_update.catch((err) =>
-          console.error("onholddb update error:", err)
-        );
-        await donor_update;
+        // update donor info
+        await onholddb
+          .update(email, {
+            kycEmail: email,
+            ...(fn && { fullName: fn }),
+            ...(str && { streetAddress: str }),
+            ...(city && { city }),
+            ...(state && { state }),
+            ...(zip && { postalCode: zip }),
+            ...(country && { country }),
+          })
+          .catch((err) => {
+            console.error("onholddb update error:", err);
+          });
+
         console.info(`updated subscriber info for onhold:${onhold_id}`);
 
         if (!s.plan_id) return resp.status(400, "missing subscription plan id");
