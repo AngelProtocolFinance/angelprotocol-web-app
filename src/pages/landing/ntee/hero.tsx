@@ -1,6 +1,5 @@
 import { Image } from "components/image";
 import { BOOK_A_DEMO } from "constants/env";
-import { DotIcon } from "lucide-react";
 import { Link, href } from "react-router";
 import type { PageContext } from "./types";
 

@@ -42,8 +42,9 @@ export async function handle_intent_succeeded(
   }
 
   // PaymentIntent Event does not contain subs metadata so we query for Invoice
-  const { subscription, subscription_details, hosted_invoice_url, created } =
-    await stripe.invoices.retrieve(str_id(intent.invoice));
+  const { subscription_details, created } = await stripe.invoices.retrieve(
+    str_id(intent.invoice)
+  );
 
   const subs_meta = subscription_details?.metadata as IMetadataSubs | null;
   if (!subs_meta) throw "missing subs metadata";

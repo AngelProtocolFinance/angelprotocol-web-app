@@ -38,7 +38,6 @@ export const loader = async ({
   params,
 }: UserRoute.LoaderArgs | AdminRoute.LoaderArgs) => {
   const { user, headers } = await cognito.retrieve(request);
-  const s = new URL(request.url).search;
   if (!user) return to_auth(request, headers);
 
   //creating inside admin, form is attributed to :id

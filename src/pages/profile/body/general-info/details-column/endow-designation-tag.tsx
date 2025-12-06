@@ -1,4 +1,4 @@
-import type { EndowDesignation, INpo } from "@better-giving/endowment";
+import type { EndowDesignation } from "@better-giving/endowment";
 import {
   Church,
   Heart,

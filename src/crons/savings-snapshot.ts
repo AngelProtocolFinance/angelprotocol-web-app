@@ -58,6 +58,6 @@ export const action: ActionFunction = async ({
   });
 
   await db.client.send(put);
-  console.log(`Logged ${non_zero_bals.length} non-zero balances`);
+  console.info(`Logged ${non_zero_bals.length} non-zero balances`);
   return new Response(null, { status: 200 });
 };

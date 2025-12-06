@@ -1,5 +1,5 @@
 import type { Payment } from "types/crypto";
-import { _var, env } from ".server/env";
+import { env } from ".server/env";
 import { np } from ".server/sdks";
 
 export interface Order {

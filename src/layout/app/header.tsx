@@ -1,9 +1,4 @@
-import {
-  AuthBtns,
-  AuthLinks,
-  NavDropdown,
-  UserAvatar,
-} from "components/header";
+import { AuthBtns, AuthLinks, NavDropdown } from "components/header";
 import { DappLogo } from "components/image";
 import { auth_routes } from "constants/routes";
 import { use_root_data } from "hooks/use-root-data";

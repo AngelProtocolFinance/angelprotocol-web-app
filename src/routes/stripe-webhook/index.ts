@@ -1,5 +1,6 @@
 import { getUnixTime } from "date-fns";
 import { resp } from "helpers/https";
+import type { ISubUpdate } from "lib/subscriptions";
 import type { ActionFunction } from "react-router";
 import { parse, stage as schema } from "routes/types/donation-message";
 import {
@@ -66,22 +67,15 @@ export const action: ActionFunction = async ({
       }
       case "customer.subscription.updated": {
         const { object: sub } = event.data;
-        await subsdb.update(sub.id, {
+        const update: ISubUpdate = {
           next_billing: sub.current_period_end,
-        });
+          updated_at: getUnixTime(new Date()),
+          status: sub.status === "active" ? "active" : "inactive",
+        };
+        await subsdb.update(sub.id, update);
         console.info(
           `Updated subscription ${sub.id} next_billing to ${sub.current_period_end}`
         );
-        break;
-      }
-      case "customer.subscription.deleted": {
-        const { object: sub } = event.data;
-        await subsdb.update(sub.id, {
-          status: "inactive",
-          status_cancel_reason: sub.cancellation_details?.comment ?? undefined,
-          updated_at: getUnixTime(new Date()),
-        });
-        console.info(`cancelled subscription ${sub.id}`);
         break;
       }
       default:

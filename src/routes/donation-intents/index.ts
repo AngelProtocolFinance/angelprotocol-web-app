@@ -1,9 +1,7 @@
 import { is_custom, tokens_map } from "@better-giving/crypto";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import type { PurchaseUnitsRequest } from "@better-giving/paypal";
-import { paypal_currencies } from "constants/paypal";
 import { addDays, getUnixTime } from "date-fns";
-import { rd, rd2num } from "helpers/decimal";
+import { rd2num } from "helpers/decimal";
 import { resp } from "helpers/https";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
@@ -15,15 +13,17 @@ import {
 import { getDotPath, parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";
-import { create_payment_intent } from "./stripe/create-payment-intent";
+import { create_order } from "./paypal/create-order";
+import { create_subs } from "./paypal/create-subs";
 import { customer_with_currency } from "./stripe/customer-with-currency";
+import { payment_intent } from "./stripe/payment-intent";
 import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { onholddb } from ".server/aws/db";
 import { type IDonationsCookie, donations_cookie } from ".server/cookie";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
-import { aws_monitor, chariot, np, paypal } from ".server/sdks";
+import { aws_monitor, chariot, np } from ".server/sdks";
 import { unit_per_usd } from ".server/unit-per-usd";
 
 const json_with_cookie_fn =
@@ -233,7 +233,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     const client_secret =
       intent.frequency === "one-time"
-        ? await create_payment_intent(onhold, customer_id)
+        ? await payment_intent(onhold, customer_id)
         : await setup_intent(onhold, customer_id);
 
     return await json_with_cookie({
@@ -244,7 +244,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (d_type === "paypal") {
     const usd_rate = await unit_per_usd(intent.amount.currency);
-
     const to_pay =
       intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
 
@@ -261,69 +260,16 @@ export const action: ActionFunction = async ({ request, params }) => {
     };
     await onholddb.put(onhold);
 
-    const c = intent.amount.currency;
-    const d = paypal_currencies[c];
-
-    const p: PurchaseUnitsRequest = {
-      custom_id: onhold.transactionId,
-      amount: {
-        value: rd(to_pay, d),
-        currency_code: c,
-      },
-    };
-    if (intent.amount.tip || intent.amount.fee_allowance) {
-      p.items ||= [];
-      p.items.push({
-        name: "Donation",
-        quantity: "1",
-        unit_amount: {
-          currency_code: c,
-          value: rd(intent.amount.amount, d),
-        },
-        category: "DONATION",
-      });
-
-      if (intent.amount.tip) {
-        p.items.push({
-          name: "Donation to Better Giving",
-          quantity: "1",
-          unit_amount: {
-            currency_code: c,
-            value: rd(intent.amount.tip, d),
-          },
-          category: "DONATION",
-        });
-      }
-      if (intent.amount.fee_allowance) {
-        p.items.push({
-          name: "Fee coverage",
-          quantity: "1",
-          unit_amount: {
-            currency_code: c,
-            value: rd(intent.amount.fee_allowance, d),
-          },
-          category: "DONATION",
-        });
-      }
-
-      if (p.amount) {
-        p.amount.breakdown = {
-          item_total: {
-            currency_code: c,
-            value: rd(to_pay, d),
-          },
-        };
-      }
-    }
-    const res = await paypal.create_order({
-      intent: "CAPTURE",
-      purchase_units: [p],
-    });
-
-    console.info("paypal create order", res.id);
+    const tx_id =
+      intent.frequency === "recurring"
+        ? await create_subs(to_pay, onhold.denomination, onhold.transactionId)
+        : await create_order({
+            onhold_id: onhold.transactionId,
+            ...intent.amount,
+          });
 
     return await json_with_cookie({
-      order_id: res.id,
+      tx_id,
     });
   }
 };
