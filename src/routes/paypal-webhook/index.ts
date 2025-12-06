@@ -1,4 +1,10 @@
-import type { Capture, Order, Subs, WebhookEvent } from "@better-giving/paypal";
+import type {
+  Capture,
+  Order,
+  Sale,
+  Subs,
+  WebhookEvent,
+} from "@better-giving/paypal";
 import { getUnixTime } from "date-fns";
 import { resp } from "helpers/https";
 import type { ISub, TInterval } from "lib/subscriptions";
@@ -231,6 +237,65 @@ export const action: ActionFunction = async ({ request }) => {
           net: settled.net,
           fee: settled.fee,
           in: { hash: cid, id: "paypal", currency: settled.c },
+        });
+
+        const res = await qstash.publishJSON({
+          body: final,
+          url: `${base_url}/q/final-recorder`,
+          retries: 0,
+          deduplicationId: final.id,
+          failureCallback: `${base_url}${href("/failure-callback")}`,
+        });
+
+        console.info(`Final donation record sent:${res.messageId}`);
+        return resp.status(200, "processed");
+      }
+      case "PAYMENT.SALE.COMPLETED": {
+        const {
+          id: sale_id,
+          billing_agreement_id: subs_id,
+          transaction_fee: { value: tf } = {},
+          receivable_amount: { value: net, currency: c } = {},
+          exchange_rate: rate,
+        } = ev.resource as Sale;
+        if (!sale_id) return resp.status(400, "missing sale id");
+        if (!subs_id) return resp.status(400, "missing billing agreement id");
+        const sub = await paypal.get_subscription(subs_id);
+        if (!sub) return resp.status(400, "subscription not found");
+
+        if (!net || !tf || !c)
+          return resp.status(400, `missing amounts for sale: ${sale_id}`);
+
+        const settled = ((
+          r
+        ): { net: number; fee: number; c: string } | null => {
+          if (r) {
+            return { net: +net * +r, fee: +tf * +r, c };
+          }
+          return { net: +net, fee: +tf, c };
+        })(rate);
+
+        if (!settled) {
+          return resp.status(400, `settled can't be determined: ${sale_id}`);
+        }
+
+        const onhold_id = sub.custom_id;
+        if (!onhold_id) {
+          return resp.status(400, `missing onhold id for sale: ${sale_id}`);
+        }
+
+        const onhold = await onholddb.item(onhold_id);
+        if (!onhold) {
+          return resp.status(
+            201,
+            `onhold missing or has been processed: ${sale_id}`
+          );
+        }
+
+        const final = to_final(onhold, {
+          net: settled.net,
+          fee: settled.fee,
+          in: { hash: sale_id, id: "paypal", currency: settled.c },
         });
 
         const res = await qstash.publishJSON({
