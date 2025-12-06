@@ -1,17 +1,25 @@
-import type { IDonationOnHoldAttr } from "@better-giving/donation";
 import type { PurchaseUnitsRequest } from "@better-giving/paypal";
 import { paypal_currencies } from "constants/paypal";
 import { rd } from "helpers/decimal";
 import { paypal } from ".server/sdks";
 
+interface IInput {
+  onhold_id: string;
+  amount: number;
+  fee_allowance: number;
+  tip: number;
+  currency: string;
+}
+
 export const create_order = async ({
-  amount: total,
-  transactionId: onhold_id,
-  denomination: c,
-  tipAmount: tip,
-  feeAllowance: fa,
-}: IDonationOnHoldAttr): Promise<string> => {
+  onhold_id,
+  amount,
+  currency: c,
+  tip,
+  fee_allowance: fa,
+}: IInput): Promise<string> => {
   const d = paypal_currencies[c];
+  const total = amount + tip + fa;
 
   const p: PurchaseUnitsRequest = {
     custom_id: onhold_id,
@@ -20,6 +28,7 @@ export const create_order = async ({
       currency_code: c,
     },
   };
+
   if (tip || fa) {
     p.items ||= [];
     p.items.push({
@@ -27,7 +36,7 @@ export const create_order = async ({
       quantity: "1",
       unit_amount: {
         currency_code: c,
-        value: rd(total, d),
+        value: rd(amount, d),
       },
       category: "DONATION",
     });

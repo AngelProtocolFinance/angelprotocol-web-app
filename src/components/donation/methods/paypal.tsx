@@ -4,7 +4,7 @@ import {
   loadScript,
 } from "@paypal/paypal-js";
 import { paypal_client_id } from "constants/env";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { href } from "react-router";
 import { type DonationIntent, donor_init } from "types/donation-intent";
 import { use_donation } from "../context";
@@ -17,13 +17,11 @@ interface Props extends IPayPalExpress {
 
 export function Paypal({ classes = "", on_error, ...p }: Props) {
   const { don } = use_donation();
-  const [state, set_state] = useState<"loading" | "error">();
 
   useEffect(() => {
     try {
       (async (...x) => {
         const [a, t, fa, c, fr] = x;
-        set_state("loading");
 
         const paypal = await loadScript({
           clientId: paypal_client_id,
@@ -34,7 +32,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
           intent: fr === "recurring" ? "subscription" : "capture",
         });
 
-        if (!paypal || !paypal.Buttons) return set_state("error");
+        if (!paypal || !paypal.Buttons) return;
 
         const create_intent = async (): Promise<string> => {
           const intent: DonationIntent = {
@@ -96,14 +94,14 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
         container.appendChild(btn_container);
 
         await paypal.Buttons(opts).render("#paypal-button-container");
-        set_state(undefined);
       })(p.amnt, p.tip, p.fee_allowance, p.currency, p.frequency);
     } catch (err) {
-      set_state("error");
+      console.error(err);
     }
     return () => {
       const container = document.getElementById("paypal-container");
-      if (container) container.innerHTML = "";
+      const btn_container = document.getElementById("paypal-button-container");
+      if (btn_container) container?.removeChild(btn_container);
     };
   }, [
     p.amnt,

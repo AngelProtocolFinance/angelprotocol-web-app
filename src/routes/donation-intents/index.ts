@@ -265,7 +265,10 @@ export const action: ActionFunction = async ({ request, params }) => {
     const tx_id =
       intent.frequency === "recurring"
         ? await create_subs(to_pay, onhold.denomination, onhold.transactionId)
-        : await create_order(onhold);
+        : await create_order({
+            onhold_id: onhold.transactionId,
+            ...intent.amount,
+          });
 
     return await json_with_cookie({
       tx_id,
