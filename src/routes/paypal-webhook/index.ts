@@ -89,8 +89,9 @@ export const action: ActionFunction = async ({ request }) => {
 
         if (!s.plan_id) return resp.status(400, "missing subscription plan id");
         const plan = await paypal.get_plan(s.plan_id);
+        if (!plan) return resp.status(400, "plan not found");
 
-        const cycle = plan?.billing_cycles?.[0];
+        const cycle = plan.billing_cycles?.[0];
         if (!cycle) {
           return resp.status(400, "missing plan billing cycle");
         }
@@ -105,8 +106,8 @@ export const action: ActionFunction = async ({ request }) => {
           return resp.status(400, "missing next billing time");
         }
         if (!s.quantity) return resp.status(400, "missing subscription qty");
-        const product = s.plan?.product_id;
-        if (!product) return resp.status(400, "missing plan product id");
+        if (!plan.product_id)
+          return resp.status(400, "missing plan product id");
         //create subs record
 
         const to_name = onhold.fund_id ? onhold.fund_name : onhold.charityName;
@@ -122,7 +123,7 @@ export const action: ActionFunction = async ({ request }) => {
           amount: onhold.amount,
           amount_usd: onhold.usdValue,
           currency: onhold.denomination,
-          product_id: product,
+          product_id: plan.product_id,
           to_id: onhold.fund_id
             ? onhold.fund_id
             : onhold.endowmentId.toString(),
