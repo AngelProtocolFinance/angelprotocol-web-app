@@ -1,4 +1,7 @@
-import * as sdk from "@paypal/paypal-js";
+import type {
+  PayPalButtonOnApprove,
+  PayPalButtonsComponentOptions,
+} from "@paypal/paypal-js";
 import { paypal_client_id } from "constants/env";
 import { useEffect } from "react";
 import { href } from "react-router";
@@ -19,7 +22,8 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
       (async (...x) => {
         const [a, t, fa, c, fr] = x;
 
-        const paypal = await sdk.loadScript({
+        const { loadScript } = await import("@paypal/paypal-js");
+        const paypal = await loadScript({
           clientId: paypal_client_id,
           currency: c,
           disableFunding: ["card"],
@@ -54,7 +58,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
           const { tx_id } = await res.json();
           return tx_id;
         };
-        const on_approve: sdk.PayPalButtonOnApprove = async (data, actions) => {
+        const on_approve: PayPalButtonOnApprove = async (data, actions) => {
           if (actions.order) {
             const captured = await actions.order.capture();
             const onhold_id = captured?.purchase_units?.[0].custom_id;
@@ -72,7 +76,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
           }
         };
 
-        const opts: sdk.PayPalButtonsComponentOptions = {
+        const opts: PayPalButtonsComponentOptions = {
           onApprove: on_approve,
           style: {
             layout: "vertical",
