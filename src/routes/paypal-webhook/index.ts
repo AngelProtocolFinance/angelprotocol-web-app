@@ -6,7 +6,7 @@ import { type ActionFunction, href } from "react-router";
 import { to_final } from "routes/helpers/donation";
 import { verified_body } from "./helpers";
 import { onholddb, subsdb } from ".server/aws/db";
-import { qstash } from ".server/sdks";
+import { paypal, qstash } from ".server/sdks";
 import { is_resp } from ".server/utils";
 
 type TIntervalFrom = "DAY" | "WEEK" | "MONTH" | "YEAR";
@@ -66,20 +66,25 @@ export const action: ActionFunction = async ({ request }) => {
         const fn = [n?.given_name, n?.surname].filter(Boolean).join(" ") || "";
         const str = [l1, l2].filter(Boolean).join(" ") || "";
 
-        await onholddb
-          .update(email, {
-            kycEmail: email,
-            ...(fn && { fullName: fn }),
-            ...(str && { streetAddress: str }),
-            ...(city && { city }),
-            ...(state && { state }),
-            ...(zip && { postalCode: zip }),
-            ...(country && { country }),
-          })
-          .catch((err) => console.error("onholddb update error:", err));
+        const donor_update = onholddb.update(email, {
+          kycEmail: email,
+          ...(fn && { fullName: fn }),
+          ...(str && { streetAddress: str }),
+          ...(city && { city }),
+          ...(state && { state }),
+          ...(zip && { postalCode: zip }),
+          ...(country && { country }),
+        });
+        donor_update.catch((err) =>
+          console.error("onholddb update error:", err)
+        );
+        await donor_update;
         console.info(`updated subscriber info for onhold:${onhold_id}`);
 
-        const cycle = s.plan?.billing_cycles?.[0];
+        if (!s.plan_id) return resp.status(400, "missing subscription plan id");
+        const plan = await paypal.get_plan(s.plan_id);
+
+        const cycle = plan?.billing_cycles?.[0];
         if (!cycle) {
           return resp.status(400, "missing plan billing cycle");
         }
@@ -166,7 +171,7 @@ export const action: ActionFunction = async ({ request }) => {
         const onhold = await onholddb.item(onhold_id);
         if (!onhold) {
           return resp.status(
-            201,
+            404,
             `onhold missing or has been processed: ${order_id}`
           );
         }
