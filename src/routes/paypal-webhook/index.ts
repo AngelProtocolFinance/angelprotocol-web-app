@@ -138,8 +138,7 @@ export const action: ActionFunction = async ({ request }) => {
         };
 
         await subsdb.put(subs_db);
-        console.info(`created subscription record ${subs_id} `);
-        break;
+        return resp.status(200, `created subscription record ${subs_id}`);
       }
       case "CHECKOUT.ORDER.APPROVED": {
         const {
@@ -196,7 +195,7 @@ export const action: ActionFunction = async ({ request }) => {
           ...(zip && { postalCode: zip }),
           ...(country && { country }),
         });
-        console.info(res);
+        console.info("onhold donor info updated:", res);
         return resp.status(200, "updated onhold donor info");
       }
       case "PAYMENT.CAPTURE.COMPLETED": {
@@ -251,7 +250,7 @@ export const action: ActionFunction = async ({ request }) => {
         });
 
         console.info(`Final donation record sent:${res.messageId}`);
-        return resp.status(200, "processed");
+        return resp.json(res);
       }
       case "PAYMENT.SALE.COMPLETED": {
         const {
@@ -309,12 +308,11 @@ export const action: ActionFunction = async ({ request }) => {
           failureCallback: `${base_url}${href("/failure-callback")}`,
         });
 
-        console.info(`Final donation record sent:${res.messageId}`);
-        return resp.status(200, "processed");
+        return resp.json(res);
       }
     }
     console.info(JSON.stringify(ev, null, 2));
-    return resp.status(201, "event type not processed");
+    return resp.status(201, `event type not handled: ${ev.event_type}`);
   } catch (error) {
     console.error("[paypal webhook] error processing webhook:", error);
     return resp.status(500, "error processing webhook");
