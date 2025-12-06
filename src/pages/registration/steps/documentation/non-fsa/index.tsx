@@ -4,7 +4,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { Field, Form } from "components/form";
 import { LoadText } from "components/load-text";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { NavLink, useFetcher, useNavigate } from "react-router";
+import { NavLink, useFetcher } from "react-router";
 import { toast } from "sonner";
 import { steps } from "../../../routes";
 import { type FV, type Props, schema } from "./types";
