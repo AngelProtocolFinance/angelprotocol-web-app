@@ -1,3 +1,4 @@
+import type { IDonationOnholdUpdate } from "@better-giving/donation";
 import type {
   Capture,
   Order,
@@ -29,6 +30,51 @@ const to_interval = (from: TIntervalFrom): TInterval => {
   }
 };
 
+interface IPayer {
+  name?: {
+    given_name?: string;
+    surname?: string;
+  };
+  email_address?: string;
+  address?: {
+    address_line_1?: string;
+    address_line_2?: string;
+    admin_area_1?: string;
+    admin_area_2?: string;
+    postal_code?: string;
+    country_code: string;
+  };
+}
+const donor_update = (payer: IPayer): IDonationOnholdUpdate => {
+  const {
+    email_address: email,
+    address: {
+      address_line_1: l1,
+      address_line_2: l2,
+      admin_area_1: state,
+      admin_area_2: city,
+      postal_code: zip,
+      country_code: country,
+    } = {},
+    name: n,
+  } = payer;
+
+  const update: IDonationOnholdUpdate = {
+    country,
+  };
+
+  const fn = [n?.given_name, n?.surname].filter(Boolean).join(" ") || "";
+  const str = [l1, l2].filter(Boolean).join(" ") || "";
+  if (fn) update.fullName = fn;
+  if (str) update.streetAddress = str;
+  if (city) update.city = city;
+  if (state) update.state = state;
+  if (zip) update.zipCode = zip;
+  if (email) update.kycEmail = email;
+
+  return update;
+};
+
 export const action: ActionFunction = async ({ request }) => {
   try {
     const base_url = new URL(request.url).origin;
@@ -49,45 +95,6 @@ export const action: ActionFunction = async ({ request }) => {
           update_time = new Date().toISOString(),
           ...s
         } = ev.resource as Subs;
-        if (!onhold_id) return resp.status(400, "missing onhold id");
-        const onhold = await onholddb.item(onhold_id);
-        if (!onhold) return resp.status(400, "onhold record not found");
-
-        if (!subscriber) return resp.status(400, "missing subscriber info");
-        const {
-          email_address: email,
-          name: n,
-          shipping_address: saddr,
-        } = subscriber;
-        if (!email) return resp.status(400, "missing subscriber email");
-        const {
-          address_line_1: l1,
-          address_line_2: l2,
-          admin_area_1: state,
-          admin_area_2: city,
-          postal_code: zip,
-          country_code: country,
-        } = saddr?.address ?? {};
-
-        const fn = [n?.given_name, n?.surname].filter(Boolean).join(" ") || "";
-        const str = [l1, l2].filter(Boolean).join(" ") || "";
-
-        // update donor info
-        await onholddb
-          .update(email, {
-            kycEmail: email,
-            ...(fn && { fullName: fn }),
-            ...(str && { streetAddress: str }),
-            ...(city && { city }),
-            ...(state && { state }),
-            ...(zip && { postalCode: zip }),
-            ...(country && { country }),
-          })
-          .catch((err) => {
-            console.error("onholddb update error:", err);
-          });
-
-        console.info(`updated subscriber info for onhold:${onhold_id}`);
 
         if (!s.plan_id) return resp.status(400, "missing subscription plan id");
         const plan = await paypal.get_plan(s.plan_id);
@@ -110,11 +117,32 @@ export const action: ActionFunction = async ({ request }) => {
         if (!s.quantity) return resp.status(400, "missing subscription qty");
         if (!plan.product_id)
           return resp.status(400, "missing plan product id");
-        //create subs record
 
+        if (!onhold_id) return resp.status(400, "missing onhold id");
+        const onhold = await onholddb.item(onhold_id);
+        if (!onhold) return resp.status(400, "onhold record not found");
+
+        //create subs record
         const to_name = onhold.fund_id ? onhold.fund_name : onhold.charityName;
+        if (!subscriber) return resp.status(400, "missing subscriber info");
+
+        const donor = donor_update(subscriber);
+        if (!donor.kycEmail) {
+          return resp.status(400, "missing subscriber email");
+        }
+
+        // update onholddb with donor info
+        await onholddb
+          .update(onhold_id, donor)
+          .then((res) => {
+            console.info("onholddb donor info updated:", res);
+          })
+          .catch((err) => {
+            console.error("onholddb donor update error:", err);
+          });
 
         if (!subs_id) return resp.status(400, "missing subscription id");
+
         const subs_db: ISub = {
           id: subs_id,
           created_at: getUnixTime(new Date(create_time)),
@@ -134,7 +162,7 @@ export const action: ActionFunction = async ({ request }) => {
           platform: "paypal",
           status: "active",
           env: onhold.network,
-          from_id: email,
+          from_id: donor.kycEmail,
         };
 
         await subsdb.put(subs_db);
@@ -153,49 +181,14 @@ export const action: ActionFunction = async ({ request }) => {
 
         /** we only expect paypal and venmo */
         if (!ps) return resp.status(400, "paypal and venmo not found");
-
-        const {
-          email_address: email,
-          address: {
-            address_line_1: l1,
-            address_line_2: l2,
-            admin_area_1: state,
-            admin_area_2: city,
-            postal_code: zip,
-            country_code: country,
-          } = {},
-          name: n,
-        } = ps;
-
-        if (!email) {
-          return resp.status(400, `missing email for order: ${order_id}`);
-        }
+        const donor = donor_update(ps);
 
         const onhold_id = purchase_units?.[0]?.custom_id;
         if (!onhold_id) {
           return resp.status(400, `missing onhold id for order: ${order_id}`);
         }
+        await onholddb.update(onhold_id, donor);
 
-        const onhold = await onholddb.item(onhold_id);
-        if (!onhold) {
-          return resp.status(
-            404,
-            `onhold missing or has been processed: ${order_id}`
-          );
-        }
-        const fn = [n?.given_name, n?.surname].filter(Boolean).join(" ") || "";
-        const str = [l1, l2].filter(Boolean).join(" ") || "";
-        //update donor info
-        const res = await onholddb.update(onhold_id, {
-          kycEmail: email,
-          ...(fn && { fullName: fn }),
-          ...(str && { streetAddress: str }),
-          ...(city && { city }),
-          ...(state && { state }),
-          ...(zip && { postalCode: zip }),
-          ...(country && { country }),
-        });
-        console.info("onhold donor info updated:", res);
         return resp.status(200, "updated onhold donor info");
       }
       case "PAYMENT.CAPTURE.COMPLETED": {
@@ -261,9 +254,6 @@ export const action: ActionFunction = async ({ request }) => {
           exchange_rate: rate,
         } = ev.resource as Sale;
         if (!sale_id) return resp.status(400, "missing sale id");
-        if (!subs_id) return resp.status(400, "missing billing agreement id");
-        const sub = await paypal.get_subscription(subs_id);
-        if (!sub) return resp.status(400, "subscription not found");
 
         if (!net || !tf || !c)
           return resp.status(400, `missing amounts for sale: ${sale_id}`);
@@ -281,18 +271,14 @@ export const action: ActionFunction = async ({ request }) => {
           return resp.status(400, `settled can't be determined: ${sale_id}`);
         }
 
-        const onhold_id = sub.custom_id;
-        if (!onhold_id) {
-          return resp.status(400, `missing onhold id for sale: ${sale_id}`);
-        }
+        if (!subs_id) return resp.status(400, "missing billing agreement id");
+        const sub = await paypal.get_subscription(subs_id);
+        if (!sub) return resp.status(400, "subscription not found");
+        if (!sub.subscriber) return resp.status(400, "missing subscriber info");
+        if (!sub.custom_id) return resp.status(400, "missing onhold id");
 
-        const onhold = await onholddb.item(onhold_id);
-        if (!onhold) {
-          return resp.status(
-            201,
-            `onhold missing or has been processed: ${sale_id}`
-          );
-        }
+        const donor = donor_update(sub.subscriber);
+        const onhold = await onholddb.update(sub.custom_id, donor);
 
         const final = to_final(onhold, {
           net: settled.net,
