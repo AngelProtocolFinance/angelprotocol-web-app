@@ -43,6 +43,12 @@ interface IName {
   surname?: string;
 }
 
+interface ISettlement {
+  net: number;
+  fee: number;
+  c: string;
+}
+
 const donor_update = (
   email: string,
   name: IName | undefined,
@@ -215,9 +221,8 @@ export const action: ActionFunction = async ({ request }) => {
         if (!b || !b.net_amount || !b.paypal_fee) {
           return resp.status(400, `missing breakdown for capture ${cid}`);
         }
-        const settled = ((
-          r
-        ): { net: number; fee: number; c: string } | null => {
+
+        const settled = ((r): ISettlement => {
           const n = b.net_amount.value;
           const p = b.paypal_fee.value;
           const c = b.net_amount.currency_code;
@@ -254,26 +259,18 @@ export const action: ActionFunction = async ({ request }) => {
           billing_agreement_id: subs_id,
           transaction_fee: { value: tf } = {},
           receivable_amount: { value: net, currency: c } = {},
-          exchange_rate: usdpu,
+          exchange_rate: rate, // unit per usd
         } = ev.resource as Sale;
         if (!sale_id) return resp.status(400, "missing sale id");
 
         if (!net || !tf || !c)
           return resp.status(400, `missing amounts for sale: ${sale_id}`);
 
-        const settled = ((
-          r
-        ): { net: number; fee: number; c: string } | null => {
-          if (r) {
-            // only tf is denominated in foreign currency
-            return { net: +net, fee: +tf / +r, c };
-          }
-          return { net: +net, fee: +tf, c };
-        })(usdpu);
-
-        if (!settled) {
-          return resp.status(400, `settled can't be determined: ${sale_id}`);
-        }
+        const settled: ISettlement = {
+          net: +net,
+          fee: rate ? +tf * +rate : +tf,
+          c: c,
+        };
 
         if (!subs_id) return resp.status(400, "missing billing agreement id");
         const sub = await paypal.get_subscription(subs_id);
