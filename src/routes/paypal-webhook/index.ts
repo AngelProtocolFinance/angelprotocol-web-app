@@ -30,40 +30,36 @@ const to_interval = (from: TIntervalFrom): TInterval => {
   }
 };
 
-interface IPayer {
-  name?: {
-    given_name?: string;
-    surname?: string;
-  };
-  email_address?: string;
-  address?: {
-    address_line_1?: string;
-    address_line_2?: string;
-    admin_area_1?: string;
-    admin_area_2?: string;
-    postal_code?: string;
-    country_code: string;
-  };
+interface IAddress {
+  address_line_1?: string;
+  address_line_2?: string;
+  admin_area_1?: string;
+  admin_area_2?: string;
+  postal_code?: string;
+  country_code: string;
 }
-const donor_update = (payer: IPayer): IDonationOnholdUpdate => {
+interface IName {
+  given_name?: string;
+  surname?: string;
+}
+
+const donor_update = (
+  email: string,
+  name: IName | undefined,
+  address?: IAddress | undefined
+): IDonationOnholdUpdate => {
   const {
-    email_address: email,
-    address: {
-      address_line_1: l1,
-      address_line_2: l2,
-      admin_area_1: state,
-      admin_area_2: city,
-      postal_code: zip,
-      country_code: country,
-    } = {},
-    name: n,
-  } = payer;
+    address_line_1: l1,
+    address_line_2: l2,
+    admin_area_1: state,
+    admin_area_2: city,
+    postal_code: zip,
+    country_code: country,
+  } = address || {};
 
-  const update: IDonationOnholdUpdate = {
-    country,
-  };
+  const update: IDonationOnholdUpdate = {};
 
-  const fn = [n?.given_name, n?.surname].filter(Boolean).join(" ") || "";
+  const fn = [name?.given_name, name?.surname].filter(Boolean).join(" ") || "";
   const str = [l1, l2].filter(Boolean).join(" ") || "";
   if (fn) update.fullName = fn;
   if (str) update.streetAddress = str;
@@ -71,7 +67,7 @@ const donor_update = (payer: IPayer): IDonationOnholdUpdate => {
   if (state) update.state = state;
   if (zip) update.zipCode = zip;
   if (email) update.kycEmail = email;
-
+  if (country) update.country = country;
   return update;
 };
 
@@ -124,9 +120,14 @@ export const action: ActionFunction = async ({ request }) => {
 
         //create subs record
         const to_name = onhold.fund_id ? onhold.fund_name : onhold.charityName;
-        if (!subscriber) return resp.status(400, "missing subscriber info");
+        if (!subscriber?.email_address)
+          return resp.status(400, "missing subscriber email");
 
-        const donor = donor_update(subscriber);
+        const donor = donor_update(
+          subscriber.email_address,
+          subscriber.name,
+          subscriber.shipping_address?.address
+        );
         if (!donor.kycEmail) {
           return resp.status(400, "missing subscriber email");
         }
@@ -181,7 +182,9 @@ export const action: ActionFunction = async ({ request }) => {
 
         /** we only expect paypal and venmo */
         if (!ps) return resp.status(400, "paypal and venmo not found");
-        const donor = donor_update(ps);
+        if (!ps.email_address)
+          return resp.status(400, "missing payer email address");
+        const donor = donor_update(ps.email_address, ps.name, ps.address);
 
         const onhold_id = purchase_units?.[0]?.custom_id;
         if (!onhold_id) {
@@ -276,8 +279,10 @@ export const action: ActionFunction = async ({ request }) => {
         if (!sub) return resp.status(400, "subscription not found");
         if (!sub.subscriber) return resp.status(400, "missing subscriber info");
         if (!sub.custom_id) return resp.status(400, "missing onhold id");
+        const { email_address: email, shipping_address, name } = sub.subscriber;
+        if (!email) return resp.status(400, "missing subscriber email");
 
-        const donor = donor_update(sub.subscriber);
+        const donor = donor_update(email, name, shipping_address?.address);
         const onhold = await onholddb.update(sub.custom_id, donor);
 
         const final = to_final(onhold, {
