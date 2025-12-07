@@ -254,7 +254,7 @@ export const action: ActionFunction = async ({ request }) => {
           billing_agreement_id: subs_id,
           transaction_fee: { value: tf } = {},
           receivable_amount: { value: net, currency: c } = {},
-          exchange_rate: rate,
+          exchange_rate: usdpu,
         } = ev.resource as Sale;
         if (!sale_id) return resp.status(400, "missing sale id");
 
@@ -265,10 +265,10 @@ export const action: ActionFunction = async ({ request }) => {
           r
         ): { net: number; fee: number; c: string } | null => {
           if (r) {
-            return { net: +net * +r, fee: +tf * +r, c };
+            return { net: +net / +r, fee: +tf / +r, c };
           }
           return { net: +net, fee: +tf, c };
-        })(rate);
+        })(usdpu);
 
         if (!settled) {
           return resp.status(400, `settled can't be determined: ${sale_id}`);
