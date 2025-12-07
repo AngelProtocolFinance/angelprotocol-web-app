@@ -11,7 +11,11 @@ export const to_currencies_fv = (
     const uppc = c.toUpperCase();
     const rate = rate_map[uppc];
     if (!rate) continue;
-    items.push({ code: uppc, rate, min: Math.round(rate) });
+    items.push({
+      code: uppc,
+      rate,
+      min: Math.round(rate * 2 /** 2 usd equivalent */),
+    });
   }
 
   if (!pref) return { pref: undefined, all: items };

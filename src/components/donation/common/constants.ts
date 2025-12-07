@@ -31,7 +31,7 @@ export const init_ticker_option: ITickerFv = {
 };
 
 export const USD_CODE = "USD";
-export const usd_option: ICurrencyFv = { code: USD_CODE, min: 1, rate: 1 };
+export const usd_option: ICurrencyFv = { code: USD_CODE, min: 2, rate: 1 };
 
 export const init_tribute_notif: Tribute["notif"] = {
   to_email: "",
