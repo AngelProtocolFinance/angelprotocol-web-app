@@ -265,7 +265,8 @@ export const action: ActionFunction = async ({ request }) => {
           r
         ): { net: number; fee: number; c: string } | null => {
           if (r) {
-            return { net: +net / +r, fee: +tf / +r, c };
+            // only tf is denominated in foreign currency
+            return { net: +net, fee: +tf / +r, c };
           }
           return { net: +net, fee: +tf, c };
         })(usdpu);
