@@ -86,7 +86,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
     const custom_redirect = don.config?.success_redirect;
     const return_url = custom_redirect
       ? new URL(custom_redirect)
-      : new URL(`${don.base_url}/${href("/donations/:id", { id: order_id })}`);
+      : new URL(`${don.base_url}${href("/donations/:id", { id: order_id })}`);
 
     if (custom_redirect) {
       return_url.searchParams.set("donor_name", `${fn} ${ln}`);
