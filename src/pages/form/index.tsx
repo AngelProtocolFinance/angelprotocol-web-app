@@ -1,9 +1,10 @@
 import { Steps, type TDonation } from "components/donation";
 import { donor_fv_blank } from "lib/donations/schema";
 import type { Route } from "./+types";
+import { useEffect } from "react";
 export { loader } from "./api";
 
-export default function Page({ loaderData }: Route.ComponentProps) {
+export default function Page({ loaderData, params }: Route.ComponentProps) {
   const { recipient_details: rd, ...d } = loaderData;
   const init_state: TDonation = {
     method: d.donate_methods?.at(0) || "stripe",
@@ -26,6 +27,32 @@ export default function Page({ loaderData }: Route.ComponentProps) {
     },
     program: d.program,
   };
+
+  useEffect(() => {
+    const send_height_to_parent = () => {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage(
+        {
+          type: "resize",
+          form_id: params.id,
+          height,
+        },
+        "*"
+      );
+    };
+
+    send_height_to_parent();
+
+    const resize_observer = new ResizeObserver(() => {
+      send_height_to_parent();
+    });
+
+    resize_observer.observe(document.body);
+
+    return () => {
+      resize_observer.disconnect();
+    };
+  }, [params.id]);
 
   return <Steps key={JSON.stringify(init_state)} init={init_state} />;
 }
