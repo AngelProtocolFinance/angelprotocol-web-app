@@ -17,12 +17,12 @@ import * as v from "valibot";
 export const str = v.pipe(v.string(), v.trim());
 
 const donor_address_raw = v.object({
-  street: v.optional($),
-  city: v.optional($),
-  state: v.optional($),
-  zip_code: v.optional($),
+  street: $req,
+  city: $req,
+  state: $,
+  zip_code: $req,
   /** country name */
-  country: v.optional($),
+  country: $req,
   uk_gift_aid: v.optional(v.boolean()),
 });
 export const donor_address = v.pipe(
@@ -30,8 +30,7 @@ export const donor_address = v.pipe(
   v.forward(
     v.partialCheck(
       [["country"], ["state"]],
-      ({ country: c, state: s = "" }) => {
-        if (!c) return true;
+      ({ country: c, state: s }) => {
         if (/united states/i.test(c)) {
           return s.trim().length > 0;
         }
@@ -73,7 +72,7 @@ export const donor = v.object({
   title: donor_title,
   first_name: $req,
   company_name: v.optional(str),
-  last_name: $,
+  last_name: $req,
   email: v.pipe($req, v.email("Please check your email for correctness")),
   address: v.optional(donor_address),
 });

@@ -40,7 +40,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
     if (!b?.email) {
       return on_error("your email was not found in billing details.");
     }
-    const [fn, ln = ""] = b.name.split(" ");
+    const [fn, ln] = b.name.split(" ");
     const addr: DonorAddress = {
       street: [b.address.line1, b.address.line2].filter(Boolean).join(" "),
       city: b.address.city,
