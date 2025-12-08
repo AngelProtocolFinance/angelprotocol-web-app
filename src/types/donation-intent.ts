@@ -17,12 +17,12 @@ import * as v from "valibot";
 export const str = v.pipe(v.string(), v.trim());
 
 const donor_address_raw = v.object({
-  street: $req,
-  city: $req,
-  state: $,
-  zip_code: $req,
+  street: v.optional($),
+  city: v.optional($),
+  state: v.optional($),
+  zip_code: v.optional($),
   /** country name */
-  country: $req,
+  country: v.optional($),
   uk_gift_aid: v.optional(v.boolean()),
 });
 export const donor_address = v.pipe(
@@ -30,7 +30,8 @@ export const donor_address = v.pipe(
   v.forward(
     v.partialCheck(
       [["country"], ["state"]],
-      ({ country: c, state: s }) => {
+      ({ country: c, state: s = "" }) => {
+        if (!c) return true;
         if (/united states/i.test(c)) {
           return s.trim().length > 0;
         }

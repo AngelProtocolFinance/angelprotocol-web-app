@@ -35,7 +35,7 @@ export function DonorStep({ classes = "", on_change, value }: Props) {
     name: "address.country",
   });
 
-  const is_US = /united states/i.test(country.value);
+  const is_US = /united states/i.test(country.value || "");
 
   const { field: state } = useController<FV, "address.state">({
     control,
