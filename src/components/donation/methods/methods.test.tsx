@@ -15,6 +15,7 @@ describe("payment method form state persistence", () => {
 
   test("crypto: form state persists when navigating to checkout and back", async () => {
     const init: TDonation = {
+      base_url: "",
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
@@ -96,6 +97,7 @@ describe("payment method form state persistence", () => {
 
   test("daf: form state persists when navigating to checkout and back", async () => {
     const init: TDonation = {
+      base_url: "",
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
@@ -139,6 +141,7 @@ describe("payment method form state persistence", () => {
 
   test("stocks: form state persists when navigating to checkout and back", async () => {
     const init: TDonation = {
+      base_url: "",
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
@@ -188,6 +191,7 @@ describe("payment method form state persistence", () => {
 
   test("form state persists when switching between payment methods after checkout", async () => {
     const init: TDonation = {
+      base_url: "",
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),
@@ -292,6 +296,7 @@ describe("payment method form state persistence", () => {
 
   test("form state persists after going to checkout from one method and switching to another", async () => {
     const init: TDonation = {
+      base_url: "",
       source: "bg-marketplace",
       mode: "live",
       recipient: donation_recipient_init({ hide_bg_tip: true }),

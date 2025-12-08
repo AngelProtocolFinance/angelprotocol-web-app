@@ -36,7 +36,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       return on_error(submit_err.message || GENERIC_ERROR_MESSAGE);
     }
 
-    const { billingDetails: b } = ev;
+    const { billingDetails: b, expressPaymentType } = ev;
     if (!b?.email) {
       return on_error("your email was not found in billing details.");
     }
@@ -83,14 +83,26 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
 
     const { order_id, client_secret }: IStripeIntentReturn = await res.json();
 
-    const return_url = `${window.location.origin}/${href("/donations/:id", { id: order_id })}`;
+    const custom_redirect = don.config?.success_redirect;
+    const return_url = custom_redirect
+      ? new URL(custom_redirect)
+      : new URL(`${don.base_url}/${href("/donations/:id", { id: order_id })}`);
+
+    if (custom_redirect) {
+      return_url.searchParams.set("donor_name", `${fn} ${ln}`);
+      const to_pay =
+        intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
+      return_url.searchParams.set("donation_amount", to_pay.toString());
+      return_url.searchParams.set("donation_currency", intent.amount.currency);
+      return_url.searchParams.set("payment_method", expressPaymentType);
+    }
 
     const { error } = await stripe[
       x.frequency === "recurring" ? "confirmSetup" : "confirmPayment"
     ]({
       elements,
       clientSecret: client_secret,
-      confirmParams: { return_url },
+      confirmParams: { return_url: return_url.toString() },
     });
 
     if (error) {

@@ -61,6 +61,7 @@ function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
             <Steps
               source="bg-marketplace"
               mode="live"
+              base_url=""
               recipient={{
                 id: fund.id,
                 name: fund.name,

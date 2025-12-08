@@ -63,7 +63,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
             const captured = await actions.order.capture();
             const onhold_id = captured?.purchase_units?.[0].custom_id;
             if (!onhold_id) return on_error("Missing order information");
-            const return_url = `${window.location.origin}${href("/donations/:id", { id: onhold_id })}`;
+            const return_url = `${don.base_url}${href("/donations/:id", { id: onhold_id })}`;
             return actions.redirect(return_url);
           }
           if (actions.subscription) {
@@ -113,6 +113,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
     don.source,
     don.program,
     don.config?.id,
+    don.base_url,
     on_error,
   ]);
 

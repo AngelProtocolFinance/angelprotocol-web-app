@@ -56,12 +56,14 @@
     // create AbortController for cleanup
     const abort_controller = new AbortController();
 
-    const handle_resize = (e) => {
+    const handle_message = (e) => {
       // validate origin
       if (e.origin !== script_origin) return;
 
       // validate message structure and form_id
-      if (e.data?.type === "resize" && e.data?.form_id === form_id) {
+      if (e.data?.form_id !== form_id) return;
+
+      if (e.data?.type === "resize") {
         // validate height is a positive number within reasonable bounds
         const height = Number(e.data.height);
         if (isNaN(height) || height < 0 || height > 50000) {
@@ -69,10 +71,23 @@
           return;
         }
         iframe.style.height = `${height}px`;
+      } else if (e.data?.type === "redirect" && e.data?.redirect_url) {
+        // validate and perform redirect
+        try {
+          const url = new URL(e.data.redirect_url);
+          // only allow http and https protocols for security
+          if (url.protocol === "http:" || url.protocol === "https:") {
+            window.location.href = e.data.redirect_url;
+          } else {
+            console.warn("Invalid redirect URL protocol:", url.protocol);
+          }
+        } catch (error) {
+          console.warn("Invalid redirect URL:", e.data.redirect_url);
+        }
       }
     };
 
-    window.addEventListener("message", handle_resize, {
+    window.addEventListener("message", handle_message, {
       signal: abort_controller.signal,
     });
 

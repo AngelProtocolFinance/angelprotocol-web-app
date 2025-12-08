@@ -11,9 +11,10 @@ export interface IRecipient {
 
 export interface ILoader extends IForm {
   recipient_details: IRecipient;
+  base_url: string;
 }
 
-export const loader = async ({ params }: Route.LoaderArgs) => {
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const form = await formsdb.form_get(params.id);
   if (!form) throw resp.err(404, "form not found");
 
@@ -24,5 +25,9 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
   ]);
   if (!x) throw resp.err(404, "recipient not found");
 
-  return { ...form, recipient_details: x } satisfies ILoader;
+  return {
+    ...form,
+    recipient_details: x,
+    base_url: new URL(request.url).origin,
+  } satisfies ILoader;
 };

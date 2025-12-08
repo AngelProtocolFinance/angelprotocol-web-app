@@ -45,7 +45,7 @@ export function Checkout(props: Props) {
 
     set_status("submitting");
 
-    const return_url = `${window.location.origin}${href("/donations/:id", { id: props.order_id })}`;
+    const return_url = `${don.base_url}${href("/donations/:id", { id: props.order_id })}`;
 
     const { error } =
       props.frequency === "recurring"

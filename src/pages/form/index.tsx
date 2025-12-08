@@ -5,8 +5,9 @@ import { useEffect } from "react";
 export { loader } from "./api";
 
 export default function Page({ loaderData, params }: Route.ComponentProps) {
-  const { recipient_details: rd, ...d } = loaderData;
+  const { recipient_details: rd, base_url, ...d } = loaderData;
   const init_state: TDonation = {
+    base_url,
     method: d.donate_methods?.at(0) || "stripe",
     source: "bg-widget",
     mode: "preview",
