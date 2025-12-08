@@ -6,14 +6,14 @@ type Props = {
   form_id: string;
   base_url: string;
 };
-export function Snippet({ classes = "", form_id, base_url }: Props) {
+export function SnippetAdv({ classes = "", form_id, base_url }: Props) {
   /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
   const iframe_url = `<iframe src="${base_url}/forms/${form_id}" width="700" height="900" style="border:0px"></iframe>`;
   const script_url = `<script src="${base_url}/form-embed.js"async></script>`;
   const container_url = `<div data-bg-form="${form_id}"></div>`;
 
   return (
-    <TabGroup className={`${classes} relative`}>
+    <TabGroup defaultIndex={1} className={`${classes} relative`}>
       <TabList className="flex items-center mb-2 border-y border-gray-l2">
         <Tab className="data-[selected]:bg-white data-[selected]:shadow-inner px-3 py-1 text-gray-d1 hover:text-gray-d4 data-[selected]:text-gray-d4 rounded-[2px] focus:outline-none text-sm">
           Simple

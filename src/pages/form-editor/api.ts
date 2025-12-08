@@ -83,6 +83,13 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
     throw resp.err(403, "forbidden");
   }
 
+  if (fv.type === "adv") {
+    await formsdb.form_update(params.id, {
+      success_redirect: fv.success_redirect,
+    });
+    return { __ok: "Form updated" } satisfies ActionData;
+  }
+
   const target = ((x) => {
     switch (x.type) {
       case "fixed":

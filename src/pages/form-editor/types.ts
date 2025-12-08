@@ -3,7 +3,8 @@ import { target } from "components/goal-selector";
 import { donate_method } from "types/components";
 import * as v from "valibot";
 
-export const schema = v.object({
+export const schema_basic = v.object({
+  type: v.literal("basic"),
   methods: v.pipe(
     v.array(donate_method),
     v.filterItems((m) => !m.disabled),
@@ -14,7 +15,14 @@ export const schema = v.object({
   increments: v.array(increment),
   target,
   tag: $req,
+});
+
+export const schema_adv = v.object({
+  type: v.literal("adv"),
   success_redirect: v.optional(https_url()),
 });
 
-export interface FV extends v.InferOutput<typeof schema> {}
+export const schema = v.variant("type", [schema_basic, schema_adv]);
+
+export interface FVBasic extends v.InferOutput<typeof schema_basic> {}
+export interface FVAdv extends v.InferOutput<typeof schema_adv> {}

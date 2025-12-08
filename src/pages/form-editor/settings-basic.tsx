@@ -8,15 +8,15 @@ import { Increments } from "components/increments";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { bg_accent_primary, bg_accent_secondary } from "styles/colors";
-import { type FV, schema } from "./types";
+import { type FVBasic, schema_basic } from "./types";
 
-interface Props extends FV {
+interface Props extends FVBasic {
   classes?: string;
   is_submitting: boolean;
-  on_submit: (fv: FV) => void;
+  on_submit: (fv: FVBasic) => void;
 }
 
-export function Configurer({
+export function SettingsBasic({
   classes = "",
   on_submit,
   is_submitting,
@@ -31,8 +31,8 @@ export function Configurer({
     watch,
     register,
     control,
-  } = useForm<FV>({
-    resolver: valibotResolver(schema),
+  } = useForm<FVBasic>({
+    resolver: valibotResolver(schema_basic),
     //set new config as default, so user would need to make a change to be able to update again
     values: { ...fv, accent_primary, accent_secondary },
   });
@@ -174,22 +174,13 @@ export function Configurer({
         error={errors.tag?.message}
       />
 
-      <div className="flex gap-3 mt-8">
-        <button
-          disabled={!isDirty}
-          type="reset"
-          className="btn-outline normal-case btn text-sm px-4 py-2"
-        >
-          Reset Changes
-        </button>
-        <button
-          disabled={!isDirty}
-          type="submit"
-          className="btn btn-blue normal-case text-sm px-4 py-2"
-        >
-          {isSubmitting ? "Updating.." : "Update Form"}
-        </button>
-      </div>
+      <button
+        disabled={!isDirty}
+        type="submit"
+        className="mt-6 justify-self-end btn btn-blue normal-case text-sm px-4 py-2"
+      >
+        {isSubmitting ? "Saving.." : "Save"}
+      </button>
     </Form>
   );
 }
