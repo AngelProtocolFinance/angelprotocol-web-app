@@ -60,7 +60,7 @@ export function Checkout({ order_id, donor, ...intent }: Props) {
         intent.amount.base + intent.amount.tip + intent.amount.fee_allowance;
       url.searchParams.set("donation_amount", to_pay.toString());
       url.searchParams.set("donation_currency", intent.amount.currency);
-      url.searchParams.set("payment_method", "");
+      url.searchParams.set("payment_method", "card");
     }
     const return_url = url.toString();
 
