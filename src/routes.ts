@@ -345,4 +345,6 @@ export default [
 
   r("streams/subs", "./routes/streams/subs.ts"),
   r("failure-callback", "./routes/failure-callback.ts"),
+
+  r("form-embed.js", "./routes/form-embed.ts"),
 ] satisfies RouteConfig;
