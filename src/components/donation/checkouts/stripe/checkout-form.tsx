@@ -60,7 +60,7 @@ export function Checkout(props: Props) {
             redirect: "if_required",
           });
 
-    // With redirect: "if_required", this point will be reached for both
+    // with redirect: "if_required", this point will be reached for both
     // successful payments and errors. Handle both cases appropriately.
     if (error) {
       if (error.type === "card_error" || error.type === "validation_error") {
