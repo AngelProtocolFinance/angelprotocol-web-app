@@ -1,4 +1,4 @@
-import { $, $req, increment } from "@better-giving/schemas";
+import { $, $req, https_url, increment } from "@better-giving/schemas";
 import { target } from "components/goal-selector";
 import { donate_method } from "types/components";
 import * as v from "valibot";
@@ -14,6 +14,7 @@ export const schema = v.object({
   increments: v.array(increment),
   target,
   tag: $req,
+  success_redirect: v.optional(https_url()),
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}

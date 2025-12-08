@@ -12,8 +12,8 @@ export function Videos({ classes = "", ...props }: IVideos) {
   const [open, set_open] = useState(false);
   return (
     <div className={`grid content-start @container ${classes}`}>
-      <div className="flex gap-x-2 items-center">
-        <label className="label font-medium">Videos</label>
+      <div className="flex gap-x-2 items-center mb-1">
+        <label className="label font-semibold text-sm">Videos</label>
         <button
           onClick={() => set_open(true)}
           type="button"

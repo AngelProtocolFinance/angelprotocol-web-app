@@ -176,7 +176,7 @@ export function DonationFormTab(p: Props) {
       />
 
       <div>
-        <p className="font-bold mb-3">Donation goal</p>
+        <p className="font-semibold mb-3 text-sm">Donation goal</p>
         <GoalSelector value={target.value} onChange={target.onChange} />
         {target.value === "fixed" && (
           <Field

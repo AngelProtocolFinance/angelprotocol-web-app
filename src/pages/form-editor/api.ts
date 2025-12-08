@@ -40,19 +40,6 @@ const recipient_fn = async (
     if (!x) return;
     return { name: x.name, members: [], hide_bg_tip: x.hide_bg_tip };
   }
-
-  if (type === "program") {
-    // program owner is npo
-    const npo = await npodb.npo(+owner, ["name", "id", "hide_bg_tip"]);
-    if (!npo) return;
-    const p = await npodb.npo_program(id, npo.id);
-    return {
-      name: npo.name,
-      members: [],
-      program: p ? { id: p.id, title: p.title } : undefined,
-      hide_bg_tip: npo.hide_bg_tip,
-    };
-  }
 };
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {

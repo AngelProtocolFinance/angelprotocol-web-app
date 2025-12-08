@@ -87,7 +87,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
         onSubmit={handleSubmit}
         className="grid border border-gray-l3 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
-        <h4 className="font-bold text-xl mb-4">Create your fundraiser</h4>
+        <h4 className="font-semibold text-sm mb-4">Create your fundraiser</h4>
 
         <Field
           {...register("name")}
@@ -146,7 +146,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
           />
         )}
 
-        <Label className="mt-6 mb-2" required>
+        <Label className="mt-6 mb-2 text-sm font-semibold" required>
           Banner
         </Label>
         <ImgEditor
@@ -167,7 +167,7 @@ export default function Page({ loaderData: endow }: Route.ComponentProps) {
           error={errors.banner?.message}
         />
 
-        <Label className="mt-6 mb-2" required>
+        <Label className="mt-6 mb-2 text-sm font-semibold" required>
           Logo
         </Label>
         <ImgEditor

@@ -67,7 +67,7 @@ export function Configurer({
       <DonateMethods
         classes={{
           tooltip: "italic",
-          label: "font-medium text-base",
+          label: "font-medium",
         }}
         values={donate_methods.value}
         on_change={donate_methods.onChange}
@@ -125,7 +125,7 @@ export function Configurer({
                   placeholder="0.00"
                   step="any"
                   {...register(`increments.${idx}.value`)}
-                  className="w-full h-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                  className="w-full h-full outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                 />
               </div>
               <p className="mt-1 empty:hidden text-left text-xs text-red">
@@ -150,7 +150,7 @@ export function Configurer({
       />
 
       <div>
-        <p className="font-bold mb-3 text-sm">Donation goal</p>
+        <p className="font-semibold mb-3 text-sm">Donation goal</p>
         <GoalSelector value={target.value} onChange={target.onChange} />
         {target.value === "fixed" && (
           <Field
@@ -170,7 +170,7 @@ export function Configurer({
         label="Tag"
         placeholder="e.g. in mywebsite.com"
         required
-        classes={{ container: "mt-4", label: "font-semibold" }}
+        classes={{ container: "mt-6", label: "font-semibold text-sm" }}
         error={errors.tag?.message}
       />
 

@@ -68,6 +68,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           methods={fill(d.donate_methods)}
           accent_primary={d.accent_primary}
           accent_secondary={d.accent_secondary}
+          success_redirect={d.success_redirect}
           tag={d.tag}
           on_submit={(x) =>
             fetcher.submit(x, { method: "POST", encType: "application/json" })
