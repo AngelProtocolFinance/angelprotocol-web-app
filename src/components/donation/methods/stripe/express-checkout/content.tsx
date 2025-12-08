@@ -103,11 +103,27 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       elements,
       clientSecret: client_secret,
       confirmParams: { return_url: return_url.toString() },
+      redirect: "if_required",
     });
 
     if (error) {
       console.error(error);
       on_error(error.message || GENERIC_ERROR_MESSAGE);
+    } else {
+      // Payment succeeded, redirect via postMessage if in iframe
+      if (window.self !== window.top) {
+        window.parent.postMessage(
+          {
+            type: "redirect",
+            redirect_url: return_url.toString(),
+            form_id: don.config?.id,
+          },
+          "*"
+        );
+      } else {
+        // Not in iframe, redirect directly
+        window.location.href = return_url.toString();
+      }
     }
   };
 
