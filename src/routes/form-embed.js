@@ -47,7 +47,7 @@
     iframe.allow = "payment";
 
     // add sandbox attribute for security (adjust permissions as needed)
-    iframe.sandbox = "allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation";
+    iframe.sandbox = "allow-scripts allow-same-origin allow-forms allow-popups";
 
     // set title for accessibility
     iframe.title = `Form ${form_id}`;

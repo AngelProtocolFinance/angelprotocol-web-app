@@ -49,24 +49,42 @@ export function Checkout(props: Props) {
 
     const { error } =
       props.frequency === "recurring"
-        ? await stripe.confirmSetup({ elements, confirmParams: { return_url } })
+        ? await stripe.confirmSetup({
+            elements,
+            confirmParams: { return_url },
+            redirect: "if_required",
+          })
         : await stripe.confirmPayment({
             elements,
             confirmParams: { return_url },
+            redirect: "if_required",
           });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      set_prompt(error_prompt(error.message, "parsed"));
+    // With redirect: "if_required", this point will be reached for both
+    // successful payments and errors. Handle both cases appropriately.
+    if (error) {
+      if (error.type === "card_error" || error.type === "validation_error") {
+        set_prompt(error_prompt(error.message, "parsed"));
+      } else {
+        set_prompt(error_prompt(error, { context: "processing payment" }));
+      }
+      set_status("ready");
     } else {
-      set_prompt(error_prompt(error, { context: "processing payment" }));
+      // Payment succeeded, redirect via postMessage if in iframe
+      if (window.self !== window.top) {
+        window.parent.postMessage(
+          {
+            type: "redirect",
+            redirect_url: return_url,
+            form_id: don.config?.id,
+          },
+          "*"
+        );
+      } else {
+        // Not in iframe, redirect directly
+        window.location.href = return_url;
+      }
     }
-
-    set_status("ready");
   };
 
   if (typeof status === "object") {
