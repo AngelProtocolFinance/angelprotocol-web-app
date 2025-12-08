@@ -48,6 +48,7 @@ export default function Content({
     accent_primary: config.accentPrimary,
     accent_secondary: config.accentSecondary,
     increments: incs,
+    success_redirect: undefined,
   };
 
   return (

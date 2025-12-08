@@ -25,6 +25,7 @@ export default function Page({ loaderData, params }: Route.ComponentProps) {
       accent_secondary: d.accent_secondary,
       method_ids: d.donate_methods,
       increments: d.increments,
+      success_redirect: d.success_redirect,
     },
     program: d.program,
   };

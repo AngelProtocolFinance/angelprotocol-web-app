@@ -273,7 +273,7 @@ export type Config = {
   /** hex color without alpha */
   accent_secondary?: string;
   increments?: IIncrement[];
-  success_redirect?: string;
+  success_redirect: string | undefined;
 };
 
 export interface IProgram {

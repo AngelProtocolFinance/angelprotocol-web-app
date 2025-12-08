@@ -71,6 +71,7 @@ function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
               }}
               config={{
                 id: null,
+                success_redirect: undefined,
                 method_ids: fund.settings.donateMethods,
                 increments: fund.increments,
               }}

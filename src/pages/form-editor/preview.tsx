@@ -31,6 +31,7 @@ export function Preview({
       accent_secondary: f.accent_secondary,
       method_ids: f.donate_methods,
       increments: f.increments,
+      success_redirect: f.success_redirect,
     },
   };
 
