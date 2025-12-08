@@ -92,7 +92,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
             }}
             stripe={stripe_promise}
           >
-            <Checkout {...props} donor={don.donor} order_id={data.order_id} />
+            <Checkout {...intent} order_id={data.order_id} />
           </Elements>
         )}
       </ErrorBoundaryClass>

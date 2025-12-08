@@ -15,6 +15,7 @@ const don_mock = vi.hoisted(() => ({
   source: "bg-marketplace",
   mode: "live",
   config: null,
+  base_url: "https://test.example.com",
   donor: {
     email: "john@doe.com",
     first_name: "John",

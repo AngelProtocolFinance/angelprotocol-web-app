@@ -84,25 +84,27 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
     const { order_id, client_secret }: IStripeIntentReturn = await res.json();
 
     const custom_redirect = don.config?.success_redirect;
-    const return_url = custom_redirect
+    const url = custom_redirect
       ? new URL(custom_redirect)
       : new URL(`${don.base_url}${href("/donations/:id", { id: order_id })}`);
 
     if (custom_redirect) {
-      return_url.searchParams.set("donor_name", `${fn} ${ln}`);
+      url.searchParams.set("donor_name", `${fn} ${ln}`);
       const to_pay =
         intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
-      return_url.searchParams.set("donation_amount", to_pay.toString());
-      return_url.searchParams.set("donation_currency", intent.amount.currency);
-      return_url.searchParams.set("payment_method", expressPaymentType);
+      url.searchParams.set("donation_amount", to_pay.toString());
+      url.searchParams.set("donation_currency", intent.amount.currency);
+      url.searchParams.set("payment_method", expressPaymentType);
     }
+
+    const return_url = url.toString();
 
     const { error } = await stripe[
       x.frequency === "recurring" ? "confirmSetup" : "confirmPayment"
     ]({
       elements,
       clientSecret: client_secret,
-      confirmParams: { return_url: return_url.toString() },
+      confirmParams: { return_url },
       redirect: "if_required",
     });
 
@@ -115,14 +117,14 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
         window.parent.postMessage(
           {
             type: "redirect",
-            redirect_url: return_url.toString(),
+            redirect_url: return_url,
             form_id: don.config?.id,
           },
           "*"
         );
       } else {
         // Not in iframe, redirect directly
-        window.location.href = return_url.toString();
+        window.location.href = return_url;
       }
     }
   };
