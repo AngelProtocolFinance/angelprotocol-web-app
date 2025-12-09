@@ -8,7 +8,7 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { href } from "react-router";
 import type {
   DonationIntent,
-  DonorAddress,
+  DonorAddressFv,
   IStripeIntentReturn,
 } from "types/donation-intent";
 import { use_donation } from "../../../context";
@@ -41,7 +41,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       return on_error("your email was not found in billing details.");
     }
     const [fn, ln] = b.name.split(" ");
-    const addr: DonorAddress = {
+    const addr: DonorAddressFv = {
       street: [b.address.line1, b.address.line2].filter(Boolean).join(" "),
       city: b.address.city,
       state: b.address.state,

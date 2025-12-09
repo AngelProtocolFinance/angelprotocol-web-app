@@ -1,5 +1,5 @@
 import { Steps, type TDonation } from "components/donation";
-import { donor_blank } from "types/donation-intent";
+import { donor_fv_blank } from "types/donation-intent";
 import type { Route } from "./+types";
 export { loader } from "./api";
 
@@ -9,7 +9,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
     method: d.donate_methods?.at(0) || "stripe",
     source: "bg-widget",
     mode: "preview",
-    donor: donor_blank,
+    donor: donor_fv_blank,
     recipient: {
       id: d.recipient,
       name: d.name,

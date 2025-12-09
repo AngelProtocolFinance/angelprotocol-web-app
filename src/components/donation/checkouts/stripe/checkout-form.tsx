@@ -10,14 +10,14 @@ import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import { href } from "react-router";
 import { use_donation } from "../../context";
-import type { Donor, StripeDonationDetails } from "../../types";
+import type { DonorFv, StripeDonationDetails } from "../../types";
 import { Loader } from "../loader";
 
 type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 
 interface Props extends StripeDonationDetails {
   order_id: string;
-  donor: Donor;
+  donor: DonorFv;
 }
 
 // Code inspired by React Stripe.js docs, see:

@@ -1,6 +1,6 @@
 import { Steps, type TDonation } from "components/donation";
 import { EyeIcon } from "lucide-react";
-import { donor_blank } from "types/donation-intent";
+import { donor_fv_blank } from "types/donation-intent";
 import type { ILoader } from "./api";
 
 interface Props extends ILoader {
@@ -18,7 +18,7 @@ export function Preview({ classes = "", recipient_details: rd, ...f }: Props) {
       members: rd.members,
       donor_address_required: false,
     },
-    donor: donor_blank,
+    donor: donor_fv_blank,
     config: {
       id: f.id,
       accent_primary: f.accent_primary,

@@ -14,9 +14,8 @@ export {
 
 import * as v from "valibot";
 
-export const str = v.pipe(v.string(), v.trim());
-
-const donor_address_raw = v.object({
+/** used in client validation */
+const donor_address_fv_raw = v.object({
   street: $req,
   city: $req,
   state: $,
@@ -25,8 +24,20 @@ const donor_address_raw = v.object({
   country: $req,
   uk_gift_aid: v.optional(v.boolean()),
 });
-export const donor_address = v.pipe(
-  donor_address_raw,
+
+/** used in server validation, where requestor might not have all the information (e.g .express checkouts) */
+export const donor_address = v.object({
+  street: v.optional($),
+  city: v.optional($),
+  state: v.optional($),
+  zip_code: v.optional($),
+  /** country name */
+  country: v.optional($),
+  uk_gift_aid: v.optional(v.boolean()),
+});
+
+export const donor_address_fv = v.pipe(
+  donor_address_fv_raw,
   v.forward(
     v.partialCheck(
       [["country"], ["state"]],
@@ -42,9 +53,9 @@ export const donor_address = v.pipe(
   )
 );
 
-export type DonorAddress = v.InferOutput<typeof donor_address_raw>;
+export type DonorAddressFv = v.InferOutput<typeof donor_address_fv_raw>;
 
-export const donor_address_init: DonorAddress = {
+export const donor_address_fv_init: DonorAddressFv = {
   street: "",
   city: "",
   state: "",
@@ -68,24 +79,36 @@ export const donor_msg_to_npo = v.pipe(
     (x) => `max ${x.requirement} characters`
   )
 );
-export const donor = v.object({
+/** used in client validation */
+export const donor_fv = v.object({
   title: donor_title,
   first_name: $req,
-  company_name: v.optional(str),
+  company_name: v.optional($),
   last_name: $req,
   email: v.pipe($req, v.email("Please check your email for correctness")),
+  address: v.optional(donor_address_fv),
+});
+
+/** used in server validation, where requestor might not have all the information (e.g .express checkouts) */
+export const donor = v.object({
+  title: donor_title,
+  first_name: v.optional($),
+  company_name: v.optional($),
+  last_name: v.optional($),
+  // only email is required
+  email: v.pipe($, v.email("Please check your email for correctness")),
   address: v.optional(donor_address),
 });
 
-export type Donor = v.InferOutput<typeof donor>;
+export type DonorFv = v.InferOutput<typeof donor_fv>;
 
-export const donor_blank: Donor = {
+export const donor_fv_blank: DonorFv = {
   title: "",
   first_name: "",
   last_name: "",
   email: "",
 };
-export const donor_init: Donor = {
+export const donor_fv_init: DonorFv = {
   title: "",
   first_name: "unknown",
   last_name: "unknown",
@@ -103,7 +126,7 @@ export const amount = v.object({
 
 export type Amount = v.InferOutput<typeof amount>;
 
-export const uuid = v.pipe(str, v.uuid());
+export const uuid = v.pipe($, v.uuid());
 
 export const program = v.object({
   id: uuid,
@@ -121,7 +144,7 @@ export const tribute_notif = v.object({
   to_email: v.pipe($req, v.email("invalid email")),
   to_fullname: $req,
   from_msg: v.pipe(
-    str,
+    $,
     v.maxLength(from_msg_max_length, (x) => `max ${x.requirement} characters`)
   ),
 });
@@ -140,15 +163,14 @@ export const intent = v.object({
   recipient,
   program: v.optional(program),
   donor,
-
   source: donation_source,
   source_id: v.optional(v.pipe($req, v.nanoid("invalid source id"))),
   tribute: v.optional(tribute),
   frequency,
   /** chain name, etc. */
-  via_name: str,
+  via_name: $,
   /** chain id, workflow-session-id, etc. */
-  via_id: str,
+  via_id: $,
 });
 
 export type DonationIntent = v.InferOutput<typeof intent>;

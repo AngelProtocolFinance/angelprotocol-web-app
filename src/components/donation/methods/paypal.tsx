@@ -5,7 +5,7 @@ import {
 } from "@paypal/react-paypal-js";
 import { paypal_client_id } from "constants/env";
 import { href } from "react-router";
-import { type DonationIntent, donor_init } from "types/donation-intent";
+import { type DonationIntent, donor_fv_init } from "types/donation-intent";
 import { use_donation } from "../context";
 import type { IPayPalExpress } from "./stripe/use-rhf";
 
@@ -28,7 +28,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
         fee_allowance: p.fee_allowance,
         currency: p.currency,
       },
-      donor: donor_init,
+      donor: donor_fv_init,
       via_id: "fiat",
       via_name: "Paypal",
       recipient: don.recipient.id,

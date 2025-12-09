@@ -7,7 +7,7 @@ import { min_fee_allowance } from "helpers/donation";
 import { href, useNavigate, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
-import type { DonationIntent, Donor } from "types/donation-intent";
+import type { DonationIntent, DonorFv } from "types/donation-intent";
 import { ContinueBtn } from "../../common/continue-btn";
 import { type CryptoDonationDetails, type Init, tip_val } from "../../types";
 import { PayQr } from "./pay-qr";
@@ -15,7 +15,7 @@ import { PayQr } from "./pay-qr";
 type Props = {
   classes?: string;
   fv: CryptoDonationDetails;
-  donor: Donor;
+  donor: DonorFv;
   init: Init;
 };
 
