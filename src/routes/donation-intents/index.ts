@@ -28,7 +28,7 @@ import { unit_per_usd } from ".server/unit-per-usd";
 
 const json_with_cookie_fn =
   (existing: null | IDonationsCookie, key: string) =>
-  async (data: Record<string, any>) => {
+  async (data: Record<string, any>, custom_key?: string) => {
     const now = Date.now();
     const obj = existing || {};
 
@@ -39,7 +39,7 @@ const json_with_cookie_fn =
       }
     }
 
-    obj[key] = now + 15 * 60 * 1000; // 15 minutes
+    obj[custom_key || key] = now + 15 * 60 * 1000; // 15 minutes
 
     // keep only top 5 most recent keys
     const sorted_entries = Object.entries(obj)
@@ -203,8 +203,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       email: intent.donor.email,
     };
     await onholddb.put(onhold);
-    // return resp.json({ grantId: grant.id });
-    return await json_with_cookie({ id: onhold.transactionId });
+    return await json_with_cookie({ id: onhold.transactionId }, grant.id);
   }
 
   if (d_type === "stripe") {
