@@ -60,12 +60,13 @@ export function Steps({ classes = "" }) {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring", delay: 0.4 }}
       >
-        We pride ourselves in helping fellow nonprofits like yours{" "}
-        <span className="font-bold">save money</span> with free donation
-        processing, <span className="font-bold">save time</span> by handling all
-        admin & reporting work, and{" "}
-        <span className="font-bold">save for your future</span> with simple but
-        powerful high-yield savings and investment options
+        We help nonprofits like yours{" "}
+        <span className="font-bold">grow gifts</span> by accepting all donation
+        methods, <span className="font-bold">grow capacity</span> by handling
+        all admin & reporting work, and{" "}
+        <span className="font-bold">grow funds</span> with simple high-yield
+        savings and investments. We pride ourselves in helping fellow nonprofits
+        like yours{" "}
       </motion.p>
       <motion.div
         className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10"
