@@ -1,4 +1,3 @@
-import { APP_NAME } from "constants/env";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
@@ -74,9 +73,9 @@ export function Stats({ classes = "" }) {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ type: "spring", delay: 0.2 }}
       >
-        <CountUp end={18000} suffix="+" />
+        <CountUp end={5} suffix="+" />
         <p className="max-w-md text-center mt-2 text-lg">
-          Causes discoverable across the {APP_NAME} directory.
+          Years providing free donation & fund management solutions.
         </p>
       </motion.article>
     </div>
