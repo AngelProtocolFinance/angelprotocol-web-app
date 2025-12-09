@@ -47,8 +47,7 @@ export function Loaded({ classes = "", ...props }: Props) {
               <div>
                 <p>50% - Domestic and international equities</p>
                 <p>30% - Fixed income</p>
-                <p>15% - Crypto</p>
-                <p>5% - Cash</p>
+                <p>20% - Crypto</p>
               </div>
               <Arrow />
             </Content>
