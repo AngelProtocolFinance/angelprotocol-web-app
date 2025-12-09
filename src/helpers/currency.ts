@@ -16,7 +16,7 @@ export const to_currencies_fv = (
     items.push({
       code: uppc,
       rate: uusd,
-      min: Math.round(uusd * MIN_DONATION_USD),
+      min: Math.ceil(uusd * MIN_DONATION_USD),
     });
   }
 
@@ -28,7 +28,7 @@ export const to_currencies_fv = (
   const pref_currency: ICurrencyFv = {
     code: upppref,
     rate: pref_rate,
-    min: Math.round(pref_rate * MIN_DONATION_USD),
+    min: Math.ceil(pref_rate * MIN_DONATION_USD),
   };
 
   return { pref: pref_currency, all: items };
