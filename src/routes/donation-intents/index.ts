@@ -20,14 +20,14 @@ import { payment_intent } from "./stripe/payment-intent";
 import { setup_intent } from "./stripe/setup-intent";
 import { donation_type } from "./types";
 import { onholddb } from ".server/aws/db";
-import { type IDonationsCookie, donations_cookie } from ".server/cookie";
+import { type IDonationIntentExpiries, donations_cookie } from ".server/cookie";
 import { get_recipient } from ".server/donation-recipient";
 import { deposit_addrs_envs, env } from ".server/env";
 import { aws_monitor, chariot, np } from ".server/sdks";
 import { unit_per_usd } from ".server/unit-per-usd";
 
 const json_with_cookie_fn =
-  (existing: null | IDonationsCookie, key: string) =>
+  (existing: null | IDonationIntentExpiries, key: string) =>
   async (data: Record<string, any>, custom_key?: string) => {
     const now = Date.now();
     const obj = existing || {};
@@ -57,9 +57,8 @@ const json_with_cookie_fn =
   };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const cookie: IDonationsCookie | null = await donations_cookie.parse(
-    request.headers.get("cookie")
-  );
+  const expiry_per_intent: IDonationIntentExpiries | null =
+    await donations_cookie.parse(request.headers.get("cookie"));
 
   const parsed = safeParse(schema, await request.json());
   if (parsed.issues) {
@@ -77,7 +76,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const now = new Date();
   const intent_id = nanoid();
-  const json_with_cookie = json_with_cookie_fn(cookie, intent_id);
+  const json_with_cookie = json_with_cookie_fn(expiry_per_intent, intent_id);
   const base = onhold_base(recipient, intent);
 
   if (d_type === "crypto") {

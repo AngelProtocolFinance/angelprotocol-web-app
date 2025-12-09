@@ -13,5 +13,5 @@ export const donations_cookie = createCookie("donations", {
   sameSite: "none",
 });
 
-/** donation-id: access expiry */
-export interface IDonationsCookie extends Record<string, number> {}
+/** Map of donation intent ID to expiry timestamp (milliseconds since epoch) */
+export interface IDonationIntentExpiries extends Record<string, number> {}

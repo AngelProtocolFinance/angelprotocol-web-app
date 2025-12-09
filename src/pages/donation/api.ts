@@ -19,7 +19,7 @@ import {
   onholddb,
   userdb,
 } from ".server/aws/db";
-import { type IDonationsCookie, donations_cookie } from ".server/cookie";
+import { type IDonationIntentExpiries, donations_cookie } from ".server/cookie";
 import { env } from ".server/env";
 import { donation_get, tribute_to_db } from ".server/utils";
 
@@ -58,14 +58,14 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
   if (!don) throw resp.status(404, "donation not found");
 
   // prioritize cookie authentication over user authentication
-  const cookie: IDonationsCookie | null = await donations_cookie.parse(
-    request.headers.get("cookie")
-  );
+  const expiry_per_intent = await donations_cookie
+    .parse(request.headers.get("cookie"))
+    .then<IDonationIntentExpiries>((x) => x || {});
 
   if (
-    cookie &&
-    cookie[params.id] &&
-    new Date(cookie[params.id]) >= new Date()
+    expiry_per_intent &&
+    expiry_per_intent[params.id] &&
+    expiry_per_intent[params.id] >= Date.now()
   ) {
     // cookie is valid, proceed without further auth checks
   } else {
