@@ -7,7 +7,6 @@
     "ignore": [
       "./package.json",
       "./public/scripts/*",
-      "./src/components/TokenField/TokenSelector/coins/*",
       "./src/scripts/*"
     ]
   },
@@ -39,7 +38,9 @@
         "useExhaustiveDependencies": "warn",
         "noPrecisionLoss": "off",
         "noChildrenProp": "off",
-        "useJsxKeyInIterable": "off"
+        "useJsxKeyInIterable": "off",
+        "noUnusedImports": "warn",
+        "noUnusedVariables": "warn"
       },
       "a11y": {
         "useButtonType": "off",

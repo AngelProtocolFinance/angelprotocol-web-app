@@ -13,7 +13,7 @@ import type { Route } from "./+types";
 
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
-export const meta: Route.MetaFunction = ({ loaderData: d, location: loc }) => {
+export const meta: Route.MetaFunction = ({ loaderData: d }) => {
   if (!d) return [];
   return metas({ title: `Form - ${d.name}` });
 };
