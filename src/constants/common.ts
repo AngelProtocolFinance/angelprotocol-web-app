@@ -3,6 +3,8 @@ import type { IIncrement } from "@better-giving/schemas";
 
 export const BYTES_IN_MB = 1e6;
 
+export const MIN_DONATION_USD = 2;
+
 export const PROCESSING_RATES = {
   chariot: 0.029,
   stripe: 0.022,

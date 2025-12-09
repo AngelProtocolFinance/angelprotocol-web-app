@@ -1,5 +1,6 @@
 import { is_custom, tokens_map } from "@better-giving/crypto";
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
+import { MIN_DONATION_USD } from "constants/common";
 import { addDays, getUnixTime } from "date-fns";
 import { rd2num } from "helpers/decimal";
 import { resp } from "helpers/https";
@@ -207,6 +208,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (d_type === "stripe") {
     const upusd = await unit_per_usd(intent.amount.currency);
+    const amount_usd = rd2num(intent.amount.amount / upusd, 1);
+    if (amount_usd < MIN_DONATION_USD) return resp.status(400, "less than min");
 
     const customer_id = await customer_with_currency(
       intent.amount.currency.toUpperCase(),
