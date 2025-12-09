@@ -1,7 +1,11 @@
 import { Steps, type TDonation } from "components/donation";
+<<<<<<< HEAD
 import { donor_fv_blank } from "lib/donations/schema";
-import type { Route } from "./+types";
+=======
 import { useEffect } from "react";
+import { donor_fv_blank } from "types/donation-intent";
+>>>>>>> f478d738c (fixes)
+import type { Route } from "./+types";
 export { loader } from "./api";
 
 export default function Page({ loaderData, params }: Route.ComponentProps) {

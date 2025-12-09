@@ -23,8 +23,7 @@ export interface ILoader extends IForm {
 
 const recipient_fn = async (
   id: string,
-  type: IForm["recipient_type"],
-  owner: string
+  type: IForm["recipient_type"]
 ): Promise<IRecipient | undefined> => {
   if (type === "fund") {
     const x = await funddb.fund(id);
@@ -55,8 +54,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 
   const recipient_details = await recipient_fn(
     form.recipient,
-    form.recipient_type,
-    form.owner
+    form.recipient_type
   );
   if (!recipient_details) throw resp.err(404, "recipient not found");
 

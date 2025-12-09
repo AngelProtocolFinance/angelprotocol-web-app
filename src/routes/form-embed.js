@@ -82,7 +82,7 @@
           } else {
             console.warn("Invalid redirect URL protocol:", url.protocol);
           }
-        } catch (error) {
+        } catch (_) {
           console.warn("Invalid redirect URL:", e.data.redirect_url);
         }
       }

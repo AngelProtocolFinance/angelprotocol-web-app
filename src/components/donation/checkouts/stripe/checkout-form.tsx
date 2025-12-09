@@ -9,7 +9,7 @@ import { type IPrompt, Prompt } from "components/prompt";
 import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import { href } from "react-router";
-import type { IDonationIntent, IDonorFv } from "lib/donations";
+import type { IDonationIntent } from "lib/donations";
 import { use_donation } from "../../context";
 import { Loader } from "../loader";
 
@@ -17,7 +17,6 @@ type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 
 interface Props extends IDonationIntent {
   order_id: string;
-  donor: IDonorFv;
 }
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook

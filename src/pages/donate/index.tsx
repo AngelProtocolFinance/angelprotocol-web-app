@@ -71,6 +71,7 @@ function Page({ loaderData }: Route.ComponentProps) {
               id: null,
               method_ids: endow.donateMethods,
               increments: endow.increments,
+              success_redirect: undefined,
             }}
             program={
               program ? { id: program.id, name: program.title } : undefined
