@@ -9,7 +9,6 @@ import { type IPrompt, Prompt } from "components/prompt";
 import { error_prompt } from "helpers/error-prompt";
 import { type FormEventHandler, useState } from "react";
 import { href } from "react-router";
-import { use_donation } from "../../context";
 import type { DonorFv, StripeDonationDetails } from "../../types";
 import { Loader } from "../loader";
 
@@ -23,7 +22,6 @@ interface Props extends StripeDonationDetails {
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export function Checkout(props: Props) {
-  const { don } = use_donation();
   const [complete, set_complete] = useState(false);
   const [prompt, set_prompt] = useState<IPrompt>();
   const stripe = useStripe();

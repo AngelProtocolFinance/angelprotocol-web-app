@@ -45,8 +45,8 @@ importers:
         specifier: 2.0.7
         version: 2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)
       '@better-giving/donation':
-        specifier: 3.0.30
-        version: 3.0.30(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.4(valibot@0.42.0(typescript@5.9.2)))(@better-giving/types@1.1.8)(date-fns@4.1.0)(valibot@0.42.0(typescript@5.9.2))
+        specifier: 3.0.32
+        version: 3.0.32(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.4(valibot@0.42.0(typescript@5.9.2)))(@better-giving/types@1.1.8)(date-fns@4.1.0)(valibot@0.42.0(typescript@5.9.2))
       '@better-giving/emails':
         specifier: 1.0.2
         version: 1.0.2(@aws-sdk/client-ses@3.485.0)
@@ -63,8 +63,8 @@ importers:
         specifier: 2.0.8
         version: 2.0.8(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/types@1.1.8)
       '@better-giving/paypal':
-        specifier: 1.0.8
-        version: 1.0.8
+        specifier: 1.3.4
+        version: 1.3.4
       '@better-giving/referrals':
         specifier: 1.0.7
         version: 1.0.7(@better-giving/types@1.1.8)
@@ -110,9 +110,9 @@ importers:
       '@maskito/react':
         specifier: 3.5.0
         version: 3.5.0(@maskito/core@3.5.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@paypal/react-paypal-js':
-        specifier: 8.3.0
-        version: 8.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@paypal/paypal-js':
+        specifier: 9.0.1
+        version: 9.0.1
       '@radix-ui/react-slider':
         specifier: 1.1.2
         version: 1.1.2(@types/react-dom@18.2.19)(@types/react@18.2.62)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -666,8 +666,8 @@ packages:
       '@aws-sdk/lib-dynamodb': 3.485.0
       '@better-giving/types': 1.1.8
 
-  '@better-giving/donation@3.0.30':
-    resolution: {integrity: sha512-OlADszsfXCMZATmff8IUH4+o3uw0A83o5s/pBITnPZ4RouTDsnxSg7zfxy9u4a6BX6skc0T7KtZO+W3KDp2Xgw==}
+  '@better-giving/donation@3.0.32':
+    resolution: {integrity: sha512-mGr/GNSC8Ub+Y0XbY/nwmGw0ujCOdXwFZ49qQn6jiB1hQaVbPVpxkqYf++XwAr9avvxFE5quyOj9ae4yY8ylnA==}
     peerDependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0
       '@better-giving/db': 2.0.7
@@ -713,8 +713,8 @@ packages:
       '@better-giving/db': 2.0.7
       '@better-giving/types': 1.1.8
 
-  '@better-giving/paypal@1.0.8':
-    resolution: {integrity: sha512-4bDUGfd9QtXBBmKtrTu3S6wGn9TO1TZYEQXonbULsWCJZz0lhvMxC1Iznb/z+QduvO+HvRb8dZ17mhdBJfhPBg==}
+  '@better-giving/paypal@1.3.4':
+    resolution: {integrity: sha512-n+RTd8z3xaspVDiDr70uRE/RlNvK/U20SaYw+pYYyDh27TdPjJXlXUpTYt8kVtq2YysTNjAl0gTLuVWE31xRdw==}
 
   '@better-giving/referrals@1.0.7':
     resolution: {integrity: sha512-Nlk8elczE1qRmtZ3JzZxOxSspMYIrBnQczUnq5o2XI19EeGa8nLsU7rOI9DfXmNy4BDw6rHE15YhLgbBYCElEg==}
@@ -1166,17 +1166,8 @@ packages:
   '@open-draft/until@2.1.0':
     resolution: {integrity: sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==}
 
-  '@paypal/paypal-js@8.4.2':
-    resolution: {integrity: sha512-UbY2lvwW65KX4migWbAx8KK0TCbPdIxeHIHogpJ5Z6yta5Qd2+90rXyx8FGdp6wrcr1f/srotlxnBXvqYWyHog==}
-
-  '@paypal/react-paypal-js@8.3.0':
-    resolution: {integrity: sha512-SX17d2h1CMNFGI+wtjb329AEDaBR8Ziy2LCV076eDcY1Q0MFKRkfQ/v0HOAvZtk3sJoydRmYez2pq47BRblwqQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-
-  '@paypal/sdk-constants@1.0.157':
-    resolution: {integrity: sha512-BjxWT9rK6dM1AOffSpvHYY47/8BY775jgEYYiwH6eL4YaqU5Epcw7zOtwQ8L4UaEn4FCAjZ2EWxaS83dCN7SpA==}
+  '@paypal/paypal-js@9.0.1':
+    resolution: {integrity: sha512-6A5hkyYBSuloO7rPwnoPoy/0PPNH0pZZ1TBSTuEaSVqJ9h9t13PiP1ZarffirsO/e5t4hKjUmUORjgKV9sTMLw==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -2744,9 +2735,6 @@ packages:
 
   headers-polyfill@4.0.3:
     resolution: {integrity: sha512-IScLbePpkvO846sIwOtOTDjutRMWdXdJmXdMvk6gCBHxFO8d+QKOQedyZSxFTTFYRSmlgSTDtXqqq4pcenBXLQ==}
-
-  hi-base32@0.5.1:
-    resolution: {integrity: sha512-EmBBpvdYh/4XxsnUybsPag6VikPYnN30td+vQk+GI3qpahVEG9+gTkG0aXVxTjBqQ5T6ijbWIu77O+C5WFWsnA==}
 
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -4922,7 +4910,7 @@ snapshots:
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
       '@better-giving/types': 1.1.8
 
-  '@better-giving/donation@3.0.30(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.4(valibot@0.42.0(typescript@5.9.2)))(@better-giving/types@1.1.8)(date-fns@4.1.0)(valibot@0.42.0(typescript@5.9.2))':
+  '@better-giving/donation@3.0.32(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/db@2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8))(@better-giving/schemas@2.0.4(valibot@0.42.0(typescript@5.9.2)))(@better-giving/types@1.1.8)(date-fns@4.1.0)(valibot@0.42.0(typescript@5.9.2))':
     dependencies:
       '@aws-sdk/lib-dynamodb': 3.485.0(@aws-sdk/client-dynamodb@3.485.0)
       '@better-giving/db': 2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)
@@ -4964,7 +4952,7 @@ snapshots:
       '@better-giving/db': 2.0.7(@aws-sdk/lib-dynamodb@3.485.0(@aws-sdk/client-dynamodb@3.485.0))(@better-giving/types@1.1.8)
       '@better-giving/types': 1.1.8
 
-  '@better-giving/paypal@1.0.8': {}
+  '@better-giving/paypal@1.3.4': {}
 
   '@better-giving/referrals@1.0.7(@better-giving/types@1.1.8)':
     dependencies:
@@ -5328,20 +5316,9 @@ snapshots:
 
   '@open-draft/until@2.1.0': {}
 
-  '@paypal/paypal-js@8.4.2':
+  '@paypal/paypal-js@9.0.1':
     dependencies:
       promise-polyfill: 8.3.0
-
-  '@paypal/react-paypal-js@8.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@paypal/paypal-js': 8.4.2
-      '@paypal/sdk-constants': 1.0.157
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-
-  '@paypal/sdk-constants@1.0.157':
-    dependencies:
-      hi-base32: 0.5.1
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -6999,8 +6976,6 @@ snapshots:
       function-bind: 1.1.2
 
   headers-polyfill@4.0.3: {}
-
-  hi-base32@0.5.1: {}
 
   hoist-non-react-statics@3.3.2:
     dependencies:

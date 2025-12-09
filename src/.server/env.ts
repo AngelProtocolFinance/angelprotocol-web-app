@@ -131,4 +131,6 @@ export const paypal_envs = {
   client_secret: _var("PAYPAL_CLIENT_SECRET"),
   webhook_id: _var("PAYPAL_WEBHOOK_ID"),
   api_url: _var("PAYPAL_API_URL"),
+  product_id: _var("PAYPAL_PRODUCT_ID"),
+  plans: JSON.parse(_var("PAYPAL_PLANS_JSON")) as Record<string, string>,
 };
