@@ -22,6 +22,8 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
       (async (...x) => {
         const [a, t, fa, c, fr] = x;
 
+        const to_pay = a + t + fa;
+
         const { loadScript } = await import("@paypal/paypal-js");
         const paypal = await loadScript({
           clientId: paypal_client_id,
@@ -60,18 +62,76 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
         };
         const on_approve: PayPalButtonOnApprove = async (_, actions) => {
           if (actions.order) {
-            const captured = await actions.order.capture();
-            const onhold_id = captured?.purchase_units?.[0].custom_id;
+            const { purchase_units, payment_source = {} } =
+              await actions.order.capture();
+            const ps_id = Object.keys(payment_source)[0] || "paypal";
+            const ps = payment_source.paypal || payment_source.venmo;
+            const onhold_id = purchase_units?.[0].custom_id;
             if (!onhold_id) return on_error("Missing order information");
-            const return_url = `${don.base_url}${href("/donations/:id", { id: onhold_id })}`;
-            return actions.redirect(return_url);
+
+            const custom_redirect = don.config?.success_redirect;
+            const url = custom_redirect
+              ? new URL(custom_redirect)
+              : new URL(
+                  `${don.base_url}${href("/donations/:id", { id: onhold_id })}`
+                );
+
+            if (custom_redirect) {
+              url.searchParams.set("donation_amount", to_pay.toString());
+              url.searchParams.set("donation_currency", c);
+              if (ps?.name?.full_name) {
+                url.searchParams.set("donor_name", ps.name.full_name);
+              }
+              url.searchParams.set("payment_method", ps_id);
+            }
+
+            const return_url = url.toString();
+            // Redirect via postMessage if in iframe, otherwise use actions.redirect
+            if (window.self !== window.top) {
+              window.parent.postMessage(
+                {
+                  type: "redirect",
+                  redirect_url: return_url,
+                  form_id: don.config?.id,
+                },
+                "*"
+              );
+            } else {
+              return actions.redirect(return_url);
+            }
           }
           if (actions.subscription) {
             const sub = await actions.subscription.get();
             if ("custom_id" in sub) {
               const onhold_id = sub.custom_id as string;
-              const return_url = `${window.location.origin}${href("/donations/:id", { id: onhold_id })}`;
-              return actions.redirect(return_url);
+
+              const custom_redirect = don.config?.success_redirect;
+              const url = custom_redirect
+                ? new URL(custom_redirect)
+                : new URL(
+                    `${don.base_url}${href("/donations/:id", { id: onhold_id })}`
+                  );
+
+              if (custom_redirect) {
+                url.searchParams.set("payment_method", "paypal");
+                url.searchParams.set("donation_amount", to_pay.toString());
+                url.searchParams.set("donation_currency", c);
+              }
+              const return_url = url.toString();
+
+              // Redirect via postMessage if in iframe, otherwise use actions.redirect
+              if (window.self !== window.top) {
+                window.parent.postMessage(
+                  {
+                    type: "redirect",
+                    redirect_url: return_url,
+                    form_id: don.config?.id,
+                  },
+                  "*"
+                );
+              } else {
+                return actions.redirect(return_url);
+              }
             }
           }
         };
@@ -113,6 +173,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
     don.source,
     don.program,
     don.config?.id,
+    don.config?.success_redirect,
     don.base_url,
     on_error,
   ]);
