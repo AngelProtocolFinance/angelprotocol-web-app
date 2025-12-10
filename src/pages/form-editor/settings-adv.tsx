@@ -56,19 +56,15 @@ export function SettingsAdv({
             </code>
             ,{" "}
             <code className="text-xs text-amber bg-gray-l4 p-0.5 rounded-xs">
-              amount
+              donation_amount
             </code>
             ,{" "}
             <code className="text-xs text-amber bg-gray-l4 p-0.5 rounded-xs">
-              currency
-            </code>
-            ,{" "}
-            <code className="text-xs text-amber bg-gray-l4 p-0.5 rounded-xs">
-              email
+              donation_currency
             </code>
             , and{" "}
             <code className="text-xs text-amber bg-gray-l4 p-0.5 rounded-xs">
-              transaction_id
+              payment_method
             </code>{" "}
             would be included on the{" "}
             <ExtLink
