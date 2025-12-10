@@ -12,7 +12,7 @@ import {
 } from "lib/donations/schema";
 import { useState } from "react";
 import ChariotConnect from "react-chariot-connect";
-import { href, useNavigate } from "react-router";
+import { href } from "react-router";
 import { safeParse } from "valibot";
 import { usd_option } from "../../common/constants";
 import { currency } from "../../common/currency";
@@ -31,7 +31,6 @@ export function ChariotCheckout(props: DafDonationDetails) {
   const { don_set, don } = use_donation();
   const [prompt, set_prompt] = useState<IPrompt>();
   const [grant_state, set_grant_state] = useState<"pending">();
-  const navigate = useNavigate();
 
   const tipv = tip_val(props.tip_format, props.tip, +props.amount);
   const mfa = props.cover_processing_fee
@@ -138,7 +137,39 @@ export function ChariotCheckout(props: DafDonationDetails) {
               const { id } = await res.json();
 
               set_prompt(undefined);
-              navigate(href("/donations/:id", { id }));
+
+              const custom_redirect = don.config?.success_redirect;
+              const url = custom_redirect
+                ? new URL(custom_redirect)
+                : new URL(`${don.base_url}${href("/donations/:id", { id })}`);
+
+              if (custom_redirect) {
+                url.searchParams.set(
+                  "donor_name",
+                  `${grantor.firstName} ${grantor.lastName}`
+                );
+                url.searchParams.set(
+                  "donation_amount",
+                  grant_amount.toString()
+                );
+                url.searchParams.set("donation_currency", usd_option.code);
+                url.searchParams.set("payment_method", "daf");
+              }
+              const return_url = url.toString();
+
+              // redirect via postMessage if in iframe, otherwise navigate directly
+              if (window.self !== window.top) {
+                window.parent.postMessage(
+                  {
+                    type: "redirect",
+                    redirect_url: return_url,
+                    form_id: don.config?.id,
+                  },
+                  "*"
+                );
+              } else {
+                window.location.href = return_url;
+              }
             } catch (err) {
               set_prompt(error_prompt(err, { context: "processing donation" }));
             } finally {
