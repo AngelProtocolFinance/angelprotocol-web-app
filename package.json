@@ -118,7 +118,7 @@
     "@react-router/dev": "7.8.2",
     "@tailwindcss/typography": "0.5.16",
     "@testing-library/dom": "10.4.1",
-    "@testing-library/jest-dom": "6.8.0",
+    "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.0",
     "@testing-library/user-event": "14.6.1",
     "@types/lodash": "4.17.10",
@@ -128,16 +128,16 @@
     "@types/react-csv": "1.1.10",
     "@types/react-dom": "18.2.19",
     "@vercel/react-router": "1.2.3",
-    "jsdom": "26.1.0",
+    "jsdom": "27.3.0",
     "lefthook": "1.13.0",
-    "msw": "2.11.2",
+    "msw": "2.12.4",
     "tailwindcss": "4.1.13",
     "tsc-files": "1.1.4",
     "typescript": "5.9.2",
     "vite": "6.3.3",
     "vite-plugin-devtools-json": "1.0.0",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "3.2.1"
+    "vitest": "4.0.15"
   },
   "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a"
 }
