@@ -3,6 +3,7 @@ import { humanize } from "helpers/decimal";
 import {
   ArrowDownToLineIcon,
   ArrowLeftRightIcon,
+  ArrowUpFromLineIcon,
   CircleHelp,
 } from "lucide-react";
 import { NavLink, Outlet } from "react-router";
@@ -43,6 +44,13 @@ function Page({ loaderData }: Route.ComponentProps) {
         ${humanize(bal_lock)} <SfPerf id={id} />
       </div>
       <div className="flex items-center gap-4 mt-4">
+        <NavLink
+          to="deposit"
+          className="btn-green rounded px-4.5 py-2.5 text-sm flex items-center gap-2"
+        >
+          <ArrowUpFromLineIcon size={16} />
+          Deposit
+        </NavLink>
         <NavLink
           to="withdraw"
           className="btn-outline rounded px-4.5 py-2.5 text-sm flex items-center gap-2"

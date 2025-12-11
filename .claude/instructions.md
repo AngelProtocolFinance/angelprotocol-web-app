@@ -27,7 +27,8 @@ export const DonationForm = () => { ... };
 ## React Component Design
 
 - **Props-based design**: Make components reusable by accepting configuration as props rather than deriving values internally. This improves SSR compatibility, testability, and flexibility
-- **Define interfaces**: Always define proper TypeScript interfaces for component props
+- **Define interfaces**: Always define proper TypeScript interfaces for component props (e.g., `AccountSelectorProps` for `AccountSelector` component)
+- **External spacing via classes prop**: Classes that affect outside spacing (margin, positioning) should be passed from the parent, not hardcoded inside the component. Add a `classes` prop and apply it to the root element (e.g., `<AccountSelector classes="mb-6" />`)
 - **Use existing patterns**: Check the codebase for existing design system classes (e.g., `btn btn-blue`) and patterns before creating custom ones
 - **Provide fallbacks**: Use sensible fallbacks for optional props (e.g., `logo || default_logo`)
 - **Keep it concise**: Prefer compact, inline layouts over verbose sections with extra headings unless the UI demands it

@@ -2,7 +2,11 @@ import { min_payout_amount } from "@better-giving/endowment/schema";
 import { Info } from "components/status";
 import { Arrow, Content } from "components/tooltip";
 import { humanize } from "helpers/decimal";
-import { ArrowDownToLineIcon, ArrowLeftRightIcon } from "lucide-react";
+import {
+  ArrowDownToLineIcon,
+  ArrowLeftRightIcon,
+  ArrowUpFromLineIcon,
+} from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 import { use_admin_data } from "../use-admin-data";
 import type { DashboardData } from "./api";
@@ -57,6 +61,13 @@ export function Loaded({ classes = "", ...props }: Props) {
         />
       </div>
       <div className="flex items-center gap-4 mt-4">
+        <NavLink
+          to="deposit"
+          className="btn-green rounded px-4.5 py-2.5 text-sm flex items-center gap-2"
+        >
+          <ArrowUpFromLineIcon size={16} />
+          Deposit
+        </NavLink>
         <NavLink
           to="withdraw"
           className="btn-outline rounded px-4.5 py-2.5 text-sm flex items-center gap-2"

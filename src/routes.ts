@@ -113,15 +113,18 @@ export default [
       r("payout-min", admin.$("dashboard/payout-min.tsx")._),
       r("withdraw", admin.$("dashboard/withdraw.tsx")._),
       r("transfer", admin.$("dashboard/transfer.tsx")._),
+      r("deposit", admin.$("dashboard/deposit.tsx")._),
     ]),
     r("referrals", admin.$("referrals/index.tsx")._),
     r("investments", admin.$("investments/index.tsx")._, [
       r("withdraw", admin.$("investments/withdraw.tsx")._),
       r("transfer", admin.$("investments/transfer.tsx")._),
+      r("deposit", admin.$("investments/deposit.tsx")._),
     ]),
     r("savings", admin.$("savings/index.tsx")._, [
       r("withdraw", admin.$("savings/withdraw.tsx")._),
       r("transfer", admin.$("savings/transfer.tsx")._),
+      r("deposit", admin.$("savings/deposit.tsx")._),
     ]),
     r("dashboard/payouts", admin.$("dashboard/payouts.tsx")._),
     r("dashboard/grants", admin.$("dashboard/grants-history.tsx")._),
