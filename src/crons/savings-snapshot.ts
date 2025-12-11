@@ -3,7 +3,7 @@ import {
   ScanCommand,
   type ScanCommandInput,
 } from "@aws-sdk/lib-dynamodb";
-import { BalanceDb, type IBalance } from "@better-giving/balance";
+import { BalanceDb, type IBalance } from "lib/balance";
 import { type IBalLog, LiquidDb } from "lib/liquid";
 import type { ActionFunction } from "react-router";
 import { liqdb as db } from ".server/aws/db";

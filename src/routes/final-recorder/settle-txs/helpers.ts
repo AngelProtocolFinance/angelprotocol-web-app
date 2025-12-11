@@ -1,4 +1,4 @@
-import type { IBalanceUpdate } from "@better-giving/balance";
+import type { IBalanceUpdate } from "lib/balance";
 
 export const apply_fees = (
   amount: number,

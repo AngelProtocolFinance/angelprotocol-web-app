@@ -1,8 +1,8 @@
-import type { IPrettyBalance } from "@better-giving/balance";
 import type { INpo, IProgram } from "@better-giving/endowment";
 import { program_id } from "@better-giving/endowment/schema";
 import { $int_gte1 } from "@better-giving/schemas";
 import { search } from "helpers/https";
+import type { IPrettyBalance } from "lib/balance";
 import { type LoaderFunctionArgs, data } from "react-router";
 import type { UserV2 } from "types/auth";
 import * as v from "valibot";

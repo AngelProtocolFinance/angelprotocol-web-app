@@ -6,9 +6,9 @@ import { VerifiedIcon } from "components/verified-icon";
 import { Globe, MapPin } from "lucide-react";
 import { Await, NavLink, href } from "react-router";
 
-import type { IPrettyBalance } from "@better-giving/balance";
 import type { INpo } from "@better-giving/endowment";
 import { ContentLoader } from "components/content-loader";
+import type { IPrettyBalance } from "lib/balance";
 import { Suspense } from "react";
 import type { DetailedUser } from "types/auth";
 
