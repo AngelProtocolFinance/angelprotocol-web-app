@@ -1,5 +1,5 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
+import type { IBalanceTx } from "lib/balance-txs";
 import { nanoid } from "nanoid";
 import { baldb, btxdb, liqdb } from ".server/aws/db";
 

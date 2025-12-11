@@ -16,7 +16,6 @@ export {
 } from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { BalanceDb } from "@better-giving/balance";
-import { BalanceTxsDb } from "@better-giving/balance-txs";
 import { BankingApplicationsDb } from "@better-giving/banking-applications";
 import {
   DonationDonorsDb,
@@ -28,6 +27,7 @@ import { FundDb } from "@better-giving/fundraiser";
 import { PayoutsDB } from "@better-giving/payouts";
 import { RegDb } from "@better-giving/reg";
 import { UserDb } from "@better-giving/user";
+import { BalanceTxsDb } from "lib/balance-txs";
 import { FormsDb } from "lib/forms";
 import { LiquidDb } from "lib/liquid";
 import { NavHistoryDB } from "lib/nav";

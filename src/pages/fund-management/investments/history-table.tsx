@@ -1,6 +1,6 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import type { IBalanceTx } from "lib/balance-txs";
 import type { ILog } from "lib/nav";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";

@@ -1,7 +1,7 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
 import { NpoName } from "components/npo-name";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import type { IBalanceTx } from "lib/balance-txs";
 import { NavLink } from "react-router";
 import type { IPaginator } from "types/components";
 

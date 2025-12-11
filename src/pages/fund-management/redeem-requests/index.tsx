@@ -1,6 +1,6 @@
-import type { TStatus } from "@better-giving/balance-txs";
 import { Select } from "components/selector";
 import { use_paginator } from "hooks/use-paginator";
+import type { TStatus } from "lib/balance-txs";
 import { Outlet, useSearchParams } from "react-router";
 import { CacheRoute, createClientLoaderCache } from "remix-client-cache";
 import type { Route } from "./+types";

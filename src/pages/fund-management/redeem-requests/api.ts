@@ -1,5 +1,5 @@
-import { balance_txs_options } from "@better-giving/balance-txs";
 import { resp, search } from "helpers/https";
+import { balance_txs_options } from "lib/balance-txs";
 import type { LoaderFunctionArgs } from "react-router";
 import * as v from "valibot";
 import { cognito } from ".server/auth";

@@ -1,7 +1,7 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
 import { Txs } from "@better-giving/db";
 import { type IPayout, PayoutsDB } from "@better-giving/payouts";
 import { produce } from "immer";
+import type { IBalanceTx } from "lib/balance-txs";
 import { nanoid } from "nanoid";
 import { type ActionFunction, redirect } from "react-router";
 import * as v from "valibot";

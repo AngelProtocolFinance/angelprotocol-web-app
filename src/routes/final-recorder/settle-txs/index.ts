@@ -1,9 +1,9 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
 import { type TxItems, Txs } from "@better-giving/db";
 import type { IDonationFinalAttr } from "@better-giving/donation";
 import type { IAllocation } from "@better-giving/endowment";
 import { PayoutsDB } from "@better-giving/payouts";
 import { produce } from "immer";
+import type { IBalanceTx } from "lib/balance-txs";
 import { nanoid } from "nanoid";
 import { type Increments, bal_deltas_fn } from "./helpers";
 import type { Base, Overrides, Uniques } from "./types";

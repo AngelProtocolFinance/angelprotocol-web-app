@@ -1,5 +1,5 @@
-import type { IBalanceTxsPage } from "@better-giving/balance-txs";
 import { use_paginator } from "hooks/use-paginator";
+import type { IBalanceTxsPage } from "lib/balance-txs";
 import { useSearchParams } from "react-router";
 import { Table } from "./table";
 

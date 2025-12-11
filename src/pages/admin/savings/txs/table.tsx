@@ -1,7 +1,7 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
 import { Arrow, Content, Tooltip } from "components/tooltip";
 import { format } from "date-fns";
 import { humanize } from "helpers/decimal";
+import type { IBalanceTx } from "lib/balance-txs";
 import { ArrowRight, InfoIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import type { IPaginator } from "types/components";

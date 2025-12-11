@@ -1,4 +1,4 @@
-import type { IBalanceTxsPage } from "@better-giving/balance-txs";
+import type { IBalanceTxsPage } from "lib/balance-txs";
 import type { LoaderFunctionArgs } from "react-router";
 import * as v from "valibot";
 import { baldb, btxdb } from ".server/aws/db";

@@ -1,5 +1,5 @@
-import type { IBalanceTx } from "@better-giving/balance-txs";
 import { mask_string } from "helpers/mask-string";
+import type { IBalanceTx } from "lib/balance-txs";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 
