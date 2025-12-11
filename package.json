@@ -26,7 +26,7 @@
     ]
   },
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@anvilco/anvil": "3.3.2",
