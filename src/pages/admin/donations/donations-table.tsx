@@ -21,6 +21,8 @@ const csv_headers: {
   { key: "payment_method", label: "payment method" },
   { key: "frequency", label: "frequency" },
   { key: "donation_origin", label: "donation origin" },
+  { key: "donation_origin_id", label: "form id" },
+  { key: "donation_origin_tag", label: "form tag" },
   { key: "donor_name", label: "donor name" },
   { key: "donor_company", label: "donor company" },
   { key: "donor_email", label: "donor email" },
