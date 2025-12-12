@@ -8,7 +8,10 @@ export async function handle_setup_intent_failed(
   const meta = data.object.metadata as IMetadataSubs | null;
   if (!meta) throw "missing setup intent metadata";
 
-  const message = `Setup Intent ID ${data.object.id} failed due to: ${data.object.last_setup_error?.message ?? "Stripe error"}`;
+  const err = data.object.last_setup_error;
+  if (err?.type === "card_error") return; //already handled in frontend
+
+  const message = `Setup Intent ID ${data.object.id} failed due to: ${err?.message ?? "Stripe error"}`;
   await send_email(
     {
       name: "donation-error",

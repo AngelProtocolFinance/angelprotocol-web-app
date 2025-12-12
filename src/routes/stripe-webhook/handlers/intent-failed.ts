@@ -8,6 +8,8 @@ import { stripe } from ".server/sdks";
 export async function handle_intent_failed(
   data: Stripe.PaymentIntentPaymentFailedEvent.Data
 ) {
+  const err = data.object.last_payment_error;
+  if (err?.type === "card_error") return; //already handled in frontend
   const meta = await (async (pi) => {
     //subs pi metadata is empty object // retrieve from invoice
     if (Object.keys(pi.metadata).length === 0) {
@@ -27,7 +29,7 @@ export async function handle_intent_failed(
       name: "donation-error",
       recipientName: meta.charityName,
       donorFirstName: meta.fullName.split(" ")[0],
-      errorMessage: `Payment Intent ID ${data.object.id} failed due to: ${data.object.last_payment_error?.message ?? "Stripe error"}`,
+      errorMessage: `Payment Intent ID ${data.object.id} failed due to: ${err?.message ?? "Stripe error"}`,
     },
     [meta.email]
   );
