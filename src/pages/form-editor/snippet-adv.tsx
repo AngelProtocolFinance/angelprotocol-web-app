@@ -6,7 +6,7 @@ type Props = {
   base_url: string;
 };
 export function SnippetAdv({ classes = "", form_id, base_url }: Props) {
-  const script_url = `<script src="${base_url}/form-embed.js"async></script>`;
+  const script_url = `<script src="${base_url}/form-embed.js" async></script>`;
   const container_url = `<div data-bg-form="${form_id}"></div>`;
 
   return (
