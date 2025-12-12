@@ -9,7 +9,7 @@ import type {
   DonationIntent,
   DonorAddressFv,
   IStripeIntentReturn,
-} from "lib/donations/donation-intent";
+} from "lib/donations";
 import { href } from "react-router";
 import { use_donation } from "../../../context";
 import type { IStripeExpress } from "../use-rhf";

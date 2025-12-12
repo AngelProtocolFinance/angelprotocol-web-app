@@ -1,5 +1,5 @@
 import { Steps, type TDonation } from "components/donation";
-import { donor_fv_blank } from "lib/donations/donation-intent";
+import { donor_fv_blank } from "lib/donations/schema";
 import type { Route } from "./+types";
 export { loader } from "./api";
 

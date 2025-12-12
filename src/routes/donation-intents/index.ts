@@ -7,7 +7,7 @@ import { resp } from "helpers/https";
 import {
   type IStripeIntentReturn,
   intent as schema,
-} from "lib/donations/donation-intent";
+} from "lib/donations/schema";
 import { nanoid } from "nanoid";
 import type { ActionFunction } from "react-router";
 import type { Payment } from "types/crypto";

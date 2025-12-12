@@ -1,7 +1,7 @@
 import type { ITributeNotif, TDonationSource } from "@better-giving/donation";
 import { $int_gte1 } from "@better-giving/endowment/schema";
 import { resp } from "helpers/https";
-import type { Tribute } from "lib/donations/donation-intent";
+import type { Tribute } from "lib/donations";
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,

@@ -2,7 +2,7 @@ import {
   donor_msg_to_npo,
   donor_public_msg,
   tribute,
-} from "lib/donations/donation-intent";
+} from "lib/donations/schema";
 import * as v from "valibot";
 export const tribute_fv = v.object({
   type: v.literal("tribute"),

@@ -1,4 +1,4 @@
-import type { IStripeIntentReturn } from "lib/donations/donation-intent";
+import type { IStripeIntentReturn } from "lib/donations";
 import { http, HttpResponse } from "msw";
 import { href } from "react-router";
 import type { ITokenEstimate } from "types/api";

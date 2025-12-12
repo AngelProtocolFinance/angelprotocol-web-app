@@ -1,5 +1,5 @@
 import { Steps, type TDonation } from "components/donation";
-import { donor_fv_blank } from "lib/donations/donation-intent";
+import { donor_fv_blank } from "lib/donations/schema";
 import { EyeIcon } from "lucide-react";
 import type { ILoader } from "./api";
 

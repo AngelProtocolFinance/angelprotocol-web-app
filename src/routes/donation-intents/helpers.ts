@@ -1,5 +1,5 @@
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import type { DonationIntent } from "lib/donations/donation-intent";
+import type { DonationIntent } from "lib/donations";
 import type { Except } from "type-fest";
 import type { Recipient } from ".server/donation-recipient";
 import { env } from ".server/env";

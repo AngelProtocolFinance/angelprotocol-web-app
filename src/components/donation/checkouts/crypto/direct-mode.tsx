@@ -4,7 +4,7 @@ import { QueryLoader } from "components/query-loader";
 import { PROCESSING_RATES } from "constants/common";
 import { ru_vdec } from "helpers/decimal";
 import { min_fee_allowance } from "helpers/donation";
-import type { DonationIntent, DonorFv } from "lib/donations/donation-intent";
+import type { DonationIntent, DonorFv } from "lib/donations/schema";
 import { href, useNavigate, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";

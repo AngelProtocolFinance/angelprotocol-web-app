@@ -1,4 +1,4 @@
-import { donor_public_msg_max_length } from "lib/donations/donation-intent";
+import { donor_public_msg_max_length } from "lib/donations/schema";
 import { Form, useFetcher } from "react-router";
 import { useRemixForm } from "remix-hook-form";
 import type { IPrivateMsgFv } from "./schema";
