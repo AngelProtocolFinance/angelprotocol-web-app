@@ -36,7 +36,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
   const intent: IDonationIntent = {
     frequency: frequency,
     amount: {
-      amount: +amount,
+      base: +amount,
       tip: tip_val(tip_format, tip, +amount),
       fee_allowance: mfa,
       currency: currency.code,

@@ -26,6 +26,7 @@ export interface IStripeExpress {
   total_atomic: number;
   /** includes tip and fee_allowance */
   total: number;
+  base: number;
   tip: number;
   fee_allowance: number;
   items: ILineItem[];
@@ -57,6 +58,7 @@ export const stripe_express_partial = (
     frequency,
     is_partial: true,
     total_usd: 1,
+    base: 1,
     tip: 0,
     fee_allowance: 0,
     total_atomic: to_atomic(unit_per_usd, currency),
@@ -180,6 +182,7 @@ export function use_rhf(fv: FV) {
 
     return {
       frequency: f,
+      base: amnt,
       tip: tipv,
       fee_allowance: mfa,
       is_partial: false,

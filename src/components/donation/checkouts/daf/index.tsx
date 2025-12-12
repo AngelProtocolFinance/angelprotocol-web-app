@@ -5,7 +5,11 @@ import { PROCESSING_RATES } from "constants/common";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { min_fee_allowance } from "helpers/donation";
 import { error_prompt } from "helpers/error-prompt";
-import { type IDonationIntent, donor_address } from "lib/donations/schema";
+import {
+  type IAmount,
+  type IDonationIntent,
+  donor_address,
+} from "lib/donations/schema";
 import { useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { href, useNavigate } from "react-router";
@@ -22,13 +26,6 @@ import {
 } from "../../types";
 import { DonationTerms } from "../donation-terms";
 import { to_platform_values } from "./to-platform-values";
-
-interface GrantMetadata {
-  /** includes tip and fee_allowance */
-  amount: number;
-  tip: number;
-  fee_allowance: number;
-}
 
 export function ChariotCheckout(props: DafDonationDetails) {
   const { don_set, don } = use_donation();
@@ -60,10 +57,11 @@ export function ChariotCheckout(props: DafDonationDetails) {
           onDonationRequest={async () => {
             const total = +props.amount + tipv + mfa;
             const total_cents = Math.floor(total) * 100;
-            const metadata: GrantMetadata = {
-              amount: +props.amount + tipv + mfa,
+            const metadata: IAmount = {
+              base: +props.amount,
               tip: tipv,
               fee_allowance: mfa,
+              currency: usd_option.code,
             };
 
             return {
@@ -85,7 +83,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
                 workflowSessionId,
                 user: grantor,
               } = ev.detail;
-              const meta: GrantMetadata = grantIntent.metadata;
+              const meta: IAmount = grantIntent.metadata;
               /** user may input amount different from our donate form */
               const grant_amount: number = grantIntent.amount / 100;
               const adj = to_platform_values(grant_amount, meta);
@@ -97,7 +95,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
                 daf: {
                   type: "daf",
                   step: "checkout",
-                  fv: { ...props, ...tip_from_val(adj.tip, adj.amount) },
+                  fv: { ...props, ...tip_from_val(adj.tip, adj.base) },
                 },
               }));
 

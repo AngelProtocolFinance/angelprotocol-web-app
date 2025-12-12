@@ -38,7 +38,7 @@ export function DirectMode({ fv, init, classes = "", donor }: Props) {
   const intent: IDonationIntent = {
     frequency: "one-time",
     amount: {
-      amount: +fv.token.amount,
+      base: +fv.token.amount,
       currency: fv.token.code,
       tip: tipv,
       fee_allowance: mfa,

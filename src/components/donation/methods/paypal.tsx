@@ -37,7 +37,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
         const create_intent = async (): Promise<string> => {
           const intent: IDonationIntent = {
             frequency: fr,
-            amount: { amount: a, tip: t, fee_allowance: fa, currency: c },
+            amount: { base: a, tip: t, fee_allowance: fa, currency: c },
             donor: donor_fv_init,
             via_id: "fiat",
             via_name: "Paypal",

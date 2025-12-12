@@ -36,6 +36,8 @@ export const donor_address = v.object({
   uk_gift_aid: v.optional(v.boolean()),
 });
 
+export interface IDonorAddress extends v.InferOutput<typeof donor_address> {}
+
 export const donor_address_fv = v.pipe(
   donor_address_fv_raw,
   v.forward(
@@ -82,26 +84,26 @@ export const donor_msg_to_npo = v.pipe(
 );
 /** used in client validation */
 export const donor_fv = v.object({
+  email: v.pipe($req, v.email("Please check your email for correctness")),
   title: donor_title,
   first_name: $req,
-  company_name: v.optional($),
   last_name: $req,
-  email: v.pipe($req, v.email("Please check your email for correctness")),
+  company_name: v.optional($),
   address: v.optional(donor_address_fv),
 });
-
+export interface IDonorFv extends v.InferOutput<typeof donor_fv> {}
 /** used in server validation, where requestor might not have all the information (e.g .express checkouts) */
 export const donor = v.object({
-  title: donor_title,
-  first_name: v.optional($),
-  company_name: v.optional($),
-  last_name: v.optional($),
-  // only email is required
   email: v.pipe($, v.email("Please check your email for correctness")),
+  title: v.optional(donor_title),
+  first_name: v.optional($),
+  last_name: v.optional($),
+  company_name: v.optional($),
+  // only email is required
   address: v.optional(donor_address),
 });
 
-export interface IDonorFv extends v.InferOutput<typeof donor_fv> {}
+export interface IDonor extends v.InferOutput<typeof donor> {}
 
 export const donor_fv_blank: IDonorFv = {
   title: "",
@@ -119,7 +121,7 @@ export const donor_fv_init: IDonorFv = {
 const money = v.pipe(v.number(), v.minValue(0));
 
 export const amount = v.object({
-  amount: money,
+  base: money,
   currency: v.pipe($req, v.toUpperCase()),
   tip: money,
   fee_allowance: money,

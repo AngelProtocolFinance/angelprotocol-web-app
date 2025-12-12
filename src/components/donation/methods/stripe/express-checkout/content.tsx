@@ -52,7 +52,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
     const intent: IDonationIntent = {
       recipient: don.recipient.id,
       amount: {
-        amount: x.total,
+        base: x.base,
         currency: x.currency,
         tip: x.tip,
         fee_allowance: x.fee_allowance,

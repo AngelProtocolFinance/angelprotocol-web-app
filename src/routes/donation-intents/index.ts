@@ -101,7 +101,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     })(token);
 
     const to_pay =
-      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
+      intent.amount.base + intent.amount.tip + intent.amount.fee_allowance;
 
     if (to_pay < min) {
       return resp.txt(`Min amount for ${token.code} is: ${min}`, 400);
@@ -185,7 +185,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (d_type === "chariot") {
     const to_pay =
-      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
+      intent.amount.base + intent.amount.tip + intent.amount.fee_allowance;
     const grant = await chariot.create_grant(
       intent.via_id,
       rd2num(to_pay * 100, 0)
@@ -208,8 +208,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (d_type === "stripe") {
     const upusd = await unit_per_usd(intent.amount.currency);
-    const amount_usd = rd2num(intent.amount.amount / upusd, 1);
-    if (amount_usd < MIN_DONATION_USD) return resp.status(400, "less than min");
+    const base_usd = rd2num(intent.amount.base / upusd, 1);
+    if (base_usd < MIN_DONATION_USD) return resp.status(400, "less than min");
 
     const customer_id = await customer_with_currency(
       intent.amount.currency.toUpperCase(),
@@ -217,7 +217,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     );
 
     const units =
-      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
+      intent.amount.base + intent.amount.tip + intent.amount.fee_allowance;
 
     const onhold: IDonationOnHoldAttr = {
       ...base,
@@ -246,7 +246,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (d_type === "paypal") {
     const usd_rate = await unit_per_usd(intent.amount.currency);
     const to_pay =
-      intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
+      intent.amount.base + intent.amount.tip + intent.amount.fee_allowance;
 
     const onhold: IDonationOnHoldAttr = {
       ...base,
