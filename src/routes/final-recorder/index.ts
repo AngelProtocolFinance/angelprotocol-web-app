@@ -25,7 +25,7 @@ import {
   npodb,
   onholddb,
 } from ".server/aws/db";
-import { env } from ".server/env";
+import { bg_tip_acct_id, env } from ".server/env";
 import { fiat_monitor } from ".server/sdks";
 import { is_resp, qstash_body } from ".server/utils";
 
@@ -161,6 +161,7 @@ export const action: ActionFunction = async ({ request }) => {
           fiscal_sponsored: endow.fiscal_sponsored,
           msg_to_npo: num_members === 1 ? tx.from.message : undefined,
           allocation: endow.allocation || default_allocation,
+          receipt_msg: endow.receiptMsg,
         };
 
         // for fund members without referrer, commission remains with BG
@@ -241,6 +242,7 @@ export const action: ActionFunction = async ({ request }) => {
         fiscal_sponsored: endow.fiscal_sponsored,
         msg_to_npo: tx.from.message,
         allocation: endow.allocation || default_allocation,
+        receipt_msg: endow.receiptMsg,
       };
       const c = commission_fn(
         {
@@ -294,9 +296,8 @@ export const action: ActionFunction = async ({ request }) => {
       txs.put(donordb.put_txi(r));
     }
 
-    const BG_ENDOW_ID = 1293762;
     const overrides: Overrides = {
-      endowId: BG_ENDOW_ID,
+      endowId: bg_tip_acct_id,
       input: p_init_amount.tip,
       inputUsd: p_init_amount_usd.tip,
       settled: p_net_settled.tip,
@@ -310,6 +311,7 @@ export const action: ActionFunction = async ({ request }) => {
       claimed: true,
       fiscal_sponsored: false,
       allocation: default_allocation,
+      receipt_msg: undefined,
     };
 
     //deduct paid commissions

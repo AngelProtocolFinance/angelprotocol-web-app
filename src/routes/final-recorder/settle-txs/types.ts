@@ -82,4 +82,5 @@ export interface Overrides {
   fiscal_sponsored: boolean;
   msg_to_npo?: string;
   allocation: IAllocation;
+  receipt_msg: string | undefined;
 }

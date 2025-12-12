@@ -35,6 +35,10 @@ export async function settle_txs(base: Base, o: Overrides): Promise<TxItems> {
     fiscalSponsored: o.fiscal_sponsored,
   };
 
+  if (o.receipt_msg) {
+    uniques.nonProfitMsg = o.receipt_msg;
+  }
+
   if (o.referrer) {
     uniques.referrer = o.referrer.id;
     uniques.referrer_commission = o.referrer.commission;

@@ -115,6 +115,7 @@ export const deposit_addrs_envs = (chain: string) => {
 };
 
 export const bg_npo_id = Number.parseInt(_var("BG_NPO_ID"));
+export const bg_tip_acct_id = Number.parseInt(_var("BG_TIP_ACCT_ID"));
 
 export const hubspot_envs = {
   access_token: _var("HUBSPOT_ACCESS_TOKEN"),
