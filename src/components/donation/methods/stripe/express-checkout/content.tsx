@@ -36,7 +36,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       return on_error(submit_err.message || GENERIC_ERROR_MESSAGE);
     }
 
-    const { billingDetails: b } = ev;
+    const { billingDetails: b, expressPaymentType } = ev;
     if (!b?.email) {
       return on_error("your email was not found in billing details.");
     }
@@ -83,7 +83,21 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
 
     const { order_id, client_secret }: IStripeIntentReturn = await res.json();
 
-    const return_url = `${window.location.origin}/${href("/donations/:id", { id: order_id })}`;
+    const custom_redirect = don.config?.success_redirect;
+    const url = custom_redirect
+      ? new URL(custom_redirect)
+      : new URL(`${don.base_url}${href("/donations/:id", { id: order_id })}`);
+
+    if (custom_redirect) {
+      url.searchParams.set("donor_name", `${fn} ${ln}`);
+      const to_pay =
+        intent.amount.base + intent.amount.tip + intent.amount.fee_allowance;
+      url.searchParams.set("donation_amount", to_pay.toString());
+      url.searchParams.set("donation_currency", intent.amount.currency);
+      url.searchParams.set("payment_method", expressPaymentType);
+    }
+
+    const return_url = url.toString();
 
     const { error } = await stripe[
       x.frequency === "recurring" ? "confirmSetup" : "confirmPayment"
@@ -91,11 +105,27 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       elements,
       clientSecret: client_secret,
       confirmParams: { return_url },
+      redirect: "if_required",
     });
 
     if (error) {
       console.error(error);
       on_error(error.message || GENERIC_ERROR_MESSAGE);
+    } else {
+      // Payment succeeded, redirect via postMessage if in iframe
+      if (window.self !== window.top) {
+        window.parent.postMessage(
+          {
+            type: "redirect",
+            redirect_url: return_url,
+            form_id: don.config?.id,
+          },
+          "*"
+        );
+      } else {
+        // Not in iframe, redirect directly
+        window.location.href = return_url;
+      }
     }
   };
 

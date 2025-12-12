@@ -23,8 +23,7 @@ export interface ILoader extends IForm {
 
 const recipient_fn = async (
   id: string,
-  type: IForm["recipient_type"],
-  owner: string
+  type: IForm["recipient_type"]
 ): Promise<IRecipient | undefined> => {
   if (type === "fund") {
     const x = await funddb.fund(id);
@@ -39,19 +38,6 @@ const recipient_fn = async (
     const x = await npodb.npo(+id, ["name", "hide_bg_tip"]);
     if (!x) return;
     return { name: x.name, members: [], hide_bg_tip: x.hide_bg_tip };
-  }
-
-  if (type === "program") {
-    // program owner is npo
-    const npo = await npodb.npo(+owner, ["name", "id", "hide_bg_tip"]);
-    if (!npo) return;
-    const p = await npodb.npo_program(id, npo.id);
-    return {
-      name: npo.name,
-      members: [],
-      program: p ? { id: p.id, title: p.title } : undefined,
-      hide_bg_tip: npo.hide_bg_tip,
-    };
   }
 };
 
@@ -68,8 +54,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 
   const recipient_details = await recipient_fn(
     form.recipient,
-    form.recipient_type,
-    form.owner
+    form.recipient_type
   );
   if (!recipient_details) throw resp.err(404, "recipient not found");
 
@@ -94,6 +79,13 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 
   if (form.owner !== user.email && !user.endowments.includes(+form.owner)) {
     throw resp.err(403, "forbidden");
+  }
+
+  if (fv.type === "adv") {
+    await formsdb.form_update(params.id, {
+      success_redirect: fv.success_redirect,
+    });
+    return { __ok: "Form updated" } satisfies ActionData;
   }
 
   const target = ((x) => {

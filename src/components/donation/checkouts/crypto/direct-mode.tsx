@@ -5,7 +5,7 @@ import { PROCESSING_RATES } from "constants/common";
 import { ru_vdec } from "helpers/decimal";
 import { min_fee_allowance } from "helpers/donation";
 import type { IDonationIntent, IDonorFv } from "lib/donations/schema";
-import { href, useNavigate, useNavigation } from "react-router";
+import { href, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
 import { ContinueBtn } from "../../common/continue-btn";
@@ -26,8 +26,44 @@ const fetcher = async (intent: IDonationIntent) =>
   }).then<Payment>((res) => res.json());
 
 export function DirectMode({ fv, init, classes = "", donor }: Props) {
-  const navigate = useNavigate();
   const navigation = useNavigation();
+
+  const handle_continue = () => {
+    const id = data?.order_id;
+    if (!id) throw new Error("No order ID found");
+
+    const custom_redirect = init.config?.success_redirect;
+    const url = custom_redirect
+      ? new URL(custom_redirect)
+      : new URL(`${init.base_url}${href("/donations/:id", { id })}`);
+
+    if (custom_redirect) {
+      url.searchParams.set("donation_amount", fv.token.amount);
+      url.searchParams.set("donation_currency", fv.token.code);
+      if (donor.first_name || donor.last_name) {
+        url.searchParams.set(
+          "donor_name",
+          `${donor.first_name} ${donor.last_name}`.trim()
+        );
+      }
+      url.searchParams.set("payment_method", "crypto");
+    }
+    const return_url = url.toString();
+
+    // redirect via postMessage if in iframe, otherwise navigate directly
+    if (window.self !== window.top) {
+      window.parent.postMessage(
+        {
+          type: "redirect",
+          redirect_url: return_url,
+          form_id: init.config?.id,
+        },
+        "*"
+      );
+    } else {
+      window.location.href = return_url;
+    }
+  };
 
   const tipv = tip_val(fv.tip_format, fv.tip, +fv.token.amount);
   const mfa = min_fee_allowance(
@@ -103,11 +139,7 @@ export function DirectMode({ fv, init, classes = "", donor }: Props) {
 
       <ContinueBtn
         disabled={!!error || isLoading || navigation.state !== "idle"}
-        onClick={() => {
-          const id = data?.order_id;
-          if (!id) throw new Error("No order ID found");
-          navigate(href("/donations/:id", { id }));
-        }}
+        onClick={handle_continue}
         text="I have completed the payment"
         className="justify-self-stretch mt-8"
       />

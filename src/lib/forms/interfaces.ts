@@ -37,6 +37,9 @@ export interface IForm {
   ltd: number;
   ltd_count: number;
   program?: IProgram;
+
+  /** url */
+  success_redirect?: string;
 }
 
 export interface IOwnerFormsPage extends IPageKeyed<IForm> {}

@@ -22,10 +22,10 @@ export function DonateMethods({ values, on_change, error, classes }: Props) {
   const style = unpack(classes);
   return (
     <div className={style.container}>
-      <label className={`${style.label} mb-2 block`}>
-        Customize donation payment options
+      <label className={`${style.label} mb-1 block font-semibold text-sm`}>
+        Donation methods
       </label>
-      <p className={`text-gray ${style.tooltip} mb-4`}>
+      <p className={`text-gray ${style.tooltip} mb-2 text-sm`}>
         Here you can turn on/off payment options and change the order of their
         appearance
       </p>
@@ -89,7 +89,7 @@ function Method({ value, updator }: IMethod) {
         <GripVertical size={20} />
       </button>
 
-      <span>{value.name}</span>
+      <span className="text-sm">{value.name}</span>
     </Reorder.Item>
   );
 }

@@ -15,6 +15,7 @@ type Props = {
   program: IProgram | undefined;
   user: IUser | undefined;
   classes?: string;
+  base_url: string;
 };
 
 export default function Content({
@@ -22,6 +23,7 @@ export default function Content({
   config,
   program,
   user,
+  base_url,
   classes = "",
 }: Props) {
   const recipient: DonationRecipient = {
@@ -46,6 +48,7 @@ export default function Content({
     accent_primary: config.accentPrimary,
     accent_secondary: config.accentSecondary,
     increments: incs,
+    success_redirect: undefined,
   };
 
   return (
@@ -64,6 +67,7 @@ export default function Content({
         </p>
       )}
       <Steps
+        base_url={base_url}
         source="bg-widget"
         mode="live"
         className="w-full border border-gray-l3 rounded-lg"

@@ -16,6 +16,7 @@ export interface DonateData {
   program?: IProgram;
   balance: Promise<IPrettyBalance>;
   user?: UserV2;
+  base_url: string;
 }
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
@@ -33,5 +34,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     program: pid ? await npodb.npo_program(pid, id) : undefined,
     balance: baldb.npo_balance(id),
     user,
+    base_url: new URL(request.url).origin,
   } satisfies DonateData);
 };

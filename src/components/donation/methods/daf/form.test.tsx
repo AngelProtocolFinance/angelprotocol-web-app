@@ -23,6 +23,7 @@ describe("DAF form: initial load", () => {
 
   test("initial form state: no persisted details", async () => {
     const init: Init = {
+      base_url: "",
       source: "bg-marketplace",
       config: null,
       recipient: donation_recipient_init(),
@@ -54,6 +55,7 @@ describe("DAF form: initial load", () => {
 
   test("submit form with initial/persisted data", async () => {
     const init: Init = {
+      base_url: "",
       source: "bg-marketplace",
       config: null,
       recipient: donation_recipient_init(),
@@ -93,6 +95,7 @@ describe("DAF form: initial load", () => {
 
   test("submitting empty form should show validation messages and focus first field: amount input", async () => {
     const init: Init = {
+      base_url: "",
       source: "bg-marketplace",
       config: null,
       recipient: donation_recipient_init(),
@@ -114,6 +117,7 @@ describe("DAF form: initial load", () => {
 
   test("user corrects error and submits", async () => {
     const init: Init = {
+      base_url: "",
       source: "bg-marketplace",
       config: null,
       recipient: donation_recipient_init(),

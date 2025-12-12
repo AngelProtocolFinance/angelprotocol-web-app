@@ -273,6 +273,7 @@ export type Config = {
   /** hex color without alpha */
   accent_secondary?: string;
   increments?: IIncrement[];
+  success_redirect: string | undefined;
 };
 
 export interface IProgram {
@@ -293,6 +294,7 @@ export type Init = {
   program?: IProgram;
   config: Config | null;
   user?: IUser;
+  base_url: string;
 };
 
 export type TMethod = "stripe" | "crypto" | "stocks" | "daf";

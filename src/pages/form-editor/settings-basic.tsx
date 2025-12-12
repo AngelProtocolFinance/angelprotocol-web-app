@@ -8,15 +8,15 @@ import { Increments } from "components/increments";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { bg_accent_primary, bg_accent_secondary } from "styles/colors";
-import { type FV, schema } from "./types";
+import { type FVBasic, schema_basic } from "./types";
 
-interface Props extends FV {
+interface Props extends FVBasic {
   classes?: string;
   is_submitting: boolean;
-  on_submit: (fv: FV) => void;
+  on_submit: (fv: FVBasic) => void;
 }
 
-export function Configurer({
+export function SettingsBasic({
   classes = "",
   on_submit,
   is_submitting,
@@ -31,8 +31,8 @@ export function Configurer({
     watch,
     register,
     control,
-  } = useForm<FV>({
-    resolver: valibotResolver(schema),
+  } = useForm<FVBasic>({
+    resolver: valibotResolver(schema_basic),
     //set new config as default, so user would need to make a change to be able to update again
     values: { ...fv, accent_primary, accent_secondary },
   });
@@ -67,7 +67,7 @@ export function Configurer({
       <DonateMethods
         classes={{
           tooltip: "italic",
-          label: "font-medium text-base",
+          label: "font-medium",
         }}
         values={donate_methods.value}
         on_change={donate_methods.onChange}
@@ -125,7 +125,7 @@ export function Configurer({
                   placeholder="0.00"
                   step="any"
                   {...register(`increments.${idx}.value`)}
-                  className="w-full h-full  outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
+                  className="w-full h-full outline-blue-d1 rounded-sm text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-gray text-gray-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-gray"
                 />
               </div>
               <p className="mt-1 empty:hidden text-left text-xs text-red">
@@ -150,7 +150,7 @@ export function Configurer({
       />
 
       <div>
-        <p className="font-bold mb-3 text-sm">Donation goal</p>
+        <p className="font-semibold mb-3 text-sm">Donation goal</p>
         <GoalSelector value={target.value} onChange={target.onChange} />
         {target.value === "fixed" && (
           <Field
@@ -170,26 +170,17 @@ export function Configurer({
         label="Tag"
         placeholder="e.g. in mywebsite.com"
         required
-        classes={{ container: "mt-4", label: "font-semibold" }}
+        classes={{ container: "mt-6", label: "font-semibold text-sm" }}
         error={errors.tag?.message}
       />
 
-      <div className="flex gap-3 mt-8">
-        <button
-          disabled={!isDirty}
-          type="reset"
-          className="btn-outline normal-case btn text-sm px-4 py-2"
-        >
-          Reset Changes
-        </button>
-        <button
-          disabled={!isDirty}
-          type="submit"
-          className="btn btn-blue normal-case text-sm px-4 py-2"
-        >
-          {isSubmitting ? "Updating.." : "Update Form"}
-        </button>
-      </div>
+      <button
+        disabled={!isDirty}
+        type="submit"
+        className="mt-6 justify-self-end btn btn-blue normal-case text-sm px-4 py-2"
+      >
+        {isSubmitting ? "Saving.." : "Save"}
+      </button>
     </Form>
   );
 }

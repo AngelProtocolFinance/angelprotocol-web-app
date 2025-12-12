@@ -70,9 +70,9 @@ export function Form({
         label="Name"
         required
         error={rhf.errors.name?.message}
-        classes={{ label: "font-medium text-base" }}
+        classes={{ label: "font-semibold" }}
       />
-      <label className="label font-medium mt-4 mb-1" data-required>
+      <label className="label font-semibold mt-6 mb-1" data-required>
         Description
       </label>
       <RichText
@@ -100,13 +100,14 @@ export function Form({
           <Field
             {...rhf.register("slug")}
             label="Custom Fundraiser URL"
+            classes={{ label: "text-sm font-semibold", container: "mt-6" }}
             placeholder="myFundraiser"
             error={rhf.errors.slug?.message}
           />
         }
       />
       <Videos {...rhf.videos} classes="mt-4 mb-8" />
-      <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
+      <label className="font-semibold block mb-2 mt-4 text-sm">Logo</label>
       <ImgEditor
         disabled={is_submitting}
         value={rhf.logo.value}
@@ -123,7 +124,7 @@ export function Form({
         error={rhf.errors.logo?.message}
       />
 
-      <label className="text-lg font-medium block mt-6 mb-2">Banner</label>
+      <label className="text-sm font-semibold block mt-6 mb-2">Banner</label>
       <ImgEditor
         disabled={is_submitting}
         value={rhf.banner.value}
@@ -140,7 +141,7 @@ export function Form({
         error={rhf.errors.banner?.message}
       />
 
-      <label className="block mt-4 font-medium">
+      <label className="text-sm block mt-6 font-semibold">
         Fundraiser goal <span className="text-red">*</span>
       </label>
       <GoalSelector

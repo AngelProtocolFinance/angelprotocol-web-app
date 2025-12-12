@@ -10,7 +10,6 @@ export {
 } from "./types";
 export { Donation as Steps } from "./container";
 export { StepsCarousel } from "./steps-carousel";
-export { ProgramSelector } from "../../pages/widget/configurer/program-selector";
 export {
   DEFAULT_PROGRAM,
   init_token_option,

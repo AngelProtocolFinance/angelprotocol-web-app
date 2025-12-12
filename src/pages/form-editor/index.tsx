@@ -1,6 +1,6 @@
 import { fill } from "components/donate-methods";
-import { Configurer } from "./configurer";
 import { Preview } from "./preview";
+import { SettingsBasic } from "./settings-basic";
 import { Snippet } from "./snippet";
 
 import { to_form_target } from "components/goal-selector";
@@ -10,6 +10,8 @@ import { use_action_result } from "hooks/use-action-result";
 import { ChevronLeftIcon, TagIcon } from "lucide-react";
 import { NavLink, useFetcher } from "react-router";
 import type { Route } from "./+types";
+import { SettingsAdv } from "./settings-adv";
+import { SnippetAdv } from "./snippet-adv";
 
 export { loader, action } from "./api";
 export { ErrorBoundary } from "components/error";
@@ -60,20 +62,35 @@ export default function Page({ loaderData }: Route.ComponentProps) {
             <Target.Inline classes="w-64" target={d.target} progress={d.ltd} />
           </div>
         </header>
-        <Configurer
-          classes="row-span-2"
-          is_submitting={fetcher.state === "submitting"}
-          increments={d.increments ?? []}
-          target={to_form_target(d.target ? d.target.toString() : "0")}
-          methods={fill(d.donate_methods)}
-          accent_primary={d.accent_primary}
-          accent_secondary={d.accent_secondary}
-          tag={d.tag}
-          on_submit={(x) =>
-            fetcher.submit(x, { method: "POST", encType: "application/json" })
-          }
-        />
-        <Snippet base_url={base_url} form_id={d.id} classes="self-start" />
+        <div className="row-span-2 grid gap-y-4">
+          <SettingsBasic
+            type="basic"
+            is_submitting={fetcher.state === "submitting"}
+            increments={d.increments ?? []}
+            target={to_form_target(d.target ? d.target.toString() : "0")}
+            methods={fill(d.donate_methods)}
+            accent_primary={d.accent_primary}
+            accent_secondary={d.accent_secondary}
+            tag={d.tag}
+            on_submit={(x) =>
+              fetcher.submit(x, { method: "POST", encType: "application/json" })
+            }
+          />
+          <SettingsAdv
+            type="adv"
+            is_submitting={fetcher.state === "submitting"}
+            success_redirect={d.success_redirect}
+            on_submit={(x) =>
+              fetcher.submit(x, { method: "POST", encType: "application/json" })
+            }
+          />
+        </div>
+
+        {d.success_redirect ? (
+          <SnippetAdv base_url={base_url} form_id={d.id} />
+        ) : (
+          <Snippet base_url={base_url} form_id={d.id} classes="self-start" />
+        )}
         <Preview {...loaderData} classes="mt-4" />
       </div>
     </div>

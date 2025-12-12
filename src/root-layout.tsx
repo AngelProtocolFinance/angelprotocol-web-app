@@ -17,7 +17,7 @@ export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
         <Links />
         <style />
       </head>
-      <body className="grid min-h-screen grid-rows-[1fr_0]">
+      <body>
         {children}
         <ScrollRestoration />
         <Scripts />

@@ -61,6 +61,7 @@ function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
             <Steps
               source="bg-marketplace"
               mode="live"
+              base_url=""
               recipient={{
                 id: fund.id,
                 name: fund.name,
@@ -70,6 +71,7 @@ function Page({ loaderData: { fund, user } }: Route.ComponentProps) {
               }}
               config={{
                 id: null,
+                success_redirect: undefined,
                 method_ids: fund.settings.donateMethods,
                 increments: fund.increments,
               }}

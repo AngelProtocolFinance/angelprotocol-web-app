@@ -6,8 +6,14 @@ import type { ILoader } from "./api";
 interface Props extends ILoader {
   classes?: string;
 }
-export function Preview({ classes = "", recipient_details: rd, ...f }: Props) {
+export function Preview({
+  classes = "",
+  recipient_details: rd,
+  base_url,
+  ...f
+}: Props) {
   const init_state: TDonation = {
+    base_url,
     method: f.donate_methods?.at(0) || "stripe",
     source: "bg-widget",
     mode: "preview",
@@ -25,6 +31,7 @@ export function Preview({ classes = "", recipient_details: rd, ...f }: Props) {
       accent_secondary: f.accent_secondary,
       method_ids: f.donate_methods,
       increments: f.increments,
+      success_redirect: f.success_redirect,
     },
   };
 

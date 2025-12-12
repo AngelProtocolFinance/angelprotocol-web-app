@@ -122,7 +122,7 @@ export function Form(props: TMethodState<"stocks">) {
 
   return (
     <FormContainer
-      className="grid gap-y-2"
+      className="flex flex-col gap-y-2 h-full"
       onSubmit={handleSubmit((fv) =>
         // skip donor step
         to_step("stocks", fv, "checkout", don_set)
@@ -198,7 +198,7 @@ export function Form(props: TMethodState<"stocks">) {
       <MethodBenefits subject="stock" classes="mt-4" />
       <button
         disabled={isSubmitting}
-        className="mt-4 btn btn-blue text-sm enabled:bg-(--accent-primary)"
+        className="mt-auto btn btn-blue text-sm enabled:bg-(--accent-primary)"
         type="submit"
       >
         Continue

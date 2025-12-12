@@ -10,6 +10,7 @@ import { get_fund } from ".server/fund";
 export interface LoaderData {
   user: UserV2 | undefined;
   fund: IFund;
+  base_url: string;
 }
 
 const schema = union([fund_id, segment]);
@@ -23,5 +24,6 @@ export const loader = async ({ params, request }: Route.LoaderArgs) => {
   return {
     user,
     fund,
+    base_url: new URL(request.url).origin,
   } satisfies LoaderData;
 };

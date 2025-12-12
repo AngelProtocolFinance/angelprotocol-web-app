@@ -17,7 +17,6 @@ class Path {
 const pages = new Path("./pages");
 const donate_fund = pages.$("donate-fund");
 const landing = pages.$("landing");
-const widget = pages.$("widget");
 const admin = pages.$("admin");
 const user = pages.$("user-dashboard");
 const layouts = new Path("./layout");
@@ -59,9 +58,7 @@ export default [
     landing.$("tgb-attack/index.tsx")._
   ),
 
-  r("form-builder", widget.$("form-builder-layout.tsx")._, [
-    index(widget.$("index.tsx")._, { id: "public-form-builder" }),
-  ]),
+  r("form-builder", pages.$("form-builder.ts")._),
 
   layout(layouts.$("landing/layout.tsx")._, [
     r("donation-forms", landing.$("donation-forms/index.tsx")._),
@@ -89,9 +86,6 @@ export default [
     r("banking/:bankId", admin.$("banking/payout-method/payout-method.tsx")._, [
       r("delete", admin.$("banking/payout-method/delete-prompt.tsx")._),
     ]),
-    r("form-builder", widget.$("index.tsx")._, {
-      id: "admin-form-builder",
-    }),
     r("forms", admin.$("forms/index.tsx")._, [
       r("create", pages.$("shared/form-create/index.tsx")._, {
         id: "admin-form-create",
@@ -345,4 +339,6 @@ export default [
 
   r("streams/subs", "./routes/streams/subs.ts"),
   r("failure-callback", "./routes/failure-callback.ts"),
+
+  r("form-embed.js", "./routes/form-embed.ts"),
 ] satisfies RouteConfig;

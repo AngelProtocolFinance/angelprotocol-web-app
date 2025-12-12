@@ -19,6 +19,7 @@ type Components = {
   recipient: DonationRecipient;
   user: IUser | undefined;
   program: IProgram | undefined;
+  base_url: string;
 };
 
 type InitState = {
@@ -51,6 +52,7 @@ export function Donation({ className = "", ...props }: Props) {
 }
 
 function init_state({
+  base_url,
   source,
   config,
   recipient,
@@ -59,6 +61,7 @@ function init_state({
   program,
 }: Components): TDonation {
   const init: Init = {
+    base_url,
     source,
     config,
     recipient,

@@ -25,6 +25,7 @@ const endow: INpo = {
 export const test_donate_data: DonateData = {
   id: 1,
   endow,
+  base_url: "",
   balance: Promise.resolve({} as any),
 };
 
