@@ -5,7 +5,7 @@ import { PROCESSING_RATES } from "constants/common";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { min_fee_allowance } from "helpers/donation";
 import { error_prompt } from "helpers/error-prompt";
-import { type DonationIntent, donor_address } from "lib/donations/schema";
+import { type IDonationIntent, donor_address } from "lib/donations/schema";
 import { useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { href, useNavigate } from "react-router";
@@ -111,7 +111,7 @@ export function ChariotCheckout(props: DafDonationDetails) {
                 zip_code: postalCode,
               });
 
-              const intent: DonationIntent = {
+              const intent: IDonationIntent = {
                 frequency: "one-time",
                 via_id: workflowSessionId,
                 via_name: "",

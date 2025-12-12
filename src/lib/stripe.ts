@@ -103,7 +103,7 @@ export interface IMetadataAttr extends Record<string, string | undefined> {
   /// TRIBUTE
   /** may be empty */
   inHonorOf?: string;
-  /** TributeNotif JSON */
+  /** ITributeNotif JSON */
   tributeNotif?: string;
 }
 

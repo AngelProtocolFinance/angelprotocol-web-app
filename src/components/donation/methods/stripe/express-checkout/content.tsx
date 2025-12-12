@@ -6,8 +6,8 @@ import {
 } from "@stripe/react-stripe-js";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import type {
-  DonationIntent,
-  DonorAddressFv,
+  IDonationIntent,
+  IDonorAddressFv,
   IStripeIntentReturn,
 } from "lib/donations";
 import { href } from "react-router";
@@ -41,7 +41,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       return on_error("your email was not found in billing details.");
     }
     const [fn, ln] = b.name.split(" ");
-    const addr: DonorAddressFv = {
+    const addr: IDonorAddressFv = {
       street: [b.address.line1, b.address.line2].filter(Boolean).join(" "),
       city: b.address.city,
       state: b.address.state,
@@ -49,7 +49,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
       zip_code: b.address.postal_code,
     };
 
-    const intent: DonationIntent = {
+    const intent: IDonationIntent = {
       recipient: don.recipient.id,
       amount: {
         amount: x.total,

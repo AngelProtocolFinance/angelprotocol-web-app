@@ -1,7 +1,10 @@
 export type {
   TFrequency,
-  Tribute,
-  TributeNotif,
+  ITribute,
+  ITributeNotif,
+  TRecipient,
   IStripeIntentReturn,
-  DonationIntent,
+  IDonationIntent,
+  IDonorAddressFv,
+  IDonorFv,
 } from "./schema";

@@ -4,7 +4,7 @@ import { QueryLoader } from "components/query-loader";
 import { PROCESSING_RATES } from "constants/common";
 import { ru_vdec } from "helpers/decimal";
 import { min_fee_allowance } from "helpers/donation";
-import type { DonationIntent, DonorFv } from "lib/donations/schema";
+import type { IDonationIntent, IDonorFv } from "lib/donations/schema";
 import { href, useNavigate, useNavigation } from "react-router";
 import use_swr from "swr/immutable";
 import type { Payment } from "types/crypto";
@@ -15,11 +15,11 @@ import { PayQr } from "./pay-qr";
 type Props = {
   classes?: string;
   fv: CryptoDonationDetails;
-  donor: DonorFv;
+  donor: IDonorFv;
   init: Init;
 };
 
-const fetcher = async (intent: DonationIntent) =>
+const fetcher = async (intent: IDonationIntent) =>
   fetch("/api/donation-intents/crypto", {
     method: "POST",
     body: JSON.stringify(intent),
@@ -35,7 +35,7 @@ export function DirectMode({ fv, init, classes = "", donor }: Props) {
     PROCESSING_RATES.crypto
   );
 
-  const intent: DonationIntent = {
+  const intent: IDonationIntent = {
     frequency: "one-time",
     amount: {
       amount: +fv.token.amount,

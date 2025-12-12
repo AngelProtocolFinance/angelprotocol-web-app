@@ -64,15 +64,15 @@ export interface Program {
   name: string;
 }
 
-export interface TributeNotif {
+export interface ITributeNotif {
   to_fullname: string;
   to_email: string;
   from_msg?: string;
 }
-export interface Tribute {
+export interface ITribute {
   /** full name */
   to: string;
-  notif?: TributeNotif;
+  notif?: ITributeNotif;
 }
 
 export interface FinalRecorderPayload {
@@ -83,7 +83,7 @@ export interface FinalRecorderPayload {
   to: To;
   from: From;
   date: string;
-  tribute?: Tribute;
+  tribute?: ITribute;
   program?: Program;
   is_recurring: boolean;
   settled_in: Destination;

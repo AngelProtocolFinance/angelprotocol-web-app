@@ -315,7 +315,7 @@ describe("payment method form state persistence", () => {
     await userEvent.click(token_options[0]);
 
     let amount_input = screen.getByPlaceholderText(/enter amount/i);
-    await userEvent.type(amount_input, "3");
+    await userEvent.type(amount_input, "2");
 
     const continue_btn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continue_btn);
@@ -378,7 +378,7 @@ describe("payment method form state persistence", () => {
     await userEvent.click(crypto_tab2);
 
     expect(screen.getByPlaceholderText(/enter amount/i)).toHaveDisplayValue(
-      "3"
+      "2"
     );
   });
 });

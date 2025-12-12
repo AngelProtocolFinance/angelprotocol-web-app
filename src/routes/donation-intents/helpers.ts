@@ -1,5 +1,5 @@
 import type { IDonationOnHoldAttr } from "@better-giving/donation";
-import type { DonationIntent } from "lib/donations";
+import type { IDonationIntent } from "lib/donations";
 import type { Except } from "type-fest";
 import type { Recipient } from ".server/donation-recipient";
 import { env } from ".server/env";
@@ -15,7 +15,7 @@ type TBase = Except<
 >;
 export const onhold_base = (
   recipient: Recipient,
-  intent: DonationIntent
+  intent: IDonationIntent
 ): TBase => {
   const obj: TBase = {
     network: env,

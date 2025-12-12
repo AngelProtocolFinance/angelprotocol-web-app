@@ -53,9 +53,10 @@ export const donor_address_fv = v.pipe(
   )
 );
 
-export type DonorAddressFv = v.InferOutput<typeof donor_address_fv_raw>;
+export interface IDonorAddressFv
+  extends v.InferOutput<typeof donor_address_fv_raw> {}
 
-export const donor_address_fv_init: DonorAddressFv = {
+export const donor_address_fv_init: IDonorAddressFv = {
   street: "",
   city: "",
   state: "",
@@ -100,15 +101,15 @@ export const donor = v.object({
   address: v.optional(donor_address),
 });
 
-export type DonorFv = v.InferOutput<typeof donor_fv>;
+export interface IDonorFv extends v.InferOutput<typeof donor_fv> {}
 
-export const donor_fv_blank: DonorFv = {
+export const donor_fv_blank: IDonorFv = {
   title: "",
   first_name: "",
   last_name: "",
   email: "",
 };
-export const donor_fv_init: DonorFv = {
+export const donor_fv_init: IDonorFv = {
   title: "",
   first_name: "unknown",
   last_name: "unknown",
@@ -124,7 +125,7 @@ export const amount = v.object({
   fee_allowance: money,
 });
 
-export type Amount = v.InferOutput<typeof amount>;
+export interface IAmount extends v.InferOutput<typeof amount> {}
 
 export const uuid = v.pipe($, v.uuid());
 
@@ -133,11 +134,11 @@ export const program = v.object({
   name: $req,
 });
 
-export type Program = v.InferOutput<typeof program>;
+export interface IProgram extends v.InferOutput<typeof program> {}
 
 export const recipient = v.union([$int_gte1, uuid]);
 
-export type Recipient = v.InferOutput<typeof recipient>;
+export type TRecipient = v.InferOutput<typeof recipient>;
 
 export const from_msg_max_length = 250;
 export const tribute_notif = v.object({
@@ -149,14 +150,14 @@ export const tribute_notif = v.object({
   ),
 });
 
-export type TributeNotif = v.InferOutput<typeof tribute_notif>;
+export type ITributeNotif = v.InferOutput<typeof tribute_notif>;
 
 export const tribute = v.object({
   full_name: $req,
   notif: v.optional(tribute_notif),
 });
 
-export type Tribute = v.InferOutput<typeof tribute>;
+export type ITribute = v.InferOutput<typeof tribute>;
 
 export const intent = v.object({
   amount,
@@ -173,7 +174,7 @@ export const intent = v.object({
   via_id: $,
 });
 
-export type DonationIntent = v.InferOutput<typeof intent>;
+export interface IDonationIntent extends v.InferOutput<typeof intent> {}
 
 export interface IStripeIntentReturn {
   client_secret: string;

@@ -3,7 +3,7 @@ import type {
   PayPalButtonsComponentOptions,
 } from "@paypal/paypal-js";
 import { paypal_client_id } from "constants/env";
-import { type DonationIntent, donor_fv_init } from "lib/donations/schema";
+import { type IDonationIntent, donor_fv_init } from "lib/donations/schema";
 import { useEffect } from "react";
 import { href } from "react-router";
 import { use_donation } from "../context";
@@ -35,7 +35,7 @@ export function Paypal({ classes = "", on_error, ...p }: Props) {
         if (!paypal || !paypal.Buttons) return;
 
         const create_intent = async (): Promise<string> => {
-          const intent: DonationIntent = {
+          const intent: IDonationIntent = {
             frequency: fr,
             amount: { amount: a, tip: t, fee_allowance: fa, currency: c },
             donor: donor_fv_init,

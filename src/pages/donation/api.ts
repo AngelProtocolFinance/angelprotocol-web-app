@@ -94,7 +94,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
       await send_email({ name: "donation-tribute-notif", ...data }, [
         p.notif.to_email,
       ]);
-      return { __ok: "Tribute added to donation!" } satisfies ActionData;
+      return { __ok: "ITribute added to donation!" } satisfies ActionData;
     }
   }
 

@@ -1,9 +1,9 @@
 import { CheckField, Field } from "components/form";
-import { type Tribute, from_msg_max_length } from "lib/donations/schema";
+import { type ITribute, from_msg_max_length } from "lib/donations/schema";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 
 interface SubFV {
-  tribute?: Tribute;
+  tribute?: ITribute;
   with_tribute?: boolean;
   with_tribute_notif?: boolean;
 }

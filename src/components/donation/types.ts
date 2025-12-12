@@ -1,11 +1,11 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
-import { type DonorFv, frequency } from "lib/donations/schema";
+import { type IDonorFv, frequency } from "lib/donations/schema";
 import { type ICurrencyFv, currency_fv } from "types/currency";
 export {
-  type Tribute,
+  type ITribute,
   type TFrequency,
-  type DonorFv,
+  type IDonorFv,
   tribute,
   donor_fv,
 } from "lib/donations/schema";
@@ -315,7 +315,7 @@ export type TMethodState<T extends TMethod> =
 
 export type TDonation = Init & {
   /** may be empty */
-  donor: DonorFv;
+  donor: IDonorFv;
   method: TMethod;
 } & {
   [method in TMethod]?: TMethodState<method>;

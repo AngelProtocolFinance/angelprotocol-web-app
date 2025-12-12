@@ -1,6 +1,6 @@
 import type { DonateMethodId } from "@better-giving/schemas";
 import type { ICurrencyFv, OptionType } from "types/components";
-import type { ITickerFv, ITokenFv, Tribute } from "../types";
+import type { ITickerFv, ITokenFv, ITribute } from "../types";
 
 export const DEFAULT_PROGRAM: OptionType<""> = {
   label: "General Donation",
@@ -33,7 +33,7 @@ export const init_ticker_option: ITickerFv = {
 export const USD_CODE = "USD";
 export const usd_option: ICurrencyFv = { code: USD_CODE, min: 2, rate: 1 };
 
-export const init_tribute_notif: Tribute["notif"] = {
+export const init_tribute_notif: ITribute["notif"] = {
   to_email: "",
   to_fullname: "",
   from_msg: "",

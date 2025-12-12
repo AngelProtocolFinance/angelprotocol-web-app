@@ -2,7 +2,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PROCESSING_RATES } from "constants/common";
 import { min_fee_allowance } from "helpers/donation";
-import type { DonationIntent, IStripeIntentReturn } from "lib/donations";
+import type { IDonationIntent, IStripeIntentReturn } from "lib/donations";
 import use_swr from "swr/immutable";
 import { currency as currencyfn } from "../../common/currency";
 import { stripe_promise } from "../../common/stripe";
@@ -13,7 +13,7 @@ import { DonationTerms } from "../donation-terms";
 import { Loader } from "../loader";
 import { Checkout } from "./checkout-form";
 
-const fetcher = async (intent: DonationIntent) =>
+const fetcher = async (intent: IDonationIntent) =>
   fetch("/api/donation-intents/stripe", {
     method: "POST",
     body: JSON.stringify(intent),
@@ -33,7 +33,7 @@ export function StripeCheckout(props: StripeDonationDetails) {
       )
     : 0;
 
-  const intent: DonationIntent = {
+  const intent: IDonationIntent = {
     frequency: frequency,
     amount: {
       amount: +amount,

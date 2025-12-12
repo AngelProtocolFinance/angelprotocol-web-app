@@ -1,7 +1,7 @@
 import type { ITributeNotif, TDonationSource } from "@better-giving/donation";
 import { $int_gte1 } from "@better-giving/endowment/schema";
 import { resp } from "helpers/https";
-import type { Tribute } from "lib/donations";
+import type { ITribute } from "lib/donations";
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
@@ -66,7 +66,7 @@ export interface IRetrievedDonation {
   /** email */
   from: string;
   from_name: string;
-  tribute?: Tribute;
+  tribute?: ITribute;
   private_msg_to_npo?: string;
   public_msg?: string;
   amount: number;
@@ -79,10 +79,10 @@ export interface IRetrievedDonation {
 const tribute_to_fv = (
   honoree?: string,
   notif?: ITributeNotif
-): Tribute | undefined => {
+): ITribute | undefined => {
   if (!honoree) return undefined;
 
-  const tribute: Tribute = {
+  const tribute: ITribute = {
     full_name: honoree,
   };
 
@@ -97,7 +97,7 @@ const tribute_to_fv = (
 };
 
 export const tribute_to_db = (
-  t: Tribute
+  t: ITribute
 ): { inHonorOf?: string; tributeNotif?: ITributeNotif } => {
   const result: { inHonorOf?: string; tributeNotif?: ITributeNotif } = {
     inHonorOf: t.full_name,
