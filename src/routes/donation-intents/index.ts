@@ -4,13 +4,13 @@ import { MIN_DONATION_USD } from "constants/common";
 import { addDays, getUnixTime } from "date-fns";
 import { rd2num } from "helpers/decimal";
 import { resp } from "helpers/https";
-import { nanoid } from "nanoid";
-import type { ActionFunction } from "react-router";
-import type { Payment } from "types/crypto";
 import {
   type IStripeIntentReturn,
   intent as schema,
-} from "types/donation-intent";
+} from "lib/donations/donation-intent";
+import { nanoid } from "nanoid";
+import type { ActionFunction } from "react-router";
+import type { Payment } from "types/crypto";
 import { getDotPath, parse, safeParse } from "valibot";
 import { type Order, crypto_payment } from "./crypto-payment";
 import { onhold_base } from "./helpers";

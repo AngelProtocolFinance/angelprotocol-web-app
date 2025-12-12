@@ -3,9 +3,12 @@ import type {
   PayPalButtonsComponentOptions,
 } from "@paypal/paypal-js";
 import { paypal_client_id } from "constants/env";
+import {
+  type DonationIntent,
+  donor_fv_init,
+} from "lib/donations/donation-intent";
 import { useEffect } from "react";
 import { href } from "react-router";
-import { type DonationIntent, donor_fv_init } from "types/donation-intent";
 import { use_donation } from "../context";
 import type { IPayPalExpress } from "./stripe/use-rhf";
 

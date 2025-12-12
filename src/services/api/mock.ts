@@ -1,8 +1,8 @@
+import type { IStripeIntentReturn } from "lib/donations/donation-intent";
 import { http, HttpResponse } from "msw";
 import { href } from "react-router";
 import type { ITokenEstimate } from "types/api";
 import type { Payment } from "types/crypto";
-import type { IStripeIntentReturn } from "types/donation-intent";
 
 export const fiatDonationIntentCreationErrorHandler = http.post(
   "/api/donation-intents/stripe",

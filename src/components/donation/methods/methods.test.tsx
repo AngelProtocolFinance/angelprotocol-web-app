@@ -1,7 +1,7 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { donor_fv_blank } from "types/donation-intent";
+import { donor_fv_blank } from "lib/donations/donation-intent";
 import { describe, expect, test } from "vitest";
 import { Steps } from "../index";
 import { type Config, type TDonation, donation_recipient_init } from "../types";

@@ -1,4 +1,7 @@
-import { donor_address_fv_init, donor_fv_blank } from "types/donation-intent";
+import {
+  donor_address_fv_init,
+  donor_fv_blank,
+} from "lib/donations/donation-intent";
 import type { DonationSource } from "types/lists";
 import { Context } from "./context";
 import { CurrentStep } from "./current-step";

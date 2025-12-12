@@ -5,12 +5,12 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { href } from "react-router";
 import type {
   DonationIntent,
   DonorAddressFv,
   IStripeIntentReturn,
-} from "types/donation-intent";
+} from "lib/donations/donation-intent";
+import { href } from "react-router";
 import { use_donation } from "../../../context";
 import type { IStripeExpress } from "../use-rhf";
 

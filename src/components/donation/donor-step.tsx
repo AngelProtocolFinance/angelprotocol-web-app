@@ -5,8 +5,8 @@ import { Field } from "components/form";
 import { Field2, Input2 } from "components/form/field-2";
 import { country_names } from "constants/countries";
 import { states } from "constants/us-states";
+import { type DonorFv as FV, donor_fv } from "lib/donations/donation-intent";
 import { useController, useForm } from "react-hook-form";
-import { type DonorFv as FV, donor_fv } from "types/donation-intent";
 import { BackBtn } from "./common/back-btn";
 import { use_donation } from "./context";
 

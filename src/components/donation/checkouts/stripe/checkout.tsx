@@ -2,11 +2,11 @@ import { Elements } from "@stripe/react-stripe-js";
 import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PROCESSING_RATES } from "constants/common";
 import { min_fee_allowance } from "helpers/donation";
-import use_swr from "swr/immutable";
 import type {
   DonationIntent,
   IStripeIntentReturn,
-} from "types/donation-intent";
+} from "lib/donations/donation-intent";
+import use_swr from "swr/immutable";
 import { currency as currencyfn } from "../../common/currency";
 import { stripe_promise } from "../../common/stripe";
 import { Summary } from "../../common/summary";

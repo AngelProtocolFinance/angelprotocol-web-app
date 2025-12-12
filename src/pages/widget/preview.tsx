@@ -4,8 +4,11 @@ import { type Config, Steps, type TDonation } from "components/donation";
 
 import { Image } from "components/image/image";
 import { Info } from "components/status";
+import {
+  donor_address_fv_init,
+  donor_fv_blank,
+} from "lib/donations/donation-intent";
 import type { PropsWithChildren } from "react";
-import { donor_address_fv_init, donor_fv_blank } from "types/donation-intent";
 import type { IWidgetFv } from "types/widget";
 
 type Props = {

@@ -1,6 +1,9 @@
 import { CheckField, Field } from "components/form";
+import {
+  type Tribute,
+  from_msg_max_length,
+} from "lib/donations/donation-intent";
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
-import { type Tribute, from_msg_max_length } from "types/donation-intent";
 
 interface SubFV {
   tribute?: Tribute;

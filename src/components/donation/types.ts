@@ -1,14 +1,14 @@
 import type { DonateMethodId } from "@better-giving/endowment";
 import { $int_gte1, type IIncrement } from "@better-giving/schemas";
+import { type DonorFv, frequency } from "lib/donations/donation-intent";
 import { type ICurrencyFv, currency_fv } from "types/currency";
-import { type DonorFv, frequency } from "types/donation-intent";
 export {
   type Tribute,
   type TFrequency,
   type DonorFv,
   tribute,
   donor_fv,
-} from "types/donation-intent";
+} from "lib/donations/donation-intent";
 import type { DonationSource } from "types/lists";
 import * as v from "valibot";
 
