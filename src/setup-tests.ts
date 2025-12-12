@@ -33,12 +33,11 @@ Object.defineProperty(window, "matchMedia", {
 });
 
 /** used by @headlessui/react */
-class ResizeObserverMock {
-  observe = vi.fn();
-  unobserve = vi.fn();
-  disconnect = vi.fn();
-}
-global.ResizeObserver = ResizeObserverMock;
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}));
 
 /**
 Mocking the `getBoundingClientRect` method for the virtual tests otherwise

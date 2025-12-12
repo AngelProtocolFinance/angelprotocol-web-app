@@ -91,7 +91,7 @@ export function Content({ classes = "", on_click, on_error, ...x }: IContent) {
     if (custom_redirect) {
       url.searchParams.set("donor_name", `${fn} ${ln}`);
       const to_pay =
-        intent.amount.amount + intent.amount.tip + intent.amount.fee_allowance;
+        intent.amount.base + intent.amount.tip + intent.amount.fee_allowance;
       url.searchParams.set("donation_amount", to_pay.toString());
       url.searchParams.set("donation_currency", intent.amount.currency);
       url.searchParams.set("payment_method", expressPaymentType);
