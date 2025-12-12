@@ -77,9 +77,8 @@ export function SettingsAdv({
           </p>
         }
         {...register("success_redirect")}
-        label="Success redirect URL"
+        label="Custom success redirect URL"
         placeholder="e.g. https://yoursite.com/thank-you"
-        required
         classes={{ container: "", label: "font-semibold text-sm" }}
         error={errors.success_redirect?.message}
       />
