@@ -20,9 +20,13 @@ export class BalanceTxsDb extends Db {
     return { PK: `Tx#${id}`, SK: `Tx#${id}` } as const;
   }
 
+  pk_gsi1_txs(status: TStatus) {
+    return `Txs#${this.env}#${status}` as const;
+  }
+
   key_gsi1_txs(date: string, status: TStatus) {
     return {
-      gsi1PK: `Txs#${this.env}#${status}`,
+      gsi1PK: this.pk_gsi1_txs(status),
       gsi1SK: date,
     } as const;
   }
@@ -94,7 +98,7 @@ export class BalanceTxsDb extends Db {
   ): Promise<TxType["Update"]> {
     const x = new UpdateBuilder();
     x.set("status", status);
-    x.set("gsi1PK", this.key_gsi1_txs(tx.date_created, status).gsi1PK);
+    x.set("gsi1PK", this.pk_gsi1_txs(status));
     return {
       TableName: BalanceTxsDb.table,
       Key: this.key_tx(tx.id),
@@ -111,8 +115,7 @@ export class BalanceTxsDb extends Db {
       KeyConditionExpression: "gsi1PK = :gsi1PK",
       ExclusiveStartKey: this.key_to_obj(opts?.next),
       ExpressionAttributeValues: {
-        ":gsi1PK": this.key_gsi1_txs("sk-not-used", opts?.status ?? "pending")
-          .gsi1PK,
+        ":gsi1PK": this.pk_gsi1_txs(opts?.status ?? "pending"),
       },
       ScanIndexForward: false,
     };
